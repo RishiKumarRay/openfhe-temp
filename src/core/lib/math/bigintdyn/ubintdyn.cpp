@@ -106,8 +106,8 @@ ubint<limb_t>::ubint(const uint64_t val) {
   if (init <= m_MaxLimb) {
     m_value.push_back((limb_t)init);
   }
-#ifdef UBINT_32  // does not occur for UBINT_64 \
-                 // NOLINTNEXTLINE
+#ifdef UBINT_32  /* does not occur for UBINT_64
+                    NOLINTNEXTLINE */
   else {
     usint ceilInt = ceilIntByUInt(msb);
     // setting the values of the array
