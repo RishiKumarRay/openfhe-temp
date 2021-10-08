@@ -69,13 +69,12 @@ namespace lbcrypto {
  * @tparam Element a ring element type.
  */
 template <class Element>
-class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element>
-{
+class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -187,7 +186,8 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element>
   bool operator==(const LPCryptoParameters<Element>& rhs) const {
     const auto* el = dynamic_cast<const LPCryptoParametersBFVrnsB<Element>*>(&rhs);
 
-    if (el == nullptr) return false;
+    if (el == nullptr)
+      return false;
 
     return LPCryptoParametersRLWE<Element>::operator==(rhs);
   }
@@ -524,9 +524,8 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::base_class<LPCryptoParametersRLWE<Element>>(this));
   }
@@ -663,13 +662,12 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element>
-{
+class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -705,13 +703,12 @@ class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element>
-{
+class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -756,13 +753,12 @@ class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element>
-{
+class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -843,13 +839,12 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element>
-{
+class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -942,13 +937,12 @@ class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element>
-{
+class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -1000,13 +994,12 @@ class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPublicKeyEncryptionSchemeBFVrnsB : public LPPublicKeyEncryptionScheme<Element>
-{
+class LPPublicKeyEncryptionSchemeBFVrnsB : public LPPublicKeyEncryptionScheme<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   LPPublicKeyEncryptionSchemeBFVrnsB();

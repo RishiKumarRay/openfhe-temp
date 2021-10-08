@@ -64,10 +64,9 @@ template Matrix<M6Integer> Rotate(Matrix<M6DCRTPoly> const& inMat);
 // biginteger version
 template <>
 PolyImpl<NativeVector> PolyImpl<M6Vector>::ToNativePoly() const {
-  PolyImpl<NativeVector> interp(
-    std::make_shared<ILParamsImpl<NativeInteger>>(this->GetCyclotomicOrder(), std::numeric_limits<uint64_t>::max(), 1),
-    this->GetFormat(),
-    true);
+  PolyImpl<NativeVector> interp(std::make_shared<ILParamsImpl<NativeInteger>>(this->GetCyclotomicOrder(),
+                                                                              std::numeric_limits<uint64_t>::max(), 1),
+                                this->GetFormat(), true);
 
   for (usint i = 0; i < this->GetLength(); i++) {
     interp[i] = (*this)[i].ConvertToInt();

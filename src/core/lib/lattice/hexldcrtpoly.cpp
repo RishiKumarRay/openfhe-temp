@@ -67,17 +67,18 @@ void HexlDCRTPoly<VecType>::DropLastElementAndScale(const std::vector<NativeInte
     extra.m_vectors[i] = (temp *= QlQlInvModqlDivqlModq[i]);
   }  // omp threaded loop
 
-  if (this->GetFormat() == Format::EVALUATION) extra.SetFormat(Format::EVALUATION);
+  if (this->GetFormat() == Format::EVALUATION)
+    extra.SetFormat(Format::EVALUATION);
 
   usint ringDim = this->GetRingDimension();
   for (usint i = 0; i < this->m_vectors.size(); i++) {
     const NativeInteger& qi = this->m_vectors[i].GetModulus();
-    PolyType& m_veci        = this->m_vectors[i];
-    PolyType& extra_m_veci  = extra.m_vectors[i];
-    const auto multOp       = qlInvModq[i];
-    uint64_t* op1           = reinterpret_cast<uint64_t*>(&m_veci[0]);
-    uint64_t op2            = multOp.ConvertToInt();
-    uint64_t* op3           = reinterpret_cast<uint64_t*>(&extra_m_veci[0]);
+    PolyType& m_veci = this->m_vectors[i];
+    PolyType& extra_m_veci = extra.m_vectors[i];
+    const auto multOp = qlInvModq[i];
+    uint64_t* op1 = reinterpret_cast<uint64_t*>(&m_veci[0]);
+    uint64_t op2 = multOp.ConvertToInt();
+    uint64_t* op3 = reinterpret_cast<uint64_t*>(&extra_m_veci[0]);
     intel::hexl::EltwiseFMAMod(op1, op1, op2, op3, ringDim, qi.ConvertToInt(), 1);
   }
 

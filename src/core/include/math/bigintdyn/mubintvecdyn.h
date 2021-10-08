@@ -45,8 +45,8 @@ namespace bigintdyn {
  */
 
 template <class ubint_el_t>
-class mubintvec : public lbcrypto::BigVectorInterface<mubintvec<ubint_el_t>, ubint_el_t>, public lbcrypto::Serializable
-{
+class mubintvec : public lbcrypto::BigVectorInterface<mubintvec<ubint_el_t>, ubint_el_t>,
+                  public lbcrypto::Serializable {
  public:
   // CONSTRUCTORS
 
@@ -567,9 +567,8 @@ class mubintvec : public lbcrypto::BigVectorInterface<mubintvec<ubint_el_t>, ubi
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     ar(::cereal::make_nvp("d", m_data));
     ar(::cereal::make_nvp("m", m_modulus));

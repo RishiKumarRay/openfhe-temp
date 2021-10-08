@@ -39,10 +39,10 @@ template <typename Element>
 Matrix<typename Element::Integer> Rotate(Matrix<Element> const& inMat) {
   Matrix<Element> mat(inMat);
   mat.SetFormat(Format::COEFFICIENT);
-  size_t n                                 = mat(0, 0).GetLength();
+  size_t n = mat(0, 0).GetLength();
   typename Element::Integer const& modulus = mat(0, 0).GetModulus();
-  size_t rows                              = mat.GetRows() * n;
-  size_t cols                              = mat.GetCols() * n;
+  size_t rows = mat.GetRows() * n;
+  size_t cols = mat.GetCols() * n;
   Matrix<typename Element::Integer> result(Element::Integer::Allocator, rows, cols);
   for (size_t row = 0; row < mat.GetRows(); ++row) {
     for (size_t col = 0; col < mat.GetCols(); ++col) {
@@ -53,7 +53,7 @@ Matrix<typename Element::Integer> Rotate(Matrix<Element> const& inMat) {
           //  (mod x^n + 1)
           if (rotRow < rotCol) {
             result(row * n + rotRow, col * n + rotCol) =
-              modulus.ModSub(result(row * n + rotRow, col * n + rotCol), modulus);
+                modulus.ModSub(result(row * n + rotRow, col * n + rotCol), modulus);
           }
         }
       }
@@ -70,21 +70,19 @@ template <typename Element>
 Matrix<typename Element::Vector> RotateVecResult(Matrix<Element> const& inMat) {
   Matrix<Element> mat(inMat);
   mat.SetFormat(Format::COEFFICIENT);
-  size_t n                                 = mat(0, 0).GetLength();
+  size_t n = mat(0, 0).GetLength();
   typename Element::Integer const& modulus = mat(0, 0).GetModulus();
   typename Element::Vector zero(1, modulus);
-  size_t rows                = mat.GetRows() * n;
-  size_t cols                = mat.GetCols() * n;
-  auto singleElemBinVecAlloc = [=]() {
-    return typename Element::Vector(1, modulus);
-  };
+  size_t rows = mat.GetRows() * n;
+  size_t cols = mat.GetCols() * n;
+  auto singleElemBinVecAlloc = [=]() { return typename Element::Vector(1, modulus); };
   Matrix<typename Element::Vector> result(singleElemBinVecAlloc, rows, cols);
   for (size_t row = 0; row < mat.GetRows(); ++row) {
     for (size_t col = 0; col < mat.GetCols(); ++col) {
       for (size_t rotRow = 0; rotRow < n; ++rotRow) {
         for (size_t rotCol = 0; rotCol < n; ++rotCol) {
           typename Element::Vector& elem = result(row * n + rotRow, col * n + rotCol);
-          elem.at(0)                     = mat(row, col).GetValues().at((rotRow - rotCol + n) % n);
+          elem.at(0) = mat(row, col).GetValues().at((rotRow - rotCol + n) % n);
           //  negate (mod q) upper-right triangle to account for
           //  (mod x^n + 1)
           if (rotRow < rotCol) {
@@ -115,8 +113,7 @@ void Matrix<Element>::SwitchFormat() {
         data[row][col].SwitchFormat();
       }
     }
-  }
-  else {
+  } else {
     for (size_t col = 0; col < cols; ++col) {
 #pragma omp parallel for
       for (size_t row = 0; row < rows; ++row) {
@@ -137,8 +134,7 @@ Matrix<int32_t> ConvertToInt32(const Matrix<T>& input, const T& modulus) {
     for (size_t j = 0; j < cols; ++j) {
       if (input(i, j) > negativeThreshold) {
         result(i, j) = -1 * (modulus - input(i, j)).ConvertToInt();
-      }
-      else {
+      } else {
         result(i, j) = input(i, j).ConvertToInt();
       }
     }
@@ -157,8 +153,7 @@ Matrix<int32_t> ConvertToInt32(const Matrix<V>& input, const typename V::Integer
       const typename V::Integer& elem = input(i, j).at(0);
       if (elem > negativeThreshold) {
         result(i, j) = -1 * (modulus - elem).ConvertToInt();
-      }
-      else {
+      } else {
         result(i, j) = elem.ConvertToInt();
       }
     }

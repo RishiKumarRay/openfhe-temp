@@ -70,11 +70,9 @@ namespace NTL {
  */
 
 template <typename myT>
-class myVecP :
-    public NTL::Vec<myT>,
-    public lbcrypto::BigVectorInterface<myVecP<myT>, myT>,
-    public lbcrypto::Serializable
-{
+class myVecP : public NTL::Vec<myT>,
+               public lbcrypto::BigVectorInterface<myVecP<myT>, myT>,
+               public lbcrypto::Serializable {
  public:
   // CONSTRUCTORS
 
@@ -175,7 +173,7 @@ class myVecP :
     if (value == 0) {
       PALISADE_THROW(lbcrypto::math_error, "SetModulus(uint64_t) cannot be zero");
     }
-    this->m_modulus       = myT(value);
+    this->m_modulus = myT(value);
     this->m_modulus_state = INITIALIZED;
   }
 
@@ -184,7 +182,7 @@ class myVecP :
     if (value == myT(0)) {
       PALISADE_THROW(lbcrypto::math_error, "SetModulus(myT) cannot be zero");
     }
-    this->m_modulus       = value;
+    this->m_modulus = value;
     this->m_modulus_state = INITIALIZED;
   }
 
@@ -209,19 +207,17 @@ class myVecP :
   const myT& GetModulus() const {
     if (this->isModulusSet()) {
       return (this->m_modulus);
-    }
-    else {
+    } else {
       PALISADE_THROW(lbcrypto::config_error, "modulus not set");
     }
   }
 
   inline int CopyModulus(const myVecP& rhs) {
-    this->m_modulus       = rhs.m_modulus;
+    this->m_modulus = rhs.m_modulus;
     this->m_modulus_state = rhs.m_modulus_state;
     if (isModulusSet()) {
       return (0);
-    }
-    else {
+    } else {
       this->m_modulus_state = GARBAGE;
       return (-1);
     }
@@ -577,7 +573,7 @@ class myVecP :
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     // YSP. This was seg-faulting in MINGW
     // ar( m_modulus.ToString() );
     // ar( m_modulus_state );
@@ -594,7 +590,7 @@ class myVecP :
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("m", m_modulus.ToString()));
     ar(::cereal::make_nvp("ms", m_modulus_state));
     ar(::cereal::make_nvp("l", this->GetLength()));
@@ -605,11 +601,10 @@ class myVecP :
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     // YSP. This was seg-faulting in MINGW
     // std::string m;
@@ -638,11 +633,10 @@ class myVecP :
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     std::string m;
     ar(::cereal::make_nvp("m", m));
@@ -680,11 +674,9 @@ class myVecP :
   void ArgCheckVector(const myVecP& b, std::string fname) const {
     if (this->m_modulus != b.m_modulus) {
       PALISADE_THROW(lbcrypto::math_error, fname + " modulus vector modulus vector op of different moduli");
-    }
-    else if (!isModulusSet()) {
+    } else if (!isModulusSet()) {
       PALISADE_THROW(lbcrypto::config_error, fname + " modulus vector modulus vector op  GARBAGE  moduli");
-    }
-    else if (this->GetLength() != b.GetLength()) {
+    } else if (this->GetLength() != b.GetLength()) {
       PALISADE_THROW(lbcrypto::math_error, fname + " vectors of different lengths");
     }
   }

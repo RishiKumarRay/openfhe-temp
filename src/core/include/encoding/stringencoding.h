@@ -33,8 +33,7 @@ using std::string;
 
 namespace lbcrypto {
 
-class StringEncoding : public PlaintextImpl
-{
+class StringEncoding : public PlaintextImpl {
   string ptx;
   // enum EncodingType { CHAR7bit } encoding = CHAR7bit;
 

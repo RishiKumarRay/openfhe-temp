@@ -50,8 +50,7 @@ namespace lbcrypto {
  * Heidelberg
  */
 template <typename IntType>
-class ILDCRTParams : public ElemParams<IntType>
-{
+class ILDCRTParams : public ElemParams<IntType> {
  public:
   static const usint DEFAULT_NBITS = 20;
 
@@ -74,17 +73,19 @@ class ILDCRTParams : public ElemParams<IntType>
    * @param &modulus is the modulus for the primary ciphertext.
    * @param rootsOfUnity is unused
    */
-  ILDCRTParams(const usint cyclotomic_order, const IntType& modulus, const IntType& rootOfUnity) :
-      ElemParams<IntType>(cyclotomic_order, modulus, 0, 0, 0) {
+  ILDCRTParams(const usint cyclotomic_order, const IntType& modulus, const IntType& rootOfUnity)
+      : ElemParams<IntType>(cyclotomic_order, modulus, 0, 0, 0) {
     // NOTE parms generation uses this constructor to make an empty parms that
     // it will later populate during the gen process. For that special case...
     // we don't populate, and we just return
 
-    if (cyclotomic_order == 0) return;
+    if (cyclotomic_order == 0)
+      return;
 
     DEBUG_FLAG(false);
-    DEBUG("in ILDCRTParams(const usint cyclotomic_order, const IntType &modulus, "
-          "const IntType& rootOfUnity");
+    DEBUG(
+        "in ILDCRTParams(const usint cyclotomic_order, const IntType &modulus, "
+        "const IntType& rootOfUnity");
     DEBUGEXP(cyclotomic_order);
     DEBUGEXP(modulus);
     DEBUGEXP(rootOfUnity);
@@ -99,7 +100,8 @@ class ILDCRTParams : public ElemParams<IntType>
       moduli.push_back(q);
       rootsOfUnity.push_back(RootOfUnity(cyclotomic_order, q));
       compositeModulus = compositeModulus * IntType(q.ConvertToInt());
-      if (compositeModulus >= modulus) break;
+      if (compositeModulus >= modulus)
+        break;
 
       q = NextPrime(q, cyclotomic_order);
       numOfTower++;
@@ -131,9 +133,8 @@ class ILDCRTParams : public ElemParams<IntType>
    */
   ILDCRTParams(const usint cyclotomic_order, const std::vector<NativeInteger>& moduli,
                const std::vector<NativeInteger>& rootsOfUnity, const std::vector<NativeInteger>& moduliBig = {},
-               const std::vector<NativeInteger>& rootsOfUnityBig = {},
-               const IntType& inputOriginalModulus               = IntType(0)) :
-      ElemParams<IntType>(cyclotomic_order, 0, 0, 0, 0) {
+               const std::vector<NativeInteger>& rootsOfUnityBig = {}, const IntType& inputOriginalModulus = IntType(0))
+      : ElemParams<IntType>(cyclotomic_order, 0, 0, 0, 0) {
     this->originalModulus = inputOriginalModulus;
     if (moduli.size() != rootsOfUnity.size()) {
       PALISADE_THROW(math_error, "sizes of moduli and roots of unity do not match");
@@ -141,12 +142,11 @@ class ILDCRTParams : public ElemParams<IntType>
 
     if (moduliBig.size() == moduli.size()) {
       for (size_t i = 0; i < moduli.size(); i++) {
-        m_parms.push_back(std::make_shared<ILNativeParams>(
-          cyclotomic_order, moduli[i], rootsOfUnity[i], moduliBig[i], rootsOfUnityBig[i]));
+        m_parms.push_back(std::make_shared<ILNativeParams>(cyclotomic_order, moduli[i], rootsOfUnity[i], moduliBig[i],
+                                                           rootsOfUnityBig[i]));
       }
       RecalculateBigModulus();
-    }
-    else {
+    } else {
       for (size_t i = 0; i < moduli.size(); i++) {
         m_parms.push_back(std::make_shared<ILNativeParams>(cyclotomic_order, moduli[i], rootsOfUnity[i]));
       }
@@ -163,8 +163,8 @@ class ILDCRTParams : public ElemParams<IntType>
    * @param &moduli is the tower of moduli
    */
   ILDCRTParams(const usint cyclotomic_order, const std::vector<NativeInteger>& moduli,
-               const IntType& inputOriginalModulus = IntType(0)) :
-      ElemParams<IntType>(cyclotomic_order, 0, 0, 0, 0) {
+               const IntType& inputOriginalModulus = IntType(0))
+      : ElemParams<IntType>(cyclotomic_order, 0, 0, 0, 0) {
     this->originalModulus = inputOriginalModulus;
 
     for (size_t i = 0; i < moduli.size(); i++) {
@@ -182,8 +182,8 @@ class ILDCRTParams : public ElemParams<IntType>
    * @return
    */
   ILDCRTParams(const usint cyclotomic_order, std::vector<std::shared_ptr<ILNativeParams>>& parms,
-               const IntType& inputOriginalModulus = IntType(0)) :
-      ElemParams<IntType>(cyclotomic_order, 0, 0, 0, 0), m_parms(parms) {
+               const IntType& inputOriginalModulus = IntType(0))
+      : ElemParams<IntType>(cyclotomic_order, 0, 0, 0, 0), m_parms(parms) {
     this->originalModulus = inputOriginalModulus;
 
     RecalculateModulus();
@@ -197,7 +197,7 @@ class ILDCRTParams : public ElemParams<IntType>
    */
   const ILDCRTParams& operator=(const ILDCRTParams& rhs) {
     ElemParams<IntType>::operator=(rhs);
-    originalModulus              = rhs.originalModulus;
+    originalModulus = rhs.originalModulus;
 
     m_parms = rhs.m_parms;
 
@@ -222,18 +222,17 @@ class ILDCRTParams : public ElemParams<IntType>
    */
   std::vector<std::shared_ptr<ILNativeParams>> GetParamPartition(uint32_t start, uint32_t end) const {
     if (end < start || end > this->GetParams().size()) {
-      PALISADE_THROW(math_error,
-                     "Incorrect parameters for GetParamPartition - (start: " + std::to_string(start) +
-                       ", end:" + std::to_string(end) + ")");
+      PALISADE_THROW(math_error, "Incorrect parameters for GetParamPartition - (start: " + std::to_string(start) +
+                                     ", end:" + std::to_string(end) + ")");
     }
 
     std::vector<std::shared_ptr<ILNativeParams>> resParams =
-      std::vector<std::shared_ptr<ILNativeParams>>(end - start + 1);
+        std::vector<std::shared_ptr<ILNativeParams>>(end - start + 1);
 
     IntType q = IntType(1);
     for (uint32_t i = 0; i <= (end - start); i++) {
       resParams[i] = this->GetParams()[i + start];
-      q            = q.Mul(IntType(this->GetParams()[i + start]->GetModulus()));
+      q = q.Mul(IntType(this->GetParams()[i + start]->GetModulus()));
     }
 
     return resParams;
@@ -288,14 +287,18 @@ class ILDCRTParams : public ElemParams<IntType>
   bool operator==(const ElemParams<IntType>& other) const {
     const auto* dcrtParams = dynamic_cast<const ILDCRTParams*>(&other);
 
-    if (dcrtParams == nullptr) return false;
+    if (dcrtParams == nullptr)
+      return false;
 
-    if (ElemParams<IntType>::operator==(other) == false) return false;
+    if (ElemParams<IntType>::operator==(other) == false)
+      return false;
 
-    if (m_parms.size() != dcrtParams->m_parms.size()) return false;
+    if (m_parms.size() != dcrtParams->m_parms.size())
+      return false;
 
     for (size_t i = 0; i < m_parms.size(); i++) {
-      if (*m_parms[i] != *dcrtParams->m_parms[i]) return false;
+      if (*m_parms[i] != *dcrtParams->m_parms[i])
+        return false;
     }
 
     //    if (originalModulus != dcrtParams->originalModulus)
@@ -338,9 +341,8 @@ class ILDCRTParams : public ElemParams<IntType>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::base_class<ElemParams<IntType>>(this));
     ar(::cereal::make_nvp("p", m_parms));

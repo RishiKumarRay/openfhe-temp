@@ -39,9 +39,9 @@ inline static void encodeVec(P& poly, const PlaintextModulus& mod, int64_t lb, i
     }
 
     if (value[i] <= lb || value[i] > ub)
-      PALISADE_THROW(config_error,
-                     "Cannot encode integer " + std::to_string(value[i]) + " at position " + std::to_string(i) +
-                       " because it is out of range of plaintext modulus " + std::to_string(mod));
+      PALISADE_THROW(config_error, "Cannot encode integer " + std::to_string(value[i]) + " at position " +
+                                       std::to_string(i) + " because it is out of range of plaintext modulus " +
+                                       std::to_string(mod));
 
     typename P::Integer entry = value[i];
 
@@ -56,13 +56,13 @@ inline static void encodeVec(P& poly, const PlaintextModulus& mod, int64_t lb, i
 }
 
 bool CoefPackedEncoding::Encode() {
-  if (this->isEncoded) return true;
+  if (this->isEncoded)
+    return true;
   PlaintextModulus mod = this->encodingParams->GetPlaintextModulus();
 
   if (this->typeFlag == IsNativePoly) {
     encodeVec(this->encodedNativeVector, mod, LowBound(), HighBound(), this->value);
-  }
-  else {
+  } else {
     encodeVec(this->encodedVector, mod, LowBound(), HighBound(), this->value);
   }
 
@@ -78,16 +78,18 @@ template <typename P>
 inline static void fillVec(const P& poly, const PlaintextModulus& mod, vector<int64_t>& value) {
   value.clear();
 
-  int64_t half                 = int64_t(mod) / 2;
+  int64_t half = int64_t(mod) / 2;
   const typename P::Integer& q = poly.GetModulus();
-  typename P::Integer qHalf    = q >> 1;
+  typename P::Integer qHalf = q >> 1;
 
   for (size_t i = 0; i < poly.GetLength(); i++) {
     int64_t val;
-    if (poly[i] > qHalf) val = (-(q - poly[i]).ConvertToInt());
+    if (poly[i] > qHalf)
+      val = (-(q - poly[i]).ConvertToInt());
     else
       val = poly[i].ConvertToInt();
-    if (val > half) val -= mod;
+    if (val > half)
+      val -= mod;
     value.push_back(val);
   }
 }
@@ -97,8 +99,7 @@ bool CoefPackedEncoding::Decode() {
 
   if (this->typeFlag == IsNativePoly) {
     fillVec(this->encodedNativeVector, mod, this->value);
-  }
-  else {
+  } else {
     fillVec(this->encodedVector, mod, this->value);
   }
 

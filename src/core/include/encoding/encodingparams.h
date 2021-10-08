@@ -41,8 +41,7 @@ typedef uint64_t PlaintextModulus;
  * @class EncodingParamsImpl
  * @brief All parameters for plaintext encodings into ciphertext space.
  */
-class EncodingParamsImpl : public lbcrypto::Serializable
-{
+class EncodingParamsImpl : public lbcrypto::Serializable {
  public:
   /**
    * Main constructor. Supports (1) default constructor, (2) regular encoding
@@ -59,12 +58,12 @@ class EncodingParamsImpl : public lbcrypto::Serializable
   EncodingParamsImpl(PlaintextModulus plaintextModulus = 0, uint32_t batchSize = 0, uint32_t plaintextGenerator = 0,
                      NativeInteger plaintextRootOfUnity = 0, NativeInteger plaintextBigModulus = 0,
                      NativeInteger plaintextBigRootOfUnity = 0) {
-    m_plaintextModulus        = plaintextModulus;
-    m_plaintextRootOfUnity    = plaintextRootOfUnity;
-    m_plaintextBigModulus     = plaintextBigModulus;
+    m_plaintextModulus = plaintextModulus;
+    m_plaintextRootOfUnity = plaintextRootOfUnity;
+    m_plaintextBigModulus = plaintextBigModulus;
     m_plaintextBigRootOfUnity = plaintextBigRootOfUnity;
-    m_batchSize               = batchSize;
-    m_plaintextGenerator      = plaintextGenerator;
+    m_batchSize = batchSize;
+    m_plaintextGenerator = plaintextGenerator;
   }
 
   /**
@@ -73,12 +72,12 @@ class EncodingParamsImpl : public lbcrypto::Serializable
    * @param &rhs the input set of parameters which is copied.
    */
   EncodingParamsImpl(const EncodingParamsImpl& rhs) {
-    m_plaintextModulus        = rhs.m_plaintextModulus;
-    m_plaintextRootOfUnity    = rhs.m_plaintextRootOfUnity;
-    m_plaintextBigModulus     = rhs.m_plaintextBigModulus;
+    m_plaintextModulus = rhs.m_plaintextModulus;
+    m_plaintextRootOfUnity = rhs.m_plaintextRootOfUnity;
+    m_plaintextBigModulus = rhs.m_plaintextBigModulus;
     m_plaintextBigRootOfUnity = rhs.m_plaintextBigRootOfUnity;
-    m_plaintextGenerator      = rhs.m_plaintextGenerator;
-    m_batchSize               = rhs.m_batchSize;
+    m_plaintextGenerator = rhs.m_plaintextGenerator;
+    m_batchSize = rhs.m_batchSize;
   }
 
   /**
@@ -87,12 +86,12 @@ class EncodingParamsImpl : public lbcrypto::Serializable
    * @param &rhs the input set of parameters which is copied.
    */
   EncodingParamsImpl(const EncodingParamsImpl&& rhs) {
-    m_plaintextModulus        = std::move(rhs.m_plaintextModulus);
-    m_plaintextRootOfUnity    = std::move(rhs.m_plaintextRootOfUnity);
-    m_plaintextBigModulus     = std::move(rhs.m_plaintextBigModulus);
+    m_plaintextModulus = std::move(rhs.m_plaintextModulus);
+    m_plaintextRootOfUnity = std::move(rhs.m_plaintextRootOfUnity);
+    m_plaintextBigModulus = std::move(rhs.m_plaintextBigModulus);
     m_plaintextBigRootOfUnity = std::move(rhs.m_plaintextBigRootOfUnity);
-    m_plaintextGenerator      = std::move(rhs.m_plaintextGenerator);
-    m_batchSize               = rhs.m_batchSize;
+    m_plaintextGenerator = std::move(rhs.m_plaintextGenerator);
+    m_batchSize = rhs.m_batchSize;
   }
 
   /**
@@ -102,12 +101,12 @@ class EncodingParamsImpl : public lbcrypto::Serializable
    * @return the resulting EncodingParamsImpl.
    */
   const EncodingParamsImpl& operator=(const EncodingParamsImpl& rhs) {
-    m_plaintextModulus        = rhs.m_plaintextModulus;
-    m_plaintextRootOfUnity    = rhs.m_plaintextRootOfUnity;
-    m_plaintextBigModulus     = rhs.m_plaintextBigModulus;
+    m_plaintextModulus = rhs.m_plaintextModulus;
+    m_plaintextRootOfUnity = rhs.m_plaintextRootOfUnity;
+    m_plaintextBigModulus = rhs.m_plaintextBigModulus;
     m_plaintextBigRootOfUnity = rhs.m_plaintextBigRootOfUnity;
-    m_plaintextGenerator      = rhs.m_plaintextGenerator;
-    m_batchSize               = rhs.m_batchSize;
+    m_plaintextGenerator = rhs.m_plaintextGenerator;
+    m_batchSize = rhs.m_batchSize;
     return *this;
   }
 
@@ -277,9 +276,8 @@ class EncodingParamsImpl : public lbcrypto::Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("m", m_plaintextModulus));
     ar(::cereal::make_nvp("ru", m_plaintextRootOfUnity));
@@ -298,12 +296,15 @@ class EncodingParamsImpl : public lbcrypto::Serializable
 };
 
 inline std::ostream& operator<<(std::ostream& out, std::shared_ptr<EncodingParamsImpl> o) {
-  if (o) out << *o;
+  if (o)
+    out << *o;
   return out;
 }
 inline bool operator==(std::shared_ptr<EncodingParamsImpl> o1, std::shared_ptr<EncodingParamsImpl> o2) {
-  if (o1 && o2) return *o1 == *o2;
-  if (!o1 && !o2) return true;
+  if (o1 && o2)
+    return *o1 == *o2;
+  if (!o1 && !o2)
+    return true;
   return false;
 }
 

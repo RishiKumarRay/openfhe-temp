@@ -46,8 +46,7 @@ namespace lbcrypto {
  * https://eprint.iacr.org/2014/816 and "Bootstrapping in FHEW-like
  * Cryptosystems"
  */
-class RingGSWAccumulatorScheme
-{
+class RingGSWAccumulatorScheme {
  public:
   RingGSWAccumulatorScheme() {}
 

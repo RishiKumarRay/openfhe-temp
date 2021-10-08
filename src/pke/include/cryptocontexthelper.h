@@ -32,8 +32,7 @@
 
 namespace lbcrypto {
 
-class CryptoContextHelper
-{
+class CryptoContextHelper {
  public:
   /**
    *

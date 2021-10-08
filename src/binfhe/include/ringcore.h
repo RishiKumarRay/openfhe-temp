@@ -52,8 +52,7 @@ enum BINFHEMETHOD { AP, GINX };
  * @brief Class that stores all parameters for the RingGSW scheme used in
  * bootstrapping
  */
-class RingGSWCryptoParams : public Serializable
-{
+class RingGSWCryptoParams : public Serializable {
  public:
   RingGSWCryptoParams() : m_baseG(0), m_digitsG(0), m_digitsG2(0), m_baseR(0), m_method(GINX) {}
 
@@ -66,8 +65,8 @@ class RingGSWCryptoParams : public Serializable
    * @param method bootstrapping method (AP or GINX)
    */
   explicit RingGSWCryptoParams(const std::shared_ptr<LWECryptoParams> lweparams, uint32_t baseG, uint32_t baseR,
-                               BINFHEMETHOD method) :
-      m_LWEParams(lweparams), m_baseG(baseG), m_baseR(baseR), m_method(method) {
+                               BINFHEMETHOD method)
+      : m_LWEParams(lweparams), m_baseG(baseG), m_baseR(baseR), m_method(method) {
     if (!IsPowerOfTwo(baseG)) {
       PALISADE_THROW(config_error, "Gadget base should be a power of two.");
     }
@@ -81,9 +80,9 @@ class RingGSWCryptoParams : public Serializable
   void PreCompute() {
     const shared_ptr<LWECryptoParams> lweparams = m_LWEParams;
 
-    NativeInteger Q           = lweparams->GetQ();
-    NativeInteger q           = lweparams->Getq();
-    uint32_t N                = lweparams->GetN();
+    NativeInteger Q = lweparams->GetQ();
+    NativeInteger q = lweparams->Getq();
+    uint32_t N = lweparams->GetN();
     NativeInteger rootOfUnity = RootOfUnity<NativeInteger>(2 * N, Q);
 
     // Precomputes the table with twiddle factors to support fast NTT
@@ -92,13 +91,13 @@ class RingGSWCryptoParams : public Serializable
     // Precomputes a polynomial for MSB extraction
     m_polyParams = std::make_shared<ILNativeParams>(2 * N, Q, rootOfUnity);
 
-    m_digitsG  = (uint32_t)std::ceil(log(Q.ConvertToDouble()) / log(static_cast<double>(m_baseG)));
+    m_digitsG = (uint32_t)std::ceil(log(Q.ConvertToDouble()) / log(static_cast<double>(m_baseG)));
     m_digitsG2 = m_digitsG * 2;
 
     // Computes baseR^i (only for AP bootstrapping)
     if (m_method == AP) {
       uint32_t digitCountR =
-        (uint32_t)std::ceil(log(static_cast<double>(q.ConvertToInt())) / log(static_cast<double>(m_baseR)));
+          (uint32_t)std::ceil(log(static_cast<double>(q.ConvertToInt())) / log(static_cast<double>(m_baseR)));
       // Populate digits
       NativeInteger value = 1;
       for (uint32_t i = 0; i < digitCountR; i++) {
@@ -116,12 +115,12 @@ class RingGSWCryptoParams : public Serializable
 
     // Sets the gate constants for supported binary operations
     m_gateConst = {
-      NativeInteger(5) * (q >> 3),  // OR
-      NativeInteger(7) * (q >> 3),  // AND
-      NativeInteger(1) * (q >> 3),  // NOR
-      NativeInteger(3) * (q >> 3),  // NAND
-      NativeInteger(5) * (q >> 3),  // XOR_FAST
-      NativeInteger(1) * (q >> 3)   // XNOR_FAST
+        NativeInteger(5) * (q >> 3),  // OR
+        NativeInteger(7) * (q >> 3),  // AND
+        NativeInteger(1) * (q >> 3),  // NOR
+        NativeInteger(3) * (q >> 3),  // NAND
+        NativeInteger(5) * (q >> 3),  // XOR_FAST
+        NativeInteger(1) * (q >> 3)   // XNOR_FAST
     };
 
     // Computes polynomials X^m - 1 that are needed in the accumulator for the
@@ -225,9 +224,8 @@ class RingGSWCryptoParams : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("params", m_LWEParams));
     ar(::cereal::make_nvp("bR", m_baseR));
@@ -284,8 +282,7 @@ class RingGSWCryptoParams : public Serializable
  * @brief Class that stores a RingGSW ciphertext; a two-dimensional vector of
  * ring elements
  */
-class RingGSWCiphertext : public Serializable
-{
+class RingGSWCiphertext : public Serializable {
  public:
   RingGSWCiphertext() {}
 
@@ -358,9 +355,8 @@ class RingGSWCiphertext : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("elements", m_elements));
   }
@@ -380,8 +376,7 @@ class RingGSWCiphertext : public Serializable
  * @brief Class that stores the refreshing key (used in bootstrapping)
  * A three-dimensional vector of RingGSW ciphertexts
  */
-class RingGSWBTKey : public Serializable
-{
+class RingGSWBTKey : public Serializable {
  public:
   RingGSWBTKey() {}
 
@@ -446,9 +441,8 @@ class RingGSWBTKey : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("key", m_key));
   }

@@ -13,8 +13,7 @@
 template <typename T>
 class stl_allocator;
 template <>
-class stl_allocator<void>
-{
+class stl_allocator<void> {
  public:
   typedef void* pointer;
   typedef const void* const_pointer;
@@ -33,8 +32,7 @@ class stl_allocator<void>
 /// stl_allocator is custom allocator where xmalloc/xfree is used to obtain
 /// and release memory.
 template <typename T>
-class stl_allocator
-{
+class stl_allocator {
  public:
   typedef size_t size_type;
   typedef ptrdiff_t difference_type;

@@ -117,7 +117,7 @@ int main() {
   cout << "The switching key has been deserialized." << std::endl;
 
   // Loading the keys in the cryptocontext
-  cc.BTKeyLoad({ refreshKey, ksKey });
+  cc.BTKeyLoad({refreshKey, ksKey});
 
   // Deserializing the secret key
 

@@ -15,8 +15,7 @@
 
 /// See
 /// http://www.codeproject.com/Articles/1083210/An-efficient-Cplusplus-fixed-block-memory-allocato
-class Allocator
-{
+class Allocator {
  public:
   /// Constructor
   /// @param[in]  size - size of the fixed blocks
@@ -112,8 +111,7 @@ class Allocator
 
 // Template class to create external memory pool
 template <class T, usint Objects>
-class AllocatorPool : public Allocator
-{
+class AllocatorPool : public Allocator {
  public:
   AllocatorPool() : Allocator(sizeof(T), Objects, m_memory) {}
 

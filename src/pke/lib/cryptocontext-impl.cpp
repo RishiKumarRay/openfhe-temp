@@ -31,8 +31,7 @@ Plaintext CryptoContextImpl<DCRTPoly>::GetPlaintextForDecrypt(PlaintextEncodings
   if ((pte == CKKSPacked) && (evp->GetParams().size() > 1)) {
     auto vp = std::make_shared<typename Poly::Params>(evp->GetCyclotomicOrder(), ep->GetPlaintextModulus(), 1);
     return PlaintextFactory::MakePlaintext(pte, vp, ep);
-  }
-  else {
+  } else {
     auto vp = std::make_shared<typename NativePoly::Params>(evp->GetCyclotomicOrder(), ep->GetPlaintextModulus(), 1);
     return PlaintextFactory::MakePlaintext(pte, vp, ep);
   }
@@ -41,8 +40,10 @@ Plaintext CryptoContextImpl<DCRTPoly>::GetPlaintextForDecrypt(PlaintextEncodings
 template <>
 DecryptResult CryptoContextImpl<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly> privateKey,
                                                    ConstCiphertext<DCRTPoly> ciphertext, Plaintext* plaintext) {
-  if (ciphertext == nullptr) PALISADE_THROW(config_error, "ciphertext passed to Decrypt is empty");
-  if (plaintext == nullptr) PALISADE_THROW(config_error, "plaintext passed to Decrypt is empty");
+  if (ciphertext == nullptr)
+    PALISADE_THROW(config_error, "ciphertext passed to Decrypt is empty");
+  if (plaintext == nullptr)
+    PALISADE_THROW(config_error, "plaintext passed to Decrypt is empty");
   if (privateKey == nullptr || Mismatched(privateKey->GetCryptoContext()))
     PALISADE_THROW(config_error,
                    "Information passed to Decrypt was not generated with "
@@ -52,8 +53,8 @@ DecryptResult CryptoContextImpl<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly> 
   // Plaintext decrypted =
   // GetPlaintextForDecrypt(ciphertext->GetEncodingType(),
   // this->GetElementParams(), this->GetEncodingParams());
-  Plaintext decrypted = GetPlaintextForDecrypt(
-    ciphertext->GetEncodingType(), ciphertext->GetElements()[0].GetParams(), this->GetEncodingParams());
+  Plaintext decrypted = GetPlaintextForDecrypt(ciphertext->GetEncodingType(), ciphertext->GetElements()[0].GetParams(),
+                                               this->GetEncodingParams());
 
   DecryptResult result;
 
@@ -63,7 +64,8 @@ DecryptResult CryptoContextImpl<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly> 
   else
     result = GetEncryptionAlgorithm()->Decrypt(privateKey, ciphertext, &decrypted->GetElement<NativePoly>());
 
-  if (result.isValid == false) return result;
+  if (result.isValid == false)
+    return result;
 
   if (ciphertext->GetEncodingType() == CKKSPacked) {
     auto decryptedCKKS = std::static_pointer_cast<CKKSPackedEncoding>(decrypted);
@@ -72,12 +74,11 @@ DecryptResult CryptoContextImpl<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly> 
     decryptedCKKS->SetScalingFactor(ciphertext->GetScalingFactor());
 
     const auto cryptoParamsCKKS =
-      std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
+        std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
 
-    decryptedCKKS->Decode(
-      ciphertext->GetDepth(), ciphertext->GetScalingFactor(), cryptoParamsCKKS->GetRescalingTechnique());
-  }
-  else {
+    decryptedCKKS->Decode(ciphertext->GetDepth(), ciphertext->GetScalingFactor(),
+                          cryptoParamsCKKS->GetRescalingTechnique());
+  } else {
     decrypted->Decode();
   }
 
@@ -87,12 +88,13 @@ DecryptResult CryptoContextImpl<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly> 
 
 template <>
 DecryptResult CryptoContextImpl<DCRTPoly>::MultipartyDecryptFusion(
-  const vector<Ciphertext<DCRTPoly>>& partialCiphertextVec, Plaintext* plaintext) const {
+    const vector<Ciphertext<DCRTPoly>>& partialCiphertextVec, Plaintext* plaintext) const {
   DecryptResult result;
 
   // Make sure we're processing ciphertexts.
   size_t last_ciphertext = partialCiphertextVec.size();
-  if (last_ciphertext < 1) return result;
+  if (last_ciphertext < 1)
+    return result;
 
   for (size_t i = 0; i < last_ciphertext; i++) {
     if (partialCiphertextVec[i] == nullptr || Mismatched(partialCiphertextVec[i]->GetCryptoContext()))
@@ -106,28 +108,27 @@ DecryptResult CryptoContextImpl<DCRTPoly>::MultipartyDecryptFusion(
   }
 
   // determine which type of plaintext that you need to decrypt into
-  Plaintext decrypted = GetPlaintextForDecrypt(partialCiphertextVec[0]->GetEncodingType(),
-                                               partialCiphertextVec[0]->GetElements()[0].GetParams(),
-                                               this->GetEncodingParams());
+  Plaintext decrypted =
+      GetPlaintextForDecrypt(partialCiphertextVec[0]->GetEncodingType(),
+                             partialCiphertextVec[0]->GetElements()[0].GetParams(), this->GetEncodingParams());
 
   if ((partialCiphertextVec[0]->GetEncodingType() == CKKSPacked) &&
       (partialCiphertextVec[0]->GetElements()[0].GetParams()->GetParams().size() > 1))
     result = GetEncryptionAlgorithm()->MultipartyDecryptFusion(partialCiphertextVec, &decrypted->GetElement<Poly>());
   else
     result =
-      GetEncryptionAlgorithm()->MultipartyDecryptFusion(partialCiphertextVec, &decrypted->GetElement<NativePoly>());
+        GetEncryptionAlgorithm()->MultipartyDecryptFusion(partialCiphertextVec, &decrypted->GetElement<NativePoly>());
 
-  if (result.isValid == false) return result;
+  if (result.isValid == false)
+    return result;
 
   if (partialCiphertextVec[0]->GetEncodingType() == CKKSPacked) {
     auto decryptedCKKS = std::static_pointer_cast<CKKSPackedEncoding>(decrypted);
     const auto cryptoParamsCKKS =
-      std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
-    decryptedCKKS->Decode(partialCiphertextVec[0]->GetDepth(),
-                          partialCiphertextVec[0]->GetScalingFactor(),
+        std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
+    decryptedCKKS->Decode(partialCiphertextVec[0]->GetDepth(), partialCiphertextVec[0]->GetScalingFactor(),
                           cryptoParamsCKKS->GetRescalingTechnique());
-  }
-  else {
+  } else {
     decrypted->Decode();
   }
 

@@ -34,8 +34,7 @@
   try {                                  \
     function;                            \
     EXPECT_EQ(0, 1);                     \
-  }                                      \
-  catch (const exception& e) {           \
+  } catch (const exception& e) {         \
     EXPECT_EQ(1, 1);                     \
   }
 
@@ -59,7 +58,8 @@ bool checkEquality(const T& a, const T& b) {
  */
 template <typename V>
 bool checkEquality(const std::vector<V>& a, const std::vector<V>& b) {
-  if (a.size() != b.size()) return false;
+  if (a.size() != b.size())
+    return false;
 
   return std::equal(a.begin(), a.end(), b.begin(), [](const V& a, const V& b) { return checkEquality(a, b); });
 }
@@ -78,7 +78,7 @@ void checkEquality(const std::vector<V>& a, const std::vector<V>& b, const std::
 
 // Helper function to check automorphism
 inline bool CheckAutomorphism(const std::vector<int64_t>& result, const std::vector<int64_t>& init) {
-  for (const auto& val: init) {
+  for (const auto& val : init) {
     if (!(std::find(result.begin(), result.end(), val) != result.end())) {
       return false;
     }
@@ -90,9 +90,10 @@ inline bool CheckAutomorphism(const std::vector<int64_t>& result, const std::vec
 // generate a random printable string of length outStrLength
 inline std::string RandomString(uint64_t outStringLength) {
   auto getRandomChar = []() -> char {
-    const char charset[] = "0123456789"
-                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                           "abcdefghijklmnopqrstuvwxyz";
+    const char charset[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
     const size_t max_index = (sizeof(charset) - 1);
     return charset[rand() % max_index];
   };

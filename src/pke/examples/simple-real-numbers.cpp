@@ -107,7 +107,7 @@ int main() {
   // The following call creates a CKKS crypto context based on the
   // arguments defined above.
   CryptoContext<DCRTPoly> cc =
-    CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth, scaleFactorBits, batchSize, securityLevel);
+      CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth, scaleFactorBits, batchSize, securityLevel);
 
   std::cout << "CKKS scheme is using ring dimension " << cc->GetRingDimension() << std::endl << std::endl;
 
@@ -149,13 +149,13 @@ int main() {
    * in the output of this demo, since CKKS is approximate, zeros are not exact
    * - they're just very small numbers.
    */
-  cc->EvalAtIndexKeyGen(keys.secretKey, { 1, -2 });
+  cc->EvalAtIndexKeyGen(keys.secretKey, {1, -2});
 
   // Step 3: Encoding and encryption of inputs
 
   // Inputs
-  vector<double> x1 = { 0.25, 0.5, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0 };
-  vector<double> x2 = { 5.0, 4.0, 3.0, 2.0, 1.0, 0.75, 0.5, 0.25 };
+  vector<double> x1 = {0.25, 0.5, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0};
+  vector<double> x2 = {5.0, 4.0, 3.0, 2.0, 1.0, 0.75, 0.5, 0.25};
 
   // Encoding as plaintexts
   Plaintext ptxt1 = cc->MakeCKKSPackedPlaintext(x1);

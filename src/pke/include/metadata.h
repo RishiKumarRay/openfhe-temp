@@ -19,8 +19,7 @@ namespace lbcrypto {
 /**
  * @brief Empty metadata container
  */
-class Metadata
-{
+class Metadata {
  public:
   /**
    * Default constructor
@@ -94,9 +93,8 @@ class Metadata
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
   }
 
@@ -119,8 +117,7 @@ class Metadata
  * @brief Example class inheriting from Metadata and adding a member.
  * This is used in unit tests.
  */
-class MetadataTest : public Metadata
-{
+class MetadataTest : public Metadata {
  public:
   /**
    * Default constructor
@@ -178,8 +175,7 @@ class MetadataTest : public Metadata
       const MetadataTest& mdataTest = dynamic_cast<const MetadataTest&>(mdata);
       return m_s == mdataTest.GetMetadata();  // All Metadata objects without
                                               // any members are equal
-    }
-    catch (const std::bad_cast& e) {
+    } catch (const std::bad_cast& e) {
       PALISADE_THROW(palisade_error, "Tried to downcast an object of different class to MetadataTest");
     }
   }
@@ -207,9 +203,8 @@ class MetadataTest : public Metadata
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(cereal::base_class<Metadata>(this));
     ar(cereal::make_nvp("str", m_s));
@@ -228,8 +223,7 @@ class MetadataTest : public Metadata
 
     if (ciphertext->MetadataFound(it)) {
       return std::dynamic_pointer_cast<MetadataTest>(ciphertext->GetMetadata(it)->Clone());
-    }
-    else {
+    } else {
       PALISADE_THROW(palisade_error, "Attempt to access metadata (MetadataTest) that has not been set.");
     }
   }
@@ -248,8 +242,7 @@ class MetadataTest : public Metadata
 
     if (ciphertext->MetadataFound(it)) {
       return std::dynamic_pointer_cast<MetadataTest>(ciphertext->GetMetadata(it));
-    }
-    else {
+    } else {
       PALISADE_THROW(palisade_error, "Attempt to access metadata (MetadataTest) that has not been set.");
     }
   }

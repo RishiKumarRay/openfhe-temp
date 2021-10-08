@@ -42,10 +42,10 @@ namespace lbcrypto {
 
 // Backend-specific settings for CKKS
 #if NATIVEINT == 128
-const size_t FIRSTMODSIZE                   = 105;
+const size_t FIRSTMODSIZE = 105;
 const enum RescalingTechnique DEFAULTRSTECH = APPROXAUTO;
 #else
-const size_t FIRSTMODSIZE                   = 60;
+const size_t FIRSTMODSIZE = 60;
 const enum RescalingTechnique DEFAULTRSTECH = EXACTRESCALE;
 #endif
 
@@ -75,9 +75,8 @@ using CryptoContext = shared_ptr<CryptoContextImpl<Element>>;
  * and recovered from a serialization
  */
 template <typename Element>
-class CryptoContextImpl : public Serializable
-{
-  using IntType  = typename Element::Integer;
+class CryptoContextImpl : public Serializable {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
 
   friend class CryptoContextFactory<Element>;
@@ -306,12 +305,12 @@ class CryptoContextImpl : public Serializable
    * @param params - pointer to CryptoParameters
    * @param scheme - pointer to Crypto Scheme
    */
-  CryptoContextImpl(LPCryptoParameters<Element>* params          = nullptr,
+  CryptoContextImpl(LPCryptoParameters<Element>* params = nullptr,
                     LPPublicKeyEncryptionScheme<Element>* scheme = nullptr, const string& schemeId = "Not") {
     this->params.reset(params);
     this->scheme.reset(scheme);
     this->m_keyGenLevel = 0;
-    this->m_schemeId    = schemeId;
+    this->m_schemeId = schemeId;
   }
 
   /**
@@ -321,10 +320,10 @@ class CryptoContextImpl : public Serializable
    */
   CryptoContextImpl(shared_ptr<LPCryptoParameters<Element>> params,
                     shared_ptr<LPPublicKeyEncryptionScheme<Element>> scheme, const string& schemeId = "Not") {
-    this->params        = params;
-    this->scheme        = scheme;
+    this->params = params;
+    this->scheme = scheme;
     this->m_keyGenLevel = 0;
-    this->m_schemeId    = schemeId;
+    this->m_schemeId = schemeId;
   }
 
   /**
@@ -332,10 +331,10 @@ class CryptoContextImpl : public Serializable
    * @param c - source
    */
   CryptoContextImpl(const CryptoContextImpl<Element>& c) {
-    params              = c.params;
-    scheme              = c.scheme;
+    params = c.params;
+    scheme = c.scheme;
     this->m_keyGenLevel = 0;
-    this->m_schemeId    = c.m_schemeId;
+    this->m_schemeId = c.m_schemeId;
   }
 
   /**
@@ -344,10 +343,10 @@ class CryptoContextImpl : public Serializable
    * @return this
    */
   CryptoContextImpl<Element>& operator=(const CryptoContextImpl<Element>& rhs) {
-    params        = rhs.params;
-    scheme        = rhs.scheme;
+    params = rhs.params;
+    scheme = rhs.scheme;
     m_keyGenLevel = rhs.m_keyGenLevel;
-    m_schemeId    = rhs.m_schemeId;
+    m_schemeId = rhs.m_schemeId;
     return *this;
   }
 
@@ -370,22 +369,22 @@ class CryptoContextImpl : public Serializable
     // same object, OR the same type and the same values
     if (a.params.get() == b.params.get()) {
       return true;
-    }
-    else {
+    } else {
       if (typeid(*a.params.get()) != typeid(*b.params.get())) {
         return false;
       }
-      if (*a.params.get() != *b.params.get()) return false;
+      if (*a.params.get() != *b.params.get())
+        return false;
     }
 
     if (a.scheme.get() == b.scheme.get()) {
       return true;
-    }
-    else {
+    } else {
       if (typeid(*a.scheme.get()) != typeid(*b.scheme.get())) {
         return false;
       }
-      if (*a.scheme.get() != *b.scheme.get()) return false;
+      if (*a.scheme.get() != *b.scheme.get())
+        return false;
     }
 
     return true;
@@ -417,13 +416,14 @@ class CryptoContextImpl : public Serializable
   template <typename ST>
   static bool SerializeEvalMultKey(std::ostream& ser, const ST& sertype, const CryptoContext<Element> cc) {
     std::map<string, std::vector<LPEvalKey<Element>>> omap;
-    for (const auto& k: GetAllEvalMultKeys()) {
+    for (const auto& k : GetAllEvalMultKeys()) {
       if (k.second[0]->GetCryptoContext() == cc) {
         omap[k.first] = k.second;
       }
     }
 
-    if (omap.size() == 0) return false;
+    if (omap.size() == 0)
+      return false;
 
     Serial::Serialize(omap, ser, sertype);
     return true;
@@ -446,7 +446,7 @@ class CryptoContextImpl : public Serializable
     // The deserialize call created any contexts that needed to be created....
     // so all we need to do is put the keys into the maps for their context
 
-    for (auto k: GetAllEvalMultKeys()) {
+    for (auto k : GetAllEvalMultKeys()) {
       GetAllEvalMultKeys()[k.first] = k.second;
     }
 
@@ -492,13 +492,13 @@ class CryptoContextImpl : public Serializable
 
     if (id.length() == 0) {
       smap = &GetAllEvalSumKeys();
-    }
-    else {
+    } else {
       auto k = GetAllEvalSumKeys().find(id);
 
-      if (k == GetAllEvalSumKeys().end()) return false;  // no such id
+      if (k == GetAllEvalSumKeys().end())
+        return false;  // no such id
 
-      smap           = &omap;
+      smap = &omap;
       omap[k->first] = k->second;
     }
     Serial::Serialize(*smap, ser, sertype);
@@ -516,13 +516,14 @@ class CryptoContextImpl : public Serializable
   template <typename ST>
   static bool SerializeEvalSumKey(std::ostream& ser, const ST& sertype, const CryptoContext<Element> cc) {
     std::map<string, shared_ptr<std::map<usint, LPEvalKey<Element>>>> omap;
-    for (const auto& k: GetAllEvalSumKeys()) {
+    for (const auto& k : GetAllEvalSumKeys()) {
       if (k.second->begin()->second->GetCryptoContext() == cc) {
         omap[k.first] = k.second;
       }
     }
 
-    if (omap.size() == 0) return false;
+    if (omap.size() == 0)
+      return false;
 
     Serial::Serialize(omap, ser, sertype);
 
@@ -547,7 +548,7 @@ class CryptoContextImpl : public Serializable
     // The deserialize call created any contexts that needed to be created....
     // so all we need to do is put the keys into the maps for their context
 
-    for (auto k: evalSumKeys) {
+    for (auto k : evalSumKeys) {
       GetAllEvalSumKeys()[k.first] = k.second;
     }
 
@@ -593,13 +594,13 @@ class CryptoContextImpl : public Serializable
     std::map<string, shared_ptr<std::map<usint, LPEvalKey<Element>>>> omap;
     if (id.length() == 0) {
       smap = &GetAllEvalAutomorphismKeys();
-    }
-    else {
+    } else {
       auto k = GetAllEvalAutomorphismKeys().find(id);
 
-      if (k == GetAllEvalAutomorphismKeys().end()) return false;  // no such id
+      if (k == GetAllEvalAutomorphismKeys().end())
+        return false;  // no such id
 
-      smap           = &omap;
+      smap = &omap;
       omap[k->first] = k->second;
     }
     Serial::Serialize(*smap, ser, sertype);
@@ -617,13 +618,14 @@ class CryptoContextImpl : public Serializable
   template <typename ST>
   static bool SerializeEvalAutomorphismKey(std::ostream& ser, const ST& sertype, const CryptoContext<Element> cc) {
     std::map<string, shared_ptr<std::map<usint, LPEvalKey<Element>>>> omap;
-    for (const auto& k: GetAllEvalAutomorphismKeys()) {
+    for (const auto& k : GetAllEvalAutomorphismKeys()) {
       if (k.second->begin()->second->GetCryptoContext() == cc) {
         omap[k.first] = k.second;
       }
     }
 
-    if (omap.size() == 0) return false;
+    if (omap.size() == 0)
+      return false;
 
     Serial::Serialize(omap, ser, sertype);
     return true;
@@ -647,7 +649,7 @@ class CryptoContextImpl : public Serializable
     // The deserialize call created any contexts that needed to be created....
     // so all we need to do is put the keys into the maps for their context
 
-    for (auto k: evalSumKeys) {
+    for (auto k : evalSumKeys) {
       GetAllEvalAutomorphismKeys()[k.first] = k.second;
     }
 
@@ -796,9 +798,10 @@ class CryptoContextImpl : public Serializable
    * joined public key
    */
   LPKeyPair<Element> MultipartyKeyGen(const LPPublicKey<Element> pk, bool makeSparse = false, bool fresh = false) {
-    if (!pk) PALISADE_THROW(config_error, "Input public key is empty");
-    auto r = GetEncryptionAlgorithm()->MultipartyKeyGen(
-      CryptoContextFactory<Element>::GetContextForPointer(this), pk, makeSparse, fresh);
+    if (!pk)
+      PALISADE_THROW(config_error, "Input public key is empty");
+    auto r = GetEncryptionAlgorithm()->MultipartyKeyGen(CryptoContextFactory<Element>::GetContextForPointer(this), pk,
+                                                        makeSparse, fresh);
     return r;
   }
 
@@ -811,9 +814,10 @@ class CryptoContextImpl : public Serializable
    * public key
    */
   LPKeyPair<Element> MultipartyKeyGen(const vector<LPPrivateKey<Element>>& secretKeys) {
-    if (!secretKeys.size()) PALISADE_THROW(config_error, "Input private key vector is empty");
-    auto r = GetEncryptionAlgorithm()->MultipartyKeyGen(
-      CryptoContextFactory<Element>::GetContextForPointer(this), secretKeys, false);
+    if (!secretKeys.size())
+      PALISADE_THROW(config_error, "Input private key vector is empty");
+    auto r = GetEncryptionAlgorithm()->MultipartyKeyGen(CryptoContextFactory<Element>::GetContextForPointer(this),
+                                                        secretKeys, false);
     return r;
   }
 
@@ -896,9 +900,12 @@ class CryptoContextImpl : public Serializable
    */
   LPEvalKey<Element> MultiKeySwitchGen(const LPPrivateKey<Element> originalPrivateKey,
                                        const LPPrivateKey<Element> newPrivateKey, const LPEvalKey<Element> ek) const {
-    if (!originalPrivateKey) PALISADE_THROW(config_error, "Input first private key is nullptr");
-    if (!newPrivateKey) PALISADE_THROW(config_error, "Input second private key is nullptr");
-    if (!ek) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+    if (!originalPrivateKey)
+      PALISADE_THROW(config_error, "Input first private key is nullptr");
+    if (!newPrivateKey)
+      PALISADE_THROW(config_error, "Input second private key is nullptr");
+    if (!ek)
+      PALISADE_THROW(config_error, "Input evaluation key is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiKeySwitchGen(originalPrivateKey, newPrivateKey, ek);
     return r;
   }
@@ -915,11 +922,14 @@ class CryptoContextImpl : public Serializable
    * @return a dictionary with new joined automorphism keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-    const std::vector<usint>& indexList, const std::string& keyId = "") {
-    if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
-    if (!eAuto) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
-    if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+      const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+      const std::vector<usint>& indexList, const std::string& keyId = "") {
+    if (!privateKey)
+      PALISADE_THROW(config_error, "Input private key is nullptr");
+    if (!eAuto)
+      PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+    if (!indexList.size())
+      PALISADE_THROW(config_error, "Input index vector is empty");
     auto r = GetEncryptionAlgorithm()->MultiEvalAutomorphismKeyGen(privateKey, eAuto, indexList, keyId);
     return r;
   }
@@ -936,11 +946,14 @@ class CryptoContextImpl : public Serializable
    * @return a dictionary with new joined rotation keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAtIndexKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-    const std::vector<int32_t>& indexList, const std::string& keyId = "") {
-    if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
-    if (!eAuto) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
-    if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+      const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+      const std::vector<int32_t>& indexList, const std::string& keyId = "") {
+    if (!privateKey)
+      PALISADE_THROW(config_error, "Input private key is nullptr");
+    if (!eAuto)
+      PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+    if (!indexList.size())
+      PALISADE_THROW(config_error, "Input index vector is empty");
     auto r = GetEncryptionAlgorithm()->MultiEvalAtIndexKeyGen(privateKey, eAuto, indexList, keyId);
     return r;
   }
@@ -956,10 +969,12 @@ class CryptoContextImpl : public Serializable
    * @return new joined summation keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalSumKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum,
-    const std::string& keyId = "") {
-    if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
-    if (!eSum) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+      const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum,
+      const std::string& keyId = "") {
+    if (!privateKey)
+      PALISADE_THROW(config_error, "Input private key is nullptr");
+    if (!eSum)
+      PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiEvalSumKeyGen(privateKey, eSum, keyId);
     return r;
   }
@@ -973,8 +988,10 @@ class CryptoContextImpl : public Serializable
    * @return the new joined key.
    */
   LPEvalKey<Element> MultiAddEvalKeys(LPEvalKey<Element> a, LPEvalKey<Element> b, const std::string& keyId = "") {
-    if (!a) PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
-    if (!b) PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
+    if (!a)
+      PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
+    if (!b)
+      PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiAddEvalKeys(a, b, keyId);
     return r;
   }
@@ -991,8 +1008,10 @@ class CryptoContextImpl : public Serializable
    */
   LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey, LPPrivateKey<Element> sk,
                                       const std::string& keyId = "") {
-    if (!evalKey) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-    if (!sk) PALISADE_THROW(config_error, "Input private key is nullptr");
+    if (!evalKey)
+      PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+    if (!sk)
+      PALISADE_THROW(config_error, "Input private key is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiMultEvalKey(evalKey, sk, keyId);
     return r;
   }
@@ -1006,10 +1025,12 @@ class CryptoContextImpl : public Serializable
    * @return the new joined key set for summation.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiAddEvalSumKeys(
-    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
-    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2, const std::string& keyId = "") {
-    if (!es1) PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
-    if (!es2) PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
+      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
+      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2, const std::string& keyId = "") {
+    if (!es1)
+      PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
+    if (!es2)
+      PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiAddEvalSumKeys(es1, es2, keyId);
     return r;
   }
@@ -1023,10 +1044,12 @@ class CryptoContextImpl : public Serializable
    * @return the new joined key set for summation.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiAddEvalAutomorphismKeys(
-    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
-    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2, const std::string& keyId = "") {
-    if (!es1) PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
-    if (!es2) PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
+      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
+      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2, const std::string& keyId = "") {
+    if (!es1)
+      PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
+    if (!es2)
+      PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiAddEvalAutomorphismKeys(es1, es2, keyId);
     return r;
   }
@@ -1041,8 +1064,10 @@ class CryptoContextImpl : public Serializable
    */
   LPPublicKey<Element> MultiAddPubKeys(LPPublicKey<Element> pubKey1, LPPublicKey<Element> pubKey2,
                                        const std::string& keyId = "") {
-    if (!pubKey1) PALISADE_THROW(config_error, "Input first public key is nullptr");
-    if (!pubKey2) PALISADE_THROW(config_error, "Input second public key is nullptr");
+    if (!pubKey1)
+      PALISADE_THROW(config_error, "Input first public key is nullptr");
+    if (!pubKey2)
+      PALISADE_THROW(config_error, "Input second public key is nullptr");
 
     auto r = GetEncryptionAlgorithm()->MultiAddPubKeys(pubKey1, pubKey2, keyId);
     return r;
@@ -1058,8 +1083,10 @@ class CryptoContextImpl : public Serializable
    */
   LPEvalKey<Element> MultiAddEvalMultKeys(LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2,
                                           const std::string& keyId = "") {
-    if (!evalKey1) PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
-    if (!evalKey2) PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
+    if (!evalKey1)
+      PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
+    if (!evalKey2)
+      PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
     auto r = GetEncryptionAlgorithm()->MultiAddEvalMultKeys(evalKey1, evalKey2, keyId);
     return r;
   }
@@ -1099,7 +1126,7 @@ class CryptoContextImpl : public Serializable
    * @return new evaluation key
    */
   LPEvalKey<Element> ReKeyGen(const LPPrivateKey<Element> newKey, const LPPrivateKey<Element> oldKey) const
-    __attribute__((deprecated("functionality removed from PALISADE")));
+      __attribute__((deprecated("functionality removed from PALISADE")));
 
   /**
    * EvalMultKeyGen creates a key that can be used with the PALISADE EvalMult
@@ -1158,9 +1185,11 @@ class CryptoContextImpl : public Serializable
    * @return ciphertext (or null on failure)
    */
   Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey, Plaintext plaintext) {
-    if (publicKey == nullptr) PALISADE_THROW(type_error, "null key passed to Encrypt");
+    if (publicKey == nullptr)
+      PALISADE_THROW(type_error, "null key passed to Encrypt");
 
-    if (plaintext == nullptr) PALISADE_THROW(type_error, "Input plaintext is nullptr");
+    if (plaintext == nullptr)
+      PALISADE_THROW(type_error, "Input plaintext is nullptr");
 
     if (Mismatched(publicKey->GetCryptoContext()))
       PALISADE_THROW(config_error, "key passed to Encrypt was not generated with this crypto context");
@@ -1186,7 +1215,8 @@ class CryptoContextImpl : public Serializable
   Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey, Plaintext plaintext) const {
     if (privateKey == nullptr || Mismatched(privateKey->GetCryptoContext()))
       PALISADE_THROW(config_error, "key passed to Encrypt was not generated with this crypto context");
-    if (plaintext == nullptr) PALISADE_THROW(type_error, "Input plaintext is nullptr");
+    if (plaintext == nullptr)
+      PALISADE_THROW(type_error, "Input plaintext is nullptr");
 
     Ciphertext<Element> ciphertext = GetEncryptionAlgorithm()->Encrypt(privateKey, plaintext->GetElement<Element>());
 
@@ -1265,7 +1295,7 @@ class CryptoContextImpl : public Serializable
                                             uint32_t level = 0, const shared_ptr<ParmType> params = nullptr) const {
     Plaintext p;
     const auto cryptoParamsCKKS =
-      std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
+        std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
 
     double scFact = cryptoParamsCKKS->GetScalingFactorOfLevel(level);
 
@@ -1277,17 +1307,15 @@ class CryptoContextImpl : public Serializable
           elemParams.PopLastParam();
         }
         elemParamsPtr = std::make_shared<ILDCRTParams<DCRTPoly::Integer>>(elemParams);
-      }
-      else {
+      } else {
         elemParamsPtr = cryptoParamsCKKS->GetElementParams();
       }
 
       p = Plaintext(
-        std::make_shared<CKKSPackedEncoding>(elemParamsPtr, this->GetEncodingParams(), value, depth, level, scFact));
-    }
-    else {
-      p =
-        Plaintext(std::make_shared<CKKSPackedEncoding>(params, this->GetEncodingParams(), value, depth, level, scFact));
+          std::make_shared<CKKSPackedEncoding>(elemParamsPtr, this->GetEncodingParams(), value, depth, level, scFact));
+    } else {
+      p = Plaintext(
+          std::make_shared<CKKSPackedEncoding>(params, this->GetEncodingParams(), value, depth, level, scFact));
     }
 
     p->Encode();
@@ -1306,8 +1334,8 @@ class CryptoContextImpl : public Serializable
   virtual Plaintext MakeCKKSPackedPlaintext(const std::vector<double>& value, size_t depth = 1, uint32_t level = 0,
                                             const shared_ptr<ParmType> params = nullptr) const {
     std::vector<std::complex<double>> complexValue(value.size());
-    std::transform(
-      value.begin(), value.end(), complexValue.begin(), [](double da) { return std::complex<double>(da); });
+    std::transform(value.begin(), value.end(), complexValue.begin(),
+                   [](double da) { return std::complex<double>(da); });
 
     return MakeCKKSPackedPlaintext(complexValue, depth, level, params);
   }
@@ -1473,8 +1501,7 @@ class CryptoContextImpl : public Serializable
 
     if (constant >= 0) {
       rv = GetEncryptionAlgorithm()->EvalAdd(ciphertext, constant);
-    }
-    else {
+    } else {
       rv = GetEncryptionAlgorithm()->EvalSub(ciphertext, -constant);
     }
 
@@ -1569,8 +1596,7 @@ class CryptoContextImpl : public Serializable
 
     if (constant >= 0) {
       rv = GetEncryptionAlgorithm()->EvalSub(ciphertext, constant);
-    }
-    else {
+    } else {
       rv = GetEncryptionAlgorithm()->EvalAdd(ciphertext, -constant);
     }
 
@@ -1583,8 +1609,8 @@ class CryptoContextImpl : public Serializable
 
   inline Ciphertext<Element> EvalSubMutable(Plaintext plaintext, Ciphertext<Element>& ciphertext) const {
     Ciphertext<Element> negated = EvalNegate(ciphertext);
-    Ciphertext<Element> result  = EvalAddMutable(negated, plaintext);
-    ciphertext                  = EvalNegate(negated);
+    Ciphertext<Element> result = EvalAddMutable(negated, plaintext);
+    ciphertext = EvalNegate(negated);
     return result;
   }
 
@@ -1661,7 +1687,8 @@ class CryptoContextImpl : public Serializable
    */
   Ciphertext<Element> EvalMultMany(const vector<Ciphertext<Element>>& ct) const {
     // input parameter check
-    if (!ct.size()) PALISADE_THROW(type_error, "Empty input ciphertext vector");
+    if (!ct.size())
+      PALISADE_THROW(type_error, "Empty input ciphertext vector");
 
     const auto ek = GetEvalMultKeyVector(ct[0]->GetKeyTag());
     if (ek.size() < (ct[0]->GetElements().size() - 2)) {
@@ -1684,7 +1711,8 @@ class CryptoContextImpl : public Serializable
    */
   Ciphertext<Element> EvalAddMany(const vector<Ciphertext<Element>>& ctList) const {
     // input parameter check
-    if (!ctList.size()) PALISADE_THROW(type_error, "Empty input ciphertext vector");
+    if (!ctList.size())
+      PALISADE_THROW(type_error, "Empty input ciphertext vector");
 
     auto rv = GetEncryptionAlgorithm()->EvalAddMany(ctList);
     return rv;
@@ -1703,7 +1731,8 @@ class CryptoContextImpl : public Serializable
    */
   Ciphertext<Element> EvalAddManyInPlace(vector<Ciphertext<Element>>& ctList) const {
     // input parameter check
-    if (!ctList.size()) PALISADE_THROW(type_error, "Empty input ciphertext vector");
+    if (!ctList.size())
+      PALISADE_THROW(type_error, "Empty input ciphertext vector");
 
     auto rv = GetEncryptionAlgorithm()->EvalAddManyInPlace(ctList);
     return rv;
@@ -1722,7 +1751,8 @@ class CryptoContextImpl : public Serializable
    */
   Ciphertext<Element> EvalMultAndRelinearize(ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2) const {
     // input parameter check
-    if (!ct1 || !ct2) PALISADE_THROW(type_error, "Input ciphertext is nullptr");
+    if (!ct1 || !ct2)
+      PALISADE_THROW(type_error, "Input ciphertext is nullptr");
 
     const auto ek = GetEvalMultKeyVector(ct1->GetKeyTag());
     if (ek.size() < (ct1->GetElements().size() + ct2->GetElements().size() - 3)) {
@@ -1744,7 +1774,8 @@ class CryptoContextImpl : public Serializable
    */
   Ciphertext<Element> Relinearize(ConstCiphertext<Element> ct) const {
     // input parameter check
-    if (!ct) PALISADE_THROW(type_error, "Input ciphertext is nullptr");
+    if (!ct)
+      PALISADE_THROW(type_error, "Input ciphertext is nullptr");
 
     const auto ek = GetEvalMultKeyVector(ct->GetKeyTag());
 
@@ -1767,7 +1798,8 @@ class CryptoContextImpl : public Serializable
    */
   void RelinearizeInPlace(Ciphertext<Element>& ct) const {
     // input parameter check
-    if (!ct) PALISADE_THROW(type_error, "Input ciphertext is nullptr");
+    if (!ct)
+      PALISADE_THROW(type_error, "Input ciphertext is nullptr");
 
     const auto ek = GetEvalMultKeyVector(ct->GetKeyTag());
     if (ek.size() < (ct->GetElements().size() - 2)) {
@@ -1904,8 +1936,10 @@ class CryptoContextImpl : public Serializable
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(const LPPublicKey<Element> publicKey,
                                                                          const LPPrivateKey<Element> origPrivateKey,
                                                                          const std::vector<usint>& indexList) const {
-    if (publicKey == nullptr || origPrivateKey == nullptr) PALISADE_THROW(type_error, "Null Keys");
-    if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+    if (publicKey == nullptr || origPrivateKey == nullptr)
+      PALISADE_THROW(type_error, "Null Keys");
+    if (!indexList.size())
+      PALISADE_THROW(config_error, "Input index vector is empty");
     if (publicKey->GetCryptoContext().get() != this)
       PALISADE_THROW(type_error, "Key was not created in this CryptoContextImpl");
     if (publicKey->GetCryptoContext() != origPrivateKey->GetCryptoContext())
@@ -1971,8 +2005,10 @@ class CryptoContextImpl : public Serializable
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(const LPPrivateKey<Element> privateKey,
                                                                          const std::vector<usint>& indexList) const {
-    if (privateKey == nullptr) PALISADE_THROW(type_error, "Null input");
-    if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+    if (privateKey == nullptr)
+      PALISADE_THROW(type_error, "Null input");
+    if (!indexList.size())
+      PALISADE_THROW(config_error, "Input index vector is empty");
     if (privateKey->GetCryptoContext().get() != this)
       PALISADE_THROW(type_error, "Key was not created in this CryptoContextImpl");
 
@@ -2167,11 +2203,12 @@ class CryptoContextImpl : public Serializable
   virtual Ciphertext<Element> EvalPoly(ConstCiphertext<Element> ciphertext,
                                        const std::vector<double>& coefficients) const {
     if (ciphertext == nullptr || this->Mismatched(ciphertext->GetCryptoContext()))
-      throw std::logic_error("Information passed to EvalPoly was not generated with this crypto "
-                             "context");
+      throw std::logic_error(
+          "Information passed to EvalPoly was not generated with this crypto "
+          "context");
 
     auto rv = std::static_pointer_cast<LPPublicKeyEncryptionScheme<Element>>(this->GetEncryptionAlgorithm())
-                ->EvalPoly(ciphertext, coefficients);
+                  ->EvalPoly(ciphertext, coefficients);
     return rv;
   }
 
@@ -2282,7 +2319,7 @@ class CryptoContextImpl : public Serializable
   Ciphertext<Element> LevelReduce(ConstCiphertext<Element> cipherText1, const LPEvalKey<Element> linearKeySwitchHint,
                                   size_t levels = 1) const {
     const auto cryptoParams =
-      std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(cipherText1->GetCryptoParameters());
+        std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(cipherText1->GetCryptoParameters());
 
     if (cipherText1 == nullptr || Mismatched(cipherText1->GetCryptoContext())) {
       PALISADE_THROW(config_error,
@@ -2326,7 +2363,8 @@ class CryptoContextImpl : public Serializable
    * @return compressed ciphertext
    */
   Ciphertext<Element> Compress(ConstCiphertext<Element> ciphertext1, uint32_t numTowers = 1) const {
-    if (ciphertext1 == nullptr) PALISADE_THROW(config_error, "input ciphertext is invalid (has no data)");
+    if (ciphertext1 == nullptr)
+      PALISADE_THROW(config_error, "input ciphertext is invalid (has no data)");
 
     auto ct = GetEncryptionAlgorithm()->Compress(ciphertext1, numTowers);
     return ct;
@@ -2342,9 +2380,8 @@ class CryptoContextImpl : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(cereal::make_nvp("cc", params));
     ar(cereal::make_nvp("kt", scheme));
@@ -2372,8 +2409,7 @@ class CryptoContextImpl : public Serializable
  * A class to aid in referring to the crypto context that an object belongs to
  */
 template <typename Element>
-class CryptoObject
-{
+class CryptoObject {
  protected:
   CryptoContext<Element> context;  // crypto context this object belongs to
                                    // tag used to find the evaluation key needed
@@ -2385,25 +2421,25 @@ class CryptoObject
 
   CryptoObject(const CryptoObject& rhs) {
     context = rhs.context;
-    keyTag  = rhs.keyTag;
+    keyTag = rhs.keyTag;
   }
 
   CryptoObject(const CryptoObject&& rhs) {
     context = std::move(rhs.context);
-    keyTag  = std::move(rhs.keyTag);
+    keyTag = std::move(rhs.keyTag);
   }
 
   virtual ~CryptoObject() {}
 
   const CryptoObject& operator=(const CryptoObject& rhs) {
     this->context = rhs.context;
-    this->keyTag  = rhs.keyTag;
+    this->keyTag = rhs.keyTag;
     return *this;
   }
 
   const CryptoObject& operator=(const CryptoObject&& rhs) {
     this->context = std::move(rhs.context);
-    this->keyTag  = std::move(rhs.keyTag);
+    this->keyTag = std::move(rhs.keyTag);
     return *this;
   }
 
@@ -2440,15 +2476,14 @@ class CryptoObject
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("cc", context));
     ar(::cereal::make_nvp("kt", keyTag));
 
     context =
-      CryptoContextFactory<Element>::GetContext(context->GetCryptoParameters(), context->GetEncryptionAlgorithm());
+        CryptoContextFactory<Element>::GetContext(context->GetCryptoParameters(), context->GetEncryptionAlgorithm());
   }
 
   std::string SerializedObjectName() const {
@@ -2467,10 +2502,9 @@ class CryptoObject
  *
  */
 template <typename Element>
-class CryptoContextFactory
-{
+class CryptoContextFactory {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
+  using IntType = typename Element::Integer;
 
  protected:
   static vector<CryptoContext<Element>> AllContexts;
@@ -2516,10 +2550,10 @@ class CryptoContextFactory
    * @return new context
    */
   static CryptoContext<Element> genCryptoContextBFV(
-    shared_ptr<ParmType> params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev,
-    const std::string& delta, MODE mode = RLWE, const std::string& bigmodulus = "0",
-    const std::string& bigrootofunity = "0", int depth = 0, int assuranceMeasure = 0, float securityLevel = 0,
-    const std::string& bigmodulusarb = "0", const std::string& bigrootofunityarb = "0", int maxDepth = 2);
+      shared_ptr<ParmType> params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev,
+      const std::string& delta, MODE mode = RLWE, const std::string& bigmodulus = "0",
+      const std::string& bigrootofunity = "0", int depth = 0, int assuranceMeasure = 0, float securityLevel = 0,
+      const std::string& bigmodulusarb = "0", const std::string& bigrootofunityarb = "0", int maxDepth = 2);
 
   /**
    * construct a PALISADE CryptoContextImpl for the BFV Scheme
@@ -2551,7 +2585,7 @@ class CryptoContextFactory
                                                     MODE mode = RLWE, const std::string& bigmodulus = "0",
                                                     const std::string& bigrootofunity = "0", int depth = 0,
                                                     int assuranceMeasure = 0, float securityLevel = 0,
-                                                    const std::string& bigmodulusarb     = "0",
+                                                    const std::string& bigmodulusarb = "0",
                                                     const std::string& bigrootofunityarb = "0", int maxDepth = 2);
 
   /**
@@ -2982,9 +3016,9 @@ class CryptoContextFactory
    * @return new context
    */
   static CryptoContext<Element> genCryptoContextCKKSWithParamsGen(
-    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow, usint batchSize, MODE mode, int depth = 1,
-    int maxDepth = 2, usint firstModSize = FIRSTMODSIZE, enum KeySwitchTechnique ksTech = BV,
-    enum RescalingTechnique rsTech = APPROXRESCALE, uint32_t numLargeDigits = 4);
+      usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow, usint batchSize, MODE mode, int depth = 1,
+      int maxDepth = 2, usint firstModSize = FIRSTMODSIZE, enum KeySwitchTechnique ksTech = BV,
+      enum RescalingTechnique rsTech = APPROXRESCALE, uint32_t numLargeDigits = 4);
 
   /**
    * Construct a PALISADE CryptoContextImpl for the CKKS Scheme.
@@ -3037,7 +3071,7 @@ class CryptoContextFactory
   static CryptoContext<Element> genCryptoContextBGVrns(shared_ptr<ParmType> params,
                                                        const PlaintextModulus plaintextmodulus, usint relinWindow,
                                                        float stDev, MODE mode = RLWE, int depth = 1, int maxDepth = 2,
-                                                       KeySwitchTechnique ksTech     = BV,
+                                                       KeySwitchTechnique ksTech = BV,
                                                        enum ModSwitchMethod msMethod = MANUAL);
 
   /**
@@ -3082,9 +3116,9 @@ class CryptoContextFactory
    * @return new context
    */
   static CryptoContext<Element> genCryptoContextBGVrnsWithParamsGen(
-    usint cyclOrder, usint numPrimes, usint ptm, usint relinWindow, MODE mode, int depth = 1, int maxDepth = 2,
-    enum KeySwitchTechnique ksTech = BV, usint firstModSize = 0, usint dcrtBits = 0, uint32_t numLargeDigits = 4,
-    usint batchSize = 0, enum ModSwitchMethod msMethod = MANUAL);
+      usint cyclOrder, usint numPrimes, usint ptm, usint relinWindow, MODE mode, int depth = 1, int maxDepth = 2,
+      enum KeySwitchTechnique ksTech = BV, usint firstModSize = 0, usint dcrtBits = 0, uint32_t numLargeDigits = 4,
+      usint batchSize = 0, enum ModSwitchMethod msMethod = MANUAL);
 
   /**
    * Construct a PALISADE CryptoContextImpl for the BGVrns Scheme.

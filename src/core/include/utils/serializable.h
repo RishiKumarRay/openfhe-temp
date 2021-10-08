@@ -73,8 +73,7 @@ using Serialized = void*;
  * The class contains some deprecated methods from the older mechanisms
  * for serialization
  */
-class Serializable
-{
+class Serializable {
  public:
   virtual ~Serializable() {}
 

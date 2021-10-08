@@ -42,10 +42,10 @@ template class RLWETrapdoorUtility<DCRTPoly>;
 // "Implementing Token-Based Obfuscation under (Ring) LWE"
 template <>
 std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>> RLWETrapdoorUtility<DCRTPoly>::TrapdoorGen(
-  shared_ptr<ParmType> params, double stddev, int64_t base, bool bal) {
-  auto zero_alloc     = DCRTPoly::Allocator(params, EVALUATION);
+    shared_ptr<ParmType> params, double stddev, int64_t base, bool bal) {
+  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
   auto gaussian_alloc = DCRTPoly::MakeDiscreteGaussianCoefficientAllocator(params, COEFFICIENT, stddev);
-  auto uniform_alloc  = DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
+  auto uniform_alloc = DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
 
   NativeInteger q = params->GetParams()[0]->GetModulus();
 
@@ -82,10 +82,10 @@ std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>> RLWETrapdoorUtility<DCRT
 
 template <>
 std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>> RLWETrapdoorUtility<DCRTPoly>::TrapdoorGenSquareMat(
-  shared_ptr<ParmType> params, double stddev, size_t d, int64_t base, bool bal) {
-  auto zero_alloc     = DCRTPoly::Allocator(params, EVALUATION);
+    shared_ptr<ParmType> params, double stddev, size_t d, int64_t base, bool bal) {
+  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
   auto gaussian_alloc = DCRTPoly::MakeDiscreteGaussianCoefficientAllocator(params, COEFFICIENT, stddev);
-  auto uniform_alloc  = DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
+  auto uniform_alloc = DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
 
   NativeInteger q = params->GetParams()[0]->GetModulus();
 
@@ -114,7 +114,8 @@ std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>> RLWETrapdoorUtility<DCRT
   for (size_t i = 0; i < d; i++) {
     for (size_t j = 0; j < d; j++) {
       A(i, j) = Abar(i, j);
-      if (i == j) A(i, j + d) = 1;
+      if (i == j)
+        A(i, j + d) = 1;
       else
         A(i, j + d) = 0;
     }
@@ -139,7 +140,7 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(size_t n, size_t k, co
   TIC(t1);
   TIC(t1_tot);
   const shared_ptr<ParmType> params = u.GetParams();
-  auto zero_alloc                   = DCRTPoly::Allocator(params, EVALUATION);
+  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -178,8 +179,8 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(size_t n, size_t k, co
     NativeInteger qu = params->GetParams()[u]->GetModulus();
 
     Matrix<int64_t> digits([]() { return 0; }, kRes, n);
-    LatticeGaussSampUtility<NativePoly>::GaussSampGqArbBase(
-      perturbedSyndrome.GetElementAtIndex(u), c, kRes, qu, base, dgg, &digits);
+    LatticeGaussSampUtility<NativePoly>::GaussSampGqArbBase(perturbedSyndrome.GetElementAtIndex(u), c, kRes, qu, base,
+                                                            dgg, &digits);
     for (size_t p = 0; p < kRes; p++) {
       for (size_t j = 0; j < n; j++) {
         zHatBBI(p + u * kRes, j) = digits(p, j);
@@ -219,7 +220,7 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(size_t n, siz
                                                                    const Matrix<DCRTPoly>& U, DggType& dgg,
                                                                    DggType& dggLargeSigma, int64_t base) {
   const shared_ptr<ParmType> params = U(0, 0).GetParams();
-  auto zero_alloc                   = DCRTPoly::Allocator(params, EVALUATION);
+  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -254,8 +255,8 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(size_t n, siz
 
         Matrix<int64_t> digits([]() { return 0; }, kRes, n);
 
-        LatticeGaussSampUtility<NativePoly>::GaussSampGqArbBase(
-          perturbedSyndrome(i, j).GetElementAtIndex(u), c, kRes, qu, base, dgg, &digits);
+        LatticeGaussSampUtility<NativePoly>::GaussSampGqArbBase(perturbedSyndrome(i, j).GetElementAtIndex(u), c, kRes,
+                                                                qu, base, dgg, &digits);
 
         for (size_t p = 0; p < kRes; p++) {
           for (size_t jj = 0; jj < n; jj++) {
@@ -284,7 +285,7 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(size_t n, siz
 
   for (size_t j = 0; j < d; j++) {  // columns
     for (size_t i = 0; i < d; i++) {
-      zHatPrime(i, j)     = (*pHat)(i, j) + rZhat(i, j);
+      zHatPrime(i, j) = (*pHat)(i, j) + rZhat(i, j);
       zHatPrime(i + d, j) = (*pHat)(i + d, j) + eZhat(i, j);
 
       for (size_t p = 0; p < k; p++) {

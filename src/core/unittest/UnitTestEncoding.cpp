@@ -40,8 +40,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTEncoding : public ::testing::Test
-{
+class UTEncoding : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 
@@ -52,8 +51,8 @@ class UTEncoding : public ::testing::Test
 };
 
 TEST_F(UTEncoding, coef_packed_encoding) {
-  vector<int64_t> value = { 32, 17, 8, -12, -32, 22, -101, 6 };
-  usint m               = 16;
+  vector<int64_t> value = {32, 17, 8, -12, -32, 22, -101, 6};
+  usint m = 16;
 
   shared_ptr<ILParams> lp = ElemParamFactory::GenElemParams<ILParamsImpl<BigInteger>>(m);
   EncodingParams ep(std::make_shared<EncodingParamsImpl>(256));
@@ -66,7 +65,7 @@ TEST_F(UTEncoding, coef_packed_encoding) {
 }
 
 TEST_F(UTEncoding, packed_int_ptxt_encoding) {
-  usint m            = 22;
+  usint m = 22;
   PlaintextModulus p = 89;
   BigInteger modulusQ("955263939794561");
   BigInteger squareRootOfRoot("941018665059848");
@@ -81,7 +80,7 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding) {
 
   PackedEncoding::SetParams(m, ep);
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 0, 0};
   PackedEncoding se(lp, ep, vectorOfInts1);
   se.Encode();
   se.Decode();
@@ -89,7 +88,7 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding) {
 }
 
 TEST_F(UTEncoding, packed_int_ptxt_encoding_negative) {
-  usint m            = 22;
+  usint m = 22;
   PlaintextModulus p = 89;
   BigInteger modulusQ("955263939794561");
   BigInteger squareRootOfRoot("941018665059848");
@@ -104,7 +103,7 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_negative) {
 
   PackedEncoding::SetParams(m, ep);
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, -3, 4, 5, -6, 7, 8, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {1, 2, -3, 4, 5, -6, 7, 8, 0, 0};
   PackedEncoding se(lp, ep, vectorOfInts1);
   se.Encode();
   se.Decode();
@@ -112,8 +111,8 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_negative) {
 }
 
 TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics) {
-  usint init_size   = 3;
-  usint dcrtBits    = 24;
+  usint init_size = 3;
+  usint dcrtBits = 24;
   usint dcrtBitsBig = 58;
 
   usint m = 1811;
@@ -129,13 +128,13 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics) {
   vector<NativeInteger> init_moduli(init_size);
   vector<NativeInteger> init_rootsOfUnity(init_size);
 
-  NativeInteger q      = FirstPrime<NativeInteger>(dcrtBits, mArb);
-  init_moduli[0]       = q;
+  NativeInteger q = FirstPrime<NativeInteger>(dcrtBits, mArb);
+  init_moduli[0] = q;
   init_rootsOfUnity[0] = RootOfUnity(mArb, init_moduli[0]);
 
   for (usint i = 1; i < init_size; i++) {
-    q                    = lbcrypto::NextPrime(q, mArb);
-    init_moduli[i]       = q;
+    q = lbcrypto::NextPrime(q, mArb);
+    init_moduli[i] = q;
     init_rootsOfUnity[i] = RootOfUnity(mArb, init_moduli[i]);
   }
 
@@ -144,24 +143,24 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics) {
   vector<NativeInteger> init_moduli_NTT(init_size);
   vector<NativeInteger> init_rootsOfUnity_NTT(init_size);
 
-  q                        = FirstPrime<NativeInteger>(dcrtBitsBig, mNTT);
-  init_moduli_NTT[0]       = q;
+  q = FirstPrime<NativeInteger>(dcrtBitsBig, mNTT);
+  init_moduli_NTT[0] = q;
   init_rootsOfUnity_NTT[0] = RootOfUnity(mNTT, init_moduli_NTT[0]);
 
   for (usint i = 1; i < init_size; i++) {
-    q                        = lbcrypto::NextPrime(q, mNTT);
-    init_moduli_NTT[i]       = q;
+    q = lbcrypto::NextPrime(q, mNTT);
+    init_moduli_NTT[i] = q;
     init_rootsOfUnity_NTT[i] = RootOfUnity(mNTT, init_moduli_NTT[i]);
   }
 
-  auto paramsDCRT = std::make_shared<ILDCRTParams<BigInteger>>(
-    m, init_moduli, init_rootsOfUnity, init_moduli_NTT, init_rootsOfUnity_NTT);
+  auto paramsDCRT = std::make_shared<ILDCRTParams<BigInteger>>(m, init_moduli, init_rootsOfUnity, init_moduli_NTT,
+                                                               init_rootsOfUnity_NTT);
 
   EncodingParams ep(std::make_shared<EncodingParamsImpl>(p));
 
   PackedEncoding::SetParams(m, ep);
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 0, 0};
   PackedEncoding se(paramsDCRT, ep, vectorOfInts1);
 
   se.Encode();
@@ -177,8 +176,8 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics) {
 }
 
 TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics_negative) {
-  usint init_size   = 3;
-  usint dcrtBits    = 24;
+  usint init_size = 3;
+  usint dcrtBits = 24;
   usint dcrtBitsBig = 58;
 
   usint m = 1811;
@@ -194,13 +193,13 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics_negative)
   vector<NativeInteger> init_moduli(init_size);
   vector<NativeInteger> init_rootsOfUnity(init_size);
 
-  NativeInteger q      = FirstPrime<NativeInteger>(dcrtBits, mArb);
-  init_moduli[0]       = q;
+  NativeInteger q = FirstPrime<NativeInteger>(dcrtBits, mArb);
+  init_moduli[0] = q;
   init_rootsOfUnity[0] = RootOfUnity(mArb, init_moduli[0]);
 
   for (usint i = 1; i < init_size; i++) {
-    q                    = lbcrypto::NextPrime(q, mArb);
-    init_moduli[i]       = q;
+    q = lbcrypto::NextPrime(q, mArb);
+    init_moduli[i] = q;
     init_rootsOfUnity[i] = RootOfUnity(mArb, init_moduli[i]);
   }
 
@@ -209,24 +208,24 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics_negative)
   vector<NativeInteger> init_moduli_NTT(init_size);
   vector<NativeInteger> init_rootsOfUnity_NTT(init_size);
 
-  q                        = FirstPrime<NativeInteger>(dcrtBitsBig, mNTT);
-  init_moduli_NTT[0]       = q;
+  q = FirstPrime<NativeInteger>(dcrtBitsBig, mNTT);
+  init_moduli_NTT[0] = q;
   init_rootsOfUnity_NTT[0] = RootOfUnity(mNTT, init_moduli_NTT[0]);
 
   for (usint i = 1; i < init_size; i++) {
-    q                        = lbcrypto::NextPrime(q, mNTT);
-    init_moduli_NTT[i]       = q;
+    q = lbcrypto::NextPrime(q, mNTT);
+    init_moduli_NTT[i] = q;
     init_rootsOfUnity_NTT[i] = RootOfUnity(mNTT, init_moduli_NTT[i]);
   }
 
-  auto paramsDCRT = std::make_shared<ILDCRTParams<BigInteger>>(
-    m, init_moduli, init_rootsOfUnity, init_moduli_NTT, init_rootsOfUnity_NTT);
+  auto paramsDCRT = std::make_shared<ILDCRTParams<BigInteger>>(m, init_moduli, init_rootsOfUnity, init_moduli_NTT,
+                                                               init_rootsOfUnity_NTT);
 
   EncodingParams ep(std::make_shared<EncodingParamsImpl>(p));
 
   PackedEncoding::SetParams(m, ep);
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, -3, 4, 5, 6, -7, 8, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {1, 2, -3, 4, 5, 6, -7, 8, 0, 0};
   PackedEncoding se(paramsDCRT, ep, vectorOfInts1);
 
   se.Encode();
@@ -243,7 +242,7 @@ TEST_F(UTEncoding, packed_int_ptxt_encoding_DCRTPoly_prime_cyclotomics_negative)
 
 TEST_F(UTEncoding, string_encoding) {
   string value = "Hello, world!";
-  usint m      = 64;
+  usint m = 64;
 
   shared_ptr<ILParams> lp = ElemParamFactory::GenElemParams<ILParamsImpl<BigInteger>>(m);
   EncodingParams ep(std::make_shared<EncodingParamsImpl>(256));

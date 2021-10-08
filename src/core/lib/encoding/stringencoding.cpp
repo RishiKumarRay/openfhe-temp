@@ -26,11 +26,12 @@
 
 namespace lbcrypto {
 
-static const size_t charPtm      = (1 << 8);
+static const size_t charPtm = (1 << 8);
 static const uint32_t CHARMARKER = (1 << 7);
 
 bool StringEncoding::Encode() {
-  if (this->isEncoded) return true;
+  if (this->isEncoded)
+    return true;
   auto mod = this->encodingParams->GetPlaintextModulus();
 
   if (mod != 256) {
@@ -46,8 +47,7 @@ bool StringEncoding::Encode() {
     for (; i < this->encodedNativeVector.GetLength(); i++) {
       this->encodedNativeVector[i] = CHARMARKER;
     }
-  }
-  else {
+  } else {
     this->encodedVector.SetValuesToZero();
     size_t i = 0;
     for (; i < ptx.size() && i < this->encodedVector.GetLength(); i++) {
@@ -71,7 +71,8 @@ static void fillPlaintext(const P& poly, string& str, const PlaintextModulus& mo
   str.clear();
   for (size_t i = 0; i < poly.GetLength(); i++) {
     uint32_t ch = (poly[i].ConvertToInt() % mod) & 0xff;
-    if (ch == CHARMARKER) break;
+    if (ch == CHARMARKER)
+      break;
     str += static_cast<char>(ch);
   }
 }
@@ -79,7 +80,8 @@ static void fillPlaintext(const P& poly, string& str, const PlaintextModulus& mo
 bool StringEncoding::Decode() {
   auto mod = this->encodingParams->GetPlaintextModulus();
 
-  if (this->typeFlag == IsNativePoly) fillPlaintext(this->encodedNativeVector, this->ptx, mod);
+  if (this->typeFlag == IsNativePoly)
+    fillPlaintext(this->encodedNativeVector, this->ptx, mod);
   else
     fillPlaintext(this->encodedVector, this->ptx, mod);
 

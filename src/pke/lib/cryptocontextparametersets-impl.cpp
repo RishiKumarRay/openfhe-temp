@@ -27,53 +27,48 @@
 namespace lbcrypto {
 
 map<string, map<string, string>> CryptoContextParameterSets = {
-  { "BFV1",
-    {
-      { "parameters", "BFV" },
-      { "plaintextModulus", "4" },
-      { "securityLevel", "1.006" },
-    } },
+    {"BFV1",
+     {
+         {"parameters", "BFV"},
+         {"plaintextModulus", "4"},
+         {"securityLevel", "1.006"},
+     }},
 
-  { "BFV2", { { "parameters", "BFV" }, { "plaintextModulus", "16" }, { "securityLevel", "1.006" } } },
+    {"BFV2", {{"parameters", "BFV"}, {"plaintextModulus", "16"}, {"securityLevel", "1.006"}}},
 
-  { "BFVrns1",
-    {
-      { "parameters", "BFVrns" },
-      { "plaintextModulus", "4" },
-      { "securityLevel", "1.006" },
-    } },
+    {"BFVrns1",
+     {
+         {"parameters", "BFVrns"},
+         {"plaintextModulus", "4"},
+         {"securityLevel", "1.006"},
+     }},
 
-  { "BFVrns2", { { "parameters", "BFVrns" }, { "plaintextModulus", "16" }, { "securityLevel", "1.006" } } },
+    {"BFVrns2", {{"parameters", "BFVrns"}, {"plaintextModulus", "16"}, {"securityLevel", "1.006"}}},
 
-  { "BFVrnsB1",
-    {
-      { "parameters", "BFVrnsB" },
-      { "plaintextModulus", "4" },
-      { "securityLevel", "1.006" },
-    } },
+    {"BFVrnsB1",
+     {
+         {"parameters", "BFVrnsB"},
+         {"plaintextModulus", "4"},
+         {"securityLevel", "1.006"},
+     }},
 
-  { "BFVrnsB2", { { "parameters", "BFVrnsB" }, { "plaintextModulus", "16" }, { "securityLevel", "1.006" } } },
+    {"BFVrnsB2", {{"parameters", "BFVrnsB"}, {"plaintextModulus", "16"}, {"securityLevel", "1.006"}}},
 
-  { "Null",
-    { { "parameters", "Null" },
-      { "plaintextModulus", "256" },
-      { "ring", "8192" },
-      { "modulus", "256" },
-      { "rootOfUnity", "242542334" } } },
+    {"Null",
+     {{"parameters", "Null"},
+      {"plaintextModulus", "256"},
+      {"ring", "8192"},
+      {"modulus", "256"},
+      {"rootOfUnity", "242542334"}}},
 
-  { "Null2",
-    { { "parameters", "Null" },
-      { "plaintextModulus", "5" },
-      { "ring", "32" },
-      { "modulus", "256" },
-      { "rootOfUnity", "322299632" } } },
-  { "BFV-PRE", { { "parameters", "BFV" }, { "plaintextModulus", "2" }, { "securityLevel", "1.006" } } },
-  { "Null-PRE",
-    { { "parameters", "Null" },
-      { "plaintextModulus", "2" },
-      { "ring", "2048" },
-      { "modulus", "2" },
-      { "rootOfUnity", "1" } } }
-};
+    {"Null2",
+     {{"parameters", "Null"},
+      {"plaintextModulus", "5"},
+      {"ring", "32"},
+      {"modulus", "256"},
+      {"rootOfUnity", "322299632"}}},
+    {"BFV-PRE", {{"parameters", "BFV"}, {"plaintextModulus", "2"}, {"securityLevel", "1.006"}}},
+    {"Null-PRE",
+     {{"parameters", "Null"}, {"plaintextModulus", "2"}, {"ring", "2048"}, {"modulus", "2"}, {"rootOfUnity", "1"}}}};
 
 } /* namespace lbcrypto */

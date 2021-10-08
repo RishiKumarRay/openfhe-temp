@@ -70,12 +70,12 @@ inline std::ostream& operator<<(std::ostream& s, Format f) {
  * @brief Lists all features supported by public key encryption schemes
  */
 enum PKESchemeFeature {
-  ENCRYPTION  = 0x01,
-  PRE         = 0x02,
-  SHE         = 0x04,
-  FHE         = 0x08,
-  LEVELEDSHE  = 0x10,
-  MULTIPARTY  = 0x20,
+  ENCRYPTION = 0x01,
+  PRE = 0x02,
+  SHE = 0x04,
+  FHE = 0x08,
+  LEVELEDSHE = 0x10,
+  MULTIPARTY = 0x20,
   ADVANCEDSHE = 0x40
 };
 

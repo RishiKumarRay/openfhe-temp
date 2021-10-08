@@ -44,7 +44,8 @@ void DiscreteGaussianGeneratorImpl<VecType>::SetStd(double std) {
     PALISADE_THROW(config_error, errorMsg);
   }
 
-  if (m_std < KARNEY_THRESHOLD) peikert = true;
+  if (m_std < KARNEY_THRESHOLD)
+    peikert = true;
   else
     peikert = false;
   if (peikert) {
@@ -61,7 +62,7 @@ template <typename VecType>
 void DiscreteGaussianGeneratorImpl<VecType>::Initialize() {
   m_vals.clear();
 
-  double acc      = 5e-32;
+  double acc = 5e-32;
   double variance = m_std * m_std;
 
   int fin = static_cast<int>(ceil(m_std * sqrt(-2 * log(acc))));
@@ -102,11 +103,9 @@ int32_t DiscreteGaussianGeneratorImpl<VecType>::GenerateInt() const {
   seed = distribution(PseudoRandomNumberGenerator::GetPRNG()) - 0.5;
   if (std::abs(seed) <= m_a / 2) {
     val = 0;
-  }
-  else if (seed > 0) {
+  } else if (seed > 0) {
     val = FindInVector(m_vals, (std::abs(seed) - m_a / 2));
-  }
-  else {
+  } else {
     val = -static_cast<int>(FindInVector(m_vals, (std::abs(seed) - m_a / 2)));
   }
   ans = val;
@@ -127,19 +126,16 @@ std::shared_ptr<int64_t> DiscreteGaussianGeneratorImpl<VecType>::GenerateIntVect
       seed = distribution(PseudoRandomNumberGenerator::GetPRNG()) - 0.5;
       if (std::abs(seed) <= m_a / 2) {
         val = 0;
-      }
-      else {
+      } else {
         if (seed > 0) {
           val = FindInVector(m_vals, (std::abs(seed) - m_a / 2));
-        }
-        else {
+        } else {
           val = -static_cast<int64_t>(FindInVector(m_vals, (std::abs(seed) - m_a / 2)));
         }
       }
       (ans.get())[i] = val;
     }
-  }
-  else {
+  } else {
     for (usint i = 0; i < size; i++) {
       (ans.get())[i] = GenerateIntegerKarney(0, m_std);
     }
@@ -160,7 +156,7 @@ usint DiscreteGaussianGeneratorImpl<VecType>::FindInVector(const std::vector<dou
 
 template <typename VecType>
 typename VecType::Integer DiscreteGaussianGeneratorImpl<VecType>::GenerateInteger(
-  const typename VecType::Integer& modulus) const {
+    const typename VecType::Integer& modulus) const {
   int32_t val = 0;
   double seed;
   typename VecType::Integer ans;
@@ -170,19 +166,16 @@ typename VecType::Integer DiscreteGaussianGeneratorImpl<VecType>::GenerateIntege
 
   if (std::abs(seed) <= m_a / 2) {
     val = 0;
-  }
-  else if (seed > 0) {
+  } else if (seed > 0) {
     val = FindInVector(m_vals, (std::abs(seed) - m_a / 2));
-  }
-  else {
+  } else {
     val = -static_cast<int>(FindInVector(m_vals, (std::abs(seed) - m_a / 2)));
   }
 
   if (val < 0) {
     val *= -1;
     ans = modulus - typename VecType::Integer(val);
-  }
-  else {
+  } else {
     ans = typename VecType::Integer(val);
   }
 
@@ -202,8 +195,7 @@ VecType DiscreteGaussianGeneratorImpl<VecType>::GenerateVector(const usint size,
     if (v < 0) {
       v *= -1;
       ans[i] = modulus - typename VecType::Integer(v);
-    }
-    else {
+    } else {
       ans[i] = typename VecType::Integer(v);
     }
   }
@@ -213,7 +205,7 @@ VecType DiscreteGaussianGeneratorImpl<VecType>::GenerateVector(const usint size,
 
 template <typename VecType>
 typename VecType::Integer DiscreteGaussianGeneratorImpl<VecType>::GenerateInteger(
-  double mean, double stddev, size_t n, const typename VecType::Integer& modulus) const {
+    double mean, double stddev, size_t n, const typename VecType::Integer& modulus) const {
   double t = log2(n) * stddev;
 
   typename VecType::Integer result;
@@ -238,8 +230,7 @@ typename VecType::Integer DiscreteGaussianGeneratorImpl<VecType>::GenerateIntege
   if (x < 0) {
     x *= -1;
     result = modulus - typename VecType::Integer(x);
-  }
-  else {
+  } else {
     result = typename VecType::Integer(x);
   }
 
@@ -276,7 +267,7 @@ int32_t DiscreteGaussianGeneratorImpl<VecType>::GenerateInteger(double mean, dou
 
   bool flagSuccess = false;
 
-  usint count       = 0;
+  usint count = 0;
   const usint limit = 10000;
   // PALISADE_THROW(palisade_error, "dbg throw");
 
@@ -316,31 +307,35 @@ int64_t DiscreteGaussianGeneratorImpl<VecType>::GenerateIntegerKarney(double mea
     k = AlgorithmG(g);
 
     // STEP D2
-    if (!AlgorithmP(g, k * (k - 1))) continue;
+    if (!AlgorithmP(g, k * (k - 1)))
+      continue;
 
     // STEP D3
     int32_t s = uniform_sign(g);
-    if (s == 0) s = -1;
+    if (s == 0)
+      s = -1;
 
     // STEP D4
     double di0 = stddev * k + s * mean;
     int64_t i0 = std::ceil(di0);
-    double x0  = (i0 - di0) / stddev;
-    int64_t j  = uniform_j(g);
+    double x0 = (i0 - di0) / stddev;
+    int64_t j = uniform_j(g);
 
     double x = x0 + j / stddev;
 
     // STEPS D5 and D6
-    if (!(x < 1) || (x == 0 && s < 0 && k == 0)) continue;
+    if (!(x < 1) || (x == 0 && s < 0 && k == 0))
+      continue;
 
     // STEP D7
     int32_t h = k + 1;
     while (h-- && AlgorithmB(g, k, x)) {
     }
-    if (!(h < 0)) continue;
+    if (!(h < 0))
+      continue;
 
     // STEP D8
-    result      = s * (i0 + j);
+    result = s * (i0 + j);
     flagSuccess = true;
   }
 
@@ -371,21 +366,23 @@ bool DiscreteGaussianGeneratorImpl<VecType>::AlgorithmH(PRNG& g) {
   h_a = dist(g);
 
   // less than the half
-  if (h_a > 0.5) return true;
+  if (h_a > 0.5)
+    return true;
   if (h_a < 0.5) {
     for (;;) {
       h_b = dist(g);
-      if (h_b > h_a) return false;
+      if (h_b > h_a)
+        return false;
       else if (h_b < h_a)
         h_a = dist(g);
       else  // numbers are equal - need higher precision
         return AlgorithmHDouble(g);
-      if (h_a > h_b) return true;
+      if (h_a > h_b)
+        return true;
       else if (h_a == h_b)  // numbers are equal - need higher precision
         return AlgorithmHDouble(g);
     }
-  }
-  else {  // numbers are equal - need higher precision
+  } else {  // numbers are equal - need higher precision
     return AlgorithmHDouble(g);
   }
 }
@@ -396,13 +393,16 @@ bool DiscreteGaussianGeneratorImpl<VecType>::AlgorithmHDouble(PRNG& g) {
   double h_a, h_b;
   h_a = dist(g);
   // less than the half
-  if (!(h_a < 0.5)) return true;
+  if (!(h_a < 0.5))
+    return true;
   for (;;) {
     h_b = dist(g);
-    if (!(h_b < h_a)) return false;
+    if (!(h_b < h_a))
+      return false;
     else
       h_a = dist(g);
-    if (!(h_a < h_b)) return true;
+    if (!(h_a < h_b))
+      return true;
   }
 }
 
@@ -410,7 +410,7 @@ template <typename VecType>
 bool DiscreteGaussianGeneratorImpl<VecType>::AlgorithmB(PRNG& g, int32_t k, double x) {
   std::uniform_real_distribution<float> dist(0.0, 1.0);
 
-  float y   = x;
+  float y = x;
   int32_t n = 0, m = 2 * k + 2;
   float z, r;
   float rTemp;
@@ -419,17 +419,16 @@ bool DiscreteGaussianGeneratorImpl<VecType>::AlgorithmB(PRNG& g, int32_t k, doub
     z = dist(g);
     if (z > y) {
       break;
-    }
-    else if (z < y) {
-      r     = dist(g);
+    } else if (z < y) {
+      r = dist(g);
       rTemp = (2 * k + x) / m;
-      if (r > rTemp) break;
+      if (r > rTemp)
+        break;
       else if (r < rTemp)
         y = z;
       else  // r == Temp - need double precision
         return AlgorithmBDouble(g, k, x);
-    }
-    else {  // z == x - need double precision
+    } else {  // z == x - need double precision
       return AlgorithmBDouble(g, k, x);
     }
   }
@@ -441,15 +440,17 @@ template <typename VecType>
 bool DiscreteGaussianGeneratorImpl<VecType>::AlgorithmBDouble(PRNG& g, int32_t k, double x) {
   std::uniform_real_distribution<double> dist(0.0, 1.0);
 
-  double y  = x;
+  double y = x;
   int32_t n = 0, m = 2 * k + 2;
   double z, r;
 
   for (;; ++n) {
     z = dist(g);
-    if (!(z < y)) break;
+    if (!(z < y))
+      break;
     r = dist(g);
-    if (!(r < (2 * k + x) / m)) break;
+    if (!(r < (2 * k + x) / m))
+      break;
     y = z;
   }
 

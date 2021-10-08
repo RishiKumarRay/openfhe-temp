@@ -35,10 +35,9 @@ namespace lbcrypto {
  *@tparam Element ring element
  */
 template <class Element>
-class TrapdoorParams
-{
+class TrapdoorParams {
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
+  using DggType = typename Element::DggType;
 
  public:
   /*
@@ -55,8 +54,8 @@ class TrapdoorParams
    *@param dgg Discrete Gaussian Generator for random number generation
    *@param stddev Distribution parameter for the Gaussian Generator
    */
-  TrapdoorParams(shared_ptr<ParmType> elemparams, DggType& dgg, double stddev) :
-      m_elemparams(elemparams), m_dgg(dgg), m_stddev(stddev) {}
+  TrapdoorParams(shared_ptr<ParmType> elemparams, DggType& dgg, double stddev)
+      : m_elemparams(elemparams), m_dgg(dgg), m_stddev(stddev) {}
   /*
    *@brief Accessor function for ring element params
    *@return Ring element params
@@ -112,10 +111,9 @@ class TrapdoorParams
  *@tparam Element ring element
  */
 template <class Element>
-class RLWETrapdoorParams : public TrapdoorParams<Element>
-{
+class RLWETrapdoorParams : public TrapdoorParams<Element> {
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
+  using DggType = typename Element::DggType;
 
  public:
   /*
@@ -134,18 +132,19 @@ class RLWETrapdoorParams : public TrapdoorParams<Element>
    *@param base Base for the gadget matrix
    *@param bal Flag for balanced generation in trapdoor
    */
-  RLWETrapdoorParams(shared_ptr<ParmType> elemparams, DggType& dgg, double stddev, int64_t base, bool bal = false) :
-      TrapdoorParams<Element>(elemparams, dgg, stddev) {
-    m_base        = base;
-    m_bal         = bal;
-    double val    = elemparams->GetModulus().ConvertToDouble();
+  RLWETrapdoorParams(shared_ptr<ParmType> elemparams, DggType& dgg, double stddev, int64_t base, bool bal = false)
+      : TrapdoorParams<Element>(elemparams, dgg, stddev) {
+    m_base = base;
+    m_bal = bal;
+    double val = elemparams->GetModulus().ConvertToDouble();
     double logTwo = log(val - 1.0) / log(base) + 1.0;
-    m_k           = (usint)floor(logTwo);
-    m_n           = elemparams->GetCyclotomicOrder() >> 1;
-    double c      = (m_base + 1) * SIGMA;
-    double s      = SPECTRAL_BOUND(m_n, m_k, base);
+    m_k = (usint)floor(logTwo);
+    m_n = elemparams->GetCyclotomicOrder() >> 1;
+    double c = (m_base + 1) * SIGMA;
+    double s = SPECTRAL_BOUND(m_n, m_k, base);
 
-    if (sqrt(s * s - c * c) <= KARNEY_THRESHOLD) m_dggLargeSigma = DggType(sqrt(s * s - c * c));
+    if (sqrt(s * s - c * c) <= KARNEY_THRESHOLD)
+      m_dggLargeSigma = DggType(sqrt(s * s - c * c));
     else
       m_dggLargeSigma = dgg;
   }
@@ -221,8 +220,7 @@ class RLWETrapdoorParams : public TrapdoorParams<Element>
  *@tparam Element ring element
  */
 template <class Element>
-class PerturbationVector
-{
+class PerturbationVector {
  public:
   /*
    *@brief Default constructor

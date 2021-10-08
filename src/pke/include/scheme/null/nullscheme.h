@@ -36,16 +36,15 @@
 namespace lbcrypto {
 
 template <class Element>
-class LPCryptoParametersNull : public LPCryptoParameters<Element>
-{
+class LPCryptoParametersNull : public LPCryptoParameters<Element> {
  public:
   LPCryptoParametersNull() : LPCryptoParameters<Element>() {}
 
-  LPCryptoParametersNull(const shared_ptr<typename Element::Params> ep, const PlaintextModulus& plaintextModulus) :
-      LPCryptoParameters<Element>(ep, plaintextModulus) {}
+  LPCryptoParametersNull(const shared_ptr<typename Element::Params> ep, const PlaintextModulus& plaintextModulus)
+      : LPCryptoParameters<Element>(ep, plaintextModulus) {}
 
-  LPCryptoParametersNull(shared_ptr<typename Element::Params> ep, EncodingParams encodingParams) :
-      LPCryptoParameters<Element>(ep, encodingParams) {}
+  LPCryptoParametersNull(shared_ptr<typename Element::Params> ep, EncodingParams encodingParams)
+      : LPCryptoParameters<Element>(ep, encodingParams) {}
 
   LPCryptoParametersNull(const LPCryptoParametersNull& rhs) : LPCryptoParameters<Element>(rhs) {}
 
@@ -65,7 +64,8 @@ class LPCryptoParametersNull : public LPCryptoParameters<Element>
   bool operator==(const LPCryptoParameters<Element>& rhs) const {
     const auto* el = dynamic_cast<const LPCryptoParametersNull<Element>*>(&rhs);
 
-    if (el == nullptr) return false;
+    if (el == nullptr)
+      return false;
 
     return this->GetPlaintextModulus() == el->GetPlaintextModulus() &&
            *this->GetElementParams() == *el->GetElementParams() &&
@@ -88,8 +88,7 @@ class LPCryptoParametersNull : public LPCryptoParameters<Element>
 };
 
 template <class Element>
-class LPAlgorithmNull : public LPEncryptionAlgorithm<Element>
-{
+class LPAlgorithmNull : public LPEncryptionAlgorithm<Element> {
  public:
   /**
    * Default constructor
@@ -147,8 +146,8 @@ class LPAlgorithmNull : public LPEncryptionAlgorithm<Element>
   DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
                         NativePoly* plaintext) const {
     const Element& b = ciphertext->GetElement();
-    const auto ptm   = ciphertext->GetCryptoContext()->GetCryptoParameters()->GetPlaintextModulus();
-    *plaintext       = b.DecryptionCRTInterpolate(ptm);
+    const auto ptm = ciphertext->GetCryptoContext()->GetCryptoParameters()->GetPlaintextModulus();
+    *plaintext = b.DecryptionCRTInterpolate(ptm);
     return DecryptResult(plaintext->GetLength());
   }
 
@@ -176,8 +175,7 @@ class LPAlgorithmNull : public LPEncryptionAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmPRENull : public LPPREAlgorithm<Element>
-{
+class LPAlgorithmPRENull : public LPPREAlgorithm<Element> {
  public:
   /**
    * Default constructor
@@ -250,8 +248,7 @@ class LPAlgorithmPRENull : public LPPREAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmMultipartyNull : public LPMultipartyAlgorithm<Element>
-{
+class LPAlgorithmMultipartyNull : public LPMultipartyAlgorithm<Element> {
  public:
   /**
    * Default constructor
@@ -348,9 +345,9 @@ class LPAlgorithmMultipartyNull : public LPMultipartyAlgorithm<Element>
    * @return the decoding result.
    */
   DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec, NativePoly* plaintext) const {
-    Element b      = ciphertextVec[0]->GetElement();
+    Element b = ciphertextVec[0]->GetElement();
     const auto ptm = ciphertextVec[0]->GetCryptoContext()->GetCryptoParameters()->GetPlaintextModulus();
-    *plaintext     = b.DecryptionCRTInterpolate(ptm);
+    *plaintext = b.DecryptionCRTInterpolate(ptm);
     return DecryptResult(plaintext->GetLength());
   }
 };
@@ -360,8 +357,7 @@ class LPAlgorithmMultipartyNull : public LPMultipartyAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPLeveledSHEAlgorithmNull : public LPLeveledSHEAlgorithm<Element>
-{
+class LPLeveledSHEAlgorithmNull : public LPLeveledSHEAlgorithm<Element> {
  public:
   /**
    * Default constructor
@@ -400,8 +396,8 @@ class LPLeveledSHEAlgorithmNull : public LPLeveledSHEAlgorithm<Element>
    */
   Ciphertext<Element> ComposedEvalMult(ConstCiphertext<Element> cipherText1, ConstCiphertext<Element> cipherText2,
                                        const LPEvalKey<Element> quadKeySwitchHint) const override {
-    Ciphertext<Element> prod =
-      cipherText1->GetCryptoContext()->GetEncryptionAlgorithm()->EvalMult(cipherText1, cipherText2, quadKeySwitchHint);
+    Ciphertext<Element> prod = cipherText1->GetCryptoContext()->GetEncryptionAlgorithm()->EvalMult(
+        cipherText1, cipherText2, quadKeySwitchHint);
 
     return this->ModReduce(prod);
   }
@@ -423,10 +419,9 @@ class LPLeveledSHEAlgorithmNull : public LPLeveledSHEAlgorithm<Element>
 };
 
 template <class Element>
-class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
-{
+class LPAlgorithmSHENull : public LPSHEAlgorithm<Element> {
   using PolyType = typename Element::PolyType;
-  using IntType  = typename Element::PolyType::Integer;
+  using IntType = typename Element::PolyType::Integer;
 
  public:
   /**
@@ -601,8 +596,8 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
   LPEvalKey<Element> EvalMultKeyGen(const LPPrivateKey<Element> originalPrivateKey) const override {
     LPEvalKey<Element> EK(std::make_shared<LPEvalKeyRelinImpl<Element>>(originalPrivateKey->GetCryptoContext()));
 
-    Element a(
-      originalPrivateKey->GetCryptoContext()->GetCryptoParameters()->GetElementParams(), Format::COEFFICIENT, true);
+    Element a(originalPrivateKey->GetCryptoContext()->GetCryptoParameters()->GetElementParams(), Format::COEFFICIENT,
+              true);
     vector<Element> evalKeyElements;
     evalKeyElements.push_back(std::move(a));
 
@@ -619,8 +614,9 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
    * @param *keySwitchHint the key switch hint list.
    */
   vector<LPEvalKey<Element>> EvalMultKeysGen(const LPPrivateKey<Element> originalPrivateKey) const override {
-    std::string errMsg = "LPAlgorithmSHENULL::EvalMultKeysGen is not implemented for NULL SHE "
-                         "Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHENULL::EvalMultKeysGen is not implemented for NULL SHE "
+        "Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -651,11 +647,11 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
    */
 
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> origPrivateKey,
-    const std::vector<usint>& indexList) const override {
+      const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> origPrivateKey,
+      const std::vector<usint>& indexList) const override {
     auto evalKeys = std::make_shared<std::map<usint, LPEvalKey<Element>>>();
 
-    for (auto& i: indexList) {
+    for (auto& i : indexList) {
       (*evalKeys)[i] = this->KeySwitchGen(origPrivateKey, origPrivateKey);
     }
 
@@ -663,10 +659,10 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
   }
 
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override {
+      const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override {
     auto evalKeys = std::make_shared<std::map<usint, LPEvalKey<Element>>>();
 
-    for (auto& i: indexList) {
+    for (auto& i : indexList) {
       (*evalKeys)[i] = this->KeySwitchGen(privateKey, privateKey);
     }
 
@@ -701,8 +697,7 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
             if (index >= ringdim) {
               index %= ringdim;
               cLarger.at(index) = (cLarger.at(index) + prod) % ptm;
-            }
-            else {
+            } else {
               cResult.at(index) = (cResult.at(index) + prod) % ptm;
             }
           }
@@ -712,7 +707,7 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
 
     // fold cLarger back into the answer
     for (int i = 0; i < ringdim; i++) {
-      IntType adj   = cResult.at(i) + (ptm - cLarger.at(i)) % ptm;
+      IntType adj = cResult.at(i) + (ptm - cLarger.at(i)) % ptm;
       cResult.at(i) = adj % ptm;
     }
 
@@ -725,8 +720,7 @@ class LPAlgorithmSHENull : public LPSHEAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmParamsGenNull : public LPParameterGenerationAlgorithm<Element>
-{
+class LPAlgorithmParamsGenNull : public LPParameterGenerationAlgorithm<Element> {
  public:
   /**
    * Default constructor
@@ -760,8 +754,7 @@ class LPAlgorithmParamsGenNull : public LPParameterGenerationAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPublicKeyEncryptionSchemeNull : public LPPublicKeyEncryptionScheme<Element>
-{
+class LPPublicKeyEncryptionSchemeNull : public LPPublicKeyEncryptionScheme<Element> {
  public:
   LPPublicKeyEncryptionSchemeNull() : LPPublicKeyEncryptionScheme<Element>() {
     this->m_algorithmParamsGen = std::make_shared<LPAlgorithmParamsGenNull<Element>>();
@@ -780,7 +773,8 @@ class LPPublicKeyEncryptionSchemeNull : public LPPublicKeyEncryptionScheme<Eleme
       case PRE:
         if (this->m_algorithmEncryption == nullptr)
           this->m_algorithmEncryption = std::make_shared<LPAlgorithmNull<Element>>();
-        if (this->m_algorithmPRE == nullptr) this->m_algorithmPRE = std::make_shared<LPAlgorithmPRENull<Element>>();
+        if (this->m_algorithmPRE == nullptr)
+          this->m_algorithmPRE = std::make_shared<LPAlgorithmPRENull<Element>>();
         break;
       case MULTIPARTY:
         if (this->m_algorithmEncryption == nullptr)
@@ -791,7 +785,8 @@ class LPPublicKeyEncryptionSchemeNull : public LPPublicKeyEncryptionScheme<Eleme
       case SHE:
         if (this->m_algorithmEncryption == nullptr)
           this->m_algorithmEncryption = std::make_shared<LPAlgorithmNull<Element>>();
-        if (this->m_algorithmSHE == nullptr) this->m_algorithmSHE = std::make_shared<LPAlgorithmSHENull<Element>>();
+        if (this->m_algorithmSHE == nullptr)
+          this->m_algorithmSHE = std::make_shared<LPAlgorithmSHENull<Element>>();
         break;
       case FHE:
         PALISADE_THROW(not_implemented_error, "FHE feature not supported for Null scheme");

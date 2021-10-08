@@ -192,8 +192,7 @@ Matrix<int32_t> ConvertToInt32(const Matrix<BigInteger>& input, const BigInteger
     for (size_t j = 0; j < cols; ++j) {
       if (input(i, j) > negativeThreshold) {
         result(i, j) = -1 * (modulus - input(i, j)).ConvertToInt();
-      }
-      else {
+      } else {
         result(i, j) = input(i, j).ConvertToInt();
       }
     }
@@ -211,8 +210,7 @@ Matrix<int32_t> ConvertToInt32(const Matrix<BigVector>& input, const BigInteger&
       const BigInteger& elem = input(i, j).at(0);
       if (elem > negativeThreshold) {
         result(i, j) = -1 * (modulus - elem).ConvertToInt();
-      }
-      else {
+      } else {
         result(i, j) = elem.ConvertToInt();
       }
     }
@@ -229,8 +227,7 @@ void Matrix<Field2n>::SetFormat(Format f) {
         data[row][col].SetFormat(f);
       }
     }
-  }
-  else {
+  } else {
     for (size_t col = 0; col < cols; ++col) {
 #pragma omp parallel for
       for (size_t row = 0; row < rows; ++row) {
@@ -249,8 +246,7 @@ void Matrix<Field2n>::SwitchFormat() {
         data[row][col].SwitchFormat();
       }
     }
-  }
-  else {
+  } else {
     for (size_t col = 0; col < cols; ++col) {
 #pragma omp parallel for
       for (size_t row = 0; row < rows; ++row) {

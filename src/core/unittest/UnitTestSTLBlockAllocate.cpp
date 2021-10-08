@@ -51,8 +51,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestBinInt : public ::testing::Test
-{
+class UnitTestBinInt : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 
@@ -162,10 +161,11 @@ void StringGlobalHeapTest() {
   list<string> myList;
   for (int i = 0; i < MAX_BENCHMARK; i++) {
     string myString("benchmark");
-    myString += "benchmark test benchmark test benchmark test benchmark test benchmark "
-                "test benchmark test benchmark test "
-                "benchmark test benchmark test benchmark test benchmark test benchmark "
-                "test benchmark test benchmark test";
+    myString +=
+        "benchmark test benchmark test benchmark test benchmark test benchmark "
+        "test benchmark test benchmark test "
+        "benchmark test benchmark test benchmark test benchmark test benchmark "
+        "test benchmark test benchmark test";
     myList.push_back(myString);
   }
   myList.clear();
@@ -178,10 +178,11 @@ void StringFixedBlockTest() {
   xlist<xstring> myList;
   for (int i = 0; i < MAX_BENCHMARK; i++) {
     xstring myString("benchmark");
-    myString += "benchmark test benchmark test benchmark test benchmark test benchmark "
-                "test benchmark test benchmark test "
-                "benchmark test benchmark test benchmark test benchmark test benchmark "
-                "test benchmark test benchmark test";
+    myString +=
+        "benchmark test benchmark test benchmark test benchmark test benchmark "
+        "test benchmark test benchmark test "
+        "benchmark test benchmark test benchmark test benchmark test benchmark "
+        "test benchmark test benchmark test";
     myList.push_back(myString);
   }
   myList.clear();

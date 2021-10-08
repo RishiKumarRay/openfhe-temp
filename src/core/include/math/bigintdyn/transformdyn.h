@@ -40,8 +40,7 @@ namespace bigintdyn {
  * @brief Number Theoretic Transform implementation
  */
 template <typename VecType>
-class NumberTheoreticTransformDyn
-{
+class NumberTheoreticTransformDyn {
   using IntType = typename VecType::Integer;
 
  public:
@@ -215,8 +214,7 @@ class NumberTheoreticTransformDyn
  * @brief Golden Chinese Remainder Transform FFT implementation.
  */
 template <typename VecType>
-class ChineseRemainderTransformFTTDyn : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType>
-{
+class ChineseRemainderTransformFTTDyn : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:
@@ -350,8 +348,7 @@ using ModulusRootPair = std::pair<ModulusRoot<IntType>, ModulusRoot<IntType>>;
  * @brief Bluestein Fast Fourier Transform implementation
  */
 template <typename VecType>
-class BluesteinFFTDyn
-{
+class BluesteinFFTDyn {
   using IntType = typename VecType::Integer;
 
  public:
@@ -451,8 +448,7 @@ class BluesteinFFTDyn
  * @brief Chinese Remainder Transform for arbitrary cyclotomics.
  */
 template <typename VecType>
-class ChineseRemainderTransformArbDyn : public lbcrypto::ChineseRemainderTransformArbInterface<VecType>
-{
+class ChineseRemainderTransformArbDyn : public lbcrypto::ChineseRemainderTransformArbInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:

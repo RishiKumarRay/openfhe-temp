@@ -112,8 +112,8 @@
 
 #endif  // PROFILE
 
-#define TIC(t)    t = timeNow()
-#define TOC(t)    duration(timeNow() - t)
+#define TIC(t) t = timeNow()
+#define TOC(t) duration(timeNow() - t)
 #define TOC_NS(t) duration_ns(timeNow() - t)
 #define TOC_US(t) duration_us(timeNow() - t)
 #define TOC_MS(t) duration_ms(timeNow() - t)
@@ -137,8 +137,8 @@
 #define PROFILELOGEXP(x)
 #define PROFILELOGWHERE(x)
 
-#define TIC(t)    t = timeNow()
-#define TOC(t)    std::chrono::steady_clock::duration::zero().count()
+#define TIC(t) t = timeNow()
+#define TOC(t) std::chrono::steady_clock::duration::zero().count()
 #define TOC_NS(t) std::chrono::steady_clock::duration::zero().count()
 #define TOC_US(t) std::chrono::steady_clock::duration::zero().count()
 #define TOC_MS(t) std::chrono::steady_clock::duration::zero().count()
@@ -175,8 +175,8 @@
     }                                                                                         \
   } while (0)
 
-#define TIC(t)    t = timeNow()
-#define TOC(t)    duration(timeNow() - t)
+#define TIC(t) t = timeNow()
+#define TOC(t) duration(timeNow() - t)
 #define TOC_NS(t) duration_ns(timeNow() - t)
 #define TOC_US(t) duration_us(timeNow() - t)
 #define TOC_MS(t) duration_ms(timeNow() - t)
@@ -187,11 +187,11 @@
 
 typedef std::chrono::high_resolution_clock::time_point TimeVar;
 
-#define duration(a)    std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
+#define duration(a) std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
 #define duration_ns(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
 #define duration_us(a) std::chrono::duration_cast<std::chrono::microseconds>(a).count()
 #define duration_ms(a) std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
-#define timeNow()      std::chrono::high_resolution_clock::now()
+#define timeNow() std::chrono::high_resolution_clock::now()
 
 double currentDateTime();
 

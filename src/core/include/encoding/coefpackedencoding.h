@@ -33,8 +33,7 @@
 
 namespace lbcrypto {
 
-class CoefPackedEncoding : public PlaintextImpl
-{
+class CoefPackedEncoding : public PlaintextImpl {
   vector<int64_t> value;
 
  public:
@@ -45,14 +44,14 @@ class CoefPackedEncoding : public PlaintextImpl
 
   CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  CoefPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  CoefPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, vector<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  CoefPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  CoefPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
   virtual ~CoefPackedEncoding() {}
 
@@ -130,7 +129,8 @@ class CoefPackedEncoding : public PlaintextImpl
     out << "(";
     size_t i = value.size();
     while (--i > 0)
-      if (value[i] != 0) break;
+      if (value[i] != 0)
+        break;
 
     for (size_t j = 0; j <= i; j++)
       out << ' ' << value[j];

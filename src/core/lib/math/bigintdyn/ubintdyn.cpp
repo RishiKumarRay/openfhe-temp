@@ -79,9 +79,9 @@ ubint<limb_t>::ubint(const ubint& val) {
   if (val.m_value.size() < 0) {
     PALISADE_THROW(lbcrypto::type_error, "copy size < 0");
   }
-  this->m_MSB   = val.m_MSB;    // copy MSB
+  this->m_MSB = val.m_MSB;      // copy MSB
   this->m_value = val.m_value;  // this occasionally fails may have been
-  m_state       = val.m_state;  // set state
+  m_state = val.m_state;        // set state
 }
 
 template <typename limb_t>
@@ -101,8 +101,8 @@ ubint<limb_t>::ubint(const std::string& strval) {
 template <typename limb_t>
 ubint<limb_t>::ubint(const uint64_t val) {
   uint64_t init = val;  // non const var
-  usint msb     = 0;
-  msb           = lbcrypto::GetMSB64(init);
+  usint msb = 0;
+  msb = lbcrypto::GetMSB64(init);
   if (init <= m_MaxLimb) {
     m_value.push_back((limb_t)init);
   }
@@ -119,7 +119,7 @@ ubint<limb_t>::ubint(const uint64_t val) {
   }
 #endif
   this->m_MSB = msb;
-  m_state     = INITIALIZED;
+  m_state = INITIALIZED;
 }
 
 #if defined(HAVE_INT128)
@@ -128,8 +128,7 @@ ubint<limb_t>::ubint(unsigned __int128 val) {
   m_MSB = lbcrypto::GetMSB(val);
   if (val <= m_MaxLimb) {
     m_value.push_back((limb_t)val);
-  }
-  else {
+  } else {
     usint ceilInt = ceilIntByUInt(m_MSB);
     // setting the values of the array
     this->m_value.reserve(ceilInt);
@@ -150,7 +149,7 @@ ubint<limb_t>::~ubint() {}
 template <typename limb_t>
 const ubint<limb_t>& ubint<limb_t>::operator=(const ubint& val) {
   if (this != &val) {
-    this->m_MSB   = val.m_MSB;
+    this->m_MSB = val.m_MSB;
     this->m_state = val.m_state;
     this->m_value = val.m_value;
   }
@@ -182,8 +181,7 @@ ubint<limb_t> ubint<limb_t>::Add(const ubint& b) const {
   if (*this > b) {
     A = this;
     B = &b;
-  }
-  else {
+  } else {
     A = &b;
     B = this;
   }
@@ -193,8 +191,8 @@ ubint<limb_t> ubint<limb_t>::Add(const ubint& b) const {
   ubint result;
   result.m_value.clear();  // note make sure result has no limbs as we are
                            // adding them below.
-  result.m_state  = INITIALIZED;
-  Dlimb_t ofl     = 0;                        // overflow variable
+  result.m_state = INITIALIZED;
+  Dlimb_t ofl = 0;                            // overflow variable
   limb_t ceilIntA = ceilIntByUInt(A->m_MSB);  // position from A to end addition
   limb_t ceilIntB = ceilIntByUInt(B->m_MSB);  // position from B to end addition
   usint i;
@@ -218,8 +216,7 @@ ubint<limb_t> ubint<limb_t>::Add(const ubint& b) const {
                 // than the one we started with
       result.m_value.push_back(1);
     }
-  }
-  else {  // there is no overflow at the end
+  } else {  // there is no overflow at the end
     for (; i < ceilIntA; ++i) {
       result.m_value.push_back(A->m_value[i]);
     }
@@ -240,18 +237,18 @@ const ubint<limb_t>& ubint<limb_t>::AddEq(const ubint& b) {
     *this = b;
     return (*this);
   }
-  Dlimb_t ofl     = 0;  // overflow variable
+  Dlimb_t ofl = 0;  // overflow variable
   size_t sizeThis = this->m_value.size();
-  size_t sizeB    = b.m_value.size();
+  size_t sizeB = b.m_value.size();
   usint i;
   bool thisIsBigger = sizeThis > sizeB;
-  size_t sizeSmall  = (sizeThis < sizeB) ? sizeThis : sizeB;
+  size_t sizeSmall = (sizeThis < sizeB) ? sizeThis : sizeB;
 
   // loop over limbs low to high till you reach the end of the smaller one
 
   for (i = 0; i < sizeSmall; ++i) {
     // sum of the two int and the carry over
-    ofl              = (Dlimb_t)this->m_value[i] + (Dlimb_t)b.m_value[i] + ofl;
+    ofl = (Dlimb_t)this->m_value[i] + (Dlimb_t)b.m_value[i] + ofl;
     this->m_value[i] = (limb_t)ofl;
     ofl >>= m_limbBitLength;  // current overflow
   }
@@ -261,7 +258,7 @@ const ubint<limb_t>& ubint<limb_t>::AddEq(const ubint& b) {
       // keep looping over the remainder of the larger value
       for (; i < sizeThis; ++i) {
         // sum of the two int and the carry over
-        ofl              = (Dlimb_t)this->m_value[i] + ofl;
+        ofl = (Dlimb_t)this->m_value[i] + ofl;
         this->m_value[i] = (limb_t)ofl;
         ofl >>= m_limbBitLength;  // current overflow
       }
@@ -270,8 +267,7 @@ const ubint<limb_t>& ubint<limb_t>::AddEq(const ubint& b) {
         this->m_value.push_back(1);
       }
     }
-  }
-  else {
+  } else {
     // B is bigger and we have an overflow at the of the shorter word, so we
     // need to
     if (ofl) {
@@ -286,8 +282,7 @@ const ubint<limb_t>& ubint<limb_t>::AddEq(const ubint& b) {
                   // greater than the one we started with
         this->m_value.push_back(1);
       }
-    }
-    else {  // there is no overflow at the end, just copy the rest
+    } else {  // there is no overflow at the end, just copy the rest
       for (; i < sizeB; ++i) {
         this->m_value.push_back(b.m_value[i]);
       }
@@ -318,7 +313,7 @@ ubint<limb_t> ubint<limb_t>::Sub(const ubint& b) const {
     if (result.m_value[i] < b.m_value[i]) {  // carryover condition need to
                                              // borrow from higher limbs.
       current = i;
-      cntr    = current + 1;
+      cntr = current + 1;
       if (cntr >= result.m_value.size()) {
         PALISADE_THROW(lbcrypto::math_error, "error seek past end of result ");
       }
@@ -331,8 +326,7 @@ ubint<limb_t> ubint<limb_t>::Sub(const ubint& b) const {
       result.m_value[cntr]--;
       // and add the it to the current limb
       result.m_value[i] = result.m_value[i] + (m_MaxLimb - b.m_value[i]) + 1;
-    }
-    else {  // usual subtraction condition
+    } else {  // usual subtraction condition
       result.m_value[i] = result.m_value[i] - b.m_value[i];
     }
   }
@@ -361,7 +355,7 @@ const ubint<limb_t>& ubint<limb_t>::SubEq(const ubint& b) {
     if (this->m_value[i] < b.m_value[i]) {  // carryover condition need to
                                             // borrow from higher limbs.
       current = i;
-      cntr    = current + 1;
+      cntr = current + 1;
       // find the first nonzero limb
       if (cntr >= this->m_value.size()) {
         PALISADE_THROW(lbcrypto::math_error, "error seek past end of result ");
@@ -375,8 +369,7 @@ const ubint<limb_t>& ubint<limb_t>::SubEq(const ubint& b) {
       this->m_value[cntr]--;
       // and add the it to the current limb
       this->m_value[i] = this->m_value[i] + (m_MaxLimb - b.m_value[i]) + 1;
-    }
-    else {  // usual subtraction condition
+    } else {  // usual subtraction condition
       this->m_value[i] = this->m_value[i] - b.m_value[i];
     }
   }
@@ -420,14 +413,14 @@ ubint<limb_t> ubint<limb_t>::Mul(const ubint& b) const {
     tmpans.m_value.clear();  // make sure there are no limbs to start.
     Dlimb_t limbb(b.m_value[i]);
     Dlimb_t temp = 0;
-    limb_t ofl   = 0;
-    usint ix     = 0;
+    limb_t ofl = 0;
+    usint ix = 0;
     while (ix < i) {
       tmpans.m_value.push_back(0);  // equivalent of << shift
       ++ix;
     }
 
-    for (auto itr: m_value) {
+    for (auto itr : m_value) {
       temp = ((Dlimb_t)itr * (Dlimb_t)limbb) + ofl;
       tmpans.m_value.push_back((limb_t)temp);
       ofl = temp >> m_limbBitLength;
@@ -467,8 +460,7 @@ ubint<limb_t> ubint<limb_t>::DividedBy(const ubint& b) const {
   }
   if (this->m_state == GARBAGE) {
     PALISADE_THROW(lbcrypto::not_available_error, "DividedBy() Dividend uninitialized");
-  }
-  else if (b == *this) {
+  } else if (b == *this) {
     ubint result(1);
     return result;
   }
@@ -502,8 +494,7 @@ ubint<limb_t> ubint<limb_t>::Exp(usint p) const {
   ubint tmp = x.Exp(p / 2);
   if (p % 2 == 0) {
     return tmp * tmp;
-  }
-  else {
+  } else {
     return tmp * tmp * x;
   }
 }
@@ -520,8 +511,7 @@ const ubint<limb_t>& ubint<limb_t>::ExpEq(usint p) {
   if (p % 2 == 0) {
     (*this) = tmp * tmp;
     return *this;
-  }
-  else {
+  } else {
     (*this) *= tmp * tmp;
     return *this;
   }
@@ -554,8 +544,7 @@ ubint<limb_t> ubint<limb_t>::DivideAndRound(const ubint& q) const {
   if (*this < q) {
     if (*this <= halfQ) {
       return ubint(0);
-    }
-    else {
+    } else {
       return ubint(1);
     }
   }
@@ -618,8 +607,7 @@ ubint<limb_t> ubint<limb_t>::Mod(const ubint& modulus) const {
   if (modulus.m_MSB == 2 && modulus.m_value[0] == 2) {
     if (this->m_value[0] % 2 == 0) {
       return ubint(0);
-    }
-    else {
+    } else {
       return ubint(1);
     }
   }
@@ -663,8 +651,7 @@ ubint<limb_t> ubint<limb_t>::Mod(const ubint& modulus) const {
     initial_shift = j.m_MSB - result.m_MSB + 1;
     if (result.m_MSB - 1 >= modulus.m_MSB) {
       j >>= initial_shift;
-    }
-    else {
+    } else {
       j = modulus;
     }
   }
@@ -701,8 +688,7 @@ const ubint<limb_t>& ubint<limb_t>::ModEq(const ubint& modulus) {
   if (modulus.m_MSB == 2 && modulus.m_value[0] == 2) {
     if (this->m_value[0] % 2 == 0) {
       return *this = 0;
-    }
-    else {
+    } else {
       return *this = 1;
     }
   }
@@ -719,7 +705,7 @@ const ubint<limb_t>& ubint<limb_t>::ModEq(const ubint& modulus) {
   }
   ans.NormalizeLimbs();
   ans.SetMSB();
-  ans.m_state  = INITIALIZED;
+  ans.m_state = INITIALIZED;
   return *this = ans;
 #else  // radically slow for 64 bit version.
   int initial_shift = 0;
@@ -747,8 +733,7 @@ const ubint<limb_t>& ubint<limb_t>::ModEq(const ubint& modulus) {
     initial_shift = j.m_MSB - result.m_MSB + 1;
     if (result.m_MSB - 1 >= modulus.m_MSB) {
       j >>= initial_shift;
-    }
-    else {
+    } else {
       j = modulus;
     }
   }
@@ -780,9 +765,9 @@ ubint<limb_t> ubint<limb_t>::Mod(const ubint& modulus, const ubint& mu) const {
   ubint z(*this);
   ubint q(*this);
 
-  usint n     = modulus.m_MSB;
+  usint n = modulus.m_MSB;
   usint alpha = n + 3;
-  int beta    = -2;
+  int beta = -2;
 
   q >>= n + beta;
   q *= mu;
@@ -807,9 +792,9 @@ const ubint<limb_t>& ubint<limb_t>::ModEq(const ubint& modulus, const ubint& mu)
   }
   ubint q(*this);
 
-  usint n     = modulus.m_MSB;
+  usint n = modulus.m_MSB;
   usint alpha = n + 3;
-  int beta    = -2;
+  int beta = -2;
 
   q >>= n + beta;
   q *= mu;
@@ -892,8 +877,7 @@ ubint<limb_t> ubint<limb_t>::ModSub(const ubint& b, const ubint& modulus) const 
   if (a >= b_op) {
     a.SubEq(b_op);
     a.ModEq(modulus);
-  }
-  else {
+  } else {
     a.AddEq(modulus);
     a.SubEq(b_op);
   }
@@ -912,8 +896,7 @@ const ubint<limb_t>& ubint<limb_t>::ModSubEq(const ubint& b, const ubint& modulu
   if (*this >= b_op) {
     this->SubEq(b_op);
     this->ModEq(modulus);
-  }
-  else {
+  } else {
     this->AddEq(modulus);
     this->SubEq(b_op);
   }
@@ -926,8 +909,7 @@ ubint<limb_t> ubint<limb_t>::ModSubFast(const ubint& b, const ubint& modulus) co
   if (a >= b) {
     a.SubEq(b);
     a.ModEq(modulus);
-  }
-  else {
+  } else {
     a.AddEq(modulus);
     a.SubEq(b);
   }
@@ -939,8 +921,7 @@ const ubint<limb_t>& ubint<limb_t>::ModSubFastEq(const ubint& b, const ubint& mo
   if (*this >= b) {
     this->SubEq(b);
     this->ModEq(modulus);
-  }
-  else {
+  } else {
     this->AddEq(modulus);
     this->SubEq(b);
   }
@@ -960,8 +941,7 @@ ubint<limb_t> ubint<limb_t>::ModSub(const ubint& b, const ubint& modulus, const 
   if (a >= b_op) {
     a.SubEq(b_op);
     a.ModEq(modulus, mu);
-  }
-  else {
+  } else {
     a.AddEq(modulus);
     a.SubEq(b_op);
   }
@@ -980,8 +960,7 @@ const ubint<limb_t>& ubint<limb_t>::ModSubEq(const ubint& b, const ubint& modulu
   if (*this >= b_op) {
     this->SubEq(b_op);
     this->ModEq(modulus, mu);
-  }
-  else {
+  } else {
     this->AddEq(modulus);
     this->SubEq(b_op);
   }
@@ -1021,14 +1000,14 @@ ubint<limb_t> ubint<limb_t>::ModMul(const ubint& b, const ubint& modulus) const 
     tmpans.m_value.clear();  // make sure there are no limbs to start.
     Dlimb_t limbb(b.m_value[i]);
     Dlimb_t temp = 0;
-    limb_t ofl   = 0;
-    usint ix     = 0;
+    limb_t ofl = 0;
+    usint ix = 0;
     while (ix < i) {
       tmpans.m_value.push_back(0);  // equivalent of << shift
       ++ix;
     }
 
-    for (auto itr: a.m_value) {
+    for (auto itr : a.m_value) {
       temp = ((Dlimb_t)itr * (Dlimb_t)limbb) + ofl;
       tmpans.m_value.push_back((limb_t)temp);
       ofl = temp >> a.m_limbBitLength;
@@ -1130,8 +1109,7 @@ ubint<limb_t> ubint<limb_t>::ModInverse(const ubint& modulus) const {
   ubint second;
   if (*this > modulus) {
     second = Mod(modulus);
-  }
-  else {
+  } else {
     second = *this;
   }
   if (second == 0) {
@@ -1144,7 +1122,7 @@ ubint<limb_t> ubint<limb_t>::ModInverse(const ubint& modulus) const {
   // NORTH ALGORITHM
   ubint first(modulus);
   ubint mod_back = first.Mod(second);
-  std::vector<ubint> quotient{ first.DividedBy(second) };
+  std::vector<ubint> quotient{first.DividedBy(second)};
 
   // the max number of iterations should be < 2^k where k ==  min(bitsize
   // (inputs))
@@ -1155,20 +1133,20 @@ ubint<limb_t> ubint<limb_t>::ModInverse(const ubint& modulus) const {
       PALISADE_THROW(lbcrypto::math_error,
                      this->ToString() + " does not have a ModInverse using " + modulus.ToString());
     }
-    first    = second;
-    second   = mod_back;
+    first = second;
+    second = mod_back;
     mod_back = first.Mod(second);
     // second != 0, since we throw if mod_back == 0
     quotient.push_back(first.DividedBy(second));
   }
 
   // SOUTH ALGORITHM
-  first  = 0;
+  first = 0;
   second = 1;
   for (int i = quotient.size() - 1; i >= 0; i--) {
     mod_back = quotient[i] * second + first;
-    first    = second;
-    second   = mod_back;
+    first = second;
+    second = mod_back;
   }
   if (quotient.size() % 2 == 1) {
     return modulus - mod_back;
@@ -1263,13 +1241,12 @@ ubint<limb_t> ubint<limb_t>::LShift(usshort shift) const {
       temp = ans.m_value[i];
       temp <<= remainingShift;
       ans.m_value[i] = (limb_t)temp + oFlow;
-      oFlow          = temp >> m_limbBitLength;
+      oFlow = temp >> m_limbBitLength;
     }
     if (oFlow) {  // there is an overflow set of bits.
       if (i < ans.m_value.size()) {
         ans.m_value[i] = oFlow;
-      }
-      else {
+      } else {
         ans.m_value.push_back(oFlow);
       }
     }
@@ -1304,9 +1281,8 @@ const ubint<limb_t>& ubint<limb_t>::LShiftEq(usshort shift) {
   }
   if (this->m_MSB == 0) {
     return *this;
-  }
-  else {
-    usint shiftByLimb     = shift >> m_log2LimbBitLength;     // compute the number of whole limb shifts
+  } else {
+    usint shiftByLimb = shift >> m_log2LimbBitLength;         // compute the number of whole limb shifts
     limb_t remainingShift = (shift & (m_limbBitLength - 1));  // compute the remaining number of bits to shift
 
     // first shift by the # remainingShift bits
@@ -1319,13 +1295,12 @@ const ubint<limb_t>& ubint<limb_t>::LShiftEq(usshort shift) {
         temp = m_value[i];
         temp <<= remainingShift;
         m_value[i] = (limb_t)temp + oFlow;
-        oFlow      = temp >> m_limbBitLength;
+        oFlow = temp >> m_limbBitLength;
       }
       if (oFlow) {  // there is an overflow set of bits.
         if (i < m_value.size()) {
           m_value[i] = oFlow;
-        }
-        else {
+        } else {
           m_value.push_back(oFlow);
         }
       }
@@ -1364,7 +1339,7 @@ ubint<limb_t> ubint<limb_t>::RShift(usshort shift) const {
   }
 
   ubint ans(*this);
-  usint shiftByLimb     = shift >> m_log2LimbBitLength;
+  usint shiftByLimb = shift >> m_log2LimbBitLength;
   limb_t remainingShift = (shift & (m_limbBitLength - 1));
   if (shiftByLimb != 0) {
     for (auto i = shiftByLimb; i < ans.m_value.size(); ++i) {
@@ -1381,13 +1356,13 @@ ubint<limb_t> ubint<limb_t>::RShift(usshort shift) const {
   if (remainingShift != 0) {
     limb_t overFlow = 0;
     limb_t oldVal;
-    limb_t maskVal      = (1 << (remainingShift)) - 1;
+    limb_t maskVal = (1 << (remainingShift)) - 1;
     limb_t compShiftVal = m_limbBitLength - remainingShift;
-    usint startVal      = ceilIntByUInt(ans.m_MSB);
+    usint startVal = ceilIntByUInt(ans.m_MSB);
     // perform shifting by bits by calculating the overflow
     // oveflow is added after the shifting operation
     for (int i = startVal - 1; i >= 0; i--) {
-      oldVal         = ans.m_value[i];
+      oldVal = ans.m_value[i];
       ans.m_value[i] = (ans.m_value[i] >> remainingShift) + overFlow;
 
       overFlow = (oldVal & maskVal);
@@ -1442,12 +1417,12 @@ const ubint<limb_t>& ubint<limb_t>::RShiftEq(usshort shift) {
   if (remainingShift != 0) {
     limb_t overFlow = 0;
     limb_t oldVal;
-    limb_t maskVal      = (1 << (remainingShift)) - 1;
+    limb_t maskVal = (1 << (remainingShift)) - 1;
     limb_t compShiftVal = m_limbBitLength - remainingShift;
 
     usint startVal = ceilIntByUInt(this->m_MSB);
     for (int i = startVal - 1; i >= 0; i--) {
-      oldVal           = this->m_value[i];
+      oldVal = this->m_value[i];
       this->m_value[i] = (this->m_value[i] >> remainingShift) + overFlow;
 
       overFlow = (oldVal & maskVal);
@@ -1470,16 +1445,14 @@ inline int ubint<limb_t>::Compare(const ubint& a) const {
   }
   if (this->m_MSB < a.m_MSB) {
     return -1;
-  }
-  else if (this->m_MSB > a.m_MSB) {
+  } else if (this->m_MSB > a.m_MSB) {
     return 1;
   }
   if (this->m_MSB == a.m_MSB) {
     for (int i = m_value.size() - 1; i >= 0; i--) {
       if (this->m_value[i] > a.m_value[i]) {  // b>a
         return 1;
-      }
-      else if (this->m_value[i] < a.m_value[i]) {  // a>b
+      } else if (this->m_value[i] < a.m_value[i]) {  // a>b
         return -1;
       }
     }
@@ -1499,8 +1472,7 @@ float ubint<limb_t>::ConvertToFloat() const {
   float ans;
   try {
     ans = std::stof(this->ToString());
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     PALISADE_THROW(lbcrypto::type_error, "ConvertToFloat() parse error converting to float");
     ans = -1.0;  // TODO: this signifies an error...
   }
@@ -1518,14 +1490,13 @@ inline double ubint<limb_t>::ConvertToDouble() const {
     // ans = std::stod(this->ToString());
     usint ceilInt = ceilIntByUInt(m_MSB);
     double factor = pow(2.0, m_limbBitLength);
-    double power  = 1.0;
+    double power = 1.0;
     // copy the values by shift and add
     for (usint i = 0; i < ceilInt; i++) {
       ans += this->m_value[i] * power;
       power *= factor;
     }
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     PALISADE_THROW(lbcrypto::type_error, "ConvertToDouble() parse error converting to double");
     ans = -1.0;
   }
@@ -1541,8 +1512,7 @@ long double ubint<limb_t>::ConvertToLongDouble() const {
   long double ans;
   try {
     ans = std::stold(this->ToString());
-  }
-  catch (const std::exception& e) {
+  } catch (const std::exception& e) {
     PALISADE_THROW(lbcrypto::type_error, "ConvertToLongDouble() parse error converting to long double");
     ans = -1.0;
   }
@@ -1570,7 +1540,7 @@ ubint<limb_t> ubint<limb_t>::FromBinaryString(const std::string& vin) {
 
   ubint value;
   value.m_value.clear();  // clear out all limbs
-  usint len  = v.length();
+  usint len = v.length();
   usint cntr = ceilIntByUInt(len);
   std::string val;
   Dlimb_t partial_value = 0;
@@ -1578,8 +1548,7 @@ ubint<limb_t> ubint<limb_t>::FromBinaryString(const std::string& vin) {
   for (usint i = 0; i < cntr; i++) {  // loop over limbs
     if (len > ((i + 1) * m_limbBitLength)) {
       val = v.substr((len - (i + 1) * m_limbBitLength), m_limbBitLength);
-    }
-    else {
+    } else {
       val = v.substr(0, len % m_limbBitLength);
     }
     for (usint j = 0; j < val.length(); j++) {
@@ -1623,7 +1592,7 @@ bool ubint<limb_t>::isPowerOfTwo(const ubint& m_numToCheck) {
 template <typename limb_t>
 usint ubint<limb_t>::GetDigitAtIndexForBase(usint index, usint base) const {
   usint DigitLen = ceil(log2(base));
-  usint digit    = 0;
+  usint digit = 0;
   usint newIndex = 1 + (index - 1) * DigitLen;
   for (usint i = 1; i < base; i = i * 2) {
     digit += GetBitAtIndex(newIndex) * i;
@@ -1663,9 +1632,9 @@ inline ubint<limb_t> ubint<limb_t>::MulIntegerByLimb(limb_t b) const {
   ubint ans;
   ans.m_value.clear();  // make sure there are no limbs to start.
   size_t endVal = this->m_value.size();
-  Dlimb_t temp  = 0;
-  limb_t ofl    = 0;
-  size_t i      = 0;
+  Dlimb_t temp = 0;
+  limb_t ofl = 0;
+  size_t i = 0;
   for (; i < endVal; ++i) {
     temp = ((Dlimb_t)m_value[i] * (Dlimb_t)b) + ofl;
     ans.m_value.push_back((limb_t)temp);
@@ -1816,8 +1785,8 @@ inline int nlz32(uint32_t x) {  // todo: needs to be flexible.
 // returns quotient and remainder
 template <typename limb_t>
 int ubint<limb_t>::divqr_vect(ubint& qin, ubint& rin, const ubint& uin, const ubint& vin) const {
-  vector<limb_t>& q       = (qin.m_value);
-  vector<limb_t>& r       = (rin.m_value);
+  vector<limb_t>& q = (qin.m_value);
+  vector<limb_t>& r = (rin.m_value);
   const vector<limb_t>& u = (uin.m_value);
   const vector<limb_t>& v = (vin.m_value);
 
@@ -1826,8 +1795,8 @@ int ubint<limb_t>::divqr_vect(ubint& qin, ubint& rin, const ubint& uin, const ub
 
   q.resize(m - n + 1);
 
-  const Dlimb_t ffs = (Dlimb_t)m_MaxLimb;      // Number  (2**64)-1.
-  const Dlimb_t b   = (Dlimb_t)m_MaxLimb + 1;  // Number base (2**64).
+  const Dlimb_t ffs = (Dlimb_t)m_MaxLimb;    // Number  (2**64)-1.
+  const Dlimb_t b = (Dlimb_t)m_MaxLimb + 1;  // Number base (2**64).
 
   Dlimb_t qhat;  // Estimated quotient digit.
   Dlimb_t rhat;  // A remainder.64
@@ -1843,7 +1812,7 @@ int ubint<limb_t>::divqr_vect(ubint& qin, ubint& rin, const ubint& uin, const ub
     k = 0;                           // the case of a
     for (j = m - 1; j >= 0; j--) {   // single-digit
       q[j] = (k * b + u[j]) / v[0];  // divisor here.
-      k    = (k * b + u[j]) - q[j] * v[0];
+      k = (k * b + u[j]) - q[j] * v[0];
     }
     if (r.size() != 0) {
       r[0] = k;
@@ -1892,21 +1861,21 @@ int ubint<limb_t>::divqr_vect(ubint& qin, ubint& rin, const ubint& uin, const ub
       p = qhat * vn[i];
       // t = un[i+j] - k - (p & 0xFFFFFFFFLL);
       // t = un[i+j] - k - (p & 0xFFFFFFFFFFFFFFFFLL);
-      t         = un[i + j] - k - (p & ffs);
+      t = un[i + j] - k - (p & ffs);
       un[i + j] = t;
-      k         = (p >> m_limbBitLength) - (t >> m_limbBitLength);
+      k = (p >> m_limbBitLength) - (t >> m_limbBitLength);
     }
-    t         = un[j + n] - k;
+    t = un[j + n] - k;
     un[j + n] = t;
 
     q[j] = qhat;        // Store quotient digit.
     if (t < 0) {        // If we subtracted too
       q[j] = q[j] - 1;  // much, add back.
-      k    = 0;
+      k = 0;
       for (i = 0; i < n; i++) {
-        t         = (Dlimb_t)un[i + j] + vn[i] + k;
+        t = (Dlimb_t)un[i + j] + vn[i] + k;
         un[i + j] = t;
-        k         = t >> m_limbBitLength;
+        k = t >> m_limbBitLength;
       }
       un[j + n] = un[j + n] + k;
     }
@@ -1924,7 +1893,7 @@ int ubint<limb_t>::divqr_vect(ubint& qin, ubint& rin, const ubint& uin, const ub
 // quotient only
 template <typename limb_t>
 int ubint<limb_t>::divq_vect(ubint& qin, const ubint& uin, const ubint& vin) const {
-  vector<limb_t>& q       = (qin.m_value);
+  vector<limb_t>& q = (qin.m_value);
   const vector<limb_t>& u = (uin.m_value);
   const vector<limb_t>& v = (vin.m_value);
 
@@ -1933,8 +1902,8 @@ int ubint<limb_t>::divq_vect(ubint& qin, const ubint& uin, const ubint& vin) con
 
   q.resize(m - n + 1);
 
-  const Dlimb_t ffs = (Dlimb_t)m_MaxLimb;      // Number  (2**64)-1.
-  const Dlimb_t b   = (Dlimb_t)m_MaxLimb + 1;  // Number base (2**64).
+  const Dlimb_t ffs = (Dlimb_t)m_MaxLimb;    // Number  (2**64)-1.
+  const Dlimb_t b = (Dlimb_t)m_MaxLimb + 1;  // Number base (2**64).
 
   Dlimb_t qhat;  // Estimated quotient digit.
   Dlimb_t rhat;  // A remainder.64
@@ -1950,7 +1919,7 @@ int ubint<limb_t>::divq_vect(ubint& qin, const ubint& uin, const ubint& vin) con
     k = 0;                           // the case of a
     for (j = m - 1; j >= 0; j--) {   // single-digit
       q[j] = (k * b + u[j]) / v[0];  // divisor here.
-      k    = (k * b + u[j]) - q[j] * v[0];
+      k = (k * b + u[j]) - q[j] * v[0];
     }
     return 0;
   }
@@ -1996,21 +1965,21 @@ int ubint<limb_t>::divq_vect(ubint& qin, const ubint& uin, const ubint& vin) con
       p = qhat * vn[i];
       // t = un[i+j] - k - (p & 0xFFFFFFFFLL);
       // t = un[i+j] - k - (p & 0xFFFFFFFFFFFFFFFFLL);
-      t         = un[i + j] - k - (p & ffs);
+      t = un[i + j] - k - (p & ffs);
       un[i + j] = t;
-      k         = (p >> m_limbBitLength) - (t >> m_limbBitLength);
+      k = (p >> m_limbBitLength) - (t >> m_limbBitLength);
     }
-    t         = un[j + n] - k;
+    t = un[j + n] - k;
     un[j + n] = t;
 
     q[j] = qhat;        // Store quotient digit.
     if (t < 0) {        // If we subtracted too
       q[j] = q[j] - 1;  // much, add back.
-      k    = 0;
+      k = 0;
       for (i = 0; i < n; i++) {
-        t         = (Dlimb_t)un[i + j] + vn[i] + k;
+        t = (Dlimb_t)un[i + j] + vn[i] + k;
         un[i + j] = t;
-        k         = t >> m_limbBitLength;
+        k = t >> m_limbBitLength;
       }
       un[j + n] = un[j + n] + k;
     }
@@ -2022,24 +1991,24 @@ int ubint<limb_t>::divq_vect(ubint& qin, const ubint& uin, const ubint& vin) con
 template <typename limb_t>
 int ubint<limb_t>::divr_vect(ubint& rin, const ubint& uin, const ubint& vin) const {
 #ifdef OLD_DIV
-  vector<limb_t>& r       = (rin.m_value);
+  vector<limb_t>& r = (rin.m_value);
   const vector<limb_t>& u = (uin.m_value);
   const vector<limb_t>& v = (vin.m_value);
 
   int m = u.size();
   int n = v.size();
 #else
-  vector<limb_t>& r       = (rin.m_value);
-  limb_t const* u         = (uin.m_value.data());
+  vector<limb_t>& r = (rin.m_value);
+  limb_t const* u = (uin.m_value.data());
   const vector<limb_t>& v = (vin.m_value);
 
-  int m    = uin.m_value.size();
-  int n    = v.size();
+  int m = uin.m_value.size();
+  int n = v.size();
 
 #endif
 
-  const Dlimb_t ffs = (Dlimb_t)m_MaxLimb;      // Number  (2**64)-1.
-  const Dlimb_t b   = (Dlimb_t)m_MaxLimb + 1;  // Number base (2**64).
+  const Dlimb_t ffs = (Dlimb_t)m_MaxLimb;    // Number  (2**64)-1.
+  const Dlimb_t b = (Dlimb_t)m_MaxLimb + 1;  // Number base (2**64).
 
   Dlimb_t qhat;  // Estimated quotient digit.
   Dlimb_t rhat;  // A remainder.64
@@ -2058,7 +2027,7 @@ int ubint<limb_t>::divr_vect(ubint& rin, const ubint& uin, const ubint& vin) con
     k = 0;                           // the case of a
     for (j = m - 1; j >= 0; j--) {   // single-digit
       q[j] = (k * b + u[j]) / v[0];  // divisor here.
-      k    = (k * b + u[j]) - q[j] * v[0];
+      k = (k * b + u[j]) - q[j] * v[0];
     }
     r.resize(n);
     r[0] = k;
@@ -2108,11 +2077,11 @@ int ubint<limb_t>::divr_vect(ubint& rin, const ubint& uin, const ubint& vin) con
       p = qhat * vn[i];
       // t = un[i+j] - k - (p & 0xFFFFFFFFLL);
       // t = un[i+j] - k - (p & 0xFFFFFFFFFFFFFFFFLL);
-      t         = un[i + j] - k - (p & ffs);
+      t = un[i + j] - k - (p & ffs);
       un[i + j] = t;
-      k         = (p >> m_limbBitLength) - (t >> m_limbBitLength);
+      k = (p >> m_limbBitLength) - (t >> m_limbBitLength);
     }
-    t         = un[j + n] - k;
+    t = un[j + n] - k;
     un[j + n] = t;
 
     // q[j] = qhat;              // Store quotient digit.
@@ -2120,9 +2089,9 @@ int ubint<limb_t>::divr_vect(ubint& rin, const ubint& uin, const ubint& vin) con
       // q[j] = q[j] - 1;       // much, add back.
       k = 0;
       for (i = 0; i < n; i++) {
-        t         = (Dlimb_t)un[i + j] + vn[i] + k;
+        t = (Dlimb_t)un[i + j] + vn[i] + k;
         un[i + j] = t;
-        k         = t >> m_limbBitLength;
+        k = t >> m_limbBitLength;
       }
       un[j + n] = un[j + n] + k;
     }
@@ -2154,8 +2123,7 @@ usint ubint<limb_t>::ceilIntByUInt(const limb_t Number) {
 
   if ((Number & mask) != 0) {
     return (Number >> m_log2LimbBitLength) + 1;
-  }
-  else {
+  } else {
     return Number >> m_log2LimbBitLength;
   }
 }
@@ -2184,11 +2152,10 @@ void ubint<limb_t>::double_bitVal(uschar* a) {
     *(a + i) <<= 1;
     if (*(a + i) > 9) {
       *(a + i) = *(a + i) - 10 + ofl;
-      ofl      = 1;
-    }
-    else {
+      ofl = 1;
+    } else {
       *(a + i) = *(a + i) + ofl;
-      ofl      = 0;
+      ofl = 0;
     }
   }
 }
@@ -2201,7 +2168,7 @@ void ubint<limb_t>::add_bitVal(uschar* a, uschar b) {
     *(a + i) += ofl;
     if (*(a + i) > 9) {
       *(a + i) = 0;
-      ofl      = 1;
+      ofl = 1;
     }
   }
 }
@@ -2298,8 +2265,7 @@ void ubint<limb_t>::NormalizeLimbs(void) {
     if (!this->m_value.back()) {
       this->m_value.pop_back();
       // std::cout<<"popped "<<std::endl;
-    }
-    else {
+    } else {
       break;
     }
   }
@@ -2311,17 +2277,16 @@ uschar ubint<limb_t>::GetBitAtIndex(usint index) const {
   if (index <= 0) {
     std::cout << "Invalid index \n";
     return 0;
-  }
-  else if (index > m_MSB) {
+  } else if (index > m_MSB) {
     return 0;
   }
   limb_t result;
   // idx is the index of the character array
-  int idx     = ceilIntByUInt(index) - 1;
+  int idx = ceilIntByUInt(index) - 1;
   limb_t temp = this->m_value[idx];
   // bmask is the bit number in the 8 bit array
   limb_t bmask_counter = index % m_limbBitLength == 0 ? m_limbBitLength : index % m_limbBitLength;
-  limb_t bmask         = 1;
+  limb_t bmask = 1;
   for (size_t i = 1; i < bmask_counter; i++) {
     bmask <<= 1;  // generate the bitmask number
   }

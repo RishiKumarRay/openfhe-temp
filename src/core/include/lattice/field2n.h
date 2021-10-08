@@ -39,8 +39,7 @@ namespace lbcrypto {
  * @class Field2n
  * @brief A class to represent field elements with power-of-2 dimension.
  */
-class Field2n : public std::vector<std::complex<double>>, public Serializable
-{
+class Field2n : public std::vector<std::complex<double>>, public Serializable {
  public:
   /**
    * @brief Default Constructor
@@ -57,8 +56,8 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable
    * @param initializeElementToZero flag for initializing values to zero.  It is
    * set to false by default.
    */
-  Field2n(int size, Format f = Format::EVALUATION, bool initializeElementToZero = false) :
-      std::vector<std::complex<double>>(size, initializeElementToZero ? 0 : -std::numeric_limits<double>::max()) {
+  Field2n(int size, Format f = Format::EVALUATION, bool initializeElementToZero = false)
+      : std::vector<std::complex<double>>(size, initializeElementToZero ? 0 : -std::numeric_limits<double>::max()) {
     this->format = f;
   }
 
@@ -323,9 +322,8 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::base_class<std::vector<std::complex<double>>>(this));
     ar(::cereal::make_nvp("f", format));

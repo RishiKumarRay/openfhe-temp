@@ -75,8 +75,7 @@ struct Log2<2> {
   static const usint value = 1;
 };
 
-class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
-{
+class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
  public:
   // CONSTRUCTORS
 
@@ -242,8 +241,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
   const myZZ& SubEq(const myZZ& b) {
     if (*this < b) {
       *this = ZZ(0);
-    }
-    else {
+    } else {
       *static_cast<ZZ*>(this) -= static_cast<const ZZ&>(b);
     }
     return *this;
@@ -498,8 +496,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
     if (newthis >= newb) {
       myZZ tmp(SubMod(newthis, newb, modulus));  // normal mod sub
       return tmp;
-    }
-    else {
+    } else {
       myZZ tmp(newthis + modulus - newb);  // signed mod
       return tmp;
     }
@@ -520,8 +517,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
     if (*this >= newb) {
       SubMod(*this, *this, newb, modulus);  // normal mod sub
       return *this;
-    }
-    else {
+    } else {
       this->AddEq(modulus);
       this->SubEq(newb);  // signed mod
       return *this;
@@ -538,8 +534,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
   myZZ ModSubFast(const myZZ& b, const myZZ& modulus) const {
     if (*this >= b) {
       return SubMod(*this, b, modulus);  // normal mod sub
-    }
-    else {
+    } else {
       return (*this + modulus - b);  // signed mod
     }
   }
@@ -554,8 +549,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
   const myZZ& ModSubFastEq(const myZZ& b, const myZZ& modulus) {
     if (*this >= b) {
       return *this = SubMod(*this, b, modulus);  // normal mod sub
-    }
-    else {
+    } else {
       return *this = (*this + modulus - b);  // signed mod
     }
   }
@@ -574,8 +568,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
     if (newthis >= newb) {
       myZZ tmp(SubMod(newthis, newb, modulus));  // normal mod sub
       return tmp;
-    }
-    else {
+    } else {
       myZZ tmp(newthis + modulus - newb);  // signed mod
       return tmp;
     }
@@ -595,8 +588,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
     if (*this >= newb) {
       SubMod(*this, *this, newb, modulus);  // normal mod sub
       return *this;
-    }
-    else {
+    } else {
       this->AddEq(modulus);
       this->SubEq(newb);  // signed mod
       return *this;
@@ -747,9 +739,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
     myZZ tmp(0);
     try {
       tmp = InvMod(*this % modulus, modulus);
-    }
-    catch (InvModErrorObject& e) {  // note this code requires NTL Excptions coto be turned
-                                    // on. TODO: provide alternative when that is off.
+    } catch (InvModErrorObject& e) {  // note this code requires NTL Excptions coto be turned
+                                      // on. TODO: provide alternative when that is off.
       std::stringstream errmsg;
       errmsg << "ModInverse exception "
              << " this: " << *this << " modulus: " << modulus << "GCD(" << e.get_a() << "," << e.get_n() << "!=1"
@@ -771,9 +762,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
     }
     try {
       *this = InvMod(*this % modulus, modulus);
-    }
-    catch (InvModErrorObject& e) {  // note this code requires NTL Excptions coto be turned
-                                    // on. TODO: provide alternative when that is off.
+    } catch (InvModErrorObject& e) {  // note this code requires NTL Excptions coto be turned
+                                      // on. TODO: provide alternative when that is off.
       std::stringstream errmsg;
       errmsg << "ModInverse exception "
              << " this: " << *this << " modulus: " << modulus << "GCD(" << e.get_a() << "," << e.get_n() << "!=1"
@@ -948,13 +938,12 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     void* data = this->rep.rep;
     size_t len = 0;
     if (data == nullptr) {
       ar(::cereal::binary_data(&len, sizeof(len)));
-    }
-    else {
+    } else {
       len = _ntl_ALLOC(this->rep.rep);
 
       ar(::cereal::binary_data(&len, sizeof(len)));
@@ -965,17 +954,16 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", ToString()));
   }
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     size_t len;
     ar(::cereal::binary_data(&len, sizeof(len)));
@@ -995,11 +983,10 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     std::string s;
     ar(::cereal::make_nvp("v", s));

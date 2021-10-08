@@ -84,8 +84,7 @@ typedef shared_ptr<const PlaintextImpl> ConstPlaintext;
 
 enum PtxtPolyType { IsPoly, IsDCRTPoly, IsNativePoly };
 
-class PlaintextImpl
-{
+class PlaintextImpl {
  protected:
   bool isEncoded;
   PtxtPolyType typeFlag;
@@ -95,9 +94,9 @@ class PlaintextImpl
   mutable NativePoly encodedNativeVector;
   mutable DCRTPoly encodedVectorDCRT;
 
-  static const int intCTOR     = 0x01;
-  static const int vecintCTOR  = 0x02;
-  static const int fracCTOR    = 0x04;
+  static const int intCTOR = 0x01;
+  static const int vecintCTOR = 0x02;
+  static const int fracCTOR = 0x04;
   static const int vecuintCTOR = 0x08;
 
   double scalingFactor;
@@ -105,53 +104,53 @@ class PlaintextImpl
   size_t depth;
 
  public:
-  PlaintextImpl(shared_ptr<Poly::Params> vp, EncodingParams ep, bool isEncoded = false) :
-      isEncoded(isEncoded),
-      typeFlag(IsPoly),
-      encodingParams(ep),
-      encodedVector(vp, Format::COEFFICIENT),
-      scalingFactor(1),
-      level(0),
-      depth(1) {}
+  PlaintextImpl(shared_ptr<Poly::Params> vp, EncodingParams ep, bool isEncoded = false)
+      : isEncoded(isEncoded),
+        typeFlag(IsPoly),
+        encodingParams(ep),
+        encodedVector(vp, Format::COEFFICIENT),
+        scalingFactor(1),
+        level(0),
+        depth(1) {}
 
-  PlaintextImpl(shared_ptr<NativePoly::Params> vp, EncodingParams ep, bool isEncoded = false) :
-      isEncoded(isEncoded),
-      typeFlag(IsNativePoly),
-      encodingParams(ep),
-      encodedNativeVector(vp, Format::COEFFICIENT),
-      scalingFactor(1),
-      level(0),
-      depth(1) {}
+  PlaintextImpl(shared_ptr<NativePoly::Params> vp, EncodingParams ep, bool isEncoded = false)
+      : isEncoded(isEncoded),
+        typeFlag(IsNativePoly),
+        encodingParams(ep),
+        encodedNativeVector(vp, Format::COEFFICIENT),
+        scalingFactor(1),
+        level(0),
+        depth(1) {}
 
-  PlaintextImpl(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, bool isEncoded = false) :
-      isEncoded(isEncoded),
-      typeFlag(IsDCRTPoly),
-      encodingParams(ep),
-      encodedVector(vp, Format::COEFFICIENT),
-      encodedVectorDCRT(vp, Format::COEFFICIENT),
-      scalingFactor(1),
-      level(0),
-      depth(1) {}
+  PlaintextImpl(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, bool isEncoded = false)
+      : isEncoded(isEncoded),
+        typeFlag(IsDCRTPoly),
+        encodingParams(ep),
+        encodedVector(vp, Format::COEFFICIENT),
+        encodedVectorDCRT(vp, Format::COEFFICIENT),
+        scalingFactor(1),
+        level(0),
+        depth(1) {}
 
-  PlaintextImpl(const PlaintextImpl& rhs) :
-      isEncoded(rhs.isEncoded),
-      typeFlag(rhs.typeFlag),
-      encodingParams(rhs.encodingParams),
-      encodedVector(rhs.encodedVector),
-      encodedVectorDCRT(rhs.encodedVectorDCRT),
-      scalingFactor(rhs.scalingFactor),
-      level(rhs.level),
-      depth(rhs.depth) {}
+  PlaintextImpl(const PlaintextImpl& rhs)
+      : isEncoded(rhs.isEncoded),
+        typeFlag(rhs.typeFlag),
+        encodingParams(rhs.encodingParams),
+        encodedVector(rhs.encodedVector),
+        encodedVectorDCRT(rhs.encodedVectorDCRT),
+        scalingFactor(rhs.scalingFactor),
+        level(rhs.level),
+        depth(rhs.depth) {}
 
-  PlaintextImpl(const PlaintextImpl&& rhs) :
-      isEncoded(rhs.isEncoded),
-      typeFlag(rhs.typeFlag),
-      encodingParams(std::move(rhs.encodingParams)),
-      encodedVector(std::move(rhs.encodedVector)),
-      encodedVectorDCRT(std::move(rhs.encodedVectorDCRT)),
-      scalingFactor(rhs.scalingFactor),
-      level(rhs.level),
-      depth(rhs.depth) {}
+  PlaintextImpl(const PlaintextImpl&& rhs)
+      : isEncoded(rhs.isEncoded),
+        typeFlag(rhs.typeFlag),
+        encodingParams(std::move(rhs.encodingParams)),
+        encodedVector(std::move(rhs.encodedVector)),
+        encodedVectorDCRT(std::move(rhs.encodedVectorDCRT)),
+        scalingFactor(rhs.scalingFactor),
+        level(rhs.level),
+        depth(rhs.depth) {}
 
   virtual ~PlaintextImpl() {}
 
@@ -210,9 +209,10 @@ class PlaintextImpl
    */
   int64_t LowBound() const {
     uint64_t half = GetEncodingParams()->GetPlaintextModulus() >> 1;
-    bool odd      = (GetEncodingParams()->GetPlaintextModulus() & 0x1) == 1;
+    bool odd = (GetEncodingParams()->GetPlaintextModulus() & 0x1) == 1;
     int64_t bound = -1 * half;
-    if (odd) bound--;
+    if (odd)
+      bound--;
     return bound;
   }
 
@@ -231,7 +231,8 @@ class PlaintextImpl
    * @param fmt
    */
   void SetFormat(Format fmt) const {
-    if (typeFlag == IsPoly) encodedVector.SetFormat(fmt);
+    if (typeFlag == IsPoly)
+      encodedVector.SetFormat(fmt);
     else if (typeFlag == IsNativePoly)
       encodedNativeVector.SetFormat(fmt);
     else

@@ -33,8 +33,7 @@
 namespace lbcrypto {
 
 template <class Element>
-class MatrixStrassen
-{  // TODO : public Serializable {
+class MatrixStrassen {  // TODO : public Serializable {
  public:
   typedef vector<vector<Element>> data_t;
   typedef vector<Element> lineardata_t;
@@ -48,8 +47,8 @@ class MatrixStrassen
    * @param &rows number of rows.
    * @param &rows number of columns.
    */
-  MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols) :
-      data(), rows(rows), cols(cols), allocZero(allocZero) {
+  MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols)
+      : data(), rows(rows), cols(cols), allocZero(allocZero) {
     data.resize(rows);
     for (auto row = data.begin(); row != data.end(); ++row) {
       for (size_t col = 0; col < cols; ++col) {
@@ -100,8 +99,8 @@ class MatrixStrassen
    *
    * @param &other the matrix object to be copied
    */
-  MatrixStrassen(const MatrixStrassen<Element>& other) :
-      data(), rows(other.rows), cols(other.cols), allocZero(other.allocZero) {
+  MatrixStrassen(const MatrixStrassen<Element>& other)
+      : data(), rows(other.rows), cols(other.cols), allocZero(other.allocZero) {
     deepCopyData(other.data);
   }
 
@@ -478,12 +477,12 @@ class MatrixStrassen
   mutable int colpad = 0;
   alloc_func allocZero;
   mutable char* pattern = nullptr;
-  mutable int numAdd    = 0;
-  mutable int numMult   = 0;
-  mutable int numSub    = 0;
+  mutable int numAdd = 0;
+  mutable int numMult = 0;
+  mutable int numSub = 0;
   mutable MatDescriptor desc;
   mutable Element zeroUniquePtr = allocZero();
-  mutable int NUM_THREADS       = 1;
+  mutable int NUM_THREADS = 1;
 
   void multiplyInternalCAPS(it_lineardata_t A, it_lineardata_t B, it_lineardata_t C, MatDescriptor desc,
                             it_lineardata_t work) const;

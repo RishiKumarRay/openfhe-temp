@@ -78,8 +78,7 @@ typedef DiscreteGaussianGeneratorImpl<BigVector> DiscreteGaussianGenerator;
  * @brief The class for Discrete Gaussion Distribution generator.
  */
 template <typename VecType>
-class DiscreteGaussianGeneratorImpl : public DistributionGenerator<VecType>
-{
+class DiscreteGaussianGeneratorImpl : public DistributionGenerator<VecType> {
  public:
   /**
    * @brief         Basic constructor for specifying distribution parameter and

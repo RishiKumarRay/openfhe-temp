@@ -52,11 +52,10 @@ namespace lbcrypto {
  * @brief Ideal lattice using a vector representation
  */
 template <typename VecType>
-class PolyImpl : public ILElement<PolyImpl<VecType>, VecType>
-{
+class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
  public:
   using Integer = typename VecType::Integer;
-  using Params  = ILParamsImpl<Integer>;
+  using Params = ILParamsImpl<Integer>;
 
   typedef VecType Vector;
   typedef PolyImpl<VecType> PolyType;
@@ -146,9 +145,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType>
    * @param format - Format::EVALUATION or COEFFICIENT
    */
   inline static function<PolyType()> Allocator(const shared_ptr<Params> params, Format format) {
-    return [=]() {
-      return PolyType(params, format, true);
-    };
+    return [=]() { return PolyType(params, format, true); };
   }
 
   /**
@@ -901,9 +898,8 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_values));
     ar(::cereal::make_nvp("f", m_format));
@@ -939,10 +935,9 @@ inline PolyImpl<NativeVector> PolyImpl<NativeVector>::DecryptionCRTInterpolate(P
 template <>
 inline PolyImpl<NativeVector> PolyImpl<BigVector>::ToNativePolyCloneParams() const {
   PolyImpl<NativeVector> interp(
-    std::make_shared<ILParamsImpl<NativeInteger>>(
-      this->GetCyclotomicOrder(), this->GetModulus().ConvertToInt(), this->GetRootOfUnity().ConvertToInt()),
-    this->GetFormat(),
-    true);
+      std::make_shared<ILParamsImpl<NativeInteger>>(this->GetCyclotomicOrder(), this->GetModulus().ConvertToInt(),
+                                                    this->GetRootOfUnity().ConvertToInt()),
+      this->GetFormat(), true);
 
   for (usint i = 0; i < this->GetLength(); i++) {
     interp[i] = (*this)[i].ConvertToInt();

@@ -13,7 +13,6 @@
 #include "stl_allocator.h"
 
 template <class _Ty, class _Ax = stl_allocator<_Ty>>
-class xvector : public std::vector<_Ty, _Ax>
-{};
+class xvector : public std::vector<_Ty, _Ax> {};
 
 #endif

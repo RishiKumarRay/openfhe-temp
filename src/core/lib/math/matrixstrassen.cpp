@@ -29,10 +29,10 @@ using std::invalid_argument;
 namespace lbcrypto {
 
 template <class Element>
-MatrixStrassen<Element>::MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols, alloc_func allocGen) :
-    data(), rows(rows), cols(cols), allocZero(allocZero) {
+MatrixStrassen<Element>::MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols, alloc_func allocGen)
+    : data(), rows(rows), cols(cols), allocZero(allocZero) {
   data.resize(rows);
-  for (auto& row: data) {
+  for (auto& row : data) {
     for (size_t col = 0; col < cols; ++col) {
       row.push_back(allocGen());
     }
@@ -73,8 +73,7 @@ MatrixStrassen<Element>& MatrixStrassen<Element>::Identity() {
     for (size_t col = 0; col < cols; ++col) {
       if (row == col) {
         data[row][col] = 1;
-      }
-      else {
+      } else {
         data[row][col] = 0;
       }
     }
@@ -87,8 +86,8 @@ MatrixStrassen<Element> MatrixStrassen<Element>::GadgetVector(int32_t base) cons
   MatrixStrassen<Element> g(allocZero, rows, cols);
   // auto two = allocZero();
   auto base_matrix = allocZero();
-  *base_matrix     = base;
-  g(0, 0)          = 1;
+  *base_matrix = base;
+  g(0, 0) = 1;
   for (size_t col = 1; col < cols; ++col) {
     //  g(0, col) = g(0, col-1) * *two;
     g(0, col) = g(0, col - 1) * *base_matrix;
@@ -172,16 +171,16 @@ MatrixStrassen<Element> MatrixStrassen<Element>::Transpose() const {
 // decomposition or the Cholesky decomposition(for positive definite matrices).
 template <class Element>
 void MatrixStrassen<Element>::Determinant(Element* determinant) const {
-  if (rows != cols) PALISADE_THROW(math_error, "Supported only for square matrix");
+  if (rows != cols)
+    PALISADE_THROW(math_error, "Supported only for square matrix");
   // auto determinant = *allocZero();
-  if (rows < 1) PALISADE_THROW(math_error, "Dimension should be at least one");
+  if (rows < 1)
+    PALISADE_THROW(math_error, "Dimension should be at least one");
   if (rows == 1) {
     *determinant = *data[0][0];
-  }
-  else if (rows == 2) {
+  } else if (rows == 2) {
     *determinant = *data[0][0] * (*data[1][1]) - *data[1][0] * (*data[0][1]);
-  }
-  else {
+  } else {
     size_t j1, j2;
     size_t n = rows;
 
@@ -194,7 +193,8 @@ void MatrixStrassen<Element>::Determinant(Element* determinant) const {
         j2 = 0;  // start at first sum-matrix column position
         // loop to copy source matrix less one column
         for (size_t j = 0; j < n; j++) {
-          if (j == j1) continue;  // don't copy the minor column element
+          if (j == j1)
+            continue;  // don't copy the minor column element
 
           *result.data[i - 1][j2] = *data[i][j];  // copy source element into new sub-matrix
                                                   // i-1 because new sub-matrix is one row
@@ -206,7 +206,8 @@ void MatrixStrassen<Element>::Determinant(Element* determinant) const {
       auto tempDeterminant = *allocZero();
       result.Determinant(&tempDeterminant);
 
-      if (j1 % 2 == 0) *determinant = *determinant + (*data[0][j1]) * tempDeterminant;
+      if (j1 % 2 == 0)
+        *determinant = *determinant + (*data[0][j1]) * tempDeterminant;
       else
         *determinant = *determinant - (*data[0][j1]) * tempDeterminant;
 
@@ -224,7 +225,8 @@ void MatrixStrassen<Element>::Determinant(Element* determinant) const {
 // multiplied by -1^{i+j} The determinant subroutine is used
 template <class Element>
 MatrixStrassen<Element> MatrixStrassen<Element>::CofactorMatrixStrassen() const {
-  if (rows != cols) PALISADE_THROW(math_error, "Supported only for square matrix");
+  if (rows != cols)
+    PALISADE_THROW(math_error, "Supported only for square matrix");
 
   size_t ii, jj, iNew, jNew;
 
@@ -239,10 +241,12 @@ MatrixStrassen<Element> MatrixStrassen<Element>::CofactorMatrixStrassen() const 
       /* Form the adjoint a_ij */
       iNew = 0;
       for (ii = 0; ii < n; ii++) {
-        if (ii == i) continue;
+        if (ii == i)
+          continue;
         jNew = 0;
         for (jj = 0; jj < n; jj++) {
-          if (jj == j) continue;
+          if (jj == j)
+            continue;
           *c.data[iNew][jNew] = *data[ii][jj];
           jNew++;
         }
@@ -255,7 +259,8 @@ MatrixStrassen<Element> MatrixStrassen<Element>::CofactorMatrixStrassen() const 
       // auto determinant = c.Determinant();
 
       /* Fill in the elements of the cofactor */
-      if ((i + j) % 2 == 0) result.data[i][j] = determinant;
+      if ((i + j) % 2 == 0)
+        result.data[i][j] = determinant;
       else
         result.data[i][j] = -determinant;
     }
@@ -272,7 +277,7 @@ MatrixStrassen<Element>& MatrixStrassen<Element>::VStack(MatrixStrassen<Element>
   }
   for (size_t row = 0; row < other.rows; ++row) {
     vector<unique_ptr<Element>> rowElems;
-    for (auto elem: other.data[row]) {
+    for (auto elem : other.data[row]) {
       rowElems.push_back(Element(*elem));
     }
     data.push_back(std::move(rowElems));
@@ -333,7 +338,7 @@ template <class Element>
 void MatrixStrassen<Element>::UnlinearizeDataCAPS(lineardata_t* lineardataPtr) const {
   int datasize = cols;
 
-  size_t row  = 0;
+  size_t row = 0;
   int counter = 0;
   data[row].clear();
   data[row].reserve(datasize);
@@ -351,8 +356,7 @@ void MatrixStrassen<Element>::UnlinearizeDataCAPS(lineardata_t* lineardataPtr) c
       if (row < rows) {
         data[row].clear();
         data[row].reserve(datasize);
-      }
-      else {
+      } else {
         break;  // Get rid of padded rows
       }
     }
@@ -374,10 +378,10 @@ void MatrixStrassen<Element>::deepCopyData(data_t const& src) {
 inline MatrixStrassen<BigInteger> Rotate(MatrixStrassen<Poly> const& inMat) {
   MatrixStrassen<Poly> mat(inMat);
   mat.SetFormat(Format::COEFFICIENT);
-  size_t n                  = mat(0, 0).GetLength();
+  size_t n = mat(0, 0).GetLength();
   BigInteger const& modulus = mat(0, 0).GetModulus();
-  size_t rows               = mat.GetRows() * n;
-  size_t cols               = mat.GetCols() * n;
+  size_t rows = mat.GetRows() * n;
+  size_t cols = mat.GetCols() * n;
   MatrixStrassen<BigInteger> result(BigInteger::Allocator, rows, cols);
   for (size_t row = 0; row < mat.GetRows(); ++row) {
     for (size_t col = 0; col < mat.GetCols(); ++col) {
@@ -388,7 +392,7 @@ inline MatrixStrassen<BigInteger> Rotate(MatrixStrassen<Poly> const& inMat) {
           //  (mod x^n + 1)
           if (rotRow < rotCol) {
             result(row * n + rotRow, col * n + rotCol) =
-              modulus.ModSub(result(row * n + rotRow, col * n + rotCol), modulus);
+                modulus.ModSub(result(row * n + rotRow, col * n + rotCol), modulus);
           }
         }
       }
@@ -404,21 +408,19 @@ inline MatrixStrassen<BigInteger> Rotate(MatrixStrassen<Poly> const& inMat) {
 MatrixStrassen<BigVector> RotateVecResult(MatrixStrassen<Poly> const& inMat) {
   MatrixStrassen<Poly> mat(inMat);
   mat.SetFormat(Format::COEFFICIENT);
-  size_t n                  = mat(0, 0).GetLength();
+  size_t n = mat(0, 0).GetLength();
   BigInteger const& modulus = mat(0, 0).GetModulus();
   BigVector zero(1, modulus);
-  size_t rows                = mat.GetRows() * n;
-  size_t cols                = mat.GetCols() * n;
-  auto singleElemBinVecAlloc = [=]() {
-    return BigVector(1, modulus);
-  };
+  size_t rows = mat.GetRows() * n;
+  size_t cols = mat.GetCols() * n;
+  auto singleElemBinVecAlloc = [=]() { return BigVector(1, modulus); };
   MatrixStrassen<BigVector> result(singleElemBinVecAlloc, rows, cols);
   for (size_t row = 0; row < mat.GetRows(); ++row) {
     for (size_t col = 0; col < mat.GetCols(); ++col) {
       for (size_t rotRow = 0; rotRow < n; ++rotRow) {
         for (size_t rotCol = 0; rotCol < n; ++rotCol) {
           BigVector& elem = result(row * n + rotRow, col * n + rotCol);
-          elem.at(0)      = mat(row, col).GetValues().at((rotRow - rotCol + n) % n);
+          elem.at(0) = mat(row, col).GetValues().at((rotRow - rotCol + n) % n);
           //  negate (mod q) upper-right triangle to account for
           //  (mod x^n + 1)
           if (rotRow < rotCol) {
@@ -496,8 +498,7 @@ MatrixStrassen<int32_t> ConvertToInt32(const MatrixStrassen<BigInteger>& input, 
     for (size_t j = 0; j < cols; ++j) {
       if (input(i, j) > negativeThreshold) {
         result(i, j) = -1 * (modulus - input(i, j)).ConvertToInt();
-      }
-      else {
+      } else {
         result(i, j) = input(i, j).ConvertToInt();
       }
     }
@@ -515,8 +516,7 @@ MatrixStrassen<int32_t> ConvertToInt32(const MatrixStrassen<BigVector>& input, c
       const BigInteger& elem = input(i, j).at(0);
       if (elem > negativeThreshold) {
         result(i, j) = -1 * (modulus - elem).ConvertToInt();
-      }
-      else {
+      } else {
         result(i, j) = elem.ConvertToInt();
       }
     }
@@ -542,11 +542,10 @@ MatrixStrassen<Poly> SplitInt32IntoPolyElements(MatrixStrassen<int32_t> const& o
       uint32_t tempInteger;
       if (other(row * n + i, 0) < 0) {
         tempInteger = -other(row * n + i, 0);
-        tempBBI     = params->GetModulus() - BigInteger(tempInteger);
-      }
-      else {
+        tempBBI = params->GetModulus() - BigInteger(tempInteger);
+      } else {
         tempInteger = other(row * n + i, 0);
-        tempBBI     = BigInteger(tempInteger);
+        tempBBI = BigInteger(tempInteger);
       }
       tempBBV.at(i) = tempBBI;
     }
@@ -574,11 +573,10 @@ MatrixStrassen<Poly> SplitInt32AltIntoPolyElements(MatrixStrassen<int32_t> const
       uint32_t tempInteger;
       if (other(row, i) < 0) {
         tempInteger = -other(row, i);
-        tempBBI     = params->GetModulus() - BigInteger(tempInteger);
-      }
-      else {
+        tempBBI = params->GetModulus() - BigInteger(tempInteger);
+      } else {
         tempInteger = other(row, i);
-        tempBBI     = BigInteger(tempInteger);
+        tempBBI = BigInteger(tempInteger);
       }
 
       tempBBV.at(i) = tempBBI;
@@ -614,12 +612,11 @@ MatrixStrassen<Element> MatrixStrassen<Element>::Mult(MatrixStrassen<Element> co
      * recursion, as 96/(2^2) is an integer.
      */
     double powtemp = pow(2, nrec);
-    rowpad         = ceil(rows / powtemp) * static_cast<int>(powtemp) - rows;
-    colpad         = ceil(cols / powtemp) * static_cast<int>(powtemp) - cols;
-    allrows        = rows + rowpad;
+    rowpad = ceil(rows / powtemp) * static_cast<int>(powtemp) - rows;
+    colpad = ceil(cols / powtemp) * static_cast<int>(powtemp) - cols;
+    allrows = rows + rowpad;
     // allcols = cols + colpad;
-  }
-  else {
+  } else {
     /* Apply the indicated padding rows and columns.  (For now they are equal,
      * assuming square matrices.  Note that the dimension of the matrix after
      * padding must support the number of levels of recursion.  For instance, if
@@ -630,8 +627,8 @@ MatrixStrassen<Element> MatrixStrassen<Element>::Mult(MatrixStrassen<Element> co
      * caluclate the optimal padding for the number of levels of recursion.
      */
 
-    rowpad  = pad;
-    colpad  = pad;
+    rowpad = pad;
+    colpad = pad;
     allrows = rows + pad;
     // allrows/(2^nrec) and allcols/(2^nrec) must be integers
 #if !defined(NDEBUG)
@@ -643,24 +640,24 @@ MatrixStrassen<Element> MatrixStrassen<Element>::Mult(MatrixStrassen<Element> co
 #endif
   }
 
-  numAdd  = 0;
-  numSub  = 0;
+  numAdd = 0;
+  numSub = 0;
   numMult = 0;
 
-  size_t len       = (allrows * allrows);
-  desc.lda         = static_cast<int>(allrows);
-  desc.nrec        = nrec;
-  desc.bs          = 1;
-  desc.nproc       = 1;
+  size_t len = (allrows * allrows);
+  desc.lda = static_cast<int>(allrows);
+  desc.nrec = nrec;
+  desc.bs = 1;
+  desc.nproc = 1;
   desc.nproc_summa = 1;
-  desc.nprocc      = 1;
-  desc.nprocr      = 1;
+  desc.nprocc = 1;
+  desc.nprocr = 1;
 
   MatrixStrassen<Element> result(allocZero, rows, other.cols);
 
-  other.rowpad  = rowpad;
+  other.rowpad = rowpad;
   result.rowpad = rowpad;
-  other.colpad  = colpad;
+  other.colpad = colpad;
   result.colpad = colpad;
   lineardata_t lineardataPtr;
   lineardata_t otherlineardataPtr;
@@ -689,10 +686,7 @@ MatrixStrassen<Element> MatrixStrassen<Element>::Mult(MatrixStrassen<Element> co
   // multiplyInternalCAPS(otherdata.begin(), thisdata.begin(),
   // resultdata.begin() /*,&(result.lineardata[0])*/, desc,
   // (it_lineardata_t)0);//&(result.lineardata[0])
-  multiplyInternalCAPS(otherdata.begin(),
-                       thisdata.begin(),
-                       resultdata.begin() /*,&(result.lineardata[0])*/,
-                       desc,
+  multiplyInternalCAPS(otherdata.begin(), thisdata.begin(), resultdata.begin() /*,&(result.lineardata[0])*/, desc,
                        lineardataPtr.begin());  // &(result.lineardata[0])
 
   collectTo1ProcCAPS(desc, resultlineardataPtr.begin(), resultdata.begin());
@@ -727,12 +721,10 @@ void MatrixStrassen<Element>::multiplyInternalCAPS(it_lineardata_t A, it_lineard
     // A 2d block cyclic layout with 1 processor still has blocks to deal with
     // run a 1-proc non-strassen
     block_multiplyCAPS(A, B, C, desc, work);
-  }
-  else {
+  } else {
     if (pattern == nullptr) {
       strassenDFSCAPS(A, B, C, desc, work);
-    }
-    else {
+    } else {
       if (pattern[0] == 'D' || pattern[0] == 'd') {
         pattern++;
 
@@ -768,15 +760,12 @@ void MatrixStrassen<Element>::smartSubtractionCAPS(it_lineardata_t result, it_li
   if (*A != zeroUniquePtr && *B != zeroUniquePtr) {
     temp = *A - *B;
     numSub++;
-  }
-  else if (*A == zeroUniquePtr && *B != zeroUniquePtr) {
+  } else if (*A == zeroUniquePtr && *B != zeroUniquePtr) {
     temp = zeroUniquePtr - *B;
     numSub++;
-  }
-  else if (*A != zeroUniquePtr && *B == zeroUniquePtr) {
+  } else if (*A != zeroUniquePtr && *B == zeroUniquePtr) {
     temp = *A;
-  }
-  else {
+  } else {
     temp = zeroUniquePtr;
   }
 
@@ -791,14 +780,11 @@ void MatrixStrassen<Element>::smartAdditionCAPS(it_lineardata_t result, it_linea
   if (*A != zeroUniquePtr && *B != zeroUniquePtr) {
     temp = *A + *B;
     numAdd++;
-  }
-  else if (*A == zeroUniquePtr && *B != zeroUniquePtr) {
+  } else if (*A == zeroUniquePtr && *B != zeroUniquePtr) {
     temp = *B;
-  }
-  else if (*A != zeroUniquePtr && *B == zeroUniquePtr) {
+  } else if (*A != zeroUniquePtr && *B == zeroUniquePtr) {
     temp = *A;
-  }
-  else {
+  } else {
     temp = zeroUniquePtr;
   }
 
@@ -963,9 +949,8 @@ void MatrixStrassen<Element>::block_multiplyCAPS(it_lineardata_t A, it_lineardat
         numMult++;
         if (uninitializedTemp == 1) {
           uninitializedTemp = 0;
-          temp              = (Aval * Bval);
-        }
-        else {
+          temp = (Aval * Bval);
+        } else {
           numAdd++;
           temp += (Aval * Bval);
         }
@@ -973,8 +958,7 @@ void MatrixStrassen<Element>::block_multiplyCAPS(it_lineardata_t A, it_lineardat
 
       if (uninitializedTemp == 1) {  // Because of nulls, temp never got value.
         *(C + row + d.lda * col) = 0;
-      }
-      else {
+      } else {
         *(C + row + d.lda * col) = temp;
       }
     }
@@ -1026,15 +1010,15 @@ void MatrixStrassen<Element>::distributeFrom1ProcRecCAPS(MatDescriptor desc, it_
                                                          int ldi) const {
   if (desc.nrec == 0) {  // base case; put the matrix block-cyclic layout
     // MPI_Comm comm = getComm();
-    int rank      = getRank();
-    int bs        = desc.bs;
+    int rank = getRank();
+    int bs = desc.bs;
     int numBlocks = desc.lda / bs;
     assert(numBlocks % desc.nprocr == 0);
     assert(numBlocks % desc.nprocc == 0);
     assert((numBlocks / desc.nprocr) % desc.nproc_summa == 0);
     int nBlocksPerProcRow = numBlocks / desc.nprocr / desc.nproc_summa;
     int nBlocksPerProcCol = numBlocks / desc.nprocc;
-    int nBlocksPerBase    = numBlocks / desc.nproc_summa;
+    int nBlocksPerBase = numBlocks / desc.nproc_summa;
 
     for (int sp = 0; sp < desc.nproc_summa; sp++) {
       for (int i = 0; i < nBlocksPerProcRow; i++) {
@@ -1044,8 +1028,8 @@ void MatrixStrassen<Element>::distributeFrom1ProcRecCAPS(MatDescriptor desc, it_
               int source = 0;
               int target = cproc + rproc * desc.nprocc + sp * base;
               // row and column of the beginning of the block in I
-              int row          = j * (desc.nprocc * bs) + cproc * bs;
-              int col          = i * (desc.nprocr * bs) + rproc * bs + sp * nBlocksPerBase * bs;
+              int row = j * (desc.nprocc * bs) + cproc * bs;
+              int col = i * (desc.nprocr * bs) + rproc * bs + sp * nBlocksPerBase * bs;
               int offsetSource = row + col * ldi;
               int offsetTarget = (j + i * nBlocksPerProcCol) * bs * bs;
               sendBlockCAPS(/*comm,*/ rank, target, O + offsetTarget, bs, source, I + offsetSource, ldi);
@@ -1054,8 +1038,7 @@ void MatrixStrassen<Element>::distributeFrom1ProcRecCAPS(MatDescriptor desc, it_
         }
       }
     }
-  }
-  else {  // recursively call on each of four submatrices
+  } else {  // recursively call on each of four submatrices
     desc.nrec -= 1;
     desc.lda /= 2;
     int entriesPerQuarter = numEntriesPerProc(desc);
@@ -1080,15 +1063,15 @@ void MatrixStrassen<Element>::collectTo1ProcRecCAPS(MatDescriptor desc, it_linea
                                                     int ldo) const {
   if (desc.nrec == 0) {  // base case; put the matrix block-cyclic layout
     // MPI_Comm comm = getComm();
-    int rank      = getRank();
-    int bs        = desc.bs;
+    int rank = getRank();
+    int bs = desc.bs;
     int numBlocks = desc.lda / bs;
     assert(numBlocks % desc.nprocr == 0);
     assert(numBlocks % desc.nprocc == 0);
     assert((numBlocks / desc.nprocr) % desc.nproc_summa == 0);
     int nBlocksPerProcRow = numBlocks / desc.nprocr / desc.nproc_summa;
     int nBlocksPerProcCol = numBlocks / desc.nprocc;
-    int nBlocksPerBase    = numBlocks / desc.nproc_summa;
+    int nBlocksPerBase = numBlocks / desc.nproc_summa;
     for (int sp = 0; sp < desc.nproc_summa; sp++) {
       for (int i = 0; i < nBlocksPerProcRow; i++) {
         for (int rproc = 0; rproc < desc.nprocr; rproc++) {
@@ -1097,8 +1080,8 @@ void MatrixStrassen<Element>::collectTo1ProcRecCAPS(MatDescriptor desc, it_linea
               int target = 0;
               int source = cproc + rproc * desc.nprocc + sp * base;
               // row and column of the beginning of the block in I
-              int row          = j * (desc.nprocc * bs) + cproc * bs;
-              int col          = i * (desc.nprocr * bs) + rproc * bs + sp * nBlocksPerBase * bs;
+              int row = j * (desc.nprocc * bs) + cproc * bs;
+              int col = i * (desc.nprocr * bs) + rproc * bs + sp * nBlocksPerBase * bs;
               int offsetTarget = row + col * ldo;
               int offsetSource = (j + i * nBlocksPerProcCol) * bs * bs;
               receiveBlockCAPS(/*comm,*/ rank, target, O + offsetTarget, bs, source, I + offsetSource, ldo);
@@ -1107,8 +1090,7 @@ void MatrixStrassen<Element>::collectTo1ProcRecCAPS(MatDescriptor desc, it_linea
         }
       }
     }
-  }
-  else {  // recursively call on each of four submatrices
+  } else {  // recursively call on each of four submatrices
     desc.nrec -= 1;
     desc.lda /= 2;
     int entriesPerQuarter = numEntriesPerProc(desc);
@@ -1176,7 +1158,8 @@ MatrixStrassen<Element> MatrixStrassen<Element>::MultByRandomVector(std::vector<
 #pragma omp parallel for
   for (int32_t row = 0; row < result.rows; ++row) {
     for (int32_t col = 0; col < cols; ++col) {
-      if (ranvec[col] == 1) *result.data[row][0] += *data[row][col];
+      if (ranvec[col] == 1)
+        *result.data[row][0] += *data[row][col];
     }
   }
   return result;

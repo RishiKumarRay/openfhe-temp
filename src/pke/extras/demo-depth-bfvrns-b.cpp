@@ -51,15 +51,15 @@ int main(int argc, char* argv[]) {
   double processingTime(0.0);
 
   usint plaintextModulus = 65537;
-  double sigma           = 3.2;
+  double sigma = 3.2;
 
   size_t dcrtBits = 60;
 
-  int numkeys      = 1 << 4;
-  int numruns      = 1 << 4;
-  int mult_depth   = 3;
+  int numkeys = 1 << 4;
+  int numruns = 1 << 4;
+  int mult_depth = 3;
   int relin_window = 1;
-  using Element    = DCRTPoly;
+  using Element = DCRTPoly;
 
   ////////////////////////////////////////////////////////////
   // Parameter generation
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 
   // Set Crypto Parameters
   CryptoContext<Element> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrnsB(
-    plaintextModulus, HEStd_128_classic, sigma, 0, mult_depth, 0, OPTIMIZED, 2, relin_window, dcrtBits);
+      plaintextModulus, HEStd_128_classic, sigma, 0, mult_depth, 0, OPTIMIZED, 2, relin_window, dcrtBits);
 
   // enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -88,8 +88,8 @@ int main(int argc, char* argv[]) {
   cout << "\nMeasuring Multiplicative Depth:\n";
   TIC(t);
 
-  std::vector<int64_t> vectorOfInts1 = { 1 };
-  Plaintext plaintext                = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = {1};
+  Plaintext plaintext = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
   Plaintext dec(plaintext);
   Ciphertext<DCRTPoly> ciphertext;
   std::vector<int> depth(numruns, 0);
@@ -118,14 +118,16 @@ int main(int argc, char* argv[]) {
     }
     min[i] = depth[0];
     for (int j = 1; j < numruns; j++)
-      if (min[i] > depth[j]) min[i] = depth[j];
+      if (min[i] > depth[j])
+        min[i] = depth[j];
     cout << "--> " << min[i] << "\n";
   }
   cout << "\n";
 
   int MIN = min[0];
   for (int i = 1; i < numkeys; i++)
-    if (MIN > min[i]) MIN = min[i];
+    if (MIN > min[i])
+      MIN = min[i];
   cout << "Smallest depth = " << MIN;
 
   processingTime = TOC(t);

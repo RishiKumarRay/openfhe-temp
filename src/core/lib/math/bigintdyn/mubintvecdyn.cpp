@@ -47,7 +47,7 @@ mubintvec<ubint_el_t>::mubintvec(const usint length) {
   for (usint i = 0; i < length; i++) {
     this->m_data[i] = 0;
   }
-  m_modulus       = 0;
+  m_modulus = 0;
   m_modulus_state = GARBAGE;
 }
 
@@ -58,9 +58,9 @@ mubintvec<ubint_el_t>::mubintvec(const usint length, const usint& modulus) {
   for (usint i = 0; i < length; i++) {
     this->m_data[i] = 0;
   }
-  m_modulus       = modulus;
+  m_modulus = modulus;
   m_modulus_state = INITIALIZED;
-  *this           = this->Mod(ubint_el_t(modulus));
+  *this = this->Mod(ubint_el_t(modulus));
 }
 
 // Basic constructor for specifying the length of the vector and modulus.
@@ -70,9 +70,9 @@ mubintvec<ubint_el_t>::mubintvec(const usint length, const ubint_el_t& modulus) 
   for (usint i = 0; i < length; i++) {
     this->m_data[i] = 0;
   }
-  m_modulus       = modulus;
+  m_modulus = modulus;
   m_modulus_state = INITIALIZED;
-  *this           = this->Mod(modulus);
+  *this = this->Mod(modulus);
 }
 
 // Baspic constructor for specifying the length of the vector and modulus.
@@ -82,7 +82,7 @@ mubintvec<ubint_el_t>::mubintvec(const usint length, const std::string& modulus)
   for (usint i = 0; i < length; i++) {
     this->m_data[i] = 0;
   }
-  m_modulus       = modulus;
+  m_modulus = modulus;
   m_modulus_state = INITIALIZED;
 }
 
@@ -94,14 +94,14 @@ mubintvec<ubint_el_t>::mubintvec(const mubintvec& in_bintvec) {
   for (size_t i = 0; i < length; i++) {
     this->m_data[i] = in_bintvec.m_data[i];
   }
-  m_modulus       = in_bintvec.m_modulus;
+  m_modulus = in_bintvec.m_modulus;
   m_modulus_state = INITIALIZED;
 }
 
 template <class ubint_el_t>
 mubintvec<ubint_el_t>::mubintvec(mubintvec&& in_bintvec) {
-  this->m_data          = std::move(in_bintvec.m_data);
-  this->m_modulus       = std::move(in_bintvec.m_modulus);
+  this->m_data = std::move(in_bintvec.m_data);
+  this->m_modulus = std::move(in_bintvec.m_modulus);
   this->m_modulus_state = std::move(in_bintvec.m_modulus_state);
 }
 
@@ -109,14 +109,13 @@ template <class ubint_el_t>
 mubintvec<ubint_el_t>::mubintvec(const usint length, const ubint_el_t& modulus,
                                  std::initializer_list<std::string> rhs) {
   this->m_data.resize(length);
-  m_modulus       = modulus;
+  m_modulus = modulus;
   m_modulus_state = INITIALIZED;
-  usint len       = rhs.size();
+  usint len = rhs.size();
   for (usint i = 0; i < length; i++) {  // this loops over each entry
     if (i < len) {
       this->m_data[i] = ubint_el_t(*(rhs.begin() + i)) % m_modulus;
-    }
-    else {
+    } else {
       this->m_data[i] = ubint_el_t(0);
     }
   }
@@ -125,14 +124,13 @@ mubintvec<ubint_el_t>::mubintvec(const usint length, const ubint_el_t& modulus,
 template <class ubint_el_t>
 mubintvec<ubint_el_t>::mubintvec(const usint length, const ubint_el_t& modulus, std::initializer_list<uint64_t> rhs) {
   this->m_data.resize(length);
-  m_modulus       = modulus;
+  m_modulus = modulus;
   m_modulus_state = INITIALIZED;
-  usint len       = rhs.size();
+  usint len = rhs.size();
   for (usint i = 0; i < length; i++) {  // this loops over each entry
     if (i < len) {
       this->m_data[i] = ubint_el_t(*(rhs.begin() + i)) % m_modulus;
-    }
-    else {
+    } else {
       this->m_data[i] = ubint_el_t(0);
     }
   }
@@ -142,7 +140,7 @@ mubintvec<ubint_el_t>::mubintvec(const usint length, const ubint_el_t& modulus, 
 template <class ubint_el_t>
 mubintvec<ubint_el_t>::mubintvec(const std::vector<std::string>& s, const ubint_el_t& modulus) {
   this->m_data.resize(s.size());
-  m_modulus       = ubint_el_t(modulus);
+  m_modulus = ubint_el_t(modulus);
   m_modulus_state = INITIALIZED;
   for (usint i = 0; i < s.size(); i++) {
     this->m_data[i] = ubint_el_t(s[i]) % m_modulus;
@@ -154,7 +152,7 @@ mubintvec<ubint_el_t>::mubintvec(const std::vector<std::string>& s, const ubint_
 template <class ubint_el_t>
 mubintvec<ubint_el_t>::mubintvec(const std::vector<std::string>& s, const std::string& modulus) {
   this->m_data.resize(s.size());
-  m_modulus       = ubint_el_t(modulus);
+  m_modulus = ubint_el_t(modulus);
   m_modulus_state = INITIALIZED;
 
   for (usint i = 0; i < s.size(); i++) {
@@ -179,14 +177,13 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::operator=(const mubintvec& r
       for (usint i = 0; i < this->m_data.size(); i++) {
         this->m_data[i] = rhs.m_data[i];
       }
-    }
-    else {
+    } else {
       this->m_data.resize(rhs.m_data.size());
       for (usint i = 0; i < this->m_data.size(); i++) {
         this->m_data[i] = rhs.m_data[i];
       }
     }
-    this->m_modulus       = rhs.m_modulus;
+    this->m_modulus = rhs.m_modulus;
     this->m_modulus_state = rhs.m_modulus_state;
   }
   return *this;
@@ -200,7 +197,7 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::operator=(mubintvec&& rhs) {
     if (rhs.m_data.size() > 0) {
       rhs.m_data.clear();
     }
-    this->m_modulus       = rhs.m_modulus;
+    this->m_modulus = rhs.m_modulus;
     this->m_modulus_state = rhs.m_modulus_state;
   }
   return *this;
@@ -216,8 +213,7 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::operator=(std::initializer_l
   for (usint i = 0; i < this->m_data.size(); i++) {  // this loops over each entry
     if (i < len) {
       this->m_data[i] = ubint_el_t(*(rhs.begin() + i));
-    }
-    else {
+    } else {
       this->m_data[i] = 0;
     }
   }
@@ -237,8 +233,7 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::operator=(std::initializer_l
   for (usint i = 0; i < this->m_data.size(); i++) {  // this loops over each entry
     if (i < len) {
       this->m_data[i] = ubint_el_t(*(rhs.begin() + i));
-    }
-    else {
+    } else {
       this->m_data[i] = 0;
     }
   }
@@ -253,25 +248,25 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::operator=(std::initializer_l
 // modulus accessors
 template <class ubint_el_t>
 void mubintvec<ubint_el_t>::SetModulus(const usint& value) {
-  m_modulus       = ubint_el_t(value);
+  m_modulus = ubint_el_t(value);
   m_modulus_state = INITIALIZED;
 }
 
 template <class ubint_el_t>
 void mubintvec<ubint_el_t>::SetModulus(const ubint_el_t& value) {
-  m_modulus       = value;
+  m_modulus = value;
   m_modulus_state = INITIALIZED;
 }
 
 template <class ubint_el_t>
 void mubintvec<ubint_el_t>::SetModulus(const std::string& value) {
-  m_modulus       = ubint_el_t(value);
+  m_modulus = ubint_el_t(value);
   m_modulus_state = INITIALIZED;
 }
 
 template <class ubint_el_t>
 void mubintvec<ubint_el_t>::SetModulus(const mubintvec& value) {
-  m_modulus       = ubint_el_t(value.GetModulus());
+  m_modulus = ubint_el_t(value.GetModulus());
   m_modulus_state = INITIALIZED;
 }
 
@@ -299,16 +294,13 @@ void mubintvec<ubint_el_t>::SwitchModulus(const ubint_el_t& newModulus) {
     if (oldModulus < newModulus) {
       if (n > oldModulusByTwo) {
         this->at(i) = n.ModAdd(diff, newModulus);
-      }
-      else {
+      } else {
         this->at(i) = n.Mod(newModulus);
       }
-    }
-    else {
+    } else {
       if (n > oldModulusByTwo) {
         this->at(i) = n.ModSub(diff, newModulus);
-      }
-      else {
+      } else {
         this->at(i) = n.Mod(newModulus);
       }
     }
@@ -329,14 +321,12 @@ template <class ubint_el_t>
 const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::ModEq(const ubint_el_t& modulus) {
   if (modulus == 2) {
     return this->ModByTwoEq();
-  }
-  else {
+  } else {
     ubint_el_t halfQ(this->GetModulus() >> 1);
     for (usint i = 0; i < this->m_data.size(); i++) {
       if ((*this)[i] > halfQ) {
         this->m_data[i].ModSubEq(this->GetModulus(), modulus);
-      }
-      else {
+      } else {
         this->m_data[i].ModEq(modulus);
       }
     }
@@ -394,11 +384,9 @@ template <class ubint_el_t>
 const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::ModAddEq(const mubintvec& b) {
   if (this->m_modulus != b.m_modulus) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec adding vectors of different moduli");
-  }
-  else if (this->m_data.size() != b.m_data.size()) {
+  } else if (this->m_data.size() != b.m_data.size()) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec adding vectors of different lengths");
-  }
-  else {
+  } else {
     for (usint i = 0; i < this->m_data.size(); i++) {
       this->m_data[i].ModAddEq(b.m_data[i], this->m_modulus);
     }
@@ -432,11 +420,9 @@ template <class ubint_el_t>
 const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::ModSubEq(const mubintvec& b) {
   if (this->m_modulus != b.m_modulus) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec subtracting vectors of different moduli");
-  }
-  else if (this->m_data.size() != b.m_data.size()) {
+  } else if (this->m_data.size() != b.m_data.size()) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec subtracting vectors of different lengths");
-  }
-  else {
+  } else {
     for (usint i = 0; i < this->m_data.size(); i++) {
       this->m_data[i].ModSubEq(b.m_data[i], this->m_modulus);
     }
@@ -491,11 +477,9 @@ mubintvec<ubint_el_t> mubintvec<ubint_el_t>::ModMul(const mubintvec& b) const {
   mubintvec ans(*this);
   if (this->m_modulus != b.m_modulus) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec multiplying vectors of different moduli");
-  }
-  else if (this->m_data.size() != b.m_data.size()) {
+  } else if (this->m_data.size() != b.m_data.size()) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec multiplying vectors of different lengths");
-  }
-  else {
+  } else {
     for (usint i = 0; i < ans.m_data.size(); i++) {
       ans.m_data[i].ModMulEq(b.m_data[i], ans.m_modulus);
     }
@@ -524,11 +508,9 @@ template <class ubint_el_t>
 const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::ModMulEq(const mubintvec& b) {
   if (this->m_modulus != b.m_modulus) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec multiplying vectors of different moduli");
-  }
-  else if (this->m_data.size() != b.m_data.size()) {
+  } else if (this->m_data.size() != b.m_data.size()) {
     PALISADE_THROW(lbcrypto::math_error, "mubintvec multiplying vectors of different lengths");
-  }
-  else {
+  } else {
     for (usint i = 0; i < this->m_data.size(); i++) {
       this->m_data[i].ModMulEq(b.m_data[i], this->m_modulus);
     }
@@ -585,16 +567,13 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::ModByTwoEq() {
     if (this->operator[](i) > halfQ) {
       if (this->m_data[i].Mod(2) == 1) {
         this->m_data[i] = ubint_el_t(0);
-      }
-      else {
+      } else {
         this->m_data[i] = ubint_el_t(1);
       }
-    }
-    else {
+    } else {
       if (this->m_data[i].Mod(2) == 1) {
         this->m_data[i] = ubint_el_t(1);
-      }
-      else {
+      } else {
         this->operator[](i) = ubint_el_t(0);
       }
     }
@@ -609,9 +588,8 @@ mubintvec<ubint_el_t> mubintvec<ubint_el_t>::MultiplyAndRound(const ubint_el_t& 
   for (usint i = 0; i < this->m_data.size(); i++) {
     if (ans.m_data[i] > halfQ) {
       ubint_el_t temp = this->m_modulus - ans.m_data[i];
-      ans.m_data[i]   = this->m_modulus - temp.MultiplyAndRound(p, q);
-    }
-    else {
+      ans.m_data[i] = this->m_modulus - temp.MultiplyAndRound(p, q);
+    } else {
       ans.m_data[i] = ans.m_data[i].MultiplyAndRound(p, q).Mod(this->m_modulus);
     }
   }
@@ -625,8 +603,7 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::MultiplyAndRoundEq(const ubi
     if (this->m_data[i] > halfQ) {
       ubint_el_t temp = this->m_modulus - this->m_data[i];
       this->m_data[i] = this->m_modulus - temp.MultiplyAndRound(p, q);
-    }
-    else {
+    } else {
       this->m_data[i].MultiplyAndRoundEq(p, q);
       this->m_data[i].ModEq(this->m_modulus);
     }
@@ -641,9 +618,8 @@ mubintvec<ubint_el_t> mubintvec<ubint_el_t>::DivideAndRound(const ubint_el_t& q)
   for (usint i = 0; i < this->m_data.size(); i++) {
     if (ans.m_data[i] > halfQ) {
       ubint_el_t temp = this->m_modulus - ans.m_data[i];
-      ans.m_data[i]   = this->m_modulus - temp.DivideAndRound(q);
-    }
-    else {
+      ans.m_data[i] = this->m_modulus - temp.DivideAndRound(q);
+    } else {
       ans.m_data[i].DivideAndRoundEq(q);
     }
   }
@@ -657,8 +633,7 @@ const mubintvec<ubint_el_t>& mubintvec<ubint_el_t>::DivideAndRoundEq(const ubint
     if (this->m_data[i] > halfQ) {
       ubint_el_t temp = this->m_modulus - this->m_data[i];
       this->m_data[i] = this->m_modulus - temp.DivideAndRound(q);
-    }
-    else {
+    } else {
       this->m_data[i].DivideAndRoundEq(q);
     }
   }

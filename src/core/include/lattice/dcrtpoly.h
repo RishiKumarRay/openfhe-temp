@@ -57,11 +57,10 @@ namespace lbcrypto {
  * Heidelberg
  */
 template <typename VecType>
-class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, NativeVector, PolyImpl>
-{
+class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, NativeVector, PolyImpl> {
  public:
   using Integer = typename VecType::Integer;
-  using Params  = ILDCRTParams<Integer>;
+  using Params = ILDCRTParams<Integer>;
 
   typedef VecType Vector;
 
@@ -227,7 +226,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
 
     for (uint32_t i = startTower; i <= endTower; i++) {
       moduli[i - startTower] = this->GetParams()->GetParams()[i]->GetModulus();
-      roots[i - startTower]  = this->GetParams()->GetParams()[i]->GetRootOfUnity();
+      roots[i - startTower] = this->GetParams()->GetParams()[i]->GetRootOfUnity();
     }
 
     auto params = DCRTPolyImpl::Params(this->GetCyclotomicOrder(), moduli, roots, {}, {}, 0);
@@ -490,8 +489,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
       PALISADE_THROW(not_implemented_error,
                      "DCRTPolyImpl element transposition is currently "
                      "implemented only in the Evaluation representation.");
-    }
-    else {
+    } else {
       usint m = this->GetCyclotomicOrder();
       return AutomorphismTransform(m - 1);
     }
@@ -888,12 +886,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @return the representation of {\approx(X/P)}_{Q}
    */
   virtual DCRTPolyType ApproxModDown(
-    const shared_ptr<Params> paramsQ, const shared_ptr<Params> paramsP, const vector<NativeInteger>& PInvModq,
-    const vector<NativeInteger>& PInvModqPrecon, const vector<NativeInteger>& PHatInvModp,
-    const vector<NativeInteger>& PHatInvModpPrecon, const vector<vector<NativeInteger>>& PHatModq,
-    const vector<DoubleNativeInt>& modqBarrettMu, const vector<NativeInteger>& tInvModp = vector<NativeInteger>(),
-    const vector<NativeInteger>& tInvModpPrecon = vector<NativeInteger>(), const NativeInteger& t = 0,
-    const vector<NativeInteger>& tModqPrecon = vector<NativeInteger>()) const override;
+      const shared_ptr<Params> paramsQ, const shared_ptr<Params> paramsP, const vector<NativeInteger>& PInvModq,
+      const vector<NativeInteger>& PInvModqPrecon, const vector<NativeInteger>& PHatInvModp,
+      const vector<NativeInteger>& PHatInvModpPrecon, const vector<vector<NativeInteger>>& PHatModq,
+      const vector<DoubleNativeInt>& modqBarrettMu, const vector<NativeInteger>& tInvModp = vector<NativeInteger>(),
+      const vector<NativeInteger>& tInvModpPrecon = vector<NativeInteger>(), const NativeInteger& t = 0,
+      const vector<NativeInteger>& tModqPrecon = vector<NativeInteger>()) const override;
 
   /**
    * @brief Performs CRT basis switching:
@@ -1109,13 +1107,13 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &mtildeInvModbskPrecon NTL-specific precomputations
    */
   virtual void FastBaseConvqToBskMontgomery(
-    const shared_ptr<Params> paramsBsk, const std::vector<NativeInteger>& moduliQ,
-    const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
-    const std::vector<NativeInteger>& mtildeQHatInvModq, const std::vector<NativeInteger>& mtildeQHatInvModqPrecon,
-    const std::vector<std::vector<NativeInteger>>& QHatModbsk, const std::vector<uint16_t>& QHatModmtilde,
-    const std::vector<NativeInteger>& QModbsk, const std::vector<NativeInteger>& QModbskPrecon,
-    const uint16_t& negQInvModmtilde, const std::vector<NativeInteger>& mtildeInvModbsk,
-    const std::vector<NativeInteger>& mtildeInvModbskPrecon) override;
+      const shared_ptr<Params> paramsBsk, const std::vector<NativeInteger>& moduliQ,
+      const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
+      const std::vector<NativeInteger>& mtildeQHatInvModq, const std::vector<NativeInteger>& mtildeQHatInvModqPrecon,
+      const std::vector<std::vector<NativeInteger>>& QHatModbsk, const std::vector<uint16_t>& QHatModmtilde,
+      const std::vector<NativeInteger>& QModbsk, const std::vector<NativeInteger>& QModbskPrecon,
+      const uint16_t& negQInvModmtilde, const std::vector<NativeInteger>& mtildeInvModbsk,
+      const std::vector<NativeInteger>& mtildeInvModbskPrecon) override;
 
   /**
    * @brief Computes scale and floor:
@@ -1142,11 +1140,11 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &tQInvModbskPrecon: NTL-specific precomputations
    */
   virtual void FastRNSFloorq(
-    const NativeInteger& t, const std::vector<NativeInteger>& moduliQ, const std::vector<NativeInteger>& moduliBsk,
-    const std::vector<DoubleNativeInt>& modbskBarrettMu, const std::vector<NativeInteger>& tQHatInvModq,
-    const std::vector<NativeInteger>& tQHatInvModqPrecon, const std::vector<std::vector<NativeInteger>>& QHatModbsk,
-    const std::vector<std::vector<NativeInteger>>& qInvModbsk, const std::vector<NativeInteger>& tQInvModbsk,
-    const std::vector<NativeInteger>& tQInvModbskPrecon) override;
+      const NativeInteger& t, const std::vector<NativeInteger>& moduliQ, const std::vector<NativeInteger>& moduliBsk,
+      const std::vector<DoubleNativeInt>& modbskBarrettMu, const std::vector<NativeInteger>& tQHatInvModq,
+      const std::vector<NativeInteger>& tQHatInvModqPrecon, const std::vector<std::vector<NativeInteger>>& QHatModbsk,
+      const std::vector<std::vector<NativeInteger>>& qInvModbsk, const std::vector<NativeInteger>& tQInvModbsk,
+      const std::vector<NativeInteger>& tQInvModbskPrecon) override;
 
   /**
    * @brief @brief Converts basis:
@@ -1177,12 +1175,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &BModqPrecon NTL precomptations for [B]_{q_i}
    */
   virtual void FastBaseConvSK(
-    const std::vector<NativeInteger>& moduliQ, const std::vector<DoubleNativeInt>& modqBarrettMu,
-    const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
-    const std::vector<NativeInteger>& BHatInvModb, const std::vector<NativeInteger>& BHatInvModbPrecon,
-    const std::vector<NativeInteger>& BHatModmsk, const NativeInteger& BInvModmsk,
-    const NativeInteger& BInvModmskPrecon, const std::vector<std::vector<NativeInteger>>& BHatModq,
-    const std::vector<NativeInteger>& BModq, const std::vector<NativeInteger>& BModqPrecon) override;
+      const std::vector<NativeInteger>& moduliQ, const std::vector<DoubleNativeInt>& modqBarrettMu,
+      const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
+      const std::vector<NativeInteger>& BHatInvModb, const std::vector<NativeInteger>& BHatInvModbPrecon,
+      const std::vector<NativeInteger>& BHatModmsk, const NativeInteger& BInvModmsk,
+      const NativeInteger& BInvModmskPrecon, const std::vector<std::vector<NativeInteger>>& BHatModq,
+      const std::vector<NativeInteger>& BModq, const std::vector<NativeInteger>& BModqPrecon) override;
 
   /**
    * @brief Convert from Coefficient to CRT or vice versa; calls FFT and inverse
@@ -1242,9 +1240,8 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_vectors));
     ar(::cereal::make_nvp("f", this->m_format));

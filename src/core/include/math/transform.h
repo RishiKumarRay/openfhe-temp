@@ -46,8 +46,7 @@ namespace lbcrypto {
  * @brief Golden Chinese Remainder Transform FFT implementation.
  */
 template <typename VecType>
-class ChineseRemainderTransformFTTInterface
-{
+class ChineseRemainderTransformFTTInterface {
   using IntType = typename VecType::Integer;
 
  public:
@@ -157,8 +156,7 @@ class ChineseRemainderTransformFTTInterface
  * @brief Chinese Remainder Transform for arbitrary cyclotomics.
  */
 template <typename VecType>
-class ChineseRemainderTransformArbInterface
-{
+class ChineseRemainderTransformArbInterface {
   using IntType = typename VecType::Integer;
 
  public:

@@ -151,7 +151,7 @@ BigInteger operations for a specific application - to achieve smaller runtimes
 inline const std::string& GetMathBackendParameters() {
   static std::string id = "Backend " + std::to_string(MATHBACKEND) +
                           (MATHBACKEND == 2 ? " internal int size " + std::to_string(sizeof(integral_dtype) * 8) +
-                                                " BitLength " + std::to_string(BigIntegerBitLength)
+                                                  " BitLength " + std::to_string(BigIntegerBitLength)
                                             : "");
   return id;
 }
@@ -201,13 +201,13 @@ typedef mubintvec<xubint> xmubintvec;
 
 // typedefs for the known math backends
 using M2Integer = bigintfxd::BigInteger<integral_dtype, BigIntegerBitLength>;
-using M2Vector  = bigintfxd::BigVectorImpl<M2Integer>;
+using M2Vector = bigintfxd::BigVectorImpl<M2Integer>;
 using M4Integer = bigintdyn::xubint;
-using M4Vector  = bigintdyn::xmubintvec;
+using M4Vector = bigintdyn::xmubintvec;
 
 #ifdef WITH_NTL
 using M6Integer = NTL::myZZ;
-using M6Vector  = NTL::myVecP<M6Integer>;
+using M6Vector = NTL::myVecP<M6Integer>;
 #endif
 
 /**
@@ -235,7 +235,7 @@ typedef uint64_t DoubleNativeInt;
 #if MATHBACKEND == 2
 
 using BigInteger = M2Integer;
-using BigVector  = M2Vector;
+using BigVector = M2Vector;
 
 #endif
 
@@ -246,14 +246,14 @@ using BigVector  = M2Vector;
 #endif
 
 using BigInteger = M4Integer;
-using BigVector  = M4Vector;
+using BigVector = M4Vector;
 
 #endif
 
 #if MATHBACKEND == 6
 
 using BigInteger = M6Integer;
-using BigVector  = M6Vector;
+using BigVector = M6Vector;
 
 #endif
 

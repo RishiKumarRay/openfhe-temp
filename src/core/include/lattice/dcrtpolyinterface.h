@@ -77,8 +77,7 @@ namespace lbcrypto {
  */
 template <typename DerivedType, typename BigVecType = BigVector, typename LilVecType = NativeVector,
           template <typename LVT> typename RNSContainerType = PolyImpl>
-class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
-{
+class DCRTPolyInterface : public ILElement<DerivedType, BigVecType> {
  public:
   // The integer type that composes the BigVecType (Original vector size)
   using BigIntType = typename BigVecType::Integer;
@@ -150,9 +149,7 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
    * @param format - EVALUATION or COEFFICIENT
    */
   inline static function<DerivedType()> Allocator(const shared_ptr<Params> params, Format format) {
-    return [=]() {
-      return DerivedType(params, format, true);
-    };
+    return [=]() { return DerivedType(params, format, true); };
   }
 
   /**
@@ -266,7 +263,7 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
    * Note this operation is computationally intense. Does bound checking
    * @return interpolated value at index i.
    */
-  virtual BigIntType& at(usint i)             = 0;
+  virtual BigIntType& at(usint i) = 0;
   virtual const BigIntType& at(usint i) const = 0;
 
   /**
@@ -274,7 +271,7 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
    * Note this operation is computationally intense. No bound checking
    * @return interpolated value at index i.
    */
-  virtual BigIntType& operator[](usint i)             = 0;
+  virtual BigIntType& operator[](usint i) = 0;
   virtual const BigIntType& operator[](usint i) const = 0;
 
   /**
@@ -470,8 +467,7 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
       PALISADE_THROW(not_implemented_error,
                      "DCRTPolyInterface element transposition is currently "
                      "implemented only in the Evaluation representation.");
-    }
-    else {
+    } else {
       usint m = m_params->GetCyclotomicOrder();
       return AutomorphismTransform(m - 1);
     }
@@ -1183,13 +1179,13 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
    * @param &mtildeInvModbskPrecon NTL-specific precomputations
    */
   virtual void FastBaseConvqToBskMontgomery(
-    const shared_ptr<Params> paramsBsk, const std::vector<NativeInteger>& moduliQ,
-    const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
-    const std::vector<NativeInteger>& mtildeQHatInvModq, const std::vector<NativeInteger>& mtildeQHatInvModqPrecon,
-    const std::vector<std::vector<NativeInteger>>& QHatModbsk, const std::vector<uint16_t>& QHatModmtilde,
-    const std::vector<NativeInteger>& QModbsk, const std::vector<NativeInteger>& QModbskPrecon,
-    const uint16_t& negQInvModmtilde, const std::vector<NativeInteger>& mtildeInvModbsk,
-    const std::vector<NativeInteger>& mtildeInvModbskPrecon) = 0;
+      const shared_ptr<Params> paramsBsk, const std::vector<NativeInteger>& moduliQ,
+      const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
+      const std::vector<NativeInteger>& mtildeQHatInvModq, const std::vector<NativeInteger>& mtildeQHatInvModqPrecon,
+      const std::vector<std::vector<NativeInteger>>& QHatModbsk, const std::vector<uint16_t>& QHatModmtilde,
+      const std::vector<NativeInteger>& QModbsk, const std::vector<NativeInteger>& QModbskPrecon,
+      const uint16_t& negQInvModmtilde, const std::vector<NativeInteger>& mtildeInvModbsk,
+      const std::vector<NativeInteger>& mtildeInvModbskPrecon) = 0;
 
   /**
    * @brief Computes scale and floor:
@@ -1216,11 +1212,11 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
    * @param &tQInvModbskPrecon: NTL-specific precomputations
    */
   virtual void FastRNSFloorq(
-    const NativeInteger& t, const std::vector<NativeInteger>& moduliQ, const std::vector<NativeInteger>& moduliBsk,
-    const std::vector<DoubleNativeInt>& modbskBarrettMu, const std::vector<NativeInteger>& tQHatInvModq,
-    const std::vector<NativeInteger>& tQHatInvModqPrecon, const std::vector<std::vector<NativeInteger>>& QHatModbsk,
-    const std::vector<std::vector<NativeInteger>>& qInvModbsk, const std::vector<NativeInteger>& tQInvModbsk,
-    const std::vector<NativeInteger>& tQInvModbskPrecon) = 0;
+      const NativeInteger& t, const std::vector<NativeInteger>& moduliQ, const std::vector<NativeInteger>& moduliBsk,
+      const std::vector<DoubleNativeInt>& modbskBarrettMu, const std::vector<NativeInteger>& tQHatInvModq,
+      const std::vector<NativeInteger>& tQHatInvModqPrecon, const std::vector<std::vector<NativeInteger>>& QHatModbsk,
+      const std::vector<std::vector<NativeInteger>>& qInvModbsk, const std::vector<NativeInteger>& tQInvModbsk,
+      const std::vector<NativeInteger>& tQInvModbskPrecon) = 0;
 
   /**
    * @brief @brief Converts basis:
@@ -1251,12 +1247,12 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
    * @param &BModqPrecon NTL precomptations for [B]_{q_i}
    */
   virtual void FastBaseConvSK(
-    const std::vector<NativeInteger>& moduliQ, const std::vector<DoubleNativeInt>& modqBarrettMu,
-    const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
-    const std::vector<NativeInteger>& BHatInvModb, const std::vector<NativeInteger>& BHatInvModbPrecon,
-    const std::vector<NativeInteger>& BHatModmsk, const NativeInteger& BInvModmsk,
-    const NativeInteger& BInvModmskPrecon, const std::vector<std::vector<NativeInteger>>& BHatModq,
-    const std::vector<NativeInteger>& BModq, const std::vector<NativeInteger>& BModqPrecon) = 0;
+      const std::vector<NativeInteger>& moduliQ, const std::vector<DoubleNativeInt>& modqBarrettMu,
+      const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
+      const std::vector<NativeInteger>& BHatInvModb, const std::vector<NativeInteger>& BHatInvModbPrecon,
+      const std::vector<NativeInteger>& BHatModmsk, const NativeInteger& BInvModmsk,
+      const NativeInteger& BInvModmskPrecon, const std::vector<std::vector<NativeInteger>>& BHatModq,
+      const std::vector<NativeInteger>& BModq, const std::vector<NativeInteger>& BModqPrecon) = 0;
 
   /**
    * @brief Convert from Coefficient to CRT or vice versa; calls FFT and inverse
@@ -1317,7 +1313,8 @@ class DCRTPolyInterface : public ILElement<DerivedType, BigVecType>
   friend inline std::ostream& operator<<(std::ostream& os, const DerivedType& vec) {
     // os << (vec.m_format == EVALUATION ? "EVAL: " : "COEF: ");
     for (usint i = 0; i < vec.GetAllElements().size(); i++) {
-      if (i != 0) os << std::endl;
+      if (i != 0)
+        os << std::endl;
       os << i << ": ";
       os << vec.GetAllElements()[i];
     }

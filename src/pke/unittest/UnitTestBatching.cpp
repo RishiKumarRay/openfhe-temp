@@ -33,8 +33,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTBFVBATCHING : public ::testing::Test
-{
+class UTBFVBATCHING : public ::testing::Test {
  protected:
   void SetUp() {}
 
@@ -49,7 +48,7 @@ class UTBFVBATCHING : public ::testing::Test
 TEST_F(UTBFVBATCHING, Poly_EVALMULT_Arb) {
   PackedEncoding::Destroy();
 
-  usint m            = 22;
+  usint m = 22;
   PlaintextModulus p = 89;  // we choose s.t. 2m|p-1 to leverage CRTArb
   BigInteger modulusQ("72385066601");
   BigInteger modulusP(p);
@@ -77,25 +76,16 @@ TEST_F(UTBFVBATCHING, Poly_EVALMULT_Arb) {
   usint batchSize = 8;
 
   EncodingParams encodingParams(
-    std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
+      std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
 
   PackedEncoding::SetParams(m, encodingParams);
 
   BigInteger delta(modulusQ.DividedBy(modulusP));
 
-  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(params,
-                                                                           encodingParams,
-                                                                           1,
-                                                                           stdDev,
-                                                                           delta.ToString(),
-                                                                           OPTIMIZED,
-                                                                           bigEvalMultModulus.ToString(),
-                                                                           bigEvalMultRootOfUnity.ToString(),
-                                                                           1,
-                                                                           9,
-                                                                           1.006,
-                                                                           bigEvalMultModulusAlt.ToString(),
-                                                                           bigEvalMultRootOfUnityAlt.ToString());
+  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(
+      params, encodingParams, 1, stdDev, delta.ToString(), OPTIMIZED, bigEvalMultModulus.ToString(),
+      bigEvalMultRootOfUnity.ToString(), 1, 9, 1.006, bigEvalMultModulusAlt.ToString(),
+      bigEvalMultRootOfUnityAlt.ToString());
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -106,18 +96,15 @@ TEST_F(UTBFVBATCHING, Poly_EVALMULT_Arb) {
   Ciphertext<Poly> ciphertext1;
   Ciphertext<Poly> ciphertext2;
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-  std::vector<int64_t> vectorOfInts2 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<int64_t> vectorOfInts2 = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 
   Plaintext intArray1 = cc->MakePackedPlaintext(vectorOfInts1);
   Plaintext intArray2 = cc->MakePackedPlaintext(vectorOfInts2);
 
   std::vector<int64_t> vectorOfIntsMult;
-  std::transform(vectorOfInts1.begin(),
-                 vectorOfInts1.end(),
-                 vectorOfInts2.begin(),
-                 std::back_inserter(vectorOfIntsMult),
-                 std::multiplies<usint>());
+  std::transform(vectorOfInts1.begin(), vectorOfInts1.end(), vectorOfInts2.begin(),
+                 std::back_inserter(vectorOfIntsMult), std::multiplies<usint>());
 
   ciphertext1 = cc->Encrypt(kp.publicKey, intArray1);
   ciphertext2 = cc->Encrypt(kp.publicKey, intArray2);

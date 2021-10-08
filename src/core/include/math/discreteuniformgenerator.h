@@ -43,8 +43,7 @@ typedef DiscreteUniformGeneratorImpl<BigVector> DiscreteUniformGenerator;
  * @brief The class for Discrete Uniform Distribution generator over Zq.
  */
 template <typename VecType>
-class DiscreteUniformGeneratorImpl : public DistributionGenerator<VecType>
-{
+class DiscreteUniformGeneratorImpl : public DistributionGenerator<VecType> {
  public:
   /**
    * @brief Constructs a new DiscreteUniformGenerator with the given modulus.
@@ -74,9 +73,9 @@ class DiscreteUniformGeneratorImpl : public DistributionGenerator<VecType>
   // discrete uniform generator relies on the built-in C++ generator for 32-bit
   // unsigned integers the constants below set the parameters specific to 32-bit
   // chunk configuration
-  static const usint CHUNK_MIN   = 0;
+  static const usint CHUNK_MIN = 0;
   static const usint CHUNK_WIDTH = std::numeric_limits<uint32_t>::digits;
-  static const usint CHUNK_MAX   = std::numeric_limits<uint32_t>::max();
+  static const usint CHUNK_MAX = std::numeric_limits<uint32_t>::max();
 
   // number of 32-bit chunks in the modulus set for the discrete uniform
   // generator object

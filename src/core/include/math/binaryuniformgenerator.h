@@ -41,8 +41,7 @@ typedef BinaryUniformGeneratorImpl<BigVector> BinaryUniformGenerator;
  * @brief A generator of the Binary Uniform Distribution.
  */
 template <typename VecType>
-class BinaryUniformGeneratorImpl : public DistributionGenerator<VecType>
-{
+class BinaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
  public:
   /**
    * @brief Basic constructor for Binary Uniform Generator.

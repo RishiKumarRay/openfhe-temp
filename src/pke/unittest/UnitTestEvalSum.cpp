@@ -35,8 +35,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTEvalSum : public ::testing::Test
-{
+class UTEvalSum : public ::testing::Test {
  protected:
   void SetUp() {}
 
@@ -65,7 +64,8 @@ void EvalSumSetup(std::vector<int64_t>& input, int64_t& expectedSum, PlaintextMo
 
   int64_t half = int64_t(plaintextMod) / 2;
 
-  if (expectedSum > half) expectedSum -= plaintextMod;
+  if (expectedSum > half)
+    expectedSum -= plaintextMod;
 }
 
 TEST_F(UTEvalSum, Test_BFV_EvalSum) {
@@ -100,14 +100,14 @@ int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t>& clearVector, PlaintextMod
   auto params = std::make_shared<ILParams>(m, modulusQ, squareRootOfRoot, bigmodulus, bigroot);
 
   EncodingParams encodingParams(
-    std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
+      std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
 
   PackedEncoding::SetParams(m, encodingParams);
 
   BigInteger delta(modulusQ.DividedBy(modulusP));
 
   CryptoContext<Poly> cc =
-    CryptoContextFactory<Poly>::genCryptoContextBFV(params, encodingParams, 8, stdDev, delta.ToString());
+      CryptoContextFactory<Poly>::genCryptoContextBFV(params, encodingParams, 8, stdDev, delta.ToString());
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -118,7 +118,7 @@ int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t>& clearVector, PlaintextMod
   Ciphertext<Poly> ciphertext;
 
   std::vector<int64_t> vectorOfInts = std::move(clearVector);
-  Plaintext intArray                = cc->MakePackedPlaintext(vectorOfInts);
+  Plaintext intArray = cc->MakePackedPlaintext(vectorOfInts);
 
   cc->EvalSumKeyGen(kp.secretKey);
 

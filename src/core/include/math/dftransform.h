@@ -46,8 +46,7 @@ namespace lbcrypto {
 /**
  * @brief Discrete Fourier Transform FFT implementation.
  */
-class DiscreteFourierTransform
-{
+class DiscreteFourierTransform {
  public:
   /**
    * Virtual FFT forward transform.

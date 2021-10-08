@@ -33,8 +33,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTMultiparty : public ::testing::Test
-{
+class UTMultiparty : public ::testing::Test {
  public:
   const usint m = 16;
   UTMultiparty() {}
@@ -72,23 +71,23 @@ class UTMultiparty : public ::testing::Test
   GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, GHS, APPROXAUTO)
 #endif
 
-#define GENERATE_TEST_CASES_FUNC_RNS(x, y, ORD, PTM, BATCH)                                                           \
-  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrns_rlwe, ORD, PTM)                                                       \
-  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrns_opt, ORD, PTM)                                                        \
-  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrnsB_rlwe, ORD, PTM)                                                      \
-  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrnsB_opt, ORD, PTM)                                                       \
-  GENERATE_BGVrns_TEST_CASE(                                                                                          \
-    x, y, DCRTPoly, BGVrns_rlwe, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, MANUAL)             \
-    GENERATE_BGVrns_TEST_CASE(                                                                                        \
-      x, y, DCRTPoly, BGVrns_opt, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, MANUAL)            \
-      GENERATE_BGVrns_TEST_CASE(                                                                                      \
-        x, y, DCRTPoly, BGVrns_rlwe, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE, MANUAL)        \
-        GENERATE_BGVrns_TEST_CASE(                                                                                    \
-          x, y, DCRTPoly, BGVrns_opt, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE, MANUAL)       \
-          GENERATE_BGVrns_TEST_CASE(                                                                                  \
-            x, y, DCRTPoly, BGVrns_rlwe, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, MANUAL) \
-            GENERATE_BGVrns_TEST_CASE(                                                                                \
-              x, y, DCRTPoly, BGVrns_opt, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, MANUAL)
+#define GENERATE_TEST_CASES_FUNC_RNS(x, y, ORD, PTM, BATCH)                                                            \
+  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrns_rlwe, ORD, PTM)                                                        \
+  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrns_opt, ORD, PTM)                                                         \
+  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrnsB_rlwe, ORD, PTM)                                                       \
+  GENERATE_PKE_TEST_CASE(x, y, DCRTPoly, BFVrnsB_opt, ORD, PTM)                                                        \
+  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns_rlwe, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH,             \
+                            APPROXRESCALE, MANUAL)                                                                     \
+      GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns_opt, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH,          \
+                                APPROXRESCALE, MANUAL)                                                                 \
+          GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns_rlwe, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH,    \
+                                    APPROXRESCALE, MANUAL)                                                             \
+              GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns_opt, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, \
+                                        APPROXRESCALE, MANUAL)                                                         \
+                  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns_rlwe, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN,        \
+                                            HYBRID, BATCH, APPROXRESCALE, MANUAL)                                      \
+                      GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns_opt, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN,     \
+                                                HYBRID, BATCH, APPROXRESCALE, MANUAL)
 
 #define GENERATE_TEST_CASES_FUNC_MP(x, y, ORD, PTM)      \
   GENERATE_PKE_TEST_CASE(x, y, Poly, BFV_rlwe, ORD, PTM) \
@@ -105,11 +104,11 @@ class UTMultiparty : public ::testing::Test
  * 		  if you need rotations before any multiplications.
  * BATCH: The length of the packed vectors to be used with CKKS.
  */
-static const usint ORDER      = 4096;
-static const usint SCALE      = 50;
-static const usint NUMPRIME   = 3;
-static const usint RELIN      = 3;
-static const usint BATCH      = 16;
+static const usint ORDER = 4096;
+static const usint SCALE = 50;
+static const usint NUMPRIME = 3;
+static const usint RELIN = 3;
+static const usint BATCH = 16;
 static const usint SIZEMODULI = 50;
 
 /**
@@ -130,7 +129,7 @@ static void checkApproximateEquality(const std::vector<std::complex<double>>& a,
   std::vector<std::complex<double>> tmp(vectorSize);
   for (int i = 0; i < vectorSize; i++) {
     allTrue[i] = 1;
-    tmp[i]     = abs(a[i] - b[i]) <= epsilon;
+    tmp[i] = abs(a[i] - b[i]) <= epsilon;
   }
   EXPECT_TRUE(tmp == allTrue) << failmsg;
 }
@@ -147,36 +146,36 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
 
   kp1 = cc->KeyGen();
 
-  std::vector<int32_t> indices = { 2 };
+  std::vector<int32_t> indices = {2};
 
   auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
   cc->EvalSumKeyGen(kp1.secretKey);
   auto evalSumKeys =
-    std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
+      std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
   cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
   auto evalAtIndexKeys =
-    std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
+      std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
 
-  kp2               = cc->MultipartyKeyGen(kp1.publicKey);
+  kp2 = cc->MultipartyKeyGen(kp1.publicKey);
   auto evalMultKey2 = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
 
   auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
 
   auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
 
-  auto evalSumKeysB    = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
+  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
   auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
   cc->InsertEvalSumKey(evalSumKeysJoin);
 
   auto evalAtIndexKeysB =
-    cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
+      cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
   auto evalAtIndexKeysJoin =
-    cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
+      cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
   cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
 
-  auto evalMultAAB   = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
   auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, evalMultAB->GetKeyTag());
-  cc->InsertEvalMultKey({ evalMultFinal });
+  cc->InsertEvalMultKey({evalMultFinal});
 
   vector<LPPrivateKey<DCRTPoly>> secretKeys;
   secretKeys.push_back(kp1.secretKey);
@@ -192,34 +191,36 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<std::complex<double>> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
-  std::vector<std::complex<double>> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<std::complex<double>> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
+  std::vector<std::complex<double>> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
+  std::vector<std::complex<double>> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<std::complex<double>> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
 
   size_t encodedLength = vectorOfInts1.size();
-  std::vector<std::complex<double>> sumInput(encodedLength, { 0, 0 });
-  std::vector<std::complex<double>> multInput(encodedLength, { 0, 0 });
-  std::vector<std::complex<double>> evalSumInput(encodedLength, { 0, 0 });
-  std::vector<std::complex<double>> rotateInput(encodedLength, { 0, 0 });
+  std::vector<std::complex<double>> sumInput(encodedLength, {0, 0});
+  std::vector<std::complex<double>> multInput(encodedLength, {0, 0});
+  std::vector<std::complex<double>> evalSumInput(encodedLength, {0, 0});
+  std::vector<std::complex<double>> rotateInput(encodedLength, {0, 0});
 
   for (usint i = 0; i < encodedLength; i++) {
-    sumInput[i]  = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
+    sumInput[i] = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
     multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
-    if (i == 0) evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
+    if (i == 0)
+      evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
     else
       evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
-    if (i + indices[0] > encodedLength - 1) rotateInput[i] = 0;
+    if (i + indices[0] > encodedLength - 1)
+      rotateInput[i] = 0;
     else
       rotateInput[i] = vectorOfInts1[i + indices[0]];
   }
 
-  Plaintext plaintext1            = cc->MakeCKKSPackedPlaintext(vectorOfInts1);
-  Plaintext plaintext2            = cc->MakeCKKSPackedPlaintext(vectorOfInts2);
-  Plaintext plaintext3            = cc->MakeCKKSPackedPlaintext(vectorOfInts3);
-  Plaintext plaintextSumInput     = cc->MakeCKKSPackedPlaintext(sumInput);
-  Plaintext plaintextMultInput    = cc->MakeCKKSPackedPlaintext(multInput);
+  Plaintext plaintext1 = cc->MakeCKKSPackedPlaintext(vectorOfInts1);
+  Plaintext plaintext2 = cc->MakeCKKSPackedPlaintext(vectorOfInts2);
+  Plaintext plaintext3 = cc->MakeCKKSPackedPlaintext(vectorOfInts3);
+  Plaintext plaintextSumInput = cc->MakeCKKSPackedPlaintext(sumInput);
+  Plaintext plaintextMultInput = cc->MakeCKKSPackedPlaintext(multInput);
   Plaintext plaintextEvalSumInput = cc->MakeCKKSPackedPlaintext(evalSumInput);
-  Plaintext plaintextRotateInput  = cc->MakeCKKSPackedPlaintext(rotateInput);
+  Plaintext plaintextRotateInput = cc->MakeCKKSPackedPlaintext(rotateInput);
 
   ////////////////////////////////////////////////////////////
   // Encryption
@@ -231,14 +232,14 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
   ////////////////////////////////////////////////////////////
   // EvalAdd Operation on Re-Encrypted Data
   ////////////////////////////////////////////////////////////
-  Ciphertext<DCRTPoly> ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
+  Ciphertext<DCRTPoly> ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
   Ciphertext<DCRTPoly> ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
 
   auto ciphertextMultTemp = cc->EvalMult(ciphertext1, ciphertext3);
-  auto ciphertextMult     = cc->ModReduce(ciphertextMultTemp);
-  auto ciphertextEvalSum  = cc->EvalSum(ciphertext3, BATCH);
-  ciphertext1             = cc->EvalMult(ciphertext1, 1);
-  auto ciphertextRotate   = cc->EvalAtIndex(ciphertext1, indices[0]);
+  auto ciphertextMult = cc->ModReduce(ciphertextMultTemp);
+  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, BATCH);
+  ciphertext1 = cc->EvalMult(ciphertext1, 1);
+  auto ciphertextRotate = cc->EvalAtIndex(ciphertext1, indices[0]);
 
   ////////////////////////////////////////////////////////////
   // Decryption after Accumulation Operation on Encrypted Data
@@ -273,10 +274,10 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
   Plaintext plaintextMultipartyNew;
 
   const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams = kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename DCRTPoly::Params> elementParams   = cryptoParams->GetElementParams();
+  const shared_ptr<typename DCRTPoly::Params> elementParams = cryptoParams->GetElementParams();
 
-  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
-  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -290,8 +291,8 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
   checkApproximateEquality(tmp_a, tmp_b, encodedLength, eps, failmsg + " Multiparty accumulation failed");
 
   Plaintext plaintextMultipartyMult;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecMult;
   partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
@@ -305,8 +306,8 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
   checkApproximateEquality(tmp_a, tmp_b, encodedLength, eps, failmsg + " Multiparty multiplication failed");
 
   Plaintext plaintextMultipartyEvalSum;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextEvalSum });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextEvalSum });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextEvalSum});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextEvalSum});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
   partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
@@ -320,8 +321,8 @@ static void UnitTest_MultiPartyCKKS(const CryptoContext<Element> cc1, const stri
   checkApproximateEquality(tmp_a, tmp_b, encodedLength, eps, failmsg + " Multiparty eval sum failed");
 
   Plaintext plaintextMultipartyRotate;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextRotate });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextRotate });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextRotate});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextRotate});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecRotate;
   partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
@@ -350,15 +351,15 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
 
   kp1 = cc->KeyGen();
 
-  std::vector<int32_t> indices = { 2 };
+  std::vector<int32_t> indices = {2};
 
   auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
   cc->EvalSumKeyGen(kp1.secretKey);
   auto evalSumKeys =
-    std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
+      std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
   cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
   auto evalAtIndexKeys =
-    std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
+      std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
 
   kp2 = cc->MultipartyKeyGen(kp1.publicKey, false, true);
 
@@ -370,19 +371,19 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
 
   auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
 
-  auto evalSumKeysB    = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
+  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
   auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
   cc->InsertEvalSumKey(evalSumKeysJoin);
 
   auto evalAtIndexKeysB =
-    cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
+      cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
   auto evalAtIndexKeysJoin =
-    cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
+      cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
   cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
 
-  auto evalMultAAB   = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
   auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, evalMultAB->GetKeyTag());
-  cc->InsertEvalMultKey({ evalMultFinal });
+  cc->InsertEvalMultKey({evalMultFinal});
 
   vector<LPPrivateKey<DCRTPoly>> secretKeys;
   secretKeys.push_back(kp1.secretKey);
@@ -398,34 +399,36 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<std::complex<double>> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
-  std::vector<std::complex<double>> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<std::complex<double>> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
+  std::vector<std::complex<double>> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
+  std::vector<std::complex<double>> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<std::complex<double>> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
 
   size_t encodedLength = vectorOfInts1.size();
-  std::vector<std::complex<double>> sumInput(encodedLength, { 0, 0 });
-  std::vector<std::complex<double>> multInput(encodedLength, { 0, 0 });
-  std::vector<std::complex<double>> evalSumInput(encodedLength, { 0, 0 });
-  std::vector<std::complex<double>> rotateInput(encodedLength, { 0, 0 });
+  std::vector<std::complex<double>> sumInput(encodedLength, {0, 0});
+  std::vector<std::complex<double>> multInput(encodedLength, {0, 0});
+  std::vector<std::complex<double>> evalSumInput(encodedLength, {0, 0});
+  std::vector<std::complex<double>> rotateInput(encodedLength, {0, 0});
 
   for (usint i = 0; i < encodedLength; i++) {
-    sumInput[i]  = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
+    sumInput[i] = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
     multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
-    if (i == 0) evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
+    if (i == 0)
+      evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
     else
       evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
-    if (i + indices[0] > encodedLength - 1) rotateInput[i] = 0;
+    if (i + indices[0] > encodedLength - 1)
+      rotateInput[i] = 0;
     else
       rotateInput[i] = vectorOfInts1[i + indices[0]];
   }
 
-  Plaintext plaintext1            = cc->MakeCKKSPackedPlaintext(vectorOfInts1);
-  Plaintext plaintext2            = cc->MakeCKKSPackedPlaintext(vectorOfInts2);
-  Plaintext plaintext3            = cc->MakeCKKSPackedPlaintext(vectorOfInts3);
-  Plaintext plaintextSumInput     = cc->MakeCKKSPackedPlaintext(sumInput);
-  Plaintext plaintextMultInput    = cc->MakeCKKSPackedPlaintext(multInput);
+  Plaintext plaintext1 = cc->MakeCKKSPackedPlaintext(vectorOfInts1);
+  Plaintext plaintext2 = cc->MakeCKKSPackedPlaintext(vectorOfInts2);
+  Plaintext plaintext3 = cc->MakeCKKSPackedPlaintext(vectorOfInts3);
+  Plaintext plaintextSumInput = cc->MakeCKKSPackedPlaintext(sumInput);
+  Plaintext plaintextMultInput = cc->MakeCKKSPackedPlaintext(multInput);
   Plaintext plaintextEvalSumInput = cc->MakeCKKSPackedPlaintext(evalSumInput);
-  Plaintext plaintextRotateInput  = cc->MakeCKKSPackedPlaintext(rotateInput);
+  Plaintext plaintextRotateInput = cc->MakeCKKSPackedPlaintext(rotateInput);
 
   ////////////////////////////////////////////////////////////
   // Encryption
@@ -437,14 +440,14 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
   ////////////////////////////////////////////////////////////
   // EvalAdd Operation on Re-Encrypted Data
   ////////////////////////////////////////////////////////////
-  Ciphertext<DCRTPoly> ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
+  Ciphertext<DCRTPoly> ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
   Ciphertext<DCRTPoly> ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
 
   auto ciphertextMultTemp = cc->EvalMult(ciphertext1, ciphertext3);
-  auto ciphertextMult     = cc->ModReduce(ciphertextMultTemp);
-  auto ciphertextEvalSum  = cc->EvalSum(ciphertext3, BATCH);
-  ciphertext1             = cc->EvalMult(ciphertext1, 1);
-  auto ciphertextRotate   = cc->EvalAtIndex(ciphertext1, indices[0]);
+  auto ciphertextMult = cc->ModReduce(ciphertextMultTemp);
+  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, BATCH);
+  ciphertext1 = cc->EvalMult(ciphertext1, 1);
+  auto ciphertextRotate = cc->EvalAtIndex(ciphertext1, indices[0]);
 
   ////////////////////////////////////////////////////////////
   // Decryption after Accumulation Operation on Encrypted Data
@@ -479,10 +482,10 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
   Plaintext plaintextMultipartyNew;
 
   const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams = kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename DCRTPoly::Params> elementParams   = cryptoParams->GetElementParams();
+  const shared_ptr<typename DCRTPoly::Params> elementParams = cryptoParams->GetElementParams();
 
-  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
-  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -496,8 +499,8 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
   checkApproximateEquality(tmp_a, tmp_b, encodedLength, eps, failmsg + " Multiparty accumulation failed");
 
   Plaintext plaintextMultipartyMult;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecMult;
   partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
@@ -511,8 +514,8 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
   checkApproximateEquality(tmp_a, tmp_b, encodedLength, eps, failmsg + " Multiparty multiplication failed");
 
   Plaintext plaintextMultipartyEvalSum;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextEvalSum });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextEvalSum });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextEvalSum});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextEvalSum});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
   partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
@@ -526,8 +529,8 @@ static void UnitTest_MultiPartyCKKS_Star(const CryptoContext<Element> cc1, const
   checkApproximateEquality(tmp_a, tmp_b, encodedLength, eps, failmsg + " Multiparty eval sum failed");
 
   Plaintext plaintextMultipartyRotate;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextRotate });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextRotate });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextRotate});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextRotate});
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecRotate;
   partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
@@ -555,460 +558,32 @@ static void UnitTest_MultiParty(const CryptoContext<Element> cc1, const string& 
 
   kp1 = cc->KeyGen();
 
-  std::vector<int32_t> indices = { 2 };
+  std::vector<int32_t> indices = {2};
 
   auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
   cc->EvalSumKeyGen(kp1.secretKey);
   cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
   auto evalSumKeys =
-    std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
+      std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
   auto evalAtIndexKeys =
-    std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
-  kp2                  = cc->MultipartyKeyGen(kp1.publicKey);
-  auto evalMultKey2    = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
-  auto evalMultAB      = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
-  auto evalMultBAB     = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
-  auto evalSumKeysB    = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
-  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalSumKey(evalSumKeysJoin);
-
-  auto evalAtIndexKeysB =
-    cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
-  auto evalAtIndexKeysJoin =
-    cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
-
-  auto evalMultAAB   = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
-  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalMultKey({ evalMultFinal });
-
-  vector<LPPrivateKey<Element>> secretKeys;
-  secretKeys.push_back(kp1.secretKey);
-  secretKeys.push_back(kp2.secretKey);
-
-  kpMultiparty = cc->MultipartyKeyGen(secretKeys);
-
-  if (!kpMultiparty.good()) {
-    std::cout << "Key generation failed!" << std::endl;
-    exit(1);
-  }
-
-  ////////////////////////////////////////////////////////////
-  // Encode source data
-  ////////////////////////////////////////////////////////////
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
-  std::vector<int64_t> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
-
-  size_t encodedLength = vectorOfInts1.size();
-  std::vector<int64_t> sumInput(encodedLength, 0);
-  std::vector<int64_t> multInput(encodedLength, 0);
-  std::vector<int64_t> evalSumInput(encodedLength, 0);
-  std::vector<int64_t> rotateInput(encodedLength, 0);
-
-  for (usint i = 0; i < encodedLength; i++) {
-    sumInput[i]  = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
-    multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
-    if (i == 0) evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
-    else
-      evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
-    if (i + indices[0] > encodedLength - 1) rotateInput[i] = 0;
-    else
-      rotateInput[i] = vectorOfInts1[i + indices[0]];
-  }
-
-  Plaintext plaintext1            = cc->MakePackedPlaintext(vectorOfInts1);
-  Plaintext plaintext2            = cc->MakePackedPlaintext(vectorOfInts2);
-  Plaintext plaintext3            = cc->MakePackedPlaintext(vectorOfInts3);
-  Plaintext plaintextSumInput     = cc->MakePackedPlaintext(sumInput);
-  Plaintext plaintextMultInput    = cc->MakePackedPlaintext(multInput);
-  Plaintext plaintextEvalSumInput = cc->MakePackedPlaintext(evalSumInput);
-  Plaintext plaintextRotateInput  = cc->MakePackedPlaintext(rotateInput);
-
-  ////////////////////////////////////////////////////////////
-  // Encryption
-  ////////////////////////////////////////////////////////////
-  Ciphertext<Element> ciphertext1;
-  Ciphertext<Element> ciphertext2;
-  Ciphertext<Element> ciphertext3;
-
-  ciphertext1 = cc->Encrypt(kp2.publicKey, plaintext1);
-  ciphertext2 = cc->Encrypt(kp2.publicKey, plaintext2);
-  ciphertext3 = cc->Encrypt(kp2.publicKey, plaintext3);
-
-  ////////////////////////////////////////////////////////////
-  // EvalAdd Operation on Re-Encrypted Data
-  ////////////////////////////////////////////////////////////
-
-  Ciphertext<Element> ciphertextAdd12;
-  Ciphertext<Element> ciphertextAdd123;
-
-  ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
-  ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
-
-  auto ciphertextMult    = cc->EvalMult(ciphertext1, ciphertext3);
-  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, BATCH);
-  auto ciphertextRotate  = cc->EvalAtIndex(ciphertext1, indices[0]);
-
-  ////////////////////////////////////////////////////////////
-  // Decryption after Accumulation Operation on Encrypted Data
-  ////////////////////////////////////////////////////////////
-  Plaintext plaintextAddNew;
-  cc->Decrypt(kpMultiparty.secretKey, ciphertextAdd123, &plaintextAddNew);
-  plaintextAddNew->SetLength(plaintext1->GetLength());
-
-  auto tmp_a = plaintextAddNew->GetPackedValue();
-  auto tmp_b = plaintextSumInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " accumulation fails";
-
-  Plaintext plaintextMult;
-  cc->Decrypt(kpMultiparty.secretKey, ciphertextMult, &plaintextMult);
-  plaintextMult->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMult->GetPackedValue();
-  tmp_b = plaintextMultInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " multiplication fails";
-
-  Plaintext plaintextRotate;
-  cc->Decrypt(kpMultiparty.secretKey, ciphertextRotate, &plaintextRotate);
-  plaintextRotate->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextRotate->GetPackedValue();
-  tmp_b = plaintextRotateInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << "rotation fails";
-
-  ////////////////////////////////////////////////////////////
-  // Decryption after Accumulation Operation on Encrypted Data with Multiparty
-  ////////////////////////////////////////////////////////////
-
-  Plaintext plaintextAddNew1;
-  Plaintext plaintextAddNew2;
-  Plaintext plaintextAddNew3;
-  Element partialPlaintext1;
-  Element partialPlaintext2;
-  Element partialPlaintext3;
-  Plaintext plaintextMultipartyNew;
-
-  const shared_ptr<LPCryptoParameters<Element>> cryptoParams = kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename Element::Params> elementParams   = cryptoParams->GetElementParams();
-
-  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
-
-  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
-
-  vector<Ciphertext<Element>> partialCiphertextVec;
-  partialCiphertextVec.push_back(ciphertextPartial1[0]);
-  partialCiphertextVec.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVec, &plaintextMultipartyNew);
-  plaintextMultipartyNew->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyNew->GetPackedValue();
-  tmp_b = plaintextSumInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty accumulation fails";
-
-  Plaintext plaintextMultipartyMult;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
-
-  vector<Ciphertext<Element>> partialCiphertextVecMult;
-  partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
-  partialCiphertextVecMult.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVecMult, &plaintextMultipartyMult);
-  plaintextMultipartyMult->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyMult->GetPackedValue();
-  tmp_b = plaintextMultInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty multiplication fails";
-
-  Plaintext plaintextMultipartyRotate;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextRotate });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextRotate });
-
-  vector<Ciphertext<Element>> partialCiphertextVecRotate;
-  partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
-  partialCiphertextVecRotate.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVecRotate, &plaintextMultipartyRotate);
-  plaintextMultipartyRotate->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyRotate->GetPackedValue();
-  tmp_b = plaintextRotateInput->GetPackedValue();
-
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty rotation fails";
-
-  Plaintext plaintextMultipartyEvalSum;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextEvalSum });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextEvalSum });
-
-  vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
-  partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
-  partialCiphertextVecEvalSum.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum, &plaintextMultipartyEvalSum);
-  plaintextMultipartyEvalSum->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyEvalSum->GetPackedValue();
-  tmp_b = plaintextEvalSumInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty eval sum fails";
-}
-
-GENERATE_TEST_CASES_FUNC_RNS(UTMultiparty, UnitTest_MultiParty, 512 /*ORDER*/, 65537 /*PTM*/, BATCH)
-
-template <class Element>
-static void UnitTest_MultiParty_Star(const CryptoContext<Element> cc1, const string& failmsg) {
-  CryptoContext<Element> cc = std::static_pointer_cast<CryptoContextImpl<Element>>(cc1);
-
-  cc->Enable(MULTIPARTY);
-
-  LPKeyPair<Element> kp1;
-  LPKeyPair<Element> kp2;
-  LPKeyPair<Element> kpMultiparty;
-  LPPublicKey<Element> pubKey;
-
-  kp1 = cc->KeyGen();
-
-  std::vector<int32_t> indices = { 2 };
-
-  auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
-  cc->EvalSumKeyGen(kp1.secretKey);
-  cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
-  auto evalSumKeys =
-    std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
-  auto evalAtIndexKeys =
-    std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
-  kp2 = cc->MultipartyKeyGen(kp1.publicKey, false, true);
-
-  pubKey = cc->MultiAddPubKeys(kp1.publicKey, kp2.publicKey, kp2.publicKey->GetKeyTag());
-
-  auto evalMultKey2    = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
-  auto evalMultAB      = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
-  auto evalMultBAB     = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
-  auto evalSumKeysB    = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
-  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalSumKey(evalSumKeysJoin);
-
-  auto evalAtIndexKeysB =
-    cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
-  auto evalAtIndexKeysJoin =
-    cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
-
-  auto evalMultAAB   = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
-  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalMultKey({ evalMultFinal });
-
-  vector<LPPrivateKey<Element>> secretKeys;
-  secretKeys.push_back(kp1.secretKey);
-  secretKeys.push_back(kp2.secretKey);
-
-  kpMultiparty = cc->MultipartyKeyGen(secretKeys);
-
-  if (!kpMultiparty.good()) {
-    std::cout << "Key generation failed!" << std::endl;
-    exit(1);
-  }
-
-  ////////////////////////////////////////////////////////////
-  // Encode source data
-  ////////////////////////////////////////////////////////////
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
-  std::vector<int64_t> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
-
-  size_t encodedLength = vectorOfInts1.size();
-  std::vector<int64_t> sumInput(encodedLength, 0);
-  std::vector<int64_t> multInput(encodedLength, 0);
-  std::vector<int64_t> evalSumInput(encodedLength, 0);
-  std::vector<int64_t> rotateInput(encodedLength, 0);
-
-  for (usint i = 0; i < encodedLength; i++) {
-    sumInput[i]  = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
-    multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
-    if (i == 0) evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
-    else
-      evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
-    if (i + indices[0] > encodedLength - 1) rotateInput[i] = 0;
-    else
-      rotateInput[i] = vectorOfInts1[i + indices[0]];
-  }
-
-  Plaintext plaintext1            = cc->MakePackedPlaintext(vectorOfInts1);
-  Plaintext plaintext2            = cc->MakePackedPlaintext(vectorOfInts2);
-  Plaintext plaintext3            = cc->MakePackedPlaintext(vectorOfInts3);
-  Plaintext plaintextSumInput     = cc->MakePackedPlaintext(sumInput);
-  Plaintext plaintextMultInput    = cc->MakePackedPlaintext(multInput);
-  Plaintext plaintextEvalSumInput = cc->MakePackedPlaintext(evalSumInput);
-  Plaintext plaintextRotateInput  = cc->MakePackedPlaintext(rotateInput);
-
-  ////////////////////////////////////////////////////////////
-  // Encryption
-  ////////////////////////////////////////////////////////////
-  Ciphertext<Element> ciphertext1;
-  Ciphertext<Element> ciphertext2;
-  Ciphertext<Element> ciphertext3;
-
-  ciphertext1 = cc->Encrypt(pubKey, plaintext1);
-  ciphertext2 = cc->Encrypt(pubKey, plaintext2);
-  ciphertext3 = cc->Encrypt(pubKey, plaintext3);
-
-  ////////////////////////////////////////////////////////////
-  // EvalAdd Operation on Re-Encrypted Data
-  ////////////////////////////////////////////////////////////
-
-  Ciphertext<Element> ciphertextAdd12;
-  Ciphertext<Element> ciphertextAdd123;
-
-  ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
-  ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
-
-  auto ciphertextMult    = cc->EvalMult(ciphertext1, ciphertext3);
-  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, BATCH);
-  auto ciphertextRotate  = cc->EvalAtIndex(ciphertext1, indices[0]);
-
-  ////////////////////////////////////////////////////////////
-  // Decryption after Accumulation Operation on Encrypted Data
-  ////////////////////////////////////////////////////////////
-  Plaintext plaintextAddNew;
-  cc->Decrypt(kpMultiparty.secretKey, ciphertextAdd123, &plaintextAddNew);
-  plaintextAddNew->SetLength(plaintext1->GetLength());
-
-  auto tmp_a = plaintextAddNew->GetPackedValue();
-  auto tmp_b = plaintextSumInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " accumulation fails";
-
-  Plaintext plaintextMult;
-  cc->Decrypt(kpMultiparty.secretKey, ciphertextMult, &plaintextMult);
-  plaintextMult->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMult->GetPackedValue();
-  tmp_b = plaintextMultInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " multiplication fails";
-
-  Plaintext plaintextRotate;
-  cc->Decrypt(kpMultiparty.secretKey, ciphertextRotate, &plaintextRotate);
-  plaintextRotate->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextRotate->GetPackedValue();
-  tmp_b = plaintextRotateInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << "rotation fails";
-
-  ////////////////////////////////////////////////////////////
-  // Decryption after Accumulation Operation on Encrypted Data with Multiparty
-  ////////////////////////////////////////////////////////////
-
-  Plaintext plaintextAddNew1;
-  Plaintext plaintextAddNew2;
-  Plaintext plaintextAddNew3;
-  Element partialPlaintext1;
-  Element partialPlaintext2;
-  Element partialPlaintext3;
-  Plaintext plaintextMultipartyNew;
-
-  const shared_ptr<LPCryptoParameters<Element>> cryptoParams = kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename Element::Params> elementParams   = cryptoParams->GetElementParams();
-
-  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
-
-  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
-
-  vector<Ciphertext<Element>> partialCiphertextVec;
-  partialCiphertextVec.push_back(ciphertextPartial1[0]);
-  partialCiphertextVec.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVec, &plaintextMultipartyNew);
-  plaintextMultipartyNew->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyNew->GetPackedValue();
-  tmp_b = plaintextSumInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty accumulation fails";
-
-  if (cc->getSchemeId() == "BGVrns") ciphertextMult = cc->Compress(ciphertextMult, 1);
-
-  Plaintext plaintextMultipartyMult;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
-
-  vector<Ciphertext<Element>> partialCiphertextVecMult;
-  partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
-  partialCiphertextVecMult.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVecMult, &plaintextMultipartyMult);
-  plaintextMultipartyMult->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyMult->GetPackedValue();
-  tmp_b = plaintextMultInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty multiplication fails";
-
-  Plaintext plaintextMultipartyRotate;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextRotate });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextRotate });
-
-  vector<Ciphertext<Element>> partialCiphertextVecRotate;
-  partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
-  partialCiphertextVecRotate.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVecRotate, &plaintextMultipartyRotate);
-  plaintextMultipartyRotate->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyRotate->GetPackedValue();
-  tmp_b = plaintextRotateInput->GetPackedValue();
-
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty rotation fails";
-
-  Plaintext plaintextMultipartyEvalSum;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextEvalSum });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextEvalSum });
-
-  vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
-  partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
-  partialCiphertextVecEvalSum.push_back(ciphertextPartial2[0]);
-
-  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum, &plaintextMultipartyEvalSum);
-  plaintextMultipartyEvalSum->SetLength(plaintext1->GetLength());
-
-  tmp_a = plaintextMultipartyEvalSum->GetPackedValue();
-  tmp_b = plaintextEvalSumInput->GetPackedValue();
-  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty eval sum fails";
-}
-
-GENERATE_TEST_CASES_FUNC_RNS(UTMultiparty, UnitTest_MultiParty_Star, 512 /*ORDER*/, 65537 /*PTM*/, BATCH)
-
-template <class Element>
-static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const string& failmsg) {
-  CryptoContext<Element> cc = std::static_pointer_cast<CryptoContextImpl<Element>>(cc1);
-
-  cc->Enable(MULTIPARTY);
-
-  LPKeyPair<Element> kp1;
-  LPKeyPair<Element> kp2;
-  LPKeyPair<Element> kpMultiparty;
-
-  kp1 = cc->KeyGen();
-
-  std::vector<int32_t> indices = { 2 };
-
-  auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
-  cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
-  auto evalAtIndexKeys =
-    std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
-
-  kp2               = cc->MultipartyKeyGen(kp1.publicKey);
+      std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
+  kp2 = cc->MultipartyKeyGen(kp1.publicKey);
   auto evalMultKey2 = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
-  auto evalMultAB   = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
-
+  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
   auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
+  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
+  cc->InsertEvalSumKey(evalSumKeysJoin);
 
   auto evalAtIndexKeysB =
-    cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
+      cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
   auto evalAtIndexKeysJoin =
-    cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
+      cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
   cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
 
-  auto evalMultAAB   = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
   auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, kp2.publicKey->GetKeyTag());
-  cc->InsertEvalMultKey({ evalMultFinal });
+  cc->InsertEvalMultKey({evalMultFinal});
 
   vector<LPPrivateKey<Element>> secretKeys;
   secretKeys.push_back(kp1.secretKey);
@@ -1024,9 +599,9 @@ static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const strin
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
-  std::vector<int64_t> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
+  std::vector<int64_t> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
 
   size_t encodedLength = vectorOfInts1.size();
   std::vector<int64_t> sumInput(encodedLength, 0);
@@ -1035,21 +610,24 @@ static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const strin
   std::vector<int64_t> rotateInput(encodedLength, 0);
 
   for (usint i = 0; i < encodedLength; i++) {
-    sumInput[i]  = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
+    sumInput[i] = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
     multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
-    if (i == 0) evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
+    if (i == 0)
+      evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
     else
       evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
-    if (i + indices[0] > encodedLength - 1) rotateInput[i] = 0;
+    if (i + indices[0] > encodedLength - 1)
+      rotateInput[i] = 0;
     else
       rotateInput[i] = vectorOfInts1[i + indices[0]];
   }
 
-  Plaintext plaintext1           = cc->MakePackedPlaintext(vectorOfInts1);
-  Plaintext plaintext2           = cc->MakePackedPlaintext(vectorOfInts2);
-  Plaintext plaintext3           = cc->MakePackedPlaintext(vectorOfInts3);
-  Plaintext plaintextSumInput    = cc->MakePackedPlaintext(sumInput);
-  Plaintext plaintextMultInput   = cc->MakePackedPlaintext(multInput);
+  Plaintext plaintext1 = cc->MakePackedPlaintext(vectorOfInts1);
+  Plaintext plaintext2 = cc->MakePackedPlaintext(vectorOfInts2);
+  Plaintext plaintext3 = cc->MakePackedPlaintext(vectorOfInts3);
+  Plaintext plaintextSumInput = cc->MakePackedPlaintext(sumInput);
+  Plaintext plaintextMultInput = cc->MakePackedPlaintext(multInput);
+  Plaintext plaintextEvalSumInput = cc->MakePackedPlaintext(evalSumInput);
   Plaintext plaintextRotateInput = cc->MakePackedPlaintext(rotateInput);
 
   ////////////////////////////////////////////////////////////
@@ -1070,10 +648,11 @@ static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const strin
   Ciphertext<Element> ciphertextAdd12;
   Ciphertext<Element> ciphertextAdd123;
 
-  ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
+  ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
   ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
 
-  auto ciphertextMult   = cc->EvalMult(ciphertext1, ciphertext3);
+  auto ciphertextMult = cc->EvalMult(ciphertext1, ciphertext3);
+  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, BATCH);
   auto ciphertextRotate = cc->EvalAtIndex(ciphertext1, indices[0]);
 
   ////////////////////////////////////////////////////////////
@@ -1116,11 +695,11 @@ static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const strin
   Plaintext plaintextMultipartyNew;
 
   const shared_ptr<LPCryptoParameters<Element>> cryptoParams = kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename Element::Params> elementParams   = cryptoParams->GetElementParams();
+  const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
 
-  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
 
-  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
 
   vector<Ciphertext<Element>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -1133,11 +712,9 @@ static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const strin
   tmp_b = plaintextSumInput->GetPackedValue();
   EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty accumulation fails";
 
-  if (cc->getSchemeId() == "BGVrns") ciphertextMult = cc->Compress(ciphertextMult, 1);
-
   Plaintext plaintextMultipartyMult;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
 
   vector<Ciphertext<Element>> partialCiphertextVecMult;
   partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
@@ -1151,8 +728,442 @@ static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const strin
   EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty multiplication fails";
 
   Plaintext plaintextMultipartyRotate;
-  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextRotate });
-  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextRotate });
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextRotate});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextRotate});
+
+  vector<Ciphertext<Element>> partialCiphertextVecRotate;
+  partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
+  partialCiphertextVecRotate.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVecRotate, &plaintextMultipartyRotate);
+  plaintextMultipartyRotate->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyRotate->GetPackedValue();
+  tmp_b = plaintextRotateInput->GetPackedValue();
+
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty rotation fails";
+
+  Plaintext plaintextMultipartyEvalSum;
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextEvalSum});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextEvalSum});
+
+  vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
+  partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
+  partialCiphertextVecEvalSum.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum, &plaintextMultipartyEvalSum);
+  plaintextMultipartyEvalSum->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyEvalSum->GetPackedValue();
+  tmp_b = plaintextEvalSumInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty eval sum fails";
+}
+
+GENERATE_TEST_CASES_FUNC_RNS(UTMultiparty, UnitTest_MultiParty, 512 /*ORDER*/, 65537 /*PTM*/, BATCH)
+
+template <class Element>
+static void UnitTest_MultiParty_Star(const CryptoContext<Element> cc1, const string& failmsg) {
+  CryptoContext<Element> cc = std::static_pointer_cast<CryptoContextImpl<Element>>(cc1);
+
+  cc->Enable(MULTIPARTY);
+
+  LPKeyPair<Element> kp1;
+  LPKeyPair<Element> kp2;
+  LPKeyPair<Element> kpMultiparty;
+  LPPublicKey<Element> pubKey;
+
+  kp1 = cc->KeyGen();
+
+  std::vector<int32_t> indices = {2};
+
+  auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
+  cc->EvalSumKeyGen(kp1.secretKey);
+  cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
+  auto evalSumKeys =
+      std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
+  auto evalAtIndexKeys =
+      std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
+  kp2 = cc->MultipartyKeyGen(kp1.publicKey, false, true);
+
+  pubKey = cc->MultiAddPubKeys(kp1.publicKey, kp2.publicKey, kp2.publicKey->GetKeyTag());
+
+  auto evalMultKey2 = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
+  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
+  auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
+  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
+  cc->InsertEvalSumKey(evalSumKeysJoin);
+
+  auto evalAtIndexKeysB =
+      cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
+  auto evalAtIndexKeysJoin =
+      cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
+  cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
+
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, kp2.publicKey->GetKeyTag());
+  cc->InsertEvalMultKey({evalMultFinal});
+
+  vector<LPPrivateKey<Element>> secretKeys;
+  secretKeys.push_back(kp1.secretKey);
+  secretKeys.push_back(kp2.secretKey);
+
+  kpMultiparty = cc->MultipartyKeyGen(secretKeys);
+
+  if (!kpMultiparty.good()) {
+    std::cout << "Key generation failed!" << std::endl;
+    exit(1);
+  }
+
+  ////////////////////////////////////////////////////////////
+  // Encode source data
+  ////////////////////////////////////////////////////////////
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
+  std::vector<int64_t> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
+
+  size_t encodedLength = vectorOfInts1.size();
+  std::vector<int64_t> sumInput(encodedLength, 0);
+  std::vector<int64_t> multInput(encodedLength, 0);
+  std::vector<int64_t> evalSumInput(encodedLength, 0);
+  std::vector<int64_t> rotateInput(encodedLength, 0);
+
+  for (usint i = 0; i < encodedLength; i++) {
+    sumInput[i] = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
+    multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
+    if (i == 0)
+      evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
+    else
+      evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
+    if (i + indices[0] > encodedLength - 1)
+      rotateInput[i] = 0;
+    else
+      rotateInput[i] = vectorOfInts1[i + indices[0]];
+  }
+
+  Plaintext plaintext1 = cc->MakePackedPlaintext(vectorOfInts1);
+  Plaintext plaintext2 = cc->MakePackedPlaintext(vectorOfInts2);
+  Plaintext plaintext3 = cc->MakePackedPlaintext(vectorOfInts3);
+  Plaintext plaintextSumInput = cc->MakePackedPlaintext(sumInput);
+  Plaintext plaintextMultInput = cc->MakePackedPlaintext(multInput);
+  Plaintext plaintextEvalSumInput = cc->MakePackedPlaintext(evalSumInput);
+  Plaintext plaintextRotateInput = cc->MakePackedPlaintext(rotateInput);
+
+  ////////////////////////////////////////////////////////////
+  // Encryption
+  ////////////////////////////////////////////////////////////
+  Ciphertext<Element> ciphertext1;
+  Ciphertext<Element> ciphertext2;
+  Ciphertext<Element> ciphertext3;
+
+  ciphertext1 = cc->Encrypt(pubKey, plaintext1);
+  ciphertext2 = cc->Encrypt(pubKey, plaintext2);
+  ciphertext3 = cc->Encrypt(pubKey, plaintext3);
+
+  ////////////////////////////////////////////////////////////
+  // EvalAdd Operation on Re-Encrypted Data
+  ////////////////////////////////////////////////////////////
+
+  Ciphertext<Element> ciphertextAdd12;
+  Ciphertext<Element> ciphertextAdd123;
+
+  ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
+  ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
+
+  auto ciphertextMult = cc->EvalMult(ciphertext1, ciphertext3);
+  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, BATCH);
+  auto ciphertextRotate = cc->EvalAtIndex(ciphertext1, indices[0]);
+
+  ////////////////////////////////////////////////////////////
+  // Decryption after Accumulation Operation on Encrypted Data
+  ////////////////////////////////////////////////////////////
+  Plaintext plaintextAddNew;
+  cc->Decrypt(kpMultiparty.secretKey, ciphertextAdd123, &plaintextAddNew);
+  plaintextAddNew->SetLength(plaintext1->GetLength());
+
+  auto tmp_a = plaintextAddNew->GetPackedValue();
+  auto tmp_b = plaintextSumInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " accumulation fails";
+
+  Plaintext plaintextMult;
+  cc->Decrypt(kpMultiparty.secretKey, ciphertextMult, &plaintextMult);
+  plaintextMult->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMult->GetPackedValue();
+  tmp_b = plaintextMultInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " multiplication fails";
+
+  Plaintext plaintextRotate;
+  cc->Decrypt(kpMultiparty.secretKey, ciphertextRotate, &plaintextRotate);
+  plaintextRotate->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextRotate->GetPackedValue();
+  tmp_b = plaintextRotateInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << "rotation fails";
+
+  ////////////////////////////////////////////////////////////
+  // Decryption after Accumulation Operation on Encrypted Data with Multiparty
+  ////////////////////////////////////////////////////////////
+
+  Plaintext plaintextAddNew1;
+  Plaintext plaintextAddNew2;
+  Plaintext plaintextAddNew3;
+  Element partialPlaintext1;
+  Element partialPlaintext2;
+  Element partialPlaintext3;
+  Plaintext plaintextMultipartyNew;
+
+  const shared_ptr<LPCryptoParameters<Element>> cryptoParams = kp1.secretKey->GetCryptoParameters();
+  const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
+
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
+
+  vector<Ciphertext<Element>> partialCiphertextVec;
+  partialCiphertextVec.push_back(ciphertextPartial1[0]);
+  partialCiphertextVec.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVec, &plaintextMultipartyNew);
+  plaintextMultipartyNew->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyNew->GetPackedValue();
+  tmp_b = plaintextSumInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty accumulation fails";
+
+  if (cc->getSchemeId() == "BGVrns")
+    ciphertextMult = cc->Compress(ciphertextMult, 1);
+
+  Plaintext plaintextMultipartyMult;
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
+
+  vector<Ciphertext<Element>> partialCiphertextVecMult;
+  partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
+  partialCiphertextVecMult.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVecMult, &plaintextMultipartyMult);
+  plaintextMultipartyMult->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyMult->GetPackedValue();
+  tmp_b = plaintextMultInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty multiplication fails";
+
+  Plaintext plaintextMultipartyRotate;
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextRotate});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextRotate});
+
+  vector<Ciphertext<Element>> partialCiphertextVecRotate;
+  partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
+  partialCiphertextVecRotate.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVecRotate, &plaintextMultipartyRotate);
+  plaintextMultipartyRotate->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyRotate->GetPackedValue();
+  tmp_b = plaintextRotateInput->GetPackedValue();
+
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty rotation fails";
+
+  Plaintext plaintextMultipartyEvalSum;
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextEvalSum});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextEvalSum});
+
+  vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
+  partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
+  partialCiphertextVecEvalSum.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum, &plaintextMultipartyEvalSum);
+  plaintextMultipartyEvalSum->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyEvalSum->GetPackedValue();
+  tmp_b = plaintextEvalSumInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty eval sum fails";
+}
+
+GENERATE_TEST_CASES_FUNC_RNS(UTMultiparty, UnitTest_MultiParty_Star, 512 /*ORDER*/, 65537 /*PTM*/, BATCH)
+
+template <class Element>
+static void UnitTest_MultiParty_MP(const CryptoContext<Element> cc1, const string& failmsg) {
+  CryptoContext<Element> cc = std::static_pointer_cast<CryptoContextImpl<Element>>(cc1);
+
+  cc->Enable(MULTIPARTY);
+
+  LPKeyPair<Element> kp1;
+  LPKeyPair<Element> kp2;
+  LPKeyPair<Element> kpMultiparty;
+
+  kp1 = cc->KeyGen();
+
+  std::vector<int32_t> indices = {2};
+
+  auto evalMultKey = cc->KeySwitchGen(kp1.secretKey, kp1.secretKey);
+  cc->EvalAtIndexKeyGen(kp1.secretKey, indices);
+  auto evalAtIndexKeys =
+      std::make_shared<std::map<usint, LPEvalKey<Element>>>(cc->GetEvalAutomorphismKeyMap(kp1.secretKey->GetKeyTag()));
+
+  kp2 = cc->MultipartyKeyGen(kp1.publicKey);
+  auto evalMultKey2 = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
+  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
+
+  auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
+
+  auto evalAtIndexKeysB =
+      cc->MultiEvalAtIndexKeyGen(kp2.secretKey, evalAtIndexKeys, indices, kp2.publicKey->GetKeyTag());
+  auto evalAtIndexKeysJoin =
+      cc->MultiAddEvalAutomorphismKeys(evalAtIndexKeys, evalAtIndexKeysB, kp2.publicKey->GetKeyTag());
+  cc->InsertEvalAutomorphismKey(evalAtIndexKeysJoin);
+
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
+  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, kp2.publicKey->GetKeyTag());
+  cc->InsertEvalMultKey({evalMultFinal});
+
+  vector<LPPrivateKey<Element>> secretKeys;
+  secretKeys.push_back(kp1.secretKey);
+  secretKeys.push_back(kp2.secretKey);
+
+  kpMultiparty = cc->MultipartyKeyGen(secretKeys);
+
+  if (!kpMultiparty.good()) {
+    std::cout << "Key generation failed!" << std::endl;
+    exit(1);
+  }
+
+  ////////////////////////////////////////////////////////////
+  // Encode source data
+  ////////////////////////////////////////////////////////////
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
+  std::vector<int64_t> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
+
+  size_t encodedLength = vectorOfInts1.size();
+  std::vector<int64_t> sumInput(encodedLength, 0);
+  std::vector<int64_t> multInput(encodedLength, 0);
+  std::vector<int64_t> evalSumInput(encodedLength, 0);
+  std::vector<int64_t> rotateInput(encodedLength, 0);
+
+  for (usint i = 0; i < encodedLength; i++) {
+    sumInput[i] = vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i];
+    multInput[i] = vectorOfInts1[i] * vectorOfInts3[i];
+    if (i == 0)
+      evalSumInput[encodedLength - i - 1] = vectorOfInts3[encodedLength - i - 1];
+    else
+      evalSumInput[encodedLength - i - 1] = evalSumInput[encodedLength - i] + vectorOfInts3[encodedLength - i - 1];
+    if (i + indices[0] > encodedLength - 1)
+      rotateInput[i] = 0;
+    else
+      rotateInput[i] = vectorOfInts1[i + indices[0]];
+  }
+
+  Plaintext plaintext1 = cc->MakePackedPlaintext(vectorOfInts1);
+  Plaintext plaintext2 = cc->MakePackedPlaintext(vectorOfInts2);
+  Plaintext plaintext3 = cc->MakePackedPlaintext(vectorOfInts3);
+  Plaintext plaintextSumInput = cc->MakePackedPlaintext(sumInput);
+  Plaintext plaintextMultInput = cc->MakePackedPlaintext(multInput);
+  Plaintext plaintextRotateInput = cc->MakePackedPlaintext(rotateInput);
+
+  ////////////////////////////////////////////////////////////
+  // Encryption
+  ////////////////////////////////////////////////////////////
+  Ciphertext<Element> ciphertext1;
+  Ciphertext<Element> ciphertext2;
+  Ciphertext<Element> ciphertext3;
+
+  ciphertext1 = cc->Encrypt(kp2.publicKey, plaintext1);
+  ciphertext2 = cc->Encrypt(kp2.publicKey, plaintext2);
+  ciphertext3 = cc->Encrypt(kp2.publicKey, plaintext3);
+
+  ////////////////////////////////////////////////////////////
+  // EvalAdd Operation on Re-Encrypted Data
+  ////////////////////////////////////////////////////////////
+
+  Ciphertext<Element> ciphertextAdd12;
+  Ciphertext<Element> ciphertextAdd123;
+
+  ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
+  ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
+
+  auto ciphertextMult = cc->EvalMult(ciphertext1, ciphertext3);
+  auto ciphertextRotate = cc->EvalAtIndex(ciphertext1, indices[0]);
+
+  ////////////////////////////////////////////////////////////
+  // Decryption after Accumulation Operation on Encrypted Data
+  ////////////////////////////////////////////////////////////
+  Plaintext plaintextAddNew;
+  cc->Decrypt(kpMultiparty.secretKey, ciphertextAdd123, &plaintextAddNew);
+  plaintextAddNew->SetLength(plaintext1->GetLength());
+
+  auto tmp_a = plaintextAddNew->GetPackedValue();
+  auto tmp_b = plaintextSumInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " accumulation fails";
+
+  Plaintext plaintextMult;
+  cc->Decrypt(kpMultiparty.secretKey, ciphertextMult, &plaintextMult);
+  plaintextMult->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMult->GetPackedValue();
+  tmp_b = plaintextMultInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " multiplication fails";
+
+  Plaintext plaintextRotate;
+  cc->Decrypt(kpMultiparty.secretKey, ciphertextRotate, &plaintextRotate);
+  plaintextRotate->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextRotate->GetPackedValue();
+  tmp_b = plaintextRotateInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << "rotation fails";
+
+  ////////////////////////////////////////////////////////////
+  // Decryption after Accumulation Operation on Encrypted Data with Multiparty
+  ////////////////////////////////////////////////////////////
+
+  Plaintext plaintextAddNew1;
+  Plaintext plaintextAddNew2;
+  Plaintext plaintextAddNew3;
+  Element partialPlaintext1;
+  Element partialPlaintext2;
+  Element partialPlaintext3;
+  Plaintext plaintextMultipartyNew;
+
+  const shared_ptr<LPCryptoParameters<Element>> cryptoParams = kp1.secretKey->GetCryptoParameters();
+  const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
+
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
+
+  vector<Ciphertext<Element>> partialCiphertextVec;
+  partialCiphertextVec.push_back(ciphertextPartial1[0]);
+  partialCiphertextVec.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVec, &plaintextMultipartyNew);
+  plaintextMultipartyNew->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyNew->GetPackedValue();
+  tmp_b = plaintextSumInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty accumulation fails";
+
+  if (cc->getSchemeId() == "BGVrns")
+    ciphertextMult = cc->Compress(ciphertextMult, 1);
+
+  Plaintext plaintextMultipartyMult;
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
+
+  vector<Ciphertext<Element>> partialCiphertextVecMult;
+  partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
+  partialCiphertextVecMult.push_back(ciphertextPartial2[0]);
+
+  cc->MultipartyDecryptFusion(partialCiphertextVecMult, &plaintextMultipartyMult);
+  plaintextMultipartyMult->SetLength(plaintext1->GetLength());
+
+  tmp_a = plaintextMultipartyMult->GetPackedValue();
+  tmp_b = plaintextMultInput->GetPackedValue();
+  EXPECT_EQ(tmp_a, tmp_b) << failmsg << " Multiparty multiplication fails";
+
+  Plaintext plaintextMultipartyRotate;
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextRotate});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextRotate});
 
   vector<Ciphertext<Element>> partialCiphertextVecRotate;
   partialCiphertextVecRotate.push_back(ciphertextPartial1[0]);
@@ -1221,12 +1232,12 @@ void UnitTestMultiparty(CryptoContext<Element> cc) {
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<int64_t> vectorOfInts1 = { 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts3 = { 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
-  Plaintext plaintext1               = cc->MakeCoefPackedPlaintext(vectorOfInts1);
-  Plaintext plaintext2               = cc->MakeCoefPackedPlaintext(vectorOfInts2);
-  Plaintext plaintext3               = cc->MakeCoefPackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts1 = {1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts3 = {1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+  Plaintext plaintext1 = cc->MakeCoefPackedPlaintext(vectorOfInts1);
+  Plaintext plaintext2 = cc->MakeCoefPackedPlaintext(vectorOfInts2);
+  Plaintext plaintext3 = cc->MakeCoefPackedPlaintext(vectorOfInts3);
 
   std::vector<int64_t> vectorOfIntsSum(vectorOfInts1.size());
 
@@ -1234,8 +1245,9 @@ void UnitTestMultiparty(CryptoContext<Element> cc) {
 
   for (size_t i = 0; i < vectorOfInts1.size(); i++) {
     int64_t value =
-      (vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i]) % cc->GetCryptoParameters()->GetPlaintextModulus();
-    if (value > half) value = value - cc->GetCryptoParameters()->GetPlaintextModulus();
+        (vectorOfInts1[i] + vectorOfInts2[i] + vectorOfInts3[i]) % cc->GetCryptoParameters()->GetPlaintextModulus();
+    if (value > half)
+      value = value - cc->GetCryptoParameters()->GetPlaintextModulus();
     vectorOfIntsSum[i] = value;
   }
 
@@ -1271,7 +1283,7 @@ void UnitTestMultiparty(CryptoContext<Element> cc) {
   Ciphertext<Element> ciphertextAddNew;
 
   ciphertextAddNew12 = cc->EvalAdd(ciphertext1New, ciphertext2New);
-  ciphertextAddNew   = cc->EvalAdd(ciphertextAddNew12, ciphertext3New);
+  ciphertextAddNew = cc->EvalAdd(ciphertextAddNew12, ciphertext3New);
 
   ////////////////////////////////////////////////////////////
   // Decryption after Accumulation Operation on Re-Encrypted Data
@@ -1299,11 +1311,11 @@ void UnitTestMultiparty(CryptoContext<Element> cc) {
   Plaintext plaintextMultipartyNew;
 
   const shared_ptr<LPCryptoParameters<Element>> cryptoParams = kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename Element::Params> elementParams   = cryptoParams->GetElementParams();
+  const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
 
-  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAddNew });
-  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAddNew });
-  auto ciphertextPartial3 = cc->MultipartyDecryptMain(kp3.secretKey, { ciphertextAddNew });
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAddNew});
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAddNew});
+  auto ciphertextPartial3 = cc->MultipartyDecryptMain(kp3.secretKey, {ciphertextAddNew});
 
   vector<Ciphertext<Element>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -1315,9 +1327,9 @@ void UnitTestMultiparty(CryptoContext<Element> cc) {
   plaintextMultipartyNew->SetLength(plaintext1->GetLength());
 
   EXPECT_EQ(vectorOfIntsSum, plaintextMultipartyNew->GetCoefPackedValue())
-    << "Multiparty: Does not match plaintext addition.";
+      << "Multiparty: Does not match plaintext addition.";
   EXPECT_EQ(plaintextAddNew->GetCoefPackedValue(), plaintextMultipartyNew->GetCoefPackedValue())
-    << "Multiparty: Does not match the results of direction encryption.";
+      << "Multiparty: Does not match the results of direction encryption.";
 }
 
 TEST_F(UTMultiparty, BFVrns_RLWE_DCRTPoly_Multiparty_pri) {

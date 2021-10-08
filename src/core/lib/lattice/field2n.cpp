@@ -29,15 +29,14 @@ namespace lbcrypto {
 Field2n::Field2n(const Poly& element) {
   if (element.GetFormat() != Format::COEFFICIENT) {
     PALISADE_THROW(type_error, "Poly not in Format::COEFFICIENT representation");
-  }
-  else {
+  } else {
     // the value of element.at(i) is usually small - so a 64-bit integer is more
     // than enough this approach is much faster than BigInteger::ConvertToDouble
     BigInteger negativeThreshold(element.GetModulus() / Poly::Integer(2));
     for (size_t i = 0; i < element.GetLength(); i++) {
       if (element.at(i) > negativeThreshold)
         this->push_back(
-          static_cast<double>(static_cast<int64_t>(-1 * (element.GetModulus() - element.at(i)).ConvertToInt())));
+            static_cast<double>(static_cast<int64_t>(-1 * (element.GetModulus() - element.at(i)).ConvertToInt())));
       // this->push_back(-(element.GetModulus() -
       // element.at(i)).ConvertToDouble());
       else
@@ -52,15 +51,14 @@ Field2n::Field2n(const Poly& element) {
 Field2n::Field2n(const NativePoly& element) {
   if (element.GetFormat() != Format::COEFFICIENT) {
     PALISADE_THROW(type_error, "Poly not in Format::COEFFICIENT representation");
-  }
-  else {
+  } else {
     // the value of element.at(i) is usually small - so a 64-bit integer is more
     // than enough this approach is much faster than BigInteger::ConvertToDouble
     NativeInteger negativeThreshold(element.GetModulus() / 2);
     for (size_t i = 0; i < element.GetLength(); i++) {
       if (element.at(i) > negativeThreshold)
         this->push_back(
-          static_cast<double>(static_cast<int64_t>(-1 * (element.GetModulus() - element[i]).ConvertToInt())));
+            static_cast<double>(static_cast<int64_t>(-1 * (element.GetModulus() - element[i]).ConvertToInt())));
       else
         this->push_back(static_cast<double>(static_cast<int64_t>(element[i].ConvertToInt())));
     }
@@ -72,8 +70,7 @@ Field2n::Field2n(const NativePoly& element) {
 Field2n::Field2n(const DCRTPoly& DCRTelement) {
   if (DCRTelement.GetFormat() != Format::COEFFICIENT) {
     PALISADE_THROW(type_error, "DCRTPoly not in Format::COEFFICIENT representation");
-  }
-  else {
+  } else {
     // the value of element.at(i) is usually small - so a 64-bit integer is more
     // than enough Also it is assumed that the prime moduli are large enough (60
     // bits or more) - so the CRT interpolation is not needed this approach is
@@ -83,7 +80,7 @@ Field2n::Field2n(const DCRTPoly& DCRTelement) {
     for (size_t i = 0; i < element.GetLength(); i++) {
       if (element.at(i) > negativeThreshold)
         this->push_back(
-          static_cast<double>(static_cast<int64_t>(-1 * (element.GetModulus() - element.at(i)).ConvertToInt())));
+            static_cast<double>(static_cast<int64_t>(-1 * (element.GetModulus() - element.at(i)).ConvertToInt())));
       // this->push_back(-(element.GetModulus() -
       // element.at(i)).ConvertToDouble());
       else
@@ -106,12 +103,11 @@ Field2n::Field2n(const Matrix<int64_t>& element) {
 Field2n Field2n::Inverse() const {
   if (format == Format::COEFFICIENT) {
     PALISADE_THROW(type_error, "Polynomial not in Format::EVALUATION representation");
-  }
-  else {
+  } else {
     Field2n inverse(this->size(), Format::EVALUATION);
     for (size_t i = 0; i < this->size(); i++) {
       double quotient = this->at(i).real() * this->at(i).real() + this->at(i).imag() * this->at(i).imag();
-      inverse.at(i)   = std::complex<double>(this->at(i).real() / quotient, -this->at(i).imag() / quotient);
+      inverse.at(i) = std::complex<double>(this->at(i).real() / quotient, -this->at(i).imag() / quotient);
     }
     return inverse;
   }
@@ -125,8 +121,7 @@ Field2n Field2n::Plus(const Field2n& rhs) const {
       sum.at(i) = this->at(i) + rhs.at(i);
     }
     return sum;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Operands are not in the same format");
   }
 }
@@ -137,8 +132,7 @@ Field2n Field2n::Plus(double scalar) const {
     Field2n sum(*this);
     sum.at(0) = this->at(0) + scalar;
     return sum;
-  }
-  else {
+  } else {
     PALISADE_THROW(not_implemented_error,
                    "Field2n scalar addition is currently supported only for "
                    "Format::COEFFICIENT representation");
@@ -153,8 +147,7 @@ Field2n Field2n::Minus(const Field2n& rhs) const {
       difference.at(i) = this->at(i) - rhs.at(i);
     }
     return difference;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Operands are not in the same format");
   }
 }
@@ -167,8 +160,7 @@ Field2n Field2n::Times(const Field2n& rhs) const {
       result.at(i) = this->at(i) * rhs.at(i);
     }
     return result;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error,
                    "At least one of the polynomials is not in "
                    "Format::EVALUATION representation");
@@ -185,8 +177,7 @@ Field2n Field2n::ShiftRight() {
     }
     result.at(0) = temp;
     return result;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Polynomial not in Format::COEFFICIENT representation");
   }
 }
@@ -203,12 +194,11 @@ Field2n Field2n::AutomorphismTransform(size_t i) const {
 
     for (usint j = 1; j < m; j = j + 2) {
       // usint newIndex = (j*iInverse) % m;
-      usint idx                    = (j * i) % m;
+      usint idx = (j * i) % m;
       result.at((idx + 1) / 2 - 1) = this->at((j + 1) / 2 - 1);
     }
     return result;
-  }
-  else {
+  } else {
     PALISADE_THROW(not_implemented_error,
                    "Field2n Automorphism is only implemented for "
                    "Format::EVALUATION format");
@@ -225,8 +215,7 @@ Field2n Field2n::Transpose() const {
     }
     transpose.at(0) = this->at(0);
     return transpose;
-  }
-  else {
+  } else {
     usint m = this->size() * 2;
     return AutomorphismTransform(m - 1);
   }
@@ -240,8 +229,7 @@ Field2n Field2n::ExtractOdd() const {
       odds.at(i) = this->at(1 + 2 * i);
     }
     return odds;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Polynomial not in Format::COEFFICIENT representation");
   }
 }
@@ -254,8 +242,7 @@ Field2n Field2n::ExtractEven() const {
       evens.at(i) = this->at(0 + 2 * i);
     }
     return evens;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Polynomial not in Format::COEFFICIENT representation");
   }
 }
@@ -266,20 +253,18 @@ Field2n Field2n::Permute() const {
   if (this->format == Format::COEFFICIENT) {
     Field2n permuted(this->size(), Format::COEFFICIENT, true);
     int evenPtr = 0;
-    int oddPtr  = this->size() / 2;
+    int oddPtr = this->size() / 2;
     for (size_t i = 0; i < this->size(); i++) {
       if (i % 2 == 0) {
         permuted.at(evenPtr) = this->at(i);
         evenPtr++;
-      }
-      else {
+      } else {
         permuted.at(oddPtr) = this->at(i);
         oddPtr++;
       }
     }
     return permuted;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Polynomial not in Format::COEFFICIENT representation");
   }
 }
@@ -290,16 +275,15 @@ Field2n Field2n::InversePermute() const {
   if (this->format == Format::COEFFICIENT) {
     Field2n invpermuted(this->size(), Format::COEFFICIENT, true);
     size_t evenPtr = 0;
-    size_t oddPtr  = this->size() / 2;
+    size_t oddPtr = this->size() / 2;
     for (size_t i = 0; evenPtr < this->size() / 2; i += 2) {
-      invpermuted.at(i)     = this->at(evenPtr);
+      invpermuted.at(i) = this->at(evenPtr);
       invpermuted.at(i + 1) = this->at(oddPtr);
       evenPtr++;
       oddPtr++;
     }
     return invpermuted;
-  }
-  else {
+  } else {
     PALISADE_THROW(type_error, "Polynomial not in Format::COEFFICIENT representation");
   }
 }
@@ -323,8 +307,7 @@ void Field2n::SwitchFormat() {
     }
 
     format = Format::EVALUATION;
-  }
-  else {
+  } else {
     std::vector<std::complex<double>> r = DiscreteFourierTransform::InverseTransform(*this);
 
     for (size_t i = 0; i < r.size(); i++) {

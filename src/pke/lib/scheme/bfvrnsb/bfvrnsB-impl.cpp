@@ -76,14 +76,14 @@ LPCryptoParametersBFVrnsB<NativePoly>::LPCryptoParametersBFVrnsB() : m_numq(0), 
 }
 
 template <>
-LPCryptoParametersBFVrnsB<Poly>::LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs) :
-    m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
+LPCryptoParametersBFVrnsB<Poly>::LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs)
+    : m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
   NOPOLY
 }
 
 template <>
-LPCryptoParametersBFVrnsB<NativePoly>::LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs) :
-    m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
+LPCryptoParametersBFVrnsB<NativePoly>::LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs)
+    : m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
   NONATIVEPOLY
 }
 
@@ -92,8 +92,8 @@ LPCryptoParametersBFVrnsB<Poly>::LPCryptoParametersBFVrnsB(shared_ptr<ParmType> 
                                                            const PlaintextModulus& plaintextModulus,
                                                            float distributionParameter, float assuranceMeasure,
                                                            float securityLevel, usint relinWindow, MODE mode, int depth,
-                                                           int maxDepth) :
-    m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
+                                                           int maxDepth)
+    : m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
   NOPOLY
 }
 
@@ -102,8 +102,8 @@ LPCryptoParametersBFVrnsB<NativePoly>::LPCryptoParametersBFVrnsB(shared_ptr<Parm
                                                                  const PlaintextModulus& plaintextModulus,
                                                                  float distributionParameter, float assuranceMeasure,
                                                                  float securityLevel, usint relinWindow, MODE mode,
-                                                                 int depth, int maxDepth) :
-    m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
+                                                                 int depth, int maxDepth)
+    : m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
   NONATIVEPOLY
 }
 
@@ -111,8 +111,8 @@ template <>
 LPCryptoParametersBFVrnsB<Poly>::LPCryptoParametersBFVrnsB(shared_ptr<ParmType> params, EncodingParams encodingParams,
                                                            float distributionParameter, float assuranceMeasure,
                                                            float securityLevel, usint relinWindow, MODE mode, int depth,
-                                                           int maxDepth) :
-    m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
+                                                           int maxDepth)
+    : m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
   NOPOLY
 }
 
@@ -121,8 +121,8 @@ LPCryptoParametersBFVrnsB<NativePoly>::LPCryptoParametersBFVrnsB(shared_ptr<Parm
                                                                  EncodingParams encodingParams,
                                                                  float distributionParameter, float assuranceMeasure,
                                                                  float securityLevel, usint relinWindow, MODE mode,
-                                                                 int depth, int maxDepth) :
-    m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
+                                                                 int depth, int maxDepth)
+    : m_numq(0), m_numb(0), m_negQInvModmtilde(0) {
   NONATIVEPOLY
 }
 
@@ -238,7 +238,7 @@ LPEvalKey<Poly> LPAlgorithmSHEBFVrnsB<Poly>::KeySwitchGen(const LPPrivateKey<Pol
 
 template <>
 LPEvalKey<NativePoly> LPAlgorithmSHEBFVrnsB<NativePoly>::KeySwitchGen(
-  const LPPrivateKey<NativePoly> originalPrivateKey, const LPPrivateKey<NativePoly> newPrivateKey) const {
+    const LPPrivateKey<NativePoly> originalPrivateKey, const LPPrivateKey<NativePoly> newPrivateKey) const {
   NONATIVEPOLY
 }
 
@@ -263,7 +263,7 @@ Ciphertext<Poly> LPAlgorithmSHEBFVrnsB<Poly>::EvalMultAndRelinearize(ConstCipher
 
 template <>
 Ciphertext<NativePoly> LPAlgorithmSHEBFVrnsB<NativePoly>::EvalMultAndRelinearize(
-  ConstCiphertext<NativePoly> ct1, ConstCiphertext<NativePoly> ct, const vector<LPEvalKey<NativePoly>>& ek) const {
+    ConstCiphertext<NativePoly> ct1, ConstCiphertext<NativePoly> ct, const vector<LPEvalKey<NativePoly>>& ek) const {
   NONATIVEPOLY
 }
 
@@ -275,7 +275,7 @@ DecryptResult LPAlgorithmMultipartyBFVrnsB<Poly>::MultipartyDecryptFusion(const 
 
 template <>
 DecryptResult LPAlgorithmMultipartyBFVrnsB<NativePoly>::MultipartyDecryptFusion(
-  const vector<Ciphertext<NativePoly>>& ciphertextVec, NativePoly* plaintext) const {
+    const vector<Ciphertext<NativePoly>>& ciphertextVec, NativePoly* plaintext) const {
   NONATIVEPOLY
 }
 
@@ -288,8 +288,8 @@ LPEvalKey<Poly> LPAlgorithmMultipartyBFVrnsB<Poly>::MultiKeySwitchGen(const LPPr
 
 template <>
 LPEvalKey<NativePoly> LPAlgorithmMultipartyBFVrnsB<NativePoly>::MultiKeySwitchGen(
-  const LPPrivateKey<NativePoly> originalPrivateKey, const LPPrivateKey<NativePoly> newPrivateKey,
-  const LPEvalKey<NativePoly> ek) const {
+    const LPPrivateKey<NativePoly> originalPrivateKey, const LPPrivateKey<NativePoly> newPrivateKey,
+    const LPEvalKey<NativePoly> ek) const {
   NONATIVEPOLY
 }
 
@@ -327,8 +327,8 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
 
   m_moduliQ.resize(sizeQ);
   for (size_t i = 0; i < sizeQ; i++) {
-    moduliQ[i]   = GetElementParams()->GetParams()[i]->GetModulus();
-    rootsQ[i]    = GetElementParams()->GetParams()[i]->GetRootOfUnity();
+    moduliQ[i] = GetElementParams()->GetParams()[i]->GetModulus();
+    rootsQ[i] = GetElementParams()->GetParams()[i]->GetRootOfUnity();
     m_moduliQ[i] = moduliQ[i];
   }
 
@@ -341,9 +341,9 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   std::vector<NativeInteger> QDivtModq(sizeQ);
 
   for (size_t i = 0; i < sizeQ; i++) {
-    BigInteger qi         = BigInteger(moduliQ[i].ConvertToInt());
+    BigInteger qi = BigInteger(moduliQ[i].ConvertToInt());
     BigInteger QDivtModqi = QDivt.Mod(qi);
-    QDivtModq[i]          = NativeInteger(QDivtModqi.ConvertToInt());
+    QDivtModq[i] = NativeInteger(QDivtModqi.ConvertToInt());
   }
 
   m_QDivtModq = QDivtModq;
@@ -369,7 +369,7 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   BigInteger t = BigInteger(GetPlaintextModulus());
   BigInteger Q(GetElementParams()->GetModulus());
 
-  BigInteger B                   = 1;
+  BigInteger B = 1;
   BigInteger maxConvolutionValue = BigInteger(2) * BigInteger(ringDim) * Q * Q * t;
 
   m_moduliB.push_back(PreviousPrime<NativeInteger>(moduliQ[m_numq - 1], 2 * ringDim));
@@ -387,7 +387,7 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
 
   m_msk = PreviousPrime<NativeInteger>(m_moduliB[m_numq - 1], 2 * ringDim);
 
-  usint s           = 0;
+  usint s = 0;
   NativeInteger tmp = m_msk;
   while (tmp > 0) {
     tmp >>= 1;
@@ -400,7 +400,8 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
 
     m_msk = NextPrime<NativeInteger>(firstInteger, 2 * ringDim);
     s++;
-    if (s >= 60) PALISADE_THROW(math_error, "msk is larger than 60 bits");
+    if (s >= 60)
+      PALISADE_THROW(math_error, "msk is larger than 60 bits");
   }
   m_rootsBsk.push_back(RootOfUnity<NativeInteger>(2 * ringDim, m_msk));
 
@@ -426,9 +427,9 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   m_QHatInvModq.resize(m_numq);
   for (uint32_t i = 0; i < m_QHatInvModq.size(); i++) {
     BigInteger QHatInvModqi;
-    QHatInvModqi     = Q.DividedBy(moduliQ[i]);
-    QHatInvModqi     = QHatInvModqi.Mod(moduliQ[i]);
-    QHatInvModqi     = QHatInvModqi.ModInverse(moduliQ[i]);
+    QHatInvModqi = Q.DividedBy(moduliQ[i]);
+    QHatInvModqi = QHatInvModqi.Mod(moduliQ[i]);
+    QHatInvModqi = QHatInvModqi.ModInverse(moduliQ[i]);
     m_QHatInvModq[i] = QHatInvModqi.ConvertToInt();
   }
 
@@ -437,11 +438,11 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   m_tQHatInvModqPrecon.resize(m_numq);
   for (uint32_t i = 0; i < m_tQHatInvModq.size(); i++) {
     BigInteger tQHatInvModqi;
-    tQHatInvModqi           = Q.DividedBy(moduliQ[i]);
-    tQHatInvModqi           = tQHatInvModqi.Mod(moduliQ[i]);
-    tQHatInvModqi           = tQHatInvModqi.ModInverse(moduliQ[i]);
-    tQHatInvModqi           = tQHatInvModqi.ModMul(t.ConvertToInt(), moduliQ[i]);
-    m_tQHatInvModq[i]       = tQHatInvModqi.ConvertToInt();
+    tQHatInvModqi = Q.DividedBy(moduliQ[i]);
+    tQHatInvModqi = tQHatInvModqi.Mod(moduliQ[i]);
+    tQHatInvModqi = tQHatInvModqi.ModInverse(moduliQ[i]);
+    tQHatInvModqi = tQHatInvModqi.ModMul(t.ConvertToInt(), moduliQ[i]);
+    m_tQHatInvModq[i] = tQHatInvModqi.ConvertToInt();
     m_tQHatInvModqPrecon[i] = m_tQHatInvModq[i].PrepModMulConst(moduliQ[i]);
   }
 
@@ -454,7 +455,7 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
     BigInteger QHati = Q.DividedBy(moduliQ[i]);
     for (uint32_t j = 0; j < m_QHatModbsk[i].size(); j++) {
       BigInteger QHatiModbskj = QHati.Mod(m_moduliBsk[j]);
-      m_QHatModbsk[i][j]      = QHatiModbskj.ConvertToInt();
+      m_QHatModbsk[i][j] = QHatiModbskj.ConvertToInt();
     }
     m_QHatModmtilde[i] = QHati.Mod(m_mtilde).ConvertToInt();
   }
@@ -474,18 +475,18 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   BigInteger bmtilde(m_mtilde);
   for (uint32_t i = 0; i < m_mtildeQHatInvModq.size(); i++) {
     BigInteger mtildeQHatInvModqi = Q.DividedBy(moduliQ[i]);
-    mtildeQHatInvModqi            = mtildeQHatInvModqi.Mod(moduliQ[i]);
-    mtildeQHatInvModqi            = mtildeQHatInvModqi.ModInverse(moduliQ[i]);
-    mtildeQHatInvModqi            = mtildeQHatInvModqi * bmtilde;
-    mtildeQHatInvModqi            = mtildeQHatInvModqi.Mod(moduliQ[i]);
-    m_mtildeQHatInvModq[i]        = mtildeQHatInvModqi.ConvertToInt();
-    m_mtildeQHatInvModqPrecon[i]  = m_mtildeQHatInvModq[i].PrepModMulConst(moduliQ[i]);
+    mtildeQHatInvModqi = mtildeQHatInvModqi.Mod(moduliQ[i]);
+    mtildeQHatInvModqi = mtildeQHatInvModqi.ModInverse(moduliQ[i]);
+    mtildeQHatInvModqi = mtildeQHatInvModqi * bmtilde;
+    mtildeQHatInvModqi = mtildeQHatInvModqi.Mod(moduliQ[i]);
+    m_mtildeQHatInvModq[i] = mtildeQHatInvModqi.ConvertToInt();
+    m_mtildeQHatInvModqPrecon[i] = m_mtildeQHatInvModq[i].PrepModMulConst(moduliQ[i]);
   }
 
   // Populate [-Q^{-1}]_{mtilde}
   BigInteger negQInvModmtilde = (BigInteger(m_mtilde - 1) * Q.ModInverse(m_mtilde));
-  negQInvModmtilde            = negQInvModmtilde.Mod(m_mtilde);
-  m_negQInvModmtilde          = negQInvModmtilde.ConvertToInt();
+  negQInvModmtilde = negQInvModmtilde.Mod(m_mtilde);
+  m_negQInvModmtilde = negQInvModmtilde.ConvertToInt();
 
   // Populate [Q]_{bski_j}
   m_QModbsk.resize(m_numq + 1);
@@ -493,8 +494,8 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
 
   for (uint32_t j = 0; j < m_QModbsk.size(); j++) {
     BigInteger QModbskij = Q.Mod(m_moduliBsk[j]);
-    m_QModbsk[j]         = QModbskij.ConvertToInt();
-    m_QModbskPrecon[j]   = m_QModbsk[j].PrepModMulConst(m_moduliBsk[j]);
+    m_QModbsk[j] = QModbskij.ConvertToInt();
+    m_QModbskPrecon[j] = m_QModbsk[j].PrepModMulConst(m_moduliBsk[j]);
   }
 
   // Populate [mtilde^{-1}]_{bsk_j}
@@ -502,9 +503,9 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   m_mtildeInvModbskPrecon.resize(m_numb + 1);
   for (uint32_t j = 0; j < m_mtildeInvModbsk.size(); j++) {
     BigInteger mtildeInvModbskij = m_mtilde % m_moduliBsk[j];
-    mtildeInvModbskij            = mtildeInvModbskij.ModInverse(m_moduliBsk[j]);
-    m_mtildeInvModbsk[j]         = mtildeInvModbskij.ConvertToInt();
-    m_mtildeInvModbskPrecon[j]   = m_mtildeInvModbsk[j].PrepModMulConst(m_moduliBsk[j]);
+    mtildeInvModbskij = mtildeInvModbskij.ModInverse(m_moduliBsk[j]);
+    m_mtildeInvModbsk[j] = mtildeInvModbskij.ConvertToInt();
+    m_mtildeInvModbskPrecon[j] = m_mtildeInvModbsk[j].PrepModMulConst(m_moduliBsk[j]);
   }
 
   // Populate {t/Q}_{bsk_j}
@@ -514,7 +515,7 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   for (uint32_t i = 0; i < m_tQInvModbsk.size(); i++) {
     BigInteger tDivqModBski = Q.ModInverse(m_moduliBsk[i]);
     tDivqModBski.ModMulEq(t.ConvertToInt(), m_moduliBsk[i]);
-    m_tQInvModbsk[i]       = tDivqModBski.ConvertToInt();
+    m_tQInvModbsk[i] = tDivqModBski.ConvertToInt();
     m_tQInvModbskPrecon[i] = m_tQInvModbsk[i].PrepModMulConst(m_moduliBsk[i]);
   }
 
@@ -524,10 +525,10 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
 
   for (uint32_t i = 0; i < m_BHatInvModb.size(); i++) {
     BigInteger BDivBi;
-    BDivBi                 = B.DividedBy(m_moduliB[i]);
-    BDivBi                 = BDivBi.Mod(m_moduliB[i]);
-    BDivBi                 = BDivBi.ModInverse(m_moduliB[i]);
-    m_BHatInvModb[i]       = BDivBi.ConvertToInt();
+    BDivBi = B.DividedBy(m_moduliB[i]);
+    BDivBi = BDivBi.Mod(m_moduliB[i]);
+    BDivBi = BDivBi.ModInverse(m_moduliB[i]);
+    m_BHatInvModb[i] = BDivBi.ConvertToInt();
     m_BHatInvModbPrecon[i] = m_BHatInvModb[i].PrepModMulConst(m_moduliB[i]);
   }
 
@@ -538,7 +539,7 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
     BigInteger BDivBi = B.DividedBy(m_moduliB[i]);
     for (uint32_t j = 0; j < m_BHatModq[i].size(); j++) {
       BigInteger BDivBiModqj = BDivBi.Mod(moduliQ[j]);
-      m_BHatModq[i][j]       = BDivBiModqj.ConvertToInt();
+      m_BHatModq[i][j] = BDivBiModqj.ConvertToInt();
     }
   }
 
@@ -546,18 +547,18 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   m_BHatModmsk.resize(m_numb);
   for (uint32_t i = 0; i < m_BHatModmsk.size(); i++) {
     BigInteger BDivBi = B.DividedBy(m_moduliB[i]);
-    m_BHatModmsk[i]   = (BDivBi.Mod(m_msk)).ConvertToInt();
+    m_BHatModmsk[i] = (BDivBi.Mod(m_msk)).ConvertToInt();
   }
 
   // Populate [B^{-1}]_{msk}
-  m_BInvModmsk       = (B.ModInverse(m_msk)).ConvertToInt();
+  m_BInvModmsk = (B.ModInverse(m_msk)).ConvertToInt();
   m_BInvModmskPrecon = m_BInvModmsk.PrepModMulConst(m_msk);
 
   // Populate [B]_{q_i}
   m_BModq.resize(m_numq);
   m_BModqPrecon.resize(m_numq);
   for (uint32_t i = 0; i < m_BModq.size(); i++) {
-    m_BModq[i]       = (B.Mod(moduliQ[i])).ConvertToInt();
+    m_BModq[i] = (B.Mod(moduliQ[i])).ConvertToInt();
     m_BModqPrecon[i] = m_BModq[i].PrepModMulConst(moduliQ[i]);
   }
 
@@ -575,8 +576,8 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
     BigInteger negInvqi = BigInteger((tgamma - 1)) * imod.ModInverse(tgamma);
 
     BigInteger negInvqiModtgamma = negInvqi.Mod(tgamma);
-    m_negInvqModtgamma[i]        = negInvqiModtgamma.ConvertToInt();
-    m_negInvqModtgammaPrecon[i]  = m_negInvqModtgamma[i].PrepModMulConst(tgamma);
+    m_negInvqModtgamma[i] = negInvqiModtgamma.ConvertToInt();
+    m_negInvqModtgammaPrecon[i] = m_negInvqModtgamma[i].PrepModMulConst(tgamma);
   }
 
   // populate [t*gamma*(Q/q_i)^(-1)]_{q_i}
@@ -587,10 +588,10 @@ bool LPCryptoParametersBFVrnsB<DCRTPoly>::PrecomputeCRTTables() {
   for (uint32_t i = 0; i < m_tgammaQHatInvModq.size(); i++) {
     BigInteger qDivqi = Q.DividedBy(moduliQ[i]);
     BigInteger imod(moduliQ[i]);
-    qDivqi                       = qDivqi.ModInverse(moduliQ[i]);
-    BigInteger gammaqDivqi       = (qDivqi * bmgamma) % imod;
-    BigInteger tgammaqDivqi      = (gammaqDivqi * t) % imod;
-    m_tgammaQHatInvModq[i]       = tgammaqDivqi.ConvertToInt();
+    qDivqi = qDivqi.ModInverse(moduliQ[i]);
+    BigInteger gammaqDivqi = (qDivqi * bmgamma) % imod;
+    BigInteger tgammaqDivqi = (gammaqDivqi * t) % imod;
+    m_tgammaQHatInvModq[i] = tgammaqDivqi.ConvertToInt();
     m_tgammaQHatInvModqPrecon[i] = m_tgammaQHatInvModq[i].PrepModMulConst(moduliQ[i]);
   }
 
@@ -602,7 +603,8 @@ template <>
 bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams,
                                                       int32_t evalAddCount, int32_t evalMultCount,
                                                       int32_t keySwitchCount, size_t dcrtBits, uint32_t nCustom) const {
-  if (!cryptoParams) PALISADE_THROW(not_available_error, "No crypto parameters are supplied to BFVrns ParamsGen");
+  if (!cryptoParams)
+    PALISADE_THROW(not_available_error, "No crypto parameters are supplied to BFVrns ParamsGen");
 
   if ((dcrtBits < 30) || (dcrtBits > 60))
     PALISADE_THROW(math_error,
@@ -611,11 +613,11 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
 
   const auto cryptoParamsBFVrnsB = std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(cryptoParams);
 
-  double sigma           = cryptoParamsBFVrnsB->GetDistributionParameter();
-  double alpha           = cryptoParamsBFVrnsB->GetAssuranceMeasure();
-  double hermiteFactor   = cryptoParamsBFVrnsB->GetSecurityLevel();
-  double p               = static_cast<double>(cryptoParamsBFVrnsB->GetPlaintextModulus());
-  uint32_t relinWindow   = cryptoParamsBFVrnsB->GetRelinWindow();
+  double sigma = cryptoParamsBFVrnsB->GetDistributionParameter();
+  double alpha = cryptoParamsBFVrnsB->GetAssuranceMeasure();
+  double hermiteFactor = cryptoParamsBFVrnsB->GetSecurityLevel();
+  double p = static_cast<double>(cryptoParamsBFVrnsB->GetPlaintextModulus());
+  uint32_t relinWindow = cryptoParamsBFVrnsB->GetRelinWindow();
   SecurityLevel stdLevel = cryptoParamsBFVrnsB->GetStdLevel();
 
   // Bound of the Gaussian error polynomial
@@ -629,32 +631,26 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
   // supports both discrete Gaussian (RLWE) and ternary uniform distribution
   // (OPTIMIZED) cases
   if (cryptoParamsBFVrnsB->GetMode() == RLWE) {
-    Bkey     = sigma * sqrt(alpha);
+    Bkey = sigma * sqrt(alpha);
     distType = HEStd_error;
-  }
-  else {
-    Bkey     = 1;
+  } else {
+    Bkey = 1;
     distType = HEStd_ternary;
   }
 
   // expansion factor delta
-  auto delta = [](uint32_t n) -> double {
-    return (2. * sqrt(n));
-  };
+  auto delta = [](uint32_t n) -> double { return (2. * sqrt(n)); };
 
   // norm of fresh ciphertext polynomial
-  auto Vnorm = [&](uint32_t n) -> double {
-    return Berr * (1. + 2. * delta(n) * Bkey);
-  };
+  auto Vnorm = [&](uint32_t n) -> double { return Berr * (1. + 2. * delta(n) * Bkey); };
 
   // RLWE security constraint
   auto nRLWE = [&](double logq) -> double {
     if (stdLevel == HEStd_NotSet) {
       return (logq - log(sigma)) / (4. * log(hermiteFactor));
-    }
-    else {
+    } else {
       return static_cast<double>(
-        StdLatticeParm::FindRingDim(distType, stdLevel, static_cast<long>(ceil(logq / log(2)))));
+          StdLatticeParm::FindRingDim(distType, stdLevel, static_cast<long>(ceil(logq / log(2)))));
     }
   };
 
@@ -681,7 +677,7 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
                      "security requirement. Please increase it.");
 
     while (nRLWE(logq) > n) {
-      n    = 2 * n;
+      n = 2 * n;
       logq = logqBFV(n);
     }
 
@@ -693,13 +689,12 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
     double logqCeil = k * dcrtBits * log(2);
 
     while (nRLWE(logqCeil) > n) {
-      n        = 2 * n;
-      logq     = logqBFV(n);
-      k        = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
+      n = 2 * n;
+      logq = logqBFV(n);
+      k = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
       logqCeil = k * dcrtBits * log(2);
     }
-  }
-  else if ((evalMultCount == 0) && (keySwitchCount > 0) && (evalAddCount == 0)) {
+  } else if ((evalMultCount == 0) && (keySwitchCount > 0) && (evalAddCount == 0)) {
     // this case supports automorphism w/o any other operations
     // base for relinearization
 
@@ -708,13 +703,14 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
     // Correctness constraint
     auto logqBFV = [&](uint32_t n, double logqPrev) -> double {
       return log(
-        p * (4 * (Vnorm(n) + keySwitchCount * delta(n) * (floor(logqPrev / (log(2) * dcrtBits)) + 1) * w * Berr) + p));
+          p *
+          (4 * (Vnorm(n) + keySwitchCount * delta(n) * (floor(logqPrev / (log(2) * dcrtBits)) + 1) * w * Berr) + p));
     };
 
     // initial values
     double logqPrev = 6 * log(10);
-    logq            = logqBFV(n, logqPrev);
-    logqPrev        = logq;
+    logq = logqBFV(n, logqPrev);
+    logqPrev = logq;
 
     if ((nRLWE(logq) > n) && (nCustom > 0))
       PALISADE_THROW(config_error,
@@ -726,8 +722,8 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
     // possible
     while (nRLWE(logq) > n) {
       while (nRLWE(logq) > n) {
-        n        = 2 * n;
-        logq     = logqBFV(n, logqPrev);
+        n = 2 * n;
+        logq = logqBFV(n, logqPrev);
         logqPrev = logq;
       }
 
@@ -735,7 +731,7 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
 
       while (fabs(logq - logqPrev) > log(1.001)) {
         logqPrev = logq;
-        logq     = logqBFV(n, logqPrev);
+        logq = logqBFV(n, logqPrev);
       }
 
       // this code updates n and q to account for the discrete size of CRT
@@ -744,18 +740,17 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
       int32_t k = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
 
       double logqCeil = k * dcrtBits * log(2);
-      logqPrev        = logqCeil;
+      logqPrev = logqCeil;
 
       while (nRLWE(logqCeil) > n) {
-        n        = 2 * n;
-        logq     = logqBFV(n, logqPrev);
-        k        = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
+        n = 2 * n;
+        logq = logqBFV(n, logqPrev);
+        k = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
         logqCeil = k * dcrtBits * log(2);
         logqPrev = logqCeil;
       }
     }
-  }
-  else if ((evalAddCount == 0) && (evalMultCount > 0) && (keySwitchCount == 0)) {
+  } else if ((evalAddCount == 0) && (evalMultCount > 0) && (keySwitchCount == 0)) {
     // Only EvalMult operations are used in the correctness constraint
     // the correctness constraint from section 3.5 of
     // https://eprint.iacr.org/2014/062.pdf is used
@@ -764,14 +759,10 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
     double w = relinWindow == 0 ? pow(2, dcrtBits) : pow(2, relinWindow);
 
     // function used in the EvalMult constraint
-    auto epsilon1 = [&](uint32_t n) -> double {
-      return 5 / (delta(n) * Bkey);
-    };
+    auto epsilon1 = [&](uint32_t n) -> double { return 5 / (delta(n) * Bkey); };
 
     // function used in the EvalMult constraint
-    auto C1 = [&](uint32_t n) -> double {
-      return (1 + epsilon1(n)) * delta(n) * delta(n) * p * Bkey;
-    };
+    auto C1 = [&](uint32_t n) -> double { return (1 + epsilon1(n)) * delta(n) * delta(n) * p * Bkey; };
 
     // function used in the EvalMult constraint
     auto C2 = [&](uint32_t n, double logqPrev) -> double {
@@ -786,8 +777,8 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
 
     // initial values
     double logqPrev = 6. * log(10);
-    logq            = logqBFV(n, logqPrev);
-    logqPrev        = logq;
+    logq = logqBFV(n, logqPrev);
+    logqPrev = logq;
 
     if ((nRLWE(logq) > n) && (nCustom > 0))
       PALISADE_THROW(config_error,
@@ -799,8 +790,8 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
     // possible
     while (nRLWE(logq) > n) {
       while (nRLWE(logq) > n) {
-        n        = 2 * n;
-        logq     = logqBFV(n, logqPrev);
+        n = 2 * n;
+        logq = logqBFV(n, logqPrev);
         logqPrev = logq;
       }
 
@@ -808,7 +799,7 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
 
       while (fabs(logq - logqPrev) > log(1.001)) {
         logqPrev = logq;
-        logq     = logqBFV(n, logqPrev);
+        logq = logqBFV(n, logqPrev);
       }
 
       // this code updates n and q to account for the discrete size of CRT
@@ -817,12 +808,12 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
       int32_t k = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
 
       double logqCeil = k * dcrtBits * log(2);
-      logqPrev        = logqCeil;
+      logqPrev = logqCeil;
 
       while (nRLWE(logqCeil) > n) {
-        n        = 2 * n;
-        logq     = logqBFV(n, logqPrev);
-        k        = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
+        n = 2 * n;
+        logq = logqBFV(n, logqPrev);
+        k = static_cast<int32_t>(ceil((ceil(logq / log(2)) + 1.0) / dcrtBits));
         logqCeil = k * dcrtBits * log(2);
         logqPrev = logqCeil;
       }
@@ -839,11 +830,11 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
   NativeInteger firstInteger = FirstPrime<NativeInteger>(dcrtBits, 2 * n);
 
   moduliQ[0] = PreviousPrime<NativeInteger>(firstInteger, 2 * n);
-  rootsQ[0]  = RootOfUnity<NativeInteger>(2 * n, moduliQ[0]);
+  rootsQ[0] = RootOfUnity<NativeInteger>(2 * n, moduliQ[0]);
 
   for (size_t i = 1; i < sizeQ; i++) {
     moduliQ[i] = PreviousPrime<NativeInteger>(moduliQ[i - 1], 2 * n);
-    rootsQ[i]  = RootOfUnity<NativeInteger>(2 * n, moduliQ[i]);
+    rootsQ[i] = RootOfUnity<NativeInteger>(2 * n, moduliQ[i]);
   }
 
   auto params = std::make_shared<ILDCRTParams<BigInteger>>(2 * n, moduliQ, rootsQ);
@@ -861,7 +852,7 @@ bool LPAlgorithmParamsGenBFVrnsB<DCRTPoly>::ParamsGen(shared_ptr<LPCryptoParamet
   if (encodingParams->GetBatchSize() == 0) {
     uint32_t batchSize = n;
     EncodingParams encodingParamsNew(
-      std::make_shared<EncodingParamsImpl>(encodingParams->GetPlaintextModulus(), batchSize));
+        std::make_shared<EncodingParamsImpl>(encodingParams->GetPlaintextModulus(), batchSize));
     cryptoParamsBFVrnsB->SetEncodingParams(encodingParamsNew);
   }
 
@@ -873,7 +864,7 @@ Ciphertext<DCRTPoly> LPAlgorithmBFVrnsB<DCRTPoly>::Encrypt(const LPPublicKey<DCR
   Ciphertext<DCRTPoly> ciphertext(std::make_shared<CiphertextImpl<DCRTPoly>>(publicKey));
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(publicKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(publicKey->GetCryptoParameters());
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
@@ -891,7 +882,8 @@ Ciphertext<DCRTPoly> LPAlgorithmBFVrnsB<DCRTPoly>::Encrypt(const LPPublicKey<DCR
 
   // Supports both discrete Gaussian (RLWE) and ternary uniform distribution
   // (OPTIMIZED) cases
-  if (cryptoParams->GetMode() == RLWE) u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
+  if (cryptoParams->GetMode() == RLWE)
+    u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
   else
     u = DCRTPoly(tug, elementParams, Format::EVALUATION);
 
@@ -905,7 +897,7 @@ Ciphertext<DCRTPoly> LPAlgorithmBFVrnsB<DCRTPoly>::Encrypt(const LPPublicKey<DCR
 
   c1 = p1 * u + e2;
 
-  ciphertext->SetElements({ std::move(c0), std::move(c1) });
+  ciphertext->SetElements({std::move(c0), std::move(c1)});
 
   return ciphertext;
 }
@@ -918,13 +910,13 @@ DecryptResult LPAlgorithmBFVrnsB<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly>
   // TIC(t_total);
 
   const auto cryptoParamsBFVrnsB =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(privateKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(privateKey->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParamsBFVrnsB->GetElementParams();
 
   const std::vector<DCRTPoly>& c = ciphertext->GetElements();
 
   const DCRTPoly& s = privateKey->GetPrivateElement();
-  DCRTPoly sPower   = s;
+  DCRTPoly sPower = s;
 
   DCRTPoly b = c[0];
   b.SetFormat(Format::EVALUATION);
@@ -941,17 +933,17 @@ DecryptResult LPAlgorithmBFVrnsB<DCRTPoly>::Decrypt(const LPPrivateKey<DCRTPoly>
   // Converts back to Format::COEFFICIENT representation
   b.SetFormat(Format::COEFFICIENT);
 
-  auto& t                                                   = cryptoParamsBFVrnsB->GetPlaintextModulus();
-  auto& tgamma                                              = cryptoParamsBFVrnsB->Gettgamma();
-  const std::vector<NativeInteger>& moduliQ                 = cryptoParamsBFVrnsB->GetModuliQ();
-  const std::vector<NativeInteger>& tgammaQHatInvModq       = cryptoParamsBFVrnsB->GettgammaQHatInvModq();
+  auto& t = cryptoParamsBFVrnsB->GetPlaintextModulus();
+  auto& tgamma = cryptoParamsBFVrnsB->Gettgamma();
+  const std::vector<NativeInteger>& moduliQ = cryptoParamsBFVrnsB->GetModuliQ();
+  const std::vector<NativeInteger>& tgammaQHatInvModq = cryptoParamsBFVrnsB->GettgammaQHatInvModq();
   const std::vector<NativeInteger>& tgammaQHatInvModqPrecon = cryptoParamsBFVrnsB->GettgammaQHatInvModqPrecon();
-  const std::vector<NativeInteger>& negInvqModtgamma        = cryptoParamsBFVrnsB->GetNegInvqModtgamma();
-  const std::vector<NativeInteger>& negInvqModtgammaPrecon  = cryptoParamsBFVrnsB->GetNegInvqModtgammaPrecon();
+  const std::vector<NativeInteger>& negInvqModtgamma = cryptoParamsBFVrnsB->GetNegInvqModtgamma();
+  const std::vector<NativeInteger>& negInvqModtgammaPrecon = cryptoParamsBFVrnsB->GetNegInvqModtgammaPrecon();
 
   // this is the resulting vector of coefficients;
-  *plaintext = b.ScaleAndRound(
-    moduliQ, t, tgamma, tgammaQHatInvModq, tgammaQHatInvModqPrecon, negInvqModtgamma, negInvqModtgammaPrecon);
+  *plaintext = b.ScaleAndRound(moduliQ, t, tgamma, tgammaQHatInvModq, tgammaQHatInvModqPrecon, negInvqModtgamma,
+                               negInvqModtgammaPrecon);
 
   // std::cout << "Decryption time (internal): " << TOC_US(t_total) << " us" <<
   // std::endl;
@@ -965,7 +957,7 @@ Ciphertext<DCRTPoly> LPAlgorithmBFVrnsB<DCRTPoly>::Encrypt(const LPPrivateKey<DC
   Ciphertext<DCRTPoly> ciphertext(std::make_shared<CiphertextImpl<DCRTPoly>>(privateKey));
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(privateKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(privateKey->GetCryptoParameters());
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
@@ -984,7 +976,7 @@ Ciphertext<DCRTPoly> LPAlgorithmBFVrnsB<DCRTPoly>::Encrypt(const LPPrivateKey<DC
   DCRTPoly c1(elementParams, Format::EVALUATION, true);
   c1 -= a;
 
-  ciphertext->SetElements({ std::move(c0), std::move(c1) });
+  ciphertext->SetElements({std::move(c0), std::move(c1)});
 
   return ciphertext;
 }
@@ -1002,7 +994,7 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalAdd(ConstCiphertext<DC
   std::vector<DCRTPoly> c(cipherTextElements.size());
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ciphertext->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ciphertext->GetCryptoParameters());
 
   const std::vector<NativeInteger>& delta = cryptoParams->GetDelta();
 
@@ -1031,7 +1023,7 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalSub(ConstCiphertext<DC
   std::vector<DCRTPoly> c(cipherTextElements.size());
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ciphertext->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ciphertext->GetCryptoParameters());
 
   const std::vector<NativeInteger>& delta = cryptoParams->GetDelta();
 
@@ -1057,7 +1049,7 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMult(ConstCiphertext<D
   Ciphertext<DCRTPoly> newCiphertext = ciphertext1->CloneEmpty();
 
   const auto cryptoParamsBFVrnsB = std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(
-    ciphertext1->GetCryptoContext()->GetCryptoParameters());
+      ciphertext1->GetCryptoContext()->GetCryptoParameters());
 
   // Get the ciphertext elements
   std::vector<DCRTPoly> cipherText1Elements = ciphertext1->GetElements();
@@ -1069,59 +1061,39 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMult(ConstCiphertext<D
 
   std::vector<DCRTPoly> c(cipherTextRElementsSize);
 
-  const shared_ptr<ParmType> elementParams                  = cryptoParamsBFVrnsB->GetElementParams();
-  const shared_ptr<ILDCRTParams<BigInteger>> paramsBsk      = cryptoParamsBFVrnsB->GetParamsBsk();
-  const std::vector<NativeInteger>& moduliQ                 = cryptoParamsBFVrnsB->GetModuliQ();
-  const std::vector<DoubleNativeInt>& modqBarrettMu         = cryptoParamsBFVrnsB->GetModqBarrettMu();
-  const std::vector<NativeInteger>& moduliBsk               = cryptoParamsBFVrnsB->GetModuliBsk();
-  const std::vector<DoubleNativeInt>& modbskBarrettMu       = cryptoParamsBFVrnsB->GetModbskBarrettMu();
-  const std::vector<NativeInteger>& mtildeQHatInvModq       = cryptoParamsBFVrnsB->GetmtildeQHatInvModq();
+  const shared_ptr<ParmType> elementParams = cryptoParamsBFVrnsB->GetElementParams();
+  const shared_ptr<ILDCRTParams<BigInteger>> paramsBsk = cryptoParamsBFVrnsB->GetParamsBsk();
+  const std::vector<NativeInteger>& moduliQ = cryptoParamsBFVrnsB->GetModuliQ();
+  const std::vector<DoubleNativeInt>& modqBarrettMu = cryptoParamsBFVrnsB->GetModqBarrettMu();
+  const std::vector<NativeInteger>& moduliBsk = cryptoParamsBFVrnsB->GetModuliBsk();
+  const std::vector<DoubleNativeInt>& modbskBarrettMu = cryptoParamsBFVrnsB->GetModbskBarrettMu();
+  const std::vector<NativeInteger>& mtildeQHatInvModq = cryptoParamsBFVrnsB->GetmtildeQHatInvModq();
   const std::vector<NativeInteger>& mtildeQHatInvModqPrecon = cryptoParamsBFVrnsB->GetmtildeQHatInvModqPrecon();
   const std::vector<std::vector<NativeInteger>>& QHatModbsk = cryptoParamsBFVrnsB->GetQHatModbsk();
-  const std::vector<uint16_t>& QHatModmtilde                = cryptoParamsBFVrnsB->GetQHatModmtilde();
-  const std::vector<NativeInteger>& QModbsk                 = cryptoParamsBFVrnsB->GetQModbsk();
-  const std::vector<NativeInteger>& QModbskPrecon           = cryptoParamsBFVrnsB->GetQModbskPrecon();
-  const uint16_t& negQInvModmtilde                          = cryptoParamsBFVrnsB->GetNegQInvModmtilde();
+  const std::vector<uint16_t>& QHatModmtilde = cryptoParamsBFVrnsB->GetQHatModmtilde();
+  const std::vector<NativeInteger>& QModbsk = cryptoParamsBFVrnsB->GetQModbsk();
+  const std::vector<NativeInteger>& QModbskPrecon = cryptoParamsBFVrnsB->GetQModbskPrecon();
+  const uint16_t& negQInvModmtilde = cryptoParamsBFVrnsB->GetNegQInvModmtilde();
   // const NativeInteger &negQInvModmtildePrecon =
   //     cryptoParamsBFVrnsB->GetNegQInvModmtildePrecon();
-  const std::vector<NativeInteger>& mtildeInvModbsk       = cryptoParamsBFVrnsB->GetmtildeInvModbsk();
+  const std::vector<NativeInteger>& mtildeInvModbsk = cryptoParamsBFVrnsB->GetmtildeInvModbsk();
   const std::vector<NativeInteger>& mtildeInvModbskPrecon = cryptoParamsBFVrnsB->GetmtildeInvModbskPrecon();
 
   // Expands the CRT basis to q*Bsk; Outputs the polynomials in coeff
   // representation
 
   for (size_t i = 0; i < cipherText1ElementsSize; i++) {
-    cipherText1Elements[i].FastBaseConvqToBskMontgomery(paramsBsk,
-                                                        moduliQ,
-                                                        moduliBsk,
-                                                        modbskBarrettMu,
-                                                        mtildeQHatInvModq,
-                                                        mtildeQHatInvModqPrecon,
-                                                        QHatModbsk,
-                                                        QHatModmtilde,
-                                                        QModbsk,
-                                                        QModbskPrecon,
-                                                        negQInvModmtilde,
-                                                        mtildeInvModbsk,
-                                                        mtildeInvModbskPrecon);
+    cipherText1Elements[i].FastBaseConvqToBskMontgomery(
+        paramsBsk, moduliQ, moduliBsk, modbskBarrettMu, mtildeQHatInvModq, mtildeQHatInvModqPrecon, QHatModbsk,
+        QHatModmtilde, QModbsk, QModbskPrecon, negQInvModmtilde, mtildeInvModbsk, mtildeInvModbskPrecon);
 
     cipherText1Elements[i].SetFormat(Format::EVALUATION);
   }
 
   for (size_t i = 0; i < cipherText2ElementsSize; i++) {
-    cipherText2Elements[i].FastBaseConvqToBskMontgomery(paramsBsk,
-                                                        moduliQ,
-                                                        moduliBsk,
-                                                        modbskBarrettMu,
-                                                        mtildeQHatInvModq,
-                                                        mtildeQHatInvModqPrecon,
-                                                        QHatModbsk,
-                                                        QHatModmtilde,
-                                                        QModbsk,
-                                                        QModbskPrecon,
-                                                        negQInvModmtilde,
-                                                        mtildeInvModbsk,
-                                                        mtildeInvModbskPrecon);
+    cipherText2Elements[i].FastBaseConvqToBskMontgomery(
+        paramsBsk, moduliQ, moduliBsk, modbskBarrettMu, mtildeQHatInvModq, mtildeQHatInvModqPrecon, QHatModbsk,
+        QHatModmtilde, QModbsk, QModbskPrecon, negQInvModmtilde, mtildeInvModbsk, mtildeInvModbskPrecon);
 
     cipherText2Elements[i].SetFormat(Format::EVALUATION);
   }
@@ -1139,18 +1111,16 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMult(ConstCiphertext<D
     c[1] *= (cipherText2Elements[0] + cipherText2Elements[1]);
     c[1] -= c[2];
     c[1] -= c[0];
-  }
-  else {  // if size of any of the ciphertexts > 2
+  } else {  // if size of any of the ciphertexts > 2
     bool* isFirstAdd = new bool[cipherTextRElementsSize];
     std::fill_n(isFirstAdd, cipherTextRElementsSize, true);
 
     for (size_t i = 0; i < cipherText1ElementsSize; i++) {
       for (size_t j = 0; j < cipherText2ElementsSize; j++) {
         if (isFirstAdd[i + j] == true) {
-          c[i + j]          = cipherText1Elements[i] * cipherText2Elements[j];
+          c[i + j] = cipherText1Elements[i] * cipherText2Elements[j];
           isFirstAdd[i + j] = false;
-        }
-        else {
+        } else {
           c[i + j] += cipherText1Elements[i] * cipherText2Elements[j];
         }
       }
@@ -1166,10 +1136,9 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMult(ConstCiphertext<D
   for (size_t i = 0; i < cipherText1ElementsSize; i++) {
     for (size_t j = 0; j < cipherText2ElementsSize; j++) {
       if (isFirstAdd[i + j] == true) {
-        c[i + j]          = cipherText1Elements[i] * cipherText2Elements[j];
+        c[i + j] = cipherText1Elements[i] * cipherText2Elements[j];
         isFirstAdd[i + j] = false;
-      }
-      else {
+      } else {
         c[i + j] += cipherText1Elements[i] * cipherText2Elements[j];
       }
     }
@@ -1179,52 +1148,34 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMult(ConstCiphertext<D
 #endif
 
   // perfrom RNS approximate Flooring
-  const NativeInteger& t                                    = cryptoParamsBFVrnsB->GetPlaintextModulus();
-  const std::vector<NativeInteger>& tQHatInvModq            = cryptoParamsBFVrnsB->GettQHatInvModq();
-  const std::vector<NativeInteger>& tQHatInvModqPrecon      = cryptoParamsBFVrnsB->GettQHatInvModqPrecon();
+  const NativeInteger& t = cryptoParamsBFVrnsB->GetPlaintextModulus();
+  const std::vector<NativeInteger>& tQHatInvModq = cryptoParamsBFVrnsB->GettQHatInvModq();
+  const std::vector<NativeInteger>& tQHatInvModqPrecon = cryptoParamsBFVrnsB->GettQHatInvModqPrecon();
   const std::vector<std::vector<NativeInteger>>& qInvModbsk = cryptoParamsBFVrnsB->GetqInvModbsk();
-  const std::vector<NativeInteger>& tQInvModbsk             = cryptoParamsBFVrnsB->GettQInvModbsk();
-  const std::vector<NativeInteger>& tQInvModbskPrecon       = cryptoParamsBFVrnsB->GettQInvModbskPrecon();
+  const std::vector<NativeInteger>& tQInvModbsk = cryptoParamsBFVrnsB->GettQInvModbsk();
+  const std::vector<NativeInteger>& tQInvModbskPrecon = cryptoParamsBFVrnsB->GettQInvModbskPrecon();
 
   // perform FastBaseConvSK
-  const std::vector<NativeInteger>& BHatInvModb           = cryptoParamsBFVrnsB->GetBHatInvModb();
-  const std::vector<NativeInteger>& BHatInvModbPrecon     = cryptoParamsBFVrnsB->GetBHatInvModbPrecon();
-  const std::vector<NativeInteger>& BHatModmsk            = cryptoParamsBFVrnsB->GetBHatModmsk();
-  const NativeInteger& BInvModmsk                         = cryptoParamsBFVrnsB->GetBInvModmsk();
-  const NativeInteger& BInvModmskPrecon                   = cryptoParamsBFVrnsB->GetBInvModmskPrecon();
+  const std::vector<NativeInteger>& BHatInvModb = cryptoParamsBFVrnsB->GetBHatInvModb();
+  const std::vector<NativeInteger>& BHatInvModbPrecon = cryptoParamsBFVrnsB->GetBHatInvModbPrecon();
+  const std::vector<NativeInteger>& BHatModmsk = cryptoParamsBFVrnsB->GetBHatModmsk();
+  const NativeInteger& BInvModmsk = cryptoParamsBFVrnsB->GetBInvModmsk();
+  const NativeInteger& BInvModmskPrecon = cryptoParamsBFVrnsB->GetBInvModmskPrecon();
   const std::vector<std::vector<NativeInteger>>& BHatModq = cryptoParamsBFVrnsB->GetBHatModq();
-  const std::vector<NativeInteger>& BModq                 = cryptoParamsBFVrnsB->GetBModq();
-  const std::vector<NativeInteger>& BModqPrecon           = cryptoParamsBFVrnsB->GetBModqPrecon();
+  const std::vector<NativeInteger>& BModq = cryptoParamsBFVrnsB->GetBModq();
+  const std::vector<NativeInteger>& BModqPrecon = cryptoParamsBFVrnsB->GetBModqPrecon();
 
   for (size_t i = 0; i < cipherTextRElementsSize; i++) {
     // converts to Format::COEFFICIENT representation before rounding
     c[i].SetFormat(Format::COEFFICIENT);
     // Performs the scaling by t/Q followed by rounding; the result is in the
     // CRT basis {Bsk}
-    c[i].FastRNSFloorq(t,
-                       moduliQ,
-                       moduliBsk,
-                       modbskBarrettMu,
-                       tQHatInvModq,
-                       tQHatInvModqPrecon,
-                       QHatModbsk,
-                       qInvModbsk,
-                       tQInvModbsk,
-                       tQInvModbskPrecon);
+    c[i].FastRNSFloorq(t, moduliQ, moduliBsk, modbskBarrettMu, tQHatInvModq, tQHatInvModqPrecon, QHatModbsk, qInvModbsk,
+                       tQInvModbsk, tQInvModbskPrecon);
 
     // Converts from the CRT basis {Bsk} to {Q}
-    c[i].FastBaseConvSK(moduliQ,
-                        modqBarrettMu,
-                        moduliBsk,
-                        modbskBarrettMu,
-                        BHatInvModb,
-                        BHatInvModbPrecon,
-                        BHatModmsk,
-                        BInvModmsk,
-                        BInvModmskPrecon,
-                        BHatModq,
-                        BModq,
-                        BModqPrecon);
+    c[i].FastBaseConvSK(moduliQ, modqBarrettMu, moduliBsk, modbskBarrettMu, BHatInvModb, BHatInvModbPrecon, BHatModmsk,
+                        BInvModmsk, BInvModmskPrecon, BHatModq, BModq, BModqPrecon);
   }
 
   newCiphertext->SetElements(std::move(c));
@@ -1239,9 +1190,9 @@ LPEvalKey<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::KeySwitchGen(const LPPrivat
   LPEvalKey<DCRTPoly> ek(std::make_shared<LPEvalKeyRelinImpl<DCRTPoly>>(newPrivateKey->GetCryptoContext()));
 
   const auto cryptoParamsLWE =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(newPrivateKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(newPrivateKey->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParamsLWE->GetElementParams();
-  const DCRTPoly& s                        = newPrivateKey->GetPrivateElement();
+  const DCRTPoly& s = newPrivateKey->GetPrivateElement();
 
   const DggType& dgg = cryptoParamsLWE->GetDiscreteGaussianGenerator();
   DugType dug;
@@ -1271,8 +1222,7 @@ LPEvalKey<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::KeySwitchGen(const LPPrivat
         DCRTPoly e(dgg, elementParams, Format::EVALUATION);
         evalKeyElements.push_back(filtered - (a * s + e));
       }
-    }
-    else {
+    } else {
       // Creates an element with all zeroes
       DCRTPoly filtered(elementParams, Format::EVALUATION, true);
 
@@ -1296,12 +1246,12 @@ LPEvalKey<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::KeySwitchGen(const LPPrivat
 
 template <>
 LPEvalKey<DCRTPoly> LPAlgorithmMultipartyBFVrnsB<DCRTPoly>::MultiKeySwitchGen(
-  const LPPrivateKey<DCRTPoly> originalPrivateKey, const LPPrivateKey<DCRTPoly> newPrivateKey,
-  const LPEvalKey<DCRTPoly> ek) const {
+    const LPPrivateKey<DCRTPoly> originalPrivateKey, const LPPrivateKey<DCRTPoly> newPrivateKey,
+    const LPEvalKey<DCRTPoly> ek) const {
   LPEvalKeyRelin<DCRTPoly> keySwitchHintRelin(new LPEvalKeyRelinImpl<DCRTPoly>(newPrivateKey->GetCryptoContext()));
 
   const shared_ptr<LPCryptoParametersRLWE<DCRTPoly>> cryptoParamsLWE =
-    std::dynamic_pointer_cast<LPCryptoParametersRLWE<DCRTPoly>>(newPrivateKey->GetCryptoParameters());
+      std::dynamic_pointer_cast<LPCryptoParametersRLWE<DCRTPoly>>(newPrivateKey->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParamsLWE->GetElementParams();
 
   // Getting a reference to the polynomials of new private key.
@@ -1337,8 +1287,7 @@ LPEvalKey<DCRTPoly> LPAlgorithmMultipartyBFVrnsB<DCRTPoly>::MultiKeySwitchGen(
         DCRTPoly e(dgg, elementParams, Format::EVALUATION);
         evalKeyElements.push_back(filtered - (a[i * decomposedKeyElements.size() + k] * sNew + e));
       }
-    }
-    else {
+    } else {
       // Creates an element with all zeroes
       DCRTPoly filtered(elementParams, EVALUATION, true);
 
@@ -1377,14 +1326,14 @@ void LPAlgorithmSHEBFVrnsB<DCRTPoly>::KeySwitchInPlace(const LPEvalKey<DCRTPoly>
 
   // in the case of EvalMult, c[0] is initially in Format::COEFFICIENT format
   // and needs to be switched to Format::EVALUATION format
-  if (c.size() > 2) c[0].SetFormat(Format::EVALUATION);
+  if (c.size() > 2)
+    c[0].SetFormat(Format::EVALUATION);
 
   if (c.size() == 2) {  // case of automorphism
     auto tmpVector = c[1].CRTDecompose(relinWindow);
     digitsC2.assign(tmpVector.begin(), tmpVector.end());
     c[1] = digitsC2[0] * a[0];
-  }
-  else {  // case of EvalMult
+  } else {  // case of EvalMult
     auto tmpVector = c[2].CRTDecompose(relinWindow);
     digitsC2.assign(tmpVector.begin(), tmpVector.end());
     c[1].SetFormat(Format::EVALUATION);
@@ -1399,18 +1348,18 @@ void LPAlgorithmSHEBFVrnsB<DCRTPoly>::KeySwitchInPlace(const LPEvalKey<DCRTPoly>
   }
 
   Ciphertext<DCRTPoly> newCiphertext = cipherText->CloneEmpty();
-  newCiphertext->SetElements({ std::move(c[0]), std::move(c[1]) });
+  newCiphertext->SetElements({std::move(c[0]), std::move(c[1])});
   cipherText = std::move(newCiphertext);
 }
 
 template <>
 Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMultAndRelinearize(
-  ConstCiphertext<DCRTPoly> ciphertext1, ConstCiphertext<DCRTPoly> ciphertext2,
-  const vector<LPEvalKey<DCRTPoly>>& ek) const {
+    ConstCiphertext<DCRTPoly> ciphertext1, ConstCiphertext<DCRTPoly> ciphertext2,
+    const vector<LPEvalKey<DCRTPoly>>& ek) const {
   Ciphertext<DCRTPoly> cipherText = this->EvalMult(ciphertext1, ciphertext2);
 
   const auto cryptoParamsLWE =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ek[0]->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ek[0]->GetCryptoParameters());
 
   Ciphertext<DCRTPoly> newCiphertext = cipherText->CloneEmpty();
 
@@ -1425,7 +1374,7 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMultAndRelinearize(
   // TODO: Maybe we can change the number of keyswitching and terminate early.
   // For instance; perform keyswitching until 4 elements left.
   for (size_t j = 0; j <= cipherText->GetDepth() - 2; j++) {
-    size_t index                     = cipherText->GetDepth() - 2 - j;
+    size_t index = cipherText->GetDepth() - 2 - j;
     LPEvalKeyRelin<DCRTPoly> evalKey = std::static_pointer_cast<LPEvalKeyRelinImpl<DCRTPoly>>(ek[index]);
 
     const std::vector<DCRTPoly>& b = evalKey->GetAVector();
@@ -1440,7 +1389,7 @@ Ciphertext<DCRTPoly> LPAlgorithmSHEBFVrnsB<DCRTPoly>::EvalMultAndRelinearize(
     }
   }
 
-  newCiphertext->SetElements({ std::move(ct0), std::move(ct1) });
+  newCiphertext->SetElements({std::move(ct0), std::move(ct1)});
 
   return newCiphertext;
 }
@@ -1456,7 +1405,7 @@ LPEvalKey<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReKeyGen(const LPPublicKey<
   LPEvalKeyRelin<DCRTPoly> ek(std::make_shared<LPEvalKeyRelinImpl<DCRTPoly>>(cc));
 
   const auto cryptoParamsLWE =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(newPK->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(newPK->GetCryptoParameters());
   const shared_ptr<DCRTPoly::Params> elementParams = cryptoParamsLWE->GetElementParams();
 
   const DCRTPoly::DggType& dgg = cryptoParamsLWE->GetDiscreteGaussianGenerator();
@@ -1485,7 +1434,8 @@ LPEvalKey<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReKeyGen(const LPPublicKey<
 
         DCRTPoly u;
 
-        if (cryptoParamsLWE->GetMode() == RLWE) u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
+        if (cryptoParamsLWE->GetMode() == RLWE)
+          u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
         else
           u = DCRTPoly(tug, elementParams, Format::EVALUATION);
 
@@ -1505,8 +1455,7 @@ LPEvalKey<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReKeyGen(const LPPublicKey<
         DCRTPoly e(dgg, elementParams, Format::EVALUATION);
         evalKeyElements.push_back(c0);
       }
-    }
-    else {
+    } else {
       // Creates an element with all zeroes
       DCRTPoly filtered(elementParams, Format::EVALUATION, true);
 
@@ -1514,7 +1463,8 @@ LPEvalKey<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReKeyGen(const LPPublicKey<
 
       DCRTPoly u;
 
-      if (cryptoParamsLWE->GetMode() == RLWE) u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
+      if (cryptoParamsLWE->GetMode() == RLWE)
+        u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
       else
         u = DCRTPoly(tug, elementParams, Format::EVALUATION);
 
@@ -1569,7 +1519,8 @@ Ciphertext<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReEncrypt(const LPEvalKey<
 
   DCRTPoly u;
 
-  if (cryptoParamsLWE->GetMode() == RLWE) u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
+  if (cryptoParamsLWE->GetMode() == RLWE)
+    u = DCRTPoly(dgg, elementParams, Format::EVALUATION);
   else
     u = DCRTPoly(tug, elementParams, Format::EVALUATION);
 
@@ -1579,7 +1530,7 @@ Ciphertext<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReEncrypt(const LPEvalKey<
   DCRTPoly c0 = p0 * u + e1;
   DCRTPoly c1 = p1 * u + e2;
 
-  zeroCiphertext->SetElements({ std::move(c0), std::move(c1) });
+  zeroCiphertext->SetElements({std::move(c0), std::move(c1)});
 
   // Add the encryption of zero for re-randomization purposes
   auto c = ciphertext->GetCryptoContext()->GetEncryptionAlgorithm()->EvalAdd(ciphertext, zeroCiphertext);
@@ -1590,13 +1541,13 @@ Ciphertext<DCRTPoly> LPAlgorithmPREBFVrnsB<DCRTPoly>::ReEncrypt(const LPEvalKey<
 
 template <>
 DecryptResult LPAlgorithmMultipartyBFVrnsB<DCRTPoly>::MultipartyDecryptFusion(
-  const vector<Ciphertext<DCRTPoly>>& ciphertextVec, NativePoly* plaintext) const {
+    const vector<Ciphertext<DCRTPoly>>& ciphertextVec, NativePoly* plaintext) const {
   const auto cryptoParamsBFVrnsB =
-    std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ciphertextVec[0]->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBFVrnsB<DCRTPoly>>(ciphertextVec[0]->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParamsBFVrnsB->GetElementParams();
 
   const std::vector<DCRTPoly>& cElem = ciphertextVec[0]->GetElements();
-  DCRTPoly b                         = cElem[0];
+  DCRTPoly b = cElem[0];
 
   size_t numCipher = ciphertextVec.size();
   for (size_t i = 1; i < numCipher; i++) {
@@ -1604,20 +1555,20 @@ DecryptResult LPAlgorithmMultipartyBFVrnsB<DCRTPoly>::MultipartyDecryptFusion(
     b += c2[0];
   }
 
-  auto& t      = cryptoParamsBFVrnsB->GetPlaintextModulus();
+  auto& t = cryptoParamsBFVrnsB->GetPlaintextModulus();
   auto& tgamma = cryptoParamsBFVrnsB->Gettgamma();
 
   // Invoke BFVrnsB DecRNS
 
-  const std::vector<NativeInteger>& moduliQ                 = cryptoParamsBFVrnsB->GetModuliQ();
-  const std::vector<NativeInteger>& tgammaQHatInvModq       = cryptoParamsBFVrnsB->GettgammaQHatInvModq();
+  const std::vector<NativeInteger>& moduliQ = cryptoParamsBFVrnsB->GetModuliQ();
+  const std::vector<NativeInteger>& tgammaQHatInvModq = cryptoParamsBFVrnsB->GettgammaQHatInvModq();
   const std::vector<NativeInteger>& tgammaQHatInvModqPrecon = cryptoParamsBFVrnsB->GettgammaQHatInvModqPrecon();
-  const std::vector<NativeInteger>& negInvqModtgamma        = cryptoParamsBFVrnsB->GetNegInvqModtgamma();
-  const std::vector<NativeInteger>& negInvqModtgammaPrecon  = cryptoParamsBFVrnsB->GetNegInvqModtgammaPrecon();
+  const std::vector<NativeInteger>& negInvqModtgamma = cryptoParamsBFVrnsB->GetNegInvqModtgamma();
+  const std::vector<NativeInteger>& negInvqModtgammaPrecon = cryptoParamsBFVrnsB->GetNegInvqModtgammaPrecon();
 
   // this is the resulting vector of coefficients;
-  *plaintext = b.ScaleAndRound(
-    moduliQ, t, tgamma, tgammaQHatInvModq, tgammaQHatInvModqPrecon, negInvqModtgamma, negInvqModtgammaPrecon);
+  *plaintext = b.ScaleAndRound(moduliQ, t, tgamma, tgammaQHatInvModq, tgammaQHatInvModqPrecon, negInvqModtgamma,
+                               negInvqModtgammaPrecon);
 
   return DecryptResult(plaintext->GetLength());
 }

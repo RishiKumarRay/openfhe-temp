@@ -31,7 +31,7 @@ namespace lbcrypto {
 
 template <typename VecType>
 std::uniform_int_distribution<int> TernaryUniformGeneratorImpl<VecType>::m_distribution =
-  std::uniform_int_distribution<int>(-1, 1);
+    std::uniform_int_distribution<int>(-1, 1);
 
 template <typename VecType>
 VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(usint size, const typename VecType::Integer& modulus,
@@ -46,18 +46,19 @@ VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(usint size, const t
 
     for (usint i = 0; i < size; i++) {
       randomNumber = m_distribution(PseudoRandomNumberGenerator::GetPRNG());
-      if (randomNumber < 0) v[i] = modulus - typename VecType::Integer(1);
+      if (randomNumber < 0)
+        v[i] = modulus - typename VecType::Integer(1);
       else
         v[i] = typename VecType::Integer(randomNumber);
     }
-  }
-  else {
+  } else {
     int32_t randomIndex;
     std::uniform_int_distribution<int> distrHWT = std::uniform_int_distribution<int>(0, size - 1);
 
     BinaryUniformGeneratorImpl<VecType> bug;
 
-    if (h > size) h = size;
+    if (h > size)
+      h = size;
 
     uint32_t counterPlus = 0;
 
@@ -76,8 +77,7 @@ VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(usint size, const t
         if (v[randomIndex] == typename VecType::Integer(0)) {
           if (bug.GenerateInteger() == typename VecType::Integer(0)) {
             v[randomIndex] = modulus - typename VecType::Integer(1);
-          }
-          else {
+          } else {
             v[randomIndex] = typename VecType::Integer(1);
             counterPlus++;
           }
@@ -98,14 +98,14 @@ std::shared_ptr<int32_t> TernaryUniformGeneratorImpl<VecType>::GenerateIntVector
     for (usint i = 0; i < size; i++) {
       (ans.get())[i] = m_distribution(PseudoRandomNumberGenerator::GetPRNG());
     }
-  }
-  else {
+  } else {
     int32_t randomIndex;
     std::uniform_int_distribution<int> distrHWT = std::uniform_int_distribution<int>(0, size - 1);
 
     BinaryUniformGeneratorImpl<VecType> bug;
 
-    if (h > size) h = size;
+    if (h > size)
+      h = size;
 
     uint32_t counterPlus = 0;
 
@@ -124,8 +124,7 @@ std::shared_ptr<int32_t> TernaryUniformGeneratorImpl<VecType>::GenerateIntVector
         if ((ans.get())[randomIndex] == 0) {
           if (bug.GenerateInteger() == typename VecType::Integer(0)) {
             (ans.get())[randomIndex] = -1;
-          }
-          else {
+          } else {
             (ans.get())[randomIndex] = 1;
             counterPlus++;
           }

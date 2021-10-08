@@ -61,8 +61,8 @@ int main(int argc, char* argv[]) {
   TimeVar t;
   double processingTime(0.0);
 
-  usint plaintextModulus      = 536903681;
-  double sigma                = 3.2;
+  usint plaintextModulus = 536903681;
+  double sigma = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   ////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
   // ciphertexts, i.e., ceiling{log2{7}} Max depth is set to 3 (second 3) to
   // generate homomorphic evaluation multiplication keys for s^2 and s^3
   CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrnsB(
-    encodingParams, securityLevel, sigma, 0, 3, 0, OPTIMIZED, 3);
+      encodingParams, securityLevel, sigma, 0, 3, 0, OPTIMIZED, 3);
 
   // enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -128,26 +128,26 @@ int main(int argc, char* argv[]) {
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext1               = cryptoContext->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext1 = cryptoContext->MakePackedPlaintext(vectorOfInts1);
 
-  std::vector<int64_t> vectorOfInts2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext2               = cryptoContext->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext2 = cryptoContext->MakePackedPlaintext(vectorOfInts2);
 
-  std::vector<int64_t> vectorOfInts3 = { 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext3               = cryptoContext->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = {2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext3 = cryptoContext->MakePackedPlaintext(vectorOfInts3);
 
-  std::vector<int64_t> vectorOfInts4 = { 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext4               = cryptoContext->MakePackedPlaintext(vectorOfInts4);
+  std::vector<int64_t> vectorOfInts4 = {2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext4 = cryptoContext->MakePackedPlaintext(vectorOfInts4);
 
-  std::vector<int64_t> vectorOfInts5 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext5               = cryptoContext->MakePackedPlaintext(vectorOfInts5);
+  std::vector<int64_t> vectorOfInts5 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext5 = cryptoContext->MakePackedPlaintext(vectorOfInts5);
 
-  std::vector<int64_t> vectorOfInts6 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext6               = cryptoContext->MakePackedPlaintext(vectorOfInts6);
+  std::vector<int64_t> vectorOfInts6 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext6 = cryptoContext->MakePackedPlaintext(vectorOfInts6);
 
-  std::vector<int64_t> vectorOfInts7 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext7               = cryptoContext->MakePackedPlaintext(vectorOfInts7);
+  std::vector<int64_t> vectorOfInts7 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext7 = cryptoContext->MakePackedPlaintext(vectorOfInts7);
 
   cout << "\nOriginal Plaintext #1: \n";
   cout << plaintext1 << endl;
@@ -281,7 +281,7 @@ int main(int argc, char* argv[]) {
 
   cout << "\nRunning a depth-3 multiplication w/o relinearization...";
 
-  ciphertextMult12  = cryptoContext->EvalMultNoRelin(ciphertexts[0], ciphertexts[1]);
+  ciphertextMult12 = cryptoContext->EvalMultNoRelin(ciphertexts[0], ciphertexts[1]);
   ciphertextMult123 = cryptoContext->EvalMultNoRelin(ciphertextMult12, ciphertexts[2]);
 
   cout << "Completed\n";

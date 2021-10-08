@@ -69,9 +69,8 @@ namespace lbcrypto {
  * @tparam Element a ring element type.
  */
 template <class Element>
-class LPCryptoParametersBFV : public LPCryptoParametersRLWE<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPCryptoParametersBFV : public LPCryptoParametersRLWE<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
 
  public:
@@ -298,13 +297,19 @@ class LPCryptoParametersBFV : public LPCryptoParametersRLWE<Element>
   bool operator==(const LPCryptoParameters<Element>& rhs) const {
     const auto* el = dynamic_cast<const LPCryptoParametersBFV<Element>*>(&rhs);
 
-    if (el == nullptr) return false;
+    if (el == nullptr)
+      return false;
 
-    if (m_delta != el->m_delta) return false;
-    if (m_bigModulus != el->m_bigModulus) return false;
-    if (m_bigRootOfUnity != el->m_bigRootOfUnity) return false;
-    if (m_bigModulusArb != el->m_bigModulusArb) return false;
-    if (m_bigRootOfUnityArb != el->m_bigRootOfUnityArb) return false;
+    if (m_delta != el->m_delta)
+      return false;
+    if (m_bigModulus != el->m_bigModulus)
+      return false;
+    if (m_bigRootOfUnity != el->m_bigRootOfUnity)
+      return false;
+    if (m_bigModulusArb != el->m_bigModulusArb)
+      return false;
+    if (m_bigRootOfUnityArb != el->m_bigRootOfUnityArb)
+      return false;
 
     return LPCryptoParametersRLWE<Element>::operator==(rhs);
   }
@@ -329,9 +334,8 @@ class LPCryptoParametersBFV : public LPCryptoParametersRLWE<Element>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::base_class<LPCryptoParametersRLWE<Element>>(this));
     ar(::cereal::make_nvp("d", m_delta));
@@ -385,9 +389,8 @@ class LPCryptoParametersBFV : public LPCryptoParametersRLWE<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmParamsGenBFV : public LPParameterGenerationAlgorithm<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPAlgorithmParamsGenBFV : public LPParameterGenerationAlgorithm<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
 
  public:
@@ -438,13 +441,12 @@ class LPAlgorithmParamsGenBFV : public LPParameterGenerationAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmBFV : public LPEncryptionAlgorithm<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPAlgorithmBFV : public LPEncryptionAlgorithm<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
-  using DugType  = typename Element::DugType;
-  using TugType  = typename Element::TugType;
+  using DggType = typename Element::DggType;
+  using DugType = typename Element::DugType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -514,13 +516,12 @@ class LPAlgorithmBFV : public LPEncryptionAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmSHEBFV : public LPSHEAlgorithm<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPAlgorithmSHEBFV : public LPSHEAlgorithm<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
-  using DugType  = typename Element::DugType;
-  using TugType  = typename Element::TugType;
+  using DggType = typename Element::DggType;
+  using DugType = typename Element::DugType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -704,7 +705,7 @@ class LPAlgorithmSHEBFV : public LPSHEAlgorithm<Element>
    * @return returns the evaluation keys
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override;
+      const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override;
 
   /**
    * Generate automophism keys for a given private key; Uses the public key for
@@ -716,10 +717,11 @@ class LPAlgorithmSHEBFV : public LPSHEAlgorithm<Element>
    * @return returns the evaluation keys
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> privateKey,
-    const std::vector<usint>& indexList) const override {
-    std::string errMsg = "LPAlgorithmSHEBFV::EvalAutomorphismKeyGen is not implemented for BFV "
-                         "SHE Scheme.";
+      const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> privateKey,
+      const std::vector<usint>& indexList) const override {
+    std::string errMsg =
+        "LPAlgorithmSHEBFV::EvalAutomorphismKeyGen is not implemented for BFV "
+        "SHE Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 };
@@ -730,12 +732,11 @@ class LPAlgorithmSHEBFV : public LPSHEAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmPREBFV : public LPPREAlgorithm<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPAlgorithmPREBFV : public LPPREAlgorithm<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -839,13 +840,12 @@ class LPAlgorithmPREBFV : public LPPREAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmMultipartyBFV : public LPMultipartyAlgorithm<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPAlgorithmMultipartyBFV : public LPMultipartyAlgorithm<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
-  using DugType  = typename Element::DugType;
-  using TugType  = typename Element::TugType;
+  using DggType = typename Element::DggType;
+  using DugType = typename Element::DugType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -942,8 +942,8 @@ class LPAlgorithmMultipartyBFV : public LPMultipartyAlgorithm<Element>
    * @return a dictionary with new joined automorphism keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-    const std::vector<usint>& indexList) const override;
+      const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+      const std::vector<usint>& indexList) const override;
 
   /**
    * Threshold FHE: Generates joined summation evaluation keys
@@ -955,7 +955,8 @@ class LPAlgorithmMultipartyBFV : public LPMultipartyAlgorithm<Element>
    * @return new joined summation keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalSumKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const override;
+      const LPPrivateKey<Element> privateKey,
+      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const override;
 
   /**
    * Threshold FHE: Adds two prior evaluation keys
@@ -997,12 +998,11 @@ class LPAlgorithmMultipartyBFV : public LPMultipartyAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPublicKeyEncryptionSchemeBFV : public LPPublicKeyEncryptionScheme<Element>
-{
-  using IntType  = typename Element::Integer;
+class LPPublicKeyEncryptionSchemeBFV : public LPPublicKeyEncryptionScheme<Element> {
+  using IntType = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   LPPublicKeyEncryptionSchemeBFV();

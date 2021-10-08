@@ -47,13 +47,18 @@ int main(int argc, char* argv[]) {
     std::cout << "usage: " << argv[0] << " 1|2|3(default 1) nloop (default 10)" << endl;
   usint level = 1;
   usint nloop = 10;
-  if (argc > 1) level = atoi(argv[1]);
-  if (argc > 2) nloop = atoi(argv[2]);
+  if (argc > 1)
+    level = atoi(argv[1]);
+  if (argc > 2)
+    nloop = atoi(argv[2]);
 
-  if (level > 3) level = 3;
-  if (level < 1) level = 1;
+  if (level > 3)
+    level = 3;
+  if (level < 1)
+    level = 1;
 
-  if (nloop < 1) nloop = 1;
+  if (nloop < 1)
+    nloop = 1;
   cout << "running " << argv[0] << " level = " << level << " nloop = " << nloop << endl;
 
   test_NTT(level, nloop);
@@ -80,8 +85,7 @@ bool clonetest(Poly& a, Poly& b, string name) {
   if (a != b) {
     cout << name << " FAILED " << endl;
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
@@ -102,7 +106,8 @@ void test_NTT(const usint level, const usint nloop) {
   double time3br, time3bf;
 
   cout << "testing NTT backend " << MATHBACKEND;
-  if (BigIntegerBitLength > 0) cout << " BITLENGTH " << BigIntegerBitLength;
+  if (BigIntegerBitLength > 0)
+    cout << " BITLENGTH " << BigIntegerBitLength;
   cout << endl;
 
   TIC(t_total);
@@ -167,13 +172,15 @@ void test_NTT(const usint level, const usint nloop) {
   // repeat for q3
   // note computation of root of unity for big numbers takes forever
   // hardwire this case
-  BigInteger q3("130935624315845674800527587873103966088665681841722591579331654723845351"
-                "856186982195330803693036166286035467365102402840368690261835415722133141"
-                "10873601");
+  BigInteger q3(
+      "130935624315845674800527587873103966088665681841722591579331654723845351"
+      "856186982195330803693036166286035467365102402840368690261835415722133141"
+      "10873601");
 
-  BigInteger rootOfUnity3("120238484638556494666603774400695561444642670309493651659937259422204414"
-                          "126327993119899739382548230714053366233156689615011395926730002978876828"
-                          "95033094");
+  BigInteger rootOfUnity3(
+      "120238484638556494666603774400695561444642670309493651659937259422204414"
+      "126327993119899739382548230714053366233156689615011395926730002978876828"
+      "95033094");
 
   cout << "q3 : " << q3.ToString() << endl;
   cout << "rootOfUnity3 : " << rootOfUnity3.ToString() << endl;
@@ -225,7 +232,8 @@ void test_NTT(const usint level, const usint nloop) {
   cout << "Starting timing" << endl;
 
   for (ix = 0; ix < nloop; ix++) {
-    if (ix % 100 == 0) cout << ix << endl;  // print out status every 100 loops
+    if (ix % 100 == 0)
+      cout << ix << endl;  // print out status every 100 loops
 
     // forward transforms
     if (level > 0) {
@@ -299,8 +307,7 @@ void test_NTT(const usint level, const usint nloop) {
 
   if (failed) {
     cout << "failure in loop number " << ix << endl;
-  }
-  else {
+  } else {
     time1af /= static_cast<double>(nloop);
     time1bf /= static_cast<double>(nloop);
     time2af /= static_cast<double>(nloop);

@@ -30,8 +30,7 @@
 namespace lbcrypto {
 
 template <typename T>
-class BigIntegerInterface
-{
+class BigIntegerInterface {
  public:
   // CONSTRUCTORS
 
@@ -616,8 +615,7 @@ class BigIntegerInterface
 };
 
 template <typename T, typename I>
-class BigVectorInterface
-{
+class BigVectorInterface {
  public:
   typedef I Integer;
 
@@ -1047,8 +1045,7 @@ class BigVectorInterface
 };
 
 // TODO
-class BigMatrixInterface
-{};
+class BigMatrixInterface {};
 }  // namespace lbcrypto
 
 #endif

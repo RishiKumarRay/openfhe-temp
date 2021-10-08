@@ -141,15 +141,15 @@ void AutomaticRescaleDemo(RescalingTechnique rsTech) {
     std::cout << "\n\n\n ===== ApproxAutoDemo ============= " << std::endl;
   }
 
-  uint32_t multDepth          = 6;
-  uint32_t scaleFactorBits    = 90;
-  uint32_t batchSize          = 8;
+  uint32_t multDepth = 6;
+  uint32_t scaleFactorBits = 90;
+  uint32_t batchSize = 8;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   // 0 means the library will choose it based on securityLevel
-  uint32_t ringDimension     = 0;
+  uint32_t ringDimension = 0;
   CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
-    multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech);
+      multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech);
 
   std::cout << "CKKS scheme is using ring dimension " << cc->GetRingDimension() << std::endl << std::endl;
 
@@ -163,8 +163,8 @@ void AutomaticRescaleDemo(RescalingTechnique rsTech) {
   cc->EvalMultKeyGen(keys.secretKey);
 
   // Input
-  vector<double> x = { 1.0, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07 };
-  Plaintext ptxt   = cc->MakeCKKSPackedPlaintext(x);
+  vector<double> x = {1.0, 1.01, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07};
+  Plaintext ptxt = cc->MakeCKKSPackedPlaintext(x);
 
   std::cout << "Input x: " << ptxt << std::endl;
 
@@ -178,12 +178,12 @@ void AutomaticRescaleDemo(RescalingTechnique rsTech) {
    * The result is correct, even though there is no call to
    * the Rescale() operation.
    */
-  auto c2    = cc->EvalMult(c, c);                       // x^2
-  auto c4    = cc->EvalMult(c2, c2);                     // x^4
-  auto c8    = cc->EvalMult(c4, c4);                     // x^8
-  auto c16   = cc->EvalMult(c8, c8);                     // x^16
-  auto c9    = cc->EvalMult(c8, c);                      // x^9
-  auto c18   = cc->EvalMult(c16, c2);                    // x^18
+  auto c2 = cc->EvalMult(c, c);                          // x^2
+  auto c4 = cc->EvalMult(c2, c2);                        // x^4
+  auto c8 = cc->EvalMult(c4, c4);                        // x^8
+  auto c16 = cc->EvalMult(c8, c8);                       // x^16
+  auto c9 = cc->EvalMult(c8, c);                         // x^9
+  auto c18 = cc->EvalMult(c16, c2);                      // x^18
   auto cRes1 = cc->EvalAdd(cc->EvalAdd(c18, c9), 1.0);   // Final result 1
   auto cRes2 = cc->EvalSub(cc->EvalAdd(c18, c9), 1.0);   // Final result 2
   auto cRes3 = cc->EvalMult(cc->EvalAdd(c18, c9), 0.5);  // Final result 3
@@ -229,15 +229,15 @@ void ManualRescaleDemo(RescalingTechnique rsTech) {
    */
   std::cout << "\n\n\n ===== ApproxRescaleDemo ============= " << std::endl;
 
-  uint32_t multDepth          = 5;
-  uint32_t scaleFactorBits    = 90;
-  uint32_t batchSize          = 8;
+  uint32_t multDepth = 5;
+  uint32_t scaleFactorBits = 90;
+  uint32_t batchSize = 8;
   SecurityLevel securityLevel = HEStd_128_classic;
   // 0 means the library will choose it based on securityLevel
   uint32_t ringDimension = 0;
 
   CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
-    multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech);
+      multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech);
 
   std::cout << "CKKS scheme is using ring dimension " << cc->GetRingDimension() << std::endl << std::endl;
 
@@ -249,8 +249,8 @@ void ManualRescaleDemo(RescalingTechnique rsTech) {
   cc->EvalMultKeyGen(keys.secretKey);
 
   // Input
-  vector<double> x = { 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7 };
-  Plaintext ptxt   = cc->MakeCKKSPackedPlaintext(x);
+  vector<double> x = {1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7};
+  Plaintext ptxt = cc->MakeCKKSPackedPlaintext(x);
 
   std::cout << "Input x: " << ptxt << std::endl;
 
@@ -306,13 +306,13 @@ void HybridKeySwitchingDemo1() {
    */
 
   std::cout << "\n\n\n ===== HybridKeySwitchingDemo1 ============= " << std::endl;
-  uint32_t multDepth          = 5;
-  uint32_t scaleFactorBits    = 90;
-  uint32_t batchSize          = 8;
+  uint32_t multDepth = 5;
+  uint32_t scaleFactorBits = 90;
+  uint32_t batchSize = 8;
   SecurityLevel securityLevel = HEStd_128_classic;
-  uint32_t ringDimension      = 0;  // 0 means the library will choose it based on securityLevel
-  RescalingTechnique rsTech   = APPROXAUTO;
-  KeySwitchTechnique ksTech   = HYBRID;
+  uint32_t ringDimension = 0;  // 0 means the library will choose it based on securityLevel
+  RescalingTechnique rsTech = APPROXAUTO;
+  KeySwitchTechnique ksTech = HYBRID;
   /*
    * dnum is the number of large digits in HYBRID decomposition
    *
@@ -371,7 +371,7 @@ void HybridKeySwitchingDemo1() {
    */
 
   CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
-    multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech, ksTech, dnum);
+      multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech, ksTech, dnum);
 
   std::cout << "CKKS scheme is using ring dimension " << cc->GetRingDimension() << std::endl;
 
@@ -381,11 +381,11 @@ void HybridKeySwitchingDemo1() {
   cc->Enable(SHE);
 
   auto keys = cc->KeyGen();
-  cc->EvalAtIndexKeyGen(keys.secretKey, { 1, -2 });
+  cc->EvalAtIndexKeyGen(keys.secretKey, {1, -2});
 
   // Input
-  vector<double> x = { 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7 };
-  Plaintext ptxt   = cc->MakeCKKSPackedPlaintext(x);
+  vector<double> x = {1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7};
+  Plaintext ptxt = cc->MakeCKKSPackedPlaintext(x);
 
   std::cout << "Input x: " << ptxt << std::endl;
 
@@ -393,8 +393,8 @@ void HybridKeySwitchingDemo1() {
 
   TimeVar t;
   TIC(t);
-  auto cRot1         = cc->EvalAtIndex(c, 1);
-  auto cRot2         = cc->EvalAtIndex(cRot1, -2);
+  auto cRot1 = cc->EvalAtIndex(c, 1);
+  auto cRot2 = cc->EvalAtIndex(cRot1, -2);
   double time2digits = TOC(t);
   // Take note and compare the runtime to the runtime
   // of the same computation in the next demo.
@@ -457,13 +457,13 @@ void HybridKeySwitchingDemo2() {
 
   std::cout << "\n\n\n ===== HybridKeySwitchingDemo2 ============= " << std::endl;
 
-  uint32_t multDepth          = 5;
-  uint32_t scaleFactorBits    = 90;
-  uint32_t batchSize          = 8;
+  uint32_t multDepth = 5;
+  uint32_t scaleFactorBits = 90;
+  uint32_t batchSize = 8;
   SecurityLevel securityLevel = HEStd_128_classic;
-  uint32_t ringDimension      = 0;  // 0 means the library will choose it based on securityLevel
-  RescalingTechnique rsTech   = APPROXAUTO;
-  KeySwitchTechnique ksTech   = HYBRID;
+  uint32_t ringDimension = 0;  // 0 means the library will choose it based on securityLevel
+  RescalingTechnique rsTech = APPROXAUTO;
+  KeySwitchTechnique ksTech = HYBRID;
   /*
    * Here we use dnum = 3 digits. Even though 3 digits are
    * more than the two digits in the previous demo and the
@@ -482,7 +482,7 @@ void HybridKeySwitchingDemo2() {
   uint32_t dnum = 3;
 
   CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
-    multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech, ksTech, dnum);
+      multDepth, scaleFactorBits, batchSize, securityLevel, ringDimension, rsTech, ksTech, dnum);
 
   // Compare the ring dimension in this demo to the one in
   // the previous.
@@ -494,11 +494,11 @@ void HybridKeySwitchingDemo2() {
   cc->Enable(SHE);
 
   auto keys = cc->KeyGen();
-  cc->EvalAtIndexKeyGen(keys.secretKey, { 1, -2 });
+  cc->EvalAtIndexKeyGen(keys.secretKey, {1, -2});
 
   // Input
-  vector<double> x = { 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7 };
-  Plaintext ptxt   = cc->MakeCKKSPackedPlaintext(x);
+  vector<double> x = {1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7};
+  Plaintext ptxt = cc->MakeCKKSPackedPlaintext(x);
 
   std::cout << "Input x: " << ptxt << std::endl;
 
@@ -596,13 +596,13 @@ void FastRotationsDemo1() {
 
   std::cout << "\n\n\n ===== FastRotationsDemo1 ============= " << std::endl;
 
-  uint32_t multDepth          = 1;
-  uint32_t scaleFactorBits    = 90;
-  uint32_t batchSize          = 8;
+  uint32_t multDepth = 1;
+  uint32_t scaleFactorBits = 90;
+  uint32_t batchSize = 8;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   CryptoContext<DCRTPoly> cc =
-    CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth, scaleFactorBits, batchSize, securityLevel);
+      CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth, scaleFactorBits, batchSize, securityLevel);
 
   uint32_t N = cc->GetRingDimension();
   std::cout << "CKKS scheme is using ring dimension " << N << std::endl << std::endl;
@@ -611,11 +611,11 @@ void FastRotationsDemo1() {
   cc->Enable(SHE);
 
   auto keys = cc->KeyGen();
-  cc->EvalAtIndexKeyGen(keys.secretKey, { 1, 2, 3, 4, 5, 6, 7 });
+  cc->EvalAtIndexKeyGen(keys.secretKey, {1, 2, 3, 4, 5, 6, 7});
 
   // Input
-  vector<double> x = { 0, 0, 0, 0, 0, 0, 0, 1 };
-  Plaintext ptxt   = cc->MakeCKKSPackedPlaintext(x);
+  vector<double> x = {0, 0, 0, 0, 0, 0, 0, 1};
+  Plaintext ptxt = cc->MakeCKKSPackedPlaintext(x);
 
   std::cout << "Input x: " << ptxt << std::endl;
 
@@ -627,13 +627,13 @@ void FastRotationsDemo1() {
   // and measure the runtime.
   TimeVar t;
   TIC(t);
-  cRot1                 = cc->EvalAtIndex(c, 1);
-  cRot2                 = cc->EvalAtIndex(c, 2);
-  cRot3                 = cc->EvalAtIndex(c, 3);
-  cRot4                 = cc->EvalAtIndex(c, 4);
-  cRot5                 = cc->EvalAtIndex(c, 5);
-  cRot6                 = cc->EvalAtIndex(c, 6);
-  cRot7                 = cc->EvalAtIndex(c, 7);
+  cRot1 = cc->EvalAtIndex(c, 1);
+  cRot2 = cc->EvalAtIndex(c, 2);
+  cRot3 = cc->EvalAtIndex(c, 3);
+  cRot4 = cc->EvalAtIndex(c, 4);
+  cRot5 = cc->EvalAtIndex(c, 5);
+  cRot6 = cc->EvalAtIndex(c, 6);
+  cRot7 = cc->EvalAtIndex(c, 7);
   double timeNoHoisting = TOC(t);
 
   auto cResNoHoist = c + cRot1 + cRot2 + cRot3 + cRot4 + cRot5 + cRot6 + cRot7;
@@ -643,14 +643,14 @@ void FastRotationsDemo1() {
 
   // Then, we perform 7 rotations with hoisting.
   TIC(t);
-  auto cPrecomp       = cc->EvalFastRotationPrecompute(c);
-  cRot1               = cc->EvalFastRotation(c, 1, M, cPrecomp);
-  cRot2               = cc->EvalFastRotation(c, 2, M, cPrecomp);
-  cRot3               = cc->EvalFastRotation(c, 3, M, cPrecomp);
-  cRot4               = cc->EvalFastRotation(c, 4, M, cPrecomp);
-  cRot5               = cc->EvalFastRotation(c, 5, M, cPrecomp);
-  cRot6               = cc->EvalFastRotation(c, 6, M, cPrecomp);
-  cRot7               = cc->EvalFastRotation(c, 7, M, cPrecomp);
+  auto cPrecomp = cc->EvalFastRotationPrecompute(c);
+  cRot1 = cc->EvalFastRotation(c, 1, M, cPrecomp);
+  cRot2 = cc->EvalFastRotation(c, 2, M, cPrecomp);
+  cRot3 = cc->EvalFastRotation(c, 3, M, cPrecomp);
+  cRot4 = cc->EvalFastRotation(c, 4, M, cPrecomp);
+  cRot5 = cc->EvalFastRotation(c, 5, M, cPrecomp);
+  cRot6 = cc->EvalFastRotation(c, 6, M, cPrecomp);
+  cRot7 = cc->EvalFastRotation(c, 7, M, cPrecomp);
   double timeHoisting = TOC(t);
   // The time with hoisting should be faster than without hoisting.
 
@@ -685,14 +685,14 @@ void FastRotationsDemo2() {
 
   std::cout << "\n\n\n ===== FastRotationsDemo2 ============= " << std::endl;
 
-  uint32_t multDepth          = 1;
-  uint32_t scaleFactorBits    = 90;
-  uint32_t batchSize          = 8;
+  uint32_t multDepth = 1;
+  uint32_t scaleFactorBits = 90;
+  uint32_t batchSize = 8;
   SecurityLevel securityLevel = HEStd_128_classic;
-  uint32_t ringDim            = 0;
-  RescalingTechnique rsTech   = APPROXAUTO;
-  KeySwitchTechnique ksTech   = BV;
-  uint32_t dnum               = 0;
+  uint32_t ringDim = 0;
+  RescalingTechnique rsTech = APPROXAUTO;
+  KeySwitchTechnique ksTech = BV;
+  uint32_t dnum = 0;
   /*
    * This controls how many multiplications are possible without rescaling.
    * The number of multiplications (depth) is maxDepth - 1.
@@ -717,23 +717,14 @@ void FastRotationsDemo2() {
    * decomposition) and see how the results are incorrect.
    */
   uint32_t relinWin = 10;
-  MODE mode         = OPTIMIZED;  // Using ternary distribution
+  MODE mode = OPTIMIZED;  // Using ternary distribution
 
   // This invocation of genCryptoContextCKKS is of independent
   // interest because it shows all arguments that genCryptoContextCKKS
   // can take.
-  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth,
-                                                                                    scaleFactorBits,
-                                                                                    batchSize,
-                                                                                    securityLevel,
-                                                                                    ringDim,
-                                                                                    rsTech,
-                                                                                    ksTech,
-                                                                                    dnum,
-                                                                                    maxDepth,
-                                                                                    firstModSize,
-                                                                                    relinWin,
-                                                                                    mode);
+  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
+      multDepth, scaleFactorBits, batchSize, securityLevel, ringDim, rsTech, ksTech, dnum, maxDepth, firstModSize,
+      relinWin, mode);
 
   uint32_t N = cc->GetRingDimension();
   std::cout << "CKKS scheme is using ring dimension " << N << std::endl << std::endl;
@@ -742,11 +733,11 @@ void FastRotationsDemo2() {
   cc->Enable(SHE);
 
   auto keys = cc->KeyGen();
-  cc->EvalAtIndexKeyGen(keys.secretKey, { 1, 2, 3, 4, 5, 6, 7 });
+  cc->EvalAtIndexKeyGen(keys.secretKey, {1, 2, 3, 4, 5, 6, 7});
 
   // Input
-  vector<double> x = { 0, 0, 0, 0, 0, 0, 0, 1 };
-  Plaintext ptxt   = cc->MakeCKKSPackedPlaintext(x);
+  vector<double> x = {0, 0, 0, 0, 0, 0, 0, 1};
+  Plaintext ptxt = cc->MakeCKKSPackedPlaintext(x);
 
   std::cout << "Input x: " << ptxt << std::endl;
 
@@ -758,13 +749,13 @@ void FastRotationsDemo2() {
   // and measure the runtime.
   TimeVar t;
   TIC(t);
-  cRot1                 = cc->EvalAtIndex(c, 1);
-  cRot2                 = cc->EvalAtIndex(c, 2);
-  cRot3                 = cc->EvalAtIndex(c, 3);
-  cRot4                 = cc->EvalAtIndex(c, 4);
-  cRot5                 = cc->EvalAtIndex(c, 5);
-  cRot6                 = cc->EvalAtIndex(c, 6);
-  cRot7                 = cc->EvalAtIndex(c, 7);
+  cRot1 = cc->EvalAtIndex(c, 1);
+  cRot2 = cc->EvalAtIndex(c, 2);
+  cRot3 = cc->EvalAtIndex(c, 3);
+  cRot4 = cc->EvalAtIndex(c, 4);
+  cRot5 = cc->EvalAtIndex(c, 5);
+  cRot6 = cc->EvalAtIndex(c, 6);
+  cRot7 = cc->EvalAtIndex(c, 7);
   double timeNoHoisting = TOC(t);
 
   auto cResNoHoist = c + cRot1 + cRot2 + cRot3 + cRot4 + cRot5 + cRot6 + cRot7;
@@ -774,14 +765,14 @@ void FastRotationsDemo2() {
 
   // Then, we perform 7 rotations with hoisting.
   TIC(t);
-  auto cPrecomp       = cc->EvalFastRotationPrecompute(c);
-  cRot1               = cc->EvalFastRotation(c, 1, M, cPrecomp);
-  cRot2               = cc->EvalFastRotation(c, 2, M, cPrecomp);
-  cRot3               = cc->EvalFastRotation(c, 3, M, cPrecomp);
-  cRot4               = cc->EvalFastRotation(c, 4, M, cPrecomp);
-  cRot5               = cc->EvalFastRotation(c, 5, M, cPrecomp);
-  cRot6               = cc->EvalFastRotation(c, 6, M, cPrecomp);
-  cRot7               = cc->EvalFastRotation(c, 7, M, cPrecomp);
+  auto cPrecomp = cc->EvalFastRotationPrecompute(c);
+  cRot1 = cc->EvalFastRotation(c, 1, M, cPrecomp);
+  cRot2 = cc->EvalFastRotation(c, 2, M, cPrecomp);
+  cRot3 = cc->EvalFastRotation(c, 3, M, cPrecomp);
+  cRot4 = cc->EvalFastRotation(c, 4, M, cPrecomp);
+  cRot5 = cc->EvalFastRotation(c, 5, M, cPrecomp);
+  cRot6 = cc->EvalFastRotation(c, 6, M, cPrecomp);
+  cRot7 = cc->EvalFastRotation(c, 7, M, cPrecomp);
   double timeHoisting = TOC(t);
   /* The time with hoisting should be faster than without hoisting.
    * Also, the benefits from hoisting should be more pronounced in this

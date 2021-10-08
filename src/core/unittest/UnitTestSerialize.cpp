@@ -116,7 +116,7 @@ void vector_of_bigint(const string& msg) {
   typename V::Integer ranval;
 
   for (int i = 0; i < vecsize; i++) {
-    ranval        = dug.GenerateInteger();
+    ranval = dug.GenerateInteger();
     testvec.at(i) = ranval;
   }
 
@@ -265,7 +265,7 @@ void serialize_matrix_bigint(const string& msg) {
   // load up the matix with random values
   for (size_t i = 0; i < nrows; i++) {
     for (size_t j = 0; j < ncols; j++) {
-      ranval        = dug.GenerateInteger();
+      ranval = dug.GenerateInteger();
       testmat(i, j) = ranval;
     }
   }

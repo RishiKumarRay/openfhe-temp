@@ -38,8 +38,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTBGVrnsSer : public ::testing::Test
-{
+class UTBGVrnsSer : public ::testing::Test {
  public:
   UTBGVrnsSer() {}
   ~UTBGVrnsSer() {}
@@ -53,19 +52,18 @@ class UTBGVrnsSer : public ::testing::Test
 };
 
 // This file unit tests the SHE capabilities for the BGVrns scheme
-#define GENERATE_TEST_CASES_FUNC(x, y, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)                             \
-  GENERATE_BGVrns_TEST_CASE(                                                                                     \
-    x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, MANUAL)             \
-    GENERATE_BGVrns_TEST_CASE(                                                                                   \
-      x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, AUTO)             \
-      GENERATE_BGVrns_TEST_CASE(                                                                                 \
-        x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE, MANUAL)        \
-        GENERATE_BGVrns_TEST_CASE(                                                                               \
-          x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE, AUTO)        \
-          GENERATE_BGVrns_TEST_CASE(                                                                             \
-            x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, MANUAL) \
-            GENERATE_BGVrns_TEST_CASE(                                                                           \
-              x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, AUTO)
+#define GENERATE_TEST_CASES_FUNC(x, y, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)                                  \
+  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE,  \
+                            MANUAL) GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, \
+                                                              RELIN, BV, BATCH, APPROXRESCALE, AUTO)                  \
+      GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH,            \
+                                APPROXRESCALE, MANUAL)                                                                \
+          GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH,        \
+                                    APPROXRESCALE, AUTO)                                                              \
+              GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, \
+                                        APPROXRESCALE, MANUAL)                                                        \
+                  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID,    \
+                                            BATCH, APPROXRESCALE, AUTO)
 
 /* *
  * ORDER: Cyclotomic order. Must be a power of 2 for CKKS.
@@ -78,12 +76,12 @@ class UTBGVrnsSer : public ::testing::Test
  * 		  if you need rotations before any multiplications.
  * PTM: The plaintext modulus.
  */
-static const usint ORDER      = 1024;  // 16384;
+static const usint ORDER = 1024;  // 16384;
 static const usint SIZEMODULI = 50;
-static const usint NUMPRIME   = 4;
-static const usint RELIN      = 20;
-static const usint PTM        = 65537;
-static const usint BATCH      = 16;
+static const usint NUMPRIME = 4;
+static const usint RELIN = 20;
+static const usint PTM = 65537;
+static const usint BATCH = 16;
 
 /**
  * This function checks whether vectors of numbers a and b are equal.
@@ -97,7 +95,7 @@ static void checkEquality(const std::vector<int64_t>& a, const std::vector<int64
   std::vector<usint> tmp(vectorSize);
   for (int i = 0; i < vectorSize; i++) {
     allTrue[i] = 1;
-    tmp[i]     = (a[i] == b[i]);
+    tmp[i] = (a[i] == b[i]);
   }
   EXPECT_TRUE(tmp == allTrue) << failmsg;
 }
@@ -108,14 +106,12 @@ static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype, s
 
   try {
     cc->EvalMultKeyGen(kp.secretKey);
-  }
-  catch (...) {
+  } catch (...) {
   }
 
   try {
     cc->EvalSumKeyGen(kp.secretKey, kp.publicKey);
-  }
-  catch (...) {
+  } catch (...) {
   }
 
   stringstream s;
@@ -132,12 +128,12 @@ static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype, s
   EXPECT_EQ(*cc, *newcc) << msg << " Mismatched context";
 
   EXPECT_EQ(*cc->GetEncryptionAlgorithm(), *newcc->GetEncryptionAlgorithm())
-    << msg << " Scheme mismatch after ser/deser";
+      << msg << " Scheme mismatch after ser/deser";
   EXPECT_EQ(*cc->GetCryptoParameters(), *newcc->GetCryptoParameters())
-    << msg << " Crypto parms mismatch after ser/deser";
+      << msg << " Crypto parms mismatch after ser/deser";
   EXPECT_EQ(*cc->GetEncodingParams(), *newcc->GetEncodingParams()) << msg << " Encoding parms mismatch after ser/deser";
   EXPECT_EQ(cc->GetEncryptionAlgorithm()->GetEnabled(), newcc->GetEncryptionAlgorithm()->GetEnabled())
-    << msg << " Enabled features mismatch after ser/deser";
+      << msg << " Enabled features mismatch after ser/deser";
 
   s.str("");
   s.clear();
@@ -190,10 +186,10 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
 
   // Update the batchSize from the default value
   const auto cryptoParamsBGVrns =
-    std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(kp.publicKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(kp.publicKey->GetCryptoParameters());
 
   EncodingParams encodingParamsNew(
-    std::make_shared<EncodingParamsImpl>(cc->GetEncodingParams()->GetPlaintextModulus(), vecSize));
+      std::make_shared<EncodingParamsImpl>(cc->GetEncodingParams()->GetPlaintextModulus(), vecSize));
   cryptoParamsBGVrns->SetEncodingParams(encodingParamsNew);
 
   DEBUG("step 1");
@@ -211,8 +207,8 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
     EXPECT_EQ(*kp.secretKey, *kpnew.secretKey) << "Secret key mismatch after ser/deser";
   }
   DEBUG("step 3");
-  vector<int64_t> vals            = { 1, 3, 5, 7, 9, 2, 4, 6, 8, 11 };
-  Plaintext plaintextShort        = cc->MakePackedPlaintext(vals);
+  vector<int64_t> vals = {1, 3, 5, 7, 9, 2, 4, 6, 8, 11};
+  Plaintext plaintextShort = cc->MakePackedPlaintext(vals);
   Ciphertext<DCRTPoly> ciphertext = cc->Encrypt(kp.publicKey, plaintextShort);
 
   DEBUG("step 4");
@@ -228,9 +224,7 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
   Plaintext plaintextShortNew;
   cc->Decrypt(kp.secretKey, newC, &plaintextShortNew);
 
-  checkEquality(plaintextShortNew->GetPackedValue(),
-                plaintextShort->GetPackedValue(),
-                vecSize,
+  checkEquality(plaintextShortNew->GetPackedValue(), plaintextShort->GetPackedValue(), vecSize,
                 failmsg + " Decrypted serialization test fails");
 
   DEBUG("step 6");
@@ -245,22 +239,22 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
   // serialize a bunch of mult keys
   stringstream ser0;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser0, sertype, kp.secretKey->GetKeyTag()), true)
-    << "single eval mult key ser fails";
+      << "single eval mult key ser fails";
   stringstream ser2a;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser2a, sertype, cc), true)
-    << "context 1 eval mult key ser fails";
+      << "context 1 eval mult key ser fails";
   stringstream ser3;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser3, sertype), true)
-    << "all context eval mult key ser fails";
+      << "all context eval mult key ser fails";
 
   DEBUG("step 8");
   // serialize a bunch of sum keys
   stringstream aser0;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser0, sertype, kp.secretKey->GetKeyTag()), true)
-    << "single eval sum key ser fails";
+      << "single eval sum key ser fails";
   stringstream aser2a;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser2a, sertype, cc), true)
-    << "single ctx eval sum key ser fails";
+      << "single ctx eval sum key ser fails";
   stringstream aser3;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser3, sertype), true) << "all eval sum key ser fails";
 

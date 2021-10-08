@@ -116,9 +116,10 @@ void LPAlgorithmSHECKKS<Element>::KeySwitchGHSInPlace(const LPEvalKey<Element> k
 
 template <class Element>
 vector<shared_ptr<ConstCiphertext<Element>>> LPAlgorithmSHECKKS<Element>::AutomaticLevelReduce(
-  ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2) const {
-  std::string errMsg = "LPAlgorithmSHECKKS::AutomaticLevelReduce is only supported for "
-                       "DCRTPoly.";
+    ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2) const {
+  std::string errMsg =
+      "LPAlgorithmSHECKKS::AutomaticLevelReduce is only supported for "
+      "DCRTPoly.";
   PALISADE_THROW(not_implemented_error, errMsg);
 }
 
@@ -143,11 +144,11 @@ void LPAlgorithmSHECKKS<Element>::EvalAddCoreInPlace(Ciphertext<Element>& cipher
                    "level less than ciphertext2 level.");
   }
 
-  std::vector<Element>& cv1       = ciphertext1->GetElements();
+  std::vector<Element>& cv1 = ciphertext1->GetElements();
   const std::vector<Element>& cv2 = ciphertext2->GetElements();
 
-  size_t c1Size     = cv1.size();
-  size_t c2Size     = cv2.size();
+  size_t c1Size = cv1.size();
+  size_t c2Size = cv2.size();
   size_t cSmallSize = std::min(c1Size, c2Size);
 
   for (size_t i = 0; i < cSmallSize; i++) {
@@ -187,8 +188,7 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalSubCore(ConstCiphertext<Ele
   if (c1Size < c2Size) {
     cSmallSize = c1Size;
     cLargeSize = c2Size;
-  }
-  else {
+  } else {
     cSmallSize = c2Size;
     cLargeSize = c1Size;
   }
@@ -199,7 +199,8 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalSubCore(ConstCiphertext<Ele
     cvSub.push_back(std::move(cv1[i] - cv2[i]));
   }
   for (size_t i = cSmallSize; i < cLargeSize; i++) {
-    if (c1Size < c2Size) cvSub.push_back(std::move(cv2[i].Negate()));
+    if (c1Size < c2Size)
+      cvSub.push_back(std::move(cv2[i].Negate()));
     else
       cvSub.push_back(cv1[i]);
   }
@@ -229,7 +230,7 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalMultCore(ConstCiphertext<El
 
   Ciphertext<Element> result = ciphertext1->CloneEmpty();
 
-  std::vector<Element> cv1        = ciphertext1->GetElements();
+  std::vector<Element> cv1 = ciphertext1->GetElements();
   const std::vector<Element>& cv2 = ciphertext2->GetElements();
 
   size_t cResultSize = cv1.size() + cv2.size() - 1;
@@ -243,18 +244,16 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalMultCore(ConstCiphertext<El
     cvMult[1] = (cv1[1] *= cv2[0]);
     cvMult[0] = (cv2[0] * cv1[0]);
     cvMult[1] += (cv1[0] *= cv2[1]);
-  }
-  else {
+  } else {
     bool isFirstAdd[cResultSize];
     std::fill_n(isFirstAdd, cResultSize, true);
 
     for (size_t i = 0; i < cv1.size(); i++) {
       for (size_t j = 0; j < cv2.size(); j++) {
         if (isFirstAdd[i + j] == true) {
-          cvMult[i + j]     = cv1[i] * cv2[j];
+          cvMult[i + j] = cv1[i] * cv2[j];
           isFirstAdd[i + j] = false;
-        }
-        else {
+        } else {
           cvMult[i + j] += cv1[i] * cv2[j];
         }
       }
@@ -315,7 +314,7 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalAdd(ConstCiphertext<Element
   const std::vector<Element>& cv = ciphertext->GetElements();
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
   const auto p = cryptoParams->GetPlaintextModulus();
 
   int32_t depth = ciphertext->GetDepth();
@@ -383,7 +382,7 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalSub(ConstCiphertext<Element
   const std::vector<Element>& cv = ciphertext->GetElements();
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
   const auto p = cryptoParams->GetPlaintextModulus();
 
   int32_t depth = ciphertext->GetDepth();
@@ -431,7 +430,7 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalMult(ConstCiphertext<Elemen
   Ciphertext<Element> result = ciphertext->CloneEmpty();
 
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
 
   // Works only for APPROXRESCALE
   if (cryptoParams->GetRescalingTechnique() == APPROXRESCALE) {
@@ -453,24 +452,23 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalMult(ConstCiphertext<Elemen
     result->SetLevel(ciphertext->GetLevel());
 
     return result;
-  }
-  else {
+  } else {
     Ciphertext<Element> c;
     // First, rescale to bring ciphertext to depth 1
     if (ciphertext->GetDepth() > 2) {
       PALISADE_THROW(not_available_error, "Exact rescaling works for ciphertexts of depth 1 and 2 only.");
     }
 
-    uint32_t depth       = ciphertext->GetDepth();
-    uint32_t level       = ciphertext->GetLevel();
+    uint32_t depth = ciphertext->GetDepth();
+    uint32_t level = ciphertext->GetLevel();
     double scalingFactor = ciphertext->GetScalingFactor();
 
     if (ciphertext->GetDepth() == 2) {
       CryptoContext<Element> cc = ciphertext->GetCryptoContext();
-      c                         = cc->ModReduce(ciphertext);
+      c = cc->ModReduce(ciphertext);
 
-      depth         = c->GetDepth();
-      level         = c->GetLevel();
+      depth = c->GetDepth();
+      level = c->GetLevel();
       scalingFactor = c->GetScalingFactor();
     }
 
@@ -501,7 +499,7 @@ template <class Element>
 Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalMultApprox(ConstCiphertext<Element> ciphertext,
                                                                 double constant) const {
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertext->GetCryptoParameters());
 
   const std::vector<Element>& cv = ciphertext->GetElements();
 
@@ -533,8 +531,8 @@ LPEvalKey<Element> LPAlgorithmSHECKKS<Element>::KeySwitchGen(const LPPrivateKey<
 
   const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(newKey->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
-  const Element& sNew                      = newKey->GetPrivateElement();
-  const Element& sOld                      = oldKey->GetPrivateElement();
+  const Element& sNew = newKey->GetPrivateElement();
+  const Element& sOld = oldKey->GetPrivateElement();
 
   const DggType& dgg = cryptoParams->GetDiscreteGaussianGenerator();
   DugType dug;
@@ -565,7 +563,7 @@ void LPAlgorithmSHECKKS<Element>::KeySwitchInPlace(const LPEvalKey<Element> ek, 
   Ciphertext<Element> result = ciphertext->Clone();
 
   const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ek->GetCryptoParameters());
-  usint relinWindow       = cryptoParams->GetRelinWindow();
+  usint relinWindow = cryptoParams->GetRelinWindow();
 
   LPEvalKeyRelin<Element> evalKey = std::static_pointer_cast<LPEvalKeyRelinImpl<Element>>(ek);
 
@@ -586,11 +584,10 @@ void LPAlgorithmSHECKKS<Element>::KeySwitchInPlace(const LPEvalKey<Element> ek, 
 
   if (cv.size() == 2) {  // case of PRE or automorphism
     digitsC2 = cv[1].BaseDecompose(relinWindow);
-    ct1      = digitsC2[0] * av[0];
-  }
-  else {  // case of EvalMult
+    ct1 = digitsC2[0] * av[0];
+  } else {  // case of EvalMult
     digitsC2 = cv[2].BaseDecompose(relinWindow);
-    ct1      = cv[1];
+    ct1 = cv[1];
     // Convert ct1 to Format::EVALUATION representation
     ct1.SetFormat(Format::EVALUATION);
     ct1 += digitsC2[0] * av[0];
@@ -603,7 +600,7 @@ void LPAlgorithmSHECKKS<Element>::KeySwitchInPlace(const LPEvalKey<Element> ek, 
     ct1 += (digitsC2[i] *= av[i]);
   }
 
-  result->SetElements({ std::move(ct0), std::move(ct1) });
+  result->SetElements({std::move(ct0), std::move(ct1)});
 
   result->SetDepth(ciphertext->GetDepth());
 }
@@ -662,7 +659,7 @@ LPEvalKey<Element> LPAlgorithmSHECKKS<Element>::EvalMultKeyGen(const LPPrivateKe
 template <class Element>
 vector<LPEvalKey<Element>> LPAlgorithmSHECKKS<Element>::EvalMultKeysGen(const LPPrivateKey<Element> privateKey) const {
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
 
   LPPrivateKey<Element> privateKeyPowered(std::make_shared<LPPrivateKeyImpl<Element>>(privateKey->GetCryptoContext()));
 
@@ -738,15 +735,15 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalAutomorphism(ConstCiphertex
 
   Ciphertext<Element> permutedCiphertext = this->KeySwitch(fk, ciphertext);
 
-  permutedCiphertext->SetElements({ permutedCiphertext->GetElements()[0].AutomorphismTransform(i, map),
-                                    permutedCiphertext->GetElements()[1].AutomorphismTransform(i, map) });
+  permutedCiphertext->SetElements({permutedCiphertext->GetElements()[0].AutomorphismTransform(i, map),
+                                   permutedCiphertext->GetElements()[1].AutomorphismTransform(i, map)});
 
   return permutedCiphertext;
 }
 
 template <class Element>
 shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmSHECKKS<Element>::EvalAutomorphismKeyGen(
-  const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const {
+    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const {
   const Element& s = privateKey->GetPrivateElement();
 
   usint n = s.GetRingDimension();
@@ -754,13 +751,15 @@ shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmSHECKKS<Element>::Eva
   std::vector<LPEvalKey<Element>> keysVector(indexList.size());
 
   auto it = std::find(indexList.begin(), indexList.end(), 2 * n - 1);
-  if (it != indexList.end()) PALISADE_THROW(not_available_error, "conjugation is disabled in CKKS");
+  if (it != indexList.end())
+    PALISADE_THROW(not_available_error, "conjugation is disabled in CKKS");
 
-  if (indexList.size() > n - 1) PALISADE_THROW(math_error, "size exceeds the ring dimension");
+  if (indexList.size() > n - 1)
+    PALISADE_THROW(math_error, "size exceeds the ring dimension");
 #pragma omp parallel for if (indexList.size() >= 4)
   for (usint i = 0; i < indexList.size(); i++) {
     LPPrivateKey<Element> privateKeyPermuted(
-      std::make_shared<LPPrivateKeyImpl<Element>>(privateKey->GetCryptoContext()));
+        std::make_shared<LPPrivateKeyImpl<Element>>(privateKey->GetCryptoContext()));
     // Element sPermuted = s.AutomorphismTransform(indexList[i]);
     usint index = NativeInteger(indexList[i]).ModInverse(2 * n).ConvertToInt();
     std::vector<usint> map(n);
@@ -804,7 +803,8 @@ LPEvalKey<Element> LPAlgorithmPRECKKS<Element>::ReKeyGen(const LPPublicKey<Eleme
   usint K = 1;
   if (relinWin > 0) {
     K = nBits / relinWin;
-    if (nBits % relinWin > 0) K++;
+    if (nBits % relinWin > 0)
+      K++;
   }
 
   Element s = oldSk->GetPrivateElement();
@@ -825,7 +825,8 @@ LPEvalKey<Element> LPAlgorithmPRECKKS<Element>::ReKeyGen(const LPPublicKey<Eleme
 
     Element u;
 
-    if (cryptoParams->GetMode() == RLWE) u = Element(dgg, elementParams, Format::EVALUATION);
+    if (cryptoParams->GetMode() == RLWE)
+      u = Element(dgg, elementParams, Format::EVALUATION);
     else
       u = Element(tug, elementParams, Format::EVALUATION);
 
@@ -856,14 +857,12 @@ Ciphertext<Element> LPAlgorithmPRECKKS<Element>::ReEncrypt(const LPEvalKey<Eleme
 
   if (publicKey == nullptr) {  // Recipient PK is not provided - CPA-secure PRE
     return c;
-  }
-  else {  // Recipient PK provided - HRA-secure PRE
+  } else {  // Recipient PK provided - HRA-secure PRE
     auto c = ciphertext->GetCryptoContext()->GetEncryptionAlgorithm()->KeySwitch(EK, ciphertext);
 
     if (publicKey == nullptr) {  // Recipient PK is not provided - CPA-secure PRE
       return c;
-    }
-    else {
+    } else {
       // Recipient PK provided - HRA-secure PRE
       // To obtain HRA security, we a fresh encryption of zero to the result
       // with noise scaled by K (=log2(q)/relinWin).
@@ -875,16 +874,17 @@ Ciphertext<Element> LPAlgorithmPRECKKS<Element>::ReEncrypt(const LPEvalKey<Eleme
 
       // Encrypting with noise scaled by K
       const auto cryptoParams =
-        std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(publicKey->GetCryptoParameters());
+          std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(publicKey->GetCryptoParameters());
       const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
       usint relinWin = cryptoParams->GetRelinWindow();
-      usint nBits    = elementParams->GetModulus().GetLengthForBase(2);
+      usint nBits = elementParams->GetModulus().GetLengthForBase(2);
       // K = log2(q)/r, i.e., number of digits in PRE decomposition
       usint K = 1;
       if (relinWin > 0) {
         K = nBits / relinWin;
-        if (nBits % relinWin > 0) K++;
+        if (nBits % relinWin > 0)
+          K++;
       }
 
       Ciphertext<Element> zeroCiphertext(std::make_shared<CiphertextImpl<Element>>(publicKey));
@@ -901,7 +901,8 @@ Ciphertext<Element> LPAlgorithmPRECKKS<Element>::ReEncrypt(const LPEvalKey<Eleme
 
       Element u;
 
-      if (cryptoParams->GetMode() == RLWE) u = Element(dgg, elementParams, Format::EVALUATION);
+      if (cryptoParams->GetMode() == RLWE)
+        u = Element(dgg, elementParams, Format::EVALUATION);
       else
         u = Element(tug, elementParams, Format::EVALUATION);
 
@@ -914,7 +915,7 @@ Ciphertext<Element> LPAlgorithmPRECKKS<Element>::ReEncrypt(const LPEvalKey<Eleme
       c0 = p0 * u + e1;
       c1 = p1 * u + e2;
 
-      zeroCiphertext->SetElements({ std::move(c0), std::move(c1) });
+      zeroCiphertext->SetElements({std::move(c0), std::move(c1)});
 
       c->SetKeyTag(zeroCiphertext->GetKeyTag());
 
@@ -965,7 +966,7 @@ LPKeyPair<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyKeyGen(CryptoCo
   size_t numKeys = secretKeys.size();
   for (size_t i = 0; i < numKeys; i++) {
     LPPrivateKey<Element> ski = secretKeys[i];
-    Element si                = ski->GetPrivateElement();
+    Element si = ski->GetPrivateElement();
     s += si;
   }
   // s.SwitchFormat();
@@ -1031,7 +1032,8 @@ LPKeyPair<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyKeyGen(CryptoCo
   Element b;
 
   // When PRE is not used, a joint key is computed
-  if (!fresh) b = e - a * s + publicKey->GetPublicElements()[0];
+  if (!fresh)
+    b = e - a * s + publicKey->GetPublicElements()[0];
   else
     b = e - a * s;
 
@@ -1044,13 +1046,13 @@ LPKeyPair<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyKeyGen(CryptoCo
 
 template <class Element>
 Ciphertext<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyDecryptLead(
-  const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext) const {
+    const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext) const {
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
   const std::vector<Element>& cv = ciphertext->GetElements();
-  const Element& s               = privateKey->GetPrivateElement();
+  const Element& s = privateKey->GetPrivateElement();
 
   DggType dgg(MP_SD);
   Element e(dgg, elementParams, Format::EVALUATION);
@@ -1059,20 +1061,20 @@ Ciphertext<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyDecryptLead(
   Element b = cv[0] + s * cv[1] + e;
 
   Ciphertext<Element> result = ciphertext->CloneEmpty();
-  result->SetElements({ std::move(b) });
+  result->SetElements({std::move(b)});
 
   return result;
 }
 
 template <class Element>
 Ciphertext<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyDecryptMain(
-  const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext) const {
+    const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext) const {
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
   const std::vector<Element>& cv = ciphertext->GetElements();
-  const Element& s               = privateKey->GetPrivateElement();
+  const Element& s = privateKey->GetPrivateElement();
 
   DggType dgg(MP_SD);
   Element e(dgg, elementParams, Format::EVALUATION);
@@ -1082,19 +1084,19 @@ Ciphertext<Element> LPAlgorithmMultipartyCKKS<Element>::MultipartyDecryptMain(
 
   Ciphertext<Element> result = ciphertext->CloneEmpty();
 
-  result->SetElements({ std::move(b) });
+  result->SetElements({std::move(b)});
 
   return result;
 }
 
 template <class Element>
 DecryptResult LPAlgorithmMultipartyCKKS<Element>::MultipartyDecryptFusion(
-  const vector<Ciphertext<Element>>& ciphertextVec, NativePoly* plaintext) const {
+    const vector<Ciphertext<Element>>& ciphertextVec, NativePoly* plaintext) const {
   const auto cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertextVec[0]->GetCryptoParameters());
+      std::static_pointer_cast<LPCryptoParametersCKKS<Element>>(ciphertextVec[0]->GetCryptoParameters());
 
   const std::vector<Element>& cv0 = ciphertextVec[0]->GetElements();
-  Element b                       = cv0[0];
+  Element b = cv0[0];
 
   size_t numCipher = ciphertextVec.size();
   for (size_t i = 1; i < numCipher; i++) {
@@ -1114,10 +1116,10 @@ LPEvalKey<Element> LPAlgorithmMultipartyCKKS<Element>::MultiKeySwitchGen(const L
                                                                          const LPPrivateKey<Element> newPrivateKey,
                                                                          const LPEvalKey<Element> ek) const {
   const shared_ptr<LPCryptoParametersCKKS<Element>> cryptoParamsLWE =
-    std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(ek->GetCryptoParameters());
+      std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(ek->GetCryptoParameters());
 
   const shared_ptr<LPCryptoParametersRLWE<Element>> cryptoParams =
-    std::dynamic_pointer_cast<LPCryptoParametersRLWE<Element>>(originalPrivateKey->GetCryptoParameters());
+      std::dynamic_pointer_cast<LPCryptoParametersRLWE<Element>>(originalPrivateKey->GetCryptoParameters());
 
   const shared_ptr<ParmType> originalKeyParams = cryptoParams->GetElementParams();
 
@@ -1162,10 +1164,10 @@ LPEvalKey<Element> LPAlgorithmMultipartyCKKS<Element>::MultiKeySwitchGen(const L
 
 template <class Element>
 shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmMultipartyCKKS<Element>::MultiEvalAutomorphismKeyGen(
-  const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-  const std::vector<usint>& indexList) const {
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+    const std::vector<usint>& indexList) const {
   const shared_ptr<LPCryptoParametersCKKS<Element>> cryptoParamsLWE =
-    std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
+      std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
 
   const Element& privateKeyElement = privateKey->GetPrivateElement();
 
@@ -1177,8 +1179,7 @@ shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmMultipartyCKKS<Elemen
 
   if (indexList.size() > n - 1) {
     PALISADE_THROW(config_error, "size exceeds the ring dimension");
-  }
-  else {
+  } else {
     for (usint i = 0; i < indexList.size(); i++) {
       usint index = NativeInteger(indexList[i]).ModInverse(2 * n).ConvertToInt();
       std::vector<usint> map(n);
@@ -1196,25 +1197,25 @@ shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmMultipartyCKKS<Elemen
 
 template <class Element>
 shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmMultipartyCKKS<Element>::MultiEvalSumKeyGen(
-  const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const {
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const {
   const shared_ptr<LPCryptoParametersCKKS<Element>> cryptoParamsLWE =
-    std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
+      std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(privateKey->GetCryptoParameters());
 
   const shared_ptr<LPCryptoParameters<Element>> cryptoParams = privateKey->GetCryptoParameters();
-  const EncodingParams encodingParams                        = cryptoParams->GetEncodingParams();
-  const shared_ptr<typename Element::Params> elementParams   = cryptoParams->GetElementParams();
+  const EncodingParams encodingParams = cryptoParams->GetEncodingParams();
+  const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
 
   size_t max = ceil(log2(encodingParams->GetBatchSize()));
   std::vector<usint> indices(max);
   usint m = elementParams->GetCyclotomicOrder();
 
   // generator
-  int32_t g    = 5;
+  int32_t g = 5;
   usint gFinal = g;
 
   for (size_t j = 0; j < max; j++) {
     indices[j] = gFinal;
-    g          = (g * g) % m;
+    g = (g * g) % m;
 
     gFinal = g;
   }
@@ -1226,11 +1227,11 @@ template <class Element>
 LPEvalKey<Element> LPAlgorithmMultipartyCKKS<Element>::MultiMultEvalKey(LPEvalKey<Element> evalKey,
                                                                         LPPrivateKey<Element> sk) const {
   const shared_ptr<LPCryptoParametersCKKS<Element>> cryptoParamsLWE =
-    std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(evalKey->GetCryptoParameters());
+      std::dynamic_pointer_cast<LPCryptoParametersCKKS<Element>>(evalKey->GetCryptoParameters());
 
   const shared_ptr<LPCryptoParametersRLWE<Element>> cryptoParams =
-    std::static_pointer_cast<LPCryptoParametersRLWE<Element>>(evalKey->GetCryptoContext()->GetCryptoParameters());
-  const typename Element::DggType& dgg                     = cryptoParams->GetDiscreteGaussianGenerator();
+      std::static_pointer_cast<LPCryptoParametersRLWE<Element>>(evalKey->GetCryptoContext()->GetCryptoParameters());
+  const typename Element::DggType& dgg = cryptoParams->GetDiscreteGaussianGenerator();
   const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
 
   LPEvalKey<Element> evalKeyResult(new LPEvalKeyRelinImpl<Element>(evalKey->GetCryptoContext()));
@@ -1263,14 +1264,14 @@ LPEvalKey<Element> LPAlgorithmMultipartyCKKS<Element>::MultiMultEvalKey(LPEvalKe
 
 template <class Element>
 shared_ptr<vector<Element>> LPAlgorithmSHECKKS<Element>::EvalFastRotationPrecomputeBV(
-  ConstCiphertext<Element> ciphertext) const {
+    ConstCiphertext<Element> ciphertext) const {
   std::string errMsg = "CKKS EvalFastRotationPrecomputeBV supports only DCRTPoly.";
   PALISADE_THROW(not_implemented_error, errMsg);
 }
 
 template <class Element>
 shared_ptr<vector<Element>> LPAlgorithmSHECKKS<Element>::EvalFastRotationPrecomputeGHS(
-  ConstCiphertext<Element> ciphertext) const {
+    ConstCiphertext<Element> ciphertext) const {
   std::string errMsg = "CKKS EvalFastRotationPrecomputeGHS supports only DCRTPoly.";
   PALISADE_THROW(not_implemented_error, errMsg);
 }
@@ -1286,8 +1287,8 @@ Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalFastRotationBV(ConstCiphert
 
 template <class Element>
 Ciphertext<Element> LPAlgorithmSHECKKS<Element>::EvalFastRotationGHS(
-  ConstCiphertext<Element> ciphertext, const usint index, const usint m,
-  const shared_ptr<vector<Element>> expandedCiphertext, LPEvalKey<DCRTPoly> evalKey) const {
+    ConstCiphertext<Element> ciphertext, const usint index, const usint m,
+    const shared_ptr<vector<Element>> expandedCiphertext, LPEvalKey<DCRTPoly> evalKey) const {
   std::string errMsg = "CKKS EvalFastRotationGHS supports only DCRTPoly.";
   PALISADE_THROW(not_available_error, errMsg);
 }
@@ -1303,12 +1304,14 @@ void LPPublicKeyEncryptionSchemeCKKS<Element>::Enable(PKESchemeFeature feature) 
     case PRE:
       if (this->m_algorithmEncryption == nullptr)
         this->m_algorithmEncryption = std::make_shared<LPAlgorithmCKKS<Element>>();
-      if (this->m_algorithmPRE == nullptr) this->m_algorithmPRE = std::make_shared<LPAlgorithmPRECKKS<Element>>();
+      if (this->m_algorithmPRE == nullptr)
+        this->m_algorithmPRE = std::make_shared<LPAlgorithmPRECKKS<Element>>();
       break;
     case SHE:
       if (this->m_algorithmEncryption == nullptr)
         this->m_algorithmEncryption = std::make_shared<LPAlgorithmCKKS<Element>>();
-      if (this->m_algorithmSHE == nullptr) this->m_algorithmSHE = std::make_shared<LPAlgorithmSHECKKS<Element>>();
+      if (this->m_algorithmSHE == nullptr)
+        this->m_algorithmSHE = std::make_shared<LPAlgorithmSHECKKS<Element>>();
       break;
     case LEVELEDSHE:
       if (this->m_algorithmEncryption == nullptr)

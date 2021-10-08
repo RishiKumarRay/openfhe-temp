@@ -44,8 +44,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestBinInt : public ::testing::Test
-{
+class UnitTestBinInt : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 
@@ -59,14 +58,12 @@ class UnitTestBinInt : public ::testing::Test
 /*  TESTING METHODS OF Allocator CLASS    */
 /************************************************/
 
-class MyClass
-{
+class MyClass {
   XALLOCATOR
   // remaining class definition
 };
 
-class MyClassStatic
-{
+class MyClassStatic {
  public:
   MyClassStatic() {
     memory = xmalloc(100);
@@ -111,7 +108,7 @@ void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc);
 void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
   TimeVar t1, t_total;
 
-  float ElapsedMicroseconds, TotalElapsedMicroseconds = { 0 };
+  float ElapsedMicroseconds, TotalElapsedMicroseconds = {0};
 
   // Allocate MAX_ALLOCATIONS blocks MAX_BLOCK_SIZE / 2 sized blocks
   TIC(t_total);

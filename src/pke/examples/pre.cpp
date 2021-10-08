@@ -62,22 +62,19 @@ int main(int argc, char* argv[]) {
   ////////////////////////////////////////////////////////////
   // Set-up of parameters
   ////////////////////////////////////////////////////////////
-  string input    = "";
+  string input = "";
   string progname = *argv;
   while (argc-- > 1) {
     string arg(*++argv);
     if (arg == "-help" || arg == "-?") {
       usage();
       return 0;
-    }
-    else if (arg == "-i") {
+    } else if (arg == "-i") {
       interactive = true;
-    }
-    else if (arg[0] == '-') {
+    } else if (arg[0] == '-') {
       usage();
       return (0);
-    }
-    else {
+    } else {
       input = arg;
     }
   }
@@ -120,8 +117,7 @@ int main(int argc, char* argv[]) {
     std::cout << "or enter ALL to run every set." << std::endl;
     input = "";
     std::cin >> input;
-  }
-  else if (input.compare("") == 0) {
+  } else if (input.compare("") == 0) {
     // input can be specified on the command line
     input = "ALL";
   }
@@ -129,7 +125,7 @@ int main(int argc, char* argv[]) {
   if (input.compare("ALL") != 0) {  // run a particular parameter set
     // validate input
     bool valid = false;
-    for (string param: tokens) {
+    for (string param : tokens) {
       if (input.compare(param) == 0) {
         valid = true;
         break;
@@ -147,10 +143,9 @@ int main(int argc, char* argv[]) {
     if (rc) {  // there could be an error
       exit(1);
     }
-  }
-  else {  // run ALL parameter sets
+  } else {  // run ALL parameter sets
     // tokens contain the array of parameter name strings
-    for (string param: tokens) {
+    for (string param : tokens) {
       std::cout << "Running using parameter set: " << param << std::endl;
       int rc = run_demo_pre(param);
 
@@ -175,7 +170,7 @@ int run_demo_pre(string input) {
   }
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
 
   cout << "\nParam generation time: "
        << "\t" << diff << " ms" << endl;
@@ -207,7 +202,7 @@ int run_demo_pre(string input) {
   keyPair1 = cryptoContext->KeyGen();
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -220,8 +215,8 @@ int run_demo_pre(string input) {
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts = { 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1 };
-  Plaintext plaintext               = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts);
+  std::vector<int64_t> vectorOfInts = {1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1};
+  Plaintext plaintext = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts);
 
   ////////////////////////////////////////////////////////////
   // Encryption
@@ -232,7 +227,7 @@ int run_demo_pre(string input) {
   auto ciphertext1 = cryptoContext->Encrypt(keyPair1.publicKey, plaintext);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Encryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -247,7 +242,7 @@ int run_demo_pre(string input) {
   cryptoContext->Decrypt(keyPair1.secretKey, ciphertext1, &plaintextDec1);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Decryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -277,7 +272,7 @@ int run_demo_pre(string input) {
   keyPair2 = cryptoContext->KeyGen();
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -301,7 +296,7 @@ int run_demo_pre(string input) {
   reencryptionKey12 = cryptoContext->ReKeyGen(keyPair2.publicKey, keyPair1.secretKey);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -314,7 +309,7 @@ int run_demo_pre(string input) {
   auto ciphertext2 = cryptoContext->ReEncrypt(reencryptionKey12, ciphertext1);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Re-Encryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -329,7 +324,7 @@ int run_demo_pre(string input) {
   cryptoContext->Decrypt(keyPair2.secretKey, ciphertext2, &plaintextDec2);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Decryption time: "
        << "\t" << diff << " ms" << endl;
 

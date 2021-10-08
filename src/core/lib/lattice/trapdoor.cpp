@@ -39,7 +39,7 @@ Matrix<Element> RLWETrapdoorUtility<Element>::GaussSampOnline(size_t n, size_t k
                                                               DggType& dgg, const shared_ptr<Matrix<Element>> pHat,
                                                               int64_t base) {
   const shared_ptr<ParmType> params = u.GetParams();
-  auto zero_alloc                   = Element::Allocator(params, Format::EVALUATION);
+  auto zero_alloc = Element::Allocator(params, Format::EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -82,7 +82,7 @@ shared_ptr<Matrix<Element>> RLWETrapdoorUtility<Element>::GaussSampOffline(size_
                                                                            DggType& dgg, DggType& dggLargeSigma,
                                                                            int64_t base) {
   const shared_ptr<ParmType> params = T.m_e(0, 0).GetParams();
-  auto zero_alloc                   = Element::Allocator(params, Format::EVALUATION);
+  auto zero_alloc = Element::Allocator(params, Format::EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -170,8 +170,7 @@ inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(size_t n, double s, dou
     for (size_t i = 0; i < n * k; i++) {
       p2ZVector(i, 0) = dgg.GenerateIntegerKarney(0, sigmaLarge);
     }
-  }
-  else {
+  } else {
     // Peikert's inversion sampling method
     std::shared_ptr<int64_t> dggVector = dggLargeSigma.GenerateIntVector(n * k);
 

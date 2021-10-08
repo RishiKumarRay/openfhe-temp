@@ -35,8 +35,7 @@
 
 namespace lbcrypto {
 
-class PlaintextFactory
-{
+class PlaintextFactory {
   PlaintextFactory() {}  // never construct one!
 
  public:

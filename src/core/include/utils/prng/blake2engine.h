@@ -41,8 +41,7 @@ const uint32_t PRNG_BUFFER_SIZE = 1024;
  * @brief Defines the PRNG engine used by PALISADE. It is based on BLAKE2. Use
  * this as a template for adding other PRNG engines to PALISADE.
  */
-class Blake2Engine
-{
+class Blake2Engine {
  public:
   // all C++11 distributions used in PALISADE work by default with uint32_t
   // a different data type can be specified if needed for a particular
@@ -59,15 +58,15 @@ class Blake2Engine
   /**
    * @brief Main constructor taking a vector of 16 integers as a seed
    */
-  explicit Blake2Engine(const std::array<result_type, 16>& seed) :
-      m_counter(0), m_seed(seed), m_buffer({}), m_bufferIndex(0) {}
+  explicit Blake2Engine(const std::array<result_type, 16>& seed)
+      : m_counter(0), m_seed(seed), m_buffer({}), m_bufferIndex(0) {}
 
   /**
    * @brief Main constructor taking a vector of 16 integers as a seed and a
    * counter
    */
-  explicit Blake2Engine(const std::array<result_type, 16>& seed, result_type counter) :
-      m_counter(counter), m_seed(seed), m_buffer({}), m_bufferIndex(0) {}
+  explicit Blake2Engine(const std::array<result_type, 16>& seed, result_type counter)
+      : m_counter(counter), m_seed(seed), m_buffer({}), m_bufferIndex(0) {}
 
   /**
    * @brief minimum value used by C+11 distribution generators when no lower
@@ -91,12 +90,14 @@ class Blake2Engine
   result_type operator()() {
     result_type result;
 
-    if (m_bufferIndex == PRNG_BUFFER_SIZE) m_bufferIndex = 0;
+    if (m_bufferIndex == PRNG_BUFFER_SIZE)
+      m_bufferIndex = 0;
 
     // makes a call to the BLAKE2 generator only when the currently buffered
     // values are all consumed precomputations are done only once for the
     // current buffer
-    if (m_bufferIndex == 0) Generate();
+    if (m_bufferIndex == 0)
+      Generate();
 
     result = m_buffer[m_bufferIndex];
 
@@ -106,16 +107,16 @@ class Blake2Engine
   }
 
   Blake2Engine(const Blake2Engine& other) {
-    m_counter     = other.m_counter;
-    m_seed        = other.m_seed;
-    m_buffer      = other.m_buffer;
+    m_counter = other.m_counter;
+    m_seed = other.m_seed;
+    m_buffer = other.m_buffer;
     m_bufferIndex = other.m_bufferIndex;
   }
 
   void operator=(const Blake2Engine& other) {
-    m_counter     = other.m_counter;
-    m_seed        = other.m_seed;
-    m_buffer      = other.m_buffer;
+    m_counter = other.m_counter;
+    m_seed = other.m_seed;
+    m_buffer = other.m_buffer;
     m_bufferIndex = other.m_bufferIndex;
   }
 
@@ -126,12 +127,8 @@ class Blake2Engine
   void Generate() {
     // m_counter is the input to the hash function
     // m_buffer is the output
-    if (blake2xb(m_buffer.begin(),
-                 m_buffer.size() * sizeof(result_type),
-                 &m_counter,
-                 sizeof(m_counter),
-                 m_seed.cbegin(),
-                 m_seed.size() * sizeof(result_type)) != 0) {
+    if (blake2xb(m_buffer.begin(), m_buffer.size() * sizeof(result_type), &m_counter, sizeof(m_counter),
+                 m_seed.cbegin(), m_seed.size() * sizeof(result_type)) != 0) {
       PALISADE_THROW(math_error, "PRNG: blake2xb failed");
     }
     m_counter++;

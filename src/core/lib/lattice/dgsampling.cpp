@@ -44,7 +44,7 @@ void LatticeGaussSampUtility<Element>::GaussSampGq(const Element& syndrome, doub
   typename Element::PolyLargeType u = syndrome.CRTInterpolate();
 
   const typename Poly::Integer& modulus = u.GetParams()->GetModulus();
-  double sigma                          = stddev / (base + 1);
+  double sigma = stddev / (base + 1);
 
   std::vector<int64_t> m_digits = *(GetDigits(modulus, base, k));
 
@@ -120,7 +120,7 @@ void LatticeGaussSampUtility<Element>::GaussSampGqArbBase(const Element& syndrom
   typename Element::PolyLargeType u = syndrome.CRTInterpolate();
 
   const typename Poly::Integer& modulus = u.GetParams()->GetModulus();
-  double sigma                          = stddev / (base + 1);
+  double sigma = stddev / (base + 1);
 
   std::vector<int64_t> m_digits = *(GetDigits(modulus, base, k));
 
@@ -196,7 +196,7 @@ void LatticeGaussSampUtility<Element>::Perturb(double sigma, size_t k, size_t n,
 
   for (size_t i = 0; i < k; i++) {
     z[i] = dgg.GenerateIntegerKarney(d / l[i], sigma / l[i]);
-    d    = -z[i] * h[i];
+    d = -z[i] * h[i];
   }
 
   (*p)[0] = (2 * base + 1) * z[0] + base * z[1];
@@ -238,7 +238,7 @@ template <class Element>
 void LatticeGaussSampUtility<Element>::SampleC(const Matrix<double>& c, size_t k, size_t n, double sigma,
                                                typename Element::DggType& dgg, Matrix<double>* a, vector<int64_t>* z) {
   (*z)[k - 1] = dgg.GenerateIntegerKarney(-(*a)(k - 1, 0) / c(k - 1, 0), sigma / c(k - 1, 0));
-  *a          = *a - (static_cast<double>((*z)[k - 1])) * c;
+  *a = *a - (static_cast<double>((*z)[k - 1])) * c;
 
   for (size_t i = 0; i < k - 1; i++) {
     (*z)[i] = dgg.GenerateIntegerKarney(-(*a)(i, 0), sigma);
@@ -316,15 +316,14 @@ void LatticeGaussSampUtility<Element>::SampleMat(const Matrix<Field2n>& A, const
     Field2n dEval = D(0, 0);
     dEval.SetFormat(Format::COEFFICIENT);
     c1(0, 0) = C(d - 1, 0);
-    c0       = C.ExtractRows(0, d - 2);
+    c0 = C.ExtractRows(0, d - 2);
 
     q1 = ZSampleF(dEval, c1(0, 0), dgg, dEval.Size());
 
     Dinverse(0, 0) = D(0, 0).Inverse();
 
     qF1(0, 0) = Field2n(*q1);
-  }
-  else if (dimD == 2) {  // dimD == 2
+  } else if (dimD == 2) {  // dimD == 2
     c1 = C.ExtractRows(dimA, d - 1);
     c0 = C.ExtractRows(0, dimA - 1);
 
@@ -333,15 +332,14 @@ void LatticeGaussSampUtility<Element>::SampleMat(const Matrix<Field2n>& A, const
     for (size_t i = 0; i < dimD; i++)
       qF1(i, 0) = Field2n(q1->ExtractRows(i * n, i * n + n - 1));
 
-    Field2n det        = D(0, 0) * D(1, 1) - D(0, 1) * D(1, 0);
+    Field2n det = D(0, 0) * D(1, 1) - D(0, 1) * D(1, 0);
     Field2n detInverse = det.Inverse();
 
     Dinverse(0, 0) = D(1, 1) * detInverse;
     Dinverse(0, 1) = -D(0, 1) * detInverse;
     Dinverse(1, 0) = -D(1, 0) * detInverse;
     Dinverse(1, 1) = D(0, 0) * detInverse;
-  }
-  else {  // dimD > 2
+  } else {  // dimD > 2
     c1 = C.ExtractRows(dimA, d - 1);
     c0 = C.ExtractRows(0, dimA - 1);
 
@@ -424,7 +422,7 @@ template <class Element>
 shared_ptr<Matrix<int64_t>> LatticeGaussSampUtility<Element>::ZSampleF(const Field2n& f, const Field2n& c,
                                                                        const typename Element::DggType& dgg, size_t n) {
   if (f.Size() == 1) {
-    auto p     = std::make_shared<Matrix<int64_t>>([]() { return 0; }, 1, 1);
+    auto p = std::make_shared<Matrix<int64_t>>([]() { return 0; }, 1, 1);
     (*p)(0, 0) = dgg.GenerateIntegerKarney(c[0].real(), sqrt(f[0].real()));
     return p;
   }
@@ -455,14 +453,13 @@ shared_ptr<Matrix<int64_t>> LatticeGaussSampUtility<Element>::ZSampleF(const Fie
 template <class Element>
 Matrix<int32_t> LatticeGaussSampUtility<Element>::Permute(Matrix<int32_t>* p) {
   int evenPtr = 0;
-  int oddPtr  = p->GetRows() / 2;
+  int oddPtr = p->GetRows() / 2;
   Matrix<int32_t> permuted([]() { return 0; }, p->GetRows(), 1);
   for (usint i = 0; i < p->GetRows(); i++) {
     if (i % 2 == 0) {
       permuted(evenPtr, 0) = (*p)(i, 0);
       evenPtr++;
-    }
-    else {
+    } else {
       permuted(oddPtr, 0) = (*p)(i, 0);
       oddPtr++;
     }
@@ -481,9 +478,9 @@ void LatticeGaussSampUtility<Element>::InversePermute(shared_ptr<Matrix<int64_t>
   std::vector<int64_t> vectorPermuted(p->GetRows());
 
   size_t evenPtr = 0;
-  size_t oddPtr  = vectorPermuted.size() / 2;
+  size_t oddPtr = vectorPermuted.size() / 2;
   for (size_t i = 0; evenPtr < vectorPermuted.size() / 2; i += 2) {
-    vectorPermuted[i]     = (*p)(evenPtr, 0);
+    vectorPermuted[i] = (*p)(evenPtr, 0);
     vectorPermuted[i + 1] = (*p)(oddPtr, 0);
     evenPtr++;
     oddPtr++;

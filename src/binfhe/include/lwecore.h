@@ -39,8 +39,7 @@ typedef int64_t LWEPlaintext;
 /**
  * @brief Class that stores all parameters for the LWE scheme
  */
-class LWECryptoParams : public Serializable
-{
+class LWECryptoParams : public Serializable {
  public:
   LWECryptoParams() : m_n(0), m_N(0), m_q(0), m_Q(0), m_baseKS(0) {}
 
@@ -55,8 +54,8 @@ class LWECryptoParams : public Serializable
    * @param baseKS the base used for key switching
    */
   explicit LWECryptoParams(uint32_t n, uint32_t N, const NativeInteger& q, const NativeInteger& Q, double std,
-                           uint32_t baseKS) :
-      m_n(n), m_N(N), m_q(q), m_Q(Q), m_baseKS(baseKS) {
+                           uint32_t baseKS)
+      : m_n(n), m_N(N), m_q(q), m_Q(Q), m_baseKS(baseKS) {
     m_dgg.SetStd(std);
 
     if (Q.GetMSB() > MAX_MODULUS_SIZE) {
@@ -82,42 +81,42 @@ class LWECryptoParams : public Serializable
   }
 
   explicit LWECryptoParams(const LWECryptoParams& rhs) {
-    this->m_n        = rhs.m_n;
-    this->m_N        = rhs.m_N;
-    this->m_q        = rhs.m_q;
-    this->m_Q        = rhs.m_Q;
-    this->m_baseKS   = rhs.m_baseKS;
+    this->m_n = rhs.m_n;
+    this->m_N = rhs.m_N;
+    this->m_q = rhs.m_q;
+    this->m_Q = rhs.m_Q;
+    this->m_baseKS = rhs.m_baseKS;
     this->m_digitsKS = rhs.m_digitsKS;
     this->m_dgg.SetStd(rhs.m_dgg.GetStd());
   }
 
   explicit LWECryptoParams(const LWECryptoParams&& rhs) {
-    this->m_n        = std::move(rhs.m_n);
-    this->m_N        = std::move(rhs.m_N);
-    this->m_q        = std::move(rhs.m_q);
-    this->m_Q        = std::move(rhs.m_Q);
-    this->m_baseKS   = std::move(rhs.m_baseKS);
+    this->m_n = std::move(rhs.m_n);
+    this->m_N = std::move(rhs.m_N);
+    this->m_q = std::move(rhs.m_q);
+    this->m_Q = std::move(rhs.m_Q);
+    this->m_baseKS = std::move(rhs.m_baseKS);
     this->m_digitsKS = std::move(rhs.m_digitsKS);
     this->m_dgg.SetStd(rhs.m_dgg.GetStd());
   }
 
   const LWECryptoParams& operator=(const LWECryptoParams& rhs) {
-    this->m_n        = rhs.m_n;
-    this->m_N        = rhs.m_N;
-    this->m_q        = rhs.m_q;
-    this->m_Q        = rhs.m_Q;
-    this->m_baseKS   = rhs.m_baseKS;
+    this->m_n = rhs.m_n;
+    this->m_N = rhs.m_N;
+    this->m_q = rhs.m_q;
+    this->m_Q = rhs.m_Q;
+    this->m_baseKS = rhs.m_baseKS;
     this->m_digitsKS = rhs.m_digitsKS;
     this->m_dgg.SetStd(rhs.m_dgg.GetStd());
     return *this;
   }
 
   const LWECryptoParams& operator=(const LWECryptoParams&& rhs) {
-    this->m_n        = std::move(rhs.m_n);
-    this->m_N        = std::move(rhs.m_N);
-    this->m_q        = std::move(rhs.m_q);
-    this->m_Q        = std::move(rhs.m_Q);
-    this->m_baseKS   = std::move(rhs.m_baseKS);
+    this->m_n = std::move(rhs.m_n);
+    this->m_N = std::move(rhs.m_N);
+    this->m_q = std::move(rhs.m_q);
+    this->m_Q = std::move(rhs.m_Q);
+    this->m_baseKS = std::move(rhs.m_baseKS);
     this->m_digitsKS = std::move(rhs.m_digitsKS);
     this->m_dgg.SetStd(rhs.m_dgg.GetStd());
     return *this;
@@ -173,9 +172,8 @@ class LWECryptoParams : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
 
     ar(::cereal::make_nvp("n", m_n));
@@ -218,8 +216,7 @@ class LWECryptoParams : public Serializable
  * @brief Class that stores a LWE scheme ciphertext; composed of a vector "a"
  * and integer "b"
  */
-class LWECiphertextImpl : public Serializable
-{
+class LWECiphertextImpl : public Serializable {
  public:
   LWECiphertextImpl() {}
 
@@ -288,9 +285,8 @@ class LWECiphertextImpl : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
 
     ar(::cereal::make_nvp("a", m_a));
@@ -312,8 +308,7 @@ class LWECiphertextImpl : public Serializable
 /**
  * @brief Class that stores the LWE scheme secret key; contains a vector
  */
-class LWEPrivateKeyImpl : public Serializable
-{
+class LWEPrivateKeyImpl : public Serializable {
  public:
   LWEPrivateKeyImpl() {}
 
@@ -361,9 +356,8 @@ class LWEPrivateKeyImpl : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
 
     ar(::cereal::make_nvp("s", m_s));
@@ -383,8 +377,7 @@ class LWEPrivateKeyImpl : public Serializable
 /**
  * @brief Class that stores the LWE scheme switching key
  */
-class LWESwitchingKey : public Serializable
-{
+class LWESwitchingKey : public Serializable {
  public:
   LWESwitchingKey() {}
 
@@ -432,9 +425,8 @@ class LWESwitchingKey : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
 
     ar(::cereal::make_nvp("k", m_key));

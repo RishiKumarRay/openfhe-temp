@@ -215,8 +215,7 @@ const double LOG2_10 = 3.32192809;  //!< @brief A pre-computed constant of Log b
  * @tparam BITLENGTH maximum bitwidth supported for big integers
  */
 template <typename uint_type, usint BITLENGTH>
-class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BITLENGTH>>
-{
+class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BITLENGTH>> {
  public:
   // CONSTRUCTORS
 
@@ -831,16 +830,15 @@ class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BI
     T result = 0;
     // set num to number of equisized chunks
     // usint num = bigintnat::NativeIntegerT<T>::MaxBits() / m_uintBitLength;
-    usint num     = bigintnat::NativeIntegerT<T>().MaxBits() / m_uintBitLength;
+    usint num = bigintnat::NativeIntegerT<T>().MaxBits() / m_uintBitLength;
     usint ceilInt = m_nSize - ceilIntByUInt(m_MSB);
     // copy the values by shift and add
     for (usint i = 0; i < num && (m_nSize - i - 1) >= ceilInt; i++) {
       result += ((T)this->m_value[m_nSize - i - 1] << (m_uintBitLength * i));
     }
     if (this->m_MSB > bigintnat::NativeIntegerT<T>::MaxBits()) {
-      PALISADE_THROW(
-        lbcrypto::math_error,
-        std::string("MSB cannot be bigger than ") + std::to_string(bigintnat::NativeIntegerT<T>::MaxBits()));
+      PALISADE_THROW(lbcrypto::math_error, std::string("MSB cannot be bigger than ") +
+                                               std::to_string(bigintnat::NativeIntegerT<T>::MaxBits()));
     }
     return result;
   }
@@ -953,7 +951,8 @@ class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BI
 
     for (size_t i = m_nSize - 1; i >= (size_t)(m_nSize - ceilInt); i--) {
       ret += std::to_string(m_value[i]);
-      if (i != (size_t)(m_nSize - ceilInt)) ret += " ";
+      if (i != (size_t)(m_nSize - ceilInt))
+        ret += " ";
     }
     return ret;
   }
@@ -1003,25 +1002,24 @@ class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BI
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     ar(::cereal::binary_data(m_value, sizeof(m_value)));
     ar(::cereal::binary_data(&m_MSB, sizeof(m_MSB)));
   }
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", m_value));
     ar(::cereal::make_nvp("m", m_MSB));
   }
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     ar(::cereal::binary_data(m_value, sizeof(m_value)));
     ar(::cereal::binary_data(&m_MSB, sizeof(m_MSB)));
@@ -1029,11 +1027,10 @@ class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BI
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_value));
     ar(::cereal::make_nvp("m", m_MSB));

@@ -100,7 +100,7 @@ void method_miller_rabin_primality(const string& msg) {
     T isNotPrime("10403");
 
     EXPECT_FALSE(lbcrypto::MillerRabinPrimalityTest(isNotPrime))
-      << msg << " Failure is_not_prime_small_composite_number";
+        << msg << " Failure is_not_prime_small_composite_number";
   }
   {
     // TEST CASE FOR MILLER RABIN PRIMALITY TEST FOR BIG COMPOSITE NUMBER
@@ -119,7 +119,8 @@ TEST(UTNbTheory, method_miller_rabin_primality) {
 
 template <typename Element>
 ::testing::AssertionResult isMemberOf(Element val, const vector<Element>& values) {
-  if (std::find(values.begin(), values.end(), val) != values.end()) return ::testing::AssertionSuccess();
+  if (std::find(values.begin(), values.end(), val) != values.end())
+    return ::testing::AssertionSuccess();
   return ::testing::AssertionFailure();
 }
 
@@ -127,7 +128,7 @@ template <typename T>
 void method_factorize_returns_factors(const string& msg) {
   T comp("53093040");
   std::set<T> factors;
-  vector<T> answers({ 2, 3, 5, 7, 11, 13, 15, 17 });
+  vector<T> answers({2, 3, 5, 7, 11, 13, 15, 17});
 
   lbcrypto::PrimeFactorize(comp, factors);
 
@@ -137,16 +138,16 @@ void method_factorize_returns_factors(const string& msg) {
 }
 
 // NOLINTNEXTLINE
-TEST(UTNbTheory, method_factorize_returns_factors){ RUN_ALL_BACKENDS_INT(method_factorize_returns_factors,
-                                                                         "method_factorize_returns_factors") }
+TEST(UTNbTheory, method_factorize_returns_factors){
+    RUN_ALL_BACKENDS_INT(method_factorize_returns_factors, "method_factorize_returns_factors")}
 
 TEST(UTNbTheory, first_prime_overflow) {
   // Failure case check
-  usint m     = 512;
+  usint m = 512;
   usint nBits = NATIVEINT;
 
   EXPECT_THROW(FirstPrime<NativeInteger>(nBits, m), math_error)
-    << "did not detect overflow and throw exception for Native";
+      << "did not detect overflow and throw exception for Native";
 
   nBits = BigIntegerBitLength + 10;
 
@@ -158,7 +159,7 @@ void method_prime_modulus(const string& msg) {
   usint m, nBits;
   {
     // TEST CASE TO FIND PRIME MODULUS
-    m     = 2048;
+    m = 2048;
     nBits = 30;
 
     T expectedResult("1073750017");
@@ -167,7 +168,7 @@ void method_prime_modulus(const string& msg) {
   }
   {
     // TEST CASE TO FIND PRIME MODULUS FOR A HIGHER BIT LENGTH
-    m     = 4096;
+    m = 4096;
     nBits = 49;
 
     T primeModulus = lbcrypto::FirstPrime<T>(nBits, m);
@@ -185,10 +186,10 @@ void method_primitive_root_of_unity_VERY_LONG(const string& msg) {
   {
     // TEST CASE TO ENSURE THE ROOT OF UNITY THAT IS FOUND IS A PRIMITIVE ROOT
     // OF UNTIY
-    usint m     = 4096;
+    usint m = 4096;
     usint nBits = 33;
 
-    T primeModulus         = lbcrypto::FirstPrime<T>(nBits, m);
+    T primeModulus = lbcrypto::FirstPrime<T>(nBits, m);
     T primitiveRootOfUnity = lbcrypto::RootOfUnity<T>(m, primeModulus);
 
     T M(std::to_string(m)), MbyTwo(M.DividedBy(2));
@@ -202,9 +203,9 @@ void method_primitive_root_of_unity_VERY_LONG(const string& msg) {
   {
     // TEST CASE TO ENSURE THE ROOTS OF UNITY THAT ARE FOUND ARE
     // CONSISTENTLY THE PRIMITIVE ROOTS OF UNTIY
-    const usint n        = 256;
-    const usint m        = 2 * n;
-    const usint nBits    = 43;
+    const usint n = 256;
+    const usint m = 2 * n;
+    const usint nBits = 43;
     const int ITERATIONS = m * 2;
 
     T M(std::to_string(m)), MbyTwo(M.DividedBy(2)), MbyFour(MbyTwo.DividedBy(2));
@@ -213,7 +214,7 @@ void method_primitive_root_of_unity_VERY_LONG(const string& msg) {
 
     for (int i = 0; i < ITERATIONS; i++) {
       T primitiveRootOfUnity = lbcrypto::RootOfUnity<T>(m, primeModulus);
-      T wpowerm              = primitiveRootOfUnity.ModExp(M, primeModulus);
+      T wpowerm = primitiveRootOfUnity.ModExp(M, primeModulus);
       EXPECT_EQ(wpowerm, T(1)) << msg << " Failure single input iteration " << i << " equal_m";
       T wpowermbytwo = primitiveRootOfUnity.ModExp(MbyTwo, primeModulus);
       EXPECT_NE(wpowermbytwo, T(1)) << msg << " Failure single input  iteration " << i << " not_equal_mbytwo";
@@ -228,48 +229,48 @@ void method_primitive_root_of_unity_VERY_LONG(const string& msg) {
     // ofstream fout;
     // fout.open ("primitiveRootsBug.log");
     usint nqBitsArray[] = {
-      1,
-      1,
-      2,
-      4,
-      8,
-      20,
-      1024,
-      30,
-      2048,
-      31,
-      2048,
-      33,
-      2048,
-      40,
-      2048,
-      41
-      // const usint BIT_LENGTH = 200 and const usint FRAGMENTATION_FACTOR =
-      // 27 ,2048, 51
-      ,
-      4096,
-      32,
-      4096,
-      43
-      // ,4096, 53
-      ,
-      8192,
-      33,
-      8192,
-      44
-      // ,8192, 55
-      ,
-      16384,
-      34,
-      16384,
-      46
-      // ,16384, 57
-      ,
-      32768,
-      35,
-      32768,
-      47
-      // ,32768, 59
+        1,
+        1,
+        2,
+        4,
+        8,
+        20,
+        1024,
+        30,
+        2048,
+        31,
+        2048,
+        33,
+        2048,
+        40,
+        2048,
+        41
+        // const usint BIT_LENGTH = 200 and const usint FRAGMENTATION_FACTOR =
+        // 27 ,2048, 51
+        ,
+        4096,
+        32,
+        4096,
+        43
+        // ,4096, 53
+        ,
+        8192,
+        33,
+        8192,
+        44
+        // ,8192, 55
+        ,
+        16384,
+        34,
+        16384,
+        46
+        // ,16384, 57
+        ,
+        32768,
+        35,
+        32768,
+        47
+        // ,32768, 59
     };
     int length = sizeof(nqBitsArray) / sizeof(nqBitsArray[0]);
     // double diff, start, finish;
@@ -281,9 +282,9 @@ void method_primitive_root_of_unity_VERY_LONG(const string& msg) {
       // fout <<
       // "----------------------------------------------------------------------------------------------------------------------------------"
       // << endl; fout << "i = " << i << endl;
-      n     = nqBitsArray[i];
+      n = nqBitsArray[i];
       qBits = nqBitsArray[i + 1];
-      m     = 2 * n;
+      m = 2 * n;
 
       T M(std::to_string(m)), MbyTwo(M.DividedBy(2)), MbyFour(MbyTwo.DividedBy(2));
 
@@ -344,21 +345,20 @@ void method_primitive_root_of_unity_VERY_LONG(const string& msg) {
     int caught_error = 0;
     try {
       primitiveRootOfUnity1 = lbcrypto::RootOfUnity<T>(m, modulus1);
-    }
-    catch (...) {
+    } catch (...) {
       caught_error = 1;
     }
     EXPECT_EQ(caught_error, 1) << msg << " RootOfUnity did not throw an error and should have";
 
     // the second way is to directly expect the throw.
     EXPECT_ANY_THROW(  // this call should throw
-      primitiveRootOfUnity1 = lbcrypto::RootOfUnity<T>(m, modulus1);)
-      << msg << " RootOfUnity did not throw an error and should have";
+        primitiveRootOfUnity1 = lbcrypto::RootOfUnity<T>(m, modulus1);)
+        << msg << " RootOfUnity did not throw an error and should have";
 
     T primitiveRootOfUnity2;
     EXPECT_NO_THROW(  // this call should NOT throw
-      primitiveRootOfUnity2 = lbcrypto::RootOfUnity<T>(m, modulus2);)
-      << msg << " RootOfUnity threw an error and should not have";
+        primitiveRootOfUnity2 = lbcrypto::RootOfUnity<T>(m, modulus2);)
+        << msg << " RootOfUnity threw an error and should not have";
 
     DEBUG("RootOfUnity for " << modulus1 << " is " << primitiveRootOfUnity1);
     DEBUG("RootOfUnity for " << modulus2 << " is " << primitiveRootOfUnity2);
@@ -371,11 +371,11 @@ TEST(UTNbTheory, method_primitive_root_of_unity_VERY_LONG) {
 
 template <typename T>
 void test_nextQ(const string& msg) {
-  usint m    = 2048;
+  usint m = 2048;
   usint bits = 22;
 
-  vector<T> moduliBBV = { T("4208641"), T("4263937"), T("4270081"), T("4274177"), T("4294657"),
-                          T("4300801"), T("4304897"), T("4319233"), T("4323329"), T("4360193") };
+  vector<T> moduliBBV = {T("4208641"), T("4263937"), T("4270081"), T("4274177"), T("4294657"),
+                         T("4300801"), T("4304897"), T("4319233"), T("4323329"), T("4360193")};
 
   auto q = FirstPrime<T>(bits, m);
   for (usint i = 0; i < 10; i++) {

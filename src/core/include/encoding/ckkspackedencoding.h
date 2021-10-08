@@ -50,41 +50,40 @@ using ModulusM = std::pair<NativeInteger, uint64_t>;
  * computing on vectors of integers. It is NOT supported for DCRTPoly
  */
 
-class CKKSPackedEncoding : public PlaintextImpl
-{
+class CKKSPackedEncoding : public PlaintextImpl {
  public:
   // these two constructors are used inside of Decrypt
   CKKSPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {
-    depth      = 1;
+    depth = 1;
     m_logError = 0.0;
   }
 
   CKKSPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {
-    depth      = 1;
+    depth = 1;
     m_logError = 0.0;
   }
 
   CKKSPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {
-    depth      = 1;
+    depth = 1;
     m_logError = 0.0;
   }
 
   CKKSPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, const std::vector<std::complex<double>>& coeffs,
-                     size_t depth, uint32_t level, double scFact) :
-      PlaintextImpl(vp, ep), value(coeffs) {
-    this->depth         = depth;
-    this->level         = level;
+                     size_t depth, uint32_t level, double scFact)
+      : PlaintextImpl(vp, ep), value(coeffs) {
+    this->depth = depth;
+    this->level = level;
     this->scalingFactor = scFact;
-    m_logError          = 0.0;
+    m_logError = 0.0;
   }
 
   CKKSPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep,
-                     const std::vector<std::complex<double>>& coeffs, size_t depth, uint32_t level, double scFact) :
-      PlaintextImpl(vp, ep), value(coeffs) {
-    this->depth         = depth;
-    this->level         = level;
+                     const std::vector<std::complex<double>>& coeffs, size_t depth, uint32_t level, double scFact)
+      : PlaintextImpl(vp, ep), value(coeffs) {
+    this->depth = depth;
+    this->level = level;
     this->scalingFactor = scFact;
-    m_logError          = 0.0;
+    m_logError = 0.0;
   }
 
   /*
@@ -94,12 +93,12 @@ class CKKSPackedEncoding : public PlaintextImpl
    *
    */
   CKKSPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
-                     const std::vector<std::complex<double>>& coeffs, size_t depth, uint32_t level, double scFact) :
-      PlaintextImpl(vp, ep), value(coeffs) {
-    this->depth         = depth;
-    this->level         = level;
+                     const std::vector<std::complex<double>>& coeffs, size_t depth, uint32_t level, double scFact)
+      : PlaintextImpl(vp, ep), value(coeffs) {
+    this->depth = depth;
+    this->level = level;
     this->scalingFactor = scFact;
-    m_logError          = 0.0;
+    m_logError = 0.0;
   }
 
   /**
@@ -107,9 +106,9 @@ class CKKSPackedEncoding : public PlaintextImpl
    * in the same order.
    * @param rhs - The input object to copy.
    */
-  explicit CKKSPackedEncoding(const std::vector<std::complex<double>>& rhs) :
-      PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(rhs) {
-    depth      = 1;
+  explicit CKKSPackedEncoding(const std::vector<std::complex<double>>& rhs)
+      : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(rhs) {
+    depth = 1;
     m_logError = 0.0;
   }
 
@@ -117,15 +116,15 @@ class CKKSPackedEncoding : public PlaintextImpl
    * @brief Default empty constructor with empty uninitialized data elements.
    */
   CKKSPackedEncoding() : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value() {
-    depth      = 1;
+    depth = 1;
     m_logError = 0.0;
   }
 
-  CKKSPackedEncoding(const CKKSPackedEncoding& rhs) :
-      PlaintextImpl(rhs), value(rhs.value), m_logError(rhs.m_logError) {}
+  CKKSPackedEncoding(const CKKSPackedEncoding& rhs)
+      : PlaintextImpl(rhs), value(rhs.value), m_logError(rhs.m_logError) {}
 
-  CKKSPackedEncoding(const CKKSPackedEncoding&& rhs) :
-      PlaintextImpl(rhs), value(std::move(rhs.value)), m_logError(rhs.m_logError) {}
+  CKKSPackedEncoding(const CKKSPackedEncoding&& rhs)
+      : PlaintextImpl(rhs), value(std::move(rhs.value)), m_logError(rhs.m_logError) {}
 
   bool Encode();
 
@@ -225,7 +224,8 @@ class CKKSPackedEncoding : public PlaintextImpl
     out << "(";
     size_t i = value.size();
     while (--i > 0)
-      if (value[i] != std::complex<double>(0, 0)) break;
+      if (value[i] != std::complex<double>(0, 0))
+        break;
 
     for (size_t j = 0; j <= i; j++) {
       out << value[j].real() << ", ";

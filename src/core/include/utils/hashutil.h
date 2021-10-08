@@ -35,8 +35,7 @@ namespace lbcrypto {
 
 enum HashAlgorithm { SHA_256 = 0, SHA_512 = 1 };
 
-class HashUtil
-{
+class HashUtil {
  public:
   static void Hash(string message, HashAlgorithm algo, vector<int64_t>& digest) {
     switch (algo) {

@@ -41,8 +41,7 @@ namespace bigintfxd {
  * @brief Number Theoretic Transform implementation
  */
 template <typename VecType>
-class NumberTheoreticTransformFxd
-{
+class NumberTheoreticTransformFxd {
   using IntType = typename VecType::Integer;
 
  public:
@@ -216,8 +215,7 @@ class NumberTheoreticTransformFxd
  * @brief Golden Chinese Remainder Transform FFT implementation.
  */
 template <typename VecType>
-class ChineseRemainderTransformFTTFxd : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType>
-{
+class ChineseRemainderTransformFTTFxd : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:
@@ -351,8 +349,7 @@ using ModulusRootPair = std::pair<ModulusRoot<IntType>, ModulusRoot<IntType>>;
  * @brief Bluestein Fast Fourier Transform implementation
  */
 template <typename VecType>
-class BluesteinFFTFxd
-{
+class BluesteinFFTFxd {
   using IntType = typename VecType::Integer;
 
  public:
@@ -452,8 +449,7 @@ class BluesteinFFTFxd
  * @brief Chinese Remainder Transform for arbitrary cyclotomics.
  */
 template <typename VecType>
-class ChineseRemainderTransformArbFxd : public lbcrypto::ChineseRemainderTransformArbInterface<VecType>
-{
+class ChineseRemainderTransformArbFxd : public lbcrypto::ChineseRemainderTransformArbInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:

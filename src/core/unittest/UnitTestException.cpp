@@ -45,9 +45,9 @@ static void parthrow(const string& msg) {
 #pragma omp parallel for
   for (int i = 0; i < 10; i++) {
     try {
-      if (i == 7) regthrow("inside throw");
-    }
-    catch (...) {
+      if (i == 7)
+        regthrow("inside throw");
+    } catch (...) {
       e.CaptureException();
     }
   }
@@ -60,7 +60,8 @@ static void runthrow(const string& msg) {
 #pragma omp parallel for
   for (int i = 0; i < 10; i++) {
     e.Run([=] {
-      if (i == 7) regthrow("inside throw");
+      if (i == 7)
+        regthrow("inside throw");
     });
   }
   e.Rethrow();

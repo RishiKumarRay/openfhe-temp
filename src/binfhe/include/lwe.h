@@ -42,8 +42,7 @@ namespace lbcrypto {
 /**
  * @brief Additive LWE scheme
  */
-class LWEEncryptionScheme
-{
+class LWEEncryptionScheme {
  public:
   LWEEncryptionScheme() {}
 

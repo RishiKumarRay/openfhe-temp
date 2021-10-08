@@ -42,21 +42,20 @@ const double MP_SD = 1048576;
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPCryptoParametersRLWE : public LPCryptoParameters<Element>
-{
+class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
  public:
   /**
    * Default Constructor
    */
   LPCryptoParametersRLWE() : LPCryptoParameters<Element>() {
     m_distributionParameter = 0.0f;
-    m_assuranceMeasure      = 0.0f;
-    m_securityLevel         = 0.0f;
-    m_relinWindow           = 1;
+    m_assuranceMeasure = 0.0f;
+    m_securityLevel = 0.0f;
+    m_relinWindow = 1;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth    = 0;
+    m_depth = 0;
     m_maxDepth = 2;
-    m_mode     = RLWE;
+    m_mode = RLWE;
     m_stdLevel = HEStd_NotSet;
   }
 
@@ -64,16 +63,16 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element>
    * Copy constructor.
    *
    */
-  LPCryptoParametersRLWE(const LPCryptoParametersRLWE& rhs) :
-      LPCryptoParameters<Element>(rhs.GetElementParams(), rhs.GetPlaintextModulus()) {
+  LPCryptoParametersRLWE(const LPCryptoParametersRLWE& rhs)
+      : LPCryptoParameters<Element>(rhs.GetElementParams(), rhs.GetPlaintextModulus()) {
     m_distributionParameter = rhs.m_distributionParameter;
-    m_assuranceMeasure      = rhs.m_assuranceMeasure;
-    m_securityLevel         = rhs.m_securityLevel;
-    m_relinWindow           = rhs.m_relinWindow;
+    m_assuranceMeasure = rhs.m_assuranceMeasure;
+    m_securityLevel = rhs.m_securityLevel;
+    m_relinWindow = rhs.m_relinWindow;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth    = rhs.m_depth;
+    m_depth = rhs.m_depth;
     m_maxDepth = rhs.m_maxDepth;
-    m_mode     = rhs.m_mode;
+    m_mode = rhs.m_mode;
     m_stdLevel = rhs.m_stdLevel;
   }
 
@@ -94,16 +93,16 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element>
    */
   LPCryptoParametersRLWE(shared_ptr<typename Element::Params> params, EncodingParams encodingParams,
                          float distributionParameter, float assuranceMeasure, float securityLevel, usint relinWindow,
-                         int depth = 1, int maxDepth = 2, MODE mode = RLWE) :
-      LPCryptoParameters<Element>(params, encodingParams) {
+                         int depth = 1, int maxDepth = 2, MODE mode = RLWE)
+      : LPCryptoParameters<Element>(params, encodingParams) {
     m_distributionParameter = distributionParameter;
-    m_assuranceMeasure      = assuranceMeasure;
-    m_securityLevel         = securityLevel;
-    m_relinWindow           = relinWindow;
+    m_assuranceMeasure = assuranceMeasure;
+    m_securityLevel = securityLevel;
+    m_relinWindow = relinWindow;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth    = depth;
+    m_depth = depth;
     m_maxDepth = maxDepth;
-    m_mode     = mode;
+    m_mode = mode;
     m_stdLevel = HEStd_NotSet;
   }
 
@@ -125,16 +124,16 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element>
    */
   LPCryptoParametersRLWE(shared_ptr<typename Element::Params> params, EncodingParams encodingParams,
                          float distributionParameter, float assuranceMeasure, SecurityLevel stdLevel, usint relinWindow,
-                         int depth = 1, int maxDepth = 2, MODE mode = RLWE) :
-      LPCryptoParameters<Element>(params, encodingParams) {
+                         int depth = 1, int maxDepth = 2, MODE mode = RLWE)
+      : LPCryptoParameters<Element>(params, encodingParams) {
     m_distributionParameter = distributionParameter;
-    m_assuranceMeasure      = assuranceMeasure;
-    m_securityLevel         = 0;
-    m_relinWindow           = relinWindow;
+    m_assuranceMeasure = assuranceMeasure;
+    m_securityLevel = 0;
+    m_relinWindow = relinWindow;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth    = depth;
+    m_depth = depth;
     m_maxDepth = maxDepth;
-    m_mode     = mode;
+    m_mode = mode;
     m_stdLevel = stdLevel;
   }
 
@@ -304,7 +303,8 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element>
   bool operator==(const LPCryptoParameters<Element>& rhs) const {
     const auto* el = dynamic_cast<const LPCryptoParametersRLWE<Element>*>(&rhs);
 
-    if (el == nullptr) return false;
+    if (el == nullptr)
+      return false;
 
     return this->GetPlaintextModulus() == el->GetPlaintextModulus() &&
            *this->GetElementParams() == *el->GetElementParams() &&

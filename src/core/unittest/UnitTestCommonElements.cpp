@@ -78,13 +78,13 @@ static void common_basic_ops(const string& msg) {
   // GenerateDCRTParams<typename Element::Integer>(8, 3, 20) );
   DEBUGEXP(*ilparams);
   Element ilvector2n1(ilparams);
-  ilvector2n1 = { "1", "2", "0", "1" };
+  ilvector2n1 = {"1", "2", "0", "1"};
   // test for bug where length was 0
   EXPECT_EQ(ilvector2n1.GetLength(), m / 2) << msg << " Failure: ={init list string}";
 
   DEBUGEXP(ilvector2n1);
   Element ilvector2n2(ilparams);
-  ilvector2n2 = { 1, 2, 0, 1 };
+  ilvector2n2 = {1, 2, 0, 1};
   EXPECT_EQ(ilvector2n2.GetLength(), m / 2) << msg << " Failure: ={init list int}";
   DEBUGEXP(ilvector2n2);
 
@@ -107,7 +107,7 @@ static void common_basic_ops(const string& msg) {
     DEBUGEXP(ilvector2n1);
     DEBUGEXP(ilv1);
     Element zero(ilparams);
-    zero = { 0, 0, 0, 0 };
+    zero = {0, 0, 0, 0};
     DEBUGEXP(zero);
     ilv1 -= ilvector2n1;
     DEBUGEXP(ilv1);
@@ -123,7 +123,7 @@ static void common_basic_ops(const string& msg) {
     Element ilv1 = ilvector2n1;
     DEBUGEXP(ilv1);
     Element two(ilparams);
-    two = { 2, 2, 2, 2 };
+    two = {2, 2, 2, 2};
     ilv1 += ilvector2n1;
     EXPECT_EQ(two * ilvector2n1, ilv1) << msg << "Failure: Operator+= ";
   }
@@ -131,7 +131,7 @@ static void common_basic_ops(const string& msg) {
 
 // instantiate ops for various backend combos
 TEST(UTPoly,  // NOLINTNEXTLINE
-     common_basic_ops){ RUN_ALL_POLYS(common_basic_ops, "Poly basic_ops") }
+     common_basic_ops){RUN_ALL_POLYS(common_basic_ops, "Poly basic_ops")}
 
 TEST(UTDCRTPoly, common_basic_ops) {
   RUN_BIG_DCRTPOLYS(common_basic_ops, "DCRT basic_ops")
@@ -141,7 +141,7 @@ TEST(UTDCRTPoly, common_basic_ops) {
 template <typename Element>
 void common_set_format(const string& msg) {
   DEBUG_FLAG(false);
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
 
   usint m = 8;
@@ -157,12 +157,12 @@ void common_set_format(const string& msg) {
 #endif
 
   Element ilvector2n(ilparams, Format::COEFFICIENT);
-  ilvector2n = { "3", "0", "0", "0" };
+  ilvector2n = {"3", "0", "0", "0"};
   DEBUGEXP(ilvector2n);
   // test for bug where length was 0
   EXPECT_EQ(ilvector2n.GetLength(), m / 2) << msg << " Failure: ={init list string}";
   Element ilvector2nInEval(ilparams, Format::EVALUATION);
-  ilvector2nInEval = { "3", "3", "3", "3" };
+  ilvector2nInEval = {"3", "3", "3", "3"};
   DEBUGEXP(ilvector2nInEval);
   {  // test SetFormat()
     Element ilv(ilvector2n);
@@ -189,7 +189,7 @@ TEST(UTDCRTPoly, common_set_format) {
 template <typename Element>
 void common_setters_getters(const string& msg) {
   DEBUG_FLAG(false);
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
 
   usint m = 8;
@@ -201,9 +201,9 @@ void common_setters_getters(const string& msg) {
 
   {  // test getters
     Element ilvector2n(ilparams);
-    ilvector2n = { "1", "2", "0", "1" };
+    ilvector2n = {"1", "2", "0", "1"};
     Element bbv(ilparams);
-    bbv = { "1", "2", "0", "1" };
+    bbv = {"1", "2", "0", "1"};
     DEBUGEXP(ilvector2n);
     DEBUGEXP(bbv);
 
@@ -231,9 +231,9 @@ TEST(UTDCRTPoly, common_setters_getters) {
 template <typename Element>
 void common_binary_ops(const string& msg) {
   DEBUG_FLAG(false);
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Vector::Integer;
+  using IntType = typename Element::Vector::Integer;
 
   usint m = 8;
 
@@ -245,22 +245,22 @@ void common_binary_ops(const string& msg) {
   shared_ptr<ParmType> ilparams = ElemParamFactory::GenElemParams<ParmType>(m, primeModulus, primitiveRootOfUnity);
 
   Element ilvector2n1(ilparams);
-  ilvector2n1 = { "2", "1", "1", "1" };
+  ilvector2n1 = {"2", "1", "1", "1"};
   DEBUGEXP(ilvector2n1);
 
   // test for bug where length was 0
   EXPECT_EQ(ilvector2n1.GetLength(), m / 2) << msg << " Failure: ={init list string}";
 
   Element ilvector2n2(ilparams);
-  ilvector2n2 = { "1", "0", "1", "1" };
+  ilvector2n2 = {"1", "0", "1", "1"};
   DEBUGEXP(ilvector2n2);
 
   Element ilvector2n3(ilparams, Format::COEFFICIENT);
-  ilvector2n3 = { "2", "1", "1", "1" };
+  ilvector2n3 = {"2", "1", "1", "1"};
   DEBUGEXP(ilvector2n3);
 
   Element ilvector2n4(ilparams, Format::COEFFICIENT);
-  ilvector2n4 = { "1", "0", "1", "1" };
+  ilvector2n4 = {"1", "0", "1", "1"};
   DEBUGEXP(ilvector2n4);
 
   {  // test Plus
@@ -269,7 +269,7 @@ void common_binary_ops(const string& msg) {
     Element ilv2 = ilv1.Plus(ilvector2n2);
     DEBUGEXP(ilv2);
     Element expected(ilparams, Format::EVALUATION);
-    expected = { "3", "1", "2", "2" };
+    expected = {"3", "1", "2", "2"};
     EXPECT_EQ(expected, ilv2) << msg << " Failure: Plus()";
   }
   {  // test Minus
@@ -277,7 +277,7 @@ void common_binary_ops(const string& msg) {
     DEBUGEXP(ilv1);
     Element ilv2 = ilv1.Minus(ilvector2n2);
     Element expected(ilparams, Format::EVALUATION);
-    expected = { "1", "1", "0", "0" };
+    expected = {"1", "1", "0", "0"};
     EXPECT_EQ(expected, ilv2) << msg << " Failure: Minus()";
   }
 
@@ -286,7 +286,7 @@ void common_binary_ops(const string& msg) {
     DEBUGEXP(ilv1);
     Element ilv2 = ilv1.Times(ilvector2n2);
     Element expected(ilparams, Format::EVALUATION);
-    expected = { "2", "0", "1", "1" };
+    expected = {"2", "0", "1", "1"};
     EXPECT_EQ(expected, ilv2) << msg << " Failure: Times()";
   }
 
@@ -306,7 +306,7 @@ void common_binary_ops(const string& msg) {
     Element expected(ilparams, Format::COEFFICIENT);
     stringstream tmpstr;
     tmpstr << (ilv4.GetModulus() - IntType(1));
-    expected = { "0", tmpstr.str(), "2", "4" };
+    expected = {"0", tmpstr.str(), "2", "4"};
     EXPECT_EQ(expected, ilv4) << msg << " Failure: Times() using SwitchFormat()";
   }
 }
@@ -323,7 +323,7 @@ TEST(UTDCRTPoly, common_binary_ops) {
 // templet for common_clone_ops
 template <typename Element>
 void common_clone_ops(const string& msg) {
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
 
   usint m = 8;
@@ -333,7 +333,7 @@ void common_clone_ops(const string& msg) {
   auto ilparams = std::make_shared<ParmType>(m, primeModulus, primitiveRootOfUnity);
 
   Element ilv(ilparams);
-  ilv = { "2", "1", "1", "1" };
+  ilv = {"2", "1", "1", "1"};
 
   // test for bug where length was 0
   EXPECT_EQ(ilv.GetLength(), m / 2) << msg << " Failure: ={init list string}";
@@ -342,10 +342,10 @@ void common_clone_ops(const string& msg) {
     Element ilvClone = ilv.CloneParametersOnly();
 
     EXPECT_EQ(ilv.GetCyclotomicOrder(), ilvClone.GetCyclotomicOrder())
-      << msg << " Failure: CloneParametersOnly GetCyclotomicOrder()";
+        << msg << " Failure: CloneParametersOnly GetCyclotomicOrder()";
     EXPECT_EQ(ilv.GetModulus(), ilvClone.GetModulus()) << msg << " Failure: CloneParametersOnly GetModulus()";
     EXPECT_EQ(ilv.GetRootOfUnity(), ilvClone.GetRootOfUnity())
-      << msg << " Failure: CloneParametersOnly GetRootOfUnity()";
+        << msg << " Failure: CloneParametersOnly GetRootOfUnity()";
     EXPECT_EQ(ilv.GetFormat(), ilvClone.GetFormat()) << msg << " Failure: CloneParametersOnly GetFormat()";
   }
   {
@@ -354,7 +354,7 @@ void common_clone_ops(const string& msg) {
     Element ilvClone = ilv.CloneWithNoise(dgg, ilv.GetFormat());
 
     EXPECT_EQ(ilv.GetCyclotomicOrder(), ilvClone.GetCyclotomicOrder())
-      << msg << " Failure: CloneWithNoise GetCyclotomicOrder()";
+        << msg << " Failure: CloneWithNoise GetCyclotomicOrder()";
     EXPECT_EQ(ilv.GetModulus(), ilvClone.GetModulus()) << msg << " Failure: CloneWithNoise GetModulus()";
     EXPECT_EQ(ilv.GetRootOfUnity(), ilvClone.GetRootOfUnity()) << msg << " Failure: CloneWithNoise GetRootOfUnity()";
     EXPECT_EQ(ilv.GetFormat(), ilvClone.GetFormat()) << msg << " Failure: CloneWithNoise GetFormat()";
@@ -372,7 +372,7 @@ TEST(UTDCRTPoly, common_clone_ops) {
 // template for common_arithmetic_ops_element()
 template <typename Element>
 void common_arithmetic_ops_element(const string& msg) {
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
 
   usint m = 8;
@@ -382,7 +382,7 @@ void common_arithmetic_ops_element(const string& msg) {
   auto ilparams = std::make_shared<ParmType>(m, primeModulus, primitiveRootOfUnity);
 
   Element ilv(ilparams);
-  ilv = { "2", "1", "4", "1" };
+  ilv = {"2", "1", "4", "1"};
 
   // test for bug where length was 0
   EXPECT_EQ(ilv.GetLength(), m / 2) << msg << " Failure: ={init list string}";
@@ -391,47 +391,47 @@ void common_arithmetic_ops_element(const string& msg) {
 
   {
     Element ilvector2n(ilparams, Format::COEFFICIENT);
-    ilvector2n = { "1", "3", "4", "1" };
+    ilvector2n = {"1", "3", "4", "1"};
 
     ilvector2n = ilvector2n.Plus(element);
 
     Element expected(ilparams, Format::COEFFICIENT);
-    expected = { "2", "3", "4", "1" };
+    expected = {"2", "3", "4", "1"};
     EXPECT_EQ(expected, ilvector2n) << msg << " Failure: Plus()";
   }
   {
     Element ilvector2n = ilv.Minus(element);
     Element expected(ilparams);
-    expected = { "1", "0", "3", "0" };
+    expected = {"1", "0", "3", "0"};
     EXPECT_EQ(expected, ilvector2n) << msg << " Failure: Minus()";
   }
   {
     typename VecType::Integer ele("2");
     Element ilvector2n = ilv.Times(ele);
     Element expected(ilparams);
-    expected = { "4", "2", "8", "2" };
+    expected = {"4", "2", "8", "2"};
     EXPECT_EQ(expected, ilvector2n) << msg << " Failure: Times()";
   }
   {
     Element ilvector2n(ilparams, Format::COEFFICIENT);
-    ilvector2n = { "1", "3", "4", "1" };
+    ilvector2n = {"1", "3", "4", "1"};
 
     ilvector2n += element;
     Element expected(ilparams, Format::COEFFICIENT);
-    expected = { "2", "3", "4", "1" };
+    expected = {"2", "3", "4", "1"};
     EXPECT_EQ(expected, ilvector2n) << msg << " Failure: op+=";
   }
   {
     Element ilvector2n = ilv.Minus(element);
     Element expected(ilparams);
-    expected = { "1", "0", "3", "0" };
+    expected = {"1", "0", "3", "0"};
     EXPECT_EQ(expected, ilvector2n) << msg << " Failure: Minus()";
   }
   {
     Element ilvector2n(ilv);
     ilvector2n -= element;
     Element expected(ilparams);
-    expected = { "1", "0", "3", "0" };
+    expected = {"1", "0", "3", "0"};
     EXPECT_EQ(expected, ilvector2n) << msg << " Failure: op-=";
   }
 }
@@ -448,7 +448,7 @@ TEST(UTDCRTPoly, common_arithmetic_ops_element) {
 // template fore common_other_methods()
 template <typename Element>
 void common_other_methods(const string& msg) {
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
 
   DEBUG_FLAG(false);
@@ -459,7 +459,7 @@ void common_other_methods(const string& msg) {
   auto ilparams = std::make_shared<ParmType>(m, primeModulus, primitiveRootOfUnity);
 
   Element ilvector2n(ilparams);
-  ilvector2n = { "2", "1", "3", "2" };
+  ilvector2n = {"2", "1", "3", "2"};
   // test for bug where length was 0
   EXPECT_EQ(ilvector2n.GetLength(), m / 2) << msg << " Failure: ={init list string}";
 
@@ -469,7 +469,7 @@ void common_other_methods(const string& msg) {
 
     ilv.AddILElementOne();
     Element expected(ilparams);
-    expected = { "3", "2", "4", "3" };
+    expected = {"3", "2", "4", "3"};
     EXPECT_EQ(expected, ilv) << msg << " Failure: AddILElementOne()";
   }
 
@@ -478,7 +478,7 @@ void common_other_methods(const string& msg) {
     Element ilv(ilvector2n);
     ilv = ilv.ModByTwo();
     Element expected(ilparams);
-    expected = { "0", "1", "1", "0" };
+    expected = {"0", "1", "1", "0"};
     EXPECT_EQ(expected, ilv) << msg << " Failure: ModByTwo()";
   }
 
@@ -487,12 +487,12 @@ void common_other_methods(const string& msg) {
     Element ilv(ilvector2n);
     ilv.MakeSparse(2);
     Element expected(ilparams);
-    expected = { "2", "0", "3", "0" };
+    expected = {"2", "0", "3", "0"};
     EXPECT_EQ(expected, ilv) << msg << " Failure: MakeSparse(2)";
 
     Element ilv1(ilvector2n);
     ilv1.MakeSparse(3);
-    expected = { "2", "0", "0", "2" };
+    expected = {"2", "0", "0", "2"};
 
     EXPECT_EQ(expected, ilv1) << msg << " Failure: MakeSparse(3)";
   }
@@ -500,13 +500,13 @@ void common_other_methods(const string& msg) {
   DEBUG("InverseExists");
   {
     Element ilv(ilparams, Format::COEFFICIENT);
-    ilv = { "2", "4", "3", "2" };
+    ilv = {"2", "4", "3", "2"};
 
     Element ilv1(ilparams, Format::COEFFICIENT);
-    ilv1 = { "2", "0", "3", "2" };
+    ilv1 = {"2", "0", "3", "2"};
 
     Element ilv2(ilparams, Format::COEFFICIENT);
-    ilv2 = { "2", "1", "3", "2" };
+    ilv2 = {"2", "1", "3", "2"};
 
     EXPECT_EQ(true, ilv.InverseExists()) << msg << " Failure: ilv.InverseExists()";
     EXPECT_EQ(false, ilv1.InverseExists()) << msg << " Failure: ilv1.InverseExists()";
@@ -521,10 +521,10 @@ TEST(UTPoly, common_other_methods) {
 
 template <typename Element>
 void common_cyclotomicOrder(const string& msg) {
-  using VecType  = typename Element::Vector;
+  using VecType = typename Element::Vector;
   using ParmType = typename Element::Params;
 
-  usint m        = 8;
+  usint m = 8;
   auto ilparams0 = std::make_shared<ParmType>(m, typename VecType::Integer("1234"), typename VecType::Integer("5678"));
   Element ilv0(ilparams0);
   EXPECT_EQ(ilparams0->GetCyclotomicOrder(), ilv0.GetCyclotomicOrder()) << msg << " Failure: GetCyclotomicOrder()";

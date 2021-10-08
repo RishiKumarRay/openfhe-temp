@@ -50,8 +50,7 @@ using ModulusM = std::pair<NativeInteger, uint64_t>;
  * computing on vectors of integers. It is NOT supported for DCRTPoly
  */
 
-class PackedEncoding : public PlaintextImpl
-{
+class PackedEncoding : public PlaintextImpl {
   vector<int64_t> value;
 
  public:
@@ -62,39 +61,39 @@ class PackedEncoding : public PlaintextImpl
 
   PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, vector<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs) :
-      PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs)
+      : PlaintextImpl(vp, ep), value(coeffs) {}
 
   /**
    * @brief Constructs a container with a copy of each of the elements in rhs,
    * in the same order.
    * @param rhs - The input object to copy.
    */
-  explicit PackedEncoding(const std::vector<int64_t>& rhs) :
-      PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(rhs) {}
+  explicit PackedEncoding(const std::vector<int64_t>& rhs)
+      : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(rhs) {}
 
   /**
    * @brief Constructs a container with a copy of each of the elements in il, in
    * the same order.
    * @param arr the list to copy.
    */
-  PackedEncoding(std::initializer_list<int64_t> arr) :
-      PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(arr) {}
+  PackedEncoding(std::initializer_list<int64_t> arr)
+      : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(arr) {}
 
   /**
    * @brief Default empty constructor with empty uninitialized data elements.
@@ -152,7 +151,7 @@ class PackedEncoding : public PlaintextImpl
    * @params modulus is the plaintext modulus
    */
   static void SetParams(usint m, const PlaintextModulus& modulus)
-    __attribute__((deprecated("use SetParams(usint m, EncodingParams p)")));
+      __attribute__((deprecated("use SetParams(usint m, EncodingParams p)")));
 
   /**
    * SetLength of the plaintext to the given size
@@ -184,7 +183,8 @@ class PackedEncoding : public PlaintextImpl
     out << "(";
     size_t i = value.size();
     while (--i > 0)
-      if (value[i] != 0) break;
+      if (value[i] != 0)
+        break;
 
     for (size_t j = 0; j <= i; j++)
       out << ' ' << value[j];

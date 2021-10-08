@@ -41,15 +41,16 @@ int CryptoContextFactory<Element>::GetContextCount() {
 
 template <typename Element>
 CryptoContext<Element> CryptoContextFactory<Element>::GetSingleContext() {
-  if (GetContextCount() == 1) return AllContexts[0];
+  if (GetContextCount() == 1)
+    return AllContexts[0];
   PALISADE_THROW(config_error, "More than one context");
 }
 
 template <typename Element>
 CryptoContext<Element> CryptoContextFactory<Element>::GetContext(
-  shared_ptr<LPCryptoParameters<Element>> params, shared_ptr<LPPublicKeyEncryptionScheme<Element>> scheme,
-  const string& schemeId) {
-  for (CryptoContext<Element> cc: CryptoContextFactory<Element>::AllContexts) {
+    shared_ptr<LPCryptoParameters<Element>> params, shared_ptr<LPPublicKeyEncryptionScheme<Element>> scheme,
+    const string& schemeId) {
+  for (CryptoContext<Element> cc : CryptoContextFactory<Element>::AllContexts) {
     if (*cc->GetEncryptionAlgorithm().get() == *scheme.get() && *cc->GetCryptoParameters().get() == *params.get()) {
       return cc;
     }
@@ -67,8 +68,9 @@ CryptoContext<Element> CryptoContextFactory<Element>::GetContext(
 
 template <typename Element>
 CryptoContext<Element> CryptoContextFactory<Element>::GetContextForPointer(CryptoContextImpl<Element>* cc) {
-  for (CryptoContext<Element> ctx: AllContexts) {
-    if (ctx.get() == cc) return ctx;
+  for (CryptoContext<Element> ctx : AllContexts) {
+    if (ctx.get() == cc)
+      return ctx;
   }
   return 0;
 }
@@ -82,24 +84,14 @@ const vector<CryptoContext<T>>& CryptoContextFactory<T>::GetAllContexts() {
 
 template <typename T>
 CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(
-  shared_ptr<ParmType> ep, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev,
-  const std::string& delta, MODE mode, const std::string& bigmodulus, const std::string& bigrootofunity, int depth,
-  int assuranceMeasure, float securityLevel, const std::string& bigmodulusarb, const std::string& bigrootofunityarb,
-  int maxDepth) {
-  auto params = std::make_shared<LPCryptoParametersBFV<T>>(ep,
-                                                           plaintextmodulus,
-                                                           stDev,
-                                                           assuranceMeasure,
-                                                           securityLevel,
-                                                           relinWindow,
-                                                           IntType(delta),
-                                                           mode,
-                                                           IntType(bigmodulus),
-                                                           IntType(bigrootofunity),
-                                                           IntType(bigmodulusarb),
-                                                           IntType(bigrootofunityarb),
-                                                           depth,
-                                                           maxDepth);
+    shared_ptr<ParmType> ep, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev,
+    const std::string& delta, MODE mode, const std::string& bigmodulus, const std::string& bigrootofunity, int depth,
+    int assuranceMeasure, float securityLevel, const std::string& bigmodulusarb, const std::string& bigrootofunityarb,
+    int maxDepth) {
+  auto params = std::make_shared<LPCryptoParametersBFV<T>>(ep, plaintextmodulus, stDev, assuranceMeasure, securityLevel,
+                                                           relinWindow, IntType(delta), mode, IntType(bigmodulus),
+                                                           IntType(bigrootofunity), IntType(bigmodulusarb),
+                                                           IntType(bigrootofunityarb), depth, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFV<T>>();
 
@@ -108,23 +100,13 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(
 
 template <typename T>
 CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(
-  shared_ptr<ParmType> ep, EncodingParams encodingParams, usint relinWindow, float stDev, const std::string& delta,
-  MODE mode, const std::string& bigmodulus, const std::string& bigrootofunity, int depth, int assuranceMeasure,
-  float securityLevel, const std::string& bigmodulusarb, const std::string& bigrootofunityarb, int maxDepth) {
-  auto params = std::make_shared<LPCryptoParametersBFV<T>>(ep,
-                                                           encodingParams,
-                                                           stDev,
-                                                           assuranceMeasure,
-                                                           securityLevel,
-                                                           relinWindow,
-                                                           IntType(delta),
-                                                           mode,
-                                                           IntType(bigmodulus),
-                                                           IntType(bigrootofunity),
-                                                           IntType(bigmodulusarb),
-                                                           IntType(bigrootofunityarb),
-                                                           depth,
-                                                           maxDepth);
+    shared_ptr<ParmType> ep, EncodingParams encodingParams, usint relinWindow, float stDev, const std::string& delta,
+    MODE mode, const std::string& bigmodulus, const std::string& bigrootofunity, int depth, int assuranceMeasure,
+    float securityLevel, const std::string& bigmodulusarb, const std::string& bigrootofunityarb, int maxDepth) {
+  auto params = std::make_shared<LPCryptoParametersBFV<T>>(ep, encodingParams, stDev, assuranceMeasure, securityLevel,
+                                                           relinWindow, IntType(delta), mode, IntType(bigmodulus),
+                                                           IntType(bigrootofunity), IntType(bigmodulusarb),
+                                                           IntType(bigrootofunityarb), depth, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFV<T>>();
 
@@ -139,8 +121,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(const PlaintextMod
                                                               uint32_t n) {
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus));
 
-  return genCryptoContextBFV(
-    encodingParams, securityLevel, relinWindow, dist, numAdds, numMults, numKeyswitches, mode, maxDepth, n);
+  return genCryptoContextBFV(encodingParams, securityLevel, relinWindow, dist, numAdds, numMults, numKeyswitches, mode,
+                             maxDepth, n);
 }
 
 template <typename T>
@@ -150,9 +132,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(EncodingParams enc
                                                               MODE mode, int maxDepth, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -161,20 +146,9 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(EncodingParams enc
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
-  auto params = std::make_shared<LPCryptoParametersBFV<T>>(ep,
-                                                           encodingParams,
-                                                           dist,
-                                                           36.0,
-                                                           securityLevel,
-                                                           relinWindow,
-                                                           IntType(0),
-                                                           mode,
-                                                           IntType(0),
-                                                           IntType(0),
-                                                           IntType(0),
-                                                           IntType(0),
-                                                           1,
-                                                           maxDepth);
+  auto params =
+      std::make_shared<LPCryptoParametersBFV<T>>(ep, encodingParams, dist, 36.0, securityLevel, relinWindow, IntType(0),
+                                                 mode, IntType(0), IntType(0), IntType(0), IntType(0), 1, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFV<T>>();
 
@@ -191,9 +165,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(EncodingParams enc
                                                               uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -202,20 +179,9 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFV(EncodingParams enc
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
-  auto params = std::make_shared<LPCryptoParametersBFV<T>>(ep,
-                                                           encodingParams,
-                                                           dist,
-                                                           36.0,
-                                                           securityLevel,
-                                                           relinWindow,
-                                                           IntType(0),
-                                                           mode,
-                                                           IntType(0),
-                                                           IntType(0),
-                                                           IntType(0),
-                                                           IntType(0),
-                                                           1,
-                                                           maxDepth);
+  auto params =
+      std::make_shared<LPCryptoParametersBFV<T>>(ep, encodingParams, dist, 36.0, securityLevel, relinWindow, IntType(0),
+                                                 mode, IntType(0), IntType(0), IntType(0), IntType(0), 1, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFV<T>>();
 
@@ -232,9 +198,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(const Plaintext
                                                                  size_t dcrtBits, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -244,15 +213,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(const Plaintext
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
   auto params = std::make_shared<LPCryptoParametersBFVrns<T>>(
-    ep,
-    EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
-    dist,
-    36.0,
-    securityLevel,
-    relinWindow,
-    mode,
-    1,
-    maxDepth);
+      ep, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)), dist, 36.0, securityLevel,
+      relinWindow, mode, 1, maxDepth);
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFVrns<T>>();
 
   scheme->ParamsGen(params, numAdds, numMults, numKeyswitches, dcrtBits, n);
@@ -268,8 +230,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(const Plaintext
                                                                  uint32_t relinWindow, size_t dcrtBits, uint32_t n) {
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus));
 
-  return genCryptoContextBFVrns(
-    encodingParams, securityLevel, dist, numAdds, numMults, numKeyswitches, mode, maxDepth, relinWindow, dcrtBits, n);
+  return genCryptoContextBFVrns(encodingParams, securityLevel, dist, numAdds, numMults, numKeyswitches, mode, maxDepth,
+                                relinWindow, dcrtBits, n);
 }
 
 template <typename T>
@@ -280,9 +242,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(EncodingParams 
                                                                  size_t dcrtBits, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -291,8 +256,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(EncodingParams 
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
-  auto params = std::make_shared<LPCryptoParametersBFVrns<T>>(
-    ep, encodingParams, dist, 36.0, securityLevel, relinWindow, mode, 1, maxDepth);
+  auto params = std::make_shared<LPCryptoParametersBFVrns<T>>(ep, encodingParams, dist, 36.0, securityLevel,
+                                                              relinWindow, mode, 1, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFVrns<T>>();
 
@@ -309,9 +274,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(EncodingParams 
                                                                  uint32_t relinWindow, size_t dcrtBits, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -320,8 +288,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrns(EncodingParams 
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
-  auto params = std::make_shared<LPCryptoParametersBFVrns<T>>(
-    ep, encodingParams, dist, 36.0, securityLevel, relinWindow, mode, 1, maxDepth);
+  auto params = std::make_shared<LPCryptoParametersBFVrns<T>>(ep, encodingParams, dist, 36.0, securityLevel,
+                                                              relinWindow, mode, 1, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFVrns<T>>();
 
@@ -338,9 +306,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(const Plaintex
                                                                   size_t dcrtBits, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -350,15 +321,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(const Plaintex
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
   auto params = std::make_shared<LPCryptoParametersBFVrnsB<T>>(
-    ep,
-    EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
-    dist,
-    36.0,
-    securityLevel,
-    relinWindow,
-    mode,
-    1,
-    maxDepth);
+      ep, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)), dist, 36.0, securityLevel,
+      relinWindow, mode, 1, maxDepth);
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFVrnsB<T>>();
 
   scheme->ParamsGen(params, numAdds, numMults, numKeyswitches, dcrtBits, n);
@@ -374,8 +338,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(const Plaintex
                                                                   uint32_t relinWindow, size_t dcrtBits, uint32_t n) {
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus));
 
-  return genCryptoContextBFVrnsB(
-    encodingParams, securityLevel, dist, numAdds, numMults, numKeyswitches, mode, maxDepth, relinWindow, dcrtBits, n);
+  return genCryptoContextBFVrnsB(encodingParams, securityLevel, dist, numAdds, numMults, numKeyswitches, mode, maxDepth,
+                                 relinWindow, dcrtBits, n);
 }
 
 template <typename T>
@@ -386,9 +350,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(EncodingParams
                                                                   size_t dcrtBits, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -397,8 +364,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(EncodingParams
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
-  auto params = std::make_shared<LPCryptoParametersBFVrnsB<T>>(
-    ep, encodingParams, dist, 36.0, securityLevel, relinWindow, mode, 1, maxDepth);
+  auto params = std::make_shared<LPCryptoParametersBFVrnsB<T>>(ep, encodingParams, dist, 36.0, securityLevel,
+                                                               relinWindow, mode, 1, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFVrnsB<T>>();
 
@@ -415,9 +382,12 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(EncodingParams
                                                                   uint32_t relinWindow, size_t dcrtBits, uint32_t n) {
   int nonZeroCount = 0;
 
-  if (numAdds > 0) nonZeroCount++;
-  if (numMults > 0) nonZeroCount++;
-  if (numKeyswitches > 0) nonZeroCount++;
+  if (numAdds > 0)
+    nonZeroCount++;
+  if (numMults > 0)
+    nonZeroCount++;
+  if (numKeyswitches > 0)
+    nonZeroCount++;
 
   if (nonZeroCount > 1)
     PALISADE_THROW(config_error,
@@ -426,8 +396,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBFVrnsB(EncodingParams
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
 
-  auto params = std::make_shared<LPCryptoParametersBFVrnsB<T>>(
-    ep, encodingParams, dist, 36.0, securityLevel, relinWindow, mode, 1, maxDepth);
+  auto params = std::make_shared<LPCryptoParametersBFVrnsB<T>>(ep, encodingParams, dist, 36.0, securityLevel,
+                                                               relinWindow, mode, 1, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeBFVrnsB<T>>();
 
@@ -446,15 +416,11 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKS(shared_ptr<ParmTy
   if (rsTech == EXACTRESCALE)
     PALISADE_THROW(config_error, "128-bit CKKS is not supported for the EXACTRESCALE method.");
 #endif
-  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep,
-                                                            plaintextmodulus,
-                                                            stDev,
+  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep, plaintextmodulus, stDev,
                                                             9,            // assuranceMeasure,
                                                             1.006,        // securityLevel,
                                                             relinWindow,  // Relinearization Window
-                                                            mode,
-                                                            depth,
-                                                            maxDepth);
+                                                            mode, depth, maxDepth);
 
   params->PrecomputeCRTTables(ksTech, rsTech);
 
@@ -476,15 +442,11 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKS(shared_ptr<ParmTy
   if (rsTech == EXACTRESCALE)
     PALISADE_THROW(config_error, "128-bit CKKS is not supported for the EXACTRESCALE method.");
 #endif
-  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep,
-                                                            encodingParams,
-                                                            stDev,
+  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep, encodingParams, stDev,
                                                             9,            // assuranceMeasure,
                                                             1.006,        // securityLevel,
                                                             relinWindow,  // Relinearization Window
-                                                            mode,
-                                                            depth,
-                                                            maxDepth);
+                                                            mode, depth, maxDepth);
 
   params->PrecomputeCRTTables(ksTech, rsTech);
 
@@ -503,17 +465,11 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrns(shared_ptr<Parm
                                                                  usint relinWindow, float stDev, MODE mode, int depth,
                                                                  int maxDepth, enum KeySwitchTechnique ksTech,
                                                                  enum ModSwitchMethod msMethod) {
-  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep,
-                                                              plaintextmodulus,
-                                                              stDev,
+  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep, plaintextmodulus, stDev,
                                                               9,            // assuranceMeasure,
                                                               1.006,        // securityLevel,
                                                               relinWindow,  // Relinearization Window
-                                                              mode,
-                                                              depth,
-                                                              maxDepth,
-                                                              ksTech,
-                                                              msMethod);
+                                                              mode, depth, maxDepth, ksTech, msMethod);
 
   params->PrecomputeCRTTables(ksTech);
 
@@ -531,17 +487,11 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrns(shared_ptr<Parm
                                                                  usint relinWindow, float stDev, MODE mode, int depth,
                                                                  int maxDepth, enum KeySwitchTechnique ksTech,
                                                                  enum ModSwitchMethod msMethod) {
-  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep,
-                                                              encodingParams,
-                                                              stDev,
+  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep, encodingParams, stDev,
                                                               9,            // assuranceMeasure,
                                                               1.006,        // securityLevel,
                                                               relinWindow,  // Relinearization Window
-                                                              mode,
-                                                              depth,
-                                                              maxDepth,
-                                                              ksTech,
-                                                              msMethod);
+                                                              mode, depth, maxDepth, ksTech, msMethod);
 
   params->PrecomputeCRTTables(ksTech);
 
@@ -556,9 +506,9 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrns(shared_ptr<Parm
 
 template <typename T>
 CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrnsWithParamsGen(
-  usint cyclOrder, usint numPrimes, usint ptm, usint relinWindow, MODE mode, int depth, int maxDepth,
-  enum KeySwitchTechnique ksTech, usint firstModSize, usint dcrtBits, uint32_t numLargeDigits, usint batchSize,
-  enum ModSwitchMethod msMethod) {
+    usint cyclOrder, usint numPrimes, usint ptm, usint relinWindow, MODE mode, int depth, int maxDepth,
+    enum KeySwitchTechnique ksTech, usint firstModSize, usint dcrtBits, uint32_t numLargeDigits, usint batchSize,
+    enum ModSwitchMethod msMethod) {
   float stdDev = 3.2;
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
@@ -566,21 +516,15 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrnsWithParamsGen(
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(ptm));
   encodingParams->SetBatchSize(batchSize);
 
-  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep,
-                                                              encodingParams,
-                                                              stdDev,
+  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep, encodingParams, stdDev,
                                                               9,            // assuranceMeasure,
                                                               1.006,        // securityLevel,
                                                               relinWindow,  // Relinearization Window
-                                                              mode,
-                                                              depth,
-                                                              maxDepth,
-                                                              ksTech,
-                                                              msMethod);
+                                                              mode, depth, maxDepth, ksTech, msMethod);
 
   auto schemeBGVrns = std::make_shared<LPPublicKeyEncryptionSchemeBGVrns<T>>();
-  schemeBGVrns->ParamsGen(
-    params, cyclOrder, ptm, numPrimes, relinWindow, mode, ksTech, firstModSize, dcrtBits, numLargeDigits);
+  schemeBGVrns->ParamsGen(params, cyclOrder, ptm, numPrimes, relinWindow, mode, ksTech, firstModSize, dcrtBits,
+                          numLargeDigits);
 
   auto cc = CryptoContextFactory<T>::GetContext(params, schemeBGVrns);
 
@@ -601,17 +545,13 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrns(usint multiplic
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(ptm));
   encodingParams->SetBatchSize(batchSize);
 
-  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep,
-                                                              encodingParams,
-                                                              stdDev,
+  auto params = std::make_shared<LPCryptoParametersBGVrns<T>>(ep, encodingParams, stdDev,
                                                               9,            // assuranceMeasure,
                                                               1.006,        // securityLevel,
                                                               relinWindow,  // Relinearization Window
                                                               mode,
                                                               1,  // depth
-                                                              maxDepth,
-                                                              ksTech,
-                                                              msMethod);
+                                                              maxDepth, ksTech, msMethod);
 
   params->SetStdLevel(stdLevel);
 
@@ -626,16 +566,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrns(usint multiplic
   }
 
   auto schemeBGVrns = std::make_shared<LPPublicKeyEncryptionSchemeBGVrns<T>>();
-  schemeBGVrns->ParamsGen(params,
-                          2 * ringDim,
-                          ptm,
-                          multiplicativeDepth + 1,
-                          relinWindow,
-                          mode,
-                          ksTech,
-                          firstModSize,
-                          dcrtBits,
-                          numLargeDigits);
+  schemeBGVrns->ParamsGen(params, 2 * ringDim, ptm, multiplicativeDepth + 1, relinWindow, mode, ksTech, firstModSize,
+                          dcrtBits, numLargeDigits);
 
   auto cc = CryptoContextFactory<T>::GetContext(params, schemeBGVrns);
 
@@ -646,14 +578,14 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextBGVrns(usint multiplic
 
 template <typename T>
 CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKSWithParamsGen(
-  usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow, usint batchSize, MODE mode, int depth,
-  int maxDepth, usint firstModSize, KeySwitchTechnique ksTech, RescalingTechnique rsTech, uint32_t numLargeDigits) {
+    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow, usint batchSize, MODE mode, int depth,
+    int maxDepth, usint firstModSize, KeySwitchTechnique ksTech, RescalingTechnique rsTech, uint32_t numLargeDigits) {
 #if NATIVEINT == 128
   if (rsTech == EXACTRESCALE)
     PALISADE_THROW(config_error, "128-bit CKKS is not supported for the EXACTRESCALE method.");
 #endif
 
-  uint64_t p   = scaleExp;
+  uint64_t p = scaleExp;
   float stdDev = 3.19;
 
   auto ep = std::make_shared<ParmType>(0, IntType(0), IntType(0));
@@ -661,19 +593,15 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKSWithParamsGen(
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(p));
   encodingParams->SetBatchSize(batchSize);
 
-  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep,
-                                                            encodingParams,
-                                                            stdDev,
+  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep, encodingParams, stdDev,
                                                             9,            // assuranceMeasure,
                                                             1.006,        // securityLevel,
                                                             relinWindow,  // Relinearization Window
-                                                            mode,
-                                                            depth,
-                                                            maxDepth);
+                                                            mode, depth, maxDepth);
 
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeCKKS<T>>();
-  scheme->ParamsGen(
-    params, cyclOrder, numPrimes, scaleExp, relinWindow, mode, ksTech, firstModSize, rsTech, numLargeDigits);
+  scheme->ParamsGen(params, cyclOrder, numPrimes, scaleExp, relinWindow, mode, ksTech, firstModSize, rsTech,
+                    numLargeDigits);
 
   auto cc = CryptoContextFactory<T>::GetContext(params, scheme);
 
@@ -701,9 +629,7 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKS(usint multiplicat
   EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(scalingFactorBits));
   encodingParams->SetBatchSize(batchSize);
 
-  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep,
-                                                            encodingParams,
-                                                            stdDev,
+  auto params = std::make_shared<LPCryptoParametersCKKS<T>>(ep, encodingParams, stdDev,
                                                             9,            // assuranceMeasure,
                                                             1.006,        // securityLevel,
                                                             relinWindow,  // Relinearization Window
@@ -724,16 +650,8 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKS(usint multiplicat
   }
 
   auto schemeCKKS = std::make_shared<LPPublicKeyEncryptionSchemeCKKS<T>>();
-  schemeCKKS->ParamsGen(params,
-                        2 * ringDim,
-                        multiplicativeDepth + 1,
-                        scalingFactorBits,
-                        relinWindow,
-                        mode,
-                        ksTech,
-                        firstModSize,
-                        rsTech,
-                        numLargeDigits);
+  schemeCKKS->ParamsGen(params, 2 * ringDim, multiplicativeDepth + 1, scalingFactorBits, relinWindow, mode, ksTech,
+                        firstModSize, rsTech, numLargeDigits);
 
   auto cc = CryptoContextFactory<T>::GetContext(params, schemeCKKS);
 
@@ -745,18 +663,18 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextCKKS(usint multiplicat
 template <>
 CryptoContext<DCRTPoly> CryptoContextFactory<DCRTPoly>::genCryptoContextNull(unsigned int m,
                                                                              const PlaintextModulus ptModulus) {
-  vector<NativeInteger> moduli = { ptModulus };
-  vector<NativeInteger> roots  = { 1 };
-  auto ep                      = std::make_shared<ParmType>(m, moduli, roots);
-  auto params                  = std::make_shared<LPCryptoParametersNull<DCRTPoly>>(ep, ptModulus);
-  auto scheme                  = std::make_shared<LPPublicKeyEncryptionSchemeNull<DCRTPoly>>();
+  vector<NativeInteger> moduli = {ptModulus};
+  vector<NativeInteger> roots = {1};
+  auto ep = std::make_shared<ParmType>(m, moduli, roots);
+  auto params = std::make_shared<LPCryptoParametersNull<DCRTPoly>>(ep, ptModulus);
+  auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeNull<DCRTPoly>>();
 
   return CryptoContextFactory<DCRTPoly>::GetContext(params, scheme);
 }
 
 template <typename T>
 CryptoContext<T> CryptoContextFactory<T>::genCryptoContextNull(unsigned int m, const PlaintextModulus ptModulus) {
-  auto ep     = std::make_shared<ParmType>(m, IntType(ptModulus), 1);
+  auto ep = std::make_shared<ParmType>(m, IntType(ptModulus), 1);
   auto params = std::make_shared<LPCryptoParametersNull<T>>(ep, ptModulus);
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeNull<T>>();
   return CryptoContextFactory<T>::GetContext(params, scheme);
@@ -765,17 +683,17 @@ CryptoContext<T> CryptoContextFactory<T>::genCryptoContextNull(unsigned int m, c
 template <>
 CryptoContext<DCRTPoly> CryptoContextFactory<DCRTPoly>::genCryptoContextNull(unsigned int m,
                                                                              EncodingParams encodingParams) {
-  vector<NativeInteger> moduli = { encodingParams->GetPlaintextModulus() };
-  vector<NativeInteger> roots  = { 1 };
-  auto ep                      = std::make_shared<ParmType>(m, moduli, roots);
-  auto params                  = std::make_shared<LPCryptoParametersNull<DCRTPoly>>(ep, encodingParams);
-  auto scheme                  = std::make_shared<LPPublicKeyEncryptionSchemeNull<DCRTPoly>>();
+  vector<NativeInteger> moduli = {encodingParams->GetPlaintextModulus()};
+  vector<NativeInteger> roots = {1};
+  auto ep = std::make_shared<ParmType>(m, moduli, roots);
+  auto params = std::make_shared<LPCryptoParametersNull<DCRTPoly>>(ep, encodingParams);
+  auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeNull<DCRTPoly>>();
   return CryptoContextFactory<DCRTPoly>::GetContext(params, scheme);
 }
 
 template <typename T>
 CryptoContext<T> CryptoContextFactory<T>::genCryptoContextNull(unsigned int m, EncodingParams encodingParams) {
-  auto ep     = std::make_shared<ParmType>(m, encodingParams->GetPlaintextModulus(), 1);
+  auto ep = std::make_shared<ParmType>(m, encodingParams->GetPlaintextModulus(), 1);
   auto params = std::make_shared<LPCryptoParametersNull<T>>(ep, encodingParams);
   auto scheme = std::make_shared<LPPublicKeyEncryptionSchemeNull<T>>();
 

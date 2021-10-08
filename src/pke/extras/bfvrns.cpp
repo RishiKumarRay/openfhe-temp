@@ -52,13 +52,13 @@ int main(int argc, char* argv[]) {
   // Generate parameters.
   double diff, start, finish;
 
-  int plaintextModulus     = 256;
-  double sigma             = 4;
+  int plaintextModulus = 256;
+  double sigma = 4;
   double rootHermiteFactor = 1.006;
 
   // Set Crypto Parameters
   CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-    plaintextModulus, rootHermiteFactor, sigma, 0, 5, 0, OPTIMIZED, 6);
+      plaintextModulus, rootHermiteFactor, sigma, 0, 5, 0, OPTIMIZED, 6);
 
   // enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
   cryptoContext->EvalMultKeysGen(keyPair.secretKey);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -101,12 +101,12 @@ int main(int argc, char* argv[]) {
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts1 = { 5, 4, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0 };
-  std::vector<int64_t> vectorOfInts2 = { 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts3 = { 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts4 = { 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts5 = { 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts6 = { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {5, 4, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
+  std::vector<int64_t> vectorOfInts2 = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts3 = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts4 = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts5 = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts6 = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   Plaintext plaintext1 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
   Plaintext plaintext2 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts2);
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
   ciphertext6 = cryptoContext->Encrypt(keyPair.publicKey, plaintext6);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Encryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
   cryptoContext->Decrypt(keyPair.secretKey, ciphertext6, &plaintext6Dec);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Decryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -195,14 +195,14 @@ int main(int argc, char* argv[]) {
 
   start = currentDateTime();
   // Perform consecutive multiplications and do a keyswtiching at the end.
-  ciphertextMul12     = cryptoContext->EvalMultNoRelin(ciphertext1, ciphertext2);
-  ciphertextMul123    = cryptoContext->EvalMultNoRelin(ciphertextMul12, ciphertext3);
-  ciphertextMul1234   = cryptoContext->EvalMultNoRelin(ciphertextMul123, ciphertext4);
-  ciphertextMul12345  = cryptoContext->EvalMultNoRelin(ciphertextMul1234, ciphertext5);
+  ciphertextMul12 = cryptoContext->EvalMultNoRelin(ciphertext1, ciphertext2);
+  ciphertextMul123 = cryptoContext->EvalMultNoRelin(ciphertextMul12, ciphertext3);
+  ciphertextMul1234 = cryptoContext->EvalMultNoRelin(ciphertextMul123, ciphertext4);
+  ciphertextMul12345 = cryptoContext->EvalMultNoRelin(ciphertextMul1234, ciphertext5);
   ciphertextMul123456 = cryptoContext->EvalMultAndRelinearize(ciphertextMul12345, ciphertext6);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "EvalMult time: "
        << "\t" << diff << " ms" << endl;
 
@@ -225,7 +225,7 @@ int main(int argc, char* argv[]) {
   cryptoContext->Decrypt(keyPair.secretKey, ciphertextMul123456, &plaintextMul5);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
 
   // std::cin.get();
 
@@ -255,11 +255,11 @@ int main(int argc, char* argv[]) {
 
   start = currentDateTime();
 
-  ciphertextAdd12  = cryptoContext->EvalAdd(ciphertextMul12, ciphertextMul12345);
+  ciphertextAdd12 = cryptoContext->EvalAdd(ciphertextMul12, ciphertextMul12345);
   ciphertextAdd123 = cryptoContext->EvalAdd(ciphertextAdd12, ciphertextMul123);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "EvalAdd time: "
        << "\t" << diff << " ms" << endl;
 
@@ -276,7 +276,7 @@ int main(int argc, char* argv[]) {
   cryptoContext->Decrypt(keyPair.secretKey, ciphertextAdd123, &plaintextAdd2);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
 
   cout << "\n Original Plaintext: \n";
   cout << *plaintextMul1 << endl;

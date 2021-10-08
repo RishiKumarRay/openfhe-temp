@@ -34,7 +34,7 @@ namespace lbcrypto {
 
 template <typename VecType>
 std::uniform_int_distribution<uint32_t> DiscreteUniformGeneratorImpl<VecType>::m_distribution =
-  std::uniform_int_distribution<uint32_t>(CHUNK_MIN, CHUNK_MAX);
+    std::uniform_int_distribution<uint32_t>(CHUNK_MIN, CHUNK_MAX);
 
 template <typename VecType>
 DiscreteUniformGeneratorImpl<VecType>::DiscreteUniformGeneratorImpl() : DistributionGenerator<VecType>() {

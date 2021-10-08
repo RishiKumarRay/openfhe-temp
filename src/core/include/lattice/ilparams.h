@@ -41,8 +41,7 @@ namespace lbcrypto {
  * and their inheritors.
  */
 template <typename IntType>
-class ILParamsImpl : public ElemParams<IntType>
-{
+class ILParamsImpl : public ElemParams<IntType> {
  public:
   typedef IntType Integer;
 
@@ -64,8 +63,8 @@ class ILParamsImpl : public ElemParams<IntType>
    * @return
    */
   ILParamsImpl(const usint order, const IntType& modulus, const IntType& rootOfUnity, const IntType& bigModulus = 0,
-               const IntType& bigRootOfUnity = 0) :
-      ElemParams<IntType>(order, modulus, rootOfUnity, bigModulus, bigRootOfUnity) {}
+               const IntType& bigRootOfUnity = 0)
+      : ElemParams<IntType>(order, modulus, rootOfUnity, bigModulus, bigRootOfUnity) {}
 
   /**
    * @brief Constructor for the case of partially pre-computed parameters.
@@ -115,7 +114,8 @@ class ILParamsImpl : public ElemParams<IntType>
    * DCRTPoly, False otherwise
    */
   bool operator==(const ElemParams<IntType>& rhs) const {
-    if (dynamic_cast<const ILParamsImpl<IntType>*>(&rhs) == nullptr) return false;
+    if (dynamic_cast<const ILParamsImpl<IntType>*>(&rhs) == nullptr)
+      return false;
 
     return ElemParams<IntType>::operator==(rhs);
   }
@@ -137,9 +137,8 @@ class ILParamsImpl : public ElemParams<IntType>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::base_class<ElemParams<IntType>>(this));
   }

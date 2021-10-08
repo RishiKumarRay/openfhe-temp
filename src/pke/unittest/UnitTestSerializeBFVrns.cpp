@@ -29,8 +29,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTPKESer : public ::testing::Test
-{
+class UTPKESer : public ::testing::Test {
  protected:
   void SetUp() {}
 

@@ -81,8 +81,7 @@ using ConstLWEPrivateKey = const std::shared_ptr<const LWEPrivateKeyImpl>;
  *
  * The wrapper class for Boolean circuit FHE
  */
-class BinFHEContext : public Serializable
-{
+class BinFHEContext : public Serializable {
  public:
   BinFHEContext() {}
 
@@ -254,9 +253,8 @@ class BinFHEContext : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("params", m_params));
   }

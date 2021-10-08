@@ -114,8 +114,7 @@ class BitGenerator;
  * @brief Class implementation to generate random bit. This is created for
  * centralizing the random bit pools by the samplers.
  */
-class BitGenerator
-{
+class BitGenerator {
  public:
   BitGenerator() {}
   /*
@@ -126,7 +125,7 @@ class BitGenerator
     if (counter % 31 == 0) {
       sequence = (PseudoRandomNumberGenerator::GetPRNG())();
       sequence = sequence << 1;
-      counter  = 0;
+      counter = 0;
     }
     short bit = (sequence >> (31 - counter)) & 1;
     counter++;
@@ -136,14 +135,13 @@ class BitGenerator
 
  private:
   uint32_t sequence = 0;
-  char counter      = 0;
+  char counter = 0;
 };
 /*
  * @brief Class definiton for base samplers with precomputation that is used for
  * UCSD generic sampler
  */
-class BaseSampler
-{
+class BaseSampler {
  public:
   /*
    * @brief Constructor
@@ -265,8 +263,7 @@ class BaseSampler
  * @brief Class for combining samples from two base samplers, which is used for
  * UCSD generic sampling
  */
-class SamplerCombiner : public BaseSampler
-{
+class SamplerCombiner : public BaseSampler {
  public:
   /**
    * @brief Constructor
@@ -275,8 +272,8 @@ class SamplerCombiner : public BaseSampler
    * @param z1 Coefficient for the first sampler
    * @param z2 Coefficient for the second sampler
    */
-  SamplerCombiner(BaseSampler* s1, BaseSampler* s2, int64_t z1, int64_t z2) :
-      sampler1(s1), sampler2(s1), x1(z1), x2(z2) {}
+  SamplerCombiner(BaseSampler* s1, BaseSampler* s2, int64_t z1, int64_t z2)
+      : sampler1(s1), sampler2(s1), x1(z1), x2(z2) {}
   /**
    * @brief Return the combined value for two samplers with given coefficients
    * @return Combined value of the samplers with given coefficents
@@ -299,8 +296,7 @@ class SamplerCombiner : public BaseSampler
 /**
  * @brief The class for Generic Discrete Gaussion Distribution generator.
  */
-class DiscreteGaussianGeneratorGeneric : public DistributionGenerator<BigVector>
-{
+class DiscreteGaussianGeneratorGeneric : public DistributionGenerator<BigVector> {
  public:
   /**
    * @brief Basic constructor which does the precomputations.

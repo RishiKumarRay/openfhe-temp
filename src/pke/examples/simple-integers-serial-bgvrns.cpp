@@ -43,14 +43,14 @@ int main() {
   // Sample Program: Step 1 - Set CryptoContext
 
   // Set the main parameters
-  int plaintextModulus        = 65537;
-  double sigma                = 3.2;
+  int plaintextModulus = 65537;
+  double sigma = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
-  uint32_t depth              = 2;
+  uint32_t depth = 2;
 
   // Instantiate the crypto context
   CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(
-    depth, plaintextModulus, securityLevel, sigma, depth, OPTIMIZED, BV);
+      depth, plaintextModulus, securityLevel, sigma, depth, OPTIMIZED, BV);
 
   // Enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -110,14 +110,13 @@ int main() {
     std::cout << "The eval mult keys have been serialized." << std::endl;
 
     emkeyfile.close();
-  }
-  else {
+  } else {
     std::cerr << "Error serializing eval mult keys" << std::endl;
     return 1;
   }
 
   // Generate the rotation evaluation keys
-  cryptoContext->EvalAtIndexKeyGen(keyPair.secretKey, { 1, 2, -1, -2 });
+  cryptoContext->EvalAtIndexKeyGen(keyPair.secretKey, {1, 2, -1, -2});
 
   std::cout << "The rotation keys have been generated." << std::endl;
 
@@ -133,8 +132,7 @@ int main() {
     std::cout << "The eval rotation keys have been serialized." << std::endl;
 
     erkeyfile.close();
-  }
-  else {
+  } else {
     std::cerr << "Error serializing eval rotation keys" << std::endl;
     return 1;
   }
@@ -142,14 +140,14 @@ int main() {
   // Sample Program: Step 3: Encryption
 
   // First plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext1               = cryptoContext->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext1 = cryptoContext->MakePackedPlaintext(vectorOfInts1);
   // Second plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts2 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext2               = cryptoContext->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext2 = cryptoContext->MakePackedPlaintext(vectorOfInts2);
   // Third plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts3 = { 1, 2, 5, 2, 5, 6, 7, 8, 9, 10, 11, 12 };
-  Plaintext plaintext3               = cryptoContext->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = {1, 2, 5, 2, 5, 6, 7, 8, 9, 10, 11, 12};
+  Plaintext plaintext3 = cryptoContext->MakePackedPlaintext(vectorOfInts3);
 
   std::cout << "Plaintext #1: " << plaintext1 << std::endl;
   std::cout << "Plaintext #2: " << plaintext2 << std::endl;
@@ -251,11 +249,11 @@ int main() {
   std::cout << "The third ciphertext has been deserialized." << std::endl;
 
   // Homomorphic additions
-  auto ciphertextAdd12     = cc->EvalAdd(ct1, ct2);              //iphertext2);
+  auto ciphertextAdd12 = cc->EvalAdd(ct1, ct2);                  //iphertext2);
   auto ciphertextAddResult = cc->EvalAdd(ciphertextAdd12, ct3);  //iphertext3);
 
   // Homomorphic multiplications
-  auto ciphertextMul12      = cc->EvalMult(ct1, ct2);              //iphertext2);
+  auto ciphertextMul12 = cc->EvalMult(ct1, ct2);                   //iphertext2);
   auto ciphertextMultResult = cc->EvalMult(ciphertextMul12, ct3);  //iphertext3);
 
   // Homomorphic rotations

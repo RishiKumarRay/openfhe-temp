@@ -34,8 +34,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestEvalMultMany : public ::testing::Test
-{
+class UnitTestEvalMultMany : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 
@@ -47,14 +46,14 @@ class UnitTestEvalMultMany : public ::testing::Test
 static CryptoContext<Poly> MakeBFVPolyCC() {
   DEBUG_FLAG(false);
   DEBUG("in MakeBFVPolyCC");
-  int relWindow            = 8;
-  int plaintextModulus     = 256;
-  double sigma             = 4;
+  int relWindow = 8;
+  int plaintextModulus = 256;
+  double sigma = 4;
   double rootHermiteFactor = 1.6;
 
   // Set Crypto Parameters
   CryptoContext<Poly> cryptoContext = CryptoContextFactory<Poly>::genCryptoContextBFV(
-    plaintextModulus, rootHermiteFactor, relWindow, sigma, 0, 3, 0, OPTIMIZED, 4);
+      plaintextModulus, rootHermiteFactor, relWindow, sigma, 0, 3, 0, OPTIMIZED, 4);
 
   cryptoContext->Enable(ENCRYPTION);
   cryptoContext->Enable(SHE);
@@ -63,13 +62,13 @@ static CryptoContext<Poly> MakeBFVPolyCC() {
 }
 
 static CryptoContext<DCRTPoly> MakeBFVrnsDCRTPolyCC() {
-  int plaintextModulus     = 256;
-  double sigma             = 4;
+  int plaintextModulus = 256;
+  double sigma = 4;
   double rootHermiteFactor = 1.03;
 
   // Set Crypto Parameters
   CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-    plaintextModulus, rootHermiteFactor, sigma, 0, 3, 0, OPTIMIZED, 4);
+      plaintextModulus, rootHermiteFactor, sigma, 0, 3, 0, OPTIMIZED, 4);
 
   cryptoContext->Enable(ENCRYPTION);
   cryptoContext->Enable(SHE);
@@ -110,14 +109,14 @@ static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext, string msg
   // Plaintext
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts1 = { 5, 4, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0 };
-  std::vector<int64_t> vectorOfInts2 = { 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts3 = { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-  std::vector<int64_t> vectorOfInts4 = { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts1 = {5, 4, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
+  std::vector<int64_t> vectorOfInts2 = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts3 = {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts4 = {4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-  std::vector<int64_t> vectorOfInts5 = { 10, 8, 6, 4, 2, 0, 10, 8, 6, 4, 2, 0 };
-  std::vector<int64_t> vectorOfInts6 = { 30, 24, 18, 12, 6, 0, 30, 24, 18, 12, 6, 0 };
-  std::vector<int64_t> vectorOfInts7 = { 120, 96, 72, 48, 24, 0, 120, 96, 72, 48, 24, 0 };
+  std::vector<int64_t> vectorOfInts5 = {10, 8, 6, 4, 2, 0, 10, 8, 6, 4, 2, 0};
+  std::vector<int64_t> vectorOfInts6 = {30, 24, 18, 12, 6, 0, 30, 24, 18, 12, 6, 0};
+  std::vector<int64_t> vectorOfInts7 = {120, 96, 72, 48, 24, 0, 120, 96, 72, 48, 24, 0};
   DEBUG("MakeCoefPackedPlaintext");
   Plaintext plaintext1 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
   Plaintext plaintext2 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts2);
@@ -142,8 +141,8 @@ static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext, string msg
   ////////////////////////////////////////////////////////////
   DEBUG("EvalMults");
   // Perform consecutive multiplications and do a keyswtiching at the end.
-  auto ciphertextMul12   = cryptoContext->EvalMultNoRelin(ciphertext1, ciphertext2);
-  auto ciphertextMul123  = cryptoContext->EvalMultNoRelin(ciphertextMul12, ciphertext3);
+  auto ciphertextMul12 = cryptoContext->EvalMultNoRelin(ciphertext1, ciphertext2);
+  auto ciphertextMul123 = cryptoContext->EvalMultNoRelin(ciphertextMul12, ciphertext3);
   auto ciphertextMul1234 = cryptoContext->EvalMultAndRelinearize(ciphertextMul123, ciphertext4);
 
   ////////////////////////////////////////////////////////////

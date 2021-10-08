@@ -99,10 +99,8 @@ bool operator!=(const NAlloc<T>&, const NAlloc<U>&) { return false; }
 #endif
 
 template <class IntegerType>
-class NativeVector :
-    public lbcrypto::BigVectorInterface<NativeVector<IntegerType>, IntegerType>,
-    public lbcrypto::Serializable
-{
+class NativeVector : public lbcrypto::BigVectorInterface<NativeVector<IntegerType>, IntegerType>,
+                     public lbcrypto::Serializable {
  public:
   typedef IntegerType BVInt;
 
@@ -573,7 +571,7 @@ class NativeVector :
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     size_t size = m_data.size();
     ar(size);
     if (size > 0) {
@@ -584,18 +582,17 @@ class NativeVector :
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
-    Archive& ar, std::uint32_t const version) const {
+      Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", m_data));
     ar(::cereal::make_nvp("m", m_modulus));
   }
 
   template <class Archive>
   typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     size_t size;
     ar(size);
@@ -613,11 +610,10 @@ class NativeVector :
 
   template <class Archive>
   typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
-    Archive& ar, std::uint32_t const version) {
+      Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_data));
     ar(::cereal::make_nvp("m", m_modulus));
@@ -660,7 +656,7 @@ namespace cereal {
 template <class Archive, class A>
 inline void CEREAL_SAVE_FUNCTION_NAME(Archive& ar, std::vector<bigintnat::NativeIntegerT<uint64_t>, A> const& vector) {
   ar(make_size_tag(static_cast<cereal::size_type>(vector.size())));  // number of elements
-  for (const auto& v: vector) {
+  for (const auto& v : vector) {
     ar(v.ConvertToInt());
   }
 }
@@ -671,11 +667,11 @@ inline void CEREAL_SAVE_FUNCTION_NAME(Archive& ar,
                                       std::vector<bigintnat::NativeIntegerT<unsigned __int128>, A> const& vector) {
   ar(make_size_tag(static_cast<cereal::size_type>(vector.size())));  // number of elements
   constexpr unsigned __int128 mask = (static_cast<unsigned __int128>(1) << 64) - 1;
-  for (const auto& v: vector) {
+  for (const auto& v : vector) {
     uint64_t vec[2];
     unsigned __int128 int128 = v.ConvertToInt();
-    vec[0]                   = int128 & mask;  // least significant word
-    vec[1]                   = int128 >> 64;   // most significant word
+    vec[0] = int128 & mask;  // least significant word
+    vec[1] = int128 >> 64;   // most significant word
     ar(vec);
   }
 }
@@ -688,7 +684,7 @@ inline void CEREAL_LOAD_FUNCTION_NAME(Archive& ar, std::vector<bigintnat::Native
   cereal::size_type size;
   ar(make_size_tag(size));
   vector.resize(static_cast<size_t>(size));
-  for (auto& v: vector) {
+  for (auto& v : vector) {
     uint64_t b;
     ar(b);
     v = b;
@@ -702,7 +698,7 @@ inline void CEREAL_LOAD_FUNCTION_NAME(Archive& ar,
   cereal::size_type size;
   ar(make_size_tag(size));
   vector.resize(static_cast<size_t>(size));
-  for (auto& v: vector) {
+  for (auto& v : vector) {
     uint64_t vec[2];
     ar(vec);
     v = vec[1];  // most significant word

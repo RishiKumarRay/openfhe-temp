@@ -42,8 +42,7 @@ V ZeroPadForward(const V& InputPoly, usint target_order) {
     ans.SetModulus(InputPoly.GetModulus());
 
     return ans;
-  }
-  else {
+  } else {
     return V(InputPoly);
   }
 }
@@ -56,15 +55,14 @@ V ZeroPadInverse(const V& InputPoly, usint target_order) {
     V ans(target_order);
 
     for (usint i = 0; i < InputPoly.GetLength(); i++) {
-      ans.at(2 * i)     = typename V::Integer("0");
+      ans.at(2 * i) = typename V::Integer("0");
       ans.at(2 * i + 1) = InputPoly.at(i);
     }
 
     ans.SetModulus(InputPoly.GetModulus());
 
     return ans;
-  }
-  else {
+  } else {
     return V(InputPoly);
   }
 }
@@ -77,8 +75,8 @@ std::string replaceChar(std::string str, char in, char out) {
 
   // While our position in the string is in range.
   while (found != std::string::npos) {
-    str[found] = out;                               // Change the character at position.
-    found      = str.find_first_of(in, found + 1);  // Relocate again.
+    str[found] = out;                          // Change the character at position.
+    found = str.find_first_of(in, found + 1);  // Relocate again.
   }
 
   return str;  // return our new string.

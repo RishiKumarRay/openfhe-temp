@@ -57,8 +57,7 @@ struct HashPair {
  * @brief Number Theoretic Transform implementation
  */
 template <typename VecType>
-class NumberTheoreticTransformNat
-{
+class NumberTheoreticTransformNat {
   using IntType = typename VecType::Integer;
 
  public:
@@ -232,8 +231,7 @@ class NumberTheoreticTransformNat
  * @brief Golden Chinese Remainder Transform FFT implementation.
  */
 template <typename VecType>
-class ChineseRemainderTransformFTTNat : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType>
-{
+class ChineseRemainderTransformFTTNat : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:
@@ -373,8 +371,7 @@ using ModulusRootPair = std::pair<ModulusRoot<IntType>, ModulusRoot<IntType>>;
  * @brief Bluestein Fast Fourier Transform implementation
  */
 template <typename VecType>
-class BluesteinFFTNat
-{
+class BluesteinFFTNat {
   using IntType = typename VecType::Integer;
 
  public:
@@ -474,8 +471,7 @@ class BluesteinFFTNat
  * @brief Chinese Remainder Transform for arbitrary cyclotomics.
  */
 template <typename VecType>
-class ChineseRemainderTransformArbNat : public lbcrypto::ChineseRemainderTransformArbInterface<VecType>
-{
+class ChineseRemainderTransformArbNat : public lbcrypto::ChineseRemainderTransformArbInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:

@@ -68,15 +68,15 @@ void SHERun() {
             << std::endl;
 
   // Generate parameters.
-  usint ptm                = 2;
-  double sigma             = 3.19;
+  usint ptm = 2;
+  double sigma = 3.19;
   double rootHermiteFactor = 1.0048;
 
   size_t count = 100;
 
   // Set Crypto Parameters
-  CryptoContext<DCRTPoly> cryptoContext =
-    CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(ptm, rootHermiteFactor, sigma, 0, 5, 0, OPTIMIZED, 3, 0, 55);
+  CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
+      ptm, rootHermiteFactor, sigma, 0, 5, 0, OPTIMIZED, 3, 0, 55);
 
   // enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -99,7 +99,7 @@ void SHERun() {
   LPKeyPair<DCRTPoly> keyPair = cryptoContext->KeyGen();
 
   double finish = currentDateTime();
-  double diff   = finish - start;
+  double diff = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -114,11 +114,11 @@ void SHERun() {
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts1 = { 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0 };
-  Plaintext plaintext1               = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = {1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0};
+  Plaintext plaintext1 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
 
-  std::vector<int64_t> vectorOfInts2 = { 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0 };
-  Plaintext plaintext2               = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0};
+  Plaintext plaintext2 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts2);
 
   double timeDecrypt(0.0);
   double timeMult(0.0);

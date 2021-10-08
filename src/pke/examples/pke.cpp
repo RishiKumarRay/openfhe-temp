@@ -61,23 +61,20 @@ int main(int argc, char* argv[]) {
   // Set-up of parameters
   ////////////////////////////////////////////////////////////
   bool interactive = false;
-  string input     = "";
-  string progname  = *argv;
+  string input = "";
+  string progname = *argv;
   while (argc-- > 1) {
     string arg(*++argv);
 
     if (arg == "-help" || arg == "-?") {
       usage();
       return 0;
-    }
-    else if (arg == "-i") {
+    } else if (arg == "-i") {
       interactive = true;
-    }
-    else if (arg[0] == '-') {
+    } else if (arg[0] == '-') {
       usage();
       return (0);
-    }
-    else {
+    } else {
       input = arg;
     }
   }
@@ -100,7 +97,7 @@ int main(int argc, char* argv[]) {
   std::cout << "time using Math backend " << MATHBACKEND << std::endl;
 
   std::ostringstream stream;
-  CryptoContextHelper::printParmSetNamesByExcludeFilters(stream, { "BFVrns", "CKKS" });
+  CryptoContextHelper::printParmSetNamesByExcludeFilters(stream, {"BFVrns", "CKKS"});
   string parameter_set_list = stream.str();
 
   // tokenize the string that lists parameters, separated by commas
@@ -119,15 +116,14 @@ int main(int argc, char* argv[]) {
     std::cout << "Choose parameter set: " << parameter_set_list;
     std::cout << "or enter ALL to run every set." << std::endl;
     std::cin >> input;
-  }
-  else if (input.compare("") == 0) {  // input can be specified on the command line
+  } else if (input.compare("") == 0) {  // input can be specified on the command line
     input = "ALL";
   }
 
   if (input.compare("ALL") != 0) {  // run a particular parameter set
     // validate input
     bool valid = false;
-    for (string param: tokens) {
+    for (string param : tokens) {
       if (input.compare(param) == 0) {
         valid = true;
         break;
@@ -145,10 +141,9 @@ int main(int argc, char* argv[]) {
     if (rc) {  // there could be an error
       exit(1);
     }
-  }
-  else {  // run ALL parameter sets
+  } else {  // run ALL parameter sets
     // tokens contain the array of parameter name strings
-    for (string param: tokens) {
+    for (string param : tokens) {
       std::cout << "Running using parameter set: " << param << std::endl;
       int rc = run_demo_pke(param);
 
@@ -173,7 +168,7 @@ int run_demo_pke(string input) {
   }
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
 
   cout << "Param generation time: "
        << "\t" << diff << " ms" << endl;
@@ -202,7 +197,7 @@ int run_demo_pke(string input) {
   keyPair = cryptoContext->KeyGen();
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -215,8 +210,8 @@ int run_demo_pke(string input) {
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts = { 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0 };
-  Plaintext plaintext               = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts);
+  std::vector<int64_t> vectorOfInts = {1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0};
+  Plaintext plaintext = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts);
 
   ////////////////////////////////////////////////////////////
   // Encryption
@@ -229,7 +224,7 @@ int run_demo_pke(string input) {
   ciphertext = cryptoContext->Encrypt(keyPair.publicKey, plaintext);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Encryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -244,13 +239,14 @@ int run_demo_pke(string input) {
   cryptoContext->Decrypt(keyPair.secretKey, ciphertext, &plaintextDec);
 
   finish = currentDateTime();
-  diff   = finish - start;
+  diff = finish - start;
   cout << "Decryption time: "
        << "\t" << diff << " ms" << endl;
 
   plaintextDec->SetLength(plaintext->GetLength());
 
-  if (*plaintext != *plaintextDec) cout << "Decryption failed!" << endl;
+  if (*plaintext != *plaintextDec)
+    cout << "Decryption failed!" << endl;
 
   cout << "\n Original Plaintext: \n";
   cout << *plaintext << endl;

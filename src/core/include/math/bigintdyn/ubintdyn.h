@@ -306,8 +306,7 @@ const double LOG2_10 = 3.32192809;  //!< @brief A pre-computed constant of Log b
 // Definition starts here
 //////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename limb_t>
-class ubint : public lbcrypto::BigIntegerInterface<ubint<limb_t>>
-{
+class ubint : public lbcrypto::BigIntegerInterface<ubint<limb_t>> {
  public:
   // CONSTRUCTORS
 
@@ -910,8 +909,7 @@ class ubint : public lbcrypto::BigIntegerInterface<ubint<limb_t>>
     if (sizeof(limb_t) >= sizeof(T)) {
       result = m_value[0];
       result = (T)m_value[0];
-    }
-    else {
+    } else {
       // Case where limb_t is less bits than uint64_t
       size_t msbTest = sizeof(T) * 8;
       if (msbTest > m_MSB) {
@@ -1151,9 +1149,8 @@ class ubint : public lbcrypto::BigIntegerInterface<ubint<limb_t>>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        lbcrypto::deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(lbcrypto::deserialize_error, "serialized object version " + std::to_string(version) +
+                                                      " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_value));
     ar(::cereal::make_nvp("m", m_MSB));

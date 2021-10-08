@@ -53,8 +53,7 @@ typedef Blake2Engine PRNG;
  * ternary, and Gaussian distributions, which derive their randomness from the
  * PRNG.
  */
-class PseudoRandomNumberGenerator
-{
+class PseudoRandomNumberGenerator {
  public:
   /**
    * @brief  Returns a reference to the PRNG engine
@@ -84,7 +83,7 @@ class PseudoRandomNumberGenerator
 
         std::array<uint32_t, 16> seed{};
         seed[0] = 1;
-        m_prng  = std::make_shared<PRNG>(seed);
+        m_prng = std::make_shared<PRNG>(seed);
 
 #else
         // A 512-bit seed is generated for each thread (this roughly corresponds
@@ -110,7 +109,8 @@ class PseudoRandomNumberGenerator
         // On a 64-bit machine, the thread id is 64 bits long
         // skip on 32-bit arm architectures
 #if !defined(__arm__) && !defined(__EMSCRIPTEN__)
-        if (sizeof(size_t) == 8) initKey[2] = (std::hash<std::thread::id>{}(std::this_thread::get_id()) >> 32);
+        if (sizeof(size_t) == 8)
+          initKey[2] = (std::hash<std::thread::id>{}(std::this_thread::get_id()) >> 32);
 #endif
 
         // heap variable; we are going to use the least 32 bits of its memory
@@ -129,9 +129,9 @@ class PseudoRandomNumberGenerator
         }
 
         std::array<uint32_t, 16> rdseed{};
-        size_t attempts  = 3;
+        size_t attempts = 3;
         bool rdGenPassed = false;
-        size_t idx       = 0;
+        size_t idx = 0;
         while (!rdGenPassed && idx < attempts) {
           try {
             std::random_device genR;
@@ -146,8 +146,7 @@ class PseudoRandomNumberGenerator
               rdseed[i] = distribution(genR);
             }
             rdGenPassed = true;
-          }
-          catch (std::exception& e) {
+          } catch (std::exception& e) {
           }
           idx++;
         }
@@ -183,8 +182,7 @@ class PseudoRandomNumberGenerator
  *
  */
 template <typename VecType>
-class DistributionGenerator
-{
+class DistributionGenerator {
  public:
   DistributionGenerator() {}
   virtual ~DistributionGenerator() {}

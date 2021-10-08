@@ -40,14 +40,14 @@ int main() {
 void NTTDummy() {
   int mod = 17;
 
-  int W[8]  = { 1, 4, 15, 9, 7, 11, 3, 12 };
-  int WI[8] = { 1, 13, 8, 2, 5, 14, 6, 10 };
+  int W[8] = {1, 4, 15, 9, 7, 11, 3, 12};
+  int WI[8] = {1, 13, 8, 2, 5, 14, 6, 10};
 
-  int x[8] = { 3, 3, 3, 4, 4, 4, 5, 5 };
-  int y[8] = { 3, 3, 3, 4, 4, 4, 5, 5 };
-  int z[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-  int q[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-  int n    = 8;
+  int x[8] = {3, 3, 3, 4, 4, 4, 5, 5};
+  int y[8] = {3, 3, 3, 4, 4, 4, 5, 5};
+  int z[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  int q[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  int n = 8;
 
   for (int i = 0; i < 8; ++i) {
     std::cout << x[i] << ",";
@@ -64,8 +64,7 @@ void NTTDummy() {
       if (i + j < 8) {
         q[i + j] += (x[i] * y[j]);
         q[i + j] %= mod;
-      }
-      else {
+      } else {
         q[i + j - 8] += (mod * mod);
         q[i + j - 8] -= (x[i] * y[j]);
         q[i + j - 8] %= mod;
@@ -84,11 +83,11 @@ void NTTDummy() {
     for (int i = 0; i < m; ++i) {
       int j1 = 2 * i * t;
       int j2 = j1 + t;
-      int s  = W[m + i];
+      int s = W[m + i];
       for (int j = j1; j < j2; ++j) {
-        int u    = x[j];
-        int v    = (x[j + t] * s) % mod;
-        x[j]     = (u + v) % mod;
+        int u = x[j];
+        int v = (x[j + t] * s) % mod;
+        x[j] = (u + v) % mod;
         x[j + t] = (u + mod - v) % mod;
       }
     }
@@ -105,11 +104,11 @@ void NTTDummy() {
     for (int i = 0; i < m; ++i) {
       int j1 = 2 * i * t;
       int j2 = j1 + t;
-      int s  = W[m + i];
+      int s = W[m + i];
       for (int j = j1; j < j2; ++j) {
-        int u    = y[j];
-        int v    = (y[j + t] * s) % mod;
-        y[j]     = ((u + v) % mod);
+        int u = y[j];
+        int v = (y[j + t] * s) % mod;
+        y[j] = ((u + v) % mod);
         y[j + t] = ((u + mod - v) % mod);
       }
     }
@@ -132,14 +131,14 @@ void NTTDummy() {
   t = 1;
   for (int m = n; m > 1; m >>= 1) {
     int j1 = 0;
-    int h  = m >> 1;
+    int h = m >> 1;
     for (int i = 0; i < h; ++i) {
       int j2 = j1 + t;
-      int s  = WI[h + i];
+      int s = WI[h + i];
       for (int j = j1; j < j2; ++j) {
-        int u    = z[j];
-        int v    = z[j + t];
-        z[j]     = u + v;
+        int u = z[j];
+        int v = z[j + t];
+        z[j] = u + v;
         z[j + t] = ((u + mod - v) * s) % mod;
       }
       j1 += (t << 1);
@@ -158,7 +157,7 @@ void NTTDummy() {
 }
 
 void NTTSmall() {
-  usint m    = 8;
+  usint m = 8;
   usint phim = 4;
 
   NativeInteger modulusQ("73");
@@ -213,12 +212,12 @@ void NTTSmall() {
 }
 
 void NTTLarge() {
-  usint m    = 2048;
+  usint m = 2048;
   usint phim = 1024;
 
   NativeInteger modulusQ("288230376151748609");
   NativeInteger rootOfUnity = RootOfUnity(m, modulusQ);
-  NativeInteger mu          = modulusQ.ComputeMu();
+  NativeInteger mu = modulusQ.ComputeMu();
   DiscreteUniformGeneratorImpl<NativeVector> dug;
   dug.SetModulus(modulusQ);
   NativeVector x = dug.GenerateVector(phim);
@@ -243,7 +242,7 @@ void NTTLarge() {
 void NTTBenchmark() {
   usint counter = 1000;
   //  usint m = 2048;
-  usint m    = (1 << 13);
+  usint m = (1 << 13);
   usint phim = m / 2;
 
   //  NativeInteger modulusQ("288230376151748609");

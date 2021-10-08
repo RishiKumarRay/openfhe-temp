@@ -51,7 +51,7 @@ using namespace lbcrypto;
 #if (NATIVEINT == 128)
 TEST(UT128, modular_operations) {
   bigintnat::NativeInteger modulus = ((bigintnat::NativeInteger(1) << 120) + bigintnat::NativeInteger(123456789));
-  bigintnat::NativeInteger mu      = modulus.ComputeMu();
+  bigintnat::NativeInteger mu = modulus.ComputeMu();
 
   bigintnat::NativeInteger a = (bigintnat::NativeInteger(1) << 110) + bigintnat::NativeInteger(1234);
   bigintnat::NativeInteger b = (bigintnat::NativeInteger(1) << 115) + bigintnat::NativeInteger(6789);
@@ -114,7 +114,7 @@ TEST(UT128, modular_operations) {
 }
 
 TEST(UT128, NTT_operations) {
-  usint m1              = 16;
+  usint m1 = 16;
   NativeInteger modulus = FirstPrime<NativeInteger>(100, m1);
   NativeInteger rootOfUnity(RootOfUnity(m1, modulus));
 
@@ -124,10 +124,10 @@ TEST(UT128, NTT_operations) {
   shared_ptr<ILNativeParams> x2p(new ILNativeParams(params2));
 
   NativePoly x1(x1p, Format::COEFFICIENT);
-  x1 = { 431, 3414, 1234, 7845, 2145, 7415, 5471, 8452 };
+  x1 = {431, 3414, 1234, 7845, 2145, 7415, 5471, 8452};
 
   NativePoly x2(x2p, Format::COEFFICIENT);
-  x2 = { 4127, 9647, 1987, 5410 };
+  x2 = {4127, 9647, 1987, 5410};
 
   NativePoly x1Clone(x1);
   NativePoly x2Clone(x2);

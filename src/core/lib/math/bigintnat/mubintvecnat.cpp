@@ -57,12 +57,12 @@ NativeVector<IntegerType>::NativeVector(usint length, const IntegerType& modulus
 template <class IntegerType>
 NativeVector<IntegerType>::NativeVector(const NativeVector& bigVector) {
   m_modulus = bigVector.m_modulus;
-  m_data    = bigVector.m_data;
+  m_data = bigVector.m_data;
 }
 
 template <class IntegerType>
 NativeVector<IntegerType>::NativeVector(NativeVector&& bigVector) {
-  m_data    = std::move(bigVector.m_data);
+  m_data = std::move(bigVector.m_data);
   m_modulus = bigVector.m_modulus;
 }
 
@@ -75,8 +75,7 @@ NativeVector<IntegerType>::NativeVector(usint length, const IntegerType& modulus
   for (usint i = 0; i < m_data.size(); i++) {  // this loops over each entry
     if (i < len) {
       m_data[i] = IntegerType(*(rhs.begin() + i)) % m_modulus;
-    }
-    else {
+    } else {
       m_data[i] = IntegerType(0);
     }
   }
@@ -90,8 +89,7 @@ NativeVector<IntegerType>::NativeVector(usint length, const IntegerType& modulus
   for (usint i = 0; i < m_data.size(); i++) {  // this loops over each entry
     if (i < len) {
       m_data[i] = IntegerType(*(rhs.begin() + i)) % m_modulus;
-    }
-    else {
+    } else {
       m_data[i] = IntegerType(0);
     }
   }
@@ -109,8 +107,7 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::operator=(const Nati
       for (usint i = 0; i < m_data.size(); i++) {
         this->m_data[i] = rhs.m_data[i];
       }
-    }
-    else {
+    } else {
       m_data = rhs.m_data;
     }
     m_modulus = rhs.m_modulus;
@@ -121,7 +118,7 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::operator=(const Nati
 template <class IntegerType>
 NativeVector<IntegerType>& NativeVector<IntegerType>::operator=(NativeVector&& rhs) {
   if (this != &rhs) {
-    m_data    = std::move(rhs.m_data);
+    m_data = std::move(rhs.m_data);
     m_modulus = rhs.m_modulus;
   }
   return *this;
@@ -134,12 +131,10 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::operator=(std::initi
     if (i < len) {
       if (m_modulus != 0) {
         m_data[i] = IntegerType(*(rhs.begin() + i)) % m_modulus;
-      }
-      else {
+      } else {
         m_data[i] = IntegerType(*(rhs.begin() + i));
       }
-    }
-    else {
+    } else {
       m_data[i] = 0;
     }
   }
@@ -153,12 +148,10 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::operator=(std::initi
     if (i < len) {
       if (m_modulus != 0) {
         m_data[i] = IntegerType(*(rhs.begin() + i)) % m_modulus;
-      }
-      else {
+      } else {
         m_data[i] = IntegerType(*(rhs.begin() + i));
       }
-    }
-    else {
+    } else {
       m_data[i] = 0;
     }
   }
@@ -195,8 +188,8 @@ void NativeVector<IntegerType>::SwitchModulus(const IntegerType& newModulus) {
   if (newModulus > oldModulus) {
 #ifdef WITH_INTEL_HEXL
     uint64_t* op1 = reinterpret_cast<uint64_t*>(&m_data[0]);
-    intel::hexl::EltwiseCmpAdd(
-      op1, op1, m_data.size(), intel::hexl::CMPINT::NLE, oldModulusByTwo.ConvertToInt(), diff.ConvertToInt());
+    intel::hexl::EltwiseCmpAdd(op1, op1, m_data.size(), intel::hexl::CMPINT::NLE, oldModulusByTwo.ConvertToInt(),
+                               diff.ConvertToInt());
 #else
     for (usint i = 0; i < this->m_data.size(); i++) {
       IntegerType n = this->m_data[i];
@@ -205,22 +198,16 @@ void NativeVector<IntegerType>::SwitchModulus(const IntegerType& newModulus) {
       }
     }
 #endif
-  }
-  else {  // newModulus <= oldModulus
+  } else {  // newModulus <= oldModulus
 #ifdef WITH_INTEL_HEXL
     uint64_t* op1 = reinterpret_cast<uint64_t*>(&m_data[0]);
-    intel::hexl::EltwiseCmpSubMod(op1,
-                                  op1,
-                                  m_data.size(),
-                                  newModulus.ConvertToInt(),
-                                  intel::hexl::CMPINT::NLE,
-                                  oldModulusByTwo.ConvertToInt(),
-                                  diff.ConvertToInt() % newModulus.ConvertToInt());
+    intel::hexl::EltwiseCmpSubMod(op1, op1, m_data.size(), newModulus.ConvertToInt(), intel::hexl::CMPINT::NLE,
+                                  oldModulusByTwo.ConvertToInt(), diff.ConvertToInt() % newModulus.ConvertToInt());
 #else
     for (usint i = 0; i < this->m_data.size(); i++) {
-      IntegerType n        = this->m_data[i];
+      IntegerType n = this->m_data[i];
       IntegerType sub_diff = (n > oldModulusByTwo) ? diff : 0;
-      this->m_data[i]      = n.ModSub(sub_diff, newModulus);
+      this->m_data[i] = n.ModSub(sub_diff, newModulus);
     }
 #endif
   }
@@ -238,15 +225,13 @@ template <class IntegerType>
 NativeVector<IntegerType> NativeVector<IntegerType>::Mod(const IntegerType& modulus) const {
   if (modulus == 2) {
     return this->ModByTwo();
-  }
-  else {
+  } else {
     NativeVector ans(this->GetLength(), this->GetModulus());
     IntegerType halfQ(this->GetModulus() >> 1);
     for (size_t i = 0; i < ans.GetLength(); i++) {
       if (this->m_data[i] > halfQ) {
         ans[i] = this->m_data[i].ModSub(this->GetModulus(), modulus);
-      }
-      else {
+      } else {
         ans[i] = this->m_data[i].Mod(modulus);
       }
     }
@@ -258,14 +243,12 @@ template <class IntegerType>
 const NativeVector<IntegerType>& NativeVector<IntegerType>::ModEq(const IntegerType& modulus) {
   if (modulus == 2) {
     return this->ModByTwoEq();
-  }
-  else {
+  } else {
     IntegerType halfQ(this->GetModulus() >> 1);
     for (size_t i = 0; i < this->GetLength(); i++) {
       if (this->m_data[i] > halfQ) {
         this->m_data[i].ModSubEq(this->GetModulus(), modulus);
-      }
-      else {
+      } else {
         this->m_data[i].ModEq(modulus);
       }
     }
@@ -276,7 +259,7 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::ModEq(const IntegerT
 template <class IntegerType>
 NativeVector<IntegerType> NativeVector<IntegerType>::ModAdd(const IntegerType& b) const {
   IntegerType modulus = this->m_modulus;
-  IntegerType bLocal  = b;
+  IntegerType bLocal = b;
   NativeVector ans(*this);
   if (bLocal > m_modulus) {
     bLocal.ModEq(modulus);
@@ -290,7 +273,7 @@ NativeVector<IntegerType> NativeVector<IntegerType>::ModAdd(const IntegerType& b
 template <class IntegerType>
 const NativeVector<IntegerType>& NativeVector<IntegerType>::ModAddEq(const IntegerType& b) {
   IntegerType modulus = this->m_modulus;
-  IntegerType bLocal  = b;
+  IntegerType bLocal = b;
   if (bLocal > m_modulus) {
     bLocal.ModEq(modulus);
   }
@@ -390,7 +373,7 @@ template <class IntegerType>
 NativeVector<IntegerType> NativeVector<IntegerType>::ModMul(const IntegerType& b) const {
   NativeVector ans(*this);
   IntegerType modulus = this->m_modulus;
-  IntegerType bLocal  = b;
+  IntegerType bLocal = b;
   if (bLocal >= modulus) {
     bLocal.ModEq(modulus);
   }
@@ -404,7 +387,7 @@ NativeVector<IntegerType> NativeVector<IntegerType>::ModMul(const IntegerType& b
 template <class IntegerType>
 const NativeVector<IntegerType>& NativeVector<IntegerType>::ModMulEq(const IntegerType& b) {
   IntegerType modulus = this->m_modulus;
-  IntegerType bLocal  = b;
+  IntegerType bLocal = b;
   if (bLocal >= modulus) {
     bLocal.ModEq(modulus);
   }
@@ -423,14 +406,14 @@ NativeVector<IntegerType> NativeVector<IntegerType>::ModMul(const NativeVector& 
   NativeVector ans(*this);
 
 #ifdef WITH_INTEL_HEXL
-  uint64_t* ans_data_ptr     = reinterpret_cast<uint64_t*>(&ans.m_data[0]);
+  uint64_t* ans_data_ptr = reinterpret_cast<uint64_t*>(&ans.m_data[0]);
   const uint64_t* b_data_ptr = reinterpret_cast<const uint64_t*>(&b[0]);
   intel::hexl::EltwiseMultMod(ans_data_ptr, ans_data_ptr, b_data_ptr, m_data.size(), m_modulus.ConvertToInt(), 1);
   return ans;
 #endif
 
   IntegerType modulus = this->m_modulus;
-  IntegerType mu      = modulus.ComputeMu();
+  IntegerType mu = modulus.ComputeMu();
   for (usint i = 0; i < this->m_data.size(); i++) {
     ans.m_data[i].ModMulFastEq(b[i], modulus, mu);
   }
@@ -444,14 +427,14 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::ModMulEq(const Nativ
   }
 
 #ifdef WITH_INTEL_HEXL
-  uint64_t* m_data_ptr       = reinterpret_cast<uint64_t*>(&m_data[0]);
+  uint64_t* m_data_ptr = reinterpret_cast<uint64_t*>(&m_data[0]);
   const uint64_t* b_data_ptr = reinterpret_cast<const uint64_t*>(&b[0]);
   intel::hexl::EltwiseMultMod(m_data_ptr, m_data_ptr, b_data_ptr, m_data.size(), m_modulus.ConvertToInt(), 1);
   return *this;
 #endif
 
   IntegerType modulus = this->m_modulus;
-  IntegerType mu      = modulus.ComputeMu();
+  IntegerType mu = modulus.ComputeMu();
   for (usint i = 0; i < this->m_data.size(); i++) {
     this->m_data[i].ModMulFastEq(b[i], modulus, mu);
   }
@@ -506,16 +489,13 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::ModByTwoEq() {
     if (this->operator[](i) > halfQ) {
       if (this->m_data[i].Mod(2) == 1) {
         this->m_data[i] = IntegerType(0);
-      }
-      else {
+      } else {
         this->m_data[i] = 1;
       }
-    }
-    else {
+    } else {
       if (this->m_data[i].Mod(2) == 1) {
         this->m_data[i] = 1;
-      }
-      else {
+      } else {
         this->m_data[i] = IntegerType(0);
       }
     }
@@ -543,9 +523,8 @@ NativeVector<IntegerType> NativeVector<IntegerType>::MultiplyAndRound(const Inte
   for (usint i = 0; i < this->m_data.size(); i++) {
     if (ans.m_data[i] > halfQ) {
       IntegerType temp = this->m_modulus - ans.m_data[i];
-      ans.m_data[i]    = this->m_modulus - temp.MultiplyAndRound(p, q);
-    }
-    else {
+      ans.m_data[i] = this->m_modulus - temp.MultiplyAndRound(p, q);
+    } else {
       ans.m_data[i].MultiplyAndRoundEq(p, q);
       ans.m_data[i].ModEq(this->m_modulus);
     }
@@ -560,9 +539,8 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::MultiplyAndRoundEq(c
   for (usint i = 0; i < this->m_data.size(); i++) {
     if (this->m_data[i] > halfQ) {
       IntegerType temp = this->m_modulus - this->m_data[i];
-      this->m_data[i]  = this->m_modulus - temp.MultiplyAndRound(p, q);
-    }
-    else {
+      this->m_data[i] = this->m_modulus - temp.MultiplyAndRound(p, q);
+    } else {
       this->m_data[i].MultiplyAndRoundEq(p, q);
       this->ModEq(this->m_modulus);
     }
@@ -577,9 +555,8 @@ NativeVector<IntegerType> NativeVector<IntegerType>::DivideAndRound(const Intege
   for (usint i = 0; i < this->m_data.size(); i++) {
     if (ans.m_data[i] > halfQ) {
       IntegerType temp = this->m_modulus - ans.m_data[i];
-      ans.m_data[i]    = this->m_modulus - temp.DivideAndRound(q);
-    }
-    else {
+      ans.m_data[i] = this->m_modulus - temp.DivideAndRound(q);
+    } else {
       ans.m_data[i].DivideAndRoundEq(q);
     }
   }
@@ -592,9 +569,8 @@ const NativeVector<IntegerType>& NativeVector<IntegerType>::DivideAndRoundEq(con
   for (usint i = 0; i < this->m_data.size(); i++) {
     if (this->m_data[i] > halfQ) {
       IntegerType temp = this->m_modulus - this->m_data[i];
-      this->m_data[i]  = this->m_modulus - temp.DivideAndRound(q);
-    }
-    else {
+      this->m_data[i] = this->m_modulus - temp.DivideAndRound(q);
+    } else {
       this->m_data[i].DivideAndRoundEq(q);
     }
   }

@@ -38,7 +38,7 @@ void CryptoContextImpl<Element>::EvalMultKeyGen(const LPPrivateKey<Element> key)
 
   LPEvalKey<Element> k = GetEncryptionAlgorithm()->EvalMultKeyGen(key);
 
-  GetAllEvalMultKeys()[k->GetKeyTag()] = { k };
+  GetAllEvalMultKeys()[k->GetKeyTag()] = {k};
 }
 
 template <typename Element>
@@ -80,7 +80,8 @@ void CryptoContextImpl<Element>::ClearEvalMultKeys() {
 template <typename Element>
 void CryptoContextImpl<Element>::ClearEvalMultKeys(const string& id) {
   auto kd = GetAllEvalMultKeys().find(id);
-  if (kd != GetAllEvalMultKeys().end()) GetAllEvalMultKeys().erase(kd);
+  if (kd != GetAllEvalMultKeys().end())
+    GetAllEvalMultKeys().erase(kd);
 }
 
 /**
@@ -92,8 +93,7 @@ void CryptoContextImpl<Element>::ClearEvalMultKeys(const CryptoContext<Element> 
   for (auto it = GetAllEvalMultKeys().begin(); it != GetAllEvalMultKeys().end();) {
     if (it->second[0]->GetCryptoContext() == cc) {
       it = GetAllEvalMultKeys().erase(it);
-    }
-    else {
+    } else {
       ++it;
     }
   }
@@ -124,7 +124,7 @@ void CryptoContextImpl<Element>::EvalSumKeyGen(const LPPrivateKey<Element> priva
 
 template <typename Element>
 shared_ptr<std::map<usint, LPEvalKey<Element>>> CryptoContextImpl<Element>::EvalSumRowsKeyGen(
-  const LPPrivateKey<Element> privateKey, const LPPublicKey<Element> publicKey, usint rowSize, usint subringDim) {
+    const LPPrivateKey<Element> privateKey, const LPPublicKey<Element> publicKey, usint rowSize, usint subringDim) {
   if (privateKey == nullptr || Mismatched(privateKey->GetCryptoContext())) {
     PALISADE_THROW(config_error,
                    "Private key passed to EvalSumKeyGen were not generated "
@@ -142,7 +142,7 @@ shared_ptr<std::map<usint, LPEvalKey<Element>>> CryptoContextImpl<Element>::Eval
 
 template <typename Element>
 shared_ptr<std::map<usint, LPEvalKey<Element>>> CryptoContextImpl<Element>::EvalSumColsKeyGen(
-  const LPPrivateKey<Element> privateKey, const LPPublicKey<Element> publicKey) {
+    const LPPrivateKey<Element> privateKey, const LPPublicKey<Element> publicKey) {
   if (privateKey == nullptr || Mismatched(privateKey->GetCryptoContext())) {
     PALISADE_THROW(config_error,
                    "Private key passed to EvalSumKeyGen were not generated "
@@ -185,7 +185,8 @@ void CryptoContextImpl<Element>::ClearEvalSumKeys() {
 template <typename Element>
 void CryptoContextImpl<Element>::ClearEvalSumKeys(const string& id) {
   auto kd = GetAllEvalSumKeys().find(id);
-  if (kd != GetAllEvalSumKeys().end()) GetAllEvalSumKeys().erase(kd);
+  if (kd != GetAllEvalSumKeys().end())
+    GetAllEvalSumKeys().erase(kd);
 }
 
 /**
@@ -197,8 +198,7 @@ void CryptoContextImpl<Element>::ClearEvalSumKeys(const CryptoContext<Element> c
   for (auto it = GetAllEvalSumKeys().begin(); it != GetAllEvalSumKeys().end();) {
     if (it->second->begin()->second->GetCryptoContext() == cc) {
       it = GetAllEvalSumKeys().erase(it);
-    }
-    else {
+    } else {
       ++it;
     }
   }
@@ -208,7 +208,7 @@ template <typename Element>
 void CryptoContextImpl<Element>::InsertEvalSumKey(const shared_ptr<std::map<usint, LPEvalKey<Element>>> mapToInsert) {
   // find the tag
   if (!mapToInsert->empty()) {
-    auto onekey                                      = mapToInsert->begin();
+    auto onekey = mapToInsert->begin();
     GetAllEvalSumKeys()[onekey->second->GetKeyTag()] = mapToInsert;
   }
 }
@@ -260,7 +260,8 @@ void CryptoContextImpl<Element>::ClearEvalAutomorphismKeys() {
 template <typename Element>
 void CryptoContextImpl<Element>::ClearEvalAutomorphismKeys(const string& id) {
   auto kd = evalAutomorphismKeyMap().find(id);
-  if (kd != evalAutomorphismKeyMap().end()) evalAutomorphismKeyMap().erase(kd);
+  if (kd != evalAutomorphismKeyMap().end())
+    evalAutomorphismKeyMap().erase(kd);
 }
 
 /**
@@ -273,8 +274,7 @@ void CryptoContextImpl<Element>::ClearEvalAutomorphismKeys(const CryptoContext<E
   for (auto it = evalAutomorphismKeyMap().begin(); it != evalAutomorphismKeyMap().end();) {
     if (it->second->begin()->second->GetCryptoContext() == cc) {
       it = evalAutomorphismKeyMap().erase(it);
-    }
-    else {
+    } else {
       ++it;
     }
   }
@@ -282,9 +282,9 @@ void CryptoContextImpl<Element>::ClearEvalAutomorphismKeys(const CryptoContext<E
 
 template <typename Element>
 void CryptoContextImpl<Element>::InsertEvalAutomorphismKey(
-  const shared_ptr<std::map<usint, LPEvalKey<Element>>> mapToInsert) {
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> mapToInsert) {
   // find the tag
-  auto onekey                                           = mapToInsert->begin();
+  auto onekey = mapToInsert->begin();
   evalAutomorphismKeyMap()[onekey->second->GetKeyTag()] = mapToInsert;
 }
 
@@ -296,7 +296,7 @@ Ciphertext<Element> CryptoContextImpl<Element>::EvalSum(ConstCiphertext<Element>
                    "crypto context");
 
   auto evalSumKeys = CryptoContextImpl<Element>::GetEvalSumKeyMap(ciphertext->GetKeyTag());
-  auto rv          = GetEncryptionAlgorithm()->EvalSum(ciphertext, batchSize, evalSumKeys);
+  auto rv = GetEncryptionAlgorithm()->EvalSum(ciphertext, batchSize, evalSumKeys);
   return rv;
 }
 
@@ -315,8 +315,8 @@ Ciphertext<Element> CryptoContextImpl<Element>::EvalSumRows(ConstCiphertext<Elem
 
 template <typename Element>
 Ciphertext<Element> CryptoContextImpl<Element>::EvalSumCols(
-  ConstCiphertext<Element> ciphertext, usint rowSize,
-  const std::map<usint, LPEvalKey<Element>>& evalSumKeysRight) const {
+    ConstCiphertext<Element> ciphertext, usint rowSize,
+    const std::map<usint, LPEvalKey<Element>>& evalSumKeysRight) const {
   if (ciphertext == nullptr || Mismatched(ciphertext->GetCryptoContext()))
     PALISADE_THROW(config_error,
                    "Information passed to EvalSum was not generated with this "
@@ -371,7 +371,7 @@ Ciphertext<Element> CryptoContextImpl<Element>::EvalInnerProduct(ConstCiphertext
                    "with this crypto context");
 
   auto evalSumKeys = CryptoContextImpl<Element>::GetEvalSumKeyMap(ct1->GetKeyTag());
-  auto ek          = GetEvalMultKeyVector(ct1->GetKeyTag());
+  auto ek = GetEvalMultKeyVector(ct1->GetKeyTag());
 
   auto rv = GetEncryptionAlgorithm()->EvalInnerProduct(ct1, ct2, batchSize, evalSumKeys, ek[0]);
   return rv;
@@ -396,7 +396,8 @@ Plaintext CryptoContextImpl<Element>::GetPlaintextForDecrypt(PlaintextEncodings 
                                                              EncodingParams ep) {
   auto vp = std::make_shared<typename NativePoly::Params>(evp->GetCyclotomicOrder(), ep->GetPlaintextModulus(), 1);
 
-  if (pte == CKKSPacked) return PlaintextFactory::MakePlaintext(pte, evp, ep);
+  if (pte == CKKSPacked)
+    return PlaintextFactory::MakePlaintext(pte, evp, ep);
 
   return PlaintextFactory::MakePlaintext(pte, vp, ep);
 }
@@ -404,8 +405,10 @@ Plaintext CryptoContextImpl<Element>::GetPlaintextForDecrypt(PlaintextEncodings 
 template <typename Element>
 DecryptResult CryptoContextImpl<Element>::Decrypt(const LPPrivateKey<Element> privateKey,
                                                   ConstCiphertext<Element> ciphertext, Plaintext* plaintext) {
-  if (ciphertext == nullptr) PALISADE_THROW(config_error, "ciphertext passed to Decrypt is empty");
-  if (plaintext == nullptr) PALISADE_THROW(config_error, "plaintext passed to Decrypt is empty");
+  if (ciphertext == nullptr)
+    PALISADE_THROW(config_error, "ciphertext passed to Decrypt is empty");
+  if (plaintext == nullptr)
+    PALISADE_THROW(config_error, "plaintext passed to Decrypt is empty");
   if (privateKey == nullptr || Mismatched(privateKey->GetCryptoContext()))
     PALISADE_THROW(config_error,
                    "Information passed to Decrypt was not generated with "
@@ -415,19 +418,19 @@ DecryptResult CryptoContextImpl<Element>::Decrypt(const LPPrivateKey<Element> pr
   // Plaintext decrypted =
   // GetPlaintextForDecrypt(ciphertext->GetEncodingType(),
   // this->GetElementParams(), this->GetEncodingParams());
-  Plaintext decrypted = GetPlaintextForDecrypt(
-    ciphertext->GetEncodingType(), ciphertext->GetElements()[0].GetParams(), this->GetEncodingParams());
+  Plaintext decrypted = GetPlaintextForDecrypt(ciphertext->GetEncodingType(), ciphertext->GetElements()[0].GetParams(),
+                                               this->GetEncodingParams());
 
   DecryptResult result;
 
   if ((ciphertext->GetEncodingType() == CKKSPacked) && (typeid(Element) != typeid(NativePoly))) {
     result = GetEncryptionAlgorithm()->Decrypt(privateKey, ciphertext, &decrypted->GetElement<Poly>());
-  }
-  else {
+  } else {
     result = GetEncryptionAlgorithm()->Decrypt(privateKey, ciphertext, &decrypted->GetElement<NativePoly>());
   }
 
-  if (result.isValid == false) return result;
+  if (result.isValid == false)
+    return result;
 
   if (ciphertext->GetEncodingType() == CKKSPacked) {
     auto decryptedCKKS = std::static_pointer_cast<CKKSPackedEncoding>(decrypted);
@@ -436,12 +439,11 @@ DecryptResult CryptoContextImpl<Element>::Decrypt(const LPPrivateKey<Element> pr
     decryptedCKKS->SetScalingFactor(ciphertext->GetScalingFactor());
 
     const auto cryptoParamsCKKS =
-      std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
+        std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
 
-    decryptedCKKS->Decode(
-      ciphertext->GetDepth(), ciphertext->GetScalingFactor(), cryptoParamsCKKS->GetRescalingTechnique());
-  }
-  else {
+    decryptedCKKS->Decode(ciphertext->GetDepth(), ciphertext->GetScalingFactor(),
+                          cryptoParamsCKKS->GetRescalingTechnique());
+  } else {
     decrypted->Decode();
   }
 
@@ -451,12 +453,13 @@ DecryptResult CryptoContextImpl<Element>::Decrypt(const LPPrivateKey<Element> pr
 
 template <typename Element>
 DecryptResult CryptoContextImpl<Element>::MultipartyDecryptFusion(
-  const vector<Ciphertext<Element>>& partialCiphertextVec, Plaintext* plaintext) const {
+    const vector<Ciphertext<Element>>& partialCiphertextVec, Plaintext* plaintext) const {
   DecryptResult result;
 
   // Make sure we're processing ciphertexts.
   size_t last_ciphertext = partialCiphertextVec.size();
-  if (last_ciphertext < 1) return result;
+  if (last_ciphertext < 1)
+    return result;
 
   for (size_t i = 0; i < last_ciphertext; i++) {
     if (partialCiphertextVec[i] == nullptr || Mismatched(partialCiphertextVec[i]->GetCryptoContext()))
@@ -470,27 +473,26 @@ DecryptResult CryptoContextImpl<Element>::MultipartyDecryptFusion(
   }
 
   // determine which type of plaintext that you need to decrypt into
-  Plaintext decrypted = GetPlaintextForDecrypt(partialCiphertextVec[0]->GetEncodingType(),
-                                               partialCiphertextVec[0]->GetElements()[0].GetParams(),
-                                               this->GetEncodingParams());
+  Plaintext decrypted =
+      GetPlaintextForDecrypt(partialCiphertextVec[0]->GetEncodingType(),
+                             partialCiphertextVec[0]->GetElements()[0].GetParams(), this->GetEncodingParams());
 
   if ((partialCiphertextVec[0]->GetEncodingType() == CKKSPacked) && (typeid(Element) != typeid(NativePoly)))
     result = GetEncryptionAlgorithm()->MultipartyDecryptFusion(partialCiphertextVec, &decrypted->GetElement<Poly>());
   else
     result =
-      GetEncryptionAlgorithm()->MultipartyDecryptFusion(partialCiphertextVec, &decrypted->GetElement<NativePoly>());
+        GetEncryptionAlgorithm()->MultipartyDecryptFusion(partialCiphertextVec, &decrypted->GetElement<NativePoly>());
 
-  if (result.isValid == false) return result;
+  if (result.isValid == false)
+    return result;
 
   if (partialCiphertextVec[0]->GetEncodingType() == CKKSPacked) {
     auto decryptedCKKS = std::static_pointer_cast<CKKSPackedEncoding>(decrypted);
     const auto cryptoParamsCKKS =
-      std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
-    decryptedCKKS->Decode(partialCiphertextVec[0]->GetDepth(),
-                          partialCiphertextVec[0]->GetScalingFactor(),
+        std::dynamic_pointer_cast<LPCryptoParametersCKKS<DCRTPoly>>(this->GetCryptoParameters());
+    decryptedCKKS->Decode(partialCiphertextVec[0]->GetDepth(), partialCiphertextVec[0]->GetScalingFactor(),
                           cryptoParamsCKKS->GetRescalingTechnique());
-  }
-  else {
+  } else {
     decrypted->Decode();
   }
 

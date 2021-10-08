@@ -116,8 +116,7 @@ myZZ myZZ::DivideAndRound(const myZZ& q) const {
   if (*this < q) {
     if (*this <= halfQ) {
       return myZZ(0);
-    }
-    else {
+    } else {
       return myZZ(1);
     }
   }
@@ -140,8 +139,7 @@ const myZZ& myZZ::DivideAndRoundEq(const myZZ& q) {
   if (*this < q) {
     if (*this <= halfQ) {
       return *this = myZZ(0);
-    }
-    else {
+    } else {
       return *this = myZZ(1);
     }
   }
@@ -237,7 +235,7 @@ usint myZZ::GetMSB() const {
   MSB = (sz - 1) * NTL_ZZ_NBITS;  // figure out bit location of all but last
                                   // limb
   const ZZ_limb_t* zlp = ZZ_limbs_get(*this);
-  usint tmp            = GetMSBLimb_t(zlp[sz - 1]);  // add the value of that last limb.
+  usint tmp = GetMSBLimb_t(zlp[sz - 1]);  // add the value of that last limb.
 
   MSB += tmp;
   m_MSB = MSB;
@@ -248,8 +246,7 @@ void myZZ::SetMSB() {
   size_t sz = this->size();
   if (sz == 0) {  // special case for empty data
     m_MSB = 0;
-  }
-  else {
+  } else {
     m_MSB = (sz - 1) * NTL_ZZ_NBITS;  // figure out bit location of all but last limb
     // could also try
     // m_MSB = NumBytes(*this)*8;
@@ -263,7 +260,7 @@ void myZZ::SetMSB() {
 
 // inline static usint GetMSBLimb_t(ZZ_limb_t x){
 usint myZZ::GetMSBLimb_t(ZZ_limb_t x) const {
-  const usint bval[] = { 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4 };
+  const usint bval[] = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4};
 
   uint64_t r = 0;
   if (x & 0xFFFFFFFF00000000) {
@@ -293,7 +290,8 @@ usint myZZ::GetBitRangeAtIndex(usint ppo, usint length) const {
   long sa;
   _ntl_limb_t wh;
 
-  if (pin < 0 || !this->rep) return 0;
+  if (pin < 0 || !this->rep)
+    return 0;
 
   usint out(0);
 
@@ -302,7 +300,8 @@ usint myZZ::GetBitRangeAtIndex(usint ppo, usint length) const {
     wh = ((_ntl_limb_t)1) << (p - NTL_ZZ_NBITS * bl);
 
     sa = this->size();
-    if (sa < 0) sa = -sa;
+    if (sa < 0)
+      sa = -sa;
 
     if (sa <= bl) {
       return out;
@@ -316,9 +315,9 @@ usint myZZ::GetBitRangeAtIndex(usint ppo, usint length) const {
 
 usint myZZ::GetDigitAtIndexForBase(usint index, usint base) const {
   usint DigitLen = std::ceil(log2(base));
-  usint digit    = 0;
+  usint digit = 0;
   usint newIndex = 1 + (index - 1) * DigitLen;
-  digit          = GetBitRangeAtIndex(newIndex, DigitLen);
+  digit = GetBitRangeAtIndex(newIndex, DigitLen);
   return digit;
 }
 
@@ -341,8 +340,7 @@ usint myZZ::ceilIntByUInt(const ZZ_limb_t Number) {
 
   if ((Number & mask) != 0) {
     return (Number >> m_log2LimbBitLength) + 1;
-  }
-  else {
+  } else {
     return Number >> m_log2LimbBitLength;
   }
 }

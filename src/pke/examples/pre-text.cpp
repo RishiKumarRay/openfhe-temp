@@ -74,11 +74,9 @@ CryptoContext<Poly> GeneratePREContext(string scheme, PlaintextModulus ptm) {
 
   if (scheme == "Null") {
     cc = GenTestCryptoContext<Poly>(scheme, m, ptm);
-  }
-  else if (scheme == "BFV") {
+  } else if (scheme == "BFV") {
     cc = GenTestCryptoContext<Poly>("BFV_rlwe", m, ptm);
-  }
-  else {
+  } else {
     cout << "Unrecognized scheme '" << scheme << "'" << endl;
     cout << "Available schemes are: Null, and BFV" << endl;
   }
@@ -89,7 +87,7 @@ CryptoContext<Poly> GeneratePREContext(string scheme, PlaintextModulus ptm) {
 int main(int argc, char* argv[]) {
   string schemeName;
   bool beVerbose = true;
-  bool haveName  = false;
+  bool haveName = false;
 
   // Process parameters, find the parameter set name specified on the command
   // line
@@ -99,26 +97,25 @@ int main(int argc, char* argv[]) {
     if (parm[0] == '-') {
       if (parm == "-s") {
         beVerbose = false;
-      }
-      else {
+      } else {
         cout << "Unrecognized parameter " << parm << endl;
         return 1;
       }
-    }
-    else {
+    } else {
       if (haveName) {
         cout << "Cannot specify multiple parameter set names" << endl;
         return 1;
       }
 
-      haveName   = true;
+      haveName = true;
       schemeName = parm;
     }
   }
 
   CryptoContext<Poly> cc = GeneratePREContext(schemeName, 256);
 
-  if (cc == 0) return 0;
+  if (cc == 0)
+    return 0;
 
   if (beVerbose) {
     cout << "Crypto system for " << schemeName << " initialized with parameters:" << endl;
@@ -133,13 +130,15 @@ int main(int argc, char* argv[]) {
   // The largest possible plaintext is the size of the ring
   size_t ptsize = cc->GetRingDimension();
 
-  if (beVerbose) cout << "Plaintext will be of size " << ptsize << endl;
+  if (beVerbose)
+    cout << "Plaintext will be of size " << ptsize << endl;
 
   // generate a random string of length ptsize
   auto randchar = []() -> char {
-    const char charset[] = "0123456789"
-                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                           "abcdefghijklmnopqrstuvwxyz";
+    const char charset[] =
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz";
     const size_t max_index = (sizeof(charset) - 1);
     return charset[rand() % max_index];
   };
@@ -154,7 +153,8 @@ int main(int argc, char* argv[]) {
   // Perform the key generation operation.
   ////////////////////////////////////////////////////////////
 
-  if (beVerbose) cout << "Running key generation" << endl;
+  if (beVerbose)
+    cout << "Running key generation" << endl;
 
   LPKeyPair<Poly> kp = cc->KeyGen();
 
@@ -169,7 +169,8 @@ int main(int argc, char* argv[]) {
 
   Ciphertext<Poly> ciphertext;
 
-  if (beVerbose) cout << "Running encryption" << endl;
+  if (beVerbose)
+    cout << "Running encryption" << endl;
 
   ciphertext = cc->Encrypt(kp.publicKey, plaintext);
 
@@ -179,7 +180,8 @@ int main(int argc, char* argv[]) {
 
   Plaintext plaintextNew;
 
-  if (beVerbose) cout << "Running decryption" << std::endl;
+  if (beVerbose)
+    cout << "Running decryption" << std::endl;
 
   DecryptResult result = cc->Decrypt(kp.secretKey, ciphertext, &plaintextNew);
 
@@ -201,7 +203,8 @@ int main(int argc, char* argv[]) {
   // after the re-encryption operation.
   ////////////////////////////////////////////////////////////
 
-  if (beVerbose) cout << "Running second key generation (used for re-encryption)" << endl;
+  if (beVerbose)
+    cout << "Running second key generation (used for re-encryption)" << endl;
 
   LPKeyPair<Poly> newKp = cc->KeyGen();
 
@@ -215,13 +218,13 @@ int main(int argc, char* argv[]) {
   // This generates the keys which are used to perform the key switching.
   ////////////////////////////////////////////////////////////
 
-  if (beVerbose) cout << "Generating proxy re-encryption key" << endl;
+  if (beVerbose)
+    cout << "Generating proxy re-encryption key" << endl;
 
   LPEvalKey<Poly> evalKey;
   try {
     evalKey = cc->ReKeyGen(newKp.publicKey, kp.secretKey);
-  }
-  catch (std::exception& e) {
+  } catch (std::exception& e) {
     cout << e.what() << ", cannot proceed with PRE" << endl;
     return 0;
   }
@@ -230,7 +233,8 @@ int main(int argc, char* argv[]) {
   // Perform the proxy re-encryption operation.
   ////////////////////////////////////////////////////////////
 
-  if (beVerbose) cout << "Running re-encryption" << endl;
+  if (beVerbose)
+    cout << "Running re-encryption" << endl;
 
   auto newCiphertext = cc->ReEncrypt(evalKey, ciphertext);
 
@@ -240,7 +244,8 @@ int main(int argc, char* argv[]) {
 
   Plaintext plaintextNew2;
 
-  if (beVerbose) cout << "Running decryption of re-encrypted cipher" << endl;
+  if (beVerbose)
+    cout << "Running decryption of re-encrypted cipher" << endl;
 
   DecryptResult result1 = cc->Decrypt(newKp.secretKey, newCiphertext, &plaintextNew2);
 
@@ -251,9 +256,11 @@ int main(int argc, char* argv[]) {
 
   if (plaintext != plaintextNew2) {
     cout << "Mismatch on decryption of PRE ciphertext" << endl;
-    if (plaintext->GetEncodingType() != plaintextNew2->GetEncodingType()) cout << "encoding mismatch" << endl;
+    if (plaintext->GetEncodingType() != plaintextNew2->GetEncodingType())
+      cout << "encoding mismatch" << endl;
 
-    if (plaintext->GetEncodingParams() != plaintextNew2->GetEncodingParams()) cout << "params" << endl;
+    if (plaintext->GetEncodingParams() != plaintextNew2->GetEncodingParams())
+      cout << "params" << endl;
 
     if (plaintext->GetLength() != plaintextNew2->GetLength())
       cout << "length mismatch " << plaintext->GetLength() << " and " << plaintextNew2->GetLength() << endl;
@@ -269,7 +276,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  if (beVerbose) cout << "Execution completed" << endl;
+  if (beVerbose)
+    cout << "Execution completed" << endl;
 
   return 0;
 }

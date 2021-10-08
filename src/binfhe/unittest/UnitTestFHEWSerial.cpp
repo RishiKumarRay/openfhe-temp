@@ -29,8 +29,7 @@
 
 using namespace lbcrypto;
 
-class UnitTestFHEWSerial : public ::testing::Test
-{
+class UnitTestFHEWSerial : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 

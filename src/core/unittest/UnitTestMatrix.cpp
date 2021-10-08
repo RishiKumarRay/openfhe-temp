@@ -109,9 +109,7 @@ void basic_intvec_math(const string& msg) {
 
   typename V::Integer modulus("67108913");
   DEBUG("1");
-  auto singleAlloc = [=]() {
-    return V(1, modulus);
-  };
+  auto singleAlloc = [=]() { return V(1, modulus); };
   DEBUG("2");
   Matrix<V> z(singleAlloc, 2, 2);
   DEBUG("3");
@@ -139,9 +137,9 @@ TEST(UTMatrix, basic_intvec_math) {
 
 template <typename Element>
 void transpose(const string& msg) {
-  Matrix<Element> n  = Matrix<Element>(secureIL2nAlloc<Element>(), 4, 2).Ones();
+  Matrix<Element> n = Matrix<Element>(secureIL2nAlloc<Element>(), 4, 2).Ones();
   Matrix<Element> nT = Matrix<Element>(n).Transpose();
-  Matrix<Element> I  = Matrix<Element>(secureIL2nAlloc<Element>(), 2, 2).Identity();
+  Matrix<Element> I = Matrix<Element>(secureIL2nAlloc<Element>(), 2, 2).Identity();
   EXPECT_EQ(nT, I * nT) << msg;
 }
 
@@ -152,8 +150,8 @@ TEST(UTMatrix, transpose) {
 template <typename Element>
 void scalar_mult(const string& msg) {
   Matrix<Element> n = Matrix<Element>(secureIL2nAlloc<Element>(), 4, 2).Ones();
-  auto one          = secureIL2nAlloc<Element>()();
-  one               = 1;
+  auto one = secureIL2nAlloc<Element>()();
+  one = 1;
   EXPECT_EQ(n, one * n) << msg;
   EXPECT_EQ(n, n * one) << msg;
 }
@@ -175,7 +173,7 @@ void Poly_mult_square_matrix(const string& msg) {
   EXPECT_EQ(A, I * A) << msg << " Matrix multiplication of two Poly2Ns: A = IA - failed.\n";
 
   EXPECT_EQ((A * B).Transpose(), B.Transpose() * A.Transpose())
-    << "Matrix multiplication of two Poly2Ns: (A*B)^T = B^T*A^T - failed.\n";
+      << "Matrix multiplication of two Poly2Ns: (A*B)^T = B^T*A^T - failed.\n";
 
   EXPECT_EQ(A * B * C, A * (B * C)) << msg << " Matrix multiplication of two Poly2Ns: A*B*C = A*(B*C) - failed.\n";
   EXPECT_EQ(A * B * C, (A * B) * C) << msg << " Matrix multiplication of two Poly2Ns: A*B*C = (A*B)*C - failed.\n";
@@ -190,11 +188,11 @@ void Poly_mult_square_matrix_caps(const string& msg) {
   int32_t dimension = 16;
 
   MatrixStrassen<Element> A =
-    MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension, fastUniformIL2nAlloc<Element>());
+      MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension, fastUniformIL2nAlloc<Element>());
   MatrixStrassen<Element> B =
-    MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension, fastUniformIL2nAlloc<Element>());
+      MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension, fastUniformIL2nAlloc<Element>());
   MatrixStrassen<Element> C =
-    MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension, fastUniformIL2nAlloc<Element>());
+      MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension, fastUniformIL2nAlloc<Element>());
   MatrixStrassen<Element> I = MatrixStrassen<Element>(fastIL2nAlloc<Element>(), dimension, dimension).Identity();
 
   // EXPECT_EQ((A.Mult(B))(0, 0), (A.MultiplyCAPS(B, 2))(0, 0)) << "CAPS matrix
@@ -204,21 +202,21 @@ void Poly_mult_square_matrix_caps(const string& msg) {
   EXPECT_EQ(A, I.Mult(A, 2)) << msg << " Matrix multiplication of two Poly2Ns: A = IA - failed.\n";
 
   EXPECT_EQ((A.Mult(B, 2)).Transpose(), B.Transpose().Mult(A.Transpose(), 2))
-    << msg
-    << " Matrix multiplication of two Poly2Ns: "
-       "(A.MultiplyCAPS(B,2)).Transpose(), "
-       "B.Transpose().MultiplyCAPS(A.Transpose(),2) - failed.\n";
+      << msg
+      << " Matrix multiplication of two Poly2Ns: "
+         "(A.MultiplyCAPS(B,2)).Transpose(), "
+         "B.Transpose().MultiplyCAPS(A.Transpose(),2) - failed.\n";
 
   EXPECT_EQ(A.Mult(B, 2).Mult(C, 2), A.Mult((B.Mult(C, 2)), 2))
-    << msg
-    << " Matrix multiplication of two Poly2Ns: "
-       "A.MultiplyCAPS(B,2).MultiplyCAPS(C,2), "
-       "A.MultiplyCAPS((B.MultiplyCAPS(C,2)),2) - failed.\n";
+      << msg
+      << " Matrix multiplication of two Poly2Ns: "
+         "A.MultiplyCAPS(B,2).MultiplyCAPS(C,2), "
+         "A.MultiplyCAPS((B.MultiplyCAPS(C,2)),2) - failed.\n";
   EXPECT_EQ(A.Mult(B, 2).Mult(C, 2), (A.Mult(B, 2)).Mult(C, 2))
-    << msg
-    << " Matrix multiplication of two Poly2Ns: "
-       "A.MultiplyCAPS(B,2).MultiplyCAPS(C,2), "
-       "(A.MultiplyCAPS(B,2)).MultiplyCAPS(C,2) - failed.\n";
+      << msg
+      << " Matrix multiplication of two Poly2Ns: "
+         "A.MultiplyCAPS(B,2).MultiplyCAPS(C,2), "
+         "(A.MultiplyCAPS(B,2)).MultiplyCAPS(C,2) - failed.\n";
 }
 
 TEST(UTMatrix, Poly_mult_square_matrix_caps) {
@@ -254,8 +252,8 @@ TEST(UTMatrix, cholesky) {
 template <typename Element>
 void gadget_vector(const string& msg) {
   Matrix<Element> n = Matrix<Element>(secureIL2nAlloc<Element>(), 1, 4).GadgetVector();
-  auto v            = secureIL2nAlloc<Element>()();
-  v                 = 1;
+  auto v = secureIL2nAlloc<Element>()();
+  v = 1;
   EXPECT_EQ(v, n(0, 0)) << msg;
   v = 2;
   EXPECT_EQ(v, n(0, 1)) << msg;
@@ -271,23 +269,21 @@ TEST(UTMatrix, gadget_vector) {
 
 template <typename Element>
 void rotate_vec_result(const string& msg) {
-  Matrix<Element> n                        = Matrix<Element>(fastIL2nAlloc<Element>(), 1, 2).Ones();
+  Matrix<Element> n = Matrix<Element>(fastIL2nAlloc<Element>(), 1, 2).Ones();
   const typename Element::Integer& modulus = n(0, 0).GetModulus();
   n.SetFormat(Format::COEFFICIENT);
-  n(0, 0).at(2)                      = 1;
+  n(0, 0).at(2) = 1;
   Matrix<typename Element::Vector> R = RotateVecResult(n);
   EXPECT_EQ(8U, R.GetRows()) << msg;
   EXPECT_EQ(16U, R.GetCols()) << msg;
   EXPECT_EQ(Element::Vector::Single(1, modulus), R(0, 0)) << msg;
 
-  typename Element::Integer negOne   = n(0, 0).GetModulus() - typename Element::Integer(1);
+  typename Element::Integer negOne = n(0, 0).GetModulus() - typename Element::Integer(1);
   typename Element::Vector negOneVec = Element::Vector::Single(negOne, modulus);
   EXPECT_EQ(negOneVec, R(0, 6)) << msg;
   EXPECT_EQ(negOneVec, R(1, 7)) << msg;
 
-  auto singleAlloc = [=]() {
-    return typename Element::Vector(1, modulus);
-  };
+  auto singleAlloc = [=]() { return typename Element::Vector(1, modulus); };
   EXPECT_EQ(singleAlloc(), R(0, 6 + 8)) << msg;
   EXPECT_EQ(singleAlloc(), R(1, 7 + 8)) << msg;
 }
@@ -301,7 +297,7 @@ void rotate(const string& msg) {
   Matrix<Element> n = Matrix<Element>(fastIL2nAlloc<Element>(), 1, 2).Ones();
 
   n.SetFormat(Format::COEFFICIENT);
-  n(0, 0).at(2)                       = 1;
+  n(0, 0).at(2) = 1;
   Matrix<typename Element::Integer> R = Rotate(n);
   EXPECT_EQ(8U, R.GetRows()) << msg;
   EXPECT_EQ(16U, R.GetCols()) << msg;
@@ -350,7 +346,7 @@ void norm(const string& msg) {
 }
 
 // NOLINTNEXTLINE
-TEST(UTMatrix, norm){ RUN_ALL_POLYS(norm, "norm") }
+TEST(UTMatrix, norm){RUN_ALL_POLYS(norm, "norm")}
 
 // Checks the implementantation of determinant based on a 3x3 matrix
 TEST(UTMatrix, determinant) {

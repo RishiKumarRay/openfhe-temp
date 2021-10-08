@@ -50,38 +50,37 @@ namespace lbcrypto {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
-{
+class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
    * Default Constructor.
    */
-  LPCryptoParametersCKKS() :
-      LPCryptoParametersRLWE<Element>(),
-      m_ksTechnique(BV),
-      m_rsTechnique(APPROXRESCALE),
-      m_numPartQ(0),
-      m_numPerPartQ(0),
-      m_approxSF(0) {}
+  LPCryptoParametersCKKS()
+      : LPCryptoParametersRLWE<Element>(),
+        m_ksTechnique(BV),
+        m_rsTechnique(APPROXRESCALE),
+        m_numPartQ(0),
+        m_numPerPartQ(0),
+        m_approxSF(0) {}
 
   /**
    * Copy constructor.
    *
    * @param rhs - source
    */
-  LPCryptoParametersCKKS(const LPCryptoParametersCKKS& rhs) :
-      LPCryptoParametersRLWE<Element>(rhs),
-      m_ksTechnique(BV),
-      m_rsTechnique(APPROXRESCALE),
-      m_numPartQ(0),
-      m_numPerPartQ(0),
-      m_approxSF(0) {}
+  LPCryptoParametersCKKS(const LPCryptoParametersCKKS& rhs)
+      : LPCryptoParametersRLWE<Element>(rhs),
+        m_ksTechnique(BV),
+        m_rsTechnique(APPROXRESCALE),
+        m_numPartQ(0),
+        m_numPerPartQ(0),
+        m_approxSF(0) {}
 
   /**
    * Constructor that initializes values.  Note that it is possible to set
@@ -110,15 +109,15 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
   LPCryptoParametersCKKS(shared_ptr<ParmType> params, const PlaintextModulus& plaintextModulus,
                          float distributionParameter, float assuranceMeasure, float securityLevel, usint relinWindow,
                          MODE mode, int depth = 1, int maxDepth = 2, KeySwitchTechnique ksTech = BV,
-                         RescalingTechnique rsTech = APPROXRESCALE) :
-      LPCryptoParametersRLWE<Element>(params, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
-                                      distributionParameter, assuranceMeasure, securityLevel, relinWindow, depth,
-                                      maxDepth, mode) {
+                         RescalingTechnique rsTech = APPROXRESCALE)
+      : LPCryptoParametersRLWE<Element>(params, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
+                                        distributionParameter, assuranceMeasure, securityLevel, relinWindow, depth,
+                                        maxDepth, mode) {
     m_ksTechnique = ksTech;
     m_rsTechnique = rsTech;
-    m_numPartQ    = 0;
+    m_numPartQ = 0;
     m_numPerPartQ = 0;
-    m_approxSF    = 0;
+    m_approxSF = 0;
   }
 
   /**
@@ -139,14 +138,14 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
    */
   LPCryptoParametersCKKS(shared_ptr<ParmType> params, EncodingParams encodingParams, float distributionParameter,
                          float assuranceMeasure, float securityLevel, usint relinWindow, MODE mode, int depth = 1,
-                         int maxDepth = 2, KeySwitchTechnique ksTech = BV, RescalingTechnique rsTech = APPROXRESCALE) :
-      LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
-                                      relinWindow, depth, maxDepth, mode) {
+                         int maxDepth = 2, KeySwitchTechnique ksTech = BV, RescalingTechnique rsTech = APPROXRESCALE)
+      : LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
+                                        relinWindow, depth, maxDepth, mode) {
     m_ksTechnique = ksTech;
     m_rsTechnique = rsTech;
-    m_numPartQ    = 0;
+    m_numPartQ = 0;
     m_numPerPartQ = 0;
-    m_approxSF    = 0;
+    m_approxSF = 0;
   }
 
   /**
@@ -165,9 +164,8 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(cereal::base_class<LPCryptoParametersRLWE<Element>>(this));
     ar(cereal::make_nvp("ks", m_ksTechnique));
@@ -204,7 +202,8 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
   bool operator==(const LPCryptoParameters<Element>& rhs) const {
     const auto* el = dynamic_cast<const LPCryptoParametersCKKS<Element>*>(&rhs);
 
-    if (el == nullptr) return false;
+    if (el == nullptr)
+      return false;
 
     return LPCryptoParametersRLWE<Element>::operator==(rhs) && m_rsTechnique == el->GetRescalingTechnique() &&
            m_ksTechnique == el->GetKeySwitchTechnique() && m_numPartQ == el->GetNumPartQ();
@@ -440,8 +439,8 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
         PALISADE_THROW(math_error,
                        "LPCryptoParametersCKKS::GetScalingFactorOfLevel - Cannot "
                        "return scaling factor of level " +
-                         std::to_string(l) + ". Current settings have up to " +
-                         std::to_string(m_scalingFactors.size()) + " levels, starting from 0.");
+                           std::to_string(l) + ". Current settings have up to " +
+                           std::to_string(m_scalingFactors.size()) + " levels, starting from 0.");
       }
 
       return m_scalingFactors[l];
@@ -581,7 +580,8 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
    * @return the pre-computed values.
    */
   const vector<vector<NativeInteger>>& GetPartQlHatModp(uint32_t lvl, uint32_t part) const {
-    if (lvl < m_LvlPartQHatModp.size() && part < m_LvlPartQHatModp[lvl].size()) return m_LvlPartQHatModp[lvl][part];
+    if (lvl < m_LvlPartQHatModp.size() && part < m_LvlPartQHatModp[lvl].size())
+      return m_LvlPartQHatModp[lvl][part];
 
     PALISADE_THROW(math_error,
                    "LPCryptoParametersCKKS::GetPartitionQHatModPTable - "
@@ -723,8 +723,7 @@ class LPCryptoParametersCKKS : public LPCryptoParametersRLWE<Element>
  * @brief Parameter generation for CKKS.
  */
 template <class Element>
-class LPAlgorithmParamsGenCKKS : public LPParameterGenerationAlgorithm<Element>
-{
+class LPAlgorithmParamsGenCKKS : public LPParameterGenerationAlgorithm<Element> {
  public:
   /**
    * Default constructor
@@ -795,13 +794,12 @@ class LPAlgorithmParamsGenCKKS : public LPParameterGenerationAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmCKKS : public LPEncryptionAlgorithm<Element>
-{
+class LPAlgorithmCKKS : public LPEncryptionAlgorithm<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -884,13 +882,12 @@ class LPAlgorithmCKKS : public LPEncryptionAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
-{
+class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -996,8 +993,9 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    */
   Ciphertext<Element> EvalLinearWSumMutable(vector<Ciphertext<Element>> ciphertexts,
                                             vector<double> constants) const override {
-    std::string errMsg = "LPAlgorithmSHECKKS::EvalLinearWSumMutable is only supported for "
-                         "DCRTPoly.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::EvalLinearWSumMutable is only supported for "
+        "DCRTPoly.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1182,9 +1180,10 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    */
   Ciphertext<Element> EvalMultAndRelinearize(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
                                              const vector<LPEvalKey<Element>>& ek) const override {
-    std::string errMsg = "LPAlgorithmSHECKKS::EvalMultAndRelinearize is not implemented for "
-                         "the "
-                         "CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::EvalMultAndRelinearize is not implemented for "
+        "the "
+        "CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1197,8 +1196,9 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    */
   Ciphertext<Element> Relinearize(ConstCiphertext<Element> ciphertext,
                                   const vector<LPEvalKey<Element>>& ek) const override {
-    std::string errMsg = "LPAlgorithmSHECKKS::Relinearize is not implemented for the non "
-                         "Double-CRT variant of the CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::Relinearize is not implemented for the non "
+        "Double-CRT variant of the CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1210,8 +1210,9 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * @return the relinearized ciphertext
    */
   void RelinearizeInPlace(Ciphertext<Element>& ciphertext, const vector<LPEvalKey<Element>>& ek) const override {
-    std::string errMsg = "LPAlgorithmSHECKKS::RelinearizeInPlace is not implemented for the non "
-                         "Double-CRT variant of the CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::RelinearizeInPlace is not implemented for the non "
+        "Double-CRT variant of the CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1235,9 +1236,10 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    */
   LPEvalKey<Element> KeySwitchHybridGen(const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
                                         const LPEvalKey<DCRTPoly> ek = nullptr) const {
-    std::string errMsg = "LPAlgorithmSHECKKS::KeySwitchHybridGen is not implemented for the "
-                         "non "
-                         "Double-CRT variant of the CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::KeySwitchHybridGen is not implemented for the "
+        "non "
+        "Double-CRT variant of the CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1249,8 +1251,9 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * @param ciphertext Original ciphertext to perform in-place key switching on.
    */
   void KeySwitchHybridInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& ciphertext) const {
-    std::string errMsg = "LPAlgorithmSHECKKS::KeySwitchHybridInPlace is not implemented for the "
-                         "non Double-CRT variant of the CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::KeySwitchHybridInPlace is not implemented for the "
+        "non Double-CRT variant of the CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1367,7 +1370,7 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * @return returns the evaluation keys
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override;
+      const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override;
 
   /**
    * Generate automophism keys for a given private key; Uses the public key
@@ -1379,10 +1382,11 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * @return returns the evaluation keys
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> privateKey,
-    const std::vector<usint>& indexList) const override {
-    std::string errMsg = "LPAlgorithmSHECKKS::EvalAutomorphismKeyGen is not implemented for "
-                         "CKKS SHE Scheme.";
+      const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> privateKey,
+      const std::vector<usint>& indexList) const override {
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::EvalAutomorphismKeyGen is not implemented for "
+        "CKKS SHE Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1477,9 +1481,10 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * targetLevel.
    */
   Ciphertext<Element> AdjustLevelWithRescale(Ciphertext<Element>& ciphertext, uint32_t targetLevel) const override {
-    std::string errMsg = "LPAlgorithmSHECKKS::AdjustLevelWithoutRescale is not implemented "
-                         "for "
-                         "the non Double-CRT variant of the CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::AdjustLevelWithoutRescale is not implemented "
+        "for "
+        "the non Double-CRT variant of the CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1501,9 +1506,10 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * targetLevel.
    */
   Ciphertext<Element> AdjustLevelWithoutRescale(Ciphertext<Element>& ciphertext, uint32_t targetLevel) const {
-    std::string errMsg = "LPAlgorithmSHECKKS::AdjustLevelWithoutRescale is not implemented "
-                         "for "
-                         "the non Double-CRT variant of the CKKS Scheme.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::AdjustLevelWithoutRescale is not implemented "
+        "for "
+        "the non Double-CRT variant of the CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1517,8 +1523,9 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * @return encrypted result of multiplication.
    */
   virtual Ciphertext<DCRTPoly> EvalMultApprox(ConstCiphertext<DCRTPoly> ciphertext, ConstPlaintext plaintext) const {
-    std::string errMsg = "LPAlgorithmSHECKKS::EvalMultApprox with plaintext is only supported "
-                         "for DCRTPoly.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::EvalMultApprox with plaintext is only supported "
+        "for DCRTPoly.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1752,8 +1759,9 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
    * @return result of homomorphic addition of input ciphertexts.
    */
   virtual void EvalAddApproxInPlace(Ciphertext<Element>& ciphertext1, ConstCiphertext<Element> ciphertext2) const {
-    std::string errMsg = "LPAlgorithmSHECKKS::EvalAddApproxInPlace is only supported for "
-                         "DCRTPoly.";
+    std::string errMsg =
+        "LPAlgorithmSHECKKS::EvalAddApproxInPlace is only supported for "
+        "DCRTPoly.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1896,13 +1904,12 @@ class LPAlgorithmSHECKKS : public LPSHEAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmPRECKKS : public LPPREAlgorithm<Element>
-{
+class LPAlgorithmPRECKKS : public LPPREAlgorithm<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -2053,13 +2060,12 @@ class LPAlgorithmPRECKKS : public LPPREAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmMultipartyCKKS : public LPMultipartyAlgorithm<Element>
-{
+class LPAlgorithmMultipartyCKKS : public LPMultipartyAlgorithm<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -2162,8 +2168,8 @@ class LPAlgorithmMultipartyCKKS : public LPMultipartyAlgorithm<Element>
    * @return a dictionary with new joined automorphism keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-    const std::vector<usint>& indexList) const;
+      const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+      const std::vector<usint>& indexList) const;
 
   /**
    * Threshold FHE: Generates joined summation evaluation keys
@@ -2175,7 +2181,7 @@ class LPAlgorithmMultipartyCKKS : public LPMultipartyAlgorithm<Element>
    * @return new joined summation keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalSumKeyGen(
-    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const;
+      const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const;
 
   /**
    * Threshold FHE: Generates a partial evaluation key for homomorphic
@@ -2217,13 +2223,12 @@ class LPAlgorithmMultipartyCKKS : public LPMultipartyAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPLeveledSHEAlgorithmCKKS : public LPLeveledSHEAlgorithm<Element>
-{
+class LPLeveledSHEAlgorithmCKKS : public LPLeveledSHEAlgorithm<Element> {
   using ParmType = typename Element::Params;
-  using IntType  = typename Element::Integer;
-  using DugType  = typename Element::DugType;
-  using DggType  = typename Element::DggType;
-  using TugType  = typename Element::TugType;
+  using IntType = typename Element::Integer;
+  using DugType = typename Element::DugType;
+  using DggType = typename Element::DggType;
+  using TugType = typename Element::TugType;
 
  public:
   /**
@@ -2281,10 +2286,11 @@ class LPLeveledSHEAlgorithmCKKS : public LPLeveledSHEAlgorithm<Element>
    */
   Ciphertext<Element> ComposedEvalMult(ConstCiphertext<Element> cipherText1, ConstCiphertext<Element> cipherText2,
                                        const LPEvalKey<Element> quadKeySwitchHint) const override {
-    std::string errMsg = "LPLeveledSHEAlgorithmCKKS::ComposedEvalMult is not currently "
-                         "implemented "
-                         "for "
-                         "the CKKS/CKKS Scheme.";
+    std::string errMsg =
+        "LPLeveledSHEAlgorithmCKKS::ComposedEvalMult is not currently "
+        "implemented "
+        "for "
+        "the CKKS/CKKS Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -2363,8 +2369,7 @@ class LPLeveledSHEAlgorithmCKKS : public LPLeveledSHEAlgorithm<Element>
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPublicKeyEncryptionSchemeCKKS : public LPPublicKeyEncryptionScheme<Element>
-{
+class LPPublicKeyEncryptionSchemeCKKS : public LPPublicKeyEncryptionScheme<Element> {
  public:
   LPPublicKeyEncryptionSchemeCKKS() : LPPublicKeyEncryptionScheme<Element>() {
     this->m_algorithmParamsGen = std::make_shared<LPAlgorithmParamsGenCKKS<Element>>();

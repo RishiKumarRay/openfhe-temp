@@ -42,16 +42,16 @@ namespace lbcrypto {
  * based on the hardness of Ring-LWE problem
  */
 template <class Element>
-class RLWETrapdoorPair
-{
+class RLWETrapdoorPair {
  public:
   // matrix of noise polynomials
   Matrix<Element> m_r;
   // matrix
   Matrix<Element> m_e;
   // CTOR with empty trapdoor pair for deserialization
-  RLWETrapdoorPair() :
-      m_r(Matrix<Element>([]() { return Element(); }, 0, 0)), m_e(Matrix<Element>([]() { return Element(); }, 0, 0)) {}
+  RLWETrapdoorPair()
+      : m_r(Matrix<Element>([]() { return Element(); }, 0, 0)),
+        m_e(Matrix<Element>([]() { return Element(); }, 0, 0)) {}
 
   RLWETrapdoorPair(const Matrix<Element>& r, const Matrix<Element>& e) : m_r(r), m_e(e) {}
 
@@ -73,11 +73,10 @@ class RLWETrapdoorPair
  * of https://eprint.iacr.org/2017/844.pdf
  */
 template <class Element>
-class RLWETrapdoorUtility
-{
+class RLWETrapdoorUtility {
   using ParmType = typename Element::Params;
-  using DggType  = typename Element::DggType;
-  using IntType  = typename Element::Integer;
+  using DggType = typename Element::DggType;
+  using IntType = typename Element::Integer;
 
  public:
   /**
@@ -270,8 +269,7 @@ class RLWETrapdoorUtility
       for (size_t i = 0; i < n * k; i++) {
         p2ZVector(i, 0) = dgg.GenerateIntegerKarney(0, sigmaLarge);
       }
-    }
-    else {
+    } else {
       // Peikert's inversion sampling method
       std::shared_ptr<int64_t> dggVector = dggLargeSigma.GenerateIntVector(n * k);
       for (size_t i = 0; i < n * k; i++) {
@@ -371,8 +369,7 @@ class RLWETrapdoorUtility
           p2ZVector(i, j) = dgg.GenerateIntegerKarney(0, sigmaLarge);
         }
       }
-    }
-    else {
+    } else {
       // Peikert's inversion sampling method
       std::shared_ptr<int64_t> dggVector = dggLargeSigma.GenerateIntVector(n * k * d);
 
@@ -441,7 +438,7 @@ class RLWETrapdoorUtility
       Matrix<Field2n> c([&]() { return Field2n(n, Format::COEFFICIENT); }, 2 * d, 1);
 
       for (size_t i = 0; i < d; i++) {
-        c(i, 0)     = Field2n(Tp2(i, j)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+        c(i, 0) = Field2n(Tp2(i, j)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
         c(i + d, 0) = Field2n(Tp2(i + d, j)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
       }
 
@@ -449,7 +446,8 @@ class RLWETrapdoorUtility
 
       LatticeGaussSampUtility<Element>::SampleMat(AF, BF, DF, c, dgg, p1ZVector);
 
-      if (j == 0) p1 = SplitInt64IntoElements<Element>(*p1ZVector, n, params);
+      if (j == 0)
+        p1 = SplitInt64IntoElements<Element>(*p1ZVector, n, params);
       else
         p1.HStack(SplitInt64IntoElements<Element>(*p1ZVector, n, params));
     }

@@ -40,8 +40,7 @@ namespace NTL {
  * @brief Number Theoretic Transform implementation
  */
 template <typename VecType>
-class NumberTheoreticTransformNtl
-{
+class NumberTheoreticTransformNtl {
   using IntType = typename VecType::Integer;
 
  public:
@@ -215,8 +214,7 @@ class NumberTheoreticTransformNtl
  * @brief Golden Chinese Remainder Transform FFT implementation.
  */
 template <typename VecType>
-class ChineseRemainderTransformFTTNtl : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType>
-{
+class ChineseRemainderTransformFTTNtl : public lbcrypto::ChineseRemainderTransformFTTInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:
@@ -350,8 +348,7 @@ using ModulusRootPair = std::pair<ModulusRoot<IntType>, ModulusRoot<IntType>>;
  * @brief Bluestein Fast Fourier Transform implementation
  */
 template <typename VecType>
-class BluesteinFFTNtl
-{
+class BluesteinFFTNtl {
   using IntType = typename VecType::Integer;
 
  public:
@@ -451,8 +448,7 @@ class BluesteinFFTNtl
  * @brief Chinese Remainder Transform for arbitrary cyclotomics.
  */
 template <typename VecType>
-class ChineseRemainderTransformArbNtl : public lbcrypto::ChineseRemainderTransformArbInterface<VecType>
-{
+class ChineseRemainderTransformArbNtl : public lbcrypto::ChineseRemainderTransformArbInterface<VecType> {
   using IntType = typename VecType::Integer;
 
  public:

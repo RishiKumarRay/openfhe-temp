@@ -42,8 +42,7 @@ void verify(float* foo, uint32_t array_size) {
   }
   if (goodflag) {
     std::cout << "verification succeeded" << std::endl;
-  }
-  else {
+  } else {
     std::cout << "verification failed" << std::endl;
     for (size_t i = 0; i < array_size; ++i) {
       std::cout << foo[i] << " ";
@@ -66,8 +65,7 @@ int main(int argc, char* argv[]) {
 
   if (argc < 2) {
     std::cout << "running " << argv[0] << " with default array size of 1000" << std::endl;
-  }
-  else {
+  } else {
     array_size = atoi(argv[1]);
     if (array_size <= 0) {
       std::cout << "error in argment " << argv[1] << " must be greater than zero " << std::endl;
@@ -158,7 +156,7 @@ int main(int argc, char* argv[]) {
 #pragma omp parallel for
   for (size_t i = 0; i < array_size; ++i) {
     float tmp = i;
-    foo[i]    = tmp;
+    foo[i] = tmp;
   }
 
   // read the timer to get the computation time in micro seconds

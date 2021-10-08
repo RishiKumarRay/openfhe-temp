@@ -40,8 +40,7 @@ namespace lbcrypto {
 //
 // This class is used to catch and rethrow exceptions from threads/critical
 // regions (thank you stack overflow)
-class ThreadException
-{
+class ThreadException {
   std::exception_ptr Ptr;
   std::mutex Lock;
 
@@ -49,7 +48,8 @@ class ThreadException
   ThreadException() : Ptr(nullptr) {}
   ~ThreadException() {}
   void Rethrow() {
-    if (this->Ptr) std::rethrow_exception(this->Ptr);
+    if (this->Ptr)
+      std::rethrow_exception(this->Ptr);
   }
   void CaptureException() {
     std::unique_lock<std::mutex> guard(this->Lock);
@@ -60,8 +60,7 @@ class ThreadException
   void Run(Function f, Parameters... params) {
     try {
       f(params...);
-    }
-    catch (...) {
+    } catch (...) {
       CaptureException();
     }
   }
@@ -89,15 +88,14 @@ class ThreadException
 //   });
 // }
 // e.Rethrow();
-class palisade_error : public std::runtime_error
-{
+class palisade_error : public std::runtime_error {
   std::string filename;
   int linenum;
   std::string message;
 
  public:
-  palisade_error(const std::string& file, int line, const std::string& what) :
-      std::runtime_error(what), filename(file), linenum(line) {
+  palisade_error(const std::string& file, int line, const std::string& what)
+      : std::runtime_error(what), filename(file), linenum(line) {
     message = filename + ":" + std::to_string(linenum) + " " + what;
   }
 
@@ -113,47 +111,40 @@ class palisade_error : public std::runtime_error
   }
 };
 
-class config_error : public palisade_error
-{
+class config_error : public palisade_error {
  public:
   config_error(const std::string& file, int line, const std::string& what) : palisade_error(file, line, what) {}
 };
 
-class math_error : public palisade_error
-{
+class math_error : public palisade_error {
  public:
   math_error(const std::string& file, int line, const std::string& what) : palisade_error(file, line, what) {}
 };
 
-class not_implemented_error : public palisade_error
-{
+class not_implemented_error : public palisade_error {
  public:
-  not_implemented_error(const std::string& file, int line, const std::string& what) :
-      palisade_error(file, line, what) {}
+  not_implemented_error(const std::string& file, int line, const std::string& what)
+      : palisade_error(file, line, what) {}
 };
 
-class not_available_error : public palisade_error
-{
+class not_available_error : public palisade_error {
  public:
   not_available_error(const std::string& file, int line, const std::string& what) : palisade_error(file, line, what) {}
 };
 
-class type_error : public palisade_error
-{
+class type_error : public palisade_error {
  public:
   type_error(const std::string& file, int line, const std::string& what) : palisade_error(file, line, what) {}
 };
 
 // use this error when serializing palisade objects
-class serialize_error : public palisade_error
-{
+class serialize_error : public palisade_error {
  public:
   serialize_error(const std::string& file, int line, const std::string& what) : palisade_error(file, line, what) {}
 };
 
 // use this error when deserializing palisade objects
-class deserialize_error : public palisade_error
-{
+class deserialize_error : public palisade_error {
  public:
   deserialize_error(const std::string& file, int line, const std::string& what) : palisade_error(file, line, what) {}
 };

@@ -60,7 +60,7 @@ using ILNativeParams = ILParamsImpl<NativeInteger>;
 
 // the default for the backend...
 using ILParams = ILParamsImpl<BigInteger>;
-using Poly     = PolyImpl<BigVector>;
+using Poly = PolyImpl<BigVector>;
 
 using M2DCRTParams = ILDCRTParams<M2Integer>;
 using M4DCRTParams = ILDCRTParams<M4Integer>;

@@ -43,8 +43,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestBinInt : public ::testing::Test
-{
+class UnitTestBinInt : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 
@@ -62,8 +61,7 @@ class UnitTestBinInt : public ::testing::Test
 
 typedef char Block[BLOCKSIZE];  // define Block as char array of size BLOCKSIZE
 
-class MyClass
-{
+class MyClass {
   DECLARE_ALLOCATOR
   // remaining class definition
 };
@@ -164,7 +162,7 @@ void DeallocHeapBlocks(char* ptr) {
 void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
   TimeVar t1, t_total;
 
-  float ElapsedMicroseconds, TotalElapsedMicroseconds = { 0 };
+  float ElapsedMicroseconds, TotalElapsedMicroseconds = {0};
   // Allocate MAX_BLOCKS blocks MAX_BLOCK_SIZE / 2 sized blocks
 
   TIC(t_total);

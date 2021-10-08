@@ -40,8 +40,7 @@ namespace lbcrypto {
  * inheritors.
  */
 template <typename IntegerType>
-class ElemParams : public Serializable
-{
+class ElemParams : public Serializable {
  public:
   /**
    * @brief Simple constructor method that takes as input root of unity, big
@@ -56,13 +55,13 @@ class ElemParams : public Serializable
    */
   ElemParams(usint order, const IntegerType& ctModulus, const IntegerType& rUnity = IntegerType(0),
              const IntegerType& bigCtModulus = IntegerType(0), const IntegerType& bigRUnity = IntegerType(0)) {
-    cyclotomicOrder      = order;
-    ringDimension        = GetTotient(order);
-    isPowerOfTwo         = ringDimension == cyclotomicOrder / 2;
-    ciphertextModulus    = ctModulus;
-    rootOfUnity          = rUnity;
+    cyclotomicOrder = order;
+    ringDimension = GetTotient(order);
+    isPowerOfTwo = ringDimension == cyclotomicOrder / 2;
+    ciphertextModulus = ctModulus;
+    rootOfUnity = rUnity;
     bigCiphertextModulus = bigCtModulus;
-    bigRootOfUnity       = bigRUnity;
+    bigRootOfUnity = bigRUnity;
   }
 
   /**
@@ -71,13 +70,13 @@ class ElemParams : public Serializable
    * @return the resulting parameter set with parameters copied.
    */
   ElemParams(const ElemParams& rhs) {
-    cyclotomicOrder      = rhs.cyclotomicOrder;
-    ringDimension        = rhs.ringDimension;
-    isPowerOfTwo         = rhs.isPowerOfTwo;
-    ciphertextModulus    = rhs.ciphertextModulus;
-    rootOfUnity          = rhs.rootOfUnity;
+    cyclotomicOrder = rhs.cyclotomicOrder;
+    ringDimension = rhs.ringDimension;
+    isPowerOfTwo = rhs.isPowerOfTwo;
+    ciphertextModulus = rhs.ciphertextModulus;
+    rootOfUnity = rhs.rootOfUnity;
     bigCiphertextModulus = rhs.bigCiphertextModulus;
-    bigRootOfUnity       = rhs.bigRootOfUnity;
+    bigRootOfUnity = rhs.bigRootOfUnity;
   }
 
   /**
@@ -86,13 +85,13 @@ class ElemParams : public Serializable
    * @return the resulting copy of the parameter set.
    */
   ElemParams(const ElemParams&& rhs) {
-    cyclotomicOrder      = rhs.cyclotomicOrder;
-    ringDimension        = rhs.ringDimension;
-    isPowerOfTwo         = rhs.isPowerOfTwo;
-    ciphertextModulus    = std::move(rhs.ciphertextModulus);
-    rootOfUnity          = std::move(rhs.rootOfUnity);
+    cyclotomicOrder = rhs.cyclotomicOrder;
+    ringDimension = rhs.ringDimension;
+    isPowerOfTwo = rhs.isPowerOfTwo;
+    ciphertextModulus = std::move(rhs.ciphertextModulus);
+    rootOfUnity = std::move(rhs.rootOfUnity);
     bigCiphertextModulus = std::move(rhs.bigCiphertextModulus);
-    bigRootOfUnity       = std::move(rhs.bigRootOfUnity);
+    bigRootOfUnity = std::move(rhs.bigRootOfUnity);
   }
 
   /**
@@ -100,13 +99,13 @@ class ElemParams : public Serializable
    * @param rhs the ElemParams instance to copy.
    */
   const ElemParams& operator=(const ElemParams& rhs) {
-    cyclotomicOrder      = rhs.cyclotomicOrder;
-    ringDimension        = rhs.ringDimension;
-    isPowerOfTwo         = rhs.isPowerOfTwo;
-    ciphertextModulus    = rhs.ciphertextModulus;
-    rootOfUnity          = rhs.rootOfUnity;
+    cyclotomicOrder = rhs.cyclotomicOrder;
+    ringDimension = rhs.ringDimension;
+    isPowerOfTwo = rhs.isPowerOfTwo;
+    ciphertextModulus = rhs.ciphertextModulus;
+    rootOfUnity = rhs.rootOfUnity;
     bigCiphertextModulus = rhs.bigCiphertextModulus;
-    bigRootOfUnity       = rhs.bigRootOfUnity;
+    bigRootOfUnity = rhs.bigRootOfUnity;
     return *this;
   }
 
@@ -222,9 +221,8 @@ class ElemParams : public Serializable
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(
-        deserialize_error,
-        "serialized object version " + std::to_string(version) + " is from a later version of the library");
+      PALISADE_THROW(deserialize_error, "serialized object version " + std::to_string(version) +
+                                            " is from a later version of the library");
     }
     ar(::cereal::make_nvp("co", cyclotomicOrder));
     ar(::cereal::make_nvp("rd", ringDimension));

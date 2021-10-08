@@ -33,8 +33,8 @@ LPPublicKeyEncryptionSchemeBFV<Poly>::LPPublicKeyEncryptionSchemeBFV() : LPPubli
 }
 
 template <>
-LPPublicKeyEncryptionSchemeBFV<NativePoly>::LPPublicKeyEncryptionSchemeBFV() :
-    LPPublicKeyEncryptionScheme<NativePoly>() {
+LPPublicKeyEncryptionSchemeBFV<NativePoly>::LPPublicKeyEncryptionSchemeBFV()
+    : LPPublicKeyEncryptionScheme<NativePoly>() {
   this->m_algorithmParamsGen = std::make_shared<LPAlgorithmParamsGenBFV<NativePoly>>();
 }
 
@@ -66,10 +66,10 @@ LPCryptoParametersBFV<DCRTPoly>::LPCryptoParametersBFV(const LPCryptoParametersB
 
 template <>
 LPCryptoParametersBFV<DCRTPoly>::LPCryptoParametersBFV(
-  shared_ptr<ParmType> params, const PlaintextModulus& plaintextModulus, float distributionParameter,
-  float assuranceMeasure, float securityLevel, usint relinWindow, const BigInteger& delta, MODE mode,
-  const BigInteger& bigModulus, const BigInteger& bigRootOfUnity, const BigInteger& bigModulusArb,
-  const BigInteger& bigRootOfUnityArb, int depth, int maxDepth) {
+    shared_ptr<ParmType> params, const PlaintextModulus& plaintextModulus, float distributionParameter,
+    float assuranceMeasure, float securityLevel, usint relinWindow, const BigInteger& delta, MODE mode,
+    const BigInteger& bigModulus, const BigInteger& bigRootOfUnity, const BigInteger& bigModulusArb,
+    const BigInteger& bigRootOfUnityArb, int depth, int maxDepth) {
   std::string errMsg = "BFV does not support DCRTPoly. Use Poly instead.";
   PALISADE_THROW(not_implemented_error, errMsg);
 }

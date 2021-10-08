@@ -23,4 +23,4 @@
 #include "serial.h"
 
 #pragma message \
-  "utils/serialize-binary.h is deprecated and will be removed in the 3rd quarter of 2021. serial.h should be used instead"
+    "utils/serialize-binary.h is deprecated and will be removed in the 3rd quarter of 2021. serial.h should be used instead"

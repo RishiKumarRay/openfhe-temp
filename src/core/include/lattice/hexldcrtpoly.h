@@ -55,14 +55,13 @@ namespace lbcrypto {
  * optimized procedures for specific architecture.
  */
 template <typename VecType = BigVector>
-class HexlDCRTPoly : public DCRTPolyImpl<VecType>
-{
+class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
  public:
   // Shortcut to base class
   using DCRTPolyType = DCRTPolyImpl<VecType>;
 
   using Integer = typename VecType::Integer;
-  using Params  = ILDCRTParams<Integer>;
+  using Params = ILDCRTParams<Integer>;
 
   typedef VecType Vector;
 
@@ -97,20 +96,20 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType>
 
   HexlDCRTPoly() : DCRTPolyType() {}
 
-  HexlDCRTPoly(const shared_ptr<Params> params, Format format = EVALUATION, bool initializeElementToZero = false) :
-      DCRTPolyType(params, format, initializeElementToZero) {}
+  HexlDCRTPoly(const shared_ptr<Params> params, Format format = EVALUATION, bool initializeElementToZero = false)
+      : DCRTPolyType(params, format, initializeElementToZero) {}
 
   // Need to be able to make a copy,
   HexlDCRTPoly(const DCRTPolyType& dcrtPoly) : DCRTPolyType(dcrtPoly) {}
   HexlDCRTPoly(const std::vector<PolyType>& elements) : DCRTPolyType(elements) {}
-  HexlDCRTPoly(const DggType& dgg, const shared_ptr<Params> params, Format format = EVALUATION) :
-      DCRTPolyType(dgg, params, format) {}
-  HexlDCRTPoly(DugType& dug, const shared_ptr<Params> params, Format format = EVALUATION) :
-      DCRTPolyType(dug, params, format) {}
-  HexlDCRTPoly(const TugType& tug, const shared_ptr<Params> params, Format format = EVALUATION, uint32_t h = 0) :
-      DCRTPolyType(tug, params, format, h) {}
-  HexlDCRTPoly(const BugType& bug, const shared_ptr<Params> params, Format format = EVALUATION) :
-      DCRTPolyType(bug, params, format) {}
+  HexlDCRTPoly(const DggType& dgg, const shared_ptr<Params> params, Format format = EVALUATION)
+      : DCRTPolyType(dgg, params, format) {}
+  HexlDCRTPoly(DugType& dug, const shared_ptr<Params> params, Format format = EVALUATION)
+      : DCRTPolyType(dug, params, format) {}
+  HexlDCRTPoly(const TugType& tug, const shared_ptr<Params> params, Format format = EVALUATION, uint32_t h = 0)
+      : DCRTPolyType(tug, params, format, h) {}
+  HexlDCRTPoly(const BugType& bug, const shared_ptr<Params> params, Format format = EVALUATION)
+      : DCRTPolyType(bug, params, format) {}
   HexlDCRTPoly(const PolyLargeType& element, const shared_ptr<Params> params) : DCRTPolyType(element, params) {}
 
   /**
@@ -219,9 +218,8 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType>
     std::vector<HexlDCRTPoly> hexlVec(dcrtVec.size());
 
     // use a lambda function to transform the std::vector<DCRTPolyImpl> to std::vector<HexlDCRTPoly>
-    std::transform(dcrtVec.begin(), dcrtVec.end(), hexlVec.begin(), [](DCRTPolyType& dcrtPoly) -> HexlDCRTPoly {
-      return HexlDCRTPoly(dcrtPoly);
-    });
+    std::transform(dcrtVec.begin(), dcrtVec.end(), hexlVec.begin(),
+                   [](DCRTPolyType& dcrtPoly) -> HexlDCRTPoly { return HexlDCRTPoly(dcrtPoly); });
     return hexlVec;
   }
 

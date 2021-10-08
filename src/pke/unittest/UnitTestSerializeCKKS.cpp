@@ -38,8 +38,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTCKKSSer : public ::testing::Test
-{
+class UTCKKSSer : public ::testing::Test {
  public:
   UTCKKSSer() {}
   ~UTCKKSSer() {}
@@ -86,11 +85,11 @@ class UTCKKSSer : public ::testing::Test
  *       if you need rotations before any multiplications.
  * BATCH: The length of the packed vectors to be used with CKKS.
  */
-static const usint ORDER    = 1024;  // 16384;
-static const usint SCALE    = 50;
+static const usint ORDER = 1024;  // 16384;
+static const usint SCALE = 50;
 static const usint NUMPRIME = 4;
-static const usint RELIN    = 20;
-static const usint BATCH    = 8;
+static const usint RELIN = 20;
+static const usint BATCH = 8;
 
 /**
  * This function checks whether vectors of approximate numbers a and b are
@@ -110,7 +109,7 @@ static void checkApproximateEquality(const std::vector<std::complex<double>>& a,
   std::vector<std::complex<double>> tmp(vectorSize);
   for (int i = 0; i < vectorSize; i++) {
     allTrue[i] = 1;
-    tmp[i]     = abs(a[i] - b[i]) <= epsilon;
+    tmp[i] = abs(a[i] - b[i]) <= epsilon;
   }
   EXPECT_TRUE(tmp == allTrue) << failmsg;
 }
@@ -121,14 +120,12 @@ static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype, s
 
   try {
     cc->EvalMultKeyGen(kp.secretKey);
-  }
-  catch (...) {
+  } catch (...) {
   }
 
   try {
     cc->EvalSumKeyGen(kp.secretKey, kp.publicKey);
-  }
-  catch (...) {
+  } catch (...) {
   }
 
   stringstream s;
@@ -145,12 +142,12 @@ static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype, s
   EXPECT_EQ(*cc, *newcc) << msg << " Mismatched context";
 
   EXPECT_EQ(*cc->GetEncryptionAlgorithm(), *newcc->GetEncryptionAlgorithm())
-    << msg << " Scheme mismatch after ser/deser";
+      << msg << " Scheme mismatch after ser/deser";
   EXPECT_EQ(*cc->GetCryptoParameters(), *newcc->GetCryptoParameters())
-    << msg << " Crypto parms mismatch after ser/deser";
+      << msg << " Crypto parms mismatch after ser/deser";
   EXPECT_EQ(*cc->GetEncodingParams(), *newcc->GetEncodingParams()) << msg << " Encoding parms mismatch after ser/deser";
   EXPECT_EQ(cc->GetEncryptionAlgorithm()->GetEnabled(), newcc->GetEncryptionAlgorithm()->GetEnabled())
-    << msg << " Enabled features mismatch after ser/deser";
+      << msg << " Enabled features mismatch after ser/deser";
 
   s.str("");
   s.clear();
@@ -219,10 +216,10 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
     EXPECT_EQ(*kp.secretKey, *kpnew.secretKey) << "Secret key mismatch after ser/deser";
   }
   DEBUG("step 3");
-  vector<std::complex<double>> vals   = { 1.0, 3.0, 5.0, 7.0, 9.0, 2.0, 4.0, 6.0, 8.0, 11.0 };
-  Plaintext plaintextShort            = cc->MakeCKKSPackedPlaintext(vals);
-  Plaintext plaintextShortL2D2        = cc->MakeCKKSPackedPlaintext(vals, 2, 2);
-  Ciphertext<DCRTPoly> ciphertext     = cc->Encrypt(kp.publicKey, plaintextShort);
+  vector<std::complex<double>> vals = {1.0, 3.0, 5.0, 7.0, 9.0, 2.0, 4.0, 6.0, 8.0, 11.0};
+  Plaintext plaintextShort = cc->MakeCKKSPackedPlaintext(vals);
+  Plaintext plaintextShortL2D2 = cc->MakeCKKSPackedPlaintext(vals, 2, 2);
+  Ciphertext<DCRTPoly> ciphertext = cc->Encrypt(kp.publicKey, plaintextShort);
   Ciphertext<DCRTPoly> ciphertextL2D2 = cc->Encrypt(kp.publicKey, plaintextShortL2D2);
 
   DEBUG("step 4");
@@ -245,16 +242,10 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
   cc->Decrypt(kp.secretKey, newC, &plaintextShortNew);
   cc->Decrypt(kp.secretKey, newCL2D2, &plaintextShortNewL2D2);
 
-  checkApproximateEquality(plaintextShortNew->GetCKKSPackedValue(),
-                           plaintextShort->GetCKKSPackedValue(),
-                           vecSize,
-                           eps,
+  checkApproximateEquality(plaintextShortNew->GetCKKSPackedValue(), plaintextShort->GetCKKSPackedValue(), vecSize, eps,
                            failmsg + " Decrypted serialization test fails");
-  checkApproximateEquality(plaintextShortNewL2D2->GetCKKSPackedValue(),
-                           plaintextShort->GetCKKSPackedValue(),
-                           vecSize,
-                           eps,
-                           failmsg + " Decrypted serialization test fails (level 2, depth 2)");
+  checkApproximateEquality(plaintextShortNewL2D2->GetCKKSPackedValue(), plaintextShort->GetCKKSPackedValue(), vecSize,
+                           eps, failmsg + " Decrypted serialization test fails (level 2, depth 2)");
 
   DEBUG("step 6");
   LPKeyPair<DCRTPoly> kp2 = cc->KeyGen();
@@ -268,22 +259,22 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const
   // serialize a bunch of mult keys
   stringstream ser0;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser0, sertype, kp.secretKey->GetKeyTag()), true)
-    << "single eval mult key ser fails";
+      << "single eval mult key ser fails";
   stringstream ser2a;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser2a, sertype, cc), true)
-    << "context 1 eval mult key ser fails";
+      << "context 1 eval mult key ser fails";
   stringstream ser3;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser3, sertype), true)
-    << "all context eval mult key ser fails";
+      << "all context eval mult key ser fails";
 
   DEBUG("step 8");
   // serialize a bunch of sum keys
   stringstream aser0;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser0, sertype, kp.secretKey->GetKeyTag()), true)
-    << "single eval sum key ser fails";
+      << "single eval sum key ser fails";
   stringstream aser2a;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser2a, sertype, cc), true)
-    << "single ctx eval sum key ser fails";
+      << "single ctx eval sum key ser fails";
   stringstream aser3;
   EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser3, sertype), true) << "all eval sum key ser fails";
 
@@ -355,10 +346,10 @@ template <typename T, typename ST>
 static void TestDecryptionSerNoCRTTables(CryptoContext<T> cc, const ST& sertype, string msg) {
   LPKeyPair<T> kp = cc->KeyGen();
 
-  vector<std::complex<double>> vals = { 1.0, 3.0, 5.0, 7.0, 9.0, 2.0, 4.0, 6.0, 8.0, 11.0 };
-  Plaintext plaintextShort          = cc->MakeCKKSPackedPlaintext(vals);
-  Ciphertext<DCRTPoly> ciphertext   = cc->Encrypt(kp.publicKey, plaintextShort);
-  double eps                        = 0.000000001;
+  vector<std::complex<double>> vals = {1.0, 3.0, 5.0, 7.0, 9.0, 2.0, 4.0, 6.0, 8.0, 11.0};
+  Plaintext plaintextShort = cc->MakeCKKSPackedPlaintext(vals);
+  Ciphertext<DCRTPoly> ciphertext = cc->Encrypt(kp.publicKey, plaintextShort);
+  double eps = 0.000000001;
 
   stringstream s;
   Serial::Serialize(cc, s, sertype);

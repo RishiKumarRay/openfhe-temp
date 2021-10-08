@@ -31,8 +31,8 @@ using std::invalid_argument;
 namespace lbcrypto {
 
 template <class Element>
-Matrix<Element>::Matrix(alloc_func allocZero, size_t rows, size_t cols, alloc_func allocGen) :
-    data(), rows(rows), cols(cols), allocZero(allocZero) {
+Matrix<Element>::Matrix(alloc_func allocZero, size_t rows, size_t cols, alloc_func allocGen)
+    : data(), rows(rows), cols(cols), allocZero(allocZero) {
   data.resize(rows);
   for (auto row = data.begin(); row != data.end(); ++row) {
     for (size_t col = 0; col < cols; ++col) {
@@ -74,8 +74,7 @@ Matrix<Element> Matrix<Element>::Mult(Matrix<Element> const& other) const {
         result.data[0][col] += data[0][i] * other.data[i][col];
       }
     }
-  }
-  else {
+  } else {
 #pragma omp parallel for
     for (size_t row = 0; row < result.rows; ++row) {
       for (size_t i = 0; i < cols; ++i) {
@@ -139,16 +138,16 @@ Matrix<Element> Matrix<Element>::Transpose() const {
 // decomposition or the Cholesky decomposition(for positive definite matrices).
 template <class Element>
 void Matrix<Element>::Determinant(Element* determinant) const {
-  if (rows != cols) PALISADE_THROW(math_error, "Supported only for square matrix");
+  if (rows != cols)
+    PALISADE_THROW(math_error, "Supported only for square matrix");
   // auto determinant = *allocZero();
-  if (rows < 1) PALISADE_THROW(math_error, "Dimension should be at least one");
+  if (rows < 1)
+    PALISADE_THROW(math_error, "Dimension should be at least one");
   if (rows == 1) {
     *determinant = data[0][0];
-  }
-  else if (rows == 2) {
+  } else if (rows == 2) {
     *determinant = data[0][0] * (data[1][1]) - data[1][0] * (data[0][1]);
-  }
-  else {
+  } else {
     size_t j1, j2;
     size_t n = rows;
 
@@ -161,7 +160,8 @@ void Matrix<Element>::Determinant(Element* determinant) const {
         j2 = 0;  // start at first sum-matrix column position
         // loop to copy source matrix less one column
         for (size_t j = 0; j < n; j++) {
-          if (j == j1) continue;  // don't copy the minor column element
+          if (j == j1)
+            continue;  // don't copy the minor column element
 
           // copy source element into new sub-matrix i-1 because new sub-matrix
           // is one row (and column) smaller with excluded minors
@@ -173,7 +173,8 @@ void Matrix<Element>::Determinant(Element* determinant) const {
       auto tempDeterminant(allocZero());
       result.Determinant(&tempDeterminant);
 
-      if (j1 % 2 == 0) *determinant = *determinant + (data[0][j1]) * tempDeterminant;
+      if (j1 % 2 == 0)
+        *determinant = *determinant + (data[0][j1]) * tempDeterminant;
       else
         *determinant = *determinant - (data[0][j1]) * tempDeterminant;
 
@@ -191,7 +192,8 @@ void Matrix<Element>::Determinant(Element* determinant) const {
 // multiplied by -1^{i+j} The determinant subroutine is used
 template <class Element>
 Matrix<Element> Matrix<Element>::CofactorMatrix() const {
-  if (rows != cols) PALISADE_THROW(not_available_error, "Supported only for square matrix");
+  if (rows != cols)
+    PALISADE_THROW(not_available_error, "Supported only for square matrix");
 
   size_t ii, jj, iNew, jNew;
 
@@ -206,10 +208,12 @@ Matrix<Element> Matrix<Element>::CofactorMatrix() const {
       /* Form the adjoint a_ij */
       iNew = 0;
       for (ii = 0; ii < n; ii++) {
-        if (ii == i) continue;
+        if (ii == i)
+          continue;
         jNew = 0;
         for (jj = 0; jj < n; jj++) {
-          if (jj == j) continue;
+          if (jj == j)
+            continue;
           c.data[iNew][jNew] = data[ii][jj];
           jNew++;
         }
@@ -222,7 +226,8 @@ Matrix<Element> Matrix<Element>::CofactorMatrix() const {
       Element negDeterminant = -determinant;
 
       /* Fill in the elements of the cofactor */
-      if ((i + j) % 2 == 0) result.data[i][j] = determinant;
+      if ((i + j) % 2 == 0)
+        result.data[i][j] = determinant;
       else
         result.data[i][j] = negDeterminant;
     }
@@ -256,7 +261,7 @@ inline Matrix<Element>& Matrix<Element>::HStack(Matrix<Element> const& other) {
   }
   for (size_t row = 0; row < rows; ++row) {
     data_row_t rowElems;
-    for (auto& elem: other.data[row]) {
+    for (auto& elem : other.data[row]) {
       rowElems.push_back(elem);
     }
     MoveAppend(data[row], rowElems);
@@ -307,7 +312,8 @@ Matrix<Element> Matrix<Element>::MultByRandomVector(std::vector<int> ranvec) con
 #pragma omp parallel for
   for (size_t row = 0; row < result.rows; ++row) {
     for (size_t col = 0; col < cols; ++col) {
-      if (ranvec[col] == 1) result.data[row][0] += data[row][col];
+      if (ranvec[col] == 1)
+        result.data[row][0] += data[row][col];
     }
   }
   return result;

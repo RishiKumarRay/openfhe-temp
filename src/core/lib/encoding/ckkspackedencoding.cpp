@@ -31,9 +31,9 @@ std::vector<std::complex<double>> Conjugate(const std::vector<std::complex<doubl
   uint32_t n = vec.size();
   std::vector<std::complex<double>> result(n);
   for (size_t i = 1; i < n; i++) {
-    result[i] = { -vec[n - i].imag(), -vec[n - i].real() };
+    result[i] = {-vec[n - i].imag(), -vec[n - i].real()};
   }
-  result[0] = { vec[0].real(), -vec[0].imag() };
+  result[0] = {vec[0].real(), -vec[0].imag()};
   return result;
 }
 
@@ -102,10 +102,11 @@ std::vector<DCRTPoly::Integer> CKKSPackedEncoding::CRTMult(const std::vector<DCR
 
 #if NATIVEINT == 128
 bool CKKSPackedEncoding::Encode() {
-  if (this->isEncoded) return true;
+  if (this->isEncoded)
+    return true;
 
   uint32_t ringDim = GetElementRingDimension();
-  uint32_t Nh      = (ringDim >> 1);
+  uint32_t Nh = (ringDim >> 1);
 
   std::vector<std::complex<double>> inverse = this->GetCKKSPackedValue();
 
@@ -117,10 +118,10 @@ bool CKKSPackedEncoding::Encode() {
 
   if (this->typeFlag == IsDCRTPoly) {
     DiscreteFourierTransform::FFTSpecialInv(inverse);
-    uint64_t pBits     = encodingParams->GetPlaintextModulus();
+    uint64_t pBits = encodingParams->GetPlaintextModulus();
     uint32_t precision = 52;
 
-    double powP      = std::pow(2, precision);
+    double powP = std::pow(2, precision);
     int32_t pCurrent = pBits - precision;
 
     // the idea is to break down real and imaginary parts
@@ -141,29 +142,27 @@ bool CKKSPackedEncoding::Encode() {
         PALISADE_THROW(math_error, "Overflow, try to decrease scaling factor");
       }
 
-      int64_t re64       = std::llround(dre);
+      int64_t re64 = std::llround(dre);
       int32_t pRemaining = pCurrent + n1;
-      __int128 re        = 0;
+      __int128 re = 0;
       if (pRemaining < 0) {
         re = re64 >> (-pRemaining);
-      }
-      else {
+      } else {
         __int128 pPowRemaining = ((__int128)1) << pRemaining;
-        re                     = pPowRemaining * re64;
+        re = pPowRemaining * re64;
       }
 
       int64_t im64 = std::llround(dim);
-      pRemaining   = pCurrent + n2;
-      __int128 im  = 0;
+      pRemaining = pCurrent + n2;
+      __int128 im = 0;
       if (pRemaining < 0) {
         im = im64 >> (-pRemaining);
-      }
-      else {
+      } else {
         __int128 pPowRemaining = ((int64_t)1) << pRemaining;
-        im                     = pPowRemaining * im64;
+        im = pPowRemaining * im64;
       }
 
-      temp[i]      = (re < 0) ? Max128BitValue() + re : re;
+      temp[i] = (re < 0) ? Max128BitValue() + re : re;
       temp[i + Nh] = (im < 0) ? Max128BitValue() + im : im;
 
       if (is128BitOverflow(temp[i]) || is128BitOverflow(temp[i + Nh])) {
@@ -171,7 +170,7 @@ bool CKKSPackedEncoding::Encode() {
       }
     }
 
-    const shared_ptr<ILDCRTParams<BigInteger>> params                = this->encodedVectorDCRT.GetParams();
+    const shared_ptr<ILDCRTParams<BigInteger>> params = this->encodedVectorDCRT.GetParams();
     const std::vector<std::shared_ptr<ILNativeParams>>& nativeParams = params->GetParams();
 
     for (size_t i = 0; i < nativeParams.size(); i++) {
@@ -207,8 +206,7 @@ bool CKKSPackedEncoding::Encode() {
     this->GetElement<DCRTPoly>().SetFormat(Format::EVALUATION);
 
     scalingFactor = pow(scalingFactor, depth);
-  }
-  else {
+  } else {
     PALISADE_THROW(config_error, "Only DCRTPoly is supported for CKKS.");
   }
 
@@ -217,10 +215,11 @@ bool CKKSPackedEncoding::Encode() {
 }
 #else  // NATIVEINT == 64
 bool CKKSPackedEncoding::Encode() {
-  if (this->isEncoded) return true;
+  if (this->isEncoded)
+    return true;
 
   uint32_t ringDim = GetElementRingDimension();
-  uint32_t Nh      = (ringDim >> 1);
+  uint32_t Nh = (ringDim >> 1);
 
   std::vector<std::complex<double>> inverse = this->GetCKKSPackedValue();
 
@@ -261,7 +260,7 @@ bool CKKSPackedEncoding::Encode() {
 
         for (uint32_t idx = 0; idx < inverse.size(); idx++) {
           // exp( j*2*pi*n*k/N )
-          std::complex<double> expFactor = { cos((factor * idx) / invLen), sin((factor * idx) / invLen) };
+          std::complex<double> expFactor = {cos((factor * idx) / invLen), sin((factor * idx) / invLen)};
 
           // X[k] * exp( j*2*pi*n*k/N )
           std::complex<double> prodFactor = inverse[idx] * expFactor;
@@ -270,11 +269,11 @@ bool CKKSPackedEncoding::Encode() {
           double imagVal = prodFactor.imag();
 
           if (realVal > realMax) {
-            realMax    = realVal;
+            realMax = realVal;
             realMaxIdx = idx;
           }
           if (imagVal > imagMax) {
-            imagMax    = imagVal;
+            imagMax = imagVal;
             imagMaxIdx = idx;
           }
         }
@@ -298,10 +297,10 @@ bool CKKSPackedEncoding::Encode() {
       int64_t re = std::llround(dre);
       int64_t im = std::llround(dim);
 
-      temp[i]      = (re < 0) ? Max64BitValue() + re : re;
+      temp[i] = (re < 0) ? Max64BitValue() + re : re;
       temp[i + Nh] = (im < 0) ? Max64BitValue() + im : im;
     }
-    const shared_ptr<ILDCRTParams<BigInteger>> params                = this->encodedVectorDCRT.GetParams();
+    const shared_ptr<ILDCRTParams<BigInteger>> params = this->encodedVectorDCRT.GetParams();
     const std::vector<std::shared_ptr<ILNativeParams>>& nativeParams = params->GetParams();
 
     for (size_t i = 0; i < nativeParams.size(); i++) {
@@ -337,8 +336,7 @@ bool CKKSPackedEncoding::Encode() {
     this->GetElement<DCRTPoly>().SetFormat(Format::EVALUATION);
 
     scalingFactor = pow(scalingFactor, depth);
-  }
-  else {
+  } else {
     PALISADE_THROW(config_error, "Only DCRTPoly is supported for CKKS.");
   }
 
@@ -348,7 +346,7 @@ bool CKKSPackedEncoding::Encode() {
 #endif
 
 bool CKKSPackedEncoding::Decode(size_t depth, double scalingFactor, enum RescalingTechnique rsTech) {
-  double p    = encodingParams->GetPlaintextModulus();
+  double p = encodingParams->GetPlaintextModulus();
   double powP = 0.0;
   uint32_t Nh = GetElementRingDimension() / 2;
   value.clear();
@@ -356,17 +354,19 @@ bool CKKSPackedEncoding::Decode(size_t depth, double scalingFactor, enum Rescali
   std::vector<std::complex<double>> curValues(Nh);
 
   if (this->typeFlag == IsNativePoly) {
-    if (rsTech == EXACTRESCALE) powP = pow(scalingFactor, -1);
+    if (rsTech == EXACTRESCALE)
+      powP = pow(scalingFactor, -1);
     else
       powP = pow(2, -p);
 
     const NativeInteger& q = this->GetElementModulus().ConvertToInt();
-    NativeInteger qHalf    = q >> 1;
+    NativeInteger qHalf = q >> 1;
 
     for (size_t i = 0, idx = 0; i < Nh; ++i, idx++) {
       std::complex<double> cur;
 
-      if (GetElement<NativePoly>()[idx] > qHalf) cur.real(-((q - GetElement<NativePoly>()[idx])).ConvertToDouble());
+      if (GetElement<NativePoly>()[idx] > qHalf)
+        cur.real(-((q - GetElement<NativePoly>()[idx])).ConvertToDouble());
       else
         cur.real((GetElement<NativePoly>()[idx]).ConvertToDouble());
 
@@ -377,18 +377,18 @@ bool CKKSPackedEncoding::Decode(size_t depth, double scalingFactor, enum Rescali
 
       curValues[i] = cur;
     }
-  }
-  else {
+  } else {
     powP = pow(2, -p);
 
     // we will bring down the scaling factor to 2^p
     double scalingFactorPre = 0.0;
-    if (rsTech == EXACTRESCALE) scalingFactorPre = pow(scalingFactor, -1) * pow(2, p);
+    if (rsTech == EXACTRESCALE)
+      scalingFactorPre = pow(scalingFactor, -1) * pow(2, p);
     else
       scalingFactorPre = pow(2, -p * (depth - 1));
 
     const BigInteger& q = GetElementModulus();
-    BigInteger qHalf    = q >> 1;
+    BigInteger qHalf = q >> 1;
 
     for (size_t i = 0, idx = 0; i < Nh; ++i, idx++) {
       std::complex<double> cur;
@@ -508,8 +508,7 @@ void CKKSPackedEncoding::FitToNativeVector(const std::vector<int64_t>& vec, int6
     NativeInteger n(vec[i]);
     if (n > bigValueHf) {
       (*nativeVec)[i] = n.ModSub(diff, modulus);
-    }
-    else {
+    } else {
       (*nativeVec)[i] = n.Mod(modulus);
     }
   }
@@ -525,8 +524,7 @@ void CKKSPackedEncoding::FitToNativeVector(const std::vector<__int128>& vec, __i
     NativeInteger n((unsigned __int128)vec[i]);
     if (n > bigValueHf) {
       (*nativeVec)[i] = n.ModSub(diff, modulus);
-    }
-    else {
+    } else {
       (*nativeVec)[i] = n.Mod(modulus);
     }
   }

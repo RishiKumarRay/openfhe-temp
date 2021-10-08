@@ -46,19 +46,19 @@ using namespace lbcrypto;
 
 // Save-Load locations for keys
 const std::string DATAFOLDER = "demoData";
-std::string ccLocation       = "/cryptocontext.txt";
-std::string pubKeyLocation   = "/key_pub.txt";   // Pub key
-std::string multKeyLocation  = "/key_mult.txt";  // relinearization key
-std::string rotKeyLocation   = "/key_rot.txt";   // automorphism / rotation key
+std::string ccLocation = "/cryptocontext.txt";
+std::string pubKeyLocation = "/key_pub.txt";    // Pub key
+std::string multKeyLocation = "/key_mult.txt";  // relinearization key
+std::string rotKeyLocation = "/key_rot.txt";    // automorphism / rotation key
 
 // Save-load locations for RAW ciphertexts
 std::string cipherOneLocation = "/ciphertext1.txt";
 std::string cipherTwoLocation = "/ciphertext2.txt";
 
 // Save-load locations for evaluated ciphertexts
-std::string cipherMultLocation   = "/ciphertextMult.txt";
-std::string cipherAddLocation    = "/ciphertextAdd.txt";
-std::string cipherRotLocation    = "/ciphertextRot.txt";
+std::string cipherMultLocation = "/ciphertextMult.txt";
+std::string cipherAddLocation = "/ciphertextAdd.txt";
+std::string cipherRotLocation = "/ciphertextRot.txt";
 std::string cipherRotNegLocation = "/ciphertextRotNegLocation.txt";
 std::string clientVectorLocation = "/ciphertextVectorFromClient.txt";
 
@@ -87,7 +87,7 @@ void demarcate(const std::string& msg) {
 std::tuple<CryptoContext<DCRTPoly>, LPKeyPair<DCRTPoly>, int> serverSetupAndWrite(int multDepth, int scaleFactorBits,
                                                                                   int batchSize) {
   CryptoContext<DCRTPoly> serverCC =
-    CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth, scaleFactorBits, batchSize);
+      CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(multDepth, scaleFactorBits, batchSize);
 
   serverCC->Enable(ENCRYPTION);
   serverCC->Enable(SHE);
@@ -101,15 +101,15 @@ std::tuple<CryptoContext<DCRTPoly>, LPKeyPair<DCRTPoly>, int> serverSetupAndWrit
   serverCC->EvalMultKeyGen(serverKP.secretKey);
   std::cout << "Eval Mult Keys/ Relinearization keys have been generated" << std::endl;
 
-  serverCC->EvalAtIndexKeyGen(serverKP.secretKey, { 1, 2, -1, -2 });
+  serverCC->EvalAtIndexKeyGen(serverKP.secretKey, {1, 2, -1, -2});
   std::cout << "Rotation keys generated" << std::endl;
 
-  std::vector<std::complex<double>> vec1 = { 1.0, 2.0, 3.0, 4.0 };
-  std::vector<std::complex<double>> vec2 = { 12.5, 13.5, 14.5, 15.5 };
-  std::vector<std::complex<double>> vec3 = { 10.5, 11.5, 12.5, 13.5 };
+  std::vector<std::complex<double>> vec1 = {1.0, 2.0, 3.0, 4.0};
+  std::vector<std::complex<double>> vec2 = {12.5, 13.5, 14.5, 15.5};
+  std::vector<std::complex<double>> vec3 = {10.5, 11.5, 12.5, 13.5};
   std::cout << "\nDisplaying first data vector: ";
 
-  for (auto& v: vec1) {
+  for (auto& v : vec1) {
     std::cout << v << ',';
   }
 
@@ -166,8 +166,7 @@ std::tuple<CryptoContext<DCRTPoly>, LPKeyPair<DCRTPoly>, int> serverSetupAndWrit
     }
     std::cout << "EvalMult/ relinearization keys have been serialized" << std::endl;
     multKeyFile.close();
-  }
-  else {
+  } else {
     std::cerr << "Error serializing EvalMult keys" << std::endl;
     std::exit(1);
   }
@@ -179,8 +178,7 @@ std::tuple<CryptoContext<DCRTPoly>, LPKeyPair<DCRTPoly>, int> serverSetupAndWrit
       std::exit(1);
     }
     std::cout << "Rotation keys have been serialized" << std::endl;
-  }
-  else {
+  } else {
     std::cerr << "Error serializing Rotation keys" << std::endl;
     std::exit(1);
   }
@@ -260,18 +258,18 @@ void clientProcess() {
   }
 
   std::cout << "Deserialized ciphertext1" << '\n' << std::endl;
-  auto clientCiphertextMult   = clientCC->EvalMult(clientC1, clientC2);
-  auto clientCiphertextAdd    = clientCC->EvalAdd(clientC1, clientC2);
-  auto clientCiphertextRot    = clientCC->EvalAtIndex(clientC1, 1);
+  auto clientCiphertextMult = clientCC->EvalMult(clientC1, clientC2);
+  auto clientCiphertextAdd = clientCC->EvalAdd(clientC1, clientC2);
+  auto clientCiphertextRot = clientCC->EvalAtIndex(clientC1, 1);
   auto clientCiphertextRotNeg = clientCC->EvalAtIndex(clientC1, -1);
 
   // Now, we want to simulate a client who is encrypting data for the server to
   // decrypt. E.g weights of a machine learning algorithm
   demarcate("Part 3.5: Client Serialization of data that has been operated on");
 
-  std::vector<std::complex<double>> clientVector1 = { 1.0, 2.0, 3.0, 4.0 };
-  auto clientPlaintext1                           = clientCC->MakeCKKSPackedPlaintext(clientVector1);
-  auto clientInitiatedEncryption                  = clientCC->Encrypt(clientPublicKey, clientPlaintext1);
+  std::vector<std::complex<double>> clientVector1 = {1.0, 2.0, 3.0, 4.0};
+  auto clientPlaintext1 = clientCC->MakeCKKSPackedPlaintext(clientVector1);
+  auto clientInitiatedEncryption = clientCC->Encrypt(clientPublicKey, clientPlaintext1);
   Serial::SerializeToFile(DATAFOLDER + cipherMultLocation, clientCiphertextMult, SerType::BINARY);
   Serial::SerializeToFile(DATAFOLDER + cipherAddLocation, clientCiphertextAdd, SerType::BINARY);
   Serial::SerializeToFile(DATAFOLDER + cipherRotLocation, clientCiphertextRot, SerType::BINARY);
@@ -328,49 +326,47 @@ std::tuple<Plaintext, Plaintext, Plaintext, Plaintext, Plaintext> serverVerifica
   serverPlaintextFromClient_Rot->SetLength(vectorSize + 1);
   serverPlaintextFromClient_RotNeg->SetLength(vectorSize + 1);
 
-  return std::make_tuple(serverPlaintextFromClient_Mult,
-                         serverPlaintextFromClient_Add,
-                         serverPlaintextFromClient_Vec,
-                         serverPlaintextFromClient_Rot,
-                         serverPlaintextFromClient_RotNeg);
+  return std::make_tuple(serverPlaintextFromClient_Mult, serverPlaintextFromClient_Add, serverPlaintextFromClient_Vec,
+                         serverPlaintextFromClient_Rot, serverPlaintextFromClient_RotNeg);
 }
 int main() {
   std::cout << "This program requres the subdirectory `" << DATAFOLDER << "' to exist, otherwise you will get "
             << "an error writing serializations." << std::endl;
 
   // Set main params
-  const int multDepth       = 5;
+  const int multDepth = 5;
   const int scaleFactorBits = 40;
-  const usint batchSize     = 32;
+  const usint batchSize = 32;
 
   const int cryptoContextIdx = 0;
-  const int keyPairIdx       = 1;
-  const int vectorSizeIdx    = 2;
+  const int keyPairIdx = 1;
+  const int vectorSizeIdx = 2;
 
-  const int cipherMultResIdx   = 0;
-  const int cipherAddResIdx    = 1;
-  const int cipherVecResIdx    = 2;
-  const int cipherRotResIdx    = 3;
+  const int cipherMultResIdx = 0;
+  const int cipherAddResIdx = 1;
+  const int cipherVecResIdx = 2;
+  const int cipherRotResIdx = 3;
   const int cipherRotNegResIdx = 4;
 
-  demarcate("Part 1: Cryptocontext generation, key generation, data encryption "
-            "(server)");
+  demarcate(
+      "Part 1: Cryptocontext generation, key generation, data encryption "
+      "(server)");
 
   auto tupleCryptoContext_KeyPair = serverSetupAndWrite(multDepth, scaleFactorBits, batchSize);
-  auto cc                         = std::get<cryptoContextIdx>(tupleCryptoContext_KeyPair);
-  auto kp                         = std::get<keyPairIdx>(tupleCryptoContext_KeyPair);
-  int vectorSize                  = std::get<vectorSizeIdx>(tupleCryptoContext_KeyPair);
+  auto cc = std::get<cryptoContextIdx>(tupleCryptoContext_KeyPair);
+  auto kp = std::get<keyPairIdx>(tupleCryptoContext_KeyPair);
+  int vectorSize = std::get<vectorSizeIdx>(tupleCryptoContext_KeyPair);
 
   demarcate("Part 3: Client deserialize all data");
   clientProcess();
 
   demarcate("Part 4: Server deserialization of data from client. ");
 
-  auto tupleRes  = serverVerification(cc, kp, vectorSize);
-  auto multRes   = std::get<cipherMultResIdx>(tupleRes);
-  auto addRes    = std::get<cipherAddResIdx>(tupleRes);
-  auto vecRes    = std::get<cipherVecResIdx>(tupleRes);
-  auto rotRes    = std::get<cipherRotResIdx>(tupleRes);
+  auto tupleRes = serverVerification(cc, kp, vectorSize);
+  auto multRes = std::get<cipherMultResIdx>(tupleRes);
+  auto addRes = std::get<cipherAddResIdx>(tupleRes);
+  auto vecRes = std::get<cipherVecResIdx>(tupleRes);
+  auto rotRes = std::get<cipherRotResIdx>(tupleRes);
   auto rotNegRes = std::get<cipherRotNegResIdx>(tupleRes);
 
   // vec1: {1,2,3,4}

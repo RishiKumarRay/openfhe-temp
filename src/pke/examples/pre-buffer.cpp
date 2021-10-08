@@ -34,8 +34,8 @@ using namespace lbcrypto;
 using CT = Ciphertext<DCRTPoly>;  // ciphertext
 using PT = Plaintext;             // plaintext
 
-using vecInt  = vector<int64_t>;  // vector of ints
-using vecChar = vector<char>;     // vector of characters
+using vecInt = vector<int64_t>;  // vector of ints
+using vecChar = vector<char>;    // vector of characters
 
 bool run_demo_pre(void);
 
@@ -62,12 +62,12 @@ bool run_demo_pre(void) {
 
   uint32_t multDepth = 1;
 
-  double sigma                = 3.2;
+  double sigma = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   // Instantiate the crypto context
   CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-    plaintextModulus, securityLevel, sigma, 0, multDepth, 0, OPTIMIZED);
+      plaintextModulus, securityLevel, sigma, 0, multDepth, 0, OPTIMIZED);
 
   cout << "\nParam generation time: "
        << "\t" << TOC_MS(t) << " ms" << endl;
@@ -198,13 +198,15 @@ bool run_demo_pre(void) {
   auto unpacked0 = pt->GetPackedValue();
   auto unpacked1 = ptDec1->GetPackedValue();
   auto unpacked2 = ptDec2->GetPackedValue();
-  bool good      = true;
+  bool good = true;
 
   // note that PALISADE assumes that plaintext is in the range of -p/2..p/2
   // to recover 0...q simply add q if the unpacked value is negative
   for (unsigned int j = 0; j < pt->GetLength(); j++) {
-    if (unpacked1[j] < 0) unpacked1[j] += plaintextModulus;
-    if (unpacked2[j] < 0) unpacked2[j] += plaintextModulus;
+    if (unpacked1[j] < 0)
+      unpacked1[j] += plaintextModulus;
+    if (unpacked2[j] < 0)
+      unpacked2[j] += plaintextModulus;
   }
 
   // compare all the results for correctness
@@ -216,8 +218,7 @@ bool run_demo_pre(void) {
   }
   if (good) {
     cout << "PRE passes" << endl;
-  }
-  else {
+  } else {
     cout << "PRE fails" << endl;
   }
 

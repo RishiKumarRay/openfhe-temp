@@ -37,7 +37,7 @@ TEST(UnitTestFHEWAP, KeySwitch) {
 
   NativeInteger Q = cc.GetParams()->GetLWEParams()->GetQ();
 
-  auto sk  = cc.KeyGen();
+  auto sk = cc.KeyGen();
   auto skN = cc.KeyGenN();
 
   auto ctQN1 = cc.Encrypt(skN, 1, FRESH);
@@ -50,9 +50,9 @@ TEST(UnitTestFHEWAP, KeySwitch) {
   auto keySwitchHint = cc.KeySwitchGen(sk, skN);
 
   std::shared_ptr<LWECiphertextImpl> eQ1 =
-    cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN1);
+      cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN1);
   std::shared_ptr<LWECiphertextImpl> eQ0 =
-    cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN0);
+      cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN0);
 
   LWEPlaintext resultAfterKeySwitch1;
   cc.Decrypt(skQ, eQ1, &resultAfterKeySwitch1);
@@ -73,7 +73,7 @@ TEST(UnitTestFHEWGINX, KeySwitch) {
 
   NativeInteger Q = cc.GetParams()->GetLWEParams()->GetQ();
 
-  auto sk  = cc.KeyGen();
+  auto sk = cc.KeyGen();
   auto skN = cc.KeyGenN();
 
   auto ctQN1 = cc.Encrypt(skN, 1, FRESH);
@@ -86,9 +86,9 @@ TEST(UnitTestFHEWGINX, KeySwitch) {
   auto keySwitchHint = cc.KeySwitchGen(sk, skN);
 
   std::shared_ptr<LWECiphertextImpl> eQ1 =
-    cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN1);
+      cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN1);
   std::shared_ptr<LWECiphertextImpl> eQ0 =
-    cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN0);
+      cc.GetLWEScheme()->KeySwitch(cc.GetParams()->GetLWEParams(), keySwitchHint, ctQN0);
 
   LWEPlaintext resultAfterKeySwitch1;
   cc.Decrypt(skQ, eQ1, &resultAfterKeySwitch1);
@@ -276,8 +276,8 @@ TEST(UnitTestFHEWAP, AND) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -312,8 +312,8 @@ TEST(UnitTestFHEWGINX, AND) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -350,8 +350,8 @@ TEST(UnitTestFHEWGINX, SIGNED_MOD) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -386,8 +386,8 @@ TEST(UnitTestFHEWAP, OR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -422,8 +422,8 @@ TEST(UnitTestFHEWGINX, OR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -458,8 +458,8 @@ TEST(UnitTestFHEWAP, NAND) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -494,8 +494,8 @@ TEST(UnitTestFHEWGINX, NAND) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -530,8 +530,8 @@ TEST(UnitTestFHEWAP, NOR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -566,8 +566,8 @@ TEST(UnitTestFHEWGINX, NOR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -602,8 +602,8 @@ TEST(UnitTestFHEWAP, XOR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -638,8 +638,8 @@ TEST(UnitTestFHEWGINX, XOR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -674,8 +674,8 @@ TEST(UnitTestFHEWAP, XNOR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -710,8 +710,8 @@ TEST(UnitTestFHEWGINX, XNOR) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -746,8 +746,8 @@ TEST(UnitTestFHEWAP, XOR_FAST) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -782,8 +782,8 @@ TEST(UnitTestFHEWGINX, XOR_FAST) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -818,8 +818,8 @@ TEST(UnitTestFHEWAP, XNOR_FAST) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 
@@ -854,8 +854,8 @@ TEST(UnitTestFHEWGINX, XNOR_FAST) {
 
   cc.BTKeyGen(sk);
 
-  auto ct1    = cc.Encrypt(sk, 1);
-  auto ct0    = cc.Encrypt(sk, 0);
+  auto ct1 = cc.Encrypt(sk, 1);
+  auto ct0 = cc.Encrypt(sk, 0);
   auto ct1Alt = cc.Encrypt(sk, 1);
   auto ct0Alt = cc.Encrypt(sk, 0);
 

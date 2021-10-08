@@ -59,49 +59,49 @@ Archive, Report 2018/589. {https://eprint.iacr.org/2018/589}
 namespace lbcrypto {
 
 template <class Element>
-LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB() :
-    LPCryptoParametersRLWE<Element>(), m_numq(0), m_numb(0), m_negQInvModmtilde(0) {}
+LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB()
+    : LPCryptoParametersRLWE<Element>(), m_numq(0), m_numb(0), m_negQInvModmtilde(0) {}
 
 template <class Element>
-LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs) :
-    LPCryptoParametersRLWE<Element>(rhs), m_numq(0), m_numb(0), m_negQInvModmtilde(0) {}
+LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs)
+    : LPCryptoParametersRLWE<Element>(rhs), m_numq(0), m_numb(0), m_negQInvModmtilde(0) {}
 
 template <class Element>
 LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB(shared_ptr<ParmType> params,
                                                               const PlaintextModulus& plaintextModulus,
                                                               float distributionParameter, float assuranceMeasure,
                                                               float securityLevel, usint relinWindow, MODE mode,
-                                                              int depth, int maxDepth) :
-    LPCryptoParametersRLWE<Element>(params, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
-                                    distributionParameter, assuranceMeasure, securityLevel, relinWindow, depth,
-                                    maxDepth, mode),
-    m_numq(0),
-    m_numb(0),
-    m_negQInvModmtilde(0) {}
+                                                              int depth, int maxDepth)
+    : LPCryptoParametersRLWE<Element>(params, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
+                                      distributionParameter, assuranceMeasure, securityLevel, relinWindow, depth,
+                                      maxDepth, mode),
+      m_numq(0),
+      m_numb(0),
+      m_negQInvModmtilde(0) {}
 
 template <class Element>
 LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB(shared_ptr<ParmType> params,
                                                               EncodingParams encodingParams,
                                                               float distributionParameter, float assuranceMeasure,
                                                               float securityLevel, usint relinWindow, MODE mode,
-                                                              int depth, int maxDepth) :
-    LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
-                                    relinWindow, depth, maxDepth, mode),
-    m_numq(0),
-    m_numb(0),
-    m_negQInvModmtilde(0) {}
+                                                              int depth, int maxDepth)
+    : LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
+                                      relinWindow, depth, maxDepth, mode),
+      m_numq(0),
+      m_numb(0),
+      m_negQInvModmtilde(0) {}
 
 template <class Element>
 LPCryptoParametersBFVrnsB<Element>::LPCryptoParametersBFVrnsB(shared_ptr<ParmType> params,
                                                               EncodingParams encodingParams,
                                                               float distributionParameter, float assuranceMeasure,
                                                               SecurityLevel securityLevel, usint relinWindow, MODE mode,
-                                                              int depth, int maxDepth) :
-    LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
-                                    relinWindow, depth, maxDepth, mode),
-    m_numq(0),
-    m_numb(0),
-    m_negQInvModmtilde(0) {}
+                                                              int depth, int maxDepth)
+    : LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
+                                      relinWindow, depth, maxDepth, mode),
+      m_numq(0),
+      m_numb(0),
+      m_negQInvModmtilde(0) {}
 
 // Enable for LPPublicKeyEncryptionSchemeBFVrnsB
 template <class Element>
@@ -114,19 +114,24 @@ void LPPublicKeyEncryptionSchemeBFVrnsB<Element>::Enable(PKESchemeFeature featur
     case SHE:
       if (this->m_algorithmEncryption == nullptr)
         this->m_algorithmEncryption = std::make_shared<LPAlgorithmBFVrnsB<Element>>();
-      if (this->m_algorithmSHE == nullptr) this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBFVrnsB<Element>>();
+      if (this->m_algorithmSHE == nullptr)
+        this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBFVrnsB<Element>>();
       break;
     case PRE:
       if (this->m_algorithmEncryption == nullptr)
         this->m_algorithmEncryption = std::make_shared<LPAlgorithmBFVrnsB<Element>>();
-      if (this->m_algorithmSHE == nullptr) this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBFVrnsB<Element>>();
-      if (this->m_algorithmPRE == nullptr) this->m_algorithmPRE = std::make_shared<LPAlgorithmPREBFVrnsB<Element>>();
+      if (this->m_algorithmSHE == nullptr)
+        this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBFVrnsB<Element>>();
+      if (this->m_algorithmPRE == nullptr)
+        this->m_algorithmPRE = std::make_shared<LPAlgorithmPREBFVrnsB<Element>>();
       break;
     case MULTIPARTY:
       if (this->m_algorithmEncryption == nullptr)
         this->m_algorithmEncryption = std::make_shared<LPAlgorithmBFVrnsB<Element>>();
-      if (this->m_algorithmPRE == nullptr) this->m_algorithmPRE = std::make_shared<LPAlgorithmPREBFVrnsB<Element>>();
-      if (this->m_algorithmSHE == nullptr) this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBFVrnsB<Element>>();
+      if (this->m_algorithmPRE == nullptr)
+        this->m_algorithmPRE = std::make_shared<LPAlgorithmPREBFVrnsB<Element>>();
+      if (this->m_algorithmSHE == nullptr)
+        this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBFVrnsB<Element>>();
       if (this->m_algorithmMultiparty == nullptr)
         this->m_algorithmMultiparty = std::make_shared<LPAlgorithmMultipartyBFVrnsB<Element>>();
       break;
@@ -140,8 +145,8 @@ void LPPublicKeyEncryptionSchemeBFVrnsB<Element>::Enable(PKESchemeFeature featur
 }
 
 template <class Element>
-LPPublicKeyEncryptionSchemeBFVrnsB<Element>::LPPublicKeyEncryptionSchemeBFVrnsB() :
-    LPPublicKeyEncryptionScheme<Element>() {
+LPPublicKeyEncryptionSchemeBFVrnsB<Element>::LPPublicKeyEncryptionSchemeBFVrnsB()
+    : LPPublicKeyEncryptionScheme<Element>() {
   this->m_algorithmParamsGen = std::make_shared<LPAlgorithmParamsGenBFVrnsB<Element>>();
 }
 

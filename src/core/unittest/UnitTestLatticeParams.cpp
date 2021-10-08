@@ -38,8 +38,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTLatticeParams : public ::testing::Test
-{
+class UTLatticeParams : public ::testing::Test {
  protected:
   virtual void SetUp() {}
 
@@ -52,7 +51,7 @@ class UTLatticeParams : public ::testing::Test
 // tests the edge cases when log q is right near the point where the ring dimension
 // needs to be doubled to be compliant with the HE security standard
 TEST_F(UTLatticeParams, edge_cases) {
-  uint32_t maxQ    = StdLatticeParm::FindMaxQ(HEStd_ternary, HEStd_128_classic, 4096);
+  uint32_t maxQ = StdLatticeParm::FindMaxQ(HEStd_ternary, HEStd_128_classic, 4096);
   uint32_t ringDim = StdLatticeParm::FindRingDim(HEStd_ternary, HEStd_128_classic, maxQ);
   EXPECT_EQ(ringDim, (uint32_t)4096) << "Ring dimension is incorrect for an edge case of curQ = maxQ";
   ringDim = StdLatticeParm::FindRingDim(HEStd_ternary, HEStd_128_classic, maxQ - 1);

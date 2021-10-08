@@ -38,8 +38,7 @@ using namespace lbcrypto;
 // This file unit tests the ENCRYPTION capabilities for all schemes, using all
 // known elements
 
-class Encrypt_Decrypt : public ::testing::Test
-{
+class Encrypt_Decrypt : public ::testing::Test {
  public:
   virtual ~Encrypt_Decrypt() {}
 
@@ -80,8 +79,9 @@ class Encrypt_Decrypt : public ::testing::Test
 
 template <typename Element>
 void EncryptionString(const CryptoContext<Element> cc, const string& failmsg) {
-  string value = "You keep using that word. I do not think it means what you think it "
-                 "means";
+  string value =
+      "You keep using that word. I do not think it means what you think it "
+      "means";
   Plaintext plaintext = CryptoContextImpl<Element>::MakePlaintext(String, cc, value);
 
   LPKeyPair<Element> kp = cc->KeyGen();
@@ -98,8 +98,8 @@ GENERATE_TEST_CASES_FUNC(Encrypt_Decrypt, EncryptionString, 512, 256)
 template <typename Element>
 void EncryptionCoefPacked(const CryptoContext<Element> cc, const string& failmsg) {
   size_t intSize = cc->GetRingDimension();
-  auto ptm       = cc->GetCryptoParameters()->GetPlaintextModulus();
-  int half       = ptm / 2;
+  auto ptm = cc->GetCryptoParameters()->GetPlaintextModulus();
+  int half = ptm / 2;
 
   vector<int64_t> intvec;
   for (size_t ii = 0; ii < intSize; ii++)
@@ -109,7 +109,8 @@ void EncryptionCoefPacked(const CryptoContext<Element> cc, const string& failmsg
   vector<int64_t> sintvec;
   for (size_t ii = 0; ii < intSize; ii++) {
     int rnum = rand() % half;
-    if (rand() % 2) rnum *= -1;
+    if (rand() % 2)
+      rnum *= -1;
     sintvec.push_back(rnum);
   }
   Plaintext plaintextSInt = cc->MakeCoefPackedPlaintext(sintvec);
@@ -126,7 +127,7 @@ void EncryptionCoefPacked(const CryptoContext<Element> cc, const string& failmsg
   Plaintext plaintextSIntNew;
   cc->Decrypt(kp.secretKey, ciphertext5, &plaintextSIntNew);
   EXPECT_EQ(*plaintextSIntNew, *plaintextSInt)
-    << failmsg << "coef packed encrypt/decrypt failed for signed integer plaintext";
+      << failmsg << "coef packed encrypt/decrypt failed for signed integer plaintext";
 }
 
 GENERATE_TEST_CASES_FUNC(Encrypt_Decrypt, EncryptionCoefPacked, 128, 512)

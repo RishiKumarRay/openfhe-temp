@@ -44,8 +44,7 @@ namespace lbcrypto {
  * contains no data to construct.
  */
 template <typename Element, typename VecType>
-class ILElement : public Serializable
-{
+class ILElement : public Serializable {
   using IntType = typename VecType::Integer;
 
  public:
@@ -423,7 +422,7 @@ class ILElement : public Serializable
    * rootOfUnity for the modulus.
    */
   virtual void SwitchModulus(const IntType& modulus, const IntType& rootOfUnity,
-                             const IntType& modulusArb     = IntType::ZERO,
+                             const IntType& modulusArb = IntType::ZERO,
                              const IntType& rootOfUnityArb = IntType::ZERO) = 0;
 
   /**

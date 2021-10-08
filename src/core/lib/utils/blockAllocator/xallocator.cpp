@@ -79,12 +79,14 @@ static XallocInitDestroy xallocInitDestroy;
 usint XallocInitDestroy::refCount = 0;
 XallocInitDestroy::XallocInitDestroy() {
   // Track how many static instances of XallocInitDestroy are created
-  if (refCount++ == 0) xalloc_init();
+  if (refCount++ == 0)
+    xalloc_init();
 }
 
 XallocInitDestroy::~XallocInitDestroy() {
   // Last static instance to have destructor called?
-  if (--refCount == 0) xalloc_destroy();
+  if (--refCount == 0)
+    xalloc_destroy();
 }
 #endif  // AUTOMATIC_XALLOCATOR_INIT_DESTROY
 
@@ -118,7 +120,8 @@ static void lock_destroy() {
 
 /// Lock the shared resource.
 static inline void lock_get() {
-  if (_xallocInitialized == false) return;
+  if (_xallocInitialized == false)
+    return;
 #if 0
   // Acquire the mutex to access the shared resource
   pthread_mutex_lock(&xalloc_mutex);
@@ -128,7 +131,8 @@ static inline void lock_get() {
 
 /// Unlock the shared resource.
 static inline void lock_release() {
-  if (_xallocInitialized == false) return;
+  if (_xallocInitialized == false)
+    return;
 
 #if 0
   // Release the mutex  and release the access to shared resource
@@ -189,9 +193,11 @@ static inline Allocator* find_allocator(size_t size) {
   for (usint i = 0; i < MAX_ALLOCATORS; i++) {
     DEBUG("allocator " << i << " " << _allocators[i]);
 
-    if (_allocators[i] == 0) break;
+    if (_allocators[i] == 0)
+      break;
 
-    if (_allocators[i]->GetBlockSize() == size) return _allocators[i];
+    if (_allocators[i]->GetBlockSize() == size)
+      return _allocators[i];
   }
 
   return nullptr;
@@ -237,16 +243,16 @@ extern "C" void xalloc_init() {
   new (&_allocator16384) AllocatorPool<char[16384], MAX_BLOCKS>();
 
   // Populate allocator array with all instances
-  _allocators[0]  = reinterpret_cast<Allocator*>(&_allocator8);
-  _allocators[1]  = reinterpret_cast<Allocator*>(&_allocator16);
-  _allocators[2]  = reinterpret_cast<Allocator*>(&_allocator32);
-  _allocators[3]  = reinterpret_cast<Allocator*>(&_allocator64);
-  _allocators[4]  = reinterpret_cast<Allocator*>(&_allocator128);
-  _allocators[5]  = reinterpret_cast<Allocator*>(&_allocator256);
-  _allocators[6]  = reinterpret_cast<Allocator*>(&_allocator396);
-  _allocators[7]  = reinterpret_cast<Allocator*>(&_allocator512);
-  _allocators[8]  = reinterpret_cast<Allocator*>(&_allocator768);
-  _allocators[9]  = reinterpret_cast<Allocator*>(&_allocator1024);
+  _allocators[0] = reinterpret_cast<Allocator*>(&_allocator8);
+  _allocators[1] = reinterpret_cast<Allocator*>(&_allocator16);
+  _allocators[2] = reinterpret_cast<Allocator*>(&_allocator32);
+  _allocators[3] = reinterpret_cast<Allocator*>(&_allocator64);
+  _allocators[4] = reinterpret_cast<Allocator*>(&_allocator128);
+  _allocators[5] = reinterpret_cast<Allocator*>(&_allocator256);
+  _allocators[6] = reinterpret_cast<Allocator*>(&_allocator396);
+  _allocators[7] = reinterpret_cast<Allocator*>(&_allocator512);
+  _allocators[8] = reinterpret_cast<Allocator*>(&_allocator768);
+  _allocators[9] = reinterpret_cast<Allocator*>(&_allocator1024);
   _allocators[10] = reinterpret_cast<Allocator*>(&_allocator2048);
   _allocators[11] = reinterpret_cast<Allocator*>(&_allocator4096);
   _allocators[12] = reinterpret_cast<Allocator*>(&_allocator8192);
@@ -268,7 +274,8 @@ extern "C" void xalloc_destroy() {
     }
 #else
     for (usint i = 0; i < MAX_ALLOCATORS; i++) {
-      if (_allocators[i] == 0) break;
+      if (_allocators[i] == 0)
+        break;
       delete _allocators[i];
       _allocators[i] = 0;
     }
@@ -293,7 +300,8 @@ extern "C" Allocator* xallocator_get_allocator(size_t size) {
   // to minimize wasted storage. This offers application specific tuning.
   DEBUG_FLAG(false);
   size_t blockSize = size + sizeof(Allocator*);
-  if (blockSize > 256 && blockSize <= 396) blockSize = 396;
+  if (blockSize > 256 && blockSize <= 396)
+    blockSize = 396;
   else if (blockSize > 512 && blockSize <= 768)
     blockSize = 768;
   else
@@ -334,7 +342,7 @@ extern "C" void* xmalloc(size_t size) {
   std::unique_lock<std::mutex> lock(xalloc_mutex);
   {
     // Allocate a raw memory block
-    allocator      = xallocator_get_allocator(size);
+    allocator = xallocator_get_allocator(size);
     blockMemoryPtr = allocator->Allocate(sizeof(Allocator*) + size);
     DEBUG("xmalloc " << size);
   }
@@ -352,7 +360,8 @@ extern "C" void* xmalloc(size_t size) {
 extern "C" void xfree(void* ptr) {
   DEBUG_FLAG(false);
   DEBUG("xfree ");
-  if (ptr == 0) return;
+  if (ptr == 0)
+    return;
 
   // Extract the original allocator instance from the caller's block pointer
   Allocator* allocator = get_block_allocator(ptr);
@@ -373,19 +382,19 @@ extern "C" void xfree(void* ptr) {
 ///  @param[in] ptr - a pointer to a block created with xalloc.
 ///  @param[in] size - the client requested block size to create.
 extern "C" void* xrealloc(void* oldMem, size_t size) {
-  if (oldMem == 0) return xmalloc(size);
+  if (oldMem == 0)
+    return xmalloc(size);
 
   if (size == 0) {
     xfree(oldMem);
     return 0;
-  }
-  else {
+  } else {
     // Create a new memory block
     void* newMem = xmalloc(size);
     if (newMem != 0) {
       // Get the original allocator instance from the old memory block
       Allocator* oldAllocator = get_block_allocator(oldMem);
-      size_t oldSize          = oldAllocator->GetBlockSize() - sizeof(Allocator*);
+      size_t oldSize = oldAllocator->GetBlockSize() - sizeof(Allocator*);
 
       // Copy the bytes from the old memory block into the new (as much as will
       // fit)
@@ -411,9 +420,11 @@ extern "C" void xalloc_stats() {
 #endif
 
     for (usint i = 0; i < MAX_ALLOCATORS; i++) {
-      if (_allocators[i] == 0) break;
+      if (_allocators[i] == 0)
+        break;
 
-      if (_allocators[i]->GetName() != nullptr) cout << _allocators[i]->GetName();
+      if (_allocators[i]->GetName() != nullptr)
+        cout << _allocators[i]->GetName();
 
       cout << " Block Size: " << _allocators[i]->GetBlockSize();
       cout << " Block Count: " << _allocators[i]->GetBlockCount();

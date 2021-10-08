@@ -40,8 +40,7 @@ typedef TernaryUniformGeneratorImpl<BigVector> TernaryUniformGenerator;
  * @brief A generator of the Ternary Uniform Distribution.
  */
 template <typename VecType>
-class TernaryUniformGeneratorImpl : public DistributionGenerator<VecType>
-{
+class TernaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
  public:
   /**
    * @brief Basic constructor for Binary Uniform Generator.

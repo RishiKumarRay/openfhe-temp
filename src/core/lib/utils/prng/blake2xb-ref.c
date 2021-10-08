@@ -42,13 +42,13 @@ int blake2xb_init_key(blake2xb_state* S, const size_t outlen, const void* key, s
 
   /* Initialize parameter block */
   S->P->digest_length = BLAKE2B_OUTBYTES;
-  S->P->key_length    = keylen;
-  S->P->fanout        = 1;
-  S->P->depth         = 1;
+  S->P->key_length = keylen;
+  S->P->fanout = 1;
+  S->P->depth = 1;
   store32(&S->P->leaf_length, 0);
   store32(&S->P->node_offset, 0);
   store32(&S->P->xof_length, outlen);
-  S->P->node_depth   = 0;
+  S->P->node_depth = 0;
   S->P->inner_length = 0;
   memset(S->P->reserved, 0, sizeof(S->P->reserved));
   memset(S->P->salt, 0, sizeof(S->P->salt));
@@ -89,8 +89,7 @@ int blake2xb_final(blake2xb_state* S, void* out, size_t outlen) {
     if (outlen == 0) {
       return -1;
     }
-  }
-  else {
+  } else {
     if (outlen != xof_length) {
       return -1;
     }
@@ -105,11 +104,11 @@ int blake2xb_final(blake2xb_state* S, void* out, size_t outlen) {
   /* Copy values from parent instance, and only change the ones below */
   memcpy(P, S->P, sizeof(blake2b_param));
   P->key_length = 0;
-  P->fanout     = 0;
-  P->depth      = 0;
+  P->fanout = 0;
+  P->depth = 0;
   store32(&P->leaf_length, BLAKE2B_OUTBYTES);
   P->inner_length = BLAKE2B_OUTBYTES;
-  P->node_depth   = 0;
+  P->node_depth = 0;
 
   for (i = 0; outlen > 0; ++i) {
     const size_t block_size = (outlen < BLAKE2B_OUTBYTES) ? outlen : BLAKE2B_OUTBYTES;
@@ -135,15 +134,20 @@ int blake2xb(void* out, size_t outlen, const void* in, size_t inlen, const void*
   blake2xb_state S[1];
 
   /* Verify parameters */
-  if (NULL == in && inlen > 0) return -1;
+  if (NULL == in && inlen > 0)
+    return -1;
 
-  if (NULL == out) return -1;
+  if (NULL == out)
+    return -1;
 
-  if (NULL == key && keylen > 0) return -1;
+  if (NULL == key && keylen > 0)
+    return -1;
 
-  if (keylen > BLAKE2B_KEYBYTES) return -1;
+  if (keylen > BLAKE2B_KEYBYTES)
+    return -1;
 
-  if (outlen == 0) return -1;
+  if (outlen == 0)
+    return -1;
 
   /* Initialize the root block structure */
   if (blake2xb_init_key(S, outlen, key, keylen) < 0) {
@@ -179,7 +183,7 @@ int main(void) {
 
   /* Test simple API */
   for (outlen = 1; outlen <= BLAKE2_KAT_LENGTH; ++outlen) {
-    uint8_t hash[BLAKE2_KAT_LENGTH] = { 0 };
+    uint8_t hash[BLAKE2_KAT_LENGTH] = {0};
     if (blake2xb(hash, outlen, buf, BLAKE2_KAT_LENGTH, key, BLAKE2B_KEYBYTES) < 0) {
       goto fail;
     }
@@ -194,9 +198,9 @@ int main(void) {
     for (outlen = 1; outlen <= BLAKE2_KAT_LENGTH; ++outlen) {
       uint8_t hash[BLAKE2_KAT_LENGTH];
       blake2xb_state S;
-      uint8_t* p  = buf;
+      uint8_t* p = buf;
       size_t mlen = BLAKE2_KAT_LENGTH;
-      int err     = 0;
+      int err = 0;
 
       if ((err = blake2xb_init_key(&S, outlen, key, BLAKE2B_KEYBYTES)) < 0) {
         goto fail;
