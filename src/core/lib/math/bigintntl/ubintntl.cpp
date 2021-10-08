@@ -39,22 +39,25 @@ const usint myZZ::m_log2LimbBitLength = Log2<NTL_ZZ_NBITS>::value;
 
 // CONSTRUCTORS
 
-myZZ::myZZ() : ZZ() { SetMSB(); }
+myZZ::myZZ() : ZZ() {
+  SetMSB();
+}
 
-myZZ::myZZ(const NTL::ZZ &val) : ZZ(val) { SetMSB(); }
+myZZ::myZZ(const NTL::ZZ& val) : ZZ(val) {
+  SetMSB();
+}
 
-myZZ::myZZ(NTL::ZZ &&val) : ZZ() {
+myZZ::myZZ(NTL::ZZ&& val) : ZZ() {
   this->swap(val);
   SetMSB();
 }
 
-myZZ::myZZ(const std::string &strval) : ZZ(conv<ZZ>(strval.c_str())) {
+myZZ::myZZ(const std::string& strval) : ZZ(conv<ZZ>(strval.c_str())) {
   SetMSB();
 }
 
 myZZ::myZZ(uint64_t d) : ZZ(0) {
-  static_assert(NTL_ZZ_NBITS != sizeof(uint64_t),
-                "can't compile gmpint on this architecture");
+  static_assert(NTL_ZZ_NBITS != sizeof(uint64_t), "can't compile gmpint on this architecture");
   if (d == 0) {
     return;
   }
@@ -70,7 +73,7 @@ myZZ::myZZ(unsigned __int128 d) : myZZ((uint64_t)d) {}
 
 // ASSIGNMENT OPERATIONS
 
-const myZZ &myZZ::operator=(const myZZ &val) {
+const myZZ& myZZ::operator=(const myZZ& val) {
   if (this != &val) {
     _ntl_gcopy(val.rep, &(this->rep));
     this->m_MSB = val.m_MSB;
@@ -80,32 +83,32 @@ const myZZ &myZZ::operator=(const myZZ &val) {
 
 // ACCESSORS
 
-void myZZ::SetValue(const std::string &str) {
+void myZZ::SetValue(const std::string& str) {
   *this = conv<ZZ>(str.c_str());
   SetMSB();
 }
 
-void myZZ::SetValue(const myZZ &a) {
+void myZZ::SetValue(const myZZ& a) {
   *this = a;
   SetMSB();
 }
 
 // ARITHMETIC OPERATIONS
 
-myZZ myZZ::MultiplyAndRound(const myZZ &p, const myZZ &q) const {
+myZZ myZZ::MultiplyAndRound(const myZZ& p, const myZZ& q) const {
   myZZ ans(*this);
   ans *= p;
   ans = ans.DivideAndRound(q);
   return ans;
 }
 
-const myZZ &myZZ::MultiplyAndRoundEq(const myZZ &p, const myZZ &q) {
+const myZZ& myZZ::MultiplyAndRoundEq(const myZZ& p, const myZZ& q) {
   this->MulEq(p);
   this->DivideAndRoundEq(q);
   return *this;
 }
 
-myZZ myZZ::DivideAndRound(const myZZ &q) const {
+myZZ myZZ::DivideAndRound(const myZZ& q) const {
   if (q == myZZ(0)) {
     PALISADE_THROW(lbcrypto::math_error, "DivideAndRound() Divisor is zero");
   }
@@ -113,7 +116,8 @@ myZZ myZZ::DivideAndRound(const myZZ &q) const {
   if (*this < q) {
     if (*this <= halfQ) {
       return myZZ(0);
-    } else {
+    }
+    else {
       return myZZ(1);
     }
   }
@@ -128,7 +132,7 @@ myZZ myZZ::DivideAndRound(const myZZ &q) const {
   return ans;
 }
 
-const myZZ &myZZ::DivideAndRoundEq(const myZZ &q) {
+const myZZ& myZZ::DivideAndRoundEq(const myZZ& q) {
   if (q == myZZ(0)) {
     PALISADE_THROW(lbcrypto::math_error, "DivideAndRound() Divisor is zero");
   }
@@ -136,7 +140,8 @@ const myZZ &myZZ::DivideAndRoundEq(const myZZ &q) {
   if (*this < q) {
     if (*this <= halfQ) {
       return *this = myZZ(0);
-    } else {
+    }
+    else {
       return *this = myZZ(1);
     }
   }
@@ -158,21 +163,21 @@ uint64_t myZZ::ConvertToInt() const {
   uint64_t result;
   s >> result;
 
-  if ((this->GetMSB() > (sizeof(uint64_t) * 8)) ||
-      (this->GetMSB() > NTL_ZZ_NBITS)) {
-    std::cerr << "Warning myZZ::ConvertToInt() Loss of precision. "
-              << std::endl;
+  if ((this->GetMSB() > (sizeof(uint64_t) * 8)) || (this->GetMSB() > NTL_ZZ_NBITS)) {
+    std::cerr << "Warning myZZ::ConvertToInt() Loss of precision. " << std::endl;
     std::cerr << "input  " << *this << std::endl;
     std::cerr << "result  " << result << std::endl;
   }
   return result;
 }
 
-double myZZ::ConvertToDouble() const { return (conv<double>(*this)); }
+double myZZ::ConvertToDouble() const {
+  return (conv<double>(*this));
+}
 
 // Splits the binary string to equi sized chunks and then populates the internal
 // array values.
-myZZ myZZ::FromBinaryString(const std::string &vin) {
+myZZ myZZ::FromBinaryString(const std::string& vin) {
   std::string v = vin;
   // strip off leading spaces from the input string
   v.erase(0, v.find_first_not_of(' '));
@@ -231,8 +236,8 @@ usint myZZ::GetMSB() const {
 
   MSB = (sz - 1) * NTL_ZZ_NBITS;  // figure out bit location of all but last
                                   // limb
-  const ZZ_limb_t *zlp = ZZ_limbs_get(*this);
-  usint tmp = GetMSBLimb_t(zlp[sz - 1]);  // add the value of that last limb.
+  const ZZ_limb_t* zlp = ZZ_limbs_get(*this);
+  usint tmp            = GetMSBLimb_t(zlp[sz - 1]);  // add the value of that last limb.
 
   MSB += tmp;
   m_MSB = MSB;
@@ -243,12 +248,12 @@ void myZZ::SetMSB() {
   size_t sz = this->size();
   if (sz == 0) {  // special case for empty data
     m_MSB = 0;
-  } else {
-    m_MSB = (sz - 1) *
-            NTL_ZZ_NBITS;  // figure out bit location of all but last limb
+  }
+  else {
+    m_MSB = (sz - 1) * NTL_ZZ_NBITS;  // figure out bit location of all but last limb
     // could also try
     // m_MSB = NumBytes(*this)*8;
-    const ZZ_limb_t *zlp = ZZ_limbs_get(*this);
+    const ZZ_limb_t* zlp = ZZ_limbs_get(*this);
 
     usint tmp = GetMSBLimb_t(zlp[sz - 1]);  // add the value of that last limb.
     m_MSB += tmp;
@@ -258,7 +263,7 @@ void myZZ::SetMSB() {
 
 // inline static usint GetMSBLimb_t(ZZ_limb_t x){
 usint myZZ::GetMSBLimb_t(ZZ_limb_t x) const {
-  const usint bval[] = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4};
+  const usint bval[] = { 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4 };
 
   uint64_t r = 0;
   if (x & 0xFFFFFFFF00000000) {
@@ -311,9 +316,9 @@ usint myZZ::GetBitRangeAtIndex(usint ppo, usint length) const {
 
 usint myZZ::GetDigitAtIndexForBase(usint index, usint base) const {
   usint DigitLen = std::ceil(log2(base));
-  usint digit = 0;
+  usint digit    = 0;
   usint newIndex = 1 + (index - 1) * DigitLen;
-  digit = GetBitRangeAtIndex(newIndex, DigitLen);
+  digit          = GetBitRangeAtIndex(newIndex, DigitLen);
   return digit;
 }
 
@@ -336,7 +341,8 @@ usint myZZ::ceilIntByUInt(const ZZ_limb_t Number) {
 
   if ((Number & mask) != 0) {
     return (Number >> m_log2LimbBitLength) + 1;
-  } else {
+  }
+  else {
     return Number >> m_log2LimbBitLength;
   }
 }
@@ -349,7 +355,7 @@ const std::string myZZ::ToString() const {
   return result.str();
 }
 
-std::ostream &operator<<(std::ostream &os, const myZZ &ptr_obj) {
+std::ostream& operator<<(std::ostream& os, const myZZ& ptr_obj) {
   ZZ tmp = ptr_obj;
   os << tmp;
   return os;

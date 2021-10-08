@@ -206,8 +206,7 @@ struct DoubleDataType<uint64_t> {
 #endif
 };
 
-const double LOG2_10 =
-    3.32192809;  //!< @brief A pre-computed constant of Log base 2 of 10.
+const double LOG2_10 = 3.32192809;  //!< @brief A pre-computed constant of Log base 2 of 10.
 
 /**
  * @brief Main class for big integers represented as an array of native
@@ -216,8 +215,8 @@ const double LOG2_10 =
  * @tparam BITLENGTH maximum bitwidth supported for big integers
  */
 template <typename uint_type, usint BITLENGTH>
-class BigInteger
-    : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BITLENGTH>> {
+class BigInteger : public lbcrypto::BigIntegerInterface<BigInteger<uint_type, BITLENGTH>>
+{
  public:
   // CONSTRUCTORS
 
@@ -231,21 +230,21 @@ class BigInteger
    *
    * @param &val is the big binary integer to be copied.
    */
-  BigInteger(const BigInteger &val);
+  BigInteger(const BigInteger& val);
 
   /**
    * Move constructor.
    *
    * @param &&val is the big binary integer to be copied.
    */
-  BigInteger(BigInteger &&val);
+  BigInteger(BigInteger&& val);
 
   /**
    * Constructor from a string.
    *
    * @param &strval is the initial integer represented as a string.
    */
-  explicit BigInteger(const std::string &strval);
+  explicit BigInteger(const std::string& strval);
 
   /**
    * Constructor from an unsigned integer.
@@ -273,16 +272,14 @@ class BigInteger
    * @param &val is the initial integer represented as a native integer.
    */
   template <typename T>
-  BigInteger(const bigintnat::NativeIntegerT<T> &val)
-      : BigInteger(val.ConvertToInt()) {}
+  BigInteger(const bigintnat::NativeIntegerT<T>& val) : BigInteger(val.ConvertToInt()) {}
 
   /**
    * Constructor from double is not permitted
    *
    * @param val
    */
-  BigInteger(double val)
-      __attribute__((deprecated("Cannot construct from a double")));
+  BigInteger(double val) __attribute__((deprecated("Cannot construct from a double")));
 
   ~BigInteger() {}
 
@@ -294,7 +291,7 @@ class BigInteger
    * @param &val is the big binary integer to be assigned from.
    * @return assigned BigInteger ref.
    */
-  const BigInteger &operator=(const BigInteger &val);
+  const BigInteger& operator=(const BigInteger& val);
 
   /**
    * Move assignment operator
@@ -302,7 +299,7 @@ class BigInteger
    * @param &val is the big binary integer to be assigned from.
    * @return assigned BigInteger ref.
    */
-  const BigInteger &operator=(BigInteger &&val);
+  const BigInteger& operator=(BigInteger&& val);
 
   /**
    * Assignment operator from string
@@ -310,7 +307,7 @@ class BigInteger
    * @param strval is the string to be assigned from
    * @return the assigned BigInteger ref.
    */
-  const BigInteger &operator=(const std::string strval) {
+  const BigInteger& operator=(const std::string strval) {
     *this = BigInteger(strval);
     return *this;
   }
@@ -321,7 +318,7 @@ class BigInteger
    * @param val is the unsigned integer to be assigned from.
    * @return the assigned BigInteger ref.
    */
-  const BigInteger &operator=(uint64_t val) {
+  const BigInteger& operator=(uint64_t val) {
     *this = BigInteger(val);
     return *this;
   }
@@ -332,7 +329,7 @@ class BigInteger
    * @param &val is the native integer to be assigned from.
    * @return the assigned BigInteger ref.
    */
-  const BigInteger &operator=(const bigintnat::NativeInteger &val) {
+  const BigInteger& operator=(const bigintnat::NativeInteger& val) {
     *this = BigInteger(val);
     return *this;
   }
@@ -345,7 +342,7 @@ class BigInteger
    * @param strval is the string representation of the big binary integer to be
    * copied.
    */
-  void SetValue(const std::string &strval);
+  void SetValue(const std::string& strval);
 
   /**
    * Basic set method for setting the value of a big binary integer
@@ -353,12 +350,14 @@ class BigInteger
    * @param val is the big binary integer representation of the big binary
    * integer to be assigned.
    */
-  void SetValue(const BigInteger &val);
+  void SetValue(const BigInteger& val);
 
   /**
    *  Set this int to 1.
    */
-  void SetIdentity() { *this = 1; }
+  void SetIdentity() {
+    *this = 1;
+  }
 
   /**
    * Sets the int value at the specified index.
@@ -375,7 +374,7 @@ class BigInteger
    * @param &b is the value to add.
    * @return result of the addition operation.
    */
-  BigInteger Add(const BigInteger &b) const;
+  BigInteger Add(const BigInteger& b) const;
 
   /**
    * Addition operation. In-place variant.
@@ -383,7 +382,7 @@ class BigInteger
    * @param &b is the value to add.
    * @return result of the addition operation.
    */
-  const BigInteger &AddEq(const BigInteger &b);
+  const BigInteger& AddEq(const BigInteger& b);
 
   /**
    * Subtraction operation.
@@ -391,7 +390,7 @@ class BigInteger
    * @param &b is the value to subtract.
    * @return is the result of the subtraction operation.
    */
-  BigInteger Sub(const BigInteger &b) const;
+  BigInteger Sub(const BigInteger& b) const;
 
   /**
    * Subtraction operation. In-place variant.
@@ -399,13 +398,15 @@ class BigInteger
    * @param &b is the value to subtract.
    * @return is the result of the subtraction operation.
    */
-  const BigInteger &SubEq(const BigInteger &b);
+  const BigInteger& SubEq(const BigInteger& b);
 
   /**
    * Operator for unary minus
    * @return
    */
-  BigInteger operator-() const { return BigInteger(0).Sub(*this); }
+  BigInteger operator-() const {
+    return BigInteger(0).Sub(*this);
+  }
 
   /**
    * Multiplication operation.
@@ -413,7 +414,7 @@ class BigInteger
    * @param &b is the value to multiply with.
    * @return is the result of the multiplication operation.
    */
-  BigInteger Mul(const BigInteger &b) const;
+  BigInteger Mul(const BigInteger& b) const;
 
   /**
    * Multiplication operation. In-place variant.
@@ -421,7 +422,7 @@ class BigInteger
    * @param &b is the value to multiply with.
    * @return is the result of the multiplication operation.
    */
-  const BigInteger &MulEq(const BigInteger &b);
+  const BigInteger& MulEq(const BigInteger& b);
 
   /**
    * Division operation.
@@ -429,7 +430,7 @@ class BigInteger
    * @param &b is the value to divide by.
    * @return is the result of the division operation.
    */
-  BigInteger DividedBy(const BigInteger &b) const;
+  BigInteger DividedBy(const BigInteger& b) const;
 
   /**
    * Division operation. In-place variant.
@@ -437,7 +438,7 @@ class BigInteger
    * @param &b is the value to divide by.
    * @return is the result of the division operation.
    */
-  const BigInteger &DividedByEq(const BigInteger &b);
+  const BigInteger& DividedByEq(const BigInteger& b);
 
   /**
    * Exponentiation operation. Returns x^p.
@@ -453,7 +454,7 @@ class BigInteger
    * @param p the exponent.
    * @return is the result of the exponentiation operation.
    */
-  const BigInteger &ExpEq(usint p);
+  const BigInteger& ExpEq(usint p);
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -463,7 +464,7 @@ class BigInteger
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  BigInteger MultiplyAndRound(const BigInteger &p, const BigInteger &q) const;
+  BigInteger MultiplyAndRound(const BigInteger& p, const BigInteger& q) const;
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -473,8 +474,7 @@ class BigInteger
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  const BigInteger &MultiplyAndRoundEq(const BigInteger &p,
-                                       const BigInteger &q);
+  const BigInteger& MultiplyAndRoundEq(const BigInteger& p, const BigInteger& q);
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -483,7 +483,7 @@ class BigInteger
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  BigInteger DivideAndRound(const BigInteger &q) const;
+  BigInteger DivideAndRound(const BigInteger& q) const;
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -492,7 +492,7 @@ class BigInteger
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  const BigInteger &DivideAndRoundEq(const BigInteger &q);
+  const BigInteger& DivideAndRoundEq(const BigInteger& q);
 
   // MODULAR ARITHMETIC OPERATIONS
 
@@ -502,7 +502,7 @@ class BigInteger
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus operation.
    */
-  BigInteger Mod(const BigInteger &modulus) const;
+  BigInteger Mod(const BigInteger& modulus) const;
 
   /**
    * Naive modulus operation. In-place variant.
@@ -510,7 +510,7 @@ class BigInteger
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus operation.
    */
-  const BigInteger &ModEq(const BigInteger &modulus);
+  const BigInteger& ModEq(const BigInteger& modulus);
 
   /**
    * Pre-computes the mu factor that is used in Barrett modulo reduction
@@ -528,7 +528,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus operation.
    */
-  BigInteger Mod(const BigInteger &modulus, const BigInteger &mu) const;
+  BigInteger Mod(const BigInteger& modulus, const BigInteger& mu) const;
 
   /**
    * Barrett modulus operation. In-place variant.
@@ -539,7 +539,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus operation.
    */
-  const BigInteger &ModEq(const BigInteger &modulus, const BigInteger &mu);
+  const BigInteger& ModEq(const BigInteger& modulus, const BigInteger& mu);
 
   /**
    * Modulus addition operation.
@@ -548,7 +548,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  BigInteger ModAdd(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModAdd(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus addition operation. In-place variant.
@@ -557,7 +557,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  const BigInteger &ModAddEq(const BigInteger &b, const BigInteger &modulus);
+  const BigInteger& ModAddEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Modulus addition where operands are < modulus.
@@ -566,7 +566,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  BigInteger ModAddFast(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModAddFast(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus addition where operands are < modulus. In-place variant.
@@ -575,8 +575,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  const BigInteger &ModAddFastEq(const BigInteger &b,
-                                 const BigInteger &modulus);
+  const BigInteger& ModAddFastEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Barrett modulus addition operation.
@@ -586,8 +585,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus addition operation.
    */
-  BigInteger ModAdd(const BigInteger &b, const BigInteger &modulus,
-                    const BigInteger &mu) const;
+  BigInteger ModAdd(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu) const;
 
   /**
    * Barrett modulus addition operation. In-place variant.
@@ -597,8 +595,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus addition operation.
    */
-  const BigInteger &ModAddEq(const BigInteger &b, const BigInteger &modulus,
-                             const BigInteger &mu);
+  const BigInteger& ModAddEq(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu);
 
   /**
    * Modulus subtraction operation.
@@ -607,7 +604,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  BigInteger ModSub(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModSub(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus subtraction operation. In-place variant.
@@ -616,7 +613,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  const BigInteger &ModSubEq(const BigInteger &b, const BigInteger &modulus);
+  const BigInteger& ModSubEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Modulus subtraction where operands are < modulus.
@@ -625,7 +622,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  BigInteger ModSubFast(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModSubFast(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus subtraction where operands are < modulus. In-place variant.
@@ -634,8 +631,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  const BigInteger &ModSubFastEq(const BigInteger &b,
-                                 const BigInteger &modulus);
+  const BigInteger& ModSubFastEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Barrett modulus subtraction operation.
@@ -645,8 +641,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus subtraction operation.
    */
-  BigInteger ModSub(const BigInteger &b, const BigInteger &modulus,
-                    const BigInteger &mu) const;
+  BigInteger ModSub(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu) const;
 
   /**
    * Barrett modulus subtraction operation. In-place variant.
@@ -656,8 +651,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus subtraction operation.
    */
-  const BigInteger &ModSubEq(const BigInteger &b, const BigInteger &modulus,
-                             const BigInteger &mu);
+  const BigInteger& ModSubEq(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu);
 
   /**
    * Modulus multiplication operation.
@@ -666,7 +660,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  BigInteger ModMul(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModMul(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus multiplication operation. In-place variant.
@@ -675,7 +669,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  const BigInteger &ModMulEq(const BigInteger &b, const BigInteger &modulus);
+  const BigInteger& ModMulEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Barrett modulus multiplication.
@@ -685,8 +679,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  BigInteger ModMul(const BigInteger &b, const BigInteger &modulus,
-                    const BigInteger &mu) const;
+  BigInteger ModMul(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu) const;
 
   /**
    * Barrett modulus multiplication. In-place variant.
@@ -696,8 +689,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  const BigInteger &ModMulEq(const BigInteger &b, const BigInteger &modulus,
-                             const BigInteger &mu);
+  const BigInteger& ModMulEq(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu);
 
   /**
    * Modulus multiplication that assumes the operands are < modulus.
@@ -706,7 +698,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  BigInteger ModMulFast(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModMulFast(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus multiplication that assumes the operands are < modulus. In-place
@@ -716,8 +708,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  const BigInteger &ModMulFastEq(const BigInteger &b,
-                                 const BigInteger &modulus);
+  const BigInteger& ModMulFastEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Barrett modulus multiplication that assumes the operands are < modulus.
@@ -727,8 +718,7 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  BigInteger ModMulFast(const BigInteger &b, const BigInteger &modulus,
-                        const BigInteger &mu) const;
+  BigInteger ModMulFast(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu) const;
 
   /**
    * Barrett modulus multiplication that assumes the operands are < modulus.
@@ -739,20 +729,14 @@ class BigInteger
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  const BigInteger &ModMulFastEq(const BigInteger &b, const BigInteger &modulus,
-                                 const BigInteger &mu);
+  const BigInteger& ModMulFastEq(const BigInteger& b, const BigInteger& modulus, const BigInteger& mu);
 
-  BigInteger ModMulFastConst(const BigInteger &b, const BigInteger &modulus,
-                             const BigInteger &bInv) const {
-    PALISADE_THROW(lbcrypto::not_implemented_error,
-                   "ModMulFastConst is not implemented for backend 2");
+  BigInteger ModMulFastConst(const BigInteger& b, const BigInteger& modulus, const BigInteger& bInv) const {
+    PALISADE_THROW(lbcrypto::not_implemented_error, "ModMulFastConst is not implemented for backend 2");
   }
 
-  const BigInteger &ModMulFastConstEq(const BigInteger &b,
-                                      const BigInteger &modulus,
-                                      const BigInteger &bInv) {
-    PALISADE_THROW(lbcrypto::not_implemented_error,
-                   "ModMulFastConstEq is not implemented for backend 2");
+  const BigInteger& ModMulFastConstEq(const BigInteger& b, const BigInteger& modulus, const BigInteger& bInv) {
+    PALISADE_THROW(lbcrypto::not_implemented_error, "ModMulFastConstEq is not implemented for backend 2");
   }
 
   /**
@@ -762,7 +746,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus exponentiation operation.
    */
-  BigInteger ModExp(const BigInteger &b, const BigInteger &modulus) const;
+  BigInteger ModExp(const BigInteger& b, const BigInteger& modulus) const;
 
   /**
    * Modulus exponentiation operation. Square-and-multiply algorithm is used.
@@ -772,7 +756,7 @@ class BigInteger
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus exponentiation operation.
    */
-  const BigInteger &ModExpEq(const BigInteger &b, const BigInteger &modulus);
+  const BigInteger& ModExpEq(const BigInteger& b, const BigInteger& modulus);
 
   /**
    * Modulus inverse operation.
@@ -780,7 +764,7 @@ class BigInteger
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus inverse operation.
    */
-  BigInteger ModInverse(const BigInteger &modulus) const;
+  BigInteger ModInverse(const BigInteger& modulus) const;
 
   /**
    * Modulus inverse operation. In-place variant.
@@ -788,7 +772,7 @@ class BigInteger
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus inverse operation.
    */
-  const BigInteger &ModInverseEq(const BigInteger &modulus);
+  const BigInteger& ModInverseEq(const BigInteger& modulus);
 
   // SHIFT OPERATIONS
 
@@ -806,7 +790,7 @@ class BigInteger
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  const BigInteger &LShiftEq(usshort shift);
+  const BigInteger& LShiftEq(usshort shift);
 
   /**
    * Right shift operation.
@@ -822,7 +806,7 @@ class BigInteger
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  const BigInteger &RShiftEq(usshort shift);
+  const BigInteger& RShiftEq(usshort shift);
 
   // COMPARE
 
@@ -833,7 +817,7 @@ class BigInteger
    * @return  -1 for strictly less than, 0 for equal to and 1 for strictly
    * greater than conditons.
    */
-  int Compare(const BigInteger &a) const;
+  int Compare(const BigInteger& a) const;
 
   // CONVERTERS
 
@@ -847,7 +831,7 @@ class BigInteger
     T result = 0;
     // set num to number of equisized chunks
     // usint num = bigintnat::NativeIntegerT<T>::MaxBits() / m_uintBitLength;
-    usint num = bigintnat::NativeIntegerT<T>().MaxBits() / m_uintBitLength;
+    usint num     = bigintnat::NativeIntegerT<T>().MaxBits() / m_uintBitLength;
     usint ceilInt = m_nSize - ceilIntByUInt(m_MSB);
     // copy the values by shift and add
     for (usint i = 0; i < num && (m_nSize - i - 1) >= ceilInt; i++) {
@@ -855,9 +839,8 @@ class BigInteger
     }
     if (this->m_MSB > bigintnat::NativeIntegerT<T>::MaxBits()) {
       PALISADE_THROW(
-          lbcrypto::math_error,
-          std::string("MSB cannot be bigger than ") +
-              std::to_string(bigintnat::NativeIntegerT<T>::MaxBits()));
+        lbcrypto::math_error,
+        std::string("MSB cannot be bigger than ") + std::to_string(bigintnat::NativeIntegerT<T>::MaxBits()));
     }
     return result;
   }
@@ -883,7 +866,7 @@ class BigInteger
    * @param bitString the binary num in string.
    * @return the binary number represented as a big binary int.
    */
-  static BigInteger FromBinaryString(const std::string &bitString);
+  static BigInteger FromBinaryString(const std::string& bitString);
 
   // OTHER FUNCTIONS
 
@@ -901,7 +884,9 @@ class BigInteger
    * @param base is the base with which to determine length in.
    * @return the length of the representation in a specific base.
    */
-  usint GetLengthForBase(usint base) const { return GetMSB(); }
+  usint GetLengthForBase(usint base) const {
+    return GetMSB();
+  }
 
   /**
    * Get a specific digit at "digit" index; big integer is seen as an array of
@@ -925,7 +910,7 @@ class BigInteger
    * @param m_numToCheck is the value to check.
    * @return true if the input is a power of 2, false otherwise.
    */
-  bool CheckIfPowerOfTwo(const BigInteger &m_numToCheck);
+  bool CheckIfPowerOfTwo(const BigInteger& m_numToCheck);
 
   /**
    * Gets the bit at the specified index.
@@ -939,7 +924,9 @@ class BigInteger
    * A zero allocator that is called by the Matrix class. It is used to
    * initialize a Matrix of BigInteger objects.
    */
-  static BigInteger Allocator() { return 0; }
+  static BigInteger Allocator() {
+    return 0;
+  }
 
   // STRINGS & STREAMS
 
@@ -951,7 +938,9 @@ class BigInteger
    */
   const std::string ToString() const;
 
-  static const std::string IntegerTypeName() { return "UBFIXINT"; }
+  static const std::string IntegerTypeName() {
+    return "UBFIXINT";
+  }
 
   /**
    * Delivers value of the internal limb storage
@@ -977,13 +966,12 @@ class BigInteger
    * @return is the ostream object.
    */
   template <typename uint_type_c, usint BITLENGTH_c>
-  friend std::ostream &operator<<(
-      std::ostream &os, const BigInteger<uint_type_c, BITLENGTH_c> &ptr_obj) {
+  friend std::ostream& operator<<(std::ostream& os, const BigInteger<uint_type_c, BITLENGTH_c>& ptr_obj) {
     usint counter;
     // initiate to object to be printed
     auto print_obj = new BigInteger<uint_type_c, BITLENGTH_c>(ptr_obj);
     // print_VALUE array stores the decimal value in the array
-    uschar *print_VALUE = new uschar[ptr_obj.m_numDigitInPrintval];
+    uschar* print_VALUE = new uschar[ptr_obj.m_numDigitInPrintval];
     for (size_t i = 0; i < ptr_obj.m_numDigitInPrintval; i++) {
       // reset to zero
       *(print_VALUE + i) = 0;
@@ -993,8 +981,7 @@ class BigInteger
       // print_VALUE = print_VALUE*2
       BigInteger<uint_type_c, BITLENGTH_c>::double_bitVal(print_VALUE);
       // adds the bit value to the print_VALUE
-      BigInteger<uint_type_c, BITLENGTH_c>::add_bitVal(
-          print_VALUE, print_obj->GetBitAtIndex(i));
+      BigInteger<uint_type_c, BITLENGTH_c>::add_bitVal(print_VALUE, print_obj->GetBitAtIndex(i));
     }
     // find the first occurence of non-zero value in print_VALUE
     for (counter = 0; counter < ptr_obj.m_numDigitInPrintval - 1; counter++) {
@@ -1015,50 +1002,50 @@ class BigInteger
   // SERIALIZATION
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     ar(::cereal::binary_data(m_value, sizeof(m_value)));
     ar(::cereal::binary_data(&m_MSB, sizeof(m_MSB)));
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", m_value));
     ar(::cereal::make_nvp("m", m_MSB));
   }
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::binary_data(m_value, sizeof(m_value)));
     ar(::cereal::binary_data(&m_MSB, sizeof(m_MSB)));
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_value));
     ar(::cereal::make_nvp("m", m_MSB));
   }
 
-  std::string SerializedObjectName() const { return "FXDInteger"; }
+  std::string SerializedObjectName() const {
+    return "FXDInteger";
+  }
 
-  static uint32_t SerializedVersion() { return 1; }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  protected:
   /**
@@ -1067,7 +1054,7 @@ class BigInteger
    *
    * @param v The input string
    */
-  void AssignVal(const std::string &v);
+  void AssignVal(const std::string& v);
 
   /**
    * Sets the MSB to the correct value from the BigInteger.
@@ -1083,8 +1070,7 @@ class BigInteger
  private:
   // array storing the native integers.
   // array size is the ceiling of BITLENGTH/(bits in the integral data type)
-  uint_type m_value[(BITLENGTH + 8 * sizeof(uint_type) - 1) /
-                    (8 * sizeof(uint_type))];
+  uint_type m_value[(BITLENGTH + 8 * sizeof(uint_type) - 1) / (8 * sizeof(uint_type))];
 
   // variable that stores the MOST SIGNIFICANT BIT position in the number.
   usshort m_MSB;
@@ -1115,7 +1101,7 @@ class BigInteger
   static uint_type ceilIntByUInt(const uint_type Number);
 
   // currently unused array
-  static const BigInteger *m_modChain;
+  static const BigInteger* m_modChain;
 
   /**
    * function to return the MSB of number.
@@ -1148,27 +1134,27 @@ class BigInteger
    * @param b is the number to be multiplied.
    * @return the BigInteger after the multiplication.
    */
-  void MulByUintToInt(const uint_type b, BigInteger *ans) const;
+  void MulByUintToInt(const uint_type b, BigInteger* ans) const;
 
   /**
    * function that returns the decimal value from the binary array a.
    * @param a is a pointer to the binary array.
    * @return the decimal value.
    */
-  static uint_type UintInBinaryToDecimal(uschar *a);
+  static uint_type UintInBinaryToDecimal(uschar* a);
 
   /**
    * function that mutiplies by 2 to the binary array.
    * @param a is a pointer to the binary array.
    */
-  static void double_bitVal(uschar *a);
+  static void double_bitVal(uschar* a);
 
   /**
    * function that adds bit b to the binary array.
    * @param a is a pointer to the binary array.
    * @param b is a bit value to be added.
    */
-  static void add_bitVal(uschar *a, uschar b);
+  static void add_bitVal(uschar* a, uschar b);
 };
 
 extern template class BigInteger<integral_dtype, BigIntegerBitLength>;

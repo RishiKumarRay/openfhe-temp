@@ -33,19 +33,16 @@
 namespace lbcrypto {
 
 template <typename VecType>
-std::uniform_int_distribution<uint32_t>
-    DiscreteUniformGeneratorImpl<VecType>::m_distribution =
-        std::uniform_int_distribution<uint32_t>(CHUNK_MIN, CHUNK_MAX);
+std::uniform_int_distribution<uint32_t> DiscreteUniformGeneratorImpl<VecType>::m_distribution =
+  std::uniform_int_distribution<uint32_t>(CHUNK_MIN, CHUNK_MAX);
 
 template <typename VecType>
-DiscreteUniformGeneratorImpl<VecType>::DiscreteUniformGeneratorImpl()
-    : DistributionGenerator<VecType>() {
+DiscreteUniformGeneratorImpl<VecType>::DiscreteUniformGeneratorImpl() : DistributionGenerator<VecType>() {
   SetModulus(0);
 }
 
 template <typename VecType>
-void DiscreteUniformGeneratorImpl<VecType>::SetModulus(
-    const typename VecType::Integer& modulus) {
+void DiscreteUniformGeneratorImpl<VecType>::SetModulus(const typename VecType::Integer& modulus) {
   m_modulus = modulus;
 
   // Update values that depend on modulus.
@@ -56,8 +53,7 @@ void DiscreteUniformGeneratorImpl<VecType>::SetModulus(
 }
 
 template <typename VecType>
-typename VecType::Integer
-DiscreteUniformGeneratorImpl<VecType>::GenerateInteger() const {
+typename VecType::Integer DiscreteUniformGeneratorImpl<VecType>::GenerateInteger() const {
   // result is initialized to 0
   typename VecType::Integer result;
 
@@ -116,8 +112,7 @@ DiscreteUniformGeneratorImpl<VecType>::GenerateInteger() const {
 }
 
 template <typename VecType>
-VecType DiscreteUniformGeneratorImpl<VecType>::GenerateVector(
-    const usint size) const {
+VecType DiscreteUniformGeneratorImpl<VecType>::GenerateVector(const usint size) const {
   VecType v(size, m_modulus);
 
   for (usint i = 0; i < size; i++) {

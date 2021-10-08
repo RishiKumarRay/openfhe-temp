@@ -33,31 +33,26 @@
 
 namespace lbcrypto {
 
-class CoefPackedEncoding : public PlaintextImpl {
+class CoefPackedEncoding : public PlaintextImpl
+{
   vector<int64_t> value;
 
  public:
   // these two constructors are used inside of Decrypt
-  CoefPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  CoefPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  CoefPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  CoefPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  CoefPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep,
-                     vector<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  CoefPackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  CoefPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep,
-                     vector<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  CoefPackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
-                     vector<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  CoefPackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
   virtual ~CoefPackedEncoding() {}
 
@@ -65,13 +60,17 @@ class CoefPackedEncoding : public PlaintextImpl {
    * GetCoeffsValue
    * @return the un-encoded scalar
    */
-  const vector<int64_t>& GetCoefPackedValue() const { return value; }
+  const vector<int64_t>& GetCoefPackedValue() const {
+    return value;
+  }
 
   /**
    * SetIntVectorValue
    * @param val integer vector to initialize the plaintext
    */
-  void SetIntVectorValue(const vector<int64_t>& val) { value = val; }
+  void SetIntVectorValue(const vector<int64_t>& val) {
+    value = val;
+  }
 
   /**
    * Encode the plaintext into the Poly
@@ -89,20 +88,26 @@ class CoefPackedEncoding : public PlaintextImpl {
    * GetEncodingType
    * @return this is a CoefPacked encoding
    */
-  PlaintextEncodings GetEncodingType() const { return CoefPacked; }
+  PlaintextEncodings GetEncodingType() const {
+    return CoefPacked;
+  }
 
   /**
    * Get length of the plaintext
    *
    * @return number of elements in this plaintext
    */
-  size_t GetLength() const { return value.size(); }
+  size_t GetLength() const {
+    return value.size();
+  }
 
   /**
    * SetLength of the plaintext to the given size
    * @param siz
    */
-  void SetLength(size_t siz) { value.resize(siz); }
+  void SetLength(size_t siz) {
+    value.resize(siz);
+  }
 
   /**
    * Method to compare two plaintext to test for equivalence
@@ -127,7 +132,8 @@ class CoefPackedEncoding : public PlaintextImpl {
     while (--i > 0)
       if (value[i] != 0) break;
 
-    for (size_t j = 0; j <= i; j++) out << ' ' << value[j];
+    for (size_t j = 0; j <= i; j++)
+      out << ' ' << value[j];
 
     out << " ... )";
   }

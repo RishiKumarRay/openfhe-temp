@@ -43,7 +43,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestBinInt : public ::testing::Test {
+class UnitTestBinInt : public ::testing::Test
+{
  protected:
   virtual void SetUp() {}
 
@@ -61,7 +62,8 @@ class UnitTestBinInt : public ::testing::Test {
 
 typedef char Block[BLOCKSIZE];  // define Block as char array of size BLOCKSIZE
 
-class MyClass {
+class MyClass
+{
   DECLARE_ALLOCATOR
   // remaining class definition
 };
@@ -89,8 +91,7 @@ static const int MAX_BLOCKS = 4096;
 static const int MAX_BLOCK_SIZE = 8196;
 char* memoryPtrs[MAX_BLOCKS];
 char* memoryPtrs2[MAX_BLOCKS];
-AllocatorPool<char[MAX_BLOCK_SIZE], MAX_BLOCKS * 2>
-    allocatorStaticPoolBenchmark;
+AllocatorPool<char[MAX_BLOCK_SIZE], MAX_BLOCKS * 2> allocatorStaticPoolBenchmark;
 Allocator allocatorHeapBlocksBenchmark(MAX_BLOCK_SIZE);
 
 static void out_of_memory() {
@@ -118,12 +119,16 @@ void DeallocHeapBlocks(char* ptr);
 //------------------------------------------------------------------------------
 // AllocHeap
 //------------------------------------------------------------------------------
-char* AllocHeap(int size) { return new char[size]; }
+char* AllocHeap(int size) {
+  return new char[size];
+}
 
 //------------------------------------------------------------------------------
 // DeallocHeap
 //------------------------------------------------------------------------------
-void DeallocHeap(char* ptr) { delete[] ptr; }
+void DeallocHeap(char* ptr) {
+  delete[] ptr;
+}
 
 //------------------------------------------------------------------------------
 // AllocStaticPool
@@ -159,7 +164,7 @@ void DeallocHeapBlocks(char* ptr) {
 void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
   TimeVar t1, t_total;
 
-  float ElapsedMicroseconds, TotalElapsedMicroseconds = {0};
+  float ElapsedMicroseconds, TotalElapsedMicroseconds = { 0 };
   // Allocate MAX_BLOCKS blocks MAX_BLOCK_SIZE / 2 sized blocks
 
   TIC(t_total);
@@ -173,7 +178,8 @@ void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
 
   // Deallocate MAX_BLOCKS blocks (every other one)
   TIC(t1);
-  for (int i = 0; i < MAX_BLOCKS; i += 2) deallocFunc(memoryPtrs[i]);
+  for (int i = 0; i < MAX_BLOCKS; i += 2)
+    deallocFunc(memoryPtrs[i]);
   ElapsedMicroseconds = TOC_US(t1);
   PROFILELOG(name << " 1 deallocate time: " << ElapsedMicroseconds);
   TotalElapsedMicroseconds += ElapsedMicroseconds;
@@ -188,14 +194,16 @@ void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
 
   // Deallocate MAX_BLOCKS blocks (every other one)
   TIC(t1);
-  for (int i = 1; i < MAX_BLOCKS; i += 2) deallocFunc(memoryPtrs[i]);
+  for (int i = 1; i < MAX_BLOCKS; i += 2)
+    deallocFunc(memoryPtrs[i]);
   ElapsedMicroseconds = TOC_US(t1);
   PROFILELOG(name << " 2 deallocate time: " << ElapsedMicroseconds);
   TotalElapsedMicroseconds += ElapsedMicroseconds;
 
   // Deallocate MAX_BLOCKS blocks
   TIC(t1);
-  for (int i = MAX_BLOCKS - 1; i >= 0; i--) deallocFunc(memoryPtrs2[i]);
+  for (int i = MAX_BLOCKS - 1; i >= 0; i--)
+    deallocFunc(memoryPtrs2[i]);
   ElapsedMicroseconds = TOC_US(t1);
   PROFILELOG(name << " 2 deallocate time: " << ElapsedMicroseconds);
   TotalElapsedMicroseconds += ElapsedMicroseconds;
@@ -212,24 +220,19 @@ TEST(UTBlockAllocate, block_allocator_test) {
   delete myClass;
 
   // Allocate BLOCKSIZE bytes in fixed block allocator, then deallocate
-  char* memory1 =
-      reinterpret_cast<char*>(allocatorHeapBlocks.Allocate(BLOCKSIZE));
+  char* memory1 = reinterpret_cast<char*>(allocatorHeapBlocks.Allocate(BLOCKSIZE));
   allocatorHeapBlocks.Deallocate(memory1);
 
-  char* memory2 =
-      reinterpret_cast<char*>(allocatorHeapBlocks.Allocate(BLOCKSIZE));
+  char* memory2 = reinterpret_cast<char*>(allocatorHeapBlocks.Allocate(BLOCKSIZE));
   allocatorHeapBlocks.Deallocate(memory2);
 
-  char* memory3 =
-      reinterpret_cast<char*>(allocatorHeapPool.Allocate(BLOCKSIZE));
+  char* memory3 = reinterpret_cast<char*>(allocatorHeapPool.Allocate(BLOCKSIZE));
   allocatorHeapPool.Deallocate(memory3);
 
-  char* memory4 =
-      reinterpret_cast<char*>(allocatorStaticPool.Allocate(BLOCKSIZE));
+  char* memory4 = reinterpret_cast<char*>(allocatorStaticPool.Allocate(BLOCKSIZE));
   allocatorStaticPool.Deallocate(memory4);
 
-  char* memory5 =
-      reinterpret_cast<char*>(allocatorStaticPool2.Allocate(sizeof(MyClass)));
+  char* memory5 = reinterpret_cast<char*>(allocatorStaticPool2.Allocate(sizeof(MyClass)));
   allocatorStaticPool2.Deallocate(memory5);
 
   Benchmark("Heap (Run 1)", AllocHeap, DeallocHeap);

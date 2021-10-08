@@ -32,7 +32,6 @@
 #ifndef LBCRYPTO_LATTICE_HEXLDCRTPOLY_H
 #define LBCRYPTO_LATTICE_HEXLDCRTPOLY_H
 
-
 // C++ standard libs
 #include <vector>
 
@@ -56,13 +55,14 @@ namespace lbcrypto {
  * optimized procedures for specific architecture.
  */
 template <typename VecType = BigVector>
-class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
+class HexlDCRTPoly : public DCRTPolyImpl<VecType>
+{
  public:
   // Shortcut to base class
   using DCRTPolyType = DCRTPolyImpl<VecType>;
 
   using Integer = typename VecType::Integer;
-  using Params = ILDCRTParams<Integer>;
+  using Params  = ILDCRTParams<Integer>;
 
   typedef VecType Vector;
 
@@ -77,7 +77,9 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
   // the composed polynomial type
   using PolyLargeType = typename DCRTPolyType::PolyLargeType;
 
-  static const std::string GetElementName() { return "HexlDCRTPoly"; }
+  static const std::string GetElementName() {
+    return "HexlDCRTPoly";
+  }
 
   // =============================================================================================
   // All methods in this section are optimized for HEXL
@@ -85,39 +87,31 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
   /** Optimized DropLastElementAndScale for HEXL
    * @see DCRTPolyImpl::DropLastElementAndScale for procedure description
    */
-  virtual void DropLastElementAndScale(
-      const std::vector<NativeInteger> &QlQlInvModqlDivqlModq,
-      const std::vector<NativeInteger> &QlQlInvModqlDivqlModqPrecon,
-      const std::vector<NativeInteger> &qlInvModq,
-      const std::vector<NativeInteger> &qlInvModqPrecon) override;
+  virtual void DropLastElementAndScale(const std::vector<NativeInteger>& QlQlInvModqlDivqlModq,
+                                       const std::vector<NativeInteger>& QlQlInvModqlDivqlModqPrecon,
+                                       const std::vector<NativeInteger>& qlInvModq,
+                                       const std::vector<NativeInteger>& qlInvModqPrecon) override;
 
   // =============================================================================================
   // All methods below here are required for substitution with DCRTPolyImpl<> but are not optimized
 
   HexlDCRTPoly() : DCRTPolyType() {}
 
-  HexlDCRTPoly(const shared_ptr<Params> params, Format format = EVALUATION,
-               bool initializeElementToZero = false)
-      : DCRTPolyType(params, format, initializeElementToZero) {}
+  HexlDCRTPoly(const shared_ptr<Params> params, Format format = EVALUATION, bool initializeElementToZero = false) :
+      DCRTPolyType(params, format, initializeElementToZero) {}
 
   // Need to be able to make a copy,
-  HexlDCRTPoly(const DCRTPolyType &dcrtPoly) : DCRTPolyType(dcrtPoly) {}
-  HexlDCRTPoly(const std::vector<PolyType> &elements)
-      : DCRTPolyType(elements) {}
-  HexlDCRTPoly(const DggType &dgg, const shared_ptr<Params> params,
-               Format format = EVALUATION)
-      : DCRTPolyType(dgg, params, format) {}
-  HexlDCRTPoly(DugType &dug, const shared_ptr<Params> params,
-               Format format = EVALUATION)
-      : DCRTPolyType(dug, params, format) {}
-  HexlDCRTPoly(const TugType &tug, const shared_ptr<Params> params,
-               Format format = EVALUATION, uint32_t h = 0)
-      : DCRTPolyType(tug, params, format, h) {}
-  HexlDCRTPoly(const BugType &bug, const shared_ptr<Params> params,
-               Format format = EVALUATION)
-      : DCRTPolyType(bug, params, format) {}
-  HexlDCRTPoly(const PolyLargeType& element, const shared_ptr<Params> params)
-      : DCRTPolyType(element, params) {}
+  HexlDCRTPoly(const DCRTPolyType& dcrtPoly) : DCRTPolyType(dcrtPoly) {}
+  HexlDCRTPoly(const std::vector<PolyType>& elements) : DCRTPolyType(elements) {}
+  HexlDCRTPoly(const DggType& dgg, const shared_ptr<Params> params, Format format = EVALUATION) :
+      DCRTPolyType(dgg, params, format) {}
+  HexlDCRTPoly(DugType& dug, const shared_ptr<Params> params, Format format = EVALUATION) :
+      DCRTPolyType(dug, params, format) {}
+  HexlDCRTPoly(const TugType& tug, const shared_ptr<Params> params, Format format = EVALUATION, uint32_t h = 0) :
+      DCRTPolyType(tug, params, format, h) {}
+  HexlDCRTPoly(const BugType& bug, const shared_ptr<Params> params, Format format = EVALUATION) :
+      DCRTPolyType(bug, params, format) {}
+  HexlDCRTPoly(const PolyLargeType& element, const shared_ptr<Params> params) : DCRTPolyType(element, params) {}
 
   /**
    * @brief Assignment Operator.
@@ -125,7 +119,7 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @param &rhs the copied element.
    * @return the resulting element.
    */
-  virtual const HexlDCRTPoly &operator=(const DCRTPolyType &rhs) override {
+  virtual const HexlDCRTPoly& operator=(const DCRTPolyType& rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -136,19 +130,19 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @param &rhs the copied element.
    * @return the resulting element.
    */
-  virtual const HexlDCRTPoly &operator=(DCRTPolyType &&rhs) override {
+  virtual const HexlDCRTPoly& operator=(DCRTPolyType&& rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
 
   // All assignment operators need to be overriden because the return type is
   // different
-  const HexlDCRTPoly &operator=(const PolyLargeType &rhs) {
+  const HexlDCRTPoly& operator=(const PolyLargeType& rhs) {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
 
-  const HexlDCRTPoly &operator=(const PolyType &rhs) override {
+  const HexlDCRTPoly& operator=(const PolyType& rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -159,7 +153,7 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @param &rhs the list to initalized the element.
    * @return the resulting element.
    */
-  HexlDCRTPoly &operator=(std::initializer_list<uint64_t> rhs) override {
+  HexlDCRTPoly& operator=(std::initializer_list<uint64_t> rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -171,7 +165,7 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @param rhs is the usint to assign to index zero.
    * @return the resulting vector.
    */
-  HexlDCRTPoly &operator=(uint64_t rhs) override {
+  HexlDCRTPoly& operator=(uint64_t rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -183,7 +177,7 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @param &rhs the vector to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  HexlDCRTPoly &operator=(const std::vector<int64_t> &rhs) override {
+  HexlDCRTPoly& operator=(const std::vector<int64_t>& rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -195,7 +189,7 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @param &rhs the vector to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  HexlDCRTPoly &operator=(const std::vector<int32_t> &rhs) override {
+  HexlDCRTPoly& operator=(const std::vector<int32_t>& rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -207,7 +201,7 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
    * @return the resulting PolyImpl.
    */
 
-  HexlDCRTPoly &operator=(std::initializer_list<std::string> rhs) override {
+  HexlDCRTPoly& operator=(std::initializer_list<std::string> rhs) override {
     DCRTPolyType::operator=(rhs);
     return *this;
   }
@@ -225,11 +219,9 @@ class HexlDCRTPoly : public DCRTPolyImpl<VecType> {
     std::vector<HexlDCRTPoly> hexlVec(dcrtVec.size());
 
     // use a lambda function to transform the std::vector<DCRTPolyImpl> to std::vector<HexlDCRTPoly>
-    std::transform(dcrtVec.begin(), dcrtVec.end(), hexlVec.begin(),
-      [](DCRTPolyType& dcrtPoly) -> HexlDCRTPoly {
-        return HexlDCRTPoly(dcrtPoly);
-      }
-    );
+    std::transform(dcrtVec.begin(), dcrtVec.end(), hexlVec.begin(), [](DCRTPolyType& dcrtPoly) -> HexlDCRTPoly {
+      return HexlDCRTPoly(dcrtPoly);
+    });
     return hexlVec;
   }
 

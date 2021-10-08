@@ -81,10 +81,9 @@ void AtAndSetModulusTest(const string& msg) {
   DEBUG("m" << m);
   V calculatedResult = m.Mod(q);
   DEBUG("calculated result" << m);
-  uint64_t expectedResult[] = {48, 53, 7, 178, 190, 120, 79, 108, 60, 12};
+  uint64_t expectedResult[] = { 48, 53, 7, 178, 190, 120, 79, 108, 60, 12 };
   for (usint i = 0; i < len; i++) {
-    EXPECT_EQ(expectedResult[i], calculatedResult[i].ConvertToInt())
-        << msg << " Mod failed";
+    EXPECT_EQ(expectedResult[i], calculatedResult[i].ConvertToInt()) << msg << " Mod failed";
   }
 
   V n(len, q);
@@ -103,22 +102,19 @@ void AtAndSetModulusTest(const string& msg) {
   DEBUG("n" << n);
   for (usint i = 0; i < len; i++) {
     if (i != 6) {  // value at 6 is < q
-      EXPECT_NE(expectedResult[i], n[i].ConvertToInt())
-          << msg << " at no mod failed";
-    } else {
-      EXPECT_EQ(expectedResult[i], n[i].ConvertToInt())
-          << msg << " at no mod failed";
+      EXPECT_NE(expectedResult[i], n[i].ConvertToInt()) << msg << " at no mod failed";
+    }
+    else {
+      EXPECT_EQ(expectedResult[i], n[i].ConvertToInt()) << msg << " at no mod failed";
     }
   }
 
   V l(len, q);
   // note list assignment does take modulus
-  l = {"987968", "587679", "456454", "234343", "769789",
-       "465654", "79",     "346346", "325328", "7698798"};
+  l = { "987968", "587679", "456454", "234343", "769789", "465654", "79", "346346", "325328", "7698798" };
   DEBUG("l" << l);
   for (usint i = 0; i < len; i++) {
-    EXPECT_EQ(expectedResult[i], l[i].ConvertToInt())
-        << msg << " Mod on list assignment failed";
+    EXPECT_EQ(expectedResult[i], l[i].ConvertToInt()) << msg << " Mod on list assignment failed";
   }
 }
 
@@ -129,24 +125,21 @@ TEST(UTBinVect, AtAndSetModulusTest) {
 template <typename V>
 void CTOR_Test(const string& msg) {
   typename V::Integer q("233");
-  usint expectedResult[10] = {48, 53, 7, 178, 190, 120, 79, 108, 60, 12};
-  const usint len = sizeof(expectedResult) / sizeof(expectedResult[0]);
+  usint expectedResult[10] = { 48, 53, 7, 178, 190, 120, 79, 108, 60, 12 };
+  const usint len          = sizeof(expectedResult) / sizeof(expectedResult[0]);
 
   {
-    V m(len, q,
-        {"987968", "587679", "456454", "234343", "769789", "465654", "79",
-         "346346", "325328", "7698798"});
+    V m(len, q, { "987968", "587679", "456454", "234343", "769789", "465654", "79", "346346", "325328", "7698798" });
 
     V calculatedResult = m.Mod(q);
 
     for (usint i = 0; i < len; i++) {
-      EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-          << msg;
+      EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
     }
   }
 
   {
-    V m(len, q, {48, 53, 7, 178, 190, 120, 79, 108, 60, 12});
+    V m(len, q, { 48, 53, 7, 178, 190, 120, 79, 108, 60, 12 });
 
     for (usint i = 0; i < len; i++) {
       EXPECT_EQ(expectedResult[i], m.at(i).ConvertToInt()) << msg;
@@ -154,7 +147,9 @@ void CTOR_Test(const string& msg) {
   }
 }
 
-TEST(UTBinVect, CTOR_Test) { RUN_BIG_BACKENDS(CTOR_Test, "CTOR_Test") }
+TEST(UTBinVect, CTOR_Test) {
+  RUN_BIG_BACKENDS(CTOR_Test, "CTOR_Test")
+}
 
 // --------------- TESTING METHOD MODADD FOR ALLCONDITIONS ---------------
 
@@ -181,11 +176,10 @@ void ModAddBigModulus(const string& msg) {
 
   V calculatedResult = m.ModAdd(n);
 
-  uint64_t expectedResult[5] = {9871, 5882, 4557, 2346, 9792};
+  uint64_t expectedResult[5] = { 9871, 5882, 4557, 2346, 9792 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
@@ -217,11 +211,10 @@ void ModAddSmallerModulus(const string& msg) {
 
   DEBUG("m " << m);
   DEBUG("calculated result  " << calculatedResult);
-  uint64_t expectedResult[5] = {1825, 1370, 45, 1368, 1746};
+  uint64_t expectedResult[5] = { 1825, 1370, 45, 1368, 1746 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
@@ -255,17 +248,15 @@ void modsub_first_less_than_second(const string& msg) {
 
   V calculatedResult = m.ModSub(n);
 
-  uint64_t expectedResult[5] = {241, 3320, 1995, 3318, 162};
+  uint64_t expectedResult[5] = { 241, 3320, 1995, 3318, 162 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
 TEST(UTBinVect, modsub_first_less_than_second) {
-  RUN_BIG_BACKENDS(modsub_first_less_than_second,
-                   "modsub_first_less_than_second")
+  RUN_BIG_BACKENDS(modsub_first_less_than_second, "modsub_first_less_than_second")
 }
 
 // TEST CASE WHEN FIRST NUMBER IS GREATER THAN SECOND NUMBER
@@ -285,17 +276,15 @@ void modsub_first_greater_than_second(const string& msg) {
 
   V calculatedResult = m.ModSub(n);
 
-  uint64_t expectedResult[5] = {3, 4, 9, 3, 29};
+  uint64_t expectedResult[5] = { 3, 4, 9, 3, 29 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
 TEST(UTBinVect, modsub_first_greater_than_second) {
-  RUN_BIG_BACKENDS(modsub_first_greater_than_second,
-                   "modsub_first_greater_than_second")
+  RUN_BIG_BACKENDS(modsub_first_greater_than_second, "modsub_first_greater_than_second")
 }
 
 // --------------- TESTING METHOD MODUMUL FOR ALL CONDITIONS ---------------
@@ -319,15 +308,16 @@ void ModMulTest(const string& msg) {
 
   V calculatedResult = m.ModMul(n);
 
-  uint64_t expectedResult[5] = {1576, 1850, 978, 1758, 1476};
+  uint64_t expectedResult[5] = { 1576, 1850, 978, 1758, 1476 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
-TEST(UTBinVect, ModMulTest) { RUN_BIG_BACKENDS(ModMulTest, "ModMulTest") }
+TEST(UTBinVect, ModMulTest) {
+  RUN_BIG_BACKENDS(ModMulTest, "ModMulTest")
+}
 
 // --------------- TESTING METHOD MODEXP FOR ALL CONDITIONS  ---------------
 /*   The method "Mod Exp" operates on Big Vector m, BigIntegers n,q
@@ -352,15 +342,16 @@ void ModExpTest(const string& msg) {
 
   V calculatedResult = m.ModExp(n);
 
-  uint64_t expectedResult[5] = {2792, 3123, 64, 159, 901};
+  uint64_t expectedResult[5] = { 2792, 3123, 64, 159, 901 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
-TEST(UTBinVect, ModExpTest) { RUN_BIG_BACKENDS(ModExpTest, "ModExpTest") }
+TEST(UTBinVect, ModExpTest) {
+  RUN_BIG_BACKENDS(ModExpTest, "ModExpTest")
+}
 
 // --------------- TESTING METHOD MODINVERSE FOR ALL CONDITIONS ---------------
 
@@ -384,15 +375,16 @@ void test_modinv(const string& msg) {
 
   V calculatedResult = m.ModInverse();
 
-  uint64_t expectedResult[5] = {32, 24, 9, 17, 13};
+  uint64_t expectedResult[5] = { 32, 24, 9, 17, 13 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
-TEST(UTBinVect, test_modinv) { RUN_BIG_BACKENDS(test_modinv, "test_modinv") }
+TEST(UTBinVect, test_modinv) {
+  RUN_BIG_BACKENDS(test_modinv, "test_modinv")
+}
 
 // --------------- TESTING METHOD MODADD FOR ALL CONDITIONS ---------------
 
@@ -424,17 +416,15 @@ void modadd_vector_result_smaller_modulus(const string& msg) {
 
   V calculatedResult = m.ModAdd(n);
 
-  uint64_t expectedResult[5] = {14401, 10428, 11310, 3576, 17686};
+  uint64_t expectedResult[5] = { 14401, 10428, 11310, 3576, 17686 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
 TEST(UTBinVect, modadd_vector_result_smaller_modulus) {
-  RUN_BIG_BACKENDS(modadd_vector_result_smaller_modulus,
-                   "modadd_vector_result_smaller_modulus")
+  RUN_BIG_BACKENDS(modadd_vector_result_smaller_modulus, "modadd_vector_result_smaller_modulus")
 }
 
 // TEST CASE WHEN NUMBERS AFTER ADDITION ARE GREATER THAN MODULUS
@@ -447,9 +437,9 @@ void modadd_vector_result_greater_modulus(const string& msg) {
   V m(5, q);
   V n(5, q);
 
-  m = {"9868", "5879", "4554", "2343", "9789"};
+  m = { "9868", "5879", "4554", "2343", "9789" };
 
-  n = {"4533", "4549", "6756", "1233", "7897"};
+  n = { "4533", "4549", "6756", "1233", "7897" };
 
   DEBUG("m " << m);
   DEBUG("m mod" << m.GetModulus());
@@ -459,17 +449,15 @@ void modadd_vector_result_greater_modulus(const string& msg) {
   V calculatedResult = m.ModAdd(n);
 
   DEBUG("result mod " << calculatedResult.GetModulus());
-  uint64_t expectedResult[5] = {604, 573, 141, 291, 604};
+  uint64_t expectedResult[5] = { 604, 573, 141, 291, 604 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 
 TEST(UTBinVect, modadd_vector_result_greater_modulus) {
-  RUN_BIG_BACKENDS(modadd_vector_result_greater_modulus,
-                   "modadd_vector_result_greater_modulus")
+  RUN_BIG_BACKENDS(modadd_vector_result_greater_modulus, "modadd_vector_result_greater_modulus")
 }
 
 // --------------- TESTING METHOD ADD EQUALS FOR ALL CONDITIONS ---------------
@@ -484,7 +472,7 @@ void method_add_equals_vector_operation(const string& msg) {
   V m(5, q);
   V n(5, q);
 
-  m = {"9868", "5879", "4554", "2343", "9789"};
+  m = { "9868", "5879", "4554", "2343", "9789" };
 
   // note at does not allow uses of modulus.
   n.at(0) = typename V::Integer("4");
@@ -498,7 +486,7 @@ void method_add_equals_vector_operation(const string& msg) {
 
   m += n;
   DEBUG("m" << m);
-  uint64_t expectedResult[5] = {17, 632, 21, 405, 598};
+  uint64_t expectedResult[5] = { 17, 632, 21, 405, 598 };
 
   for (usint i = 0; i < 5; i++) {
     EXPECT_EQ(expectedResult[i], (m.at(i)).ConvertToInt()) << msg;
@@ -506,8 +494,7 @@ void method_add_equals_vector_operation(const string& msg) {
 }
 
 TEST(UTBinVect, method_add_equals_vector_operation) {
-  RUN_BIG_BACKENDS(method_add_equals_vector_operation,
-                   "method_add_equals_vector_operation")
+  RUN_BIG_BACKENDS(method_add_equals_vector_operation, "method_add_equals_vector_operation")
 }
 
 // --------------- TESTING METHOD MODMUL FOR ALL CONDITIONS ---------------
@@ -537,11 +524,10 @@ void modmul_vector(const string& msg) {
 
   V calculatedResult = m.ModMul(n);
 
-  uint64_t expectedResult[5] = {52, 351, 315, 450, 195};
+  uint64_t expectedResult[5] = { 52, 351, 315, 450, 195 };
 
   for (usint i = 0; i < 5; i++) {
-    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt())
-        << msg;
+    EXPECT_EQ(expectedResult[i], (calculatedResult.at(i)).ConvertToInt()) << msg;
   }
 }
 

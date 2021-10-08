@@ -48,8 +48,7 @@ namespace lbcrypto {
                  "BGVrns only supported for " \
                  "DCRTPoly.");
 
-#define NOIMPL \
-  PALISADE_THROW(not_implemented_error, "Not implemented for BGVrns.");
+#define NOIMPL PALISADE_THROW(not_implemented_error, "Not implemented for BGVrns.");
 
 /**
  * @brief Crypto parameters class for RLWE-based schemes.
@@ -57,35 +56,28 @@ namespace lbcrypto {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
-  using IntType = typename Element::Integer;
+class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
    * Default Constructor.
    */
-  LPCryptoParametersBGVrns()
-      : LPCryptoParametersRLWE<Element>(),
-        m_ksTechnique(BV),
-        m_msMethod(MANUAL),
-        m_numPartQ(0),
-        m_numPerPartQ(0) {}
+  LPCryptoParametersBGVrns() :
+      LPCryptoParametersRLWE<Element>(), m_ksTechnique(BV), m_msMethod(MANUAL), m_numPartQ(0), m_numPerPartQ(0) {}
 
   /**
    * Copy constructor.
    *
    * @param rhs - source
    */
-  LPCryptoParametersBGVrns(const LPCryptoParametersBGVrns& rhs)
-      : LPCryptoParametersRLWE<Element>(rhs),
-        m_ksTechnique(BV),
-        m_msMethod(MANUAL),
-        m_numPartQ(0),
-        m_numPerPartQ(0) {}
+  LPCryptoParametersBGVrns(const LPCryptoParametersBGVrns& rhs) :
+      LPCryptoParametersRLWE<Element>(rhs), m_ksTechnique(BV), m_msMethod(MANUAL), m_numPartQ(0), m_numPerPartQ(0) {}
 
   /**
    * Constructor that initializes values.  Note that it is possible to set
@@ -111,22 +103,16 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * @param ksTech key switching method
    * @param msMethod mod switch method
    */
-  LPCryptoParametersBGVrns(shared_ptr<ParmType> params,
-                           const PlaintextModulus& plaintextModulus,
-                           float distributionParameter, float assuranceMeasure,
-                           float securityLevel, usint relinWindow, MODE mode,
-                           int depth = 1, int maxDepth = 2,
-                           KeySwitchTechnique ksTech = BV,
-                           ModSwitchMethod msMethod = MANUAL)
-      : LPCryptoParametersRLWE<Element>(
-            params,
-            EncodingParams(
-                std::make_shared<EncodingParamsImpl>(plaintextModulus)),
-            distributionParameter, assuranceMeasure, securityLevel, relinWindow,
-            depth, maxDepth, mode) {
+  LPCryptoParametersBGVrns(shared_ptr<ParmType> params, const PlaintextModulus& plaintextModulus,
+                           float distributionParameter, float assuranceMeasure, float securityLevel, usint relinWindow,
+                           MODE mode, int depth = 1, int maxDepth = 2, KeySwitchTechnique ksTech = BV,
+                           ModSwitchMethod msMethod = MANUAL) :
+      LPCryptoParametersRLWE<Element>(params, EncodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus)),
+                                      distributionParameter, assuranceMeasure, securityLevel, relinWindow, depth,
+                                      maxDepth, mode) {
     m_ksTechnique = ksTech;
-    m_msMethod = msMethod;
-    m_numPartQ = 0;
+    m_msMethod    = msMethod;
+    m_numPartQ    = 0;
     m_numPerPartQ = 0;
   }
 
@@ -146,19 +132,14 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * @param ksTech key switching method
    * @param msMethod mod switch method
    */
-  LPCryptoParametersBGVrns(shared_ptr<ParmType> params,
-                           EncodingParams encodingParams,
-                           float distributionParameter, float assuranceMeasure,
-                           float securityLevel, usint relinWindow, MODE mode,
-                           int depth = 1, int maxDepth = 2,
-                           KeySwitchTechnique ksTech = BV,
-                           ModSwitchMethod msMethod = MANUAL)
-      : LPCryptoParametersRLWE<Element>(
-            params, encodingParams, distributionParameter, assuranceMeasure,
-            securityLevel, relinWindow, depth, maxDepth, mode) {
+  LPCryptoParametersBGVrns(shared_ptr<ParmType> params, EncodingParams encodingParams, float distributionParameter,
+                           float assuranceMeasure, float securityLevel, usint relinWindow, MODE mode, int depth = 1,
+                           int maxDepth = 2, KeySwitchTechnique ksTech = BV, ModSwitchMethod msMethod = MANUAL) :
+      LPCryptoParametersRLWE<Element>(params, encodingParams, distributionParameter, assuranceMeasure, securityLevel,
+                                      relinWindow, depth, maxDepth, mode) {
     m_ksTechnique = ksTech;
-    m_msMethod = msMethod;
-    m_numPartQ = 0;
+    m_msMethod    = msMethod;
+    m_numPartQ    = 0;
     m_numPerPartQ = 0;
   }
 
@@ -178,9 +159,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(cereal::base_class<LPCryptoParametersRLWE<Element>>(this));
     ar(cereal::make_nvp("ks", m_ksTechnique));
@@ -189,8 +170,12 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
     PrecomputeCRTTables(m_ksTechnique, m_numPartQ);
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsSchemeParameters"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsSchemeParameters";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
   /**
    * Computes all tables needed for decryption, homomorphic multiplication, and
@@ -207,15 +192,12 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * @param &rhs LPCryptoParameters to check equality against.
    */
   bool operator==(const LPCryptoParameters<Element>& rhs) const {
-    const auto* el =
-        dynamic_cast<const LPCryptoParametersBGVrns<Element>*>(&rhs);
+    const auto* el = dynamic_cast<const LPCryptoParametersBGVrns<Element>*>(&rhs);
 
     if (el == nullptr) return false;
 
-    return LPCryptoParametersRLWE<Element>::operator==(rhs) &&
-           m_ksTechnique == el->GetKeySwitchTechnique() &&
-           m_numPartQ == el->GetNumPartQ() &&
-           m_msMethod == el->GetModSwitchMethod();
+    return LPCryptoParametersRLWE<Element>::operator==(rhs) && m_ksTechnique == el->GetKeySwitchTechnique() &&
+           m_numPartQ == el->GetNumPartQ() && m_msMethod == el->GetModSwitchMethod();
   }
 
   void PrintParameters(std::ostream& os) const {
@@ -238,7 +220,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return product \prod_j p_j
    */
-  const BigInteger& GetAuxModulus() const { return m_modulusP; }
+  const BigInteger& GetAuxModulus() const {
+    return m_modulusP;
+  }
 
   /**
    * Gets Auxiliary expanded CRT basis
@@ -260,7 +244,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  const vector<NativeInteger>& GetPInvModq() const { return m_PInvModq; }
+  const vector<NativeInteger>& GetPInvModq() const {
+    return m_PInvModq;
+  }
 
   /**
    * Gets the NTL precomputions for [P^{-1}]_{q_i}
@@ -281,7 +267,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  const vector<NativeInteger>& GetPHatInvModp() const { return m_PHatInvModp; }
+  const vector<NativeInteger>& GetPHatInvModp() const {
+    return m_PHatInvModp;
+  }
 
   /**
    * Get the NTL precomputions for [(P/p_j)^{-1}]_{p_j}
@@ -349,7 +337,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return a vector holding (P mod q_j) for every j.
    */
-  const vector<NativeInteger>& GetPModq() const { return m_PModq; }
+  const vector<NativeInteger>& GetPModq() const {
+    return m_PModq;
+  }
 
   /**
    * Gets the Barrett modulo reduction precomputation for q_i
@@ -383,7 +373,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the mod switching method.
    */
-  enum ModSwitchMethod GetModSwitchMethod() const { return m_msMethod; }
+  enum ModSwitchMethod GetModSwitchMethod() const {
+    return m_msMethod;
+  }
 
   /**
    * Get the precomputed table of [Q/Q_j]_{q_i}
@@ -417,8 +409,7 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * partition from.
    * @return the partitions.
    */
-  const shared_ptr<ILDCRTParams<BigInteger>>& GetParamsComplPartQ(
-      uint32_t numTowers, uint32_t digit) const {
+  const shared_ptr<ILDCRTParams<BigInteger>>& GetParamsComplPartQ(uint32_t numTowers, uint32_t digit) const {
     return m_paramsComplPartQ[numTowers][digit];
   }
 
@@ -427,7 +418,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the number of partitions.
    */
-  uint32_t GetNumberOfQPartitions() const { return m_paramsPartQ.size(); }
+  uint32_t GetNumberOfQPartitions() const {
+    return m_paramsPartQ.size();
+  }
 
   /**
    * Get the precomputed table of [{Q/Q_j}^{-1}]_{q_i}
@@ -444,7 +437,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the number of digits.
    */
-  uint32_t GetNumPartQ() const { return m_numPartQ; }
+  uint32_t GetNumPartQ() const {
+    return m_numPartQ;
+  }
 
   /**
    * Method that returns the number of towers within every digit.
@@ -453,7 +448,9 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the number of towers per digit.
    */
-  uint32_t GetNumPerPartQ() const { return m_numPerPartQ; }
+  uint32_t GetNumPerPartQ() const {
+    return m_numPerPartQ;
+  }
 
   /**
    * Method that returns the precomputed values for QHat^-1 mod qj within a
@@ -461,10 +458,8 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the pre-computed values.
    */
-  const vector<NativeInteger>& GetPartQlHatInvModq(uint32_t part,
-                                                   uint32_t sublvl) const {
-    if (part < m_LvlPartQHatInvModq.size() &&
-        sublvl < m_LvlPartQHatInvModq[part].size())
+  const vector<NativeInteger>& GetPartQlHatInvModq(uint32_t part, uint32_t sublvl) const {
+    if (part < m_LvlPartQHatInvModq.size() && sublvl < m_LvlPartQHatInvModq[part].size())
       return m_LvlPartQHatInvModq[part][sublvl];
 
     PALISADE_THROW(math_error,
@@ -478,16 +473,13 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * @param index The number of towers in the ciphertext.
    * @return the pre-computed values.
    */
-  const vector<NativeInteger>& GetPartQlHatInvModqPrecon(
-      uint32_t part, uint32_t sublvl) const {
-    if (part < m_LvlPartQHatInvModqPrecon.size() &&
-        sublvl < m_LvlPartQHatInvModqPrecon[part].size())
+  const vector<NativeInteger>& GetPartQlHatInvModqPrecon(uint32_t part, uint32_t sublvl) const {
+    if (part < m_LvlPartQHatInvModqPrecon.size() && sublvl < m_LvlPartQHatInvModqPrecon[part].size())
       return m_LvlPartQHatInvModqPrecon[part][sublvl];
 
-    PALISADE_THROW(
-        math_error,
-        "LPCryptoParametersBGVrns::GetPartitionQHatInvModQPreconTable - "
-        "index out of bounds.");
+    PALISADE_THROW(math_error,
+                   "LPCryptoParametersBGVrns::GetPartitionQHatInvModQPreconTable - "
+                   "index out of bounds.");
   }
 
   /**
@@ -496,10 +488,8 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * @param index The table containing QHat mod pi.
    * @return the pre-computed values.
    */
-  const vector<vector<NativeInteger>>& GetPartQlHatModp(uint32_t lvl,
-                                                        uint32_t part) const {
-    if (lvl < m_LvlPartQHatModp.size() && part < m_LvlPartQHatModp[lvl].size())
-      return m_LvlPartQHatModp[lvl][part];
+  const vector<vector<NativeInteger>>& GetPartQlHatModp(uint32_t lvl, uint32_t part) const {
+    if (lvl < m_LvlPartQHatModp.size() && part < m_LvlPartQHatModp[lvl].size()) return m_LvlPartQHatModp[lvl][part];
 
     PALISADE_THROW(math_error,
                    "LPCryptoParametersBGVrns::GetPartitionQHatModPTable - "
@@ -512,10 +502,8 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    * @param index The number of towers in the ciphertext.
    * @return the pre-computed values.
    */
-  const vector<DoubleNativeInt>& GetmodComplPartqBarrettMu(
-      uint32_t lvl, uint32_t part) const {
-    if (lvl < m_modComplPartqBarrettMu.size() &&
-        part < m_modComplPartqBarrettMu[lvl].size())
+  const vector<DoubleNativeInt>& GetmodComplPartqBarrettMu(uint32_t lvl, uint32_t part) const {
+    if (lvl < m_modComplPartqBarrettMu.size() && part < m_modComplPartqBarrettMu[lvl].size())
       return m_modComplPartqBarrettMu[lvl][part];
 
     PALISADE_THROW(math_error,
@@ -529,14 +517,18 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the pre-computed values.
    */
-  const vector<NativeInteger>& GettInvModq() const { return m_tInvModq; }
+  const vector<NativeInteger>& GettInvModq() const {
+    return m_tInvModq;
+  }
 
   /**
    * Method that returns the NTL precomputions for [t]_{q_i}
    *
    * @return the pre-computed values.
    */
-  const vector<NativeInteger>& GettModqPrecon() const { return m_tModqPrecon; }
+  const vector<NativeInteger>& GettModqPrecon() const {
+    return m_tModqPrecon;
+  }
 
   /**
    * Method that returns the NTL precomputions for [t^{-1}]_{q_i}
@@ -553,14 +545,18 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
    *
    * @return the pre-computed values.
    */
-  const vector<NativeInteger>& GettInvModp() const { return m_tInvModp; }
+  const vector<NativeInteger>& GettInvModp() const {
+    return m_tInvModp;
+  }
 
   /**
    * Method that returns the NTL precomputions for [t]_{p_j}
    *
    * @return the pre-computed values.
    */
-  const vector<NativeInteger>& GettModpPrecon() const { return m_tModpPrecon; }
+  const vector<NativeInteger>& GettModpPrecon() const {
+    return m_tModpPrecon;
+  }
 
   /**
    * Method that returns the NTL precomputions for [t^{-1}]_{p_j}
@@ -733,13 +729,13 @@ class LPCryptoParametersBGVrns : public LPCryptoParametersRLWE<Element> {
  * @brief Parameter generation for BGVrns.
  */
 template <class Element>
-class LPAlgorithmParamsGenBGVrns
-    : public LPParameterGenerationAlgorithm<Element> {
-  using IntType = typename Element::Integer;
+class LPAlgorithmParamsGenBGVrns : public LPParameterGenerationAlgorithm<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -762,10 +758,8 @@ class LPAlgorithmParamsGenBGVrns
    * @param n ring dimension in case the user wants to use a custom ring
    * dimension
    */
-  bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                 int32_t evalAddCount = 0, int32_t evalMultCount = 0,
-                 int32_t keySwitchCount = 0, size_t dcrtBits = 0,
-                 uint32_t n = 0) const {
+  bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, int32_t evalAddCount = 0,
+                 int32_t evalMultCount = 0, int32_t keySwitchCount = 0, size_t dcrtBits = 0, uint32_t n = 0) const {
     NOIMPL
   }
 
@@ -785,11 +779,9 @@ class LPAlgorithmParamsGenBGVrns
    * @param dcrtBits the bit-width for tower's moduli.
    * @param numLargeDigits the number of digits for hybrid key-switching.
    */
-  bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                 usint cyclOrder, usint ptm, usint numPrimes, usint relinWindow,
-                 MODE mode, KeySwitchTechnique ksTech = BV,
-                 usint firstModSize = 0, usint dcrtBits = 0,
-                 uint32_t numLargeDigits = 4) const;
+  bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, usint cyclOrder, usint ptm, usint numPrimes,
+                 usint relinWindow, MODE mode, KeySwitchTechnique ksTech = BV, usint firstModSize = 0,
+                 usint dcrtBits = 0, uint32_t numLargeDigits = 4) const;
 
   ~LPAlgorithmParamsGenBGVrns() {}
 
@@ -803,7 +795,9 @@ class LPAlgorithmParamsGenBGVrns
     ar(cereal::base_class<LPParameterGenerationAlgorithm<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsParamsGen"; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsParamsGen";
+  }
 };
 
 /**
@@ -811,12 +805,13 @@ class LPAlgorithmParamsGenBGVrns
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
-  using IntType = typename Element::Integer;
+class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -831,8 +826,7 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
    * @param plaintext the plaintext input.
    * @return ciphertext which results from encryption.
    */
-  Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey,
-                              Element plaintext) const override;
+  Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey, Element plaintext) const override;
 
   /**
    * Method for encrypting plaintext using BGVrns Scheme
@@ -841,8 +835,7 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
    * @param plaintext the plaintext input.
    * @return ciphertext which results from encryption.
    */
-  Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey,
-                              Element plaintext) const override;
+  Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey, Element plaintext) const override;
 
   /**
    * Method for decrypting plaintext using BGVrns
@@ -852,8 +845,7 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
    * @param *plaintext the plaintext output.
    * @return the success/fail result
    */
-  DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                        ConstCiphertext<Element> ciphertext,
+  DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
                         NativePoly* plaintext) const override;
 
   /**
@@ -864,8 +856,7 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
    * @param *plaintext the plaintext output.
    * @return the success/fail result
    */
-  DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                        ConstCiphertext<Element> ciphertext,
+  DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
                         Poly* plaintext) const override;
 
   /**
@@ -876,8 +867,7 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
    * sparse(interleaved zeroes) or not.
    * @return KeyPair containting private key and public key.
    */
-  LPKeyPair<Element> KeyGen(CryptoContext<Element> cc,
-                            bool makeSparse = false) override;
+  LPKeyPair<Element> KeyGen(CryptoContext<Element> cc, bool makeSparse = false) override;
 
   template <class Archive>
   void save(Archive& ar) const {
@@ -889,7 +879,9 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
     ar(cereal::base_class<LPEncryptionAlgorithm<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsEncryption"; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsEncryption";
+  }
 };
 
 /**
@@ -898,12 +890,13 @@ class LPAlgorithmBGVrns : public LPEncryptionAlgorithm<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
-  using IntType = typename Element::Integer;
+class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -923,9 +916,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @return a vector containing two ciphertexts of the same level.
    */
-  vector<shared_ptr<ConstCiphertext<Element>>> AdjustLevels(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const;
+  vector<shared_ptr<ConstCiphertext<Element>>> AdjustLevels(ConstCiphertext<Element> ciphertext1,
+                                                            ConstCiphertext<Element> ciphertext2) const;
 
   /**
    * Internal function to automatically level-reduce a pair of ciphertexts.
@@ -933,8 +925,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext1 first input ciphertext.
    * @param ciphertext2 second input ciphertext.
    */
-  void AdjustLevelsEq(Ciphertext<Element>& ciphertext1,
-                      Ciphertext<Element>& ciphertext2) const;
+  void AdjustLevelsEq(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2) const;
 
   /**
    * Internal function to automatically level-reduce a ciphertext and a
@@ -944,8 +935,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext input plaintext.
    * @return a vector containing two ciphertexts of the same level.
    */
-  std::pair<shared_ptr<ConstCiphertext<Element>>, Element> AdjustLevels(
-      ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const;
+  std::pair<shared_ptr<ConstCiphertext<Element>>, Element> AdjustLevels(ConstCiphertext<Element> ciphertext,
+                                                                        ConstPlaintext plaintext) const;
 
   /**
    * Internal function to automatically level-reduce a ciphertext and a
@@ -955,8 +946,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext input plaintext.
    * @return a vector containing two ciphertexts of the same level.
    */
-  void AdjustLevelsEq(Ciphertext<Element>& ciphertext,
-                      Plaintext plaintext) const;
+  void AdjustLevelsEq(Ciphertext<Element>& ciphertext, Plaintext plaintext) const;
 
   /**
    * Internal function for homomorphic addition of ciphertexts.
@@ -967,8 +957,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @return result of homomorphic addition of input ciphertexts.
    */
-  Ciphertext<Element> EvalAddCore(ConstCiphertext<Element> ciphertext1,
-                                  ConstCiphertext<Element> ciphertext2) const;
+  Ciphertext<Element> EvalAddCore(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2) const;
 
   /**
    * Internal function for in-place homomorphic addition of ciphertexts.
@@ -979,8 +968,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @details \p ciphertext1 stores the result of \p ciphertext1 + \p ciphertext2
    */
-  void EvalAddCoreInPlace(Ciphertext<Element>& ciphertext1,
-                          ConstCiphertext<Element> ciphertext2) const;
+  void EvalAddCoreInPlace(Ciphertext<Element>& ciphertext1, ConstCiphertext<Element> ciphertext2) const;
 
   /**
    * Function for homomorphic addition of ciphertexts.
@@ -990,9 +978,10 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @return result of homomorphic addition of input ciphertexts.
    */
-  virtual Ciphertext<Element> EvalAddMutable(
-      Ciphertext<Element>& ciphertext1,
-      Ciphertext<Element>& ciphertext2) const override {ONLYDCRTPOLY}
+  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext1,
+                                             Ciphertext<Element>& ciphertext2) const override {
+    ONLYDCRTPOLY
+  }
 
   /**
    * Function for in-place homomorphic addition of ciphertexts.
@@ -1001,8 +990,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ct2 second input ciphertext.
    * @details \p ct1 stores the result of \p ct1 + \p ct2
    */
-  void EvalAddInPlace(Ciphertext<Element>& ciphertext1,
-                      ConstCiphertext<Element> ciphertext2) const override;
+  void EvalAddInPlace(Ciphertext<Element>& ciphertext1, ConstCiphertext<Element> ciphertext2) const override;
 
   /**
    * Internal function for homomorphic addition of ciphertext
@@ -1013,8 +1001,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ptElement the Element corresponding to the input plaintext.
    * @return result of homomorphic addition of inputs.
    */
-  Ciphertext<Element> EvalAddCore(ConstCiphertext<Element> ciphertext,
-                                  Element ptElement) const;
+  Ciphertext<Element> EvalAddCore(ConstCiphertext<Element> ciphertext, Element ptElement) const;
 
   /**
    * Function for homomorphic addition of ciphertexts.
@@ -1023,8 +1010,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext input plaintext.
    * @return result of homomorphic addition of input ciphertexts.
    */
-  Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext,
-                              ConstPlaintext plaintext) const override;
+  Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const override;
 
   /**
    * Function for homomorphic addition of ciphertexts.
@@ -1034,8 +1020,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext input plaintext.
    * @return result of homomorphic addition of input ciphertexts.
    */
-  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext,
-                                             Plaintext plaintext) const override {
+  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext, Plaintext plaintext) const override {
     ONLYDCRTPOLY
   }
 
@@ -1048,8 +1033,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param constants vector containing double weights.
    * @return A ciphertext containing the linear weighted sum.
    */
-  virtual Ciphertext<Element> EvalLinearWSum(
-      vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const override {
+  virtual Ciphertext<Element> EvalLinearWSum(vector<Ciphertext<Element>> ciphertexts,
+                                             vector<double> constants) const override {
     NOIMPL
   }
 
@@ -1062,9 +1047,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param constants vector containing double weights.
    * @return A ciphertext containing the linear weighted sum.
    */
-  virtual Ciphertext<Element> EvalLinearWSumMutable(
-      vector<Ciphertext<Element>> ciphertexts,
-      vector<double> constants) const override {NOIMPL}
+  virtual Ciphertext<Element> EvalLinearWSumMutable(vector<Ciphertext<Element>> ciphertexts,
+                                                    vector<double> constants) const override{ NOIMPL }
 
   /**
    * Internal function for homomorphic subtraction of ciphertexts.
@@ -1075,8 +1059,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @return result of homomorphic subtraction of input ciphertexts.
    */
-  Ciphertext<Element> EvalSubCore(ConstCiphertext<Element> ciphertext1,
-                                  ConstCiphertext<Element> ciphertext2) const;
+  Ciphertext<Element> EvalSubCore(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2) const;
 
   /**
    * Function for homomorphic subtraction of ciphertexts.
@@ -1096,9 +1079,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 the input ciphertext.
    * @return result of homomorphic subtraction of input ciphertexts.
    */
-  virtual Ciphertext<Element> EvalSubMutable(
-      Ciphertext<Element>& ciphertext1,
-      Ciphertext<Element>& ciphertext2) const override {ONLYDCRTPOLY}
+  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element>& ciphertext1,
+                                             Ciphertext<Element>& ciphertext2) const override{ ONLYDCRTPOLY }
 
   /**
    * Internal function for homomorphic subtraction of ciphertext
@@ -1110,8 +1092,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ptDepth the scaling factor (depth) of the input plaintext.
    * @return result of homomorphic subtraction of inputs.
    */
-  Ciphertext<Element> EvalSubCore(ConstCiphertext<Element> ciphertext,
-                                  Element ptElement) const;
+  Ciphertext<Element> EvalSubCore(ConstCiphertext<Element> ciphertext, Element ptElement) const;
 
   /**
    * Function for homomorphic subtraction of ciphertexts.
@@ -1120,8 +1101,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext the input plaintext.
    * @return result of homomorphic subtraction of input ciphertexts.
    */
-  Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1,
-                              ConstPlaintext plaintext) const override;
+  Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext) const override;
 
   /**
    * Function for homomorphic subtraction of ciphertexts.
@@ -1132,8 +1112,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @return result of homomorphic subtraction of input ciphertexts.
    */
   virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element>& ciphertext1,
-                                             Plaintext plaintext) const override {
-      ONLYDCRTPOLY}
+                                             Plaintext plaintext) const override{ ONLYDCRTPOLY }
 
   /**
    * Internal function for homomorphic multiplication of ciphertexts.
@@ -1144,8 +1123,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @return result of homomorphic multiplication of input ciphertexts.
    */
-  Ciphertext<Element> EvalMultCore(ConstCiphertext<Element> ciphertext1,
-                                   ConstCiphertext<Element> ciphertext2) const;
+  Ciphertext<Element> EvalMultCore(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2) const;
 
   /**
    * Function for homomorphic multiplication of ciphertexts without key
@@ -1169,9 +1147,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext2 second input ciphertext.
    * @return result of homomorphic multiplication of input ciphertexts.
    */
-  virtual Ciphertext<Element> EvalMultMutable(
-      Ciphertext<Element>& ciphertext1,
-      Ciphertext<Element>& ciphertext2) const override {ONLYDCRTPOLY}
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1,
+                                              Ciphertext<Element>& ciphertext2) const override{ ONLYDCRTPOLY }
 
   /**
    * Internal function for homomorphic multiplication of ciphertext
@@ -1182,8 +1159,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ptxt the Element corresponding to the input plaintext.
    * @return result of homomorphic subtraction of inputs.
    */
-  Ciphertext<Element> EvalMultCore(ConstCiphertext<Element> ciphertext,
-                                   Element ptxt) const;
+  Ciphertext<Element> EvalMultCore(ConstCiphertext<Element> ciphertext, Element ptxt) const;
 
   /**
    * Function for multiplying ciphertext by plaintext.
@@ -1192,8 +1168,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext input plaintext embedded in the cryptocontext.
    * @return result of the multiplication.
    */
-  Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext,
-                               ConstPlaintext plaintext) const override;
+  Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const override;
 
   /**
    * Function for multiplying ciphertext by plaintext.
@@ -1203,8 +1178,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param plaintext input plaintext embedded in the cryptocontext.
    */
   virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext,
-                                              Plaintext plaintext) const override {
-      ONLYDCRTPOLY}
+                                              Plaintext plaintext) const override{ ONLYDCRTPOLY }
 
   /**
    * Function for homomorphic multiplication of ciphertexts followed by key
@@ -1218,8 +1192,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * the same secret key as that of ciphertext1 and ciphertext2.
    * @return result of homomorphic multiplication of input ciphertexts.
    */
-  Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1,
-                               ConstCiphertext<Element> ciphertext2,
+  Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
                                const LPEvalKey<Element> ek) const override;
 
   /**
@@ -1233,8 +1206,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * the same secret key as that of ciphertext1 and ciphertext2.
    * @return result of homomorphic multiplication of input ciphertexts.
    */
-  Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1,
-                                      Ciphertext<Element>& ciphertext2,
+  Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2,
                                       const LPEvalKey<Element> ek) const override;
 
   /**
@@ -1247,10 +1219,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @return A shared pointer to the ciphertext which is the EvalMult of the two
    * inputs.
    */
-  Ciphertext<Element> EvalMultAndRelinearize(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2,
-      const vector<LPEvalKey<Element>>& ek) const override;
+  Ciphertext<Element> EvalMultAndRelinearize(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
+                                             const vector<LPEvalKey<Element>>& ek) const override;
 
   /*
    * Relinearize a ciphertext.
@@ -1268,11 +1238,9 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext input ciphertext to be relinearized
    * @param ek The evaluation key input.
    */
-  void RelinearizeInPlace(Ciphertext<Element> &ciphertext,
-                                  const vector<LPEvalKey<Element>>& ek) const override {
-    std::string errMsg =
-        "LPAlgorithmSHEBGVrns::RelinearizeInPlace is not implemented for the non "
-        "Double-CRT variant of the BGV Scheme.";
+  void RelinearizeInPlace(Ciphertext<Element>& ciphertext, const vector<LPEvalKey<Element>>& ek) const override {
+    std::string errMsg = "LPAlgorithmSHEBGVrns::RelinearizeInPlace is not implemented for the non "
+                         "Double-CRT variant of the BGV Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1294,9 +1262,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ek The evaluation key input.
    * @return resulting keySwitchHint.
    */
-  LPEvalKey<Element> KeySwitchHybridGen(
-      const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
-      const LPEvalKey<DCRTPoly> ek = nullptr) const;
+  LPEvalKey<Element> KeySwitchHybridGen(const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
+                                        const LPEvalKey<DCRTPoly> ek = nullptr) const;
 
   /*
    * Method for in-place key switching using the GHS method
@@ -1304,8 +1271,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param keySwitchHint Hint required to perform the ciphertext switching.
    * @param ciphertext Original ciphertext to perform switching on.
    */
-  void KeySwitchHybridInPlace(const LPEvalKey<Element> keySwitchHint,
-                              Ciphertext<Element>& ciphertext) const;
+  void KeySwitchHybridInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& ciphertext) const;
 
   /**
    * Method for generating a key switch matrix for GHS key switching.
@@ -1319,9 +1285,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ek The evaluation key input.
    * @return resulting keySwitchHint.
    */
-  LPEvalKey<Element> KeySwitchGHSGen(
-      const LPPrivateKey<DCRTPoly> oldKey, const LPPrivateKey<DCRTPoly> newKey,
-      const LPEvalKey<DCRTPoly> ek = nullptr) const;
+  LPEvalKey<Element> KeySwitchGHSGen(const LPPrivateKey<DCRTPoly> oldKey, const LPPrivateKey<DCRTPoly> newKey,
+                                     const LPEvalKey<DCRTPoly> ek = nullptr) const;
 
   /**
    * Method for in-place key switching using the GHS method introduced in Gentry,
@@ -1333,8 +1298,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param keySwitchHint Hint required to perform the ciphertext switching.
    * @param ciphertext Original ciphertext to perform switching on.
    */
-  void KeySwitchGHSInPlace(const LPEvalKey<Element> keySwitchHint,
-                           Ciphertext<Element>& ciphertext) const;
+  void KeySwitchGHSInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& ciphertext) const;
 
   /**
    * Method for generating a key switch matrix for BV key switching.
@@ -1348,9 +1312,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ek The evaluation key input.
    * @return resulting keySwitchHint.
    */
-  LPEvalKey<Element> KeySwitchBVGen(
-      const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
-      const LPEvalKey<DCRTPoly> ek = nullptr) const;
+  LPEvalKey<Element> KeySwitchBVGen(const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
+                                    const LPEvalKey<DCRTPoly> ek = nullptr) const;
 
   /**
    * Method for in-place key switching using the BV method introduced in
@@ -1361,8 +1324,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param keySwitchHint Hint required to perform the ciphertext switching.
    * @param ciphertext Original ciphertext to perform in-place key switching on.
    */
-  void KeySwitchBVInPlace(const LPEvalKey<Element> keySwitchHint,
-                          Ciphertext<Element>& ciphertext) const;
+  void KeySwitchBVInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& ciphertext) const;
 
   /**
    * Method for generating a KeySwitchHint using RLWE relinearization
@@ -1371,9 +1333,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param newKey New private key to generate the keyswitch hint.
    * @return resulting keySwitchHint.
    */
-  virtual LPEvalKey<Element> KeySwitchGen(
-      const LPPrivateKey<Element> oldKey,
-      const LPPrivateKey<Element> newKey) const override;
+  virtual LPEvalKey<Element> KeySwitchGen(const LPPrivateKey<Element> oldKey,
+                                          const LPPrivateKey<Element> newKey) const override;
 
   /**
    * Method for in-place KeySwitching based on a KeySwitchHint - uses the RLWE
@@ -1381,8 +1342,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    *
    * @param keySwitchHint Hint required to perform the ciphertext switching.
    */
-  void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint,
-                              Ciphertext<Element>& ciphertext) const override;
+  void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& ciphertext) const override;
 
   /**
    * Function to generate key switch hint on a ciphertext for depth 2.
@@ -1391,8 +1351,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * ciphertext.
    * @return keySwitchHint generated to switch the ciphertext.
    */
-  LPEvalKey<Element> EvalMultKeyGen(
-      const LPPrivateKey<Element> privateKey) const override;
+  LPEvalKey<Element> EvalMultKeyGen(const LPPrivateKey<Element> privateKey) const override;
 
   /**
    * Function to generate key switch hint on a ciphertext for depth more than 2.
@@ -1402,8 +1361,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * ciphertext.
    * @return keySwitchHint generated to switch the ciphertext.
    */
-  vector<LPEvalKey<Element>> EvalMultKeysGen(
-      const LPPrivateKey<Element> privateKey) const override;
+  vector<LPEvalKey<Element>> EvalMultKeysGen(const LPPrivateKey<Element> privateKey) const override;
 
   /**
    * Function for evaluating automorphism of ciphertext at index i
@@ -1414,10 +1372,9 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * EvalAutomorphismKeyGen.
    * @return resulting ciphertext
    */
-  Ciphertext<Element> EvalAutomorphism(
-      ConstCiphertext<Element> ciphertext, usint i,
-      const std::map<usint, LPEvalKey<Element>>& evalKeys,
-      CALLER_INFO_ARGS_HDR) const override;
+  Ciphertext<Element> EvalAutomorphism(ConstCiphertext<Element> ciphertext, usint i,
+                                       const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                       CALLER_INFO_ARGS_HDR) const override;
 
   /**
    * Generate automophism keys for a given private key; Uses the private key for
@@ -1428,8 +1385,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @return returns the evaluation keys
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const std::vector<usint>& indexList) const override;
+    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const override;
 
   /**
    * Generate automophism keys for a given private key; Uses the public key for
@@ -1441,12 +1397,10 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @return returns the evaluation keys
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
-      const LPPublicKey<Element> publicKey,
-      const LPPrivateKey<Element> privateKey,
-      const std::vector<usint>& indexList) const override {
-    std::string errMsg =
-        "LPAlgorithmSHEBGVrns::EvalAutomorphismKeyGen is not implemented for "
-        "BGVrns SHE Scheme.";
+    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> privateKey,
+    const std::vector<usint>& indexList) const override {
+    std::string errMsg = "LPAlgorithmSHEBGVrns::EvalAutomorphismKeyGen is not implemented for "
+                         "BGVrns SHE Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1457,8 +1411,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ciphertext the input ciphertext on which to do the precomputation
    * (digit decomposition)
    */
-  shared_ptr<vector<Element>> EvalFastRotationPrecompute(
-      ConstCiphertext<Element> ciphertext) const override;
+  shared_ptr<vector<Element>> EvalFastRotationPrecompute(ConstCiphertext<Element> ciphertext) const override;
 
   /**
    * EvalFastRotation is a wrapper for hoisted automorphism.
@@ -1473,9 +1426,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * 		  EvalFastRotationPrecomputeBV. In GHS, this is the expanded
    * part of the ciphertext.
    */
-  Ciphertext<Element> EvalFastRotation(
-      ConstCiphertext<Element> ciphertext, const usint index, const usint m,
-      const shared_ptr<vector<Element>> precomp) const override;
+  Ciphertext<Element> EvalFastRotation(ConstCiphertext<Element> ciphertext, const usint index, const usint m,
+                                       const shared_ptr<vector<Element>> precomp) const override;
 
  private:
   /**
@@ -1505,8 +1457,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param ct the input ciphertext on which to do the precomputation (digit
    * decomposition)
    */
-  shared_ptr<vector<Element>> EvalFastRotationPrecomputeBV(
-      ConstCiphertext<Element> ciphertext) const;
+  shared_ptr<vector<Element>> EvalFastRotationPrecomputeBV(ConstCiphertext<Element> ciphertext) const;
 
   /**
    * EvalFastRotationBV implements the automorphism and key switching step of
@@ -1546,10 +1497,8 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param evalKey is the rotation key that corresponds to the index (computed
    * in wrapper EvalFastRotation)
    */
-  Ciphertext<Element> EvalFastRotationBV(
-      ConstCiphertext<Element> ciphertext, const usint index, const usint m,
-      const shared_ptr<vector<Element>> digits,
-      LPEvalKey<DCRTPoly> evalKey) const;
+  Ciphertext<Element> EvalFastRotationBV(ConstCiphertext<Element> ciphertext, const usint index, const usint m,
+                                         const shared_ptr<vector<Element>> digits, LPEvalKey<DCRTPoly> evalKey) const;
 
   /**
    * EvalFastRotationPrecomputeGHS implements the precomputation step of
@@ -1566,8 +1515,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    *
    * @param ciphertext the input ciphertext on which to do the precomputation
    */
-  shared_ptr<vector<Element>> EvalFastRotationPrecomputeGHS(
-      ConstCiphertext<Element> ciphertext) const;
+  shared_ptr<vector<Element>> EvalFastRotationPrecomputeGHS(ConstCiphertext<Element> ciphertext) const;
 
   /**
    * EvalFastRotationGHS implements the automorphism and key switching step of
@@ -1588,10 +1536,9 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param evalKey is the rotation key that corresponds to the index (computed
    * in wrapper EvalFastRotation)
    */
-  Ciphertext<Element> EvalFastRotationGHS(
-      ConstCiphertext<Element> ciphertext, const usint index, const usint m,
-      const shared_ptr<vector<Element>> expandedCiphertext,
-      LPEvalKey<DCRTPoly> evalKey) const;
+  Ciphertext<Element> EvalFastRotationGHS(ConstCiphertext<Element> ciphertext, const usint index, const usint m,
+                                          const shared_ptr<vector<Element>> expandedCiphertext,
+                                          LPEvalKey<DCRTPoly> evalKey) const;
 
   /**
    * EvalFastRotationPrecomputeHybrid implements the precomputation step of
@@ -1606,8 +1553,7 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    *
    * @param ciphertext the input ciphertext on which to do the precomputation
    */
-  shared_ptr<vector<Element>> EvalFastRotationPrecomputeHybrid(
-      ConstCiphertext<Element> ciphertext) const;
+  shared_ptr<vector<Element>> EvalFastRotationPrecomputeHybrid(ConstCiphertext<Element> ciphertext) const;
 
   /**
    * EvalFastRotationHybrid implements the automorphism and key switching step
@@ -1626,10 +1572,9 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    * @param evalKey is the rotation key that corresponds to the index (computed
    * in wrapper EvalFastRotation)
    */
-  Ciphertext<Element> EvalFastRotationHybrid(
-      ConstCiphertext<Element> ciphertext, const usint index, const usint m,
-      const shared_ptr<vector<Element>> expandedCiphertext,
-      LPEvalKey<DCRTPoly> evalKey) const;
+  Ciphertext<Element> EvalFastRotationHybrid(ConstCiphertext<Element> ciphertext, const usint index, const usint m,
+                                             const shared_ptr<vector<Element>> expandedCiphertext,
+                                             LPEvalKey<DCRTPoly> evalKey) const;
 
   /**
    * Function for evaluating multiplication on ciphertext followed by
@@ -1644,11 +1589,9 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
    *  decryptable by the same secret key as that of ciphertext list.
    * @return new ciphertext.
    */
-  Ciphertext<Element> EvalMultMany(
-      const vector<Ciphertext<Element>>& ciphertextList,
-      const vector<LPEvalKey<Element>>& evalKeys) const override {
-    std::string errMsg =                                             \
-        "BGVrns supports only DCRTPoly."; \
+  Ciphertext<Element> EvalMultMany(const vector<Ciphertext<Element>>& ciphertextList,
+                                   const vector<LPEvalKey<Element>>& evalKeys) const override {
+    std::string errMsg = "BGVrns supports only DCRTPoly.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1663,7 +1606,9 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
     ar(cereal::base_class<LPSHEAlgorithm<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsSHE"; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsSHE";
+  }
 };
 
 /**
@@ -1692,12 +1637,13 @@ class LPAlgorithmSHEBGVrns : public LPSHEAlgorithm<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
-  using IntType = typename Element::Integer;
+class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -1715,8 +1661,7 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
    * @return evalKey the evaluation key for switching the ciphertext to be
    * decryptable by new private key.
    */
-  LPEvalKey<Element> ReKeyGen(const LPPrivateKey<Element> newKey,
-                              const LPPrivateKey<Element> oldKey) const;
+  LPEvalKey<Element> ReKeyGen(const LPPrivateKey<Element> newKey, const LPPrivateKey<Element> oldKey) const;
 
   /**
    * The generation of re-encryption keys is based on the BG-PRE scheme
@@ -1744,9 +1689,7 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
    * @return evalKey the evaluation key for switching the ciphertext to be
    * decryptable by new private key.
    */
-  LPEvalKey<Element> ReKeyGen(
-      const LPPublicKey<Element> newKey,
-      const LPPrivateKey<Element> oldKey) const override;
+  LPEvalKey<Element> ReKeyGen(const LPPublicKey<Element> newKey, const LPPrivateKey<Element> oldKey) const override;
 
   /**
    * This method implements re-encryption using the evaluation key generated by
@@ -1771,9 +1714,8 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
    * @param publicKey the original public key.
    * @return resulting ciphertext after the re-encryption operation.
    */
-  Ciphertext<Element> ReEncrypt(
-      const LPEvalKey<Element> EK, ConstCiphertext<Element> ciphertext,
-      const LPPublicKey<Element> publicKey = nullptr) const override;
+  Ciphertext<Element> ReEncrypt(const LPEvalKey<Element> EK, ConstCiphertext<Element> ciphertext,
+                                const LPPublicKey<Element> publicKey = nullptr) const override;
 
  private:
   /**
@@ -1789,8 +1731,7 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
    * @return evalKey the evaluation key for switching the ciphertext to be
    * decryptable by new private key.
    */
-  LPEvalKey<Element> ReKeyGenBV(const LPPublicKey<Element> newKey,
-                                const LPPrivateKey<Element> oldKey) const;
+  LPEvalKey<Element> ReKeyGenBV(const LPPublicKey<Element> newKey, const LPPrivateKey<Element> oldKey) const;
 
   /**
    * The generation of re-encryption keys is based on the BG-PRE scheme
@@ -1805,8 +1746,7 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
    * @return evalKey the evaluation key for switching the ciphertext to be
    * decryptable by new private key.
    */
-  LPEvalKey<Element> ReKeyGenGHS(const LPPublicKey<Element> newKey,
-                                 const LPPrivateKey<Element> oldKey) const;
+  LPEvalKey<Element> ReKeyGenGHS(const LPPublicKey<Element> newKey, const LPPrivateKey<Element> oldKey) const;
 
  public:
   template <class Archive>
@@ -1819,7 +1759,9 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
     ar(cereal::base_class<LPPREAlgorithm<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsPRE"; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsPRE";
+  }
 };
 
 /**
@@ -1849,12 +1791,13 @@ class LPAlgorithmPREBGVrns : public LPPREAlgorithm<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
-  using IntType = typename Element::Integer;
+class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -1876,10 +1819,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @return key pair including the secret share for the current party and
    * joined public key
    */
-  LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc,
-                                      const LPPublicKey<Element> pk1,
-                                      bool makeSparse = false,
-                                      bool fresh = false) override;
+  LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc, const LPPublicKey<Element> pk1,
+                                      bool makeSparse = false, bool fresh = false) override;
 
   /**
    * Threshold FHE: Generates a public key from a vector of secret shares.
@@ -1892,10 +1833,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @return key pair including the private for the current party and joined
    * public key
    */
-  LPKeyPair<Element> MultipartyKeyGen(
-      CryptoContext<Element> cc,
-      const vector<LPPrivateKey<Element>>& secretKeys,
-      bool makeSparse = false) override;
+  LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc, const vector<LPPrivateKey<Element>>& secretKeys,
+                                      bool makeSparse = false) override;
 
   /**
    * Threshold FHE: "Partial" decryption computed by all parties except for the
@@ -1904,9 +1843,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @param privateKey secret key share used for decryption.
    * @param ciphertext ciphertext that is being decrypted.
    */
-  Ciphertext<Element> MultipartyDecryptMain(
-      const LPPrivateKey<Element> privateKey,
-      ConstCiphertext<Element> ciphertext) const override;
+  Ciphertext<Element> MultipartyDecryptMain(const LPPrivateKey<Element> privateKey,
+                                            ConstCiphertext<Element> ciphertext) const override;
 
   /**
    * Threshold FHE: Method for decryption operation run by the lead decryption
@@ -1915,9 +1853,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @param privateKey secret key share used for decryption.
    * @param ciphertext ciphertext id decrypted.
    */
-  Ciphertext<Element> MultipartyDecryptLead(
-      const LPPrivateKey<Element> privateKey,
-      ConstCiphertext<Element> ciphertext) const override;
+  Ciphertext<Element> MultipartyDecryptLead(const LPPrivateKey<Element> privateKey,
+                                            ConstCiphertext<Element> ciphertext) const override;
 
   /**
    * Threshold FHE: Method for combining the partially decrypted ciphertexts
@@ -1927,9 +1864,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @param *plaintext the plaintext output as a NativePoly.
    * @return the decoding result.
    */
-  DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>>& ciphertextVec,
-      NativePoly* plaintext) const override;
+  DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                        NativePoly* plaintext) const override;
 
   /**
    * Threshold FHE: Method for combining the partially decrypted ciphertexts
@@ -1939,9 +1875,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @param *plaintext the plaintext output as a Poly.
    * @return the decoding result.
    */
-  DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>>& ciphertextVec,
-      Poly* plaintext) const override;
+  DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                        Poly* plaintext) const override;
 
   /**
    * Threshold FHE: Generates a joined evaluation key
@@ -1953,10 +1888,9 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @param ek the prior joined evaluation key.
    * @return the new joined evaluation key.
    */
-  LPEvalKey<Element> MultiKeySwitchGen(
-      const LPPrivateKey<Element> originalPrivateKey,
-      const LPPrivateKey<Element> newPrivateKey,
-      const LPEvalKey<Element> ek) const override;
+  LPEvalKey<Element> MultiKeySwitchGen(const LPPrivateKey<Element> originalPrivateKey,
+                                       const LPPrivateKey<Element> newPrivateKey,
+                                       const LPEvalKey<Element> ek) const override;
 
   /**
    * Threshold FHE: Generates joined automorphism keys
@@ -1969,9 +1903,8 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @return a dictionary with new joined automorphism keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAutomorphismKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-      const std::vector<usint>& indexList) const override;
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+    const std::vector<usint>& indexList) const override;
 
   /**
    * Threshold FHE: Generates joined summation evaluation keys
@@ -1983,9 +1916,7 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @return new joined summation keys.
    */
   shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalSumKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum)
-      const override;
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const override;
 
   /**
    * Threshold FHE: Generates a partial evaluation key for homomorphic
@@ -1996,8 +1927,7 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
    * @param sk current secret share.
    * @return the new joined key.
    */
-  LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey,
-                                      LPPrivateKey<Element> sk) const override;
+  LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey, LPPrivateKey<Element> sk) const override;
 
   template <class Archive>
   void save(Archive& ar) const {
@@ -2009,7 +1939,9 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
     ar(cereal::base_class<LPMultipartyAlgorithm<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsMultiparty"; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsMultiparty";
+  }
 };
 
 /**
@@ -2026,12 +1958,13 @@ class LPAlgorithmMultipartyBGVrns : public LPMultipartyAlgorithm<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
-  using IntType = typename Element::Integer;
+class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -2047,24 +1980,21 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
    * @param ciphertext is the ciphertext to perform modreduce on.
    * @return ciphertext after the modulus reduction performed.
    */
-  Ciphertext<Element> ModReduceInternal(ConstCiphertext<Element> ciphertext,
-                                        size_t levels = 1) const override;
+  Ciphertext<Element> ModReduceInternal(ConstCiphertext<Element> ciphertext, size_t levels = 1) const override;
 
   /**
    * Method for rescaling in-place
    *
    * @param ciphertext is the ciphertext to perform modreduce on in-place
    */
-  void ModReduceInternalInPlace(Ciphertext<Element>& ciphertext,
-                                size_t levels = 1) const override;
+  void ModReduceInternalInPlace(Ciphertext<Element>& ciphertext, size_t levels = 1) const override;
 
   /**
    * Method for rescaling in-place.
    *
    * @param ciphertext is the ciphertext to perform modreduce on in-place
    */
-  void ModReduceInPlace(Ciphertext<Element>& ciphertext,
-                        size_t levels = 1) const override;
+  void ModReduceInPlace(Ciphertext<Element>& ciphertext, size_t levels = 1) const override;
 
   /**
    * Method for compressing the ciphertext before decryption.
@@ -2073,8 +2003,7 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
    * @param towersLeft is the number of towers after compression
    * @return ciphertext after the compression performed.
    */
-  Ciphertext<Element> Compress(ConstCiphertext<Element> ciphertext,
-                               size_t towersLeft = 1) const override;
+  Ciphertext<Element> Compress(ConstCiphertext<Element> ciphertext, size_t towersLeft = 1) const override;
 
   /**
    * Method for Composed EvalMult, which includes homomorphic multiplication,
@@ -2087,10 +2016,8 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
    * @param quadKeySwitchHint is used for EvalMult operation.
    * @return resulting ciphertext.
    */
-  Ciphertext<Element> ComposedEvalMult(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2,
-      const LPEvalKey<Element> quadKeySwitchHint) const override;
+  Ciphertext<Element> ComposedEvalMult(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
+                                       const LPEvalKey<Element> quadKeySwitchHint) const override;
   /**
    * Wrapper method for level reduce in BGVrns.
    *
@@ -2099,8 +2026,7 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
    * @param levels the number of towers to drop.
    * @return resulting ciphertext.
    */
-  Ciphertext<Element> LevelReduce(ConstCiphertext<Element> cipherText,
-                                  const LPEvalKey<Element> linearKeySwitchHint,
+  Ciphertext<Element> LevelReduce(ConstCiphertext<Element> cipherText, const LPEvalKey<Element> linearKeySwitchHint,
                                   size_t levels) const override;
   /**
    * Method for Level Reduction in the BGVrns scheme. It just drops "levels"
@@ -2112,10 +2038,8 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
    * @param levels the number of towers to drop.
    * @return resulting ciphertext.
    */
-  Ciphertext<Element> LevelReduceInternal(
-      ConstCiphertext<Element> ciphertext,
-      const LPEvalKey<Element> linearKeySwitchHint,
-      size_t levels) const override;
+  Ciphertext<Element> LevelReduceInternal(ConstCiphertext<Element> ciphertext,
+                                          const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const override;
 
   template <class Archive>
   void save(Archive& ar) const {
@@ -2127,7 +2051,9 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
     ar(cereal::base_class<LPLeveledSHEAlgorithm<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BGVrnsLeveledSHE"; }
+  std::string SerializedObjectName() const {
+    return "BGVrnsLeveledSHE";
+  }
 };
 
 /**
@@ -2135,24 +2061,21 @@ class LPLeveledSHEAlgorithmBGVrns : public LPLeveledSHEAlgorithm<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPublicKeyEncryptionSchemeBGVrns
-    : public LPPublicKeyEncryptionScheme<Element> {
-  using IntType = typename Element::Integer;
+class LPPublicKeyEncryptionSchemeBGVrns : public LPPublicKeyEncryptionScheme<Element>
+{
+  using IntType  = typename Element::Integer;
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using DugType = typename Element::DugType;
-  using TugType = typename Element::TugType;
+  using DggType  = typename Element::DggType;
+  using DugType  = typename Element::DugType;
+  using TugType  = typename Element::TugType;
 
  public:
   LPPublicKeyEncryptionSchemeBGVrns() : LPPublicKeyEncryptionScheme<Element>() {
-    this->m_algorithmParamsGen =
-        std::make_shared<LPAlgorithmParamsGenBGVrns<Element>>();
+    this->m_algorithmParamsGen = std::make_shared<LPAlgorithmParamsGenBGVrns<Element>>();
   }
 
-  bool operator==(
-      const LPPublicKeyEncryptionScheme<Element>& sch) const override {
-    return dynamic_cast<const LPPublicKeyEncryptionSchemeBGVrns<Element>*>(
-               &sch) != nullptr;
+  bool operator==(const LPPublicKeyEncryptionScheme<Element>& sch) const override {
+    return dynamic_cast<const LPPublicKeyEncryptionSchemeBGVrns<Element>*>(&sch) != nullptr;
   }
 
   void Enable(PKESchemeFeature feature) override;
@@ -2167,7 +2090,9 @@ class LPPublicKeyEncryptionSchemeBGVrns
     ar(cereal::base_class<LPPublicKeyEncryptionScheme<Element>>(this));
   }
 
-  std::string SerializedObjectName() const override { return "BGVrnsScheme"; }
+  std::string SerializedObjectName() const override {
+    return "BGVrnsScheme";
+  }
 };
 
 }  // namespace lbcrypto

@@ -29,16 +29,13 @@
 #include "utils/serial.h"
 
 extern template class lbcrypto::LPCryptoParametersBFVrnsB<lbcrypto::DCRTPoly>;
-extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFVrnsB<
-    lbcrypto::DCRTPoly>;
+extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFVrnsB<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmBFVrnsB<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmSHEBFVrnsB<lbcrypto::DCRTPoly>;
-extern template class lbcrypto::LPAlgorithmMultipartyBFVrnsB<
-    lbcrypto::DCRTPoly>;
+extern template class lbcrypto::LPAlgorithmMultipartyBFVrnsB<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmParamsGenBFVrnsB<lbcrypto::DCRTPoly>;
 
 CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersBFVrnsB<lbcrypto::DCRTPoly>);
-CEREAL_REGISTER_TYPE(
-    lbcrypto::LPPublicKeyEncryptionSchemeBFVrnsB<lbcrypto::DCRTPoly>);
+CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionSchemeBFVrnsB<lbcrypto::DCRTPoly>);
 
 #endif

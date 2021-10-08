@@ -75,7 +75,8 @@ struct Log2<2> {
   static const usint value = 1;
 };
 
-class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
+class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ>
+{
  public:
   // CONSTRUCTORS
 
@@ -89,14 +90,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    *
    * @param &val is the ZZ to be copied.
    */
-  myZZ(const NTL::ZZ &val);
+  myZZ(const NTL::ZZ& val);
 
   /**
    * Move constructor.
    *
    * @param &&val is the ZZ to be copied.
    */
-  myZZ(NTL::ZZ &&val);
+  myZZ(NTL::ZZ&& val);
 
   // TODO: figure out how to do && for wrapper
   // myZZ(NTL::myZZ_p &&a);
@@ -106,7 +107,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    *
    * @param &strval is the initial integer represented as a string.
    */
-  explicit myZZ(const std::string &strval);
+  explicit myZZ(const std::string& strval);
 
   /**
    * Constructor from an unsigned integer.
@@ -134,15 +135,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &val is the initial integer represented as a native integer.
    */
   template <typename T>
-  myZZ(const bigintnat::NativeIntegerT<T> &val) : myZZ(val.ConvertToInt()) {}
+  myZZ(const bigintnat::NativeIntegerT<T>& val) : myZZ(val.ConvertToInt()) {}
 
   /**
    * Constructor from double is not permitted
    *
    * @param val
    */
-  myZZ(double val)
-      __attribute__((deprecated("Cannot construct from a double")));
+  myZZ(double val) __attribute__((deprecated("Cannot construct from a double")));
 
   // ASSIGNMENT OPERATORS
 
@@ -152,7 +152,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &val is the myZZ to be assigned from.
    * @return assigned myZZ ref.
    */
-  const myZZ &operator=(const myZZ &val);
+  const myZZ& operator=(const myZZ& val);
 
   // TODO move assignment operator?
 
@@ -162,7 +162,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param strval is the string to be assigned from
    * @return the assigned myZZ ref.
    */
-  inline const myZZ &operator=(std::string strval) {
+  inline const myZZ& operator=(std::string strval) {
     *this = myZZ(strval);
     return *this;
   }
@@ -173,7 +173,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param val is the unsigned integer to be assigned from.
    * @return the assigned myZZ ref.
    */
-  const myZZ &operator=(uint64_t val) {
+  const myZZ& operator=(uint64_t val) {
     *this = myZZ(val);
     return *this;
   }
@@ -185,16 +185,18 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    *
    * @param strval is the string representation of the ubint to be copied.
    */
-  void SetValue(const std::string &strval);
+  void SetValue(const std::string& strval);
 
   /**
    * Basic set method for setting the value of a myZZ
    *
    * @param a is the unsigned big int representation to be assigned.
    */
-  void SetValue(const myZZ &val);
+  void SetValue(const myZZ& val);
 
-  void SetIdentity() { *this = 1; }
+  void SetIdentity() {
+    *this = 1;
+  }
 
   // ARITHMETIC OPERATIONS
 
@@ -204,8 +206,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to add.
    * @return result of the addition operation.
    */
-  myZZ Add(const myZZ &b) const {
-    return *static_cast<const ZZ *>(this) + static_cast<const ZZ &>(b);
+  myZZ Add(const myZZ& b) const {
+    return *static_cast<const ZZ*>(this) + static_cast<const ZZ&>(b);
   }
 
   /**
@@ -214,8 +216,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to add.
    * @return result of the addition operation.
    */
-  const myZZ &AddEq(const myZZ &b) {
-    *static_cast<ZZ *>(this) += static_cast<const ZZ &>(b);
+  const myZZ& AddEq(const myZZ& b) {
+    *static_cast<ZZ*>(this) += static_cast<const ZZ&>(b);
     return *this;
   }
 
@@ -226,10 +228,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to subtract.
    * @return is the result of the subtraction operation.
    */
-  myZZ Sub(const myZZ &b) const {
-    return (*this < b)
-               ? ZZ(0)
-               : (*static_cast<const ZZ *>(this) - static_cast<const ZZ &>(b));
+  myZZ Sub(const myZZ& b) const {
+    return (*this < b) ? ZZ(0) : (*static_cast<const ZZ*>(this) - static_cast<const ZZ&>(b));
   }
 
   /**
@@ -239,11 +239,12 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to subtract.
    * @return is the result of the subtraction operation.
    */
-  const myZZ &SubEq(const myZZ &b) {
+  const myZZ& SubEq(const myZZ& b) {
     if (*this < b) {
       *this = ZZ(0);
-    } else {
-      *static_cast<ZZ *>(this) -= static_cast<const ZZ &>(b);
+    }
+    else {
+      *static_cast<ZZ*>(this) -= static_cast<const ZZ&>(b);
     }
     return *this;
   }
@@ -254,8 +255,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to multiply with.
    * @return is the result of the multiplication operation.
    */
-  myZZ Mul(const myZZ &b) const {
-    return *static_cast<const ZZ *>(this) * static_cast<const ZZ &>(b);
+  myZZ Mul(const myZZ& b) const {
+    return *static_cast<const ZZ*>(this) * static_cast<const ZZ&>(b);
   }
 
   /**
@@ -264,8 +265,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to multiply with.
    * @return is the result of the multiplication operation.
    */
-  const myZZ &MulEq(const myZZ &b) {
-    *static_cast<ZZ *>(this) *= static_cast<const ZZ &>(b);
+  const myZZ& MulEq(const myZZ& b) {
+    *static_cast<ZZ*>(this) *= static_cast<const ZZ&>(b);
     return *this;
   }
 
@@ -275,8 +276,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to divide by.
    * @return is the result of the division operation.
    */
-  myZZ DividedBy(const myZZ &b) const {
-    return *static_cast<const ZZ *>(this) / static_cast<const ZZ &>(b);
+  myZZ DividedBy(const myZZ& b) const {
+    return *static_cast<const ZZ*>(this) / static_cast<const ZZ&>(b);
   }
 
   /**
@@ -285,8 +286,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &b is the value to divide by.
    * @return is the result of the division operation.
    */
-  const myZZ &DividedByEq(const myZZ &b) {
-    *static_cast<ZZ *>(this) /= static_cast<const ZZ &>(b);
+  const myZZ& DividedByEq(const myZZ& b) {
+    *static_cast<ZZ*>(this) /= static_cast<const ZZ&>(b);
     return *this;
   }
 
@@ -296,7 +297,9 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param p the exponent.
    * @return is the result of the exponentiation operation.
    */
-  myZZ Exp(const usint p) const { return power(*this, p); }
+  myZZ Exp(const usint p) const {
+    return power(*this, p);
+  }
 
   /**
    * Exponentiation operation. Returns x^p. In-place variant.
@@ -304,7 +307,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param p the exponent.
    * @return is the result of the exponentiation operation.
    */
-  const myZZ &ExpEq(const usint p) {
+  const myZZ& ExpEq(const usint p) {
     *this = power(*this, p);
     return *this;
   }
@@ -317,7 +320,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  myZZ MultiplyAndRound(const myZZ &p, const myZZ &q) const;
+  myZZ MultiplyAndRound(const myZZ& p, const myZZ& q) const;
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -327,7 +330,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  const myZZ &MultiplyAndRoundEq(const myZZ &p, const myZZ &q);
+  const myZZ& MultiplyAndRoundEq(const myZZ& p, const myZZ& q);
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -336,7 +339,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  myZZ DivideAndRound(const myZZ &q) const;
+  myZZ DivideAndRound(const myZZ& q) const;
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -345,7 +348,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  const myZZ &DivideAndRoundEq(const myZZ &q);
+  const myZZ& DivideAndRoundEq(const myZZ& q);
 
   // MODULAR ARITHMETIC OPERATIONS
 
@@ -355,8 +358,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus operation.
    */
-  myZZ Mod(const myZZ &modulus) const {
-    return *static_cast<const ZZ *>(this) % static_cast<const ZZ &>(modulus);
+  myZZ Mod(const myZZ& modulus) const {
+    return *static_cast<const ZZ*>(this) % static_cast<const ZZ&>(modulus);
   }
 
   /**
@@ -365,8 +368,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus operation.
    */
-  const myZZ &ModEq(const myZZ &modulus) {
-    *static_cast<ZZ *>(this) %= static_cast<const ZZ &>(modulus);
+  const myZZ& ModEq(const myZZ& modulus) {
+    *static_cast<ZZ*>(this) %= static_cast<const ZZ&>(modulus);
     return *this;
   }
 
@@ -391,8 +394,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus operation.
    */
-  myZZ Mod(const myZZ &modulus, const myZZ &mu) const {
-    return *static_cast<const ZZ *>(this) % static_cast<const ZZ &>(modulus);
+  myZZ Mod(const myZZ& modulus, const myZZ& mu) const {
+    return *static_cast<const ZZ*>(this) % static_cast<const ZZ&>(modulus);
   }
 
   /**
@@ -404,8 +407,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus operation.
    */
-  const myZZ &ModEq(const myZZ &modulus, const myZZ &mu) {
-    *static_cast<ZZ *>(this) %= static_cast<const ZZ &>(modulus);
+  const myZZ& ModEq(const myZZ& modulus, const myZZ& mu) {
+    *static_cast<ZZ*>(this) %= static_cast<const ZZ&>(modulus);
     return *this;
   }
 
@@ -416,7 +419,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  myZZ ModAdd(const myZZ &b, const myZZ &modulus) const {
+  myZZ ModAdd(const myZZ& b, const myZZ& modulus) const {
     return AddMod(this->Mod(modulus), b.Mod(modulus), modulus);
   }
 
@@ -427,7 +430,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  const myZZ &ModAddEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModAddEq(const myZZ& b, const myZZ& modulus) {
     AddMod(*this, this->Mod(modulus), b.Mod(modulus), modulus);
     return *this;
   }
@@ -439,7 +442,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  myZZ ModAddFast(const myZZ &b, const myZZ &modulus) const {
+  myZZ ModAddFast(const myZZ& b, const myZZ& modulus) const {
     return AddMod(*this, b, modulus);
   }
 
@@ -450,7 +453,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  const myZZ &ModAddFastEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModAddFastEq(const myZZ& b, const myZZ& modulus) {
     *this = AddMod(*this, b, modulus);
     return *this;
   }
@@ -463,7 +466,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus addition operation.
    */
-  myZZ ModAdd(const myZZ &b, const myZZ &modulus, const myZZ &mu) const {
+  myZZ ModAdd(const myZZ& b, const myZZ& modulus, const myZZ& mu) const {
     return AddMod(*this, b, modulus);
   }
 
@@ -475,7 +478,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus addition operation.
    */
-  const myZZ &ModAddEq(const myZZ &b, const myZZ &modulus, const myZZ &mu) {
+  const myZZ& ModAddEq(const myZZ& b, const myZZ& modulus, const myZZ& mu) {
     *this = AddMod(*this, b, modulus);
     return *this;
   }
@@ -489,13 +492,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  myZZ ModSub(const myZZ &b, const myZZ &modulus) const {
+  myZZ ModSub(const myZZ& b, const myZZ& modulus) const {
     myZZ newthis(*this % modulus);
     myZZ newb(b % modulus);
     if (newthis >= newb) {
       myZZ tmp(SubMod(newthis, newb, modulus));  // normal mod sub
       return tmp;
-    } else {
+    }
+    else {
       myZZ tmp(newthis + modulus - newb);  // signed mod
       return tmp;
     }
@@ -510,13 +514,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  const myZZ &ModSubEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModSubEq(const myZZ& b, const myZZ& modulus) {
     this->ModEq(modulus);
     myZZ newb(b % modulus);
     if (*this >= newb) {
       SubMod(*this, *this, newb, modulus);  // normal mod sub
       return *this;
-    } else {
+    }
+    else {
       this->AddEq(modulus);
       this->SubEq(newb);  // signed mod
       return *this;
@@ -530,10 +535,11 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  myZZ ModSubFast(const myZZ &b, const myZZ &modulus) const {
+  myZZ ModSubFast(const myZZ& b, const myZZ& modulus) const {
     if (*this >= b) {
       return SubMod(*this, b, modulus);  // normal mod sub
-    } else {
+    }
+    else {
       return (*this + modulus - b);  // signed mod
     }
   }
@@ -545,10 +551,11 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  const myZZ &ModSubFastEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModSubFastEq(const myZZ& b, const myZZ& modulus) {
     if (*this >= b) {
       return *this = SubMod(*this, b, modulus);  // normal mod sub
-    } else {
+    }
+    else {
       return *this = (*this + modulus - b);  // signed mod
     }
   }
@@ -561,13 +568,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus subtraction operation.
    */
-  myZZ ModSub(const myZZ &b, const myZZ &modulus, const myZZ &mu) const {
+  myZZ ModSub(const myZZ& b, const myZZ& modulus, const myZZ& mu) const {
     myZZ newthis(*this % modulus);
     myZZ newb(b % modulus);
     if (newthis >= newb) {
       myZZ tmp(SubMod(newthis, newb, modulus));  // normal mod sub
       return tmp;
-    } else {
+    }
+    else {
       myZZ tmp(newthis + modulus - newb);  // signed mod
       return tmp;
     }
@@ -581,13 +589,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus subtraction operation.
    */
-  const myZZ &ModSubEq(const myZZ &b, const myZZ &modulus, const myZZ &mu) {
+  const myZZ& ModSubEq(const myZZ& b, const myZZ& modulus, const myZZ& mu) {
     this->ModEq(modulus);
     myZZ newb(b % modulus);
     if (*this >= newb) {
       SubMod(*this, *this, newb, modulus);  // normal mod sub
       return *this;
-    } else {
+    }
+    else {
       this->AddEq(modulus);
       this->SubEq(newb);  // signed mod
       return *this;
@@ -601,7 +610,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  myZZ ModMul(const myZZ &b, const myZZ &modulus) const {
+  myZZ ModMul(const myZZ& b, const myZZ& modulus) const {
     return MulMod(this->Mod(modulus), b.Mod(modulus), modulus);
   }
 
@@ -612,7 +621,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  const myZZ &ModMulEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModMulEq(const myZZ& b, const myZZ& modulus) {
     MulMod(*this, this->Mod(modulus), b.Mod(modulus), modulus);
     return *this;
   }
@@ -625,7 +634,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  myZZ ModMul(const myZZ &b, const myZZ &modulus, const myZZ &mu) const {
+  myZZ ModMul(const myZZ& b, const myZZ& modulus, const myZZ& mu) const {
     return MulMod(this->Mod(modulus), b.Mod(modulus), modulus);
   }
 
@@ -637,7 +646,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  const myZZ &ModMulEq(const myZZ &b, const myZZ &modulus, const myZZ &mu) {
+  const myZZ& ModMulEq(const myZZ& b, const myZZ& modulus, const myZZ& mu) {
     MulMod(*this, this->Mod(modulus), b.Mod(modulus), modulus);
     return *this;
   }
@@ -649,7 +658,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  inline myZZ ModMulFast(const myZZ &b, const myZZ &modulus) const {
+  inline myZZ ModMulFast(const myZZ& b, const myZZ& modulus) const {
     return MulMod(*this, b, modulus);
   }
 
@@ -661,7 +670,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  const myZZ &ModMulFastEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModMulFastEq(const myZZ& b, const myZZ& modulus) {
     *this = MulMod(*this, b, modulus);
     return *this;
   }
@@ -674,8 +683,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  inline myZZ ModMulFast(const myZZ &b, const myZZ &modulus,
-                         const myZZ &mu) const {
+  inline myZZ ModMulFast(const myZZ& b, const myZZ& modulus, const myZZ& mu) const {
     return MulMod(*this, b, modulus);
   }
 
@@ -688,21 +696,17 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  const myZZ &ModMulFastEq(const myZZ &b, const myZZ &modulus, const myZZ &mu) {
+  const myZZ& ModMulFastEq(const myZZ& b, const myZZ& modulus, const myZZ& mu) {
     *this = MulMod(*this, b, modulus);
     return *this;
   }
 
-  myZZ ModMulFastConst(const myZZ &b, const myZZ &modulus,
-                       const myZZ &bInv) const {
-    PALISADE_THROW(lbcrypto::not_implemented_error,
-                   "ModMulFastConst is not implemented for backend 6");
+  myZZ ModMulFastConst(const myZZ& b, const myZZ& modulus, const myZZ& bInv) const {
+    PALISADE_THROW(lbcrypto::not_implemented_error, "ModMulFastConst is not implemented for backend 6");
   }
 
-  const myZZ &ModMulFastConstEq(const myZZ &b, const myZZ &modulus,
-                                const myZZ &bInv) {
-    PALISADE_THROW(lbcrypto::not_implemented_error,
-                   "ModMulFastConstEq is not implemented for backend 6");
+  const myZZ& ModMulFastConstEq(const myZZ& b, const myZZ& modulus, const myZZ& bInv) {
+    PALISADE_THROW(lbcrypto::not_implemented_error, "ModMulFastConstEq is not implemented for backend 6");
   }
 
   /**
@@ -712,7 +716,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus exponentiation operation.
    */
-  inline myZZ ModExp(const myZZ &b, const myZZ &modulus) const {
+  inline myZZ ModExp(const myZZ& b, const myZZ& modulus) const {
     myZZ res;
     PowerMod(res, *this, b, modulus);
     return res;
@@ -725,7 +729,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus exponentiation operation.
    */
-  const myZZ &ModExpEq(const myZZ &b, const myZZ &modulus) {
+  const myZZ& ModExpEq(const myZZ& b, const myZZ& modulus) {
     PowerMod(*this, *this, b, modulus);
     return *this;
   }
@@ -736,20 +740,20 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus inverse operation.
    */
-  myZZ ModInverse(const myZZ &modulus) const {
+  myZZ ModInverse(const myZZ& modulus) const {
     if (modulus == myZZ(0)) {
       PALISADE_THROW(lbcrypto::math_error, "zero has no inverse");
     }
     myZZ tmp(0);
     try {
       tmp = InvMod(*this % modulus, modulus);
-    } catch (InvModErrorObject
-                 &e) {  // note this code requires NTL Excptions coto be turned
-                        // on. TODO: provide alternative when that is off.
+    }
+    catch (InvModErrorObject& e) {  // note this code requires NTL Excptions coto be turned
+                                    // on. TODO: provide alternative when that is off.
       std::stringstream errmsg;
       errmsg << "ModInverse exception "
-             << " this: " << *this << " modulus: " << modulus << "GCD("
-             << e.get_a() << "," << e.get_n() << "!=1" << std::endl;
+             << " this: " << *this << " modulus: " << modulus << "GCD(" << e.get_a() << "," << e.get_n() << "!=1"
+             << std::endl;
       PALISADE_THROW(lbcrypto::math_error, errmsg.str());
     }
     return tmp;
@@ -761,19 +765,19 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus inverse operation.
    */
-  const myZZ &ModInverseEq(const myZZ &modulus) {
+  const myZZ& ModInverseEq(const myZZ& modulus) {
     if (modulus == myZZ(0)) {
       PALISADE_THROW(lbcrypto::math_error, "zero has no inverse");
     }
     try {
       *this = InvMod(*this % modulus, modulus);
-    } catch (InvModErrorObject
-                 &e) {  // note this code requires NTL Excptions coto be turned
-                        // on. TODO: provide alternative when that is off.
+    }
+    catch (InvModErrorObject& e) {  // note this code requires NTL Excptions coto be turned
+                                    // on. TODO: provide alternative when that is off.
       std::stringstream errmsg;
       errmsg << "ModInverse exception "
-             << " this: " << *this << " modulus: " << modulus << "GCD("
-             << e.get_a() << "," << e.get_n() << "!=1" << std::endl;
+             << " this: " << *this << " modulus: " << modulus << "GCD(" << e.get_a() << "," << e.get_n() << "!=1"
+             << std::endl;
       PALISADE_THROW(lbcrypto::math_error, errmsg.str());
     }
     return *this;
@@ -786,7 +790,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @return result of the shift operation.
    */
   myZZ LShift(usshort shift) const {
-    return *static_cast<const ZZ *>(this) << shift;
+    return *static_cast<const ZZ*>(this) << shift;
   }
 
   /**
@@ -795,8 +799,8 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  const myZZ &LShiftEq(usshort shift) {
-    *static_cast<ZZ *>(this) <<= shift;
+  const myZZ& LShiftEq(usshort shift) {
+    *static_cast<ZZ*>(this) <<= shift;
     return *this;
   }
 
@@ -807,7 +811,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @return result of the shift operation.
    */
   myZZ RShift(usshort shift) const {
-    return *static_cast<const ZZ *>(this) >> shift;
+    return *static_cast<const ZZ*>(this) >> shift;
   }
 
   /**
@@ -816,15 +820,17 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  const myZZ &RShiftEq(usshort shift) {
-    *static_cast<ZZ *>(this) >>= shift;
+  const myZZ& RShiftEq(usshort shift) {
+    *static_cast<ZZ*>(this) >>= shift;
     return *this;
   }
 
   // COMPARE
 
   // comparison method inline for speed
-  int Compare(const myZZ &a) const { return compare(*this, a); }
+  int Compare(const myZZ& a) const {
+    return compare(*this, a);
+  }
 
   // CONVERTING
 
@@ -842,13 +848,13 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param bitString the binary num in string.
    * @return the  number represented as a ubint.
    */
-  static myZZ FromBinaryString(const std::string &bitString);
+  static myZZ FromBinaryString(const std::string& bitString);
 
   // OTHER FUNCTIONS
 
   // adapter kit that wraps ZZ with BACKEND 2 functionality
 
-  static const myZZ &zero();
+  static const myZZ& zero();
 
   usint GetMSB() const;
 
@@ -859,7 +865,9 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * @param base is the base with which to determine length in.
    * @return the length of the representation in a specific base.
    */
-  usint GetLengthForBase(usint base) const { return GetMSB(); }
+  usint GetLengthForBase(usint base) const {
+    return GetMSB();
+  }
 
   /**
    * Get the integer value of the of a subfield of bits. Where the length of
@@ -903,17 +911,21 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    * A zero allocator that is called by the Matrix class. It is used to
    * initialize a Matrix of myZZ objects.
    */
-  static myZZ Allocator() { return 0; }
+  static myZZ Allocator() {
+    return 0;
+  }
 
   // STRINGS & STREAMS
 
   // palisade string conversion
   const std::string ToString() const;
 
-  static const std::string IntegerTypeName() { return "UBNTLINT"; }
+  static const std::string IntegerTypeName() {
+    return "UBNTLINT";
+  }
 
   // big integer stream output
-  friend std::ostream &operator<<(std::ostream &os, const myZZ &ptr_obj);
+  friend std::ostream& operator<<(std::ostream& os, const myZZ& ptr_obj);
 
   /**
    * Gets a copy of the  internal limb storage
@@ -921,7 +933,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
    */
   std::string GetInternalRepresentation(void) const {
     std::string ret("");
-    const ZZ_limb_t *zlp = ZZ_limbs_get(*this);
+    const ZZ_limb_t* zlp = ZZ_limbs_get(*this);
 
     for (size_t i = 0; i < (size_t)this->size(); i++) {
       ret += std::to_string(zlp[i]);
@@ -935,14 +947,14 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
   /// SERIALIZATION
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
-    void *data = this->rep.rep;
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
+    void* data = this->rep.rep;
     size_t len = 0;
     if (data == nullptr) {
       ar(::cereal::binary_data(&len, sizeof(len)));
-    } else {
+    }
+    else {
       len = _ntl_ALLOC(this->rep.rep);
 
       ar(::cereal::binary_data(&len, sizeof(len)));
@@ -952,20 +964,18 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", ToString()));
   }
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     size_t len;
     ar(::cereal::binary_data(&len, sizeof(len)));
@@ -974,32 +984,35 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
       return;
     }
 
-    void *mem = malloc(len * sizeof(_ntl_gbigint));
+    void* mem = malloc(len * sizeof(_ntl_gbigint));
     ar(::cereal::binary_data(mem, len * sizeof(_ntl_gbigint)));
     WrappedPtr<_ntl_gbigint_body, Deleter> newrep;
-    newrep.rep = reinterpret_cast<_ntl_gbigint_body *>(mem);
+    newrep.rep = reinterpret_cast<_ntl_gbigint_body*>(mem);
     _ntl_gswap(&this->rep, &newrep);
 
     ar(::cereal::make_nvp("mb", m_MSB));
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     std::string s;
     ar(::cereal::make_nvp("v", s));
     *this = s;
   }
 
-  std::string SerializedObjectName() const { return "NTLInteger"; }
+  std::string SerializedObjectName() const {
+    return "NTLInteger";
+  }
 
-  static uint32_t SerializedVersion() { return 1; }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // adapter kits
@@ -1020,7 +1033,7 @@ class myZZ : public NTL::ZZ, public lbcrypto::BigIntegerInterface<myZZ> {
 };
 // class ends
 
-NTL_DECLARE_RELOCATABLE((myZZ *))
+NTL_DECLARE_RELOCATABLE((myZZ*))
 }  // namespace NTL
 
 #endif

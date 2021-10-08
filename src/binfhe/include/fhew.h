@@ -46,7 +46,8 @@ namespace lbcrypto {
  * https://eprint.iacr.org/2014/816 and "Bootstrapping in FHEW-like
  * Cryptosystems"
  */
-class RingGSWAccumulatorScheme {
+class RingGSWAccumulatorScheme
+{
  public:
   RingGSWAccumulatorScheme() {}
 
@@ -59,10 +60,9 @@ class RingGSWAccumulatorScheme {
    * LWE scheme
    * @return a shared pointer to the refreshing key
    */
-  RingGSWEvalKey KeyGen(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const std::shared_ptr<LWEEncryptionScheme> lwescheme,
-      const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const;
+  RingGSWEvalKey KeyGen(const std::shared_ptr<RingGSWCryptoParams> params,
+                        const std::shared_ptr<LWEEncryptionScheme> lwescheme,
+                        const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const;
 
   /**
    * Evaluates a binary gate (calls bootstrapping as a subroutine)
@@ -75,12 +75,11 @@ class RingGSWAccumulatorScheme {
    * @param lwescheme a shared pointer to additive LWE scheme
    * @return a shared pointer to the resulting ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> EvalBinGate(
-      const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate,
-      const RingGSWEvalKey &EK,
-      const std::shared_ptr<const LWECiphertextImpl> ct1,
-      const std::shared_ptr<const LWECiphertextImpl> ct2,
-      const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const;
+  std::shared_ptr<LWECiphertextImpl> EvalBinGate(const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate,
+                                                 const RingGSWEvalKey& EK,
+                                                 const std::shared_ptr<const LWECiphertextImpl> ct1,
+                                                 const std::shared_ptr<const LWECiphertextImpl> ct2,
+                                                 const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const;
 
   /**
    * Evaluates NOT gate
@@ -89,9 +88,8 @@ class RingGSWAccumulatorScheme {
    * @param ct1 the input ciphertext
    * @return a shared pointer to the resulting ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> EvalNOT(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const std::shared_ptr<const LWECiphertextImpl> ct1) const;
+  std::shared_ptr<LWECiphertextImpl> EvalNOT(const std::shared_ptr<RingGSWCryptoParams> params,
+                                             const std::shared_ptr<const LWECiphertextImpl> ct1) const;
 
   /**
    * Bootstraps a fresh ciphertext
@@ -102,11 +100,10 @@ class RingGSWAccumulatorScheme {
    * @param lwescheme a shared pointer to additive LWE scheme
    * @return a shared pointer to the resulting ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> Bootstrap(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const RingGSWEvalKey &EK,
-      const std::shared_ptr<const LWECiphertextImpl> ct1,
-      const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const;
+  std::shared_ptr<LWECiphertextImpl> Bootstrap(const std::shared_ptr<RingGSWCryptoParams> params,
+                                               const RingGSWEvalKey& EK,
+                                               const std::shared_ptr<const LWECiphertextImpl> ct1,
+                                               const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const;
 
  private:
   /**
@@ -118,10 +115,9 @@ class RingGSWAccumulatorScheme {
    * LWE scheme
    * @return a shared pointer to the refreshing key
    */
-  RingGSWEvalKey KeyGenGINX(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const std::shared_ptr<LWEEncryptionScheme> lwescheme,
-      const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const;
+  RingGSWEvalKey KeyGenGINX(const std::shared_ptr<RingGSWCryptoParams> params,
+                            const std::shared_ptr<LWEEncryptionScheme> lwescheme,
+                            const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const;
 
   /**
    * Generates a refreshing key - AP variant
@@ -132,10 +128,9 @@ class RingGSWAccumulatorScheme {
    * LWE scheme
    * @return a shared pointer to the refreshing key
    */
-  RingGSWEvalKey KeyGenAP(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const std::shared_ptr<LWEEncryptionScheme> lwescheme,
-      const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const;
+  RingGSWEvalKey KeyGenAP(const std::shared_ptr<RingGSWCryptoParams> params,
+                          const std::shared_ptr<LWEEncryptionScheme> lwescheme,
+                          const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const;
 
   /**
    * Internal RingGSW encryption used in generating the refreshing key - AP
@@ -147,9 +142,8 @@ class RingGSWAccumulatorScheme {
    * key)
    * @return a shared pointer to the resulting ciphertext
    */
-  std::shared_ptr<RingGSWCiphertext> EncryptAP(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const NativePoly &skFFT, const LWEPlaintext &m) const;
+  std::shared_ptr<RingGSWCiphertext> EncryptAP(const std::shared_ptr<RingGSWCryptoParams> params,
+                                               const NativePoly& skFFT, const LWEPlaintext& m) const;
 
   /**
    * Internal RingGSW encryption used in generating the refreshing key - GINX
@@ -161,9 +155,8 @@ class RingGSWAccumulatorScheme {
    * key)
    * @return a shared pointer to the resulting ciphertext
    */
-  std::shared_ptr<RingGSWCiphertext> EncryptGINX(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const NativePoly &skFFT, const LWEPlaintext &m) const;
+  std::shared_ptr<RingGSWCiphertext> EncryptGINX(const std::shared_ptr<RingGSWCryptoParams> params,
+                                                 const NativePoly& skFFT, const LWEPlaintext& m) const;
 
   /**
    * Main accumulator function used in bootstrapping - AP variant
@@ -172,8 +165,7 @@ class RingGSWAccumulatorScheme {
    * @param &input input ciphertext
    * @param acc previous value of the accumulator
    */
-  void AddToACCAP(const std::shared_ptr<RingGSWCryptoParams> params,
-                  const RingGSWCiphertext &input,
+  void AddToACCAP(const std::shared_ptr<RingGSWCryptoParams> params, const RingGSWCiphertext& input,
                   std::shared_ptr<RingGSWCiphertext> acc) const;
 
   /**
@@ -184,9 +176,8 @@ class RingGSWAccumulatorScheme {
    * @param &a integer a in each step of GINX accumulation
    * @param acc previous value of the accumulator
    */
-  void AddToACCGINX(const std::shared_ptr<RingGSWCryptoParams> params,
-                    const RingGSWCiphertext &input, const NativeInteger &a,
-                    std::shared_ptr<RingGSWCiphertext> acc) const;
+  void AddToACCGINX(const std::shared_ptr<RingGSWCryptoParams> params, const RingGSWCiphertext& input,
+                    const NativeInteger& a, std::shared_ptr<RingGSWCiphertext> acc) const;
 
   /**
    * Takes an RLWE ciphertext input and outputs a vector of its digits, i.e., an
@@ -196,10 +187,8 @@ class RingGSWAccumulatorScheme {
    * @param &input input RLWE ciphertext
    * @param *output input RLWE ciphertext
    */
-  inline void SignedDigitDecompose(
-      const std::shared_ptr<RingGSWCryptoParams> params,
-      const std::vector<NativePoly> &input,
-      std::vector<NativePoly> *output) const;
+  inline void SignedDigitDecompose(const std::shared_ptr<RingGSWCryptoParams> params,
+                                   const std::vector<NativePoly>& input, std::vector<NativePoly>* output) const;
 
   /**
    * Core bootstrapping operation
@@ -212,10 +201,10 @@ class RingGSWAccumulatorScheme {
    * @param lwescheme a shared pointer to additive LWE scheme
    * @return the output RingLWE accumulator
    */
-  std::shared_ptr<RingGSWCiphertext> BootstrapCore(
-      const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate,
-      const RingGSWEvalKey &EK, const NativeVector &a, const NativeInteger &b,
-      const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const;
+  std::shared_ptr<RingGSWCiphertext> BootstrapCore(const std::shared_ptr<RingGSWCryptoParams> params,
+                                                   const BINGATE gate, const RingGSWEvalKey& EK, const NativeVector& a,
+                                                   const NativeInteger& b,
+                                                   const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const;
 };
 
 }  // namespace lbcrypto

@@ -30,7 +30,8 @@
 // #include <iostream>
 namespace lbcrypto {
 
-class ParallelControls {
+class ParallelControls
+{
   int machineThreads;
 
  public:
@@ -59,7 +60,9 @@ class ParallelControls {
 #endif
   }
 
-  int GetMachineThreads() const { return machineThreads; }
+  int GetMachineThreads() const {
+    return machineThreads;
+  }
 
   static int GetNumProcs() {
 #ifdef PARALLEL
@@ -74,7 +77,7 @@ class ParallelControls {
   int GetNumThreads() {
 #ifdef PARALLEL
     int nthreads = 1;
-    int tid = 1;
+    int tid      = 1;
     // Fork a team of threads giving them their own copies of variables
     // so we can see how many threads we have to work with
 #pragma omp parallel private(tid)

@@ -40,13 +40,12 @@ namespace lbcrypto {
 // Encryption as described in Section 5 of https://eprint.iacr.org/2014/816
 // skNTT corresponds to the secret key z
 std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptAP(
-    const std::shared_ptr<RingGSWCryptoParams> params, const NativePoly &skNTT,
-    const LWEPlaintext &m) const {
-  NativeInteger Q = params->GetLWEParams()->GetQ();
-  int64_t q = params->GetLWEParams()->Getq().ConvertToInt();
-  uint32_t N = params->GetLWEParams()->GetN();
-  uint32_t digitsG = params->GetDigitsG();
-  uint32_t digitsG2 = params->GetDigitsG2();
+  const std::shared_ptr<RingGSWCryptoParams> params, const NativePoly& skNTT, const LWEPlaintext& m) const {
+  NativeInteger Q                             = params->GetLWEParams()->GetQ();
+  int64_t q                                   = params->GetLWEParams()->Getq().ConvertToInt();
+  uint32_t N                                  = params->GetLWEParams()->GetN();
+  uint32_t digitsG                            = params->GetDigitsG();
+  uint32_t digitsG2                           = params->GetDigitsG2();
   const shared_ptr<ILNativeParams> polyParams = params->GetPolyParams();
 
   auto result = std::make_shared<RingGSWCiphertext>(digitsG2, 2);
@@ -55,7 +54,7 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptAP(
   dug.SetModulus(Q);
 
   // Reduce mod q (dealing with negative number as well)
-  int64_t mm = (((m % q) + q) % q) * (2 * N / q);
+  int64_t mm   = (((m % q) + q) % q) * (2 * N / q);
   int64_t sign = 1;
   if (mm >= N) {
     mm -= N;
@@ -68,10 +67,9 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptAP(
   for (uint32_t i = 0; i < digitsG2; ++i) {
     // populate result[i][0] with uniform random a
     (*result)[i][0] = NativePoly(dug, polyParams, Format::COEFFICIENT);
-    tempA[i] = (*result)[i][0];
+    tempA[i]        = (*result)[i][0];
     // populate result[i][1] with error e
-    (*result)[i][1] = NativePoly(params->GetLWEParams()->GetDgg(), polyParams,
-                                 Format::COEFFICIENT);
+    (*result)[i][1] = NativePoly(params->GetLWEParams()->GetDgg(), polyParams, Format::COEFFICIENT);
   }
 
   for (uint32_t i = 0; i < digitsG; ++i) {
@@ -80,7 +78,8 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptAP(
       (*result)[2 * i][0][mm].ModAddEq(params->GetGPower()[i], Q);
       // [a,as+e] + X^m*G
       (*result)[2 * i + 1][1][mm].ModAddEq(params->GetGPower()[i], Q);
-    } else {
+    }
+    else {
       // Subtract G Multiple
       (*result)[2 * i][0][mm].ModSubEq(params->GetGPower()[i], Q);
       // [a,as+e] - X^m*G
@@ -101,11 +100,10 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptAP(
 // Encryption for the GINX variant, as described in "Bootstrapping in FHEW-like
 // Cryptosystems"
 std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptGINX(
-    const std::shared_ptr<RingGSWCryptoParams> params, const NativePoly &skNTT,
-    const LWEPlaintext &m) const {
-  NativeInteger Q = params->GetLWEParams()->GetQ();
-  uint32_t digitsG = params->GetDigitsG();
-  uint32_t digitsG2 = params->GetDigitsG2();
+  const std::shared_ptr<RingGSWCryptoParams> params, const NativePoly& skNTT, const LWEPlaintext& m) const {
+  NativeInteger Q                             = params->GetLWEParams()->GetQ();
+  uint32_t digitsG                            = params->GetDigitsG();
+  uint32_t digitsG2                           = params->GetDigitsG2();
   const shared_ptr<ILNativeParams> polyParams = params->GetPolyParams();
 
   auto result = std::make_shared<RingGSWCiphertext>(digitsG2, 2);
@@ -118,9 +116,8 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptGINX(
 
   for (uint32_t i = 0; i < digitsG2; ++i) {
     (*result)[i][0] = NativePoly(dug, polyParams, Format::COEFFICIENT);
-    tempA[i] = (*result)[i][0];
-    (*result)[i][1] = NativePoly(params->GetLWEParams()->GetDgg(), polyParams,
-                                 Format::COEFFICIENT);
+    tempA[i]        = (*result)[i][0];
+    (*result)[i][1] = NativePoly(params->GetLWEParams()->GetDgg(), polyParams, Format::COEFFICIENT);
   }
 
   for (uint32_t i = 0; i < digitsG; ++i) {
@@ -143,25 +140,21 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::EncryptGINX(
 }
 
 // wrapper for KeyGen methods
-RingGSWEvalKey RingGSWAccumulatorScheme::KeyGen(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const std::shared_ptr<LWEEncryptionScheme> lwescheme,
-    const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const {
-  if (params->GetMethod() == AP)
-    return KeyGenAP(params, lwescheme, LWEsk);
+RingGSWEvalKey RingGSWAccumulatorScheme::KeyGen(const std::shared_ptr<RingGSWCryptoParams> params,
+                                                const std::shared_ptr<LWEEncryptionScheme> lwescheme,
+                                                const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const {
+  if (params->GetMethod() == AP) return KeyGenAP(params, lwescheme, LWEsk);
   else  // GINX
     return KeyGenGINX(params, lwescheme, LWEsk);
 }
 
 // Key generation as described in Section 4 of https://eprint.iacr.org/2014/816
-RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenAP(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const std::shared_ptr<LWEEncryptionScheme> lwescheme,
-    const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const {
-  const auto &LWEParams = params->GetLWEParams();
+RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenAP(const std::shared_ptr<RingGSWCryptoParams> params,
+                                                  const std::shared_ptr<LWEEncryptionScheme> lwescheme,
+                                                  const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const {
+  const auto& LWEParams = params->GetLWEParams();
 
-  const std::shared_ptr<const LWEPrivateKeyImpl> skN =
-      lwescheme->KeyGenN(LWEParams);
+  const std::shared_ptr<const LWEPrivateKeyImpl> skN = lwescheme->KeyGenN(LWEParams);
 
   RingGSWEvalKey ek;
   ek.KSkey = lwescheme->KeySwitchGen(LWEParams, LWEsk, skN);
@@ -170,11 +163,11 @@ RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenAP(
   skNPoly.SetValues(skN->GetElement(), Format::COEFFICIENT);
   skNPoly.SetFormat(Format::EVALUATION);
 
-  NativeInteger q = LWEParams->Getq();
-  NativeInteger qHalf = q >> 1;
-  int32_t qInt = q.ConvertToInt();
-  uint32_t n = LWEParams->Getn();
-  uint32_t baseR = params->GetBaseR();
+  NativeInteger q                    = LWEParams->Getq();
+  NativeInteger qHalf                = q >> 1;
+  int32_t qInt                       = q.ConvertToInt();
+  uint32_t n                         = LWEParams->Getn();
+  uint32_t baseR                     = params->GetBaseR();
   std::vector<NativeInteger> digitsR = params->GetDigitsR();
 
   ek.BSkey = std::make_shared<RingGSWBTKey>(n, baseR, digitsR.size());
@@ -184,14 +177,12 @@ RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenAP(
     for (uint32_t j = 1; j < baseR; ++j)
       for (uint32_t k = 0; k < digitsR.size(); ++k) {
         int32_t signedSK;
-        if (LWEsk->GetElement()[i] < qHalf)
-          signedSK = LWEsk->GetElement()[i].ConvertToInt();
+        if (LWEsk->GetElement()[i] < qHalf) signedSK = LWEsk->GetElement()[i].ConvertToInt();
         else
           signedSK = (int32_t)LWEsk->GetElement()[i].ConvertToInt() - qInt;
         if (LWEsk->GetElement()[i] >= qHalf) signedSK -= qInt;
-        (*ek.BSkey)[i][j][k] = *(EncryptAP(
-            params, skNPoly,
-            signedSK * (int32_t)j * (int32_t)digitsR[k].ConvertToInt()));
+        (*ek.BSkey)[i][j][k] =
+          *(EncryptAP(params, skNPoly, signedSK * (int32_t)j * (int32_t)digitsR[k].ConvertToInt()));
       }
 
   return ek;
@@ -199,13 +190,11 @@ RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenAP(
 
 // Bootstrapping keys generation for the GINX variant, as described in
 // "Bootstrapping in FHEW-like Cryptosystems"
-RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenGINX(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const std::shared_ptr<LWEEncryptionScheme> lwescheme,
-    const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const {
+RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenGINX(const std::shared_ptr<RingGSWCryptoParams> params,
+                                                    const std::shared_ptr<LWEEncryptionScheme> lwescheme,
+                                                    const std::shared_ptr<const LWEPrivateKeyImpl> LWEsk) const {
   RingGSWEvalKey ek;
-  const std::shared_ptr<const LWEPrivateKeyImpl> skN =
-      lwescheme->KeyGenN(params->GetLWEParams());
+  const std::shared_ptr<const LWEPrivateKeyImpl> skN = lwescheme->KeyGenN(params->GetLWEParams());
 
   ek.KSkey = lwescheme->KeySwitchGen(params->GetLWEParams(), LWEsk, skN);
 
@@ -240,8 +229,7 @@ RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenGINX(
         (*ek.BSkey)[0][1][i] = *(EncryptGINX(params, skNPoly, 1));
         break;
       default:
-        std::string errMsg =
-            "ERROR: only ternary secret key distributions are supported.";
+        std::string errMsg = "ERROR: only ternary secret key distributions are supported.";
         PALISADE_THROW(not_implemented_error, errMsg);
     }
   }
@@ -253,27 +241,23 @@ RingGSWEvalKey RingGSWAccumulatorScheme::KeyGenGINX(
 // There are two approaches to do it.
 // The current approach appears to give the best performance
 // results. The two variants are labeled A and B.
-void RingGSWAccumulatorScheme::SignedDigitDecompose(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const std::vector<NativePoly> &input,
-    std::vector<NativePoly> *output) const {
-  uint32_t N = params->GetLWEParams()->GetN();
-  uint32_t digitsG = params->GetDigitsG();
-  NativeInteger Q = params->GetLWEParams()->GetQ();
-  NativeInteger QHalf = Q >> 1;
+void RingGSWAccumulatorScheme::SignedDigitDecompose(const std::shared_ptr<RingGSWCryptoParams> params,
+                                                    const std::vector<NativePoly>& input,
+                                                    std::vector<NativePoly>* output) const {
+  uint32_t N                           = params->GetLWEParams()->GetN();
+  uint32_t digitsG                     = params->GetDigitsG();
+  NativeInteger Q                      = params->GetLWEParams()->GetQ();
+  NativeInteger QHalf                  = Q >> 1;
   NativeInteger::SignedNativeInt Q_int = Q.ConvertToInt();
 
-  NativeInteger::SignedNativeInt baseG =
-      NativeInteger(params->GetBaseG()).ConvertToInt();
+  NativeInteger::SignedNativeInt baseG = NativeInteger(params->GetBaseG()).ConvertToInt();
 
   NativeInteger::SignedNativeInt d = 0;
 
-  NativeInteger::SignedNativeInt gBits =
-      (NativeInteger::SignedNativeInt)std::log2(baseG);
+  NativeInteger::SignedNativeInt gBits = (NativeInteger::SignedNativeInt)std::log2(baseG);
 
   // VARIANT A
-  NativeInteger::SignedNativeInt gBitsMaxBits =
-      NativeInteger::MaxBits() - gBits;
+  NativeInteger::SignedNativeInt gBitsMaxBits = NativeInteger::MaxBits() - gBits;
 
   // VARIANT B
   // NativeInteger::SignedNativeInt gminus1 = (1 << gBits) - 1;
@@ -284,8 +268,7 @@ void RingGSWAccumulatorScheme::SignedDigitDecompose(
   for (uint32_t j = 0; j < 2; j++) {
     for (uint32_t k = 0; k < N; k++) {
       NativeInteger t = input[j][k];
-      if (t < QHalf)
-        d += t.ConvertToInt();
+      if (t < QHalf) d += t.ConvertToInt();
       else
         d += (NativeInteger::SignedNativeInt)t.ConvertToInt() - Q_int;
 
@@ -304,8 +287,7 @@ void RingGSWAccumulatorScheme::SignedDigitDecompose(
         d -= r;
         d >>= gBits;
 
-        if (r >= 0)
-          (*output)[j + 2 * l][k] += NativeInteger(r);
+        if (r >= 0) (*output)[j + 2 * l][k] += NativeInteger(r);
         else
           (*output)[j + 2 * l][k] += NativeInteger(r + Q_int);
       }
@@ -315,11 +297,10 @@ void RingGSWAccumulatorScheme::SignedDigitDecompose(
 }
 
 // AP Accumulation as described in "Bootstrapping in FHEW-like Cryptosystems"
-void RingGSWAccumulatorScheme::AddToACCAP(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const RingGSWCiphertext &input,
-    std::shared_ptr<RingGSWCiphertext> acc) const {
-  uint32_t digitsG2 = params->GetDigitsG2();
+void RingGSWAccumulatorScheme::AddToACCAP(const std::shared_ptr<RingGSWCryptoParams> params,
+                                          const RingGSWCiphertext& input,
+                                          std::shared_ptr<RingGSWCiphertext> acc) const {
+  uint32_t digitsG2                           = params->GetDigitsG2();
   const shared_ptr<ILNativeParams> polyParams = params->GetPolyParams();
 
   std::vector<NativePoly> ct = acc->GetElements()[0];
@@ -330,12 +311,14 @@ void RingGSWAccumulatorScheme::AddToACCAP(
     dct[i] = NativePoly(polyParams, Format::COEFFICIENT, true);
 
   // calls 2 NTTs
-  for (uint32_t i = 0; i < 2; i++) ct[i].SetFormat(Format::COEFFICIENT);
+  for (uint32_t i = 0; i < 2; i++)
+    ct[i].SetFormat(Format::COEFFICIENT);
 
   SignedDigitDecompose(params, ct, &dct);
 
   // calls digitsG2 NTTs
-  for (uint32_t j = 0; j < digitsG2; j++) dct[j].SetFormat(Format::EVALUATION);
+  for (uint32_t j = 0; j < digitsG2; j++)
+    dct[j].SetFormat(Format::EVALUATION);
 
   // acc = dct * input (matrix product);
   // uses in-place * operators for the last call to dct[i] to gain performance
@@ -343,8 +326,7 @@ void RingGSWAccumulatorScheme::AddToACCAP(
   for (uint32_t j = 0; j < 2; j++) {
     (*acc)[0][j].SetValuesToZero();
     for (uint32_t l = 0; l < digitsG2; l++) {
-      if (j == 0)
-        (*acc)[0][j] += dct[l] * input[l][j];
+      if (j == 0) (*acc)[0][j] += dct[l] * input[l][j];
       else
         (*acc)[0][j] += (dct[l] *= input[l][j]);
     }
@@ -352,14 +334,13 @@ void RingGSWAccumulatorScheme::AddToACCAP(
 }
 
 // GINX Accumulation as described in "Bootstrapping in FHEW-like Cryptosystems"
-void RingGSWAccumulatorScheme::AddToACCGINX(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const RingGSWCiphertext &input, const NativeInteger &a,
-    std::shared_ptr<RingGSWCiphertext> acc) const {
+void RingGSWAccumulatorScheme::AddToACCGINX(const std::shared_ptr<RingGSWCryptoParams> params,
+                                            const RingGSWCiphertext& input, const NativeInteger& a,
+                                            std::shared_ptr<RingGSWCiphertext> acc) const {
   // cycltomic order
-  uint32_t m = 2 * params->GetLWEParams()->GetN();
-  uint32_t digitsG2 = params->GetDigitsG2();
-  int64_t q = params->GetLWEParams()->Getq().ConvertToInt();
+  uint32_t m                                  = 2 * params->GetLWEParams()->GetN();
+  uint32_t digitsG2                           = params->GetDigitsG2();
+  int64_t q                                   = params->GetLWEParams()->Getq().ConvertToInt();
   const shared_ptr<ILNativeParams> polyParams = params->GetPolyParams();
 
   std::vector<NativePoly> ct = acc->GetElements()[0];
@@ -370,17 +351,19 @@ void RingGSWAccumulatorScheme::AddToACCGINX(
     dct[i] = NativePoly(polyParams, Format::COEFFICIENT, true);
 
   // calls 2 NTTs
-  for (uint32_t i = 0; i < 2; i++) ct[i].SetFormat(Format::COEFFICIENT);
+  for (uint32_t i = 0; i < 2; i++)
+    ct[i].SetFormat(Format::COEFFICIENT);
 
   SignedDigitDecompose(params, ct, &dct);
 
-  for (uint32_t j = 0; j < digitsG2; j++) dct[j].SetFormat(Format::EVALUATION);
+  for (uint32_t j = 0; j < digitsG2; j++)
+    dct[j].SetFormat(Format::EVALUATION);
 
   uint64_t index = a.ConvertToInt() * (m / q);
   // index is in range [0,m] - so we need to adjust the edge case when
   // index = m to index = 0
   if (index == m) index = 0;
-  const NativePoly &monomial = params->GetMonomial(index);
+  const NativePoly& monomial = params->GetMonomial(index);
 
   // acc = dct * input (matrix product);
   // uses in-place * operators for the last call to dct[i] to gain performance
@@ -388,8 +371,7 @@ void RingGSWAccumulatorScheme::AddToACCGINX(
   for (uint32_t j = 0; j < 2; j++) {
     NativePoly temp1 = (j < 1) ? dct[0] * input[0][j] : (dct[0] *= input[0][j]);
     for (uint32_t l = 1; l < digitsG2; l++) {
-      if (j == 0)
-        temp1 += dct[l] * input[l][j];
+      if (j == 0) temp1 += dct[l] * input[l][j];
       else
         temp1 += (dct[l] *= input[l][j]);
     }
@@ -398,44 +380,40 @@ void RingGSWAccumulatorScheme::AddToACCGINX(
 }
 
 std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::BootstrapCore(
-    const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate,
-    const RingGSWEvalKey &EK, const NativeVector &a, const NativeInteger &b,
-    const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const {
+  const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate, const RingGSWEvalKey& EK,
+  const NativeVector& a, const NativeInteger& b, const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const {
   if ((EK.BSkey == nullptr) || (EK.KSkey == nullptr)) {
-    std::string errMsg =
-        "Bootstrapping keys have not been generated. Please call BTKeyGen "
-        "before calling bootstrapping.";
+    std::string errMsg = "Bootstrapping keys have not been generated. Please call BTKeyGen "
+                         "before calling bootstrapping.";
     PALISADE_THROW(config_error, errMsg);
   }
 
   const shared_ptr<ILNativeParams> polyParams = params->GetPolyParams();
-  NativeInteger q = params->GetLWEParams()->Getq();
-  NativeInteger Q = params->GetLWEParams()->GetQ();
-  uint32_t N = params->GetLWEParams()->GetN();
-  uint32_t baseR = params->GetBaseR();
-  uint32_t n = params->GetLWEParams()->Getn();
-  std::vector<NativeInteger> digitsR = params->GetDigitsR();
+  NativeInteger q                             = params->GetLWEParams()->Getq();
+  NativeInteger Q                             = params->GetLWEParams()->GetQ();
+  uint32_t N                                  = params->GetLWEParams()->GetN();
+  uint32_t baseR                              = params->GetBaseR();
+  uint32_t n                                  = params->GetLWEParams()->Getn();
+  std::vector<NativeInteger> digitsR          = params->GetDigitsR();
 
   // Specifies the range [q1,q2) that will be used for mapping
-  uint32_t qHalf = q.ConvertToInt() >> 1;
+  uint32_t qHalf   = q.ConvertToInt() >> 1;
   NativeInteger q1 = params->GetGateConst()[static_cast<int>(gate)];
   NativeInteger q2 = q1.ModAddFast(NativeInteger(qHalf), q);
 
   // depending on whether the value is the range, it will be set
   // to either Q/8 or -Q/8 to match binary arithmetic
-  NativeInteger Q8 = Q / NativeInteger(8) + 1;
+  NativeInteger Q8    = Q / NativeInteger(8) + 1;
   NativeInteger Q8Neg = Q - Q8;
 
-  NativeVector m(params->GetLWEParams()->GetN(),
-                 params->GetLWEParams()->GetQ());
+  NativeVector m(params->GetLWEParams()->GetN(), params->GetLWEParams()->GetQ());
   // Since q | (2*N), we deal with a sparse embedding of Z_Q[x]/(X^{q/2}+1) to
   // Z_Q[x]/(X^N+1)
   uint32_t factor = (2 * N / q.ConvertToInt());
 
   for (uint32_t j = 0; j < qHalf; j++) {
     NativeInteger temp = b.ModSub(j, q);
-    if (q1 < q2)
-      m[j * factor] = ((temp >= q1) && (temp < q2)) ? Q8Neg : Q8;
+    if (q1 < q2) m[j * factor] = ((temp >= q1) && (temp < q2)) ? Q8Neg : Q8;
     else
       m[j * factor] = ((temp >= q2) && (temp < q1)) ? Q8 : Q8Neg;
   }
@@ -449,19 +427,19 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::BootstrapCore(
   // main accumulation computation
   // the following loop is the bottleneck of bootstrapping/binary gate
   // evaluation
-  auto acc = std::make_shared<RingGSWCiphertext>(1, 2);
+  auto acc  = std::make_shared<RingGSWCiphertext>(1, 2);
   (*acc)[0] = std::move(res);
 
   if (params->GetMethod() == AP) {
     for (uint32_t i = 0; i < n; i++) {
       NativeInteger aI = q.ModSub(a[i], q);
-      for (uint32_t k = 0; k < digitsR.size();
-           k++, aI /= NativeInteger(baseR)) {
+      for (uint32_t k = 0; k < digitsR.size(); k++, aI /= NativeInteger(baseR)) {
         uint32_t a0 = (aI.Mod(baseR)).ConvertToInt();
         if (a0) this->AddToACCAP(params, (*EK.BSkey)[i][a0][k], acc);
       }
     }
-  } else {  // if GINX
+  }
+  else {  // if GINX
     for (uint32_t i = 0; i < n; i++) {
       // handles -a*E(1)
       this->AddToACCGINX(params, (*EK.BSkey)[0][0][i], q.ModSub(a[i], q), acc);
@@ -476,20 +454,17 @@ std::shared_ptr<RingGSWCiphertext> RingGSWAccumulatorScheme::BootstrapCore(
 // Full evaluation as described in "Bootstrapping in FHEW-like
 // Cryptosystems"
 std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalBinGate(
-    const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate,
-    const RingGSWEvalKey &EK,
-    const std::shared_ptr<const LWECiphertextImpl> ct1,
-    const std::shared_ptr<const LWECiphertextImpl> ct2,
-    const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const {
-  NativeInteger q = params->GetLWEParams()->Getq();
-  NativeInteger Q = params->GetLWEParams()->GetQ();
-  uint32_t n = params->GetLWEParams()->Getn();
-  uint32_t N = params->GetLWEParams()->GetN();
+  const std::shared_ptr<RingGSWCryptoParams> params, const BINGATE gate, const RingGSWEvalKey& EK,
+  const std::shared_ptr<const LWECiphertextImpl> ct1, const std::shared_ptr<const LWECiphertextImpl> ct2,
+  const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const {
+  NativeInteger q  = params->GetLWEParams()->Getq();
+  NativeInteger Q  = params->GetLWEParams()->GetQ();
+  uint32_t n       = params->GetLWEParams()->Getn();
+  uint32_t N       = params->GetLWEParams()->GetN();
   NativeInteger Q8 = Q / NativeInteger(8) + 1;
 
   if (ct1 == ct2) {
-    std::string errMsg =
-        "ERROR: Please only use independent ciphertexts as inputs.";
+    std::string errMsg = "ERROR: Please only use independent ciphertexts as inputs.";
     PALISADE_THROW(config_error, errMsg);
   }
 
@@ -500,13 +475,13 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalBinGate(
     auto ct2NOT = EvalNOT(params, ct2);
     auto ctAND1 = EvalBinGate(params, AND, EK, ct1, ct2NOT, LWEscheme);
     auto ctAND2 = EvalBinGate(params, AND, EK, ct1NOT, ct2, LWEscheme);
-    auto ctOR = EvalBinGate(params, OR, EK, ctAND1, ctAND2, LWEscheme);
+    auto ctOR   = EvalBinGate(params, OR, EK, ctAND1, ctAND2, LWEscheme);
     // NOT is free so there is not cost to do it an extra time for XNOR
-    if (gate == XOR)
-      return ctOR;
+    if (gate == XOR) return ctOR;
     else  // XNOR
       return EvalNOT(params, ctOR);
-  } else {
+  }
+  else {
     NativeVector a(n, q);
     NativeInteger b;
 
@@ -518,7 +493,8 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalBinGate(
       a += a;
       b = ct1->GetB().ModSubFast(ct2->GetB(), q);
       b.ModAddFastEq(b, q);
-    } else {
+    }
+    else {
       // for all other gates, we simply compute (ct1 + ct2) mod 4
       // for AND: 0,1 -> 0 and 2,3 -> 1
       // for OR: 1,2 -> 1 and 3,0 -> 0
@@ -534,7 +510,7 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalBinGate(
     // the accumulator result is encrypted w.r.t. the transposed secret key
     // we can transpose "a" to get an encryption under the original secret key
     NativePoly temp = (*acc)[0][0];
-    temp = temp.Transpose();
+    temp            = temp.Transpose();
     temp.SetFormat(Format::COEFFICIENT);
     aNew = temp.GetValues();
 
@@ -543,12 +519,10 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalBinGate(
     // we add Q/8 to "b" to to map back to Q/4 (i.e., mod 2) arithmetic.
     bNew = Q8.ModAddFast(temp[0], Q);
 
-    auto eQN =
-        std::make_shared<LWECiphertextImpl>(std::move(aNew), std::move(bNew));
+    auto eQN = std::make_shared<LWECiphertextImpl>(std::move(aNew), std::move(bNew));
 
     // Key switching
-    const std::shared_ptr<const LWECiphertextImpl> eQ =
-        LWEscheme->KeySwitch(params->GetLWEParams(), EK.KSkey, eQN);
+    const std::shared_ptr<const LWECiphertextImpl> eQ = LWEscheme->KeySwitch(params->GetLWEParams(), EK.KSkey, eQN);
 
     // Modulus switching
     return LWEscheme->ModSwitch(params->GetLWEParams(), eQ);
@@ -558,13 +532,12 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalBinGate(
 // Full evaluation as described in "Bootstrapping in FHEW-like
 // Cryptosystems"
 std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::Bootstrap(
-    const std::shared_ptr<RingGSWCryptoParams> params, const RingGSWEvalKey &EK,
-    const std::shared_ptr<const LWECiphertextImpl> ct1,
-    const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const {
-  NativeInteger q = params->GetLWEParams()->Getq();
-  NativeInteger Q = params->GetLWEParams()->GetQ();
-  uint32_t n = params->GetLWEParams()->Getn();
-  uint32_t N = params->GetLWEParams()->GetN();
+  const std::shared_ptr<RingGSWCryptoParams> params, const RingGSWEvalKey& EK,
+  const std::shared_ptr<const LWECiphertextImpl> ct1, const std::shared_ptr<LWEEncryptionScheme> LWEscheme) const {
+  NativeInteger q  = params->GetLWEParams()->Getq();
+  NativeInteger Q  = params->GetLWEParams()->GetQ();
+  uint32_t n       = params->GetLWEParams()->Getn();
+  uint32_t N       = params->GetLWEParams()->GetN();
   NativeInteger Q8 = Q / NativeInteger(8) + 1;
 
   NativeVector a(n, q);
@@ -581,7 +554,7 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::Bootstrap(
   // the accumulator result is encrypted w.r.t. the transposed secret key
   // we can transpose "a" to get an encryption under the original secret key
   NativePoly temp = (*acc)[0][0];
-  temp = temp.Transpose();
+  temp            = temp.Transpose();
   temp.SetFormat(Format::COEFFICIENT);
   aNew = temp.GetValues();
 
@@ -590,12 +563,10 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::Bootstrap(
   // we add Q/8 to "b" to to map back to Q/4 (i.e., mod 2) arithmetic.
   bNew = Q8.ModAddFast(temp[0], Q);
 
-  auto eQN =
-      std::make_shared<LWECiphertextImpl>(std::move(aNew), std::move(bNew));
+  auto eQN = std::make_shared<LWECiphertextImpl>(std::move(aNew), std::move(bNew));
 
   // Key switching
-  const std::shared_ptr<const LWECiphertextImpl> eQ =
-      LWEscheme->KeySwitch(params->GetLWEParams(), EK.KSkey, eQN);
+  const std::shared_ptr<const LWECiphertextImpl> eQ = LWEscheme->KeySwitch(params->GetLWEParams(), EK.KSkey, eQN);
 
   // Modulus switching
   return LWEscheme->ModSwitch(params->GetLWEParams(), eQ);
@@ -603,14 +574,14 @@ std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::Bootstrap(
 
 // Evaluation of the NOT operation; no key material is needed
 std::shared_ptr<LWECiphertextImpl> RingGSWAccumulatorScheme::EvalNOT(
-    const std::shared_ptr<RingGSWCryptoParams> params,
-    const std::shared_ptr<const LWECiphertextImpl> ct) const {
+  const std::shared_ptr<RingGSWCryptoParams> params, const std::shared_ptr<const LWECiphertextImpl> ct) const {
   NativeInteger q = params->GetLWEParams()->Getq();
-  uint32_t n = params->GetLWEParams()->Getn();
+  uint32_t n      = params->GetLWEParams()->Getn();
 
   NativeVector a(n, q);
 
-  for (uint32_t i = 0; i < n; i++) a[i] = q - ct->GetA(i);
+  for (uint32_t i = 0; i < n; i++)
+    a[i] = q - ct->GetA(i);
 
   NativeInteger b = (q >> 2).ModSubFast(ct->GetB(), q);
 

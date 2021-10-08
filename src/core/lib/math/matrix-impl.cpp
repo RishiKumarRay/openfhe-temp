@@ -46,7 +46,7 @@ ONES_FOR_TYPE(Field2n)
 
 #define MODEQ_FOR_TYPE(T)                         \
   template <>                                     \
-  Matrix<T> &Matrix<T>::ModEq(const T &element) { \
+  Matrix<T>& Matrix<T>::ModEq(const T& element) { \
     for (size_t row = 0; row < rows; ++row) {     \
       for (size_t col = 0; col < cols; ++col) {   \
         data[row][col].ModEq(element);            \
@@ -60,7 +60,7 @@ MODEQ_FOR_TYPE(BigInteger)
 
 #define MODSUBEQ_FOR_TYPE(T)                                             \
   template <>                                                            \
-  Matrix<T> &Matrix<T>::ModSubEq(Matrix<T> const &b, const T &element) { \
+  Matrix<T>& Matrix<T>::ModSubEq(Matrix<T> const& b, const T& element) { \
     for (size_t row = 0; row < rows; ++row) {                            \
       for (size_t col = 0; col < cols; ++col) {                          \
         data[row][col].ModSubEq(b.data[row][col], element);              \
@@ -112,7 +112,7 @@ NONORM_FOR_TYPE(Field2n)
 // coefficients because it is formed by discrete gaussians e and s; this implies
 // int32_t can be used This algorithm can be further improved - see the
 // Darmstadt paper section 4.4
-Matrix<double> Cholesky(const Matrix<int32_t> &input) {
+Matrix<double> Cholesky(const Matrix<int32_t>& input) {
   //  http://eprint.iacr.org/2013/297.pdf
   if (input.GetRows() != input.GetCols()) {
     PALISADE_THROW(math_error, "not square");
@@ -147,7 +147,7 @@ Matrix<double> Cholesky(const Matrix<int32_t> &input) {
   return result;
 }
 
-void Cholesky(const Matrix<int32_t> &input, Matrix<double> &result) {
+void Cholesky(const Matrix<int32_t>& input, Matrix<double>& result) {
   //  http://eprint.iacr.org/2013/297.pdf
   if (input.GetRows() != input.GetCols()) {
     PALISADE_THROW(math_error, "not square");
@@ -183,8 +183,7 @@ void Cholesky(const Matrix<int32_t> &input, Matrix<double> &result) {
 }
 
 //  Convert from Z_q to [-q/2, q/2]
-Matrix<int32_t> ConvertToInt32(const Matrix<BigInteger> &input,
-                               const BigInteger &modulus) {
+Matrix<int32_t> ConvertToInt32(const Matrix<BigInteger>& input, const BigInteger& modulus) {
   size_t rows = input.GetRows();
   size_t cols = input.GetCols();
   BigInteger negativeThreshold(modulus / BigInteger(2));
@@ -193,7 +192,8 @@ Matrix<int32_t> ConvertToInt32(const Matrix<BigInteger> &input,
     for (size_t j = 0; j < cols; ++j) {
       if (input(i, j) > negativeThreshold) {
         result(i, j) = -1 * (modulus - input(i, j)).ConvertToInt();
-      } else {
+      }
+      else {
         result(i, j) = input(i, j).ConvertToInt();
       }
     }
@@ -201,18 +201,18 @@ Matrix<int32_t> ConvertToInt32(const Matrix<BigInteger> &input,
   return result;
 }
 
-Matrix<int32_t> ConvertToInt32(const Matrix<BigVector> &input,
-                               const BigInteger &modulus) {
+Matrix<int32_t> ConvertToInt32(const Matrix<BigVector>& input, const BigInteger& modulus) {
   size_t rows = input.GetRows();
   size_t cols = input.GetCols();
   BigInteger negativeThreshold(modulus / BigInteger(2));
   Matrix<int32_t> result([]() { return 0; }, rows, cols);
   for (size_t i = 0; i < rows; ++i) {
     for (size_t j = 0; j < cols; ++j) {
-      const BigInteger &elem = input(i, j).at(0);
+      const BigInteger& elem = input(i, j).at(0);
       if (elem > negativeThreshold) {
         result(i, j) = -1 * (modulus - elem).ConvertToInt();
-      } else {
+      }
+      else {
         result(i, j) = elem.ConvertToInt();
       }
     }
@@ -229,7 +229,8 @@ void Matrix<Field2n>::SetFormat(Format f) {
         data[row][col].SetFormat(f);
       }
     }
-  } else {
+  }
+  else {
     for (size_t col = 0; col < cols; ++col) {
 #pragma omp parallel for
       for (size_t row = 0; row < rows; ++row) {
@@ -248,7 +249,8 @@ void Matrix<Field2n>::SwitchFormat() {
         data[row][col].SwitchFormat();
       }
     }
-  } else {
+  }
+  else {
     for (size_t col = 0; col < cols; ++col) {
 #pragma omp parallel for
       for (size_t row = 0; row < rows; ++row) {

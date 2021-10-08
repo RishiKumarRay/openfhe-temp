@@ -36,16 +36,15 @@ namespace lbcrypto {
 // https://eprint.iacr.org/2017/308.pdf
 
 template <class Element>
-void LatticeGaussSampUtility<Element>::GaussSampGq(
-    const Element &syndrome, double stddev, size_t k,
-    const typename Element::Integer &q, int64_t base,
-    typename Element::DggType &dgg, Matrix<int64_t> *z) {
+void LatticeGaussSampUtility<Element>::GaussSampGq(const Element& syndrome, double stddev, size_t k,
+                                                   const typename Element::Integer& q, int64_t base,
+                                                   typename Element::DggType& dgg, Matrix<int64_t>* z) {
   // If DCRT is used, the polynomial is first converted from DCRT to large
   // polynomial (in COEFFICIENT representation)
   typename Element::PolyLargeType u = syndrome.CRTInterpolate();
 
-  const typename Poly::Integer &modulus = u.GetParams()->GetModulus();
-  double sigma = stddev / (base + 1);
+  const typename Poly::Integer& modulus = u.GetParams()->GetModulus();
+  double sigma                          = stddev / (base + 1);
 
   std::vector<int64_t> m_digits = *(GetDigits(modulus, base, k));
 
@@ -72,7 +71,8 @@ void LatticeGaussSampUtility<Element>::GaussSampGq(
   // (double) is added to avoid integer division
   c(0, 0) = m_digits[0] / static_cast<double>(base);
 
-  for (size_t i = 1; i < k; i++) c(i, 0) = (c(i - 1, 0) + m_digits[i]) / base;
+  for (size_t i = 1; i < k; i++)
+    c(i, 0) = (c(i - 1, 0) + m_digits[i]) / base;
 
 #pragma omp parallel for
   for (size_t j = 0; j < u.GetLength(); j++) {
@@ -80,8 +80,7 @@ void LatticeGaussSampUtility<Element>::GaussSampGq(
 
     vector<int64_t> p(k);
 
-    LatticeGaussSampUtility<Element>::Perturb(sigma, k, u.GetLength(), l, h,
-                                              base, dgg, &p);
+    LatticeGaussSampUtility<Element>::Perturb(sigma, k, u.GetLength(), l, h, base, dgg, &p);
 
     Matrix<double> a([]() { return 0.0; }, k, 1);
 
@@ -97,18 +96,14 @@ void LatticeGaussSampUtility<Element>::GaussSampGq(
     }
     vector<int64_t> zj(k);
 
-    LatticeGaussSampUtility<Element>::SampleC(c, k, u.GetLength(), sigma, dgg,
-                                              &a, &zj);
+    LatticeGaussSampUtility<Element>::SampleC(c, k, u.GetLength(), sigma, dgg, &a, &zj);
 
-    (*z)(0, j) = base * zj[0] + (int64_t)(m_digits[0]) * zj[k - 1] +
-                 (int64_t)(v_digits[0]);
+    (*z)(0, j) = base * zj[0] + (int64_t)(m_digits[0]) * zj[k - 1] + (int64_t)(v_digits[0]);
 
     for (size_t t = 1; t < k - 1; t++) {
-      (*z)(t, j) = base * zj[t] - zj[t - 1] +
-                   (int64_t)(m_digits[t]) * zj[k - 1] + (int64_t)(v_digits[t]);
+      (*z)(t, j) = base * zj[t] - zj[t - 1] + (int64_t)(m_digits[t]) * zj[k - 1] + (int64_t)(v_digits[t]);
     }
-    (*z)(k - 1, j) = (int64_t)(m_digits[k - 1]) * zj[k - 1] - zj[k - 2] +
-                     (int64_t)(v_digits[k - 1]);
+    (*z)(k - 1, j) = (int64_t)(m_digits[k - 1]) * zj[k - 1] - zj[k - 2] + (int64_t)(v_digits[k - 1]);
   }
 }
 
@@ -117,16 +112,15 @@ void LatticeGaussSampUtility<Element>::GaussSampGq(
 // https://eprint.iacr.org/2017/844.pdf
 
 template <class Element>
-void LatticeGaussSampUtility<Element>::GaussSampGqArbBase(
-    const Element &syndrome, double stddev, size_t k,
-    const typename Element::Integer &q, int64_t base,
-    typename Element::DggType &dgg, Matrix<int64_t> *z) {
+void LatticeGaussSampUtility<Element>::GaussSampGqArbBase(const Element& syndrome, double stddev, size_t k,
+                                                          const typename Element::Integer& q, int64_t base,
+                                                          typename Element::DggType& dgg, Matrix<int64_t>* z) {
   // If DCRT is used, the polynomial is first converted from DCRT to large
   // polynomial (in Format::COEFFICIENT representation)
   typename Element::PolyLargeType u = syndrome.CRTInterpolate();
 
-  const typename Poly::Integer &modulus = u.GetParams()->GetModulus();
-  double sigma = stddev / (base + 1);
+  const typename Poly::Integer& modulus = u.GetParams()->GetModulus();
+  double sigma                          = stddev / (base + 1);
 
   std::vector<int64_t> m_digits = *(GetDigits(modulus, base, k));
 
@@ -164,8 +158,7 @@ void LatticeGaussSampUtility<Element>::GaussSampGqArbBase(
 
     vector<double> p(k);
 
-    LatticeGaussSampUtility<Element>::PerturbFloat(sigma, k, u.GetLength(), l,
-                                                   h, base, dgg, &p);
+    LatticeGaussSampUtility<Element>::PerturbFloat(sigma, k, u.GetLength(), l, h, base, dgg, &p);
 
     Matrix<double> a([]() { return 0.0; }, k, 1);
 
@@ -175,23 +168,18 @@ void LatticeGaussSampUtility<Element>::GaussSampGqArbBase(
     a(0, 0) = ((int64_t)(v_digits[0]) - p[0]) / static_cast<double>(base);
 
     for (size_t t = 1; t < k; t++) {
-      a(t, 0) = (a(t - 1, 0) + (int64_t)(v_digits[t]) - p[t]) /
-                static_cast<double>(base);
+      a(t, 0) = (a(t - 1, 0) + (int64_t)(v_digits[t]) - p[t]) / static_cast<double>(base);
     }
     vector<int64_t> zj(k);
 
-    LatticeGaussSampUtility<Element>::SampleC(c, k, u.GetLength(), sigma, dgg,
-                                              &a, &zj);
+    LatticeGaussSampUtility<Element>::SampleC(c, k, u.GetLength(), sigma, dgg, &a, &zj);
 
-    (*z)(0, j) = base * zj[0] + (int64_t)(m_digits[0]) * zj[k - 1] +
-                 (int64_t)(v_digits[0]);
+    (*z)(0, j) = base * zj[0] + (int64_t)(m_digits[0]) * zj[k - 1] + (int64_t)(v_digits[0]);
 
     for (size_t t = 1; t < k - 1; t++) {
-      (*z)(t, j) = base * zj[t] - zj[t - 1] +
-                   (int64_t)(m_digits[t]) * zj[k - 1] + (int64_t)(v_digits[t]);
+      (*z)(t, j) = base * zj[t] - zj[t - 1] + (int64_t)(m_digits[t]) * zj[k - 1] + (int64_t)(v_digits[t]);
     }
-    (*z)(k - 1, j) = (int64_t)(m_digits[k - 1]) * zj[k - 1] - zj[k - 2] +
-                     (int64_t)(v_digits[k - 1]);
+    (*z)(k - 1, j) = (int64_t)(m_digits[k - 1]) * zj[k - 1] - zj[k - 2] + (int64_t)(v_digits[k - 1]);
   }
 }
 
@@ -200,18 +188,15 @@ void LatticeGaussSampUtility<Element>::GaussSampGqArbBase(
 // As described in Figure 2 of https://eprint.iacr.org/2017/308.pdf
 
 template <class Element>
-void LatticeGaussSampUtility<Element>::Perturb(double sigma, size_t k, size_t n,
-                                               const vector<double> &l,
-                                               const vector<double> &h,
-                                               int64_t base,
-                                               typename Element::DggType &dgg,
-                                               vector<int64_t> *p) {
+void LatticeGaussSampUtility<Element>::Perturb(double sigma, size_t k, size_t n, const vector<double>& l,
+                                               const vector<double>& h, int64_t base, typename Element::DggType& dgg,
+                                               vector<int64_t>* p) {
   std::vector<int32_t> z(k);
   double d = 0;
 
   for (size_t i = 0; i < k; i++) {
     z[i] = dgg.GenerateIntegerKarney(d / l[i], sigma / l[i]);
-    d = -z[i] * h[i];
+    d    = -z[i] * h[i];
   }
 
   (*p)[0] = (2 * base + 1) * z[0] + base * z[1];
@@ -225,18 +210,18 @@ void LatticeGaussSampUtility<Element>::Perturb(double sigma, size_t k, size_t n,
 // As described in Algorithm 3 of https://eprint.iacr.org/2017/844.pdf
 
 template <class Element>
-void LatticeGaussSampUtility<Element>::PerturbFloat(
-    double sigma, size_t k, size_t n, const vector<double> &l,
-    const vector<double> &h, int64_t base, typename Element::DggType &dgg,
-    vector<double> *p) {
+void LatticeGaussSampUtility<Element>::PerturbFloat(double sigma, size_t k, size_t n, const vector<double>& l,
+                                                    const vector<double>& h, int64_t base,
+                                                    typename Element::DggType& dgg, vector<double>* p) {
   std::normal_distribution<> d(0, sigma);
 
-  PRNG &g = PseudoRandomNumberGenerator::GetPRNG();
+  PRNG& g = PseudoRandomNumberGenerator::GetPRNG();
 
   std::vector<double> z(k);
 
   // Generate a vector using continuous Gaussian distribution
-  for (size_t i = 0; i < k; i++) z[i] = d(g);
+  for (size_t i = 0; i < k; i++)
+    z[i] = d(g);
 
   // Compute matrix-vector product Lz (apply linear transformation)
   for (size_t i = 0; i < k - 1; i++) {
@@ -250,14 +235,10 @@ void LatticeGaussSampUtility<Element>::PerturbFloat(
 // As described in Algorithm 3 of https://eprint.iacr.org/2017/844.pdf
 
 template <class Element>
-void LatticeGaussSampUtility<Element>::SampleC(const Matrix<double> &c,
-                                               size_t k, size_t n, double sigma,
-                                               typename Element::DggType &dgg,
-                                               Matrix<double> *a,
-                                               vector<int64_t> *z) {
-  (*z)[k - 1] = dgg.GenerateIntegerKarney(-(*a)(k - 1, 0) / c(k - 1, 0),
-                                          sigma / c(k - 1, 0));
-  *a = *a - (static_cast<double>((*z)[k - 1])) * c;
+void LatticeGaussSampUtility<Element>::SampleC(const Matrix<double>& c, size_t k, size_t n, double sigma,
+                                               typename Element::DggType& dgg, Matrix<double>* a, vector<int64_t>* z) {
+  (*z)[k - 1] = dgg.GenerateIntegerKarney(-(*a)(k - 1, 0) / c(k - 1, 0), sigma / c(k - 1, 0));
+  *a          = *a - (static_cast<double>((*z)[k - 1])) * c;
 
   for (size_t i = 0; i < k - 1; i++) {
     (*z)[i] = dgg.GenerateIntegerKarney(-(*a)(i, 0), sigma);
@@ -269,10 +250,9 @@ void LatticeGaussSampUtility<Element>::SampleC(const Matrix<double> &c,
 // field element in DFT format d - field element in DFT format c - vector of
 // field elements in Format::COEFFICIENT format
 template <class Element>
-void LatticeGaussSampUtility<Element>::ZSampleSigma2x2(
-    const Field2n &a, const Field2n &b, const Field2n &d,
-    const Matrix<Field2n> &c, const typename Element::DggType &dgg,
-    shared_ptr<Matrix<int64_t>> q) {
+void LatticeGaussSampUtility<Element>::ZSampleSigma2x2(const Field2n& a, const Field2n& b, const Field2n& d,
+                                                       const Matrix<Field2n>& c, const typename Element::DggType& dgg,
+                                                       shared_ptr<Matrix<int64_t>> q) {
   // size of the the lattice
   size_t n = a.Size();
 
@@ -310,10 +290,9 @@ void LatticeGaussSampUtility<Element>::ZSampleSigma2x2(
 // Token-Based Obfuscation under (Ring) LWE"
 
 template <class Element>
-void LatticeGaussSampUtility<Element>::SampleMat(
-    const Matrix<Field2n> &A, const Matrix<Field2n> &B,
-    const Matrix<Field2n> &D, const Matrix<Field2n> &C,
-    const typename Element::DggType &dgg, shared_ptr<Matrix<int64_t>> p) {
+void LatticeGaussSampUtility<Element>::SampleMat(const Matrix<Field2n>& A, const Matrix<Field2n>& B,
+                                                 const Matrix<Field2n>& D, const Matrix<Field2n>& C,
+                                                 const typename Element::DggType& dgg, shared_ptr<Matrix<int64_t>> p) {
   size_t d = C.GetRows();
 
   if (d == 2) {
@@ -331,22 +310,21 @@ void LatticeGaussSampUtility<Element>::SampleMat(
   Matrix<Field2n> c1([]() { return Field2n(Format::COEFFICIENT); }, dimD, 1);
   Matrix<Field2n> qF1([]() { return Field2n(Format::COEFFICIENT); }, dimD, 1);
 
-  Matrix<Field2n> Dinverse([]() { return Field2n(Format::EVALUATION); }, dimD,
-                           dimD);
+  Matrix<Field2n> Dinverse([]() { return Field2n(Format::EVALUATION); }, dimD, dimD);
 
   if (dimD == 1) {
     Field2n dEval = D(0, 0);
     dEval.SetFormat(Format::COEFFICIENT);
     c1(0, 0) = C(d - 1, 0);
-    c0 = C.ExtractRows(0, d - 2);
+    c0       = C.ExtractRows(0, d - 2);
 
     q1 = ZSampleF(dEval, c1(0, 0), dgg, dEval.Size());
 
     Dinverse(0, 0) = D(0, 0).Inverse();
 
     qF1(0, 0) = Field2n(*q1);
-
-  } else if (dimD == 2) {  // dimD == 2
+  }
+  else if (dimD == 2) {  // dimD == 2
     c1 = C.ExtractRows(dimA, d - 1);
     c0 = C.ExtractRows(0, dimA - 1);
 
@@ -355,33 +333,32 @@ void LatticeGaussSampUtility<Element>::SampleMat(
     for (size_t i = 0; i < dimD; i++)
       qF1(i, 0) = Field2n(q1->ExtractRows(i * n, i * n + n - 1));
 
-    Field2n det = D(0, 0) * D(1, 1) - D(0, 1) * D(1, 0);
+    Field2n det        = D(0, 0) * D(1, 1) - D(0, 1) * D(1, 0);
     Field2n detInverse = det.Inverse();
 
     Dinverse(0, 0) = D(1, 1) * detInverse;
     Dinverse(0, 1) = -D(0, 1) * detInverse;
     Dinverse(1, 0) = -D(1, 0) * detInverse;
     Dinverse(1, 1) = D(0, 0) * detInverse;
-
-  } else {  // dimD > 2
+  }
+  else {  // dimD > 2
     c1 = C.ExtractRows(dimA, d - 1);
     c0 = C.ExtractRows(0, dimA - 1);
 
     size_t newDimA = (size_t)std::ceil(static_cast<double>(dimD) / 2);
     size_t newDimD = (size_t)std::floor(static_cast<double>(dimD) / 2);
 
-    Matrix<Field2n> newA([&]() { return Field2n(n, Format::EVALUATION, true); },
-                         newDimA, newDimA);
-    Matrix<Field2n> newB([&]() { return Field2n(n, Format::EVALUATION, true); },
-                         newDimA, newDimD);
-    Matrix<Field2n> newD([&]() { return Field2n(n, Format::EVALUATION, true); },
-                         newDimD, newDimD);
+    Matrix<Field2n> newA([&]() { return Field2n(n, Format::EVALUATION, true); }, newDimA, newDimA);
+    Matrix<Field2n> newB([&]() { return Field2n(n, Format::EVALUATION, true); }, newDimA, newDimD);
+    Matrix<Field2n> newD([&]() { return Field2n(n, Format::EVALUATION, true); }, newDimD, newDimD);
 
     for (size_t i = 0; i < newDimA; i++)
-      for (size_t j = 0; j < newDimA; j++) newA(i, j) = D(i, j);
+      for (size_t j = 0; j < newDimA; j++)
+        newA(i, j) = D(i, j);
 
     for (size_t i = 0; i < newDimA; i++)
-      for (size_t j = 0; j < newDimD; j++) newB(i, j) = D(i, j + newDimA);
+      for (size_t j = 0; j < newDimD; j++)
+        newB(i, j) = D(i, j + newDimA);
 
     for (size_t i = 0; i < newDimD; i++)
       for (size_t j = 0; j < newDimD; j++)
@@ -410,23 +387,20 @@ void LatticeGaussSampUtility<Element>::SampleMat(
 
   cNew.SetFormat(Format::COEFFICIENT);
 
-  size_t newDimA =
-      static_cast<size_t>(std::ceil(static_cast<double>(dimA) / 2));
-  size_t newDimD =
-      static_cast<size_t>(std::floor(static_cast<double>(dimA) / 2));
+  size_t newDimA = static_cast<size_t>(std::ceil(static_cast<double>(dimA) / 2));
+  size_t newDimD = static_cast<size_t>(std::floor(static_cast<double>(dimA) / 2));
 
-  Matrix<Field2n> newA([&]() { return Field2n(n, Format::EVALUATION, true); },
-                       newDimA, newDimA);
-  Matrix<Field2n> newB([&]() { return Field2n(n, Format::EVALUATION, true); },
-                       newDimA, newDimD);
-  Matrix<Field2n> newD([&]() { return Field2n(n, Format::EVALUATION, true); },
-                       newDimD, newDimD);
+  Matrix<Field2n> newA([&]() { return Field2n(n, Format::EVALUATION, true); }, newDimA, newDimA);
+  Matrix<Field2n> newB([&]() { return Field2n(n, Format::EVALUATION, true); }, newDimA, newDimD);
+  Matrix<Field2n> newD([&]() { return Field2n(n, Format::EVALUATION, true); }, newDimD, newDimD);
 
   for (size_t i = 0; i < newDimA; i++)
-    for (size_t j = 0; j < newDimA; j++) newA(i, j) = sigma(i, j);
+    for (size_t j = 0; j < newDimA; j++)
+      newA(i, j) = sigma(i, j);
 
   for (size_t i = 0; i < newDimA; i++)
-    for (size_t j = 0; j < newDimD; j++) newB(i, j) = sigma(i, j + newDimA);
+    for (size_t j = 0; j < newDimD; j++)
+      newB(i, j) = sigma(i, j + newDimA);
 
   for (size_t i = 0; i < newDimD; i++)
     for (size_t j = 0; j < newDimD; j++)
@@ -447,11 +421,10 @@ void LatticeGaussSampUtility<Element>::SampleMat(
 // https://eprint.iacr.org/2017/844.pdf f is in Format::COEFFICIENT
 // representation c is in Format::COEFFICIENT representation
 template <class Element>
-shared_ptr<Matrix<int64_t>> LatticeGaussSampUtility<Element>::ZSampleF(
-    const Field2n &f, const Field2n &c, const typename Element::DggType &dgg,
-    size_t n) {
+shared_ptr<Matrix<int64_t>> LatticeGaussSampUtility<Element>::ZSampleF(const Field2n& f, const Field2n& c,
+                                                                       const typename Element::DggType& dgg, size_t n) {
   if (f.Size() == 1) {
-    auto p = std::make_shared<Matrix<int64_t>>([]() { return 0; }, 1, 1);
+    auto p     = std::make_shared<Matrix<int64_t>>([]() { return 0; }, 1, 1);
     (*p)(0, 0) = dgg.GenerateIntegerKarney(c[0].real(), sqrt(f[0].real()));
     return p;
   }
@@ -464,15 +437,13 @@ shared_ptr<Matrix<int64_t>> LatticeGaussSampUtility<Element>::ZSampleF(
 
   usint f0_size = f0.Size();
 
-  auto qZVector =
-      std::make_shared<Matrix<int64_t>>([]() { return 0; }, f0_size * 2, 1);
+  auto qZVector = std::make_shared<Matrix<int64_t>>([]() { return 0; }, f0_size * 2, 1);
 
   Matrix<Field2n> cPermuted([]() { return Field2n(); }, 2, 1);
 
   cPermuted(0, 0) = c.ExtractEven();
   cPermuted(1, 0) = c.ExtractOdd();
-  LatticeGaussSampUtility<Element>::ZSampleSigma2x2(f0, f1, f0, cPermuted, dgg,
-                                                    qZVector);
+  LatticeGaussSampUtility<Element>::ZSampleSigma2x2(f0, f1, f0, cPermuted, dgg, qZVector);
   InversePermute(qZVector);
 
   return qZVector;
@@ -482,15 +453,16 @@ shared_ptr<Matrix<int64_t>> LatticeGaussSampUtility<Element>::ZSampleF(
 // Algorithm utilizes the same permutation algorithm as discussed in
 // https://eprint.iacr.org/2017/844.pdf
 template <class Element>
-Matrix<int32_t> LatticeGaussSampUtility<Element>::Permute(Matrix<int32_t> *p) {
+Matrix<int32_t> LatticeGaussSampUtility<Element>::Permute(Matrix<int32_t>* p) {
   int evenPtr = 0;
-  int oddPtr = p->GetRows() / 2;
+  int oddPtr  = p->GetRows() / 2;
   Matrix<int32_t> permuted([]() { return 0; }, p->GetRows(), 1);
   for (usint i = 0; i < p->GetRows(); i++) {
     if (i % 2 == 0) {
       permuted(evenPtr, 0) = (*p)(i, 0);
       evenPtr++;
-    } else {
+    }
+    else {
       permuted(oddPtr, 0) = (*p)(i, 0);
       oddPtr++;
     }
@@ -502,17 +474,16 @@ Matrix<int32_t> LatticeGaussSampUtility<Element>::Permute(Matrix<int32_t> *p) {
 // Algorithm utilizes the same permutation algorithm as discussed in
 // https://eprint.iacr.org/2017/844.pdf
 template <class Element>
-void LatticeGaussSampUtility<Element>::InversePermute(
-    shared_ptr<Matrix<int64_t>> p) {
+void LatticeGaussSampUtility<Element>::InversePermute(shared_ptr<Matrix<int64_t>> p) {
   // a vector of int64_t is used for intermediate storage because it is faster
   // than a Matrix of unique pointers to int64_t
 
   std::vector<int64_t> vectorPermuted(p->GetRows());
 
   size_t evenPtr = 0;
-  size_t oddPtr = vectorPermuted.size() / 2;
+  size_t oddPtr  = vectorPermuted.size() / 2;
   for (size_t i = 0; evenPtr < vectorPermuted.size() / 2; i += 2) {
-    vectorPermuted[i] = (*p)(evenPtr, 0);
+    vectorPermuted[i]     = (*p)(evenPtr, 0);
     vectorPermuted[i + 1] = (*p)(oddPtr, 0);
     evenPtr++;
     oddPtr++;

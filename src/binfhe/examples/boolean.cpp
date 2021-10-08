@@ -79,9 +79,7 @@ int main() {
 
   cc.Decrypt(sk, ctResult, &result);
 
-  std::cout
-      << "Result of encrypted computation of (1 AND 1) OR (1 AND (NOT 1)) = "
-      << result << std::endl;
+  std::cout << "Result of encrypted computation of (1 AND 1) OR (1 AND (NOT 1)) = " << result << std::endl;
 
   return 0;
 }

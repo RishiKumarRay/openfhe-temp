@@ -44,7 +44,7 @@ namespace NTL {
 // copy ctor with vector inputs
 // creation ctors without moduli are marked GARBAGE
 template <class myT>
-myVecP<myT>::myVecP(const myVecP<myT> &a) : Vec<myT>(INIT_SIZE, a.length()) {
+myVecP<myT>::myVecP(const myVecP<myT>& a) : Vec<myT>(INIT_SIZE, a.length()) {
   int rv = this->CopyModulus(a);
   if (rv == -1) {
 #ifdef WARN_BAD_MODULUS
@@ -56,7 +56,7 @@ myVecP<myT>::myVecP(const myVecP<myT> &a) : Vec<myT>(INIT_SIZE, a.length()) {
 
 // movecopy ctor
 template <class myT>
-myVecP<myT>::myVecP(myVecP<myT> &&a) : Vec<myT>(INIT_SIZE, a.length()) {
+myVecP<myT>::myVecP(myVecP<myT>&& a) : Vec<myT>(INIT_SIZE, a.length()) {
   int rv = this->CopyModulus(a);
   if (rv == -1) {
 #ifdef WARN_BAD_MODULUS
@@ -69,57 +69,55 @@ myVecP<myT>::myVecP(myVecP<myT> &&a) : Vec<myT>(INIT_SIZE, a.length()) {
 // constructors with moduli
 // ctor myT moduli
 template <class myT>
-myVecP<myT>::myVecP(const long n, const myT &q) : Vec<myT>(INIT_SIZE, n) {
+myVecP<myT>::myVecP(const long n, const myT& q) : Vec<myT>(INIT_SIZE, n) {
   this->SetModulus(q);
 }
 
 // constructors with moduli and initializer list
 // ctor myT moduli
 template <class myT>
-myVecP<myT>::myVecP(const long n, const myT &q,
-                    std::initializer_list<uint64_t> rhs)
-    : Vec<myT>(INIT_SIZE, n) {
+myVecP<myT>::myVecP(const long n, const myT& q, std::initializer_list<uint64_t> rhs) : Vec<myT>(INIT_SIZE, n) {
   this->SetModulus(q);
   usint len = rhs.size();
   for (size_t i = 0; i < size_t(n); i++) {  // this loops over each entry
     if (i < len) {
       (*this)[i] = myT(*(rhs.begin() + i)) % m_modulus;
-    } else {
+    }
+    else {
       (*this)[i] = myT(0);
     }
   }
 }
 
 template <class myT>
-myVecP<myT>::myVecP(const long n, const myT &q,
-                    std::initializer_list<std::string> rhs)
-    : Vec<myT>(INIT_SIZE, n) {
+myVecP<myT>::myVecP(const long n, const myT& q, std::initializer_list<std::string> rhs) : Vec<myT>(INIT_SIZE, n) {
   this->SetModulus(q);
   usint len = rhs.size();
   for (size_t i = 0; i < size_t(n); i++) {  // this loops over each entry
     if (i < len) {
       (*this)[i] = myT(*(rhs.begin() + i)) % m_modulus;
-    } else {
+    }
+    else {
       (*this)[i] = myT(0);
     }
   }
 }
 
 template <class myT>
-myVecP<myT>::myVecP(const myVecP<myT> &a, const myT &q) : Vec<myT>(a) {
+myVecP<myT>::myVecP(const myVecP<myT>& a, const myT& q) : Vec<myT>(a) {
   this->SetModulus(q);
   (*this) %= q;
 }
 
 // ctor with string moduli
 template <class myT>
-myVecP<myT>::myVecP(size_t n, const std::string &sq) : Vec<myT>(INIT_SIZE, n) {
+myVecP<myT>::myVecP(size_t n, const std::string& sq) : Vec<myT>(INIT_SIZE, n) {
   this->SetModulus(myT(sq));
 }
 
 // copy with char * moduli
 template <class myT>
-myVecP<myT>::myVecP(const myVecP<myT> &a, const std::string &sq) : Vec<myT>(a) {
+myVecP<myT>::myVecP(const myVecP<myT>& a, const std::string& sq) : Vec<myT>(a) {
   this->SetModulus(myT(sq));
 }
 
@@ -131,7 +129,7 @@ myVecP<myT>::myVecP(size_t n, uint64_t q) : Vec<myT>(INIT_SIZE, n) {
 
 // copy with unsigned int moduli
 template <class myT>
-myVecP<myT>::myVecP(const myVecP<myT> &a, const uint64_t q) : Vec<myT>(a) {
+myVecP<myT>::myVecP(const myVecP<myT>& a, const uint64_t q) : Vec<myT>(a) {
   this->SetModulus(q);
   for (size_t i = 0; i < this->GetLength(); i++) {
     (*this)[i] %= myT(q);
@@ -140,7 +138,7 @@ myVecP<myT>::myVecP(const myVecP<myT> &a, const uint64_t q) : Vec<myT>(a) {
 
 // constructor specifying the myvec as a vector of strings
 template <class myT>
-myVecP<myT>::myVecP(std::vector<std::string> &s) {
+myVecP<myT>::myVecP(std::vector<std::string>& s) {
   usint len = s.size();
   this->resize(len);
   for (size_t i = 0; i < len; i++) {
@@ -151,7 +149,7 @@ myVecP<myT>::myVecP(std::vector<std::string> &s) {
 
 // constructor specifying the myvec as a vector of strings with modulus
 template <class myT>
-myVecP<myT>::myVecP(std::vector<std::string> &s, const myT &q) {
+myVecP<myT>::myVecP(std::vector<std::string>& s, const myT& q) {
   usint len = s.size();
   this->resize(len);
   this->SetModulus(q);
@@ -162,7 +160,7 @@ myVecP<myT>::myVecP(std::vector<std::string> &s, const myT &q) {
 
 // constructor specifying the myvec as a vector of strings with modulus
 template <class myT>
-myVecP<myT>::myVecP(std::vector<std::string> &s, const char *sq) {
+myVecP<myT>::myVecP(std::vector<std::string>& s, const char* sq) {
   usint len = s.size();
   this->resize(len);
   myT zzq(sq);
@@ -174,7 +172,7 @@ myVecP<myT>::myVecP(std::vector<std::string> &s, const char *sq) {
 
 // constructor specifying the myvec as a vector of strings with modulus
 template <class myT>
-myVecP<myT>::myVecP(std::vector<std::string> &s, const uint64_t q) {
+myVecP<myT>::myVecP(std::vector<std::string>& s, const uint64_t q) {
   usint len = s.size();
   this->resize(len);
   myT zzq(q);
@@ -190,23 +188,22 @@ myVecP<myT>::myVecP(std::vector<std::string> &s, const uint64_t q) {
 // keeps current modulus
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::operator=(std::initializer_list<uint64_t> rhs) {
+const myVecP<myT>& myVecP<myT>::operator=(std::initializer_list<uint64_t> rhs) {
   size_t len = rhs.size();
   if (this->GetLength() < len) {
     this->resize(len);
   }
 
-  for (size_t i = 0; i < this->GetLength();
-       i++) {  // this loops over each entry
+  for (size_t i = 0; i < this->GetLength(); i++) {  // this loops over each entry
     if (i < len) {
 #ifdef FORCE_NORMALIZATION
-      if (isModulusSet())
-        (*this)[i] = myT(*(rhs.begin() + i)) % m_modulus;
+      if (isModulusSet()) (*this)[i] = myT(*(rhs.begin() + i)) % m_modulus;
       else
       // must be set directly
 #endif
         (*this)[i] = myT(*(rhs.begin() + i));
-    } else {
+    }
+    else {
       (*this)[i] = myT(0);
     }
   }
@@ -215,28 +212,26 @@ const myVecP<myT> &myVecP<myT>::operator=(std::initializer_list<uint64_t> rhs) {
 
 // for some dumb reason they coded this., it is dangerous
 template <class myT>
-const myVecP<myT> &myVecP<myT>::operator=(std::initializer_list<int32_t> rhs) {
+const myVecP<myT>& myVecP<myT>::operator=(std::initializer_list<int32_t> rhs) {
   size_t len = rhs.size();
   if (this->GetLength() < len) {
     this->resize(len);
   }
 
-  for (size_t i = 0; i < this->GetLength();
-       i++) {  // this loops over each entry
+  for (size_t i = 0; i < this->GetLength(); i++) {  // this loops over each entry
     if (i < len) {
       int tmp = *(rhs.begin() + i);
       if (tmp < 0) {
-        std::cout << "warning trying to assign negative integer value"
-                  << std::endl;
+        std::cout << "warning trying to assign negative integer value" << std::endl;
       }
 #ifdef FORCE_NORMALIZATION
-      if (isModulusSet())
-        (*this)[i] = myT(tmp) % m_modulus;
+      if (isModulusSet()) (*this)[i] = myT(tmp) % m_modulus;
       else
       // must be set directly
 #endif
         (*this)[i] = myT(tmp);
-    } else {
+    }
+    else {
       (*this)[i] = myT(0);
     }
   }
@@ -246,24 +241,22 @@ const myVecP<myT> &myVecP<myT>::operator=(std::initializer_list<int32_t> rhs) {
 // Assignment with initializer list of strings
 // keeps current modulus
 template <class myT>
-const myVecP<myT> &myVecP<myT>::operator=(
-    std::initializer_list<std::string> rhs) {
+const myVecP<myT>& myVecP<myT>::operator=(std::initializer_list<std::string> rhs) {
   size_t len = rhs.size();
   if (this->GetLength() < len) {
     this->resize(len);
   }
 
-  for (size_t i = 0; i < this->GetLength();
-       i++) {  // this loops over each entry
+  for (size_t i = 0; i < this->GetLength(); i++) {  // this loops over each entry
     if (i < len) {
 #ifdef FORCE_NORMALIZATION
-      if (isModulusSet())
-        (*this)[i] = myT(*(rhs.begin() + i)) % m_modulus;
+      if (isModulusSet()) (*this)[i] = myT(*(rhs.begin() + i)) % m_modulus;
       else
       // must be set directly
 #endif
         (*this)[i] = myT(*(rhs.begin() + i));
-    } else {
+    }
+    else {
       (*this)[i] = myT(0);
     }
   }
@@ -273,7 +266,7 @@ const myVecP<myT> &myVecP<myT>::operator=(
 // keeps current modulus
 // note this only assigns to the first element!!
 template <class myT>
-const myVecP<myT> &myVecP<myT>::operator=(uint64_t val) {
+const myVecP<myT>& myVecP<myT>::operator=(uint64_t val) {
   (*this)[0] = myT(val);
 #ifdef FORCE_NORMALIZATION
   if (isModulusSet()) (*this)[0] %= m_modulus;
@@ -287,7 +280,7 @@ const myVecP<myT> &myVecP<myT>::operator=(uint64_t val) {
 
 // do not keep current modulus but copies from rhs.
 template <class myT>
-const myVecP<myT> &myVecP<myT>::operator=(const myVecP<myT> &rhs) {
+const myVecP<myT>& myVecP<myT>::operator=(const myVecP<myT>& rhs) {
   this->resize(rhs.GetLength());
   int rv = this->CopyModulus(rhs);
   if (rv == -1) {
@@ -303,7 +296,7 @@ const myVecP<myT> &myVecP<myT>::operator=(const myVecP<myT> &rhs) {
 
 // move copy do not keep current modulus but copies from rhs.
 template <class myT>
-const myVecP<myT> &myVecP<myT>::operator=(myVecP<myT> &&rhs) {
+const myVecP<myT>& myVecP<myT>::operator=(myVecP<myT>&& rhs) {
   if (this != &rhs) {
     this->resize(rhs.GetLength());
     int rv = this->CopyModulus(rhs);
@@ -318,7 +311,7 @@ const myVecP<myT> &myVecP<myT>::operator=(myVecP<myT> &&rhs) {
 }
 
 template <class myT>
-void myVecP<myT>::clear(myVecP<myT> &x) {
+void myVecP<myT>::clear(myVecP<myT>& x) {
   size_t n = x.GetLength();
   for (size_t i = 0; i < n; i++) {
     NTL_NAMESPACE::clear(x[i]);
@@ -341,24 +334,26 @@ void myVecP<myT>::clear(myVecP<myT> &x) {
 // *  i' = i-delta
 //
 template <class myT>
-void myVecP<myT>::SwitchModulus(const myT &newModulus) {
+void myVecP<myT>::SwitchModulus(const myT& newModulus) {
   myT oldModulus(this->m_modulus);
   myT n;
   myT oldModulusByTwo(oldModulus >> 1);
-  myT diff((oldModulus > newModulus) ? (oldModulus - newModulus)
-                                     : (newModulus - oldModulus));
+  myT diff((oldModulus > newModulus) ? (oldModulus - newModulus) : (newModulus - oldModulus));
   for (size_t i = 0; i < this->GetLength(); i++) {
     n = this->at(i);
     if (oldModulus < newModulus) {
       if (n > oldModulusByTwo) {
         this->at(i) = n.ModAdd(diff, newModulus);
-      } else {
+      }
+      else {
         this->at(i) = n.Mod(newModulus);
       }
-    } else {
+    }
+    else {
       if (n > oldModulusByTwo) {
         this->at(i) = n.ModSub(diff, newModulus);
-      } else {
+      }
+      else {
         this->at(i) = n.Mod(newModulus);
       }
     }
@@ -369,17 +364,19 @@ void myVecP<myT>::SwitchModulus(const myT &newModulus) {
 // MODULAR ARITHMETIC FUNCTIONS
 
 template <class myT>
-myVecP<myT> myVecP<myT>::Mod(const myT &modulus) const {
+myVecP<myT> myVecP<myT>::Mod(const myT& modulus) const {
   if (modulus == myT(2)) {
     return this->ModByTwo();
-  } else {
+  }
+  else {
     myT thisMod(this->GetModulus());
     myVecP ans(this->GetLength(), thisMod);  // zeroed out
     myT halfQ(thisMod >> 1);
     for (size_t i = 0; i < this->GetLength(); i++) {
       if ((*this)[i] > halfQ) {
         ans[i] = (*this)[i].ModSub(thisMod, modulus);
-      } else {
+      }
+      else {
         ans[i] = (*this)[i].Mod(modulus);
       }
     }
@@ -388,16 +385,18 @@ myVecP<myT> myVecP<myT>::Mod(const myT &modulus) const {
 }
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::ModEq(const myT &modulus) {
+const myVecP<myT>& myVecP<myT>::ModEq(const myT& modulus) {
   if (modulus == myT(2)) {
     return this->ModByTwoEq();
-  } else {
+  }
+  else {
     myT thisMod(this->GetModulus());
     myT halfQ(thisMod >> 1);
     for (size_t i = 0; i < this->GetLength(); i++) {
       if (this->operator[](i) > halfQ) {
         this->operator[](i).ModSubEq(thisMod, modulus);
-      } else {
+      }
+      else {
         this->operator[](i).ModEq(modulus);
       }
     }
@@ -407,10 +406,9 @@ const myVecP<myT> &myVecP<myT>::ModEq(const myT &modulus) {
 
 // method to add scalar to vector element at index i
 template <class myT>
-myVecP<myT> myVecP<myT>::ModAddAtIndex(size_t i, const myT &b) const {
+myVecP<myT> myVecP<myT>::ModAddAtIndex(size_t i, const myT& b) const {
   if (i > this->GetLength() - 1) {
-    std::string errMsg = "myVecP::ModAddAtIndex. Index is out of range. i = " +
-                         std::to_string(i);
+    std::string errMsg = "myVecP::ModAddAtIndex. Index is out of range. i = " + std::to_string(i);
     PALISADE_THROW(lbcrypto::math_error, errMsg);
   }
   myVecP ans(*this);  // copy vector
@@ -420,10 +418,9 @@ myVecP<myT> myVecP<myT>::ModAddAtIndex(size_t i, const myT &b) const {
 }
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::ModAddAtIndexEq(size_t i, const myT &b) {
+const myVecP<myT>& myVecP<myT>::ModAddAtIndexEq(size_t i, const myT& b) {
   if (i > this->GetLength() - 1) {
-    std::string errMsg = "myVecP::ModAddAtIndex. Index is out of range. i = " +
-                         std::to_string(i);
+    std::string errMsg = "myVecP::ModAddAtIndex. Index is out of range. i = " + std::to_string(i);
     PALISADE_THROW(lbcrypto::math_error, errMsg);
   }
   ModulusCheck("myVecP::ModAddAtIndex");
@@ -434,8 +431,7 @@ const myVecP<myT> &myVecP<myT>::ModAddAtIndexEq(size_t i, const myT &b) {
 // procedural addition
 // todo make modulus explicit.
 template <class myT>
-inline void myVecP<myT>::modadd_p(myVecP<myT> &x, myVecP<myT> const &a,
-                                  myVecP<myT> const &b) const {
+inline void myVecP<myT>::modadd_p(myVecP<myT>& x, myVecP<myT> const& a, myVecP<myT> const& b) const {
   a.ArgCheckVector(b, "myVecP::modadd()");
   size_t n = a.GetLength();
   if (b.GetLength() != n) LogicError("myVecP<>vector add: dimension mismatch");
@@ -454,8 +450,7 @@ inline void myVecP<myT>::modadd_p(myVecP<myT> &x, myVecP<myT> const &a,
 // todo make modulus explicit.
 
 template <class myT>
-void myVecP<myT>::modsub_p(myVecP<myT> &x, myVecP<myT> const &a,
-                           myVecP<myT> const &b) const {
+void myVecP<myT>::modsub_p(myVecP<myT>& x, myVecP<myT> const& a, myVecP<myT> const& b) const {
   a.ArgCheckVector(b, "myVecP::sub()");
   size_t n = a.GetLength();
   if (b.GetLength() != n) LogicError("myVecP<>vector sub: dimension mismatch");
@@ -471,8 +466,7 @@ void myVecP<myT>::modsub_p(myVecP<myT> &x, myVecP<myT> const &a,
 
 // todo make modulus explicit.
 template <class myT>
-inline void myVecP<myT>::modmul_p(myVecP<myT> &x, myVecP<myT> const &a,
-                                  myVecP<myT> const &b) const {
+inline void myVecP<myT>::modmul_p(myVecP<myT>& x, myVecP<myT> const& a, myVecP<myT> const& b) const {
   a.ArgCheckVector(b, "myVecP::mul()");
   unsigned int n = a.GetLength();
   if (b.GetLength() != n) LogicError("myVecP<>vector sub: dimension mismatch");
@@ -489,7 +483,7 @@ inline void myVecP<myT>::modmul_p(myVecP<myT> &x, myVecP<myT> const &a,
 }
 
 template <class myT>
-myVecP<myT> myVecP<myT>::ModExp(const myT &b) const {
+myVecP<myT> myVecP<myT>::ModExp(const myT& b) const {
   myVecP ans(*this);
   ModulusCheck("myVecP::ModExp");
   for (size_t i = 0; i < this->GetLength(); i++) {
@@ -499,7 +493,7 @@ myVecP<myT> myVecP<myT>::ModExp(const myT &b) const {
 }
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::ModExpEq(const myT &b) {
+const myVecP<myT>& myVecP<myT>::ModExpEq(const myT& b) {
   ModulusCheck("myVecP::ModExp");
   for (size_t i = 0; i < this->GetLength(); i++) {
     (*this)[i] = (*this)[i].ModExp(b % m_modulus, this->m_modulus);
@@ -518,7 +512,7 @@ myVecP<myT> myVecP<myT>::ModInverse(void) const {
 }
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::ModInverseEq(void) {
+const myVecP<myT>& myVecP<myT>::ModInverseEq(void) {
   ModulusCheck("myVecP::ModInverse");
   for (size_t i = 0; i < this->GetLength(); i++) {
     (*this)[i] = (*this)[i].ModInverse(this->m_modulus);
@@ -535,19 +529,22 @@ myVecP<myT> myVecP<myT>::ModByTwo() const {
 
 // method to mod by two
 template <class myT>
-const myVecP<myT> &myVecP<myT>::ModByTwoEq() {
+const myVecP<myT>& myVecP<myT>::ModByTwoEq() {
   myT halfQ(this->GetModulus() >> 1);
   for (size_t i = 0; i < this->GetLength(); i++) {
     if (this->operator[](i) > halfQ) {
       if (this->operator[](i).Mod(myT(2)) == myT(1)) {
         this->operator[](i) = 0;
-      } else {
+      }
+      else {
         this->operator[](i) = 1;
       }
-    } else {
+    }
+    else {
       if (this->operator[](i).Mod(myT(2)) == myT(1)) {
         this->operator[](i) = 1;
-      } else {
+      }
+      else {
         this->operator[](i) = 0;
       }
     }
@@ -556,15 +553,16 @@ const myVecP<myT> &myVecP<myT>::ModByTwoEq() {
 }
 
 template <class myT>
-myVecP<myT> myVecP<myT>::MultiplyAndRound(const myT &p, const myT &q) const {
+myVecP<myT> myVecP<myT>::MultiplyAndRound(const myT& p, const myT& q) const {
   ModulusCheck("myVecP::MultiplyAndRound");
   myVecP ans(*this);
   myT halfQ(this->m_modulus >> 1);
   for (size_t i = 0; i < this->GetLength(); i++) {
     if (ans[i] > halfQ) {
       myT temp = this->m_modulus - ans[i];
-      ans[i] = this->m_modulus - temp.MultiplyAndRound(p, q);
-    } else {
+      ans[i]   = this->m_modulus - temp.MultiplyAndRound(p, q);
+    }
+    else {
       ans[i] = ans[i].MultiplyAndRound(p, q).Mod(this->m_modulus);
     }
   }
@@ -572,14 +570,15 @@ myVecP<myT> myVecP<myT>::MultiplyAndRound(const myT &p, const myT &q) const {
 }
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::MultiplyAndRoundEq(const myT &p, const myT &q) {
+const myVecP<myT>& myVecP<myT>::MultiplyAndRoundEq(const myT& p, const myT& q) {
   ModulusCheck("myVecP::MultiplyAndRound");
   myT halfQ(this->m_modulus >> 1);
   for (size_t i = 0; i < this->GetLength(); i++) {
     if ((*this)[i] > halfQ) {
-      myT temp = this->m_modulus - (*this)[i];
+      myT temp   = this->m_modulus - (*this)[i];
       (*this)[i] = this->m_modulus - temp.MultiplyAndRound(p, q);
-    } else {
+    }
+    else {
       (*this)[i] = (*this)[i].MultiplyAndRound(p, q).Mod(this->m_modulus);
     }
   }
@@ -587,15 +586,16 @@ const myVecP<myT> &myVecP<myT>::MultiplyAndRoundEq(const myT &p, const myT &q) {
 }
 
 template <class myT>
-myVecP<myT> myVecP<myT>::DivideAndRound(const myT &q) const {
+myVecP<myT> myVecP<myT>::DivideAndRound(const myT& q) const {
   ModulusCheck("myVecP::DivideAndRound");
   myVecP ans(*this);
   myT halfQ(this->m_modulus >> 1);
   for (size_t i = 0; i < this->GetLength(); i++) {
     if (ans[i] > halfQ) {
       myT temp = this->m_modulus - ans[i];
-      ans[i] = this->m_modulus - temp.DivideAndRound(q);
-    } else {
+      ans[i]   = this->m_modulus - temp.DivideAndRound(q);
+    }
+    else {
       ans[i] = ans[i].DivideAndRound(q);
     }
   }
@@ -603,14 +603,15 @@ myVecP<myT> myVecP<myT>::DivideAndRound(const myT &q) const {
 }
 
 template <class myT>
-const myVecP<myT> &myVecP<myT>::DivideAndRoundEq(const myT &q) {
+const myVecP<myT>& myVecP<myT>::DivideAndRoundEq(const myT& q) {
   ModulusCheck("myVecP::DivideAndRound");
   myT halfQ(this->m_modulus >> 1);
   for (size_t i = 0; i < this->GetLength(); i++) {
     if ((*this)[i] > halfQ) {
-      myT temp = this->m_modulus - (*this)[i];
+      myT temp   = this->m_modulus - (*this)[i];
       (*this)[i] = this->m_modulus - temp.DivideAndRound(q);
-    } else {
+    }
+    else {
       (*this)[i] = (*this)[i].DivideAndRound(q);
     }
   }
@@ -621,8 +622,7 @@ const myVecP<myT> &myVecP<myT>::DivideAndRoundEq(const myT &q) {
 
 // not sure what this does..
 template <class myT>
-myVecP<myT> myVecP<myT>::GetDigitAtIndexForBase(size_t index,
-                                                usint base) const {
+myVecP<myT> myVecP<myT>::GetDigitAtIndexForBase(size_t index, usint base) const {
   myVecP ans(*this);
   for (size_t i = 0; i < this->GetLength(); i++) {
     ans[i] = ans[i].GetDigitAtIndexForBase(index, base);

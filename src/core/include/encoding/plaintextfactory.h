@@ -35,19 +35,17 @@
 
 namespace lbcrypto {
 
-class PlaintextFactory {
+class PlaintextFactory
+{
   PlaintextFactory() {}  // never construct one!
 
  public:
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<Poly::Params> vp,
-                                 EncodingParams ep) {
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<Poly::Params> vp, EncodingParams ep) {
     Plaintext pt;
 
     switch (encoding) {
       case Unknown:
-        PALISADE_THROW(type_error,
-                       "Unknown plaintext encoding type in MakePlaintext");
+        PALISADE_THROW(type_error, "Unknown plaintext encoding type in MakePlaintext");
         break;
       case CoefPacked:
         pt = std::make_shared<CoefPackedEncoding>(vp, ep);
@@ -66,15 +64,12 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<NativePoly::Params> vp,
-                                 EncodingParams ep) {
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<NativePoly::Params> vp, EncodingParams ep) {
     Plaintext pt;
 
     switch (encoding) {
       case Unknown:
-        PALISADE_THROW(type_error,
-                       "Unknown plaintext encoding type in MakePlaintext");
+        PALISADE_THROW(type_error, "Unknown plaintext encoding type in MakePlaintext");
         break;
       case CoefPacked:
         pt = std::make_shared<CoefPackedEncoding>(vp, ep);
@@ -93,15 +88,12 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<DCRTPoly::Params> vp,
-                                 EncodingParams ep) {
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) {
     Plaintext pt;
 
     switch (encoding) {
       case Unknown:
-        PALISADE_THROW(type_error,
-                       "Unknown plaintext encoding type in MakePlaintext");
+        PALISADE_THROW(type_error, "Unknown plaintext encoding type in MakePlaintext");
         break;
       case CoefPacked:
         pt = std::make_shared<CoefPackedEncoding>(vp, ep);
@@ -120,8 +112,7 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<Poly::Params> vp, EncodingParams ep,
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<Poly::Params> vp, EncodingParams ep,
                                  const vector<int64_t>& value) {
     Plaintext pt = MakePlaintext(encoding, vp, ep);
     pt->SetIntVectorValue(value);
@@ -129,9 +120,7 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<NativePoly::Params> vp,
-                                 EncodingParams ep,
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<NativePoly::Params> vp, EncodingParams ep,
                                  const vector<int64_t>& value) {
     Plaintext pt = MakePlaintext(encoding, vp, ep);
     pt->SetIntVectorValue(value);
@@ -139,9 +128,7 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<DCRTPoly::Params> vp,
-                                 EncodingParams ep,
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
                                  const vector<int64_t>& value) {
     Plaintext pt = MakePlaintext(encoding, vp, ep);
     pt->SetIntVectorValue(value);
@@ -149,8 +136,7 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<Poly::Params> vp, EncodingParams ep,
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<Poly::Params> vp, EncodingParams ep,
                                  const string& value) {
     Plaintext pt = MakePlaintext(encoding, vp, ep);
     pt->SetStringValue(value);
@@ -158,24 +144,21 @@ class PlaintextFactory {
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<NativePoly::Params> vp,
-                                 EncodingParams ep, const string& value) {
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<NativePoly::Params> vp, EncodingParams ep,
+                                 const string& value) {
     Plaintext pt = MakePlaintext(encoding, vp, ep);
     pt->SetStringValue(value);
     pt->Encode();
     return pt;
   }
 
-  static Plaintext MakePlaintext(PlaintextEncodings encoding,
-                                 shared_ptr<DCRTPoly::Params> vp,
-                                 EncodingParams ep, const string& value) {
+  static Plaintext MakePlaintext(PlaintextEncodings encoding, shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
+                                 const string& value) {
     Plaintext pt = MakePlaintext(encoding, vp, ep);
     pt->SetStringValue(value);
     pt->Encode();
     return pt;
   }
-
 };
 
 } /* namespace lbcrypto */

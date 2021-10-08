@@ -32,7 +32,8 @@
 
 namespace lbcrypto {
 
-class CryptoContextHelper {
+class CryptoContextHelper
+{
  public:
   /**
    *
@@ -59,8 +60,7 @@ class CryptoContextHelper {
    * @param out stream to write to
    * @param filter is a substring that matches parameter set names
    */
-  static void printParmSetNamesByFilter(std::ostream& out,
-                                        const string& filter);
+  static void printParmSetNamesByFilter(std::ostream& out, const string& filter);
 
   /**
    * Prints all parameter sets matching one of the filters
@@ -68,8 +68,7 @@ class CryptoContextHelper {
    * @param out stream to write to
    * @param filters is a list of substrings that matches parameter set names
    */
-  static void printParmSetNamesByFilters(
-      std::ostream& out, std::initializer_list<std::string> filters);
+  static void printParmSetNamesByFilters(std::ostream& out, std::initializer_list<std::string> filters);
 
   /**
    * Prints all parameter sets excluding the ones matching the filter
@@ -77,8 +76,7 @@ class CryptoContextHelper {
    * @param out stream to write to
    * @param filter is a substring that matches parameter set names
    */
-  static void printParmSetNamesByExcludeFilter(std::ostream& out,
-                                               const string& filter);
+  static void printParmSetNamesByExcludeFilter(std::ostream& out, const string& filter);
 
   /**
    * Prints all parameter sets excluding the ones matching one of the filters
@@ -86,8 +84,7 @@ class CryptoContextHelper {
    * @param out stream to write to
    * @param filters a list of substrings that matches parameter set names
    */
-  static void printParmSetNamesByExcludeFilters(
-      std::ostream& out, std::initializer_list<std::string> filters);
+  static void printParmSetNamesByExcludeFilters(std::ostream& out, std::initializer_list<std::string> filters);
 
   /**
    * Generate a CryptoContext for a given parameter set name
@@ -95,8 +92,7 @@ class CryptoContextHelper {
    * @param parmsetname name of parameter set to use
    * @return newly constructed CryptoContext, or null on failure
    */
-  static CryptoContext<Poly> getNewContext(const string& parmsetname,
-                                           EncodingParams p = 0);
+  static CryptoContext<Poly> getNewContext(const string& parmsetname, EncodingParams p = 0);
 
   /**
    * Generate a DCRT CryptoContext for a given parameter set name
@@ -106,16 +102,11 @@ class CryptoContextHelper {
    * @param primeBits - bit width of the primes in the towers
    * @return newly constructed CryptoContext, or null on failure
    */
-  static CryptoContext<DCRTPoly> getNewDCRTContext(const string& parmsetname,
-                                                   usint numTowers,
-                                                   usint primeBits);
+  static CryptoContext<DCRTPoly> getNewDCRTContext(const string& parmsetname, usint numTowers, usint primeBits);
 
   template <typename Element>
-  static CryptoContext<Element> ContextFromAppProfile(const string& scheme,
-                                                      PlaintextModulus ptm,
-                                                      usint nA, usint nM,
-                                                      usint nK, usint maxD,
-                                                      float secFactor);
+  static CryptoContext<Element> ContextFromAppProfile(const string& scheme, PlaintextModulus ptm, usint nA, usint nM,
+                                                      usint nK, usint maxD, float secFactor);
 };
 
 }  // namespace lbcrypto

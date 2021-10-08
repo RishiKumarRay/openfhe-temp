@@ -26,13 +26,10 @@
 namespace lbcrypto {
 
 template <typename IntType>
-ILDCRTParams<IntType>::ILDCRTParams(usint order, usint depth, usint bits)
-    : ElemParams<IntType>(order, 0) {
+ILDCRTParams<IntType>::ILDCRTParams(usint order, usint depth, usint bits) : ElemParams<IntType>(order, 0) {
   if (order == 0) return;
-  if (depth == 0)
-    PALISADE_THROW(config_error, "Invalid depth for ILDCRTParams");
-  if (bits == 0 || bits > 64)
-    PALISADE_THROW(config_error, "Invalid bits for ILDCRTParams");
+  if (depth == 0) PALISADE_THROW(config_error, "Invalid depth for ILDCRTParams");
+  if (bits == 0 || bits > 64) PALISADE_THROW(config_error, "Invalid bits for ILDCRTParams");
 
   m_parms.resize(depth);
   this->ciphertextModulus = IntType(0);
@@ -41,7 +38,7 @@ ILDCRTParams<IntType>::ILDCRTParams(usint order, usint depth, usint bits)
 
   for (size_t j = 0;;) {
     NativeInteger root = RootOfUnity<NativeInteger>(order, q);
-    m_parms[j] = std::make_shared<ILNativeParams>(order, q, root);
+    m_parms[j]         = std::make_shared<ILNativeParams>(order, q, root);
 
     if (++j >= depth) break;
 
@@ -53,14 +50,9 @@ ILDCRTParams<IntType>::ILDCRTParams(usint order, usint depth, usint bits)
 
 }  // namespace lbcrypto
 
-CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<M2Integer>,
-                     lbcrypto::ILDCRTParams<M2Integer>::SerializedVersion());
-CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<M4Integer>,
-                     lbcrypto::ILDCRTParams<M4Integer>::SerializedVersion());
+CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<M2Integer>, lbcrypto::ILDCRTParams<M2Integer>::SerializedVersion());
+CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<M4Integer>, lbcrypto::ILDCRTParams<M4Integer>::SerializedVersion());
 #ifdef WITH_NTL
-CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<M6Integer>,
-                     lbcrypto::ILDCRTParams<M6Integer>::SerializedVersion());
+CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<M6Integer>, lbcrypto::ILDCRTParams<M6Integer>::SerializedVersion());
 #endif
-CEREAL_CLASS_VERSION(
-    lbcrypto::ILDCRTParams<NativeInteger>,
-    lbcrypto::ILDCRTParams<NativeInteger>::SerializedVersion());
+CEREAL_CLASS_VERSION(lbcrypto::ILDCRTParams<NativeInteger>, lbcrypto::ILDCRTParams<NativeInteger>::SerializedVersion());

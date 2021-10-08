@@ -41,7 +41,8 @@ namespace lbcrypto {
  * and their inheritors.
  */
 template <typename IntType>
-class ILParamsImpl : public ElemParams<IntType> {
+class ILParamsImpl : public ElemParams<IntType>
+{
  public:
   typedef IntType Integer;
 
@@ -62,11 +63,9 @@ class ILParamsImpl : public ElemParams<IntType> {
    * operations.
    * @return
    */
-  ILParamsImpl(const usint order, const IntType &modulus,
-               const IntType &rootOfUnity, const IntType &bigModulus = 0,
-               const IntType &bigRootOfUnity = 0)
-      : ElemParams<IntType>(order, modulus, rootOfUnity, bigModulus,
-                            bigRootOfUnity) {}
+  ILParamsImpl(const usint order, const IntType& modulus, const IntType& rootOfUnity, const IntType& bigModulus = 0,
+               const IntType& bigRootOfUnity = 0) :
+      ElemParams<IntType>(order, modulus, rootOfUnity, bigModulus, bigRootOfUnity) {}
 
   /**
    * @brief Constructor for the case of partially pre-computed parameters.
@@ -74,8 +73,7 @@ class ILParamsImpl : public ElemParams<IntType> {
    * @param &order the order of the ciphertext.
    * @param &modulus the ciphertext modulus.
    */
-  ILParamsImpl(const usint order, const IntType &modulus)
-      : ElemParams<IntType>(order, modulus) {
+  ILParamsImpl(const usint order, const IntType& modulus) : ElemParams<IntType>(order, modulus) {
     this->rootOfUnity = RootOfUnity<IntType>(order, modulus);
   }
 
@@ -84,7 +82,7 @@ class ILParamsImpl : public ElemParams<IntType> {
    *
    * @param &rhs the input set of parameters which is copied.
    */
-  ILParamsImpl(const ILParamsImpl &rhs) : ElemParams<IntType>(rhs) {}
+  ILParamsImpl(const ILParamsImpl& rhs) : ElemParams<IntType>(rhs) {}
 
   /**
    * @brief Assignment Operator.
@@ -92,7 +90,7 @@ class ILParamsImpl : public ElemParams<IntType> {
    * @param &rhs the params to be copied.
    * @return this object
    */
-  const ILParamsImpl &operator=(const ILParamsImpl &rhs) {
+  const ILParamsImpl& operator=(const ILParamsImpl& rhs) {
     ElemParams<IntType>::operator=(rhs);
     return *this;
   }
@@ -102,7 +100,7 @@ class ILParamsImpl : public ElemParams<IntType> {
    *
    * @param &rhs the input set of parameters which is copied.
    */
-  ILParamsImpl(const ILParamsImpl &&rhs) : ElemParams<IntType>(rhs) {}
+  ILParamsImpl(const ILParamsImpl&& rhs) : ElemParams<IntType>(rhs) {}
 
   /**
    * @brief Standard Destructor method.
@@ -116,15 +114,14 @@ class ILParamsImpl : public ElemParams<IntType> {
    * @return True if this Poly represents the same values as the specified
    * DCRTPoly, False otherwise
    */
-  bool operator==(const ElemParams<IntType> &rhs) const {
-    if (dynamic_cast<const ILParamsImpl<IntType> *>(&rhs) == nullptr)
-      return false;
+  bool operator==(const ElemParams<IntType>& rhs) const {
+    if (dynamic_cast<const ILParamsImpl<IntType>*>(&rhs) == nullptr) return false;
 
     return ElemParams<IntType>::operator==(rhs);
   }
 
  private:
-  std::ostream &doprint(std::ostream &out) const {
+  std::ostream& doprint(std::ostream& out) const {
     out << "ILParams ";
     ElemParams<IntType>::doprint(out);
     out << std::endl;
@@ -133,22 +130,26 @@ class ILParamsImpl : public ElemParams<IntType> {
 
  public:
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<ElemParams<IntType>>(this));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::base_class<ElemParams<IntType>>(this));
   }
 
-  std::string SerializedObjectName() const { return "ILParms"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "ILParms";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 };
 
 }  // namespace lbcrypto

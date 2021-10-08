@@ -49,7 +49,7 @@ namespace lbcrypto {
  * @return is the output of the zero padding.
  */
 template <typename V>
-V ZeroPadForward(const V &InputPoly, usint target_order);
+V ZeroPadForward(const V& InputPoly, usint target_order);
 
 /**
  * Zero Pad Inverse of Elements.
@@ -63,7 +63,7 @@ V ZeroPadForward(const V &InputPoly, usint target_order);
  * @return is the output of the zero padding.
  */
 template <typename V>
-V ZeroPadInverse(const V &InputPoly, usint target_order);
+V ZeroPadInverse(const V& InputPoly, usint target_order);
 
 /**
  * Determines if a number is a power of 2.
@@ -98,8 +98,7 @@ std::string replaceChar(std::string str, char in, char out);
  */
 inline uint32_t IsAdditionOverflow(uint64_t a, uint64_t b) {
   a += b;
-  if (a < b)
-    return 1;
+  if (a < b) return 1;
   else
     return 0;
 }
@@ -112,11 +111,10 @@ inline uint32_t IsAdditionOverflow(uint64_t a, uint64_t b) {
  * @return 1 if overflow occurs, 0 otherwise
  */
 
-inline uint32_t AdditionWithCarryOut(uint64_t a, uint64_t b, uint64_t &c) {
+inline uint32_t AdditionWithCarryOut(uint64_t a, uint64_t b, uint64_t& c) {
   a += b;
   c = a;
-  if (a < b)
-    return 1;
+  if (a < b) return 1;
   else
     return 0;
 }
@@ -141,22 +139,20 @@ inline DoubleNativeInt Mul128(uint64_t a, uint64_t b) {
  * @param mu: 2^128/modulus (128-bit)
  * @return result: 64-bit result = a mod m
  */
-inline uint64_t BarrettUint128ModUint64(const DoubleNativeInt &a,
-                                        uint64_t modulus,
-                                        const DoubleNativeInt &mu) {
+inline uint64_t BarrettUint128ModUint64(const DoubleNativeInt& a, uint64_t modulus, const DoubleNativeInt& mu) {
   // (a * mu)/2^128 // we need the upper 128-bit of (256-bit product)
-  uint64_t result = 0, a_lo = 0, a_hi = 0, mu_lo = 0, mu_hi = 0, left_hi = 0,
-           middle_lo = 0, middle_hi = 0, tmp1 = 0, tmp2 = 0, carry = 0;
+  uint64_t result = 0, a_lo = 0, a_hi = 0, mu_lo = 0, mu_hi = 0, left_hi = 0, middle_lo = 0, middle_hi = 0, tmp1 = 0,
+           tmp2 = 0, carry = 0;
   DoubleNativeInt middle = 0;
 
-  a_lo = (uint64_t)a;
-  a_hi = a >> 64;
+  a_lo  = (uint64_t)a;
+  a_hi  = a >> 64;
   mu_lo = (uint64_t)mu;
   mu_hi = mu >> 64;
 
   left_hi = (Mul128(a_lo, mu_lo)) >> 64;  // mul left parts, discard lower word
 
-  middle = Mul128(a_lo, mu_hi);  // mul middle first
+  middle    = Mul128(a_lo, mu_hi);  // mul middle first
   middle_lo = (uint64_t)middle;
   middle_hi = middle >> 64;
 
@@ -165,7 +161,7 @@ inline uint64_t BarrettUint128ModUint64(const DoubleNativeInt &a,
 
   tmp2 = middle_hi + carry;  // accumulate
 
-  middle = Mul128(a_hi, mu_lo);  // mul middle second
+  middle    = Mul128(a_hi, mu_lo);  // mul middle second
   middle_lo = (uint64_t)middle;
   middle_hi = middle >> 64;
 
@@ -179,7 +175,8 @@ inline uint64_t BarrettUint128ModUint64(const DoubleNativeInt &a,
   // subtract lower words only, higher words should be the same
   result = a_lo - tmp1 * modulus;
 
-  while (result >= modulus) result -= modulus;
+  while (result >= modulus)
+    result -= modulus;
 
   return result;
 }
@@ -190,8 +187,7 @@ inline uint64_t BarrettUint128ModUint64(const DoubleNativeInt &a,
  */
 inline std::string GenerateUniqueKeyID() {
   const size_t intsInID = 128 / (sizeof(uint32_t) * 8);
-  std::uniform_int_distribution<uint32_t> distribution(
-      0, std::numeric_limits<uint32_t>::max());
+  std::uniform_int_distribution<uint32_t> distribution(0, std::numeric_limits<uint32_t>::max());
   std::stringstream s;
   s.fill('0');
   s << std::hex;

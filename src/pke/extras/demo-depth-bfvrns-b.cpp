@@ -44,54 +44,42 @@
 using namespace std;
 using namespace lbcrypto;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   ////////////////////////////////////////////////////////////
   // Set-up of parameters
   TimeVar t;
   double processingTime(0.0);
 
   usint plaintextModulus = 65537;
-  double sigma = 3.2;
+  double sigma           = 3.2;
 
   size_t dcrtBits = 60;
 
-  int numkeys = 1 << 4;
-  int numruns = 1 << 4;
-  int mult_depth = 3;
+  int numkeys      = 1 << 4;
+  int numruns      = 1 << 4;
+  int mult_depth   = 3;
   int relin_window = 1;
-  using Element = DCRTPoly;
+  using Element    = DCRTPoly;
 
   ////////////////////////////////////////////////////////////
   // Parameter generation
   ////////////////////////////////////////////////////////////
 
-  EncodingParams encodingParams(
-      std::make_shared<EncodingParamsImpl>(plaintextModulus));
+  EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(plaintextModulus));
 
   // Set Crypto Parameters
-  CryptoContext<Element> cryptoContext =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrnsB(
-          plaintextModulus, HEStd_128_classic, sigma, 0, mult_depth, 0,
-          OPTIMIZED, 2, relin_window, dcrtBits);
+  CryptoContext<Element> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrnsB(
+    plaintextModulus, HEStd_128_classic, sigma, 0, mult_depth, 0, OPTIMIZED, 2, relin_window, dcrtBits);
 
   // enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
   cryptoContext->Enable(SHE);
 
-  std::cout << "\np = "
-            << cryptoContext->GetCryptoParameters()->GetPlaintextModulus()
-            << std::endl;
-  std::cout << "n = "
-            << cryptoContext->GetCryptoParameters()
-                       ->GetElementParams()
-                       ->GetCyclotomicOrder() /
-                   2
+  std::cout << "\np = " << cryptoContext->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cryptoContext->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
             << std::endl;
   std::cout << "log2 q = "
-            << log2(cryptoContext->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
+            << log2(cryptoContext->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
 
   // Initialize Public Key Containers
@@ -101,7 +89,7 @@ int main(int argc, char *argv[]) {
   TIC(t);
 
   std::vector<int64_t> vectorOfInts1 = { 1 };
-  Plaintext plaintext = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
+  Plaintext plaintext                = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
   Plaintext dec(plaintext);
   Ciphertext<DCRTPoly> ciphertext;
   std::vector<int> depth(numruns, 0);

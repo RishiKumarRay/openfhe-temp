@@ -53,7 +53,8 @@ typedef Blake2Engine PRNG;
  * ternary, and Gaussian distributions, which derive their randomness from the
  * PRNG.
  */
-class PseudoRandomNumberGenerator {
+class PseudoRandomNumberGenerator
+{
  public:
   /**
    * @brief  Returns a reference to the PRNG engine
@@ -70,7 +71,7 @@ class PseudoRandomNumberGenerator {
     }
   }
 
-  static PRNG &GetPRNG() {
+  static PRNG& GetPRNG() {
     // initialization of PRNGs
     if (m_prng == nullptr) {
 #pragma omp critical
@@ -83,7 +84,7 @@ class PseudoRandomNumberGenerator {
 
         std::array<uint32_t, 16> seed{};
         seed[0] = 1;
-        m_prng = std::make_shared<PRNG>(seed);
+        m_prng  = std::make_shared<PRNG>(seed);
 
 #else
         // A 512-bit seed is generated for each thread (this roughly corresponds
@@ -103,23 +104,19 @@ class PseudoRandomNumberGenerator {
         // high-resolution clock typically has a nanosecond tick period
         // Arguably this may give up to 32 bits of entropy as the clock gets
         // recycled every 4.3 seconds
-        initKey[0] = std::chrono::high_resolution_clock::now()
-                         .time_since_epoch()
-                         .count();
+        initKey[0] = std::chrono::high_resolution_clock::now().time_since_epoch().count();
         // A thread id is often close to being random (on most systems)
         initKey[1] = std::hash<std::thread::id>{}(std::this_thread::get_id());
         // On a 64-bit machine, the thread id is 64 bits long
         // skip on 32-bit arm architectures
 #if !defined(__arm__) && !defined(__EMSCRIPTEN__)
-        if (sizeof(size_t) == 8)
-          initKey[2] =
-              (std::hash<std::thread::id>{}(std::this_thread::get_id()) >> 32);
+        if (sizeof(size_t) == 8) initKey[2] = (std::hash<std::thread::id>{}(std::this_thread::get_id()) >> 32);
 #endif
 
         // heap variable; we are going to use the least 32 bits of its memory
         // location as the counter for BLAKE2 This will increase the entropy of
         // the BLAKE2 sample
-        void *mem = malloc(1);
+        void* mem = malloc(1);
         free(mem);
         uint32_t counter = reinterpret_cast<long long>(mem);
 
@@ -132,9 +129,9 @@ class PseudoRandomNumberGenerator {
         }
 
         std::array<uint32_t, 16> rdseed{};
-        size_t attempts = 3;
+        size_t attempts  = 3;
         bool rdGenPassed = false;
-        size_t idx = 0;
+        size_t idx       = 0;
         while (!rdGenPassed && idx < attempts) {
           try {
             std::random_device genR;
@@ -149,7 +146,8 @@ class PseudoRandomNumberGenerator {
               rdseed[i] = distribution(genR);
             }
             rdGenPassed = true;
-          } catch (std::exception &e) {
+          }
+          catch (std::exception& e) {
           }
           idx++;
         }
@@ -185,7 +183,8 @@ class PseudoRandomNumberGenerator {
  *
  */
 template <typename VecType>
-class DistributionGenerator {
+class DistributionGenerator
+{
  public:
   DistributionGenerator() {}
   virtual ~DistributionGenerator() {}

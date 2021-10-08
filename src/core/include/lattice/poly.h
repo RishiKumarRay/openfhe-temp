@@ -52,10 +52,11 @@ namespace lbcrypto {
  * @brief Ideal lattice using a vector representation
  */
 template <typename VecType>
-class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
+class PolyImpl : public ILElement<PolyImpl<VecType>, VecType>
+{
  public:
   using Integer = typename VecType::Integer;
-  using Params = ILParamsImpl<Integer>;
+  using Params  = ILParamsImpl<Integer>;
 
   typedef VecType Vector;
   typedef PolyImpl<VecType> PolyType;
@@ -70,7 +71,9 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @brief Return the element name.
    * @return This method returns "PolyImpl".
    */
-  static const std::string GetElementName() { return "PolyImpl"; }
+  static const std::string GetElementName() {
+    return "PolyImpl";
+  }
 
   /**
    * @brief Default constructor
@@ -84,11 +87,9 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param initializeElementToZero - if true, allocates  an empty vector set to
    * all 0s
    */
-  PolyImpl(const shared_ptr<Params> params, Format format = Format::EVALUATION,
-           bool initializeElementToZero = false);
+  PolyImpl(const shared_ptr<Params> params, Format format = Format::EVALUATION, bool initializeElementToZero = false);
 
-  PolyImpl(const shared_ptr<ILDCRTParams<Integer>> params,
-           Format format = Format::EVALUATION,
+  PolyImpl(const shared_ptr<ILDCRTParams<Integer>> params, Format format = Format::EVALUATION,
            bool initializeElementToZero = false);
 
   /**
@@ -98,8 +99,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param params - element parameters
    * @param format - Format::EVALUATION or COEFFICIENT
    */
-  PolyImpl(bool initializeElementToMax, const shared_ptr<Params> params,
-           Format format);
+  PolyImpl(bool initializeElementToMax, const shared_ptr<Params> params, Format format);
 
   /**
    * @brief Construct with a vector from a given generator
@@ -108,8 +108,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &params the input params.
    * @param format - Format::EVALUATION or COEFFICIENT
    */
-  PolyImpl(const DggType &dgg, const shared_ptr<Params> params,
-           Format format = Format::EVALUATION);
+  PolyImpl(const DggType& dgg, const shared_ptr<Params> params, Format format = Format::EVALUATION);
 
   /**
    * @brief Construct with a vector from a given generator
@@ -118,8 +117,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &params the input params.
    * @param format - Format::EVALUATION or COEFFICIENT
    */
-  PolyImpl(const BugType &bug, const shared_ptr<Params> params,
-           Format format = Format::EVALUATION);
+  PolyImpl(const BugType& bug, const shared_ptr<Params> params, Format format = Format::EVALUATION);
 
   /**
    * @brief Construct with a vector from a given generator
@@ -130,8 +128,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param h - Hamming weight for sparse ternary distribution (by default, when
    * h = 0, the distribution is NOT sparse)
    */
-  PolyImpl(const TugType &tug, const shared_ptr<Params> params,
-           Format format = Format::EVALUATION, uint32_t h = 0);
+  PolyImpl(const TugType& tug, const shared_ptr<Params> params, Format format = Format::EVALUATION, uint32_t h = 0);
 
   /**
    * @brief Construct with a vector from a given generator
@@ -140,8 +137,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &params the input params.
    * @param format - Format::EVALUATION or COEFFICIENT
    */
-  PolyImpl(DugType &dug, const shared_ptr<Params> params,
-           Format format = Format::EVALUATION);
+  PolyImpl(DugType& dug, const shared_ptr<Params> params, Format format = Format::EVALUATION);
 
   /**
    * @brief Create lambda that allocates a zeroed element for the case when it
@@ -149,9 +145,10 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param params the params to use.
    * @param format - Format::EVALUATION or COEFFICIENT
    */
-  inline static function<PolyType()> Allocator(const shared_ptr<Params> params,
-                                               Format format) {
-    return [=]() { return PolyType(params, format, true); };
+  inline static function<PolyType()> Allocator(const shared_ptr<Params> params, Format format) {
+    return [=]() {
+      return PolyType(params, format, true);
+    };
   }
 
   /**
@@ -162,8 +159,8 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param stddev standard deviation for the discrete gaussian generator.
    * @return the resulting vector.
    */
-  inline static function<PolyType()> MakeDiscreteGaussianCoefficientAllocator(
-      shared_ptr<Params> params, Format resultFormat, double stddev) {
+  inline static function<PolyType()> MakeDiscreteGaussianCoefficientAllocator(shared_ptr<Params> params,
+                                                                              Format resultFormat, double stddev) {
     return [=]() {
       DiscreteGaussianGeneratorImpl<VecType> dgg(stddev);
       PolyType ilvec(dgg, params, Format::COEFFICIENT);
@@ -179,8 +176,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param format format for the polynomials generated.
    * @return the resulting vector.
    */
-  inline static function<PolyType()> MakeDiscreteUniformAllocator(
-      shared_ptr<Params> params, Format format) {
+  inline static function<PolyType()> MakeDiscreteUniformAllocator(shared_ptr<Params> params, Format format) {
     return [=]() {
       DiscreteUniformGeneratorImpl<VecType> dug;
       dug.SetModulus(params->GetModulus());
@@ -194,7 +190,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element the copied element.
    * @param parms ILParams instance that is is passed.
    */
-  PolyImpl(const PolyType &element, shared_ptr<Params> parms = 0);
+  PolyImpl(const PolyType& element, shared_ptr<Params> parms = 0);
 
   /**
    * @brief Copy constructor from a Poly of native integers.
@@ -202,7 +198,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element the copied element.
    * @param &format sets the format for the new Poly object
    */
-  PolyImpl(const PolyNative &element, Format format);
+  PolyImpl(const PolyNative& element, Format format);
 
   /**
    * @brief Move constructor.
@@ -210,19 +206,23 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &&element the copied element.
    * @param parms ILParams instance that is is passed.
    */
-  PolyImpl(PolyType &&element, shared_ptr<Params> parms = 0);
+  PolyImpl(PolyType&& element, shared_ptr<Params> parms = 0);
 
   /**
    * @brief Clone the object by making a copy of it and returning the copy
    * @return new Element
    */
-  PolyType Clone() const { return PolyImpl(*this); }
+  PolyType Clone() const {
+    return PolyImpl(*this);
+  }
 
   /**
    * @brief Clone the object, but have it contain nothing
    * @return new Element
    */
-  PolyType CloneEmpty() const { return PolyImpl(); }
+  PolyType CloneEmpty() const {
+    return PolyImpl();
+  }
 
   /**
    * @brief Clone method that creates a new PolyImpl and clones only the params.
@@ -241,8 +241,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * to populate the towers of the PolyImpl with random numbers.
    * @return new Element
    */
-  PolyType CloneWithNoise(const DiscreteGaussianGeneratorImpl<VecType> &dgg,
-                          Format format) const;
+  PolyType CloneWithNoise(const DiscreteGaussianGeneratorImpl<VecType>& dgg, Format format) const;
 
   /**
    * Destructor
@@ -255,7 +254,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &rhs the PolyImpl to be copied.
    * @return the resulting PolyImpl.
    */
-  const PolyType &operator=(const PolyType &rhs);
+  const PolyType& operator=(const PolyType& rhs);
 
   /**
    * @brief Move Assignment.
@@ -263,7 +262,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &rhs the PolyImpl to be copied.
    * @return the resulting PolyImpl.
    */
-  const PolyType &operator=(PolyType &&rhs);
+  const PolyType& operator=(PolyType&& rhs);
 
   /**
    * @brief Initalizer list
@@ -271,7 +270,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &rhs the list to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  const PolyType &operator=(std::initializer_list<uint64_t> rhs);
+  const PolyType& operator=(std::initializer_list<uint64_t> rhs);
 
   /**
    * @brief Creates a Poly from a vector of signed integers (used for trapdoor
@@ -280,7 +279,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &rhs the vector to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  const PolyType &operator=(std::vector<int64_t> rhs);
+  const PolyType& operator=(std::vector<int64_t> rhs);
 
   /**
    * @brief Creates a Poly from a vector of signed integers (used for trapdoor
@@ -289,7 +288,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &rhs the vector to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  const PolyType &operator=(std::vector<int32_t> rhs);
+  const PolyType& operator=(std::vector<int32_t> rhs);
 
   /**
    * @brief Initalizer list
@@ -297,7 +296,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &rhs the list to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  const PolyType &operator=(std::initializer_list<std::string> rhs);
+  const PolyType& operator=(std::initializer_list<std::string> rhs);
 
   /**
    * @brief Assignment Operator. The usint val will be set at index zero and all
@@ -306,7 +305,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param val is the usint to assign to index zero.
    * @return the resulting vector.
    */
-  const PolyType &operator=(uint64_t val);
+  const PolyType& operator=(uint64_t val);
 
   // GETTERS
   /**
@@ -314,7 +313,9 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    *
    * @return the ring element params.
    */
-  const shared_ptr<Params> GetParams() const { return m_params; }
+  const shared_ptr<Params> GetParams() const {
+    return m_params;
+  }
 
   /**
    * @brief Get format of the element
@@ -335,51 +336,59 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    *
    * @return the modulus.
    */
-  const Integer &GetModulus() const { return m_params->GetModulus(); }
+  const Integer& GetModulus() const {
+    return m_params->GetModulus();
+  }
 
   /**
    * @brief Get the values for the element
    *
    * @return the vector.
    */
-  const VecType &GetValues() const;
+  const VecType& GetValues() const;
 
   /**
    * @brief Get the cyclotomic order
    *
    * @return order
    */
-  usint GetCyclotomicOrder() const { return m_params->GetCyclotomicOrder(); }
+  usint GetCyclotomicOrder() const {
+    return m_params->GetCyclotomicOrder();
+  }
 
   /**
    * @brief Get the ring dimension.
    *
    * @return the ring dimension
    */
-  usint GetRingDimension() const { return m_params->GetRingDimension(); }
+  usint GetRingDimension() const {
+    return m_params->GetRingDimension();
+  }
 
   /**
    * @brief Get the root of unity.
    *
    * @return the root of unity.
    */
-  const Integer &GetRootOfUnity() const { return m_params->GetRootOfUnity(); }
+  const Integer& GetRootOfUnity() const {
+    return m_params->GetRootOfUnity();
+  }
 
   /**
    * @brief Get value of element at index i.
    *
    * @return value at index i.
    */
-  Integer &at(usint i);
-  const Integer &at(usint i) const;
+  Integer& at(usint i);
+  const Integer& at(usint i) const;
 
   /**
    * @brief Get value of element at index i.
    *
    * @return value at index i.
    */
-  Integer &operator[](usint i);
-  const Integer &operator[](usint i) const;
+  Integer& operator[](usint i);
+  const Integer& operator[](usint i) const;
 
   // SETTERS
   /**
@@ -396,7 +405,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param values is the set of values of the vector.
    * @param format is the format, either COEFFICIENT or EVALUATION.
    */
-  void SetValues(const VecType &values, Format format);
+  void SetValues(const VecType& values, Format format);
 
   /**
    * @brief Set method of the values.
@@ -404,7 +413,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param values is the set of values of the vector.
    * @param format is the format, either COEFFICIENT or EVALUATION.
    */
-  void SetValues(VecType &&values, Format format);
+  void SetValues(VecType&& values, Format format);
 
   /**
    * @brief Sets all values of element to zero.
@@ -423,7 +432,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to add entry-wise.
    * @return is the return of the addition operation.
    */
-  PolyImpl Plus(const Integer &element) const;
+  PolyImpl Plus(const Integer& element) const;
 
   /**
    * @brief Scalar subtraction - subtract an element to all entries.
@@ -431,7 +440,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to subtract entry-wise.
    * @return is the return value of the minus operation.
    */
-  PolyImpl Minus(const Integer &element) const;
+  PolyImpl Minus(const Integer& element) const;
 
   /**
    * @brief Scalar multiplication - multiply all entries.
@@ -439,7 +448,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to multiply entry-wise.
    * @return is the return value of the times operation.
    */
-  PolyImpl Times(const Integer &element) const;
+  PolyImpl Times(const Integer& element) const;
 
 #if NATIVEINT != 64
   /**
@@ -477,7 +486,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to add with.
    * @return is the result of the addition.
    */
-  PolyImpl Plus(const PolyImpl &element) const;
+  PolyImpl Plus(const PolyImpl& element) const;
 
   /**
    * @brief Performs a subtraction operation and returns the result.
@@ -485,7 +494,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to subtract with.
    * @return is the result of the subtraction.
    */
-  PolyImpl Minus(const PolyImpl &element) const;
+  PolyImpl Minus(const PolyImpl& element) const;
 
   /**
    * @brief Performs a multiplication operation and returns the result.
@@ -493,7 +502,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to multiply with.
    * @return is the result of the multiplication.
    */
-  PolyImpl Times(const PolyImpl &element) const;
+  PolyImpl Times(const PolyImpl& element) const;
 
   /**
    * @brief Performs += operation with a Integer and returns the result.
@@ -501,7 +510,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to add
    * @return is the result of the addition.
    */
-  const PolyImpl &operator+=(const Integer &element) {
+  const PolyImpl& operator+=(const Integer& element) {
     return *this = this->Plus(element);
   }
 
@@ -511,7 +520,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to subtract
    * @return is the result of the subtraction.
    */
-  const PolyImpl &operator-=(const Integer &element) {
+  const PolyImpl& operator-=(const Integer& element) {
     m_values->ModSubEq(element);
     return *this;
   }
@@ -522,7 +531,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to multiply by
    * @return is the result of the multiplication.
    */
-  const PolyImpl &operator*=(const Integer &element) {
+  const PolyImpl& operator*=(const Integer& element) {
     m_values->ModMulEq(element);
     return *this;
   }
@@ -533,7 +542,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to add
    * @return is the result of the addition.
    */
-  const PolyImpl &operator+=(const PolyImpl &element);
+  const PolyImpl& operator+=(const PolyImpl& element);
 
   /**
    * @brief Performs an subtraction operation and returns the result.
@@ -541,7 +550,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to subtract
    * @return is the result of the subtract.
    */
-  const PolyImpl &operator-=(const PolyImpl &element);
+  const PolyImpl& operator-=(const PolyImpl& element);
 
   /**
    * @brief Performs an multiplication operation and returns the result.
@@ -549,7 +558,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &element is the element to multiply by
    * @return is the result of the multiplication.
    */
-  const PolyImpl &operator*=(const PolyImpl &element);
+  const PolyImpl& operator*=(const PolyImpl& element);
 
   /**
    * @brief Equality operator compares this element to the input element.
@@ -558,7 +567,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @return true if this PolyImpl represents the same values as the specified
    * element, false otherwise
    */
-  inline bool operator==(const PolyImpl &rhs) const {
+  inline bool operator==(const PolyImpl& rhs) const {
     if (this->GetFormat() != rhs.GetFormat()) {
       return false;
     }
@@ -580,7 +589,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @return is the return value of the multiply, divide and followed by
    * rounding operation.
    */
-  PolyImpl MultiplyAndRound(const Integer &p, const Integer &q) const;
+  PolyImpl MultiplyAndRound(const Integer& p, const Integer& q) const;
 
   /**
    * @brief Scalar division followed by rounding operation - operation on all
@@ -589,7 +598,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &q is the element to divide entry-wise.
    * @return is the return value of the divide, followed by rounding operation.
    */
-  PolyImpl DivideAndRound(const Integer &q) const;
+  PolyImpl DivideAndRound(const Integer& q) const;
 
   /**
    * @brief Performs a negation operation and returns the result.
@@ -611,7 +620,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &i is the element to perform the automorphism transform with.
    * @return is the result of the automorphism transform.
    */
-  PolyImpl AutomorphismTransform(const usint &k) const;
+  PolyImpl AutomorphismTransform(const usint& k) const;
 
   /**
    * @brief Performs an automorphism transform operation using precomputed bit
@@ -621,7 +630,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &map a vector with precomputed indices
    * @return is the result of the automorphism transform.
    */
-  PolyImpl AutomorphismTransform(usint i, const std::vector<usint> &map) const;
+  PolyImpl AutomorphismTransform(usint i, const std::vector<usint>& map) const;
 
   /**
    * @brief Interpolates based on the Chinese Remainder Transform Interpolation.
@@ -630,7 +639,9 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    *
    * @return the original ring element.
    */
-  PolyImpl CRTInterpolate() const { return *this; }
+  PolyImpl CRTInterpolate() const {
+    return *this;
+  }
 
   PolyNative DecryptionCRTInterpolate(PlaintextModulus ptm) const;
 
@@ -668,7 +679,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param modulus is the modulus to use.
    * @return is the return value of the modulus.
    */
-  PolyImpl Mod(const Integer &modulus) const;
+  PolyImpl Mod(const Integer& modulus) const;
 
   /**
    * @brief Switch modulus and adjust the values
@@ -680,9 +691,8 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * ASSUMPTION: This method assumes that the caller provides the correct
    * rootOfUnity for the modulus.
    */
-  void SwitchModulus(const Integer &modulus, const Integer &rootOfUnity,
-                     const Integer &modulusArb = Integer(0),
-                     const Integer &rootOfUnityArb = Integer(0));
+  void SwitchModulus(const Integer& modulus, const Integer& rootOfUnity, const Integer& modulusArb = Integer(0),
+                     const Integer& rootOfUnityArb = Integer(0));
 
   /**
    * @brief Convert from Coefficient to Format::EVALUATION or vice versa; calls
@@ -697,7 +707,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param &wFactor ratio between the original ring dimension and the new ring
    * dimension.
    */
-  void MakeSparse(const uint32_t &wFactor);
+  void MakeSparse(const uint32_t& wFactor);
 
   /**
    * @brief Returns true if the vector is empty/ m_values==nullptr
@@ -726,7 +736,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param x is integer to round to.
    * @return is the result of the rounding operation.
    */
-  PolyImpl Round(const Integer &x) const;
+  PolyImpl Round(const Integer& x) const;
 
   /**
    * @brief Write the element as \f$ \sum\limits{i=0}^{\lfloor {\log q/base}
@@ -739,8 +749,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * 2^{baseBits} \f$.
    * @return is the pointer where the base decomposition vector is stored
    */
-  std::vector<PolyImpl> BaseDecompose(usint baseBits,
-                                      bool evalModeAnswer = true) const;
+  std::vector<PolyImpl> BaseDecompose(usint baseBits, bool evalModeAnswer = true) const;
 
   /**
    * @brief Generate a vector of PolyImpl's as \f$ \left\{x, {base}*x,
@@ -777,10 +786,8 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param vec the element to add to the output stream.
    * @return a resulting concatenated output stream
    */
-  friend inline std::ostream &operator<<(std::ostream &os,
-                                         const PolyImpl &vec) {
-    os << (vec.m_format == Format::EVALUATION ? "EVAL: " : "COEF: ")
-       << vec.GetValues();
+  friend inline std::ostream& operator<<(std::ostream& os, const PolyImpl& vec) {
+    os << (vec.m_format == Format::EVALUATION ? "EVAL: " : "COEF: ") << vec.GetValues();
     return os;
   }
 
@@ -790,7 +797,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b second element to add.
    * @return the result of the addition operation.
    */
-  friend inline PolyImpl operator+(const PolyImpl &a, const PolyImpl &b) {
+  friend inline PolyImpl operator+(const PolyImpl& a, const PolyImpl& b) {
     return a.Plus(b);
   }
 
@@ -800,7 +807,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b integer to add.
    * @return the result of the addition operation.
    */
-  friend inline PolyImpl operator+(const PolyImpl &a, const Integer &b) {
+  friend inline PolyImpl operator+(const PolyImpl& a, const Integer& b) {
     return a.Plus(b);
   }
 
@@ -810,7 +817,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b element to add.
    * @return the result of the addition operation.
    */
-  friend inline PolyImpl operator+(const Integer &a, const PolyImpl &b) {
+  friend inline PolyImpl operator+(const Integer& a, const PolyImpl& b) {
     return b.Plus(a);
   }
 
@@ -820,7 +827,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b element to subtract.
    * @return the result of the subtraction operation.
    */
-  friend inline PolyImpl operator-(const PolyImpl &a, const PolyImpl &b) {
+  friend inline PolyImpl operator-(const PolyImpl& a, const PolyImpl& b) {
     return a.Minus(b);
   }
 
@@ -830,7 +837,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b integer to subtract.
    * @return the result of the subtraction operation.
    */
-  friend inline PolyImpl operator-(const PolyImpl &a, const Integer &b) {
+  friend inline PolyImpl operator-(const PolyImpl& a, const Integer& b) {
     return a.Minus(b);
   }
 
@@ -840,7 +847,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b element to multiply.
    * @return the result of the multiplication operation.
    */
-  friend inline PolyImpl operator*(const PolyImpl &a, const PolyImpl &b) {
+  friend inline PolyImpl operator*(const PolyImpl& a, const PolyImpl& b) {
     return a.Times(b);
   }
 
@@ -850,7 +857,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b integer to multiply.
    * @return the result of the multiplication operation.
    */
-  friend inline PolyImpl operator*(const PolyImpl &a, const Integer &b) {
+  friend inline PolyImpl operator*(const PolyImpl& a, const Integer& b) {
     return a.Times(b);
   }
 
@@ -860,7 +867,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b element to multiply.
    * @return the result of the multiplication operation.
    */
-  friend inline PolyImpl operator*(const Integer &a, const PolyImpl &b) {
+  friend inline PolyImpl operator*(const Integer& a, const PolyImpl& b) {
     return b.Times(a);
   }
 
@@ -870,7 +877,7 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b integer to multiply.
    * @return the result of the multiplication operation.
    */
-  friend inline PolyImpl operator*(const PolyImpl &a, int64_t b) {
+  friend inline PolyImpl operator*(const PolyImpl& a, int64_t b) {
     return a.Times((bigintnat::NativeInteger::SignedNativeInt)b);
   }
 
@@ -880,31 +887,35 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
    * @param b element to multiply.
    * @return the result of the multiplication operation.
    */
-  friend inline PolyImpl operator*(int64_t a, const PolyImpl &b) {
+  friend inline PolyImpl operator*(int64_t a, const PolyImpl& b) {
     return b.Times((bigintnat::NativeInteger::SignedNativeInt)a);
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", m_values));
     ar(::cereal::make_nvp("f", m_format));
     ar(::cereal::make_nvp("p", m_params));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_values));
     ar(::cereal::make_nvp("f", m_format));
     ar(::cereal::make_nvp("p", m_params));
   }
 
-  std::string SerializedObjectName() const { return "Poly"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "Poly";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // stores either coefficient or Format::EVALUATION representation
@@ -920,20 +931,18 @@ class PolyImpl : public ILElement<PolyImpl<VecType>, VecType> {
 };
 
 template <>
-inline PolyImpl<NativeVector> PolyImpl<NativeVector>::DecryptionCRTInterpolate(
-    PlaintextModulus ptm) const {
+inline PolyImpl<NativeVector> PolyImpl<NativeVector>::DecryptionCRTInterpolate(PlaintextModulus ptm) const {
   return this->Mod(ptm);
 }
 
 // biginteger version
 template <>
-inline PolyImpl<NativeVector> PolyImpl<BigVector>::ToNativePolyCloneParams()
-    const {
+inline PolyImpl<NativeVector> PolyImpl<BigVector>::ToNativePolyCloneParams() const {
   PolyImpl<NativeVector> interp(
-      std::make_shared<ILParamsImpl<NativeInteger>>(
-          this->GetCyclotomicOrder(), this->GetModulus().ConvertToInt(),
-          this->GetRootOfUnity().ConvertToInt()),
-      this->GetFormat(), true);
+    std::make_shared<ILParamsImpl<NativeInteger>>(
+      this->GetCyclotomicOrder(), this->GetModulus().ConvertToInt(), this->GetRootOfUnity().ConvertToInt()),
+    this->GetFormat(),
+    true);
 
   for (usint i = 0; i < this->GetLength(); i++) {
     interp[i] = (*this)[i].ConvertToInt();
@@ -944,8 +953,7 @@ inline PolyImpl<NativeVector> PolyImpl<BigVector>::ToNativePolyCloneParams()
 
 // native poly version
 template <>
-inline PolyImpl<NativeVector> PolyImpl<NativeVector>::ToNativePolyCloneParams()
-    const {
+inline PolyImpl<NativeVector> PolyImpl<NativeVector>::ToNativePolyCloneParams() const {
   return *this;
 }
 

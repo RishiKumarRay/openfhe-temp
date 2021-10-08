@@ -15,7 +15,8 @@
 
 /// See
 /// http://www.codeproject.com/Articles/1083210/An-efficient-Cplusplus-fixed-block-memory-allocato
-class Allocator {
+class Allocator
+{
  public:
   /// Constructor
   /// @param[in]  size - size of the fixed blocks
@@ -27,8 +28,7 @@ class Allocator {
   /// argument     defines the size of the memory block (size x objects =
   /// memory size in bytes).
   ///  @param[in]  name - optional allocator name string.
-  Allocator(size_t size, usint objects = 0, char* memory = nullptr,
-            const char* name = nullptr);
+  Allocator(size_t size, usint objects = 0, char* memory = nullptr, const char* name = nullptr);
 
   /// Destructor
   ~Allocator();
@@ -46,27 +46,39 @@ class Allocator {
   /// Get the allocator name string.
   /// @return    A pointer to the allocator name or nullptr if none was
   /// assigned.
-  const char* GetName() { return m_name; }
+  const char* GetName() {
+    return m_name;
+  }
 
   /// Gets the fixed block memory size, in bytes, handled by the allocator.
   /// @return    The fixed block size in bytes.
-  size_t GetBlockSize() { return m_blockSize; }
+  size_t GetBlockSize() {
+    return m_blockSize;
+  }
 
   /// Gets the maximum number of blocks created by the allocator.
   /// @return    The number of fixed memory blocks created.
-  usint GetBlockCount() { return m_blockCnt; }
+  usint GetBlockCount() {
+    return m_blockCnt;
+  }
 
   /// Gets the number of blocks in use.
   /// @return    The number of blocks in use by the application.
-  usint GetBlocksInUse() { return m_blocksInUse; }
+  usint GetBlocksInUse() {
+    return m_blocksInUse;
+  }
 
   /// Gets the total number of allocations for this allocator instance.
   /// @return    The total number of allocations.
-  usint GetAllocations() { return m_allocations; }
+  usint GetAllocations() {
+    return m_allocations;
+  }
 
   /// Gets the total number of deallocations for this allocator instance.
   /// @return    The total number of deallocations.
-  usint GetDeallocations() { return m_deallocations; }
+  usint GetDeallocations() {
+    return m_deallocations;
+  }
 
  private:
   /// Push a memory block onto head of free-list.
@@ -100,7 +112,8 @@ class Allocator {
 
 // Template class to create external memory pool
 template <class T, usint Objects>
-class AllocatorPool : public Allocator {
+class AllocatorPool : public Allocator
+{
  public:
   AllocatorPool() : Allocator(sizeof(T), Objects, m_memory) {}
 

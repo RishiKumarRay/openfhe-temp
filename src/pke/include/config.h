@@ -28,7 +28,7 @@
 
 namespace lbcrypto {
 
-    /**
+/**
      * Global config variable to determine if PrecomputeCRTTables()
      * will be executed during CryptoContext deserialization.
      * Deserializing without this precomputation can speed up the
@@ -39,8 +39,7 @@ namespace lbcrypto {
      * false:
      *  PrecomputeCRTTables() will not be executed during deserialization
      */
-  extern bool SERIALIZE_PRECOMPUTE;
-}
+extern bool SERIALIZE_PRECOMPUTE;
+}  // namespace lbcrypto
 
-
-#endif //SRC_LIB_PALISADE_CONFIG_H_
+#endif  //SRC_LIB_PALISADE_CONFIG_H_

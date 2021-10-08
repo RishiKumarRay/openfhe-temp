@@ -19,7 +19,8 @@ namespace lbcrypto {
 /**
  * @brief Empty metadata container
  */
-class Metadata {
+class Metadata
+{
  public:
   /**
    * Default constructor
@@ -29,7 +30,9 @@ class Metadata {
   /**
    * Copy constructor
    */
-  Metadata(const Metadata& mdata) { Metadata(); }
+  Metadata(const Metadata& mdata) {
+    Metadata();
+  }
 
   /**
    * Destructor
@@ -49,7 +52,9 @@ class Metadata {
    * Unless overriden by subclasses, Metadata does not carry any
    * metadata, so all Metadata objects are equal.
    */
-  virtual bool operator==(const Metadata& mdata) const { return true; }
+  virtual bool operator==(const Metadata& mdata) const {
+    return true;
+  }
 
   /**
    * Inequality operator, implemented by a call to the
@@ -89,28 +94,33 @@ class Metadata {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
   }
 
   /**
    * SerializedObjectName method for serialization
    */
-  virtual std::string SerializedObjectName() const { return "Metadata"; }
+  virtual std::string SerializedObjectName() const {
+    return "Metadata";
+  }
 
   /**
    * SerializedVersion method for serialization
    */
-  static uint32_t SerializedVersion() { return 1; }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 };
 
 /**
  * @brief Example class inheriting from Metadata and adding a member.
  * This is used in unit tests.
  */
-class MetadataTest : public Metadata {
+class MetadataTest : public Metadata
+{
  public:
   /**
    * Default constructor
@@ -124,7 +134,9 @@ class MetadataTest : public Metadata {
   /**
    * Copy constructor
    */
-  MetadataTest(const MetadataTest& mdata) : Metadata() { m_s = mdata.m_s; }
+  MetadataTest(const MetadataTest& mdata) : Metadata() {
+    m_s = mdata.m_s;
+  }
 
   /**
    * This method creates a new MetadataTest object.
@@ -147,12 +159,16 @@ class MetadataTest : public Metadata {
   /**
    * Setter method for the only value stored in this Metadata container.
    */
-  void SetMetadata(string str) { m_s = string(str); }
+  void SetMetadata(string str) {
+    m_s = string(str);
+  }
 
   /**
    * This method returns the (only) value stored in this Metadata container
    */
-  string GetMetadata() const { return m_s; }
+  string GetMetadata() const {
+    return m_s;
+  }
 
   /**
    * Defines how to check equality between objects of this class.
@@ -162,10 +178,9 @@ class MetadataTest : public Metadata {
       const MetadataTest& mdataTest = dynamic_cast<const MetadataTest&>(mdata);
       return m_s == mdataTest.GetMetadata();  // All Metadata objects without
                                               // any members are equal
-    } catch (const std::bad_cast& e) {
-      PALISADE_THROW(
-          palisade_error,
-          "Tried to downcast an object of different class to MetadataTest");
+    }
+    catch (const std::bad_cast& e) {
+      PALISADE_THROW(palisade_error, "Tried to downcast an object of different class to MetadataTest");
     }
   }
 
@@ -192,9 +207,9 @@ class MetadataTest : public Metadata {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(cereal::base_class<Metadata>(this));
     ar(cereal::make_nvp("str", m_s));
@@ -208,17 +223,14 @@ class MetadataTest : public Metadata {
    * @param ciphertext the ciphertext whose metadata to retrieve.
    */
   template <class Element>
-  static const shared_ptr<MetadataTest> CloneMetadata(
-      ConstCiphertext<Element> ciphertext) {
+  static const shared_ptr<MetadataTest> CloneMetadata(ConstCiphertext<Element> ciphertext) {
     auto it = ciphertext->FindMetadataByKey("test");
 
     if (ciphertext->MetadataFound(it)) {
-      return std::dynamic_pointer_cast<MetadataTest>(
-          ciphertext->GetMetadata(it)->Clone());
-    } else {
-      PALISADE_THROW(
-          palisade_error,
-          "Attempt to access metadata (MetadataTest) that has not been set.");
+      return std::dynamic_pointer_cast<MetadataTest>(ciphertext->GetMetadata(it)->Clone());
+    }
+    else {
+      PALISADE_THROW(palisade_error, "Attempt to access metadata (MetadataTest) that has not been set.");
     }
   }
 
@@ -231,17 +243,14 @@ class MetadataTest : public Metadata {
    * @param ciphertext the ciphertext whose metadata to retrieve.
    */
   template <class Element>
-  static const shared_ptr<MetadataTest> GetMetadata(
-      ConstCiphertext<Element> ciphertext) {
+  static const shared_ptr<MetadataTest> GetMetadata(ConstCiphertext<Element> ciphertext) {
     auto it = ciphertext->FindMetadataByKey("test");
 
     if (ciphertext->MetadataFound(it)) {
-      return std::dynamic_pointer_cast<MetadataTest>(
-          ciphertext->GetMetadata(it));
-    } else {
-      PALISADE_THROW(
-          palisade_error,
-          "Attempt to access metadata (MetadataTest) that has not been set.");
+      return std::dynamic_pointer_cast<MetadataTest>(ciphertext->GetMetadata(it));
+    }
+    else {
+      PALISADE_THROW(palisade_error, "Attempt to access metadata (MetadataTest) that has not been set.");
     }
   }
 
@@ -261,8 +270,7 @@ class MetadataTest : public Metadata {
    * @param ciphertext the ciphertext whose metadata to retrieve.
    */
   template <class Element>
-  static void StoreMetadata(Ciphertext<Element> ciphertext,
-                            shared_ptr<MetadataTest> mdata) {
+  static void StoreMetadata(Ciphertext<Element> ciphertext, shared_ptr<MetadataTest> mdata) {
     ciphertext->SetMetadataByKey("test", mdata);
   }
 

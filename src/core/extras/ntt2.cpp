@@ -41,11 +41,10 @@ using namespace lbcrypto;
 void test_NTT(const usint level, const usint nloop);  // test code
 
 // main()   need this for Kurts' makefile to ignore this.
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   if (argc < 2)  // argc should be 2 for correct execution
     // We print argv[0] assuming it is the program name
-    std::cout << "usage: " << argv[0] << " 1|2|3(default 1) nloop (default 10)"
-              << endl;
+    std::cout << "usage: " << argv[0] << " 1|2|3(default 1) nloop (default 10)" << endl;
   usint level = 1;
   usint nloop = 10;
   if (argc > 1) level = atoi(argv[1]);
@@ -55,15 +54,14 @@ int main(int argc, char *argv[]) {
   if (level < 1) level = 1;
 
   if (nloop < 1) nloop = 1;
-  cout << "running " << argv[0] << " level = " << level << " nloop = " << nloop
-       << endl;
+  cout << "running " << argv[0] << " level = " << level << " nloop = " << nloop << endl;
 
   test_NTT(level, nloop);
   return 0;
 }
 
 // function to compare two BigVectors and print differing indicies
-void vec_diff(BigVector &a, BigVector &b) {
+void vec_diff(BigVector& a, BigVector& b) {
   for (usint i = 0; i < a.GetLength(); ++i) {
     if (a.at(i) != b.at(i)) {
       cout << "i: " << i << endl;
@@ -78,11 +76,12 @@ void vec_diff(BigVector &a, BigVector &b) {
 }
 
 // function to compare two Poly and print differing values
-bool clonetest(Poly &a, Poly &b, string name) {
+bool clonetest(Poly& a, Poly& b, string name) {
   if (a != b) {
     cout << name << " FAILED " << endl;
     return true;
-  } else {
+  }
+  else {
     return false;
   }
 }
@@ -168,15 +167,13 @@ void test_NTT(const usint level, const usint nloop) {
   // repeat for q3
   // note computation of root of unity for big numbers takes forever
   // hardwire this case
-  BigInteger q3(
-      "130935624315845674800527587873103966088665681841722591579331654723845351"
-      "856186982195330803693036166286035467365102402840368690261835415722133141"
-      "10873601");
+  BigInteger q3("130935624315845674800527587873103966088665681841722591579331654723845351"
+                "856186982195330803693036166286035467365102402840368690261835415722133141"
+                "10873601");
 
-  BigInteger rootOfUnity3(
-      "120238484638556494666603774400695561444642670309493651659937259422204414"
-      "126327993119899739382548230714053366233156689615011395926730002978876828"
-      "95033094");
+  BigInteger rootOfUnity3("120238484638556494666603774400695561444642670309493651659937259422204414"
+                          "126327993119899739382548230714053366233156689615011395926730002978876828"
+                          "95033094");
 
   cout << "q3 : " << q3.ToString() << endl;
   cout << "rootOfUnity3 : " << rootOfUnity3.ToString() << endl;
@@ -302,7 +299,8 @@ void test_NTT(const usint level, const usint nloop) {
 
   if (failed) {
     cout << "failure in loop number " << ix << endl;
-  } else {
+  }
+  else {
     time1af /= static_cast<double>(nloop);
     time1bf /= static_cast<double>(nloop);
     time2af /= static_cast<double>(nloop);

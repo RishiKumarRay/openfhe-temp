@@ -33,7 +33,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTBFVBATCHING : public ::testing::Test {
+class UTBFVBATCHING : public ::testing::Test
+{
  protected:
   void SetUp() {}
 
@@ -48,7 +49,7 @@ class UTBFVBATCHING : public ::testing::Test {
 TEST_F(UTBFVBATCHING, Poly_EVALMULT_Arb) {
   PackedEncoding::Destroy();
 
-  usint m = 22;
+  usint m            = 22;
   PlaintextModulus p = 89;  // we choose s.t. 2m|p-1 to leverage CRTArb
   BigInteger modulusQ("72385066601");
   BigInteger modulusP(p);
@@ -59,41 +60,42 @@ TEST_F(UTBFVBATCHING, Poly_EVALMULT_Arb) {
   auto cycloPoly = GetCyclotomicPolynomial<BigVector>(m, modulusQ);
 
   ChineseRemainderTransformArb<BigVector>().PreCompute(m, modulusQ);
-  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly,
-                                                                    modulusQ);
+  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly, modulusQ);
 
   float stdDev = 4;
 
-  auto params =
-      std::make_shared<ILParams>(m, modulusQ, rootOfUnity, bigmodulus, bigroot);
+  auto params = std::make_shared<ILParams>(m, modulusQ, rootOfUnity, bigmodulus, bigroot);
 
   BigInteger bigEvalMultModulus("37778931862957161710549");
   BigInteger bigEvalMultRootOfUnity("7161758688665914206613");
-  BigInteger bigEvalMultModulusAlt(
-      "1461501637330902918203684832716283019655932547329");
-  BigInteger bigEvalMultRootOfUnityAlt(
-      "570268124029534407621996591794583635795426001824");
+  BigInteger bigEvalMultModulusAlt("1461501637330902918203684832716283019655932547329");
+  BigInteger bigEvalMultRootOfUnityAlt("570268124029534407621996591794583635795426001824");
 
   auto cycloPolyBig = GetCyclotomicPolynomial<BigVector>(m, bigEvalMultModulus);
-  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(
-        cycloPolyBig, bigEvalMultModulus);
-
+  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPolyBig, bigEvalMultModulus);
 
   usint batchSize = 8;
 
-  EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(
-      p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
-
+  EncodingParams encodingParams(
+    std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
 
   PackedEncoding::SetParams(m, encodingParams);
 
   BigInteger delta(modulusQ.DividedBy(modulusP));
 
-  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(
-      params, encodingParams, 1, stdDev, delta.ToString(), OPTIMIZED,
-      bigEvalMultModulus.ToString(), bigEvalMultRootOfUnity.ToString(), 1, 9,
-      1.006, bigEvalMultModulusAlt.ToString(),
-      bigEvalMultRootOfUnityAlt.ToString());
+  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(params,
+                                                                           encodingParams,
+                                                                           1,
+                                                                           stdDev,
+                                                                           delta.ToString(),
+                                                                           OPTIMIZED,
+                                                                           bigEvalMultModulus.ToString(),
+                                                                           bigEvalMultRootOfUnity.ToString(),
+                                                                           1,
+                                                                           9,
+                                                                           1.006,
+                                                                           bigEvalMultModulusAlt.ToString(),
+                                                                           bigEvalMultRootOfUnityAlt.ToString());
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -104,15 +106,17 @@ TEST_F(UTBFVBATCHING, Poly_EVALMULT_Arb) {
   Ciphertext<Poly> ciphertext1;
   Ciphertext<Poly> ciphertext2;
 
-  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  std::vector<int64_t> vectorOfInts2 = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  std::vector<int64_t> vectorOfInts2 = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
 
   Plaintext intArray1 = cc->MakePackedPlaintext(vectorOfInts1);
   Plaintext intArray2 = cc->MakePackedPlaintext(vectorOfInts2);
 
   std::vector<int64_t> vectorOfIntsMult;
-  std::transform(vectorOfInts1.begin(), vectorOfInts1.end(),
-                 vectorOfInts2.begin(), std::back_inserter(vectorOfIntsMult),
+  std::transform(vectorOfInts1.begin(),
+                 vectorOfInts1.end(),
+                 vectorOfInts2.begin(),
+                 std::back_inserter(vectorOfIntsMult),
                  std::multiplies<usint>());
 
   ciphertext1 = cc->Encrypt(kp.publicKey, intArray1);

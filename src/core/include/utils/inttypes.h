@@ -51,7 +51,7 @@ typedef uint64_t PlaintextModulus;
  */
 enum Format { EVALUATION = 0, COEFFICIENT = 1 };
 
-inline std::ostream &operator<<(std::ostream &s, Format f) {
+inline std::ostream& operator<<(std::ostream& s, Format f) {
   switch (f) {
     case EVALUATION:
       s << "EVALUATION";
@@ -70,16 +70,16 @@ inline std::ostream &operator<<(std::ostream &s, Format f) {
  * @brief Lists all features supported by public key encryption schemes
  */
 enum PKESchemeFeature {
-  ENCRYPTION = 0x01,
-  PRE = 0x02,
-  SHE = 0x04,
-  FHE = 0x08,
-  LEVELEDSHE = 0x10,
-  MULTIPARTY = 0x20,
+  ENCRYPTION  = 0x01,
+  PRE         = 0x02,
+  SHE         = 0x04,
+  FHE         = 0x08,
+  LEVELEDSHE  = 0x10,
+  MULTIPARTY  = 0x20,
   ADVANCEDSHE = 0x40
 };
 
-inline std::ostream &operator<<(std::ostream &s, PKESchemeFeature f) {
+inline std::ostream& operator<<(std::ostream& s, PKESchemeFeature f) {
   switch (f) {
     case ENCRYPTION:
       s << "ENCRYPTION";
@@ -114,7 +114,7 @@ inline std::ostream &operator<<(std::ostream &s, PKESchemeFeature f) {
  */
 enum MODE { RLWE = 0, OPTIMIZED = 1, SPARSE = 2 };
 
-inline std::ostream &operator<<(std::ostream &s, MODE m) {
+inline std::ostream& operator<<(std::ostream& s, MODE m) {
   switch (m) {
     case RLWE:
       s << "RLWE";

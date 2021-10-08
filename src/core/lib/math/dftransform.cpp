@@ -26,10 +26,10 @@
 
 namespace lbcrypto {
 
-std::complex<double> *DiscreteFourierTransform::rootOfUnityTable = nullptr;
-size_t DiscreteFourierTransform::m_M = 0;
-size_t DiscreteFourierTransform::m_Nh = 0;
-bool DiscreteFourierTransform::m_isInitialized = false;
+std::complex<double>* DiscreteFourierTransform::rootOfUnityTable = nullptr;
+size_t DiscreteFourierTransform::m_M                             = 0;
+size_t DiscreteFourierTransform::m_Nh                            = 0;
+bool DiscreteFourierTransform::m_isInitialized                   = false;
 
 /// precomputed rotation group indices
 std::vector<uint32_t> DiscreteFourierTransform::m_rotGroup;
@@ -47,8 +47,8 @@ void DiscreteFourierTransform::Initialize(size_t m, size_t nh) {
 #pragma omp critical
   {
     m_isInitialized = false;
-    m_M = m;
-    m_Nh = nh;
+    m_M             = m;
+    m_Nh            = nh;
 
     m_rotGroup.resize(m_Nh);
     uint32_t fivePows = 1;
@@ -65,7 +65,7 @@ void DiscreteFourierTransform::Initialize(size_t m, size_t nh) {
       m_ksiPows[j].imag(sin(angle));
     }
 
-    m_ksiPows[m_M] = m_ksiPows[0];
+    m_ksiPows[m_M]  = m_ksiPows[0];
     m_isInitialized = true;
   }
 }
@@ -79,8 +79,7 @@ void DiscreteFourierTransform::PreComputeTable(uint32_t s) {
   }
 }
 
-std::vector<std::complex<double>> DiscreteFourierTransform::FFTForwardTransform(
-    std::vector<std::complex<double>> &A) {
+std::vector<std::complex<double>> DiscreteFourierTransform::FFTForwardTransform(std::vector<std::complex<double>>& A) {
   usint m = A.size();
   std::vector<std::complex<double>> B(A);
   usint l = floor(log2(m));
@@ -128,14 +127,12 @@ std::vector<std::complex<double>> DiscreteFourierTransform::FFTForwardTransform(
 
   // Cooley-Tukey decimation-in-time radix-2 FFT
   for (usint size = 2; size <= m; size *= 2) {
-    usint halfsize = size / 2;
+    usint halfsize  = size / 2;
     usint tablestep = m / size;
     for (usint i = 0; i < m; i += size) {
       for (usint j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
-        double tpre = B[j + halfsize].real() * cosTable[l][k] +
-                      B[j + halfsize].imag() * sinTable[l][k];
-        double tpim = -B[j + halfsize].real() * sinTable[l][k] +
-                      B[j + halfsize].imag() * cosTable[l][k];
+        double tpre = B[j + halfsize].real() * cosTable[l][k] + B[j + halfsize].imag() * sinTable[l][k];
+        double tpim = -B[j + halfsize].real() * sinTable[l][k] + B[j + halfsize].imag() * cosTable[l][k];
         B[j + halfsize].real(B[j].real() - tpre);
         B[j + halfsize].imag(B[j].imag() - tpim);
         B[j].real(B[j].real() + tpre);
@@ -149,20 +146,16 @@ std::vector<std::complex<double>> DiscreteFourierTransform::FFTForwardTransform(
   return B;
 }
 
-std::vector<std::complex<double>> DiscreteFourierTransform::FFTInverseTransform(
-    std::vector<std::complex<double>> &A) {
-  std::vector<std::complex<double>> result =
-      DiscreteFourierTransform::FFTForwardTransform(A);
-  double n = result.size() / 2;
+std::vector<std::complex<double>> DiscreteFourierTransform::FFTInverseTransform(std::vector<std::complex<double>>& A) {
+  std::vector<std::complex<double>> result = DiscreteFourierTransform::FFTForwardTransform(A);
+  double n                                 = result.size() / 2;
   for (int i = 0; i < n; i++) {
-    result[i] =
-        std::complex<double>(result[i].real() / n, result[i].imag() / n);
+    result[i] = std::complex<double>(result[i].real() / n, result[i].imag() / n);
   }
   return result;
 }
 
-std::vector<std::complex<double>> DiscreteFourierTransform::ForwardTransform(
-    std::vector<std::complex<double>> A) {
+std::vector<std::complex<double>> DiscreteFourierTransform::ForwardTransform(std::vector<std::complex<double>> A) {
   int n = A.size();
   A.resize(2 * n);
   for (int i = 0; i < n; i++) {
@@ -185,12 +178,11 @@ std::vector<std::complex<double>> DiscreteFourierTransform::ForwardTransform(
   return dftRemainder;
 }
 
-std::vector<std::complex<double>> DiscreteFourierTransform::InverseTransform(
-    std::vector<std::complex<double>> A) {
+std::vector<std::complex<double>> DiscreteFourierTransform::InverseTransform(std::vector<std::complex<double>> A) {
   size_t n = A.size();
   std::vector<std::complex<double>> dft(2 * n);
   for (size_t i = 0; i < n; i++) {
-    dft[2 * i] = 0;
+    dft[2 * i]     = 0;
     dft[2 * i + 1] = A[i];
   }
   std::vector<std::complex<double>> invDft = FFTInverseTransform(dft);
@@ -201,19 +193,18 @@ std::vector<std::complex<double>> DiscreteFourierTransform::InverseTransform(
   return invDftRemainder;
 }
 
-void DiscreteFourierTransform::FFTSpecialInvLazy(
-    std::vector<std::complex<double>> &vals) {
+void DiscreteFourierTransform::FFTSpecialInvLazy(std::vector<std::complex<double>>& vals) {
   uint32_t size = vals.size();
   for (size_t len = size; len >= 1; len >>= 1) {
     for (size_t i = 0; i < size; i += len) {
       size_t lenh = len >> 1;
       size_t lenq = len << 2;
       for (size_t j = 0; j < lenh; ++j) {
-        size_t idx = (lenq - (m_rotGroup[j] % lenq)) * m_M / lenq;
+        size_t idx             = (lenq - (m_rotGroup[j] % lenq)) * m_M / lenq;
         std::complex<double> u = vals[i + j] + vals[i + j + lenh];
         std::complex<double> v = vals[i + j] - vals[i + j + lenh];
         v *= m_ksiPows[idx];
-        vals[i + j] = u;
+        vals[i + j]        = u;
         vals[i + j + lenh] = v;
       }
     }
@@ -221,11 +212,9 @@ void DiscreteFourierTransform::FFTSpecialInvLazy(
   BitReverse(vals);
 }
 
-void DiscreteFourierTransform::FFTSpecialInv(
-    std::vector<std::complex<double>> &vals) {
+void DiscreteFourierTransform::FFTSpecialInv(std::vector<std::complex<double>>& vals) {
   // if the precomputed tables do not exist
-  if ((vals.size() != m_Nh) || (!m_isInitialized))
-    Initialize(vals.size() * 4, vals.size());
+  if ((vals.size() != m_Nh) || (!m_isInitialized)) Initialize(vals.size() * 4, vals.size());
   FFTSpecialInvLazy(vals);
   uint32_t size = vals.size();
   for (size_t i = 0; i < size; ++i) {
@@ -233,11 +222,9 @@ void DiscreteFourierTransform::FFTSpecialInv(
   }
 }
 
-void DiscreteFourierTransform::FFTSpecial(
-    std::vector<std::complex<double>> &vals) {
+void DiscreteFourierTransform::FFTSpecial(std::vector<std::complex<double>>& vals) {
   // if the precomputed tables do not exist
-  if ((vals.size() != m_Nh) || (!m_isInitialized))
-    Initialize(vals.size() * 4, vals.size());
+  if ((vals.size() != m_Nh) || (!m_isInitialized)) Initialize(vals.size() * 4, vals.size());
   BitReverse(vals);
   uint32_t size = vals.size();
   for (size_t len = 2; len <= size; len <<= 1) {
@@ -245,19 +232,18 @@ void DiscreteFourierTransform::FFTSpecial(
       size_t lenh = len >> 1;
       size_t lenq = len << 2;
       for (size_t j = 0; j < lenh; ++j) {
-        long idx = ((m_rotGroup[j] % lenq)) * m_M / lenq;
+        long idx               = ((m_rotGroup[j] % lenq)) * m_M / lenq;
         std::complex<double> u = vals[i + j];
         std::complex<double> v = vals[i + j + lenh];
         v *= m_ksiPows[idx];
-        vals[i + j] = u + v;
+        vals[i + j]        = u + v;
         vals[i + j + lenh] = u - v;
       }
     }
   }
 }
 
-void DiscreteFourierTransform::BitReverse(
-    std::vector<std::complex<double>> &vals) {
+void DiscreteFourierTransform::BitReverse(std::vector<std::complex<double>>& vals) {
   uint32_t size = vals.size();
   for (size_t i = 1, j = 0; i < size; ++i) {
     size_t bit = size >> 1;

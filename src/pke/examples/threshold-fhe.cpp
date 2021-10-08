@@ -31,20 +31,18 @@ void RunBGVrnsAdditive();
 void RunBFVrns();
 void RunCKKS();
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   std::cout << "\n=================RUNNING FOR BGVrns - Additive "
                "====================="
             << std::endl;
 
   RunBGVrnsAdditive();
 
-  std::cout << "\n=================RUNNING FOR BFVrns====================="
-            << std::endl;
+  std::cout << "\n=================RUNNING FOR BFVrns=====================" << std::endl;
 
   RunBFVrns();
 
-  std::cout << "\n=================RUNNING FOR CKKS====================="
-            << std::endl;
+  std::cout << "\n=================RUNNING FOR CKKS=====================" << std::endl;
 
   RunCKKS();
 
@@ -52,13 +50,12 @@ int main(int argc, char *argv[]) {
 }
 
 void RunBGVrnsAdditive() {
-  uint32_t plaintextModulus = 65537;
+  uint32_t plaintextModulus   = 65537;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   // Generate the cryptocontext
   CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(
-          0, plaintextModulus, securityLevel);
+    CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(0, plaintextModulus, securityLevel);
 
   // Enable features that you wish to use
   cc->Enable(ENCRYPTION);
@@ -70,17 +67,9 @@ void RunBGVrnsAdditive() {
   ////////////////////////////////////////////////////////////
 
   // Print out the parameters
-  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus()
-            << std::endl;
-  std::cout
-      << "n = "
-      << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
-      << std::endl;
-  std::cout << "log2 q = "
-            << log2(cc->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
+  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << std::endl;
+  std::cout << "log2 q = " << log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
 
   // Initialize Public Key Containers for 3 parties
@@ -119,9 +108,9 @@ void RunBGVrnsAdditive() {
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<int64_t> vectorOfInts1 = {1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0};
-  std::vector<int64_t> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-  std::vector<int64_t> vectorOfInts3 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
+  std::vector<int64_t> vectorOfInts1 = { 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts3 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
 
   Plaintext plaintext1 = cc->MakePackedPlaintext(vectorOfInts1);
   Plaintext plaintext2 = cc->MakePackedPlaintext(vectorOfInts2);
@@ -145,7 +134,7 @@ void RunBGVrnsAdditive() {
   Ciphertext<DCRTPoly> ciphertextAdd12;
   Ciphertext<DCRTPoly> ciphertextAdd123;
 
-  ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
+  ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
   ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
 
   ////////////////////////////////////////////////////////////
@@ -162,22 +151,17 @@ void RunBGVrnsAdditive() {
 
   Plaintext plaintextMultipartyNew;
 
-  const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams =
-      kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename DCRTPoly::Params> elementParams =
-      cryptoParams->GetElementParams();
+  const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams = kp1.secretKey->GetCryptoParameters();
+  const shared_ptr<typename DCRTPoly::Params> elementParams   = cryptoParams->GetElementParams();
 
   // partial decryption by first party
-  auto ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
 
   // partial decryption by second party
-  auto ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
 
   // partial decryption by third party
-  auto ciphertextPartial3 =
-      cc->MultipartyDecryptMain(kp3.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial3 = cc->MultipartyDecryptMain(kp3.secretKey, { ciphertextAdd123 });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -201,8 +185,8 @@ void RunBGVrnsAdditive() {
 }
 
 void RunBFVrns() {
-  int plaintextModulus = 65537;
-  double sigma = 3.2;
+  int plaintextModulus        = 65537;
+  double sigma                = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   EncodingParams encodingParams(new EncodingParamsImpl(plaintextModulus));
@@ -210,9 +194,8 @@ void RunBFVrns() {
   usint batchSize = 1024;
   encodingParams->SetBatchSize(batchSize);
 
-  CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          encodingParams, securityLevel, sigma, 0, 2, 0, OPTIMIZED, 2, 30, 60);
+  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
+    encodingParams, securityLevel, sigma, 0, 2, 0, OPTIMIZED, 2, 30, 60);
 
   uint32_t m = cc->GetCyclotomicOrder();
   PackedEncoding::SetParams(m, encodingParams);
@@ -227,17 +210,9 @@ void RunBFVrns() {
   ////////////////////////////////////////////////////////////
 
   // Output the generated parameters
-  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus()
-            << std::endl;
-  std::cout
-      << "n = "
-      << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
-      << std::endl;
-  std::cout << "log2 q = "
-            << log2(cc->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
+  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << std::endl;
+  std::cout << "log2 q = " << log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
 
   // Initialize Public Key Containers for two parties A and B
@@ -263,8 +238,8 @@ void RunBFVrns() {
 
   // Generate evalsum key part for A
   cc->EvalSumKeyGen(kp1.secretKey);
-  auto evalSumKeys = std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(
-      cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
+  auto evalSumKeys =
+    std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
 
   std::cout << "Round 1 of key generation completed." << std::endl;
 
@@ -275,28 +250,20 @@ void RunBFVrns() {
   std::cout << "Joint public key for (s_a + s_b) is generated..." << std::endl;
   kp2 = cc->MultipartyKeyGen(kp1.publicKey);
 
-  auto evalMultKey2 =
-      cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
+  auto evalMultKey2 = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
 
-  std::cout
-      << "Joint evaluation multiplication key for (s_a + s_b) is generated..."
-      << std::endl;
-  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2,
-                                         kp2.publicKey->GetKeyTag());
+  std::cout << "Joint evaluation multiplication key for (s_a + s_b) is generated..." << std::endl;
+  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
 
   std::cout << "Joint evaluation multiplication key (s_a + s_b) is transformed "
                "into s_b*(s_a + s_b)..."
             << std::endl;
-  auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey,
-                                          kp2.publicKey->GetKeyTag());
+  auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
 
-  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys,
-                                             kp2.publicKey->GetKeyTag());
+  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
 
-  std::cout << "Joint evaluation summation key for (s_a + s_b) is generated..."
-            << std::endl;
-  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB,
-                                                 kp2.publicKey->GetKeyTag());
+  std::cout << "Joint evaluation summation key for (s_a + s_b) is generated..." << std::endl;
+  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
 
   cc->InsertEvalSumKey(evalSumKeysJoin);
 
@@ -304,27 +271,24 @@ void RunBFVrns() {
 
   std::cout << "Round 3 (party A) started." << std::endl;
 
-  std::cout << "Joint key (s_a + s_b) is transformed into s_a*(s_a + s_b)..."
-            << std::endl;
-  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey,
-                                          kp2.publicKey->GetKeyTag());
+  std::cout << "Joint key (s_a + s_b) is transformed into s_a*(s_a + s_b)..." << std::endl;
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
 
   std::cout << "Computing the final evaluation multiplication key for (s_a + "
                "s_b)*(s_a + s_b)..."
             << std::endl;
-  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB,
-                                                evalMultAB->GetKeyTag());
+  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, evalMultAB->GetKeyTag());
 
-  cc->InsertEvalMultKey({evalMultFinal});
+  cc->InsertEvalMultKey({ evalMultFinal });
 
   std::cout << "Round 3 of key generation completed." << std::endl;
 
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
-  std::vector<int64_t> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-  std::vector<int64_t> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
+  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
+  std::vector<int64_t> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
 
   Plaintext plaintext1 = cc->MakePackedPlaintext(vectorOfInts1);
   Plaintext plaintext2 = cc->MakePackedPlaintext(vectorOfInts2);
@@ -349,10 +313,10 @@ void RunBFVrns() {
   Ciphertext<DCRTPoly> ciphertextAdd12;
   Ciphertext<DCRTPoly> ciphertextAdd123;
 
-  ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
+  ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
   ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
 
-  auto ciphertextMult = cc->EvalMult(ciphertext1, ciphertext3);
+  auto ciphertextMult    = cc->EvalMult(ciphertext1, ciphertext3);
   auto ciphertextEvalSum = cc->EvalSum(ciphertext3, batchSize);
 
   ////////////////////////////////////////////////////////////
@@ -369,20 +333,16 @@ void RunBFVrns() {
 
   Plaintext plaintextMultipartyNew;
 
-  const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams =
-      kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename DCRTPoly::Params> elementParams =
-      cryptoParams->GetElementParams();
+  const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams = kp1.secretKey->GetCryptoParameters();
+  const shared_ptr<typename DCRTPoly::Params> elementParams   = cryptoParams->GetElementParams();
 
   // Distributed decryption
 
   // partial decryption by party A
-  auto ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
 
   // partial decryption by party B
-  auto ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -405,18 +365,15 @@ void RunBFVrns() {
 
   Plaintext plaintextMultipartyMult;
 
-  ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
 
-  ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecMult;
   partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
   partialCiphertextVecMult.push_back(ciphertextPartial2[0]);
 
-  cc->MultipartyDecryptFusion(partialCiphertextVecMult,
-                              &plaintextMultipartyMult);
+  cc->MultipartyDecryptFusion(partialCiphertextVecMult, &plaintextMultipartyMult);
 
   plaintextMultipartyMult->SetLength(plaintext1->GetLength());
 
@@ -429,18 +386,15 @@ void RunBFVrns() {
 
   Plaintext plaintextMultipartyEvalSum;
 
-  ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextEvalSum});
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextEvalSum });
 
-  ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextEvalSum});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextEvalSum });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
   partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
   partialCiphertextVecEvalSum.push_back(ciphertextPartial2[0]);
 
-  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum,
-                              &plaintextMultipartyEvalSum);
+  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum, &plaintextMultipartyEvalSum);
 
   plaintextMultipartyEvalSum->SetLength(plaintext1->GetLength());
 
@@ -450,17 +404,21 @@ void RunBFVrns() {
 
 void RunCKKS() {
   usint init_size = 4;
-  usint dcrtBits = 50;
+  usint dcrtBits  = 50;
   usint batchSize = 16;
 
-  CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
-          init_size - 1, dcrtBits, batchSize, HEStd_128_classic,
-          0,                    /*ringDimension*/
-          APPROXRESCALE, BV, 2, /*numLargeDigits*/
-          2,                    /*maxDepth*/
-          60,                   /*firstMod*/
-          5, OPTIMIZED);
+  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(init_size - 1,
+                                                                                    dcrtBits,
+                                                                                    batchSize,
+                                                                                    HEStd_128_classic,
+                                                                                    0, /*ringDimension*/
+                                                                                    APPROXRESCALE,
+                                                                                    BV,
+                                                                                    2,  /*numLargeDigits*/
+                                                                                    2,  /*maxDepth*/
+                                                                                    60, /*firstMod*/
+                                                                                    5,
+                                                                                    OPTIMIZED);
 
   // enable features that you wish to use
   cc->Enable(ENCRYPTION);
@@ -473,17 +431,9 @@ void RunCKKS() {
   ////////////////////////////////////////////////////////////
 
   // Output the generated parameters
-  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus()
-            << std::endl;
-  std::cout
-      << "n = "
-      << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
-      << std::endl;
-  std::cout << "log2 q = "
-            << log2(cc->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
+  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << std::endl;
+  std::cout << "log2 q = " << log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
 
   // Initialize Public Key Containers
@@ -509,8 +459,8 @@ void RunCKKS() {
 
   // Generate evalsum key part for A
   cc->EvalSumKeyGen(kp1.secretKey);
-  auto evalSumKeys = std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(
-      cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
+  auto evalSumKeys =
+    std::make_shared<std::map<usint, LPEvalKey<DCRTPoly>>>(cc->GetEvalSumKeyMap(kp1.secretKey->GetKeyTag()));
 
   std::cout << "Round 1 of key generation completed." << std::endl;
 
@@ -521,28 +471,20 @@ void RunCKKS() {
   std::cout << "Joint public key for (s_a + s_b) is generated..." << std::endl;
   kp2 = cc->MultipartyKeyGen(kp1.publicKey);
 
-  auto evalMultKey2 =
-      cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
+  auto evalMultKey2 = cc->MultiKeySwitchGen(kp2.secretKey, kp2.secretKey, evalMultKey);
 
-  std::cout
-      << "Joint evaluation multiplication key for (s_a + s_b) is generated..."
-      << std::endl;
-  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2,
-                                         kp2.publicKey->GetKeyTag());
+  std::cout << "Joint evaluation multiplication key for (s_a + s_b) is generated..." << std::endl;
+  auto evalMultAB = cc->MultiAddEvalKeys(evalMultKey, evalMultKey2, kp2.publicKey->GetKeyTag());
 
   std::cout << "Joint evaluation multiplication key (s_a + s_b) is transformed "
                "into s_b*(s_a + s_b)..."
             << std::endl;
-  auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey,
-                                          kp2.publicKey->GetKeyTag());
+  auto evalMultBAB = cc->MultiMultEvalKey(evalMultAB, kp2.secretKey, kp2.publicKey->GetKeyTag());
 
-  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys,
-                                             kp2.publicKey->GetKeyTag());
+  auto evalSumKeysB = cc->MultiEvalSumKeyGen(kp2.secretKey, evalSumKeys, kp2.publicKey->GetKeyTag());
 
-  std::cout << "Joint evaluation summation key for (s_a + s_b) is generated..."
-            << std::endl;
-  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB,
-                                                 kp2.publicKey->GetKeyTag());
+  std::cout << "Joint evaluation summation key for (s_a + s_b) is generated..." << std::endl;
+  auto evalSumKeysJoin = cc->MultiAddEvalSumKeys(evalSumKeys, evalSumKeysB, kp2.publicKey->GetKeyTag());
 
   cc->InsertEvalSumKey(evalSumKeysJoin);
 
@@ -550,27 +492,24 @@ void RunCKKS() {
 
   std::cout << "Round 3 (party A) started." << std::endl;
 
-  std::cout << "Joint key (s_a + s_b) is transformed into s_a*(s_a + s_b)..."
-            << std::endl;
-  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey,
-                                          kp2.publicKey->GetKeyTag());
+  std::cout << "Joint key (s_a + s_b) is transformed into s_a*(s_a + s_b)..." << std::endl;
+  auto evalMultAAB = cc->MultiMultEvalKey(evalMultAB, kp1.secretKey, kp2.publicKey->GetKeyTag());
 
   std::cout << "Computing the final evaluation multiplication key for (s_a + "
                "s_b)*(s_a + s_b)..."
             << std::endl;
-  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB,
-                                                evalMultAB->GetKeyTag());
+  auto evalMultFinal = cc->MultiAddEvalMultKeys(evalMultAAB, evalMultBAB, evalMultAB->GetKeyTag());
 
-  cc->InsertEvalMultKey({evalMultFinal});
+  cc->InsertEvalMultKey({ evalMultFinal });
 
   std::cout << "Round 3 of key generation completed." << std::endl;
 
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
-  std::vector<double> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0};
-  std::vector<double> vectorOfInts2 = {1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
-  std::vector<double> vectorOfInts3 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0};
+  std::vector<double> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0 };
+  std::vector<double> vectorOfInts2 = { 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<double> vectorOfInts3 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0 };
 
   Plaintext plaintext1 = cc->MakeCKKSPackedPlaintext(vectorOfInts1);
   Plaintext plaintext2 = cc->MakeCKKSPackedPlaintext(vectorOfInts2);
@@ -595,12 +534,12 @@ void RunCKKS() {
   Ciphertext<DCRTPoly> ciphertextAdd12;
   Ciphertext<DCRTPoly> ciphertextAdd123;
 
-  ciphertextAdd12 = cc->EvalAdd(ciphertext1, ciphertext2);
+  ciphertextAdd12  = cc->EvalAdd(ciphertext1, ciphertext2);
   ciphertextAdd123 = cc->EvalAdd(ciphertextAdd12, ciphertext3);
 
   auto ciphertextMultTemp = cc->EvalMult(ciphertext1, ciphertext3);
-  auto ciphertextMult = cc->ModReduce(ciphertextMultTemp);
-  auto ciphertextEvalSum = cc->EvalSum(ciphertext3, batchSize);
+  auto ciphertextMult     = cc->ModReduce(ciphertextMultTemp);
+  auto ciphertextEvalSum  = cc->EvalSum(ciphertext3, batchSize);
 
   ////////////////////////////////////////////////////////////
   // Decryption after Accumulation Operation on Encrypted Data with Multiparty
@@ -616,18 +555,14 @@ void RunCKKS() {
 
   Plaintext plaintextMultipartyNew;
 
-  const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams =
-      kp1.secretKey->GetCryptoParameters();
-  const shared_ptr<typename DCRTPoly::Params> elementParams =
-      cryptoParams->GetElementParams();
+  const shared_ptr<LPCryptoParameters<DCRTPoly>> cryptoParams = kp1.secretKey->GetCryptoParameters();
+  const shared_ptr<typename DCRTPoly::Params> elementParams   = cryptoParams->GetElementParams();
 
   // distributed decryption
 
-  auto ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextAdd123 });
 
-  auto ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextAdd123});
+  auto ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextAdd123 });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVec;
   partialCiphertextVec.push_back(ciphertextPartial1[0]);
@@ -649,18 +584,15 @@ void RunCKKS() {
 
   Plaintext plaintextMultipartyMult;
 
-  ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextMult});
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextMult });
 
-  ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextMult});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextMult });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecMult;
   partialCiphertextVecMult.push_back(ciphertextPartial1[0]);
   partialCiphertextVecMult.push_back(ciphertextPartial2[0]);
 
-  cc->MultipartyDecryptFusion(partialCiphertextVecMult,
-                              &plaintextMultipartyMult);
+  cc->MultipartyDecryptFusion(partialCiphertextVecMult, &plaintextMultipartyMult);
 
   plaintextMultipartyMult->SetLength(plaintext1->GetLength());
 
@@ -673,18 +605,15 @@ void RunCKKS() {
 
   Plaintext plaintextMultipartyEvalSum;
 
-  ciphertextPartial1 =
-      cc->MultipartyDecryptLead(kp1.secretKey, {ciphertextEvalSum});
+  ciphertextPartial1 = cc->MultipartyDecryptLead(kp1.secretKey, { ciphertextEvalSum });
 
-  ciphertextPartial2 =
-      cc->MultipartyDecryptMain(kp2.secretKey, {ciphertextEvalSum});
+  ciphertextPartial2 = cc->MultipartyDecryptMain(kp2.secretKey, { ciphertextEvalSum });
 
   vector<Ciphertext<DCRTPoly>> partialCiphertextVecEvalSum;
   partialCiphertextVecEvalSum.push_back(ciphertextPartial1[0]);
   partialCiphertextVecEvalSum.push_back(ciphertextPartial2[0]);
 
-  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum,
-                              &plaintextMultipartyEvalSum);
+  cc->MultipartyDecryptFusion(partialCiphertextVecEvalSum, &plaintextMultipartyEvalSum);
 
   plaintextMultipartyEvalSum->SetLength(plaintext1->GetLength());
 

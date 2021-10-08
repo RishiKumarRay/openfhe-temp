@@ -56,5 +56,4 @@ PolyImpl<NativeVector> PolyImpl<NativeVector>::ToNativePoly() const {
 
 }  // namespace lbcrypto
 
-CEREAL_CLASS_VERSION(lbcrypto::NativePoly,
-                     lbcrypto::NativePoly::SerializedVersion());
+CEREAL_CLASS_VERSION(lbcrypto::NativePoly, lbcrypto::NativePoly::SerializedVersion());

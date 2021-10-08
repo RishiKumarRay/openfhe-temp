@@ -40,7 +40,8 @@ namespace lbcrypto {
  * inheritors.
  */
 template <typename IntegerType>
-class ElemParams : public Serializable {
+class ElemParams : public Serializable
+{
  public:
   /**
    * @brief Simple constructor method that takes as input root of unity, big
@@ -53,17 +54,15 @@ class ElemParams : public Serializable {
    * operations.
    * @param bigRUnity the big root of unity used for bit packing operations.
    */
-  ElemParams(usint order, const IntegerType& ctModulus,
-             const IntegerType& rUnity = IntegerType(0),
-             const IntegerType& bigCtModulus = IntegerType(0),
-             const IntegerType& bigRUnity = IntegerType(0)) {
-    cyclotomicOrder = order;
-    ringDimension = GetTotient(order);
-    isPowerOfTwo = ringDimension == cyclotomicOrder / 2;
-    ciphertextModulus = ctModulus;
-    rootOfUnity = rUnity;
+  ElemParams(usint order, const IntegerType& ctModulus, const IntegerType& rUnity = IntegerType(0),
+             const IntegerType& bigCtModulus = IntegerType(0), const IntegerType& bigRUnity = IntegerType(0)) {
+    cyclotomicOrder      = order;
+    ringDimension        = GetTotient(order);
+    isPowerOfTwo         = ringDimension == cyclotomicOrder / 2;
+    ciphertextModulus    = ctModulus;
+    rootOfUnity          = rUnity;
     bigCiphertextModulus = bigCtModulus;
-    bigRootOfUnity = bigRUnity;
+    bigRootOfUnity       = bigRUnity;
   }
 
   /**
@@ -72,13 +71,13 @@ class ElemParams : public Serializable {
    * @return the resulting parameter set with parameters copied.
    */
   ElemParams(const ElemParams& rhs) {
-    cyclotomicOrder = rhs.cyclotomicOrder;
-    ringDimension = rhs.ringDimension;
-    isPowerOfTwo = rhs.isPowerOfTwo;
-    ciphertextModulus = rhs.ciphertextModulus;
-    rootOfUnity = rhs.rootOfUnity;
+    cyclotomicOrder      = rhs.cyclotomicOrder;
+    ringDimension        = rhs.ringDimension;
+    isPowerOfTwo         = rhs.isPowerOfTwo;
+    ciphertextModulus    = rhs.ciphertextModulus;
+    rootOfUnity          = rhs.rootOfUnity;
     bigCiphertextModulus = rhs.bigCiphertextModulus;
-    bigRootOfUnity = rhs.bigRootOfUnity;
+    bigRootOfUnity       = rhs.bigRootOfUnity;
   }
 
   /**
@@ -87,13 +86,13 @@ class ElemParams : public Serializable {
    * @return the resulting copy of the parameter set.
    */
   ElemParams(const ElemParams&& rhs) {
-    cyclotomicOrder = rhs.cyclotomicOrder;
-    ringDimension = rhs.ringDimension;
-    isPowerOfTwo = rhs.isPowerOfTwo;
-    ciphertextModulus = std::move(rhs.ciphertextModulus);
-    rootOfUnity = std::move(rhs.rootOfUnity);
+    cyclotomicOrder      = rhs.cyclotomicOrder;
+    ringDimension        = rhs.ringDimension;
+    isPowerOfTwo         = rhs.isPowerOfTwo;
+    ciphertextModulus    = std::move(rhs.ciphertextModulus);
+    rootOfUnity          = std::move(rhs.rootOfUnity);
     bigCiphertextModulus = std::move(rhs.bigCiphertextModulus);
-    bigRootOfUnity = std::move(rhs.bigRootOfUnity);
+    bigRootOfUnity       = std::move(rhs.bigRootOfUnity);
   }
 
   /**
@@ -101,13 +100,13 @@ class ElemParams : public Serializable {
    * @param rhs the ElemParams instance to copy.
    */
   const ElemParams& operator=(const ElemParams& rhs) {
-    cyclotomicOrder = rhs.cyclotomicOrder;
-    ringDimension = rhs.ringDimension;
-    isPowerOfTwo = rhs.isPowerOfTwo;
-    ciphertextModulus = rhs.ciphertextModulus;
-    rootOfUnity = rhs.rootOfUnity;
+    cyclotomicOrder      = rhs.cyclotomicOrder;
+    ringDimension        = rhs.ringDimension;
+    isPowerOfTwo         = rhs.isPowerOfTwo;
+    ciphertextModulus    = rhs.ciphertextModulus;
+    rootOfUnity          = rhs.rootOfUnity;
     bigCiphertextModulus = rhs.bigCiphertextModulus;
-    bigRootOfUnity = rhs.bigRootOfUnity;
+    bigRootOfUnity       = rhs.bigRootOfUnity;
     return *this;
   }
 
@@ -121,14 +120,18 @@ class ElemParams : public Serializable {
    * @brief Simple getter method for cyclotomic order.
    * @return The cyclotomic order.
    */
-  usint GetCyclotomicOrder() const { return cyclotomicOrder; }
+  usint GetCyclotomicOrder() const {
+    return cyclotomicOrder;
+  }
 
   /**
    * @brief Simple ring dimension getter method.  The ring dimension is the
    * evaluation of the totient function of the cyclotomic order.
    * @return the ring dimension.
    */
-  usint GetRingDimension() const { return ringDimension; }
+  usint GetRingDimension() const {
+    return ringDimension;
+  }
 
   /**
    * @brief Returns True if the cyclotomic order or ring dimension is a power
@@ -136,34 +139,44 @@ class ElemParams : public Serializable {
    * @return True if the cyclotomic order or ring dimension is a power of 2.
    * False otherwise.
    */
-  bool OrderIsPowerOfTwo() const { return isPowerOfTwo; }
+  bool OrderIsPowerOfTwo() const {
+    return isPowerOfTwo;
+  }
 
   /**
    * @brief Simple getter method for the ciphertext modulus, not the big
    * ciphertext modulus.
    * @return The ciphertext modulus, not the big ciphertext modulus.
    */
-  const IntegerType& GetModulus() const { return ciphertextModulus; }
+  const IntegerType& GetModulus() const {
+    return ciphertextModulus;
+  }
 
   /**
    * @brief Simpler getter method for the big ciphertext modulus.
    * This is not relevant for all applications.
    * @return The big ciphertext modulus.
    */
-  const IntegerType& GetBigModulus() const { return bigCiphertextModulus; }
+  const IntegerType& GetBigModulus() const {
+    return bigCiphertextModulus;
+  }
 
   /**
    * @brief Simple getter method for the root of unity, not the big root of
    * unity.
    * @return The root of unity, not the big root of unity.
    */
-  const IntegerType& GetRootOfUnity() const { return rootOfUnity; }
+  const IntegerType& GetRootOfUnity() const {
+    return rootOfUnity;
+  }
 
   /**
    * @brief Simple getter method for the big root of unity.
    * @return The the big root of unity.
    */
-  const IntegerType& GetBigRootOfUnity() const { return bigRootOfUnity; }
+  const IntegerType& GetBigRootOfUnity() const {
+    return bigRootOfUnity;
+  }
 
   /**
    * @brief Output strem operator.
@@ -181,12 +194,9 @@ class ElemParams : public Serializable {
    * @return True if all elements are equal, and False otherwise.
    */
   virtual bool operator==(const ElemParams<IntegerType>& other) const {
-    return cyclotomicOrder == other.cyclotomicOrder &&
-           ringDimension == other.ringDimension &&
-           ciphertextModulus == other.ciphertextModulus &&
-           rootOfUnity == other.rootOfUnity &&
-           bigCiphertextModulus == other.bigCiphertextModulus &&
-           bigRootOfUnity == other.bigRootOfUnity;
+    return cyclotomicOrder == other.cyclotomicOrder && ringDimension == other.ringDimension &&
+           ciphertextModulus == other.ciphertextModulus && rootOfUnity == other.rootOfUnity &&
+           bigCiphertextModulus == other.bigCiphertextModulus && bigRootOfUnity == other.bigRootOfUnity;
   }
 
   /**
@@ -212,9 +222,9 @@ class ElemParams : public Serializable {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("co", cyclotomicOrder));
     ar(::cereal::make_nvp("rd", ringDimension));
@@ -225,8 +235,12 @@ class ElemParams : public Serializable {
     ar(::cereal::make_nvp("br", bigRootOfUnity));
   }
 
-  std::string SerializedObjectName() const { return "ElemParams"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "ElemParams";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  protected:
   usint cyclotomicOrder;
@@ -244,9 +258,8 @@ class ElemParams : public Serializable {
    * @return the resulting output stream.
    */
   virtual std::ostream& doprint(std::ostream& out) const {
-    out << "[m=" << cyclotomicOrder << (isPowerOfTwo ? "* " : " ")
-        << "n=" << ringDimension << " q=" << ciphertextModulus
-        << " ru=" << rootOfUnity << " bigq=" << bigCiphertextModulus
+    out << "[m=" << cyclotomicOrder << (isPowerOfTwo ? "* " : " ") << "n=" << ringDimension
+        << " q=" << ciphertextModulus << " ru=" << rootOfUnity << " bigq=" << bigCiphertextModulus
         << " bigru=" << bigRootOfUnity << "]";
     return out;
   }

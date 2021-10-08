@@ -44,10 +44,9 @@ void BFVrnsEvalMerge2n();
 void NullEvalMerge2n();
 
 int main() {
-  std::cout
-      << "\nThis code shows how the EvalAtIndex and EvalMerge operations work "
-         "for different cyclotomic rings (both power-of-two and cyclic).\n"
-      << std::endl;
+  std::cout << "\nThis code shows how the EvalAtIndex and EvalMerge operations work "
+               "for different cyclotomic rings (both power-of-two and cyclic).\n"
+            << std::endl;
 
   std::cout << "\n========== BFVrns.EvalAtIndex - Power-of-Two Cyclotomics "
                "==========="
@@ -55,32 +54,23 @@ int main() {
 
   BFVrnsEvalAtIndex2n();
 
-  std::cout
-      << "\n========== CKKS.EvalAtIndex - Power-of-Two Cyclotomics ==========="
-      << std::endl;
+  std::cout << "\n========== CKKS.EvalAtIndex - Power-of-Two Cyclotomics ===========" << std::endl;
 
   CKKSEvalAtIndex2n();
 
-  std::cout
-      << "\n========== Null.EvalAtIndex - Power-of-Two Cyclotomics ==========="
-      << std::endl;
+  std::cout << "\n========== Null.EvalAtIndex - Power-of-Two Cyclotomics ===========" << std::endl;
 
   NullEvalAtIndex2n();
 
-  std::cout << "\n========== BFV.EvalAtIndex - Cyclic group ==========="
-            << std::endl;
+  std::cout << "\n========== BFV.EvalAtIndex - Cyclic group ===========" << std::endl;
 
   BFVEvalAtIndexCyclic();
 
-  std::cout
-      << "\n========== BFVrns.EvalMerge - Power-of-Two Cyclotomics ==========="
-      << std::endl;
+  std::cout << "\n========== BFVrns.EvalMerge - Power-of-Two Cyclotomics ===========" << std::endl;
 
   BFVrnsEvalMerge2n();
 
-  std::cout
-      << "\n========== Null.EvalMerge - Power-of-Two Cyclotomics ==========="
-      << std::endl;
+  std::cout << "\n========== Null.EvalMerge - Power-of-Two Cyclotomics ===========" << std::endl;
 
   NullEvalMerge2n();
 
@@ -88,16 +78,14 @@ int main() {
 }
 
 void BFVrnsEvalAtIndex2n() {
-  uint64_t p = 65537;
-  double sigma = 3.2;
+  uint64_t p               = 65537;
+  double sigma             = 3.2;
   double rootHermiteFactor = 1.006;
 
   CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          p, rootHermiteFactor, sigma, 0, 1, 0, OPTIMIZED, 3);
+    CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(p, rootHermiteFactor, sigma, 0, 1, 0, OPTIMIZED, 3);
 
-  int32_t n =
-      cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2;
+  int32_t n = cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2;
 
   // enable features that you wish to use
   cc->Enable(ENCRYPTION);
@@ -106,13 +94,11 @@ void BFVrnsEvalAtIndex2n() {
   // Initialize the public key containers.
   LPKeyPair<DCRTPoly> kp = cc->KeyGen();
 
-  vector<int32_t> indexList = {2,     3,  4,  5,      6,      7,
-                               8,     9,  10, -n + 2, -n + 3, n - 1,
-                               n - 2, -1, -2, -3,     -4,     -5};
+  vector<int32_t> indexList = { 2, 3, 4, 5, 6, 7, 8, 9, 10, -n + 2, -n + 3, n - 1, n - 2, -1, -2, -3, -4, -5 };
 
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
-  std::vector<int64_t> vectorOfInts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<int64_t> vectorOfInts = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
   vectorOfInts.resize(n);
   vectorOfInts[n - 1] = n;
   vectorOfInts[n - 2] = n - 1;
@@ -131,8 +117,7 @@ void BFVrnsEvalAtIndex2n() {
 
     intArrayNew->SetLength(10);
 
-    std::cout << "Automorphed array - at index " << indexList[i] << ": "
-              << *intArrayNew << std::endl;
+    std::cout << "Automorphed array - at index " << indexList[i] << ": " << *intArrayNew << std::endl;
   }
 }
 
@@ -140,14 +125,16 @@ void CKKSEvalAtIndex2n() {
   usint m = 8192;
 
   usint init_size = 3;
-  usint dcrtBits = 40;
+  usint dcrtBits  = 40;
 
   CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextCKKSWithParamsGen(
-          m, init_size, /*numPrimes*/
-          dcrtBits, 10, /*relinWindow*/
-          16,           /*batch size*/
-          OPTIMIZED, 3 /*depth*/);
+    CryptoContextFactory<DCRTPoly>::genCryptoContextCKKSWithParamsGen(m,
+                                                                      init_size, /*numPrimes*/
+                                                                      dcrtBits,
+                                                                      10, /*relinWindow*/
+                                                                      16, /*batch size*/
+                                                                      OPTIMIZED,
+                                                                      3 /*depth*/);
 
   int32_t n = m / 4;
 
@@ -158,14 +145,11 @@ void CKKSEvalAtIndex2n() {
   // Initialize the public key containers.
   LPKeyPair<DCRTPoly> kp = cc->KeyGen();
 
-  vector<int32_t> indexList = {2,     3,  4,  5,      6,      7,
-                               8,     9,  10, -n + 2, -n + 3, n - 1,
-                               n - 2, -1, -2, -3,     -4,     -5};
+  vector<int32_t> indexList = { 2, 3, 4, 5, 6, 7, 8, 9, 10, -n + 2, -n + 3, n - 1, n - 2, -1, -2, -3, -4, -5 };
 
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
-  std::vector<std::complex<double>> vectorOfInts = {1, 2, 3, 4, 5,
-                                                    6, 7, 8, 9, 10};
+  std::vector<std::complex<double>> vectorOfInts = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
   vectorOfInts.resize(n);
   vectorOfInts[n - 1] = n;
   vectorOfInts[n - 2] = n - 1;
@@ -184,20 +168,17 @@ void CKKSEvalAtIndex2n() {
 
     intArrayNew->SetLength(10);
 
-    std::cout << "Automorphed array - at index " << indexList[i] << ": "
-              << *intArrayNew << std::endl;
+    std::cout << "Automorphed array - at index " << indexList[i] << ": " << *intArrayNew << std::endl;
   }
 }
 
 void NullEvalAtIndex2n() {
   uint64_t p = 65537;
-  usint m = 8192;
+  usint m    = 8192;
 
-  CryptoContext<Poly> cc =
-      CryptoContextFactory<Poly>::genCryptoContextNull(m, p);
+  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextNull(m, p);
 
-  int32_t n =
-      cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2;
+  int32_t n = cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2;
 
   // enable features that you wish to use
   cc->Enable(ENCRYPTION);
@@ -206,13 +187,11 @@ void NullEvalAtIndex2n() {
   // Initialize the public key containers.
   LPKeyPair<Poly> kp = cc->KeyGen();
 
-  vector<int32_t> indexList = {2,     3,  4,  5,      6,      7,
-                               8,     9,  10, -n + 2, -n + 3, n - 1,
-                               n - 2, -1, -2, -3,     -4,     -5};
+  vector<int32_t> indexList = { 2, 3, 4, 5, 6, 7, 8, 9, 10, -n + 2, -n + 3, n - 1, n - 2, -1, -2, -3, -4, -5 };
 
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
-  std::vector<int64_t> vectorOfInts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<int64_t> vectorOfInts = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
   vectorOfInts.resize(n);
   vectorOfInts[n - 1] = n;
   vectorOfInts[n - 2] = n - 1;
@@ -231,8 +210,7 @@ void NullEvalAtIndex2n() {
 
     intArrayNew->SetLength(10);
 
-    std::cout << "Automorphed array - at index " << indexList[i] << ": "
-              << *intArrayNew << std::endl;
+    std::cout << "Automorphed array - at index " << indexList[i] << ": " << *intArrayNew << std::endl;
   }
 }
 
@@ -249,13 +227,11 @@ void BFVEvalAtIndexCyclic() {
   BigInteger bigroot("77936753846653065954043047918387");
 
   auto cycloPoly = GetCyclotomicPolynomial<BigVector>(m, modulusQ);
-  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly,
-                                                                    modulusQ);
+  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly, modulusQ);
 
   float stdDev = 4;
 
-  auto params = std::make_shared<ILParams>(m, modulusQ, squareRootOfRoot,
-                                           bigmodulus, bigroot);
+  auto params = std::make_shared<ILParams>(m, modulusQ, squareRootOfRoot, bigmodulus, bigroot);
 
   BigInteger delta(modulusQ.DividedBy(modulusP));
 
@@ -263,8 +239,8 @@ void BFVEvalAtIndexCyclic() {
 
   PackedEncoding::SetParams(m, encodingParams);
 
-  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(
-      params, encodingParams, 8, stdDev, delta.ToString());
+  CryptoContext<Poly> cc =
+    CryptoContextFactory<Poly>::genCryptoContextBFV(params, encodingParams, 8, stdDev, delta.ToString());
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -274,11 +250,11 @@ void BFVEvalAtIndexCyclic() {
 
   int32_t n = 10;
 
-  vector<int32_t> indexList = {2, 3, 4, -n + 2, n, n - 1, n - 2, -1, -2};
+  vector<int32_t> indexList = { 2, 3, 4, -n + 2, n, n - 1, n - 2, -1, -2 };
 
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
-  std::vector<int64_t> vectorOfInts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<int64_t> vectorOfInts = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
   Plaintext intArray = cc->MakePackedPlaintext(vectorOfInts);
 
@@ -293,19 +269,17 @@ void BFVEvalAtIndexCyclic() {
 
     intArrayNew->SetLength(10);
 
-    std::cout << "Automorphed array - at index " << indexList[i] << ": "
-              << *intArrayNew << std::endl;
+    std::cout << "Automorphed array - at index " << indexList[i] << ": " << *intArrayNew << std::endl;
   }
 }
 
 void BFVrnsEvalMerge2n() {
-  uint64_t p = 65537;
-  double sigma = 3.2;
+  uint64_t p               = 65537;
+  double sigma             = 3.2;
   double rootHermiteFactor = 1.006;
 
   CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          p, rootHermiteFactor, sigma, 0, 2, 0, OPTIMIZED, 3);
+    CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(p, rootHermiteFactor, sigma, 0, 2, 0, OPTIMIZED, 3);
 
   // enable features that you wish to use
   cc->Enable(ENCRYPTION);
@@ -314,30 +288,30 @@ void BFVrnsEvalMerge2n() {
   // Initialize the public key containers.
   LPKeyPair<DCRTPoly> kp = cc->KeyGen();
 
-  vector<int32_t> indexList = {-1, -2, -3, -4, -5};
+  vector<int32_t> indexList = { -1, -2, -3, -4, -5 };
 
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
   std::vector<Ciphertext<DCRTPoly>> ciphertexts;
 
-  std::vector<int64_t> vectorOfInts1 = {32, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray1 = cc->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 32, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray1                = cc->MakePackedPlaintext(vectorOfInts1);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray1));
 
-  std::vector<int64_t> vectorOfInts2 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray2 = cc->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray2                = cc->MakePackedPlaintext(vectorOfInts2);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray2));
 
-  std::vector<int64_t> vectorOfInts3 = {4, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray3 = cc->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = { 4, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray3                = cc->MakePackedPlaintext(vectorOfInts3);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray3));
 
-  std::vector<int64_t> vectorOfInts4 = {8, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray4 = cc->MakePackedPlaintext(vectorOfInts4);
+  std::vector<int64_t> vectorOfInts4 = { 8, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray4                = cc->MakePackedPlaintext(vectorOfInts4);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray4));
 
-  std::vector<int64_t> vectorOfInts5 = {16, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray5 = cc->MakePackedPlaintext(vectorOfInts5);
+  std::vector<int64_t> vectorOfInts5 = { 16, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray5                = cc->MakePackedPlaintext(vectorOfInts5);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray5));
 
   std::cout << "Input ciphertext " << *intArray1 << std::endl;
@@ -359,10 +333,9 @@ void BFVrnsEvalMerge2n() {
 
 void NullEvalMerge2n() {
   uint64_t p = 65537;
-  usint m = 32;
+  usint m    = 32;
 
-  CryptoContext<Poly> cc =
-      CryptoContextFactory<Poly>::genCryptoContextNull(m, p);
+  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextNull(m, p);
 
   // enable features that you wish to use
   cc->Enable(ENCRYPTION);
@@ -371,30 +344,30 @@ void NullEvalMerge2n() {
   // Initialize the public key containers.
   LPKeyPair<Poly> kp = cc->KeyGen();
 
-  vector<int32_t> indexList = {-1, -2, -3, -4, -5};
+  vector<int32_t> indexList = { -1, -2, -3, -4, -5 };
 
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
   std::vector<Ciphertext<Poly>> ciphertexts;
 
-  std::vector<int64_t> vectorOfInts1 = {32, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray1 = cc->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 32, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray1                = cc->MakePackedPlaintext(vectorOfInts1);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray1));
 
-  std::vector<int64_t> vectorOfInts2 = {2, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray2 = cc->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 2, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray2                = cc->MakePackedPlaintext(vectorOfInts2);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray2));
 
-  std::vector<int64_t> vectorOfInts3 = {4, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray3 = cc->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = { 4, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray3                = cc->MakePackedPlaintext(vectorOfInts3);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray3));
 
-  std::vector<int64_t> vectorOfInts4 = {8, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray4 = cc->MakePackedPlaintext(vectorOfInts4);
+  std::vector<int64_t> vectorOfInts4 = { 8, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray4                = cc->MakePackedPlaintext(vectorOfInts4);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray4));
 
-  std::vector<int64_t> vectorOfInts5 = {16, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  Plaintext intArray5 = cc->MakePackedPlaintext(vectorOfInts5);
+  std::vector<int64_t> vectorOfInts5 = { 16, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  Plaintext intArray5                = cc->MakePackedPlaintext(vectorOfInts5);
   ciphertexts.push_back(cc->Encrypt(kp.publicKey, intArray5));
 
   std::cout << "Input ciphertext " << *intArray1 << std::endl;

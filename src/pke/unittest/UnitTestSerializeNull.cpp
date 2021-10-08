@@ -29,7 +29,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTPKESer : public ::testing::Test {
+class UTPKESer : public ::testing::Test
+{
  protected:
   void SetUp() {}
 
@@ -44,23 +45,19 @@ class UTPKESer : public ::testing::Test {
 };
 
 CryptoContext<Poly> GenerateTestCryptoContext(const string& parmsetName) {
-    PlaintextModulus modulusP(256);
-    CryptoContext<Poly> cc = CryptoContextHelper::getNewContext(
-        parmsetName,
-        EncodingParams(std::make_shared<EncodingParamsImpl>(modulusP, 8)));
-    cc->Enable(ENCRYPTION);
-    cc->Enable(SHE);
-    return cc;
+  PlaintextModulus modulusP(256);
+  CryptoContext<Poly> cc =
+    CryptoContextHelper::getNewContext(parmsetName, EncodingParams(std::make_shared<EncodingParamsImpl>(modulusP, 8)));
+  cc->Enable(ENCRYPTION);
+  cc->Enable(SHE);
+  return cc;
 }
 
-CryptoContext<DCRTPoly> GenerateTestDCRTCryptoContext(const string& parmsetName,
-                                                      usint nTower,
-                                                      usint pbits) {
-    CryptoContext<DCRTPoly> cc =
-        CryptoContextHelper::getNewDCRTContext(parmsetName, nTower, pbits);
-    cc->Enable(ENCRYPTION);
-    cc->Enable(SHE);
-    return cc;
+CryptoContext<DCRTPoly> GenerateTestDCRTCryptoContext(const string& parmsetName, usint nTower, usint pbits) {
+  CryptoContext<DCRTPoly> cc = CryptoContextHelper::getNewDCRTContext(parmsetName, nTower, pbits);
+  cc->Enable(ENCRYPTION);
+  cc->Enable(SHE);
+  return cc;
 }
 
 template <typename T>

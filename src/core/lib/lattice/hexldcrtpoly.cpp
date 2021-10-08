@@ -44,50 +44,46 @@ using std::string;
 namespace lbcrypto {
 
 // used for CKKS rescaling
-template<typename VecType>
-void HexlDCRTPoly<VecType>::DropLastElementAndScale(
-   const std::vector<NativeInteger> &QlQlInvModqlDivqlModq,
-   const std::vector<NativeInteger> &QlQlInvModqlDivqlModqPrecon,
-   const std::vector<NativeInteger> &qlInvModq,
-   const std::vector<NativeInteger> &qlInvModqPrecon) {
- usint sizeQl = this->m_vectors.size();
+template <typename VecType>
+void HexlDCRTPoly<VecType>::DropLastElementAndScale(const std::vector<NativeInteger>& QlQlInvModqlDivqlModq,
+                                                    const std::vector<NativeInteger>& QlQlInvModqlDivqlModqPrecon,
+                                                    const std::vector<NativeInteger>& qlInvModq,
+                                                    const std::vector<NativeInteger>& qlInvModqPrecon) {
+  usint sizeQl = this->m_vectors.size();
 
- // last tower that will be dropped
- PolyType lastPoly(this->m_vectors[sizeQl - 1]);
+  // last tower that will be dropped
+  PolyType lastPoly(this->m_vectors[sizeQl - 1]);
 
- // drop the last tower
- this->DropLastElement();
+  // drop the last tower
+  this->DropLastElement();
 
- lastPoly.SetFormat(Format::COEFFICIENT);
- HexlDCRTPoly extra(this->m_params, COEFFICIENT, true);
+  lastPoly.SetFormat(Format::COEFFICIENT);
+  HexlDCRTPoly extra(this->m_params, COEFFICIENT, true);
 
 #pragma omp parallel for
- for (usint i = 0; i < extra.m_vectors.size(); i++) {
-   auto temp = lastPoly;
-   temp.SwitchModulus(this->m_vectors[i].GetModulus(),
-                      this->m_vectors[i].GetRootOfUnity());
-   extra.m_vectors[i] = (temp *= QlQlInvModqlDivqlModq[i]);
- } // omp threaded loop
+  for (usint i = 0; i < extra.m_vectors.size(); i++) {
+    auto temp = lastPoly;
+    temp.SwitchModulus(this->m_vectors[i].GetModulus(), this->m_vectors[i].GetRootOfUnity());
+    extra.m_vectors[i] = (temp *= QlQlInvModqlDivqlModq[i]);
+  }  // omp threaded loop
 
- if (this->GetFormat() == Format::EVALUATION)
-   extra.SetFormat(Format::EVALUATION);
+  if (this->GetFormat() == Format::EVALUATION) extra.SetFormat(Format::EVALUATION);
 
- usint ringDim = this->GetRingDimension();
- for (usint i = 0; i < this->m_vectors.size(); i++) {
-   const NativeInteger &qi = this->m_vectors[i].GetModulus();
-   PolyType &m_veci = this->m_vectors[i];
-   PolyType &extra_m_veci = extra.m_vectors[i];
-   const auto multOp = qlInvModq[i];
-   uint64_t *op1 = reinterpret_cast<uint64_t *>(&m_veci[0]);
-   uint64_t op2 = multOp.ConvertToInt();
-   uint64_t *op3 = reinterpret_cast<uint64_t *>(&extra_m_veci[0]);
-   intel::hexl::EltwiseFMAMod(op1, op1, op2, op3, ringDim, qi.ConvertToInt(),
-                              1);
- }
+  usint ringDim = this->GetRingDimension();
+  for (usint i = 0; i < this->m_vectors.size(); i++) {
+    const NativeInteger& qi = this->m_vectors[i].GetModulus();
+    PolyType& m_veci        = this->m_vectors[i];
+    PolyType& extra_m_veci  = extra.m_vectors[i];
+    const auto multOp       = qlInvModq[i];
+    uint64_t* op1           = reinterpret_cast<uint64_t*>(&m_veci[0]);
+    uint64_t op2            = multOp.ConvertToInt();
+    uint64_t* op3           = reinterpret_cast<uint64_t*>(&extra_m_veci[0]);
+    intel::hexl::EltwiseFMAMod(op1, op1, op2, op3, ringDim, qi.ConvertToInt(), 1);
+  }
 
- this->SetFormat(Format::EVALUATION);
-} // DCRTPolyImpl<VecType>::DropLastElementAndScale
+  this->SetFormat(Format::EVALUATION);
+}  // DCRTPolyImpl<VecType>::DropLastElementAndScale
 
-} // namespace lbcrypto
+}  // namespace lbcrypto
 
-#endif // WITH_INTEL_HEXL
+#endif  // WITH_INTEL_HEXL

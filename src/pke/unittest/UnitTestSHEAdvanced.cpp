@@ -41,7 +41,8 @@ using namespace lbcrypto;
 
 using TYPE = DCRTPoly;
 // A new one of these is created for each test
-class UTSHEAdvanced : public testing::Test {
+class UTSHEAdvanced : public testing::Test
+{
  public:
   UTSHEAdvanced() {}
 
@@ -56,16 +57,14 @@ class UTSHEAdvanced : public testing::Test {
 #if !defined(_MSC_VER)
 
 TEST_F(UTSHEAdvanced, test_eval_mult_single_crt) {
-  usint m = 16;
-  usint relin = 1;
-  float stdDev = 4;
+  usint m              = 16;
+  usint relin          = 1;
+  float stdDev         = 4;
   PlaintextModulus ptm = 20;
 
-  shared_ptr<TYPE::Params> parms =
-      ElemParamFactory::GenElemParams<TYPE::Params>(m, 50);
+  shared_ptr<TYPE::Params> parms = ElemParamFactory::GenElemParams<TYPE::Params>(m, 50);
 
-  CryptoContext<TYPE> cc = CryptoContextFactory<TYPE>::genCryptoContextBGVrns(
-      parms, ptm, relin, stdDev);
+  CryptoContext<TYPE> cc = CryptoContextFactory<TYPE>::genCryptoContextBGVrns(parms, ptm, relin, stdDev);
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
   cc->Enable(LEVELEDSHE);
@@ -73,11 +72,11 @@ TEST_F(UTSHEAdvanced, test_eval_mult_single_crt) {
   // Initialize the public key containers.
   LPKeyPair<TYPE> kp;
 
-  std::vector<int64_t> vectorOfInts1 = {2};
-  Plaintext intArray1 = cc->MakeCoefPackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 2 };
+  Plaintext intArray1                = cc->MakeCoefPackedPlaintext(vectorOfInts1);
 
-  std::vector<int64_t> vectorOfInts2 = {3};
-  Plaintext intArray2 = cc->MakeCoefPackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 3 };
+  Plaintext intArray2                = cc->MakeCoefPackedPlaintext(vectorOfInts2);
 
   kp = cc->KeyGen();
   cc->EvalMultKeyGen(kp.secretKey);
@@ -92,8 +91,7 @@ TEST_F(UTSHEAdvanced, test_eval_mult_single_crt) {
 
   LPKeyPair<TYPE> newKp = cc->KeyGen();
 
-  LPEvalKey<TYPE> keySwitchHint2 =
-      cc->KeySwitchGen(kp.secretKey, newKp.secretKey);
+  LPEvalKey<TYPE> keySwitchHint2 = cc->KeySwitchGen(kp.secretKey, newKp.secretKey);
 
   cc->KeySwitchInPlace(keySwitchHint2, cResult);
 
@@ -106,16 +104,14 @@ TEST_F(UTSHEAdvanced, test_eval_mult_single_crt) {
 
 TEST_F(UTSHEAdvanced, test_eval_add_single_crt) {
   DEBUG_FLAG(false);
-  usint m = 16;
+  usint m              = 16;
   PlaintextModulus ptm = 20;
 
   float stdDev = 4;
 
-  shared_ptr<TYPE::Params> parms =
-      ElemParamFactory::GenElemParams<TYPE::Params>(m);
+  shared_ptr<TYPE::Params> parms = ElemParamFactory::GenElemParams<TYPE::Params>(m);
 
-  CryptoContext<TYPE> cc =
-      CryptoContextFactory<TYPE>::genCryptoContextBGVrns(parms, ptm, 1, stdDev);
+  CryptoContext<TYPE> cc = CryptoContextFactory<TYPE>::genCryptoContextBGVrns(parms, ptm, 1, stdDev);
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -125,12 +121,12 @@ TEST_F(UTSHEAdvanced, test_eval_add_single_crt) {
   LPKeyPair<TYPE> kp;
 
   DEBUG("Filling 1");
-  std::vector<int64_t> vectorOfInts1 = {2, 3, 1, 4};
-  Plaintext intArray1 = cc->MakeCoefPackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 2, 3, 1, 4 };
+  Plaintext intArray1                = cc->MakeCoefPackedPlaintext(vectorOfInts1);
 
   DEBUG("Filling 2");
-  std::vector<int64_t> vectorOfInts2 = {3, 6, 3, 1};
-  Plaintext intArray2 = cc->MakeCoefPackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 3, 6, 3, 1 };
+  Plaintext intArray2                = cc->MakeCoefPackedPlaintext(vectorOfInts2);
 
   DEBUG("getting pairs");
   kp = cc->KeyGen();
@@ -149,7 +145,7 @@ TEST_F(UTSHEAdvanced, test_eval_add_single_crt) {
   cResult = cc->EvalAdd(ciphertext1, ciphertext2);
   DEBUG("after");
 
-  Ciphertext<TYPE> ciphertextResults({cResult});
+  Ciphertext<TYPE> ciphertextResults({ cResult });
   Plaintext results;
 
   cc->Decrypt(kp.secretKey, ciphertextResults, &results);

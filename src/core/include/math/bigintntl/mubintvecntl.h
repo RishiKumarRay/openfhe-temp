@@ -70,15 +70,19 @@ namespace NTL {
  */
 
 template <typename myT>
-class myVecP : public NTL::Vec<myT>,
-               public lbcrypto::BigVectorInterface<myVecP<myT>, myT>,
-               public lbcrypto::Serializable {
+class myVecP :
+    public NTL::Vec<myT>,
+    public lbcrypto::BigVectorInterface<myVecP<myT>, myT>,
+    public lbcrypto::Serializable
+{
  public:
   // CONSTRUCTORS
 
-  myVecP() : Vec<myT>() { m_modulus_state = GARBAGE; }
+  myVecP() : Vec<myT>() {
+    m_modulus_state = GARBAGE;
+  }
 
-  static inline myVecP Single(const myT &val, const myT &modulus) {
+  static inline myVecP Single(const myT& val, const myT& modulus) {
     myVecP vec(1);
     vec.SetModulus(modulus);
     vec[0] = val;
@@ -93,58 +97,68 @@ class myVecP : public NTL::Vec<myT>,
     m_modulus_state = GARBAGE;
   }
 
-  explicit myVecP(const myVecP<myT> &a);
+  explicit myVecP(const myVecP<myT>& a);
 
-  myVecP(myVecP<myT> &&a);
+  myVecP(myVecP<myT>&& a);
 
-  myVecP(const long n, const myT &q);
+  myVecP(const long n, const myT& q);
 
-  myVecP(const long n, const myT &q, std::initializer_list<std::string> rhs);
-  myVecP(const long n, const myT &q, std::initializer_list<uint64_t> rhs);
+  myVecP(const long n, const myT& q, std::initializer_list<std::string> rhs);
+  myVecP(const long n, const myT& q, std::initializer_list<uint64_t> rhs);
 
-  myVecP(const myVecP<myT> &a, const myT &q);
+  myVecP(const myVecP<myT>& a, const myT& q);
 
-  myVecP(size_t n, const std::string &sq);
+  myVecP(size_t n, const std::string& sq);
 
-  myVecP(const myVecP<myT> &a, const std::string &sq);
+  myVecP(const myVecP<myT>& a, const std::string& sq);
 
   myVecP(size_t n, uint64_t q);
 
-  myVecP(const myVecP<myT> &a, const uint64_t q);
+  myVecP(const myVecP<myT>& a, const uint64_t q);
 
-  explicit myVecP(std::vector<std::string> &s);           // without modulus
-  myVecP(std::vector<std::string> &s, const myT &q);      // with modulus
-  myVecP(std::vector<std::string> &s, const char *sq);    // with modulus
-  myVecP(std::vector<std::string> &s, const uint64_t q);  // with modulusu
+  explicit myVecP(std::vector<std::string>& s);           // without modulus
+  myVecP(std::vector<std::string>& s, const myT& q);      // with modulus
+  myVecP(std::vector<std::string>& s, const char* sq);    // with modulus
+  myVecP(std::vector<std::string>& s, const uint64_t q);  // with modulusu
 
-  void clear(myVecP &x);  // why isn't this inhereted?
+  void clear(myVecP& x);  // why isn't this inhereted?
 
   ~myVecP() {}
 
   // ASSIGNMENT OPERATORS
 
-  const myVecP &operator=(const myVecP &a);
-  const myVecP &operator=(myVecP &&a);
+  const myVecP& operator=(const myVecP& a);
+  const myVecP& operator=(myVecP&& a);
 
-  const myVecP &operator=(std::initializer_list<uint64_t> rhs);
-  const myVecP &operator=(std::initializer_list<int32_t> rhs);
-  const myVecP &operator=(std::initializer_list<std::string> rhs);
-  const myVecP &operator=(uint64_t rhs);
+  const myVecP& operator=(std::initializer_list<uint64_t> rhs);
+  const myVecP& operator=(std::initializer_list<int32_t> rhs);
+  const myVecP& operator=(std::initializer_list<std::string> rhs);
+  const myVecP& operator=(uint64_t rhs);
 
   // ACCESSORS
 
   // NOTE the underlying Vec does not have a no-bounds-checking operator[]
-  myT &at(size_t i) { return this->NTL::Vec<myT>::at(i); }
+  myT& at(size_t i) {
+    return this->NTL::Vec<myT>::at(i);
+  }
 
-  const myT &at(size_t i) const { return this->NTL::Vec<myT>::at(i); }
+  const myT& at(size_t i) const {
+    return this->NTL::Vec<myT>::at(i);
+  }
 
-  myT &operator[](size_t idx) { return this->at(idx); }
+  myT& operator[](size_t idx) {
+    return this->at(idx);
+  }
 
-  const myT &operator[](size_t idx) const { return this->at(idx); }
+  const myT& operator[](size_t idx) const {
+    return this->at(idx);
+  }
 
-  inline void push_back(const myT &a) { this->append(a); }
+  inline void push_back(const myT& a) {
+    this->append(a);
+  }
 
-  void SwitchModulus(const myT &newModulus);
+  void SwitchModulus(const myT& newModulus);
 
   // public modulus accessors
   inline bool isModulusSet(void) const {
@@ -152,32 +166,30 @@ class myVecP : public NTL::Vec<myT>,
   }
 
   // return true if both myVecP have same modulus
-  inline bool SameModulus(const myVecP &a) const {
-    return ((this->m_modulus_state == a.m_modulus_state) &&
-            (this->m_modulus == a.m_modulus));
+  inline bool SameModulus(const myVecP& a) const {
+    return ((this->m_modulus_state == a.m_modulus_state) && (this->m_modulus == a.m_modulus));
   }
 
   // sets modulus and the NTL init function uint64_t argument
-  inline void SetModulus(const uint64_t &value) {
+  inline void SetModulus(const uint64_t& value) {
     if (value == 0) {
-      PALISADE_THROW(lbcrypto::math_error,
-                     "SetModulus(uint64_t) cannot be zero");
+      PALISADE_THROW(lbcrypto::math_error, "SetModulus(uint64_t) cannot be zero");
     }
-    this->m_modulus = myT(value);
+    this->m_modulus       = myT(value);
     this->m_modulus_state = INITIALIZED;
   }
 
   // sets modulus and the NTL init function myT argument
-  void SetModulus(const myT &value) {
+  void SetModulus(const myT& value) {
     if (value == myT(0)) {
       PALISADE_THROW(lbcrypto::math_error, "SetModulus(myT) cannot be zero");
     }
-    this->m_modulus = value;
+    this->m_modulus       = value;
     this->m_modulus_state = INITIALIZED;
   }
 
   // sets modulus and the NTL init function string argument
-  inline void SetModulus(const std::string &value) {
+  inline void SetModulus(const std::string& value) {
     this->m_modulus = myT(value);
     if (this->m_modulus == myT(0)) {
       PALISADE_THROW(lbcrypto::math_error, "SetModulus(string) cannot be zero");
@@ -186,7 +198,7 @@ class myVecP : public NTL::Vec<myT>,
   }
 
   // sets modulus and the NTL init function uses same modulus
-  inline void SetModulus(const myVecP &value) {
+  inline void SetModulus(const myVecP& value) {
     this->m_modulus = value.GetModulus();
     if (this->m_modulus == myT(0)) {
       PALISADE_THROW(lbcrypto::math_error, "SetModulus(myVecP) cannot be zero");
@@ -194,26 +206,30 @@ class myVecP : public NTL::Vec<myT>,
     this->m_modulus_state = INITIALIZED;
   }
 
-  const myT &GetModulus() const {
+  const myT& GetModulus() const {
     if (this->isModulusSet()) {
       return (this->m_modulus);
-    } else {
+    }
+    else {
       PALISADE_THROW(lbcrypto::config_error, "modulus not set");
     }
   }
 
-  inline int CopyModulus(const myVecP &rhs) {
-    this->m_modulus = rhs.m_modulus;
+  inline int CopyModulus(const myVecP& rhs) {
+    this->m_modulus       = rhs.m_modulus;
     this->m_modulus_state = rhs.m_modulus_state;
     if (isModulusSet()) {
       return (0);
-    } else {
+    }
+    else {
       this->m_modulus_state = GARBAGE;
       return (-1);
     }
   }
 
-  size_t GetLength(void) const { return this->length(); }
+  size_t GetLength(void) const {
+    return this->length();
+  }
 
   void resize(size_t n) {
     // resize is the STL::vector standard call for this functionality
@@ -228,7 +244,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &modulus is the modulus to perform on the current vector entries.
    * @return is the result of the modulus operation on current vector.
    */
-  myVecP Mod(const myT &b) const;
+  myVecP Mod(const myT& b) const;
 
   /**
    * Vector modulus operator. In-place variant.
@@ -236,7 +252,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &modulus is the modulus to perform on the current vector entries.
    * @return is the result of the modulus operation on current vector.
    */
-  const myVecP &ModEq(const myT &b);
+  const myVecP& ModEq(const myT& b);
 
   /**
    * Scalar-to-vector modulus addition operation.
@@ -244,7 +260,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus addition operation.
    */
-  myVecP ModAdd(const myT &b) const {
+  myVecP ModAdd(const myT& b) const {
     ModulusCheck("Warning: myVecP::ModAdd");
     myVecP ans(*this);
     ans.ModAddEq(b);
@@ -257,7 +273,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus addition operation.
    */
-  const myVecP &ModAddEq(const myT &b) {
+  const myVecP& ModAddEq(const myT& b) {
     ModulusCheck("Warning: myVecP::ModAdd");
     for (usint i = 0; i < this->GetLength(); i++) {
       this->operator[](i).ModAddEq(b, this->m_modulus);
@@ -272,7 +288,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to add.
    * @return is the result of the modulus addition operation.
    */
-  myVecP ModAddAtIndex(size_t i, const myT &b) const;
+  myVecP ModAddAtIndex(size_t i, const myT& b) const;
 
   /**
    * Scalar modulus addition at a particular index. In-place variant.
@@ -281,7 +297,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to add.
    * @return is the result of the modulus addition operation.
    */
-  const myVecP &ModAddAtIndexEq(size_t i, const myT &b);
+  const myVecP& ModAddAtIndexEq(size_t i, const myT& b);
 
   /**
    * Vector component wise modulus addition.
@@ -289,7 +305,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus addition operation.
    */
-  myVecP ModAdd(const myVecP &b) const {
+  myVecP ModAdd(const myVecP& b) const {
     ArgCheckVector(b, "myVecP ModAdd()");
     myVecP ans(*this);
     ans.ModAddEq(b);
@@ -302,7 +318,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus addition operation.
    */
-  const myVecP &ModAddEq(const myVecP &b) {
+  const myVecP& ModAddEq(const myVecP& b) {
     ArgCheckVector(b, "myVecP ModAddEq()");
     for (usint i = 0; i < this->GetLength(); i++) {
       this->operator[](i).ModAddEq(b[i], this->m_modulus);
@@ -312,7 +328,7 @@ class myVecP : public NTL::Vec<myT>,
 
   /// procedural version for the vector component wise modulus addition
   /// operation.
-  void modadd_p(myVecP &x, const myVecP &a, const myVecP &b) const;
+  void modadd_p(myVecP& x, const myVecP& a, const myVecP& b) const;
 
   /**
    * Scalar-from-vector modulus subtraction operation.
@@ -320,7 +336,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus subtraction operation.
    */
-  myVecP ModSub(const myT &b) const {
+  myVecP ModSub(const myT& b) const {
     ModulusCheck("Warning: myVecP::ModSub");
     myVecP ans(*this);
     ans.ModSubEq(b);
@@ -333,7 +349,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus subtraction operation.
    */
-  const myVecP &ModSubEq(const myT &b) {
+  const myVecP& ModSubEq(const myT& b) {
     ModulusCheck("Warning: myVecP::ModSubEq");
     for (usint i = 0; i < this->GetLength(); i++) {
       this->operator[](i).ModSubEq(b, this->m_modulus);
@@ -347,7 +363,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus subtraction operation.
    */
-  myVecP ModSub(const myVecP &b) const {
+  myVecP ModSub(const myVecP& b) const {
     ArgCheckVector(b, "myVecP ModSub()");
     myVecP ans(*this);
     ans.ModSubEq(b);
@@ -360,7 +376,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus subtraction operation.
    */
-  const myVecP &ModSubEq(const myVecP &b) {
+  const myVecP& ModSubEq(const myVecP& b) {
     ArgCheckVector(b, "myVecP ModSubEq()");
     for (usint i = 0; i < this->GetLength(); i++) {
       this->operator[](i).ModSubEq(b[i], this->m_modulus);
@@ -370,7 +386,7 @@ class myVecP : public NTL::Vec<myT>,
 
   /// procedural version for the vector component wise modulus subtraction
   /// operation.
-  void modsub_p(myVecP &x, const myVecP &a, const myVecP &b) const;
+  void modsub_p(myVecP& x, const myVecP& a, const myVecP& b) const;
 
   /**
    * Scalar-to-vector modulus multiplication operation.
@@ -378,7 +394,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus multiplication operation.
    */
-  myVecP ModMul(const myT &b) const {
+  myVecP ModMul(const myT& b) const {
     ModulusCheck("Warning: myVecP::ModMul");
     myVecP ans(*this);
     ans.ModMulEq(b);
@@ -391,7 +407,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus multiplication operation.
    */
-  const myVecP &ModMulEq(const myT &b) {
+  const myVecP& ModMulEq(const myT& b) {
     ModulusCheck("Warning: myVecP::ModMul");
     for (usint i = 0; i < this->GetLength(); i++) {
       this->operator[](i).ModMulEq(b, this->m_modulus);
@@ -406,7 +422,7 @@ class myVecP : public NTL::Vec<myT>,
    * @return is the result of the component wise modulus multiplication
    * operation.
    */
-  myVecP ModMul(const myVecP &b) const {
+  myVecP ModMul(const myVecP& b) const {
     ArgCheckVector(b, "myVecP Mul()");
     myVecP ans(*this);
     ans.ModMulEq(b);
@@ -420,7 +436,7 @@ class myVecP : public NTL::Vec<myT>,
    * @return is the result of the component wise modulus multiplication
    * operation.
    */
-  const myVecP &ModMulEq(const myVecP &b) {
+  const myVecP& ModMulEq(const myVecP& b) {
     ArgCheckVector(b, "myVecP Mul()");
     for (usint i = 0; i < this->GetLength(); i++) {
       this->operator[](i).ModMulEq(b[i], this->m_modulus);
@@ -430,7 +446,7 @@ class myVecP : public NTL::Vec<myT>,
 
   /// procedural version for the vector component wise modulus multiplication
   /// operation.
-  void modmul_p(myVecP &x, const myVecP &a, const myVecP &b) const;
+  void modmul_p(myVecP& x, const myVecP& a, const myVecP& b) const;
 
   /**
    * Scalar modulus exponentiation operation.
@@ -438,7 +454,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus exponentiation operation.
    */
-  myVecP ModExp(const myT &b) const;
+  myVecP ModExp(const myT& b) const;
 
   /**
    * Scalar modulus exponentiation operation. In-place variant.
@@ -446,7 +462,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus exponentiation operation.
    */
-  const myVecP &ModExpEq(const myT &b);
+  const myVecP& ModExpEq(const myT& b);
 
   /**
    * Modulus inverse operation.
@@ -460,7 +476,7 @@ class myVecP : public NTL::Vec<myT>,
    *
    * @return is the result of the component wise modulus inverse operation.
    */
-  const myVecP &ModInverseEq();
+  const myVecP& ModInverseEq();
 
   /**
    * Modulus 2 operation, also a least significant bit.
@@ -476,7 +492,7 @@ class myVecP : public NTL::Vec<myT>,
    * @return is the result of the component wise modulus 2 operation, also a
    * least significant bit.
    */
-  const myVecP &ModByTwoEq();
+  const myVecP& ModByTwoEq();
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -486,7 +502,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  myVecP MultiplyAndRound(const myT &p, const myT &q) const;
+  myVecP MultiplyAndRound(const myT& p, const myT& q) const;
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -496,7 +512,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  const myVecP &MultiplyAndRoundEq(const myT &p, const myT &q);
+  const myVecP& MultiplyAndRoundEq(const myT& p, const myT& q);
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -505,7 +521,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  myVecP DivideAndRound(const myT &q) const;
+  myVecP DivideAndRound(const myT& q) const;
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -514,7 +530,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  const myVecP &DivideAndRoundEq(const myT &q);
+  const myVecP& DivideAndRoundEq(const myT& q);
 
   // OTHER FUNCTIONS
 
@@ -546,8 +562,7 @@ class myVecP : public NTL::Vec<myT>,
    * @param &ptr_obj is the BigVectorImpl object to be printed.
    * @return std ostream object which captures the vector values.
    */
-  friend std::ostream &operator<<(std::ostream &os,
-                                  const myVecP<myT> &ptr_obj) {
+  friend std::ostream& operator<<(std::ostream& os, const myVecP<myT>& ptr_obj) {
     auto len = ptr_obj.GetLength();
     os << "[";
     for (size_t i = 0; i < len; i++) {
@@ -561,9 +576,8 @@ class myVecP : public NTL::Vec<myT>,
   // SERIALIZATION
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     // YSP. This was seg-faulting in MINGW
     // ar( m_modulus.ToString() );
     // ar( m_modulus_state );
@@ -579,9 +593,8 @@ class myVecP : public NTL::Vec<myT>,
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("m", m_modulus.ToString()));
     ar(::cereal::make_nvp("ms", m_modulus_state));
     ar(::cereal::make_nvp("l", this->GetLength()));
@@ -591,13 +604,12 @@ class myVecP : public NTL::Vec<myT>,
   }
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     // YSP. This was seg-faulting in MINGW
     // std::string m;
@@ -625,13 +637,12 @@ class myVecP : public NTL::Vec<myT>,
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     std::string m;
     ar(::cereal::make_nvp("m", m));
@@ -647,34 +658,34 @@ class myVecP : public NTL::Vec<myT>,
     }
   }
 
-  std::string SerializedObjectName() const { return "NTLVector"; }
+  std::string SerializedObjectName() const {
+    return "NTLVector";
+  }
 
-  static uint32_t SerializedVersion() { return 1; }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // utility function to warn if modulus is no good
   // use when argument to function is myT
   void ModulusCheck(std::string msg) const {
     if (!isModulusSet()) {
-      PALISADE_THROW(lbcrypto::config_error,
-                     msg + " uninitialized this->modulus");
+      PALISADE_THROW(lbcrypto::config_error, msg + " uninitialized this->modulus");
     }
   }
 
   // utility function to check argument consistency for vector vector fns
   // use when argument to function is myVecP
-  void ArgCheckVector(const myVecP &b, std::string fname) const {
+  void ArgCheckVector(const myVecP& b, std::string fname) const {
     if (this->m_modulus != b.m_modulus) {
-      PALISADE_THROW(
-          lbcrypto::math_error,
-          fname + " modulus vector modulus vector op of different moduli");
-    } else if (!isModulusSet()) {
-      PALISADE_THROW(
-          lbcrypto::config_error,
-          fname + " modulus vector modulus vector op  GARBAGE  moduli");
-    } else if (this->GetLength() != b.GetLength()) {
-      PALISADE_THROW(lbcrypto::math_error,
-                     fname + " vectors of different lengths");
+      PALISADE_THROW(lbcrypto::math_error, fname + " modulus vector modulus vector op of different moduli");
+    }
+    else if (!isModulusSet()) {
+      PALISADE_THROW(lbcrypto::config_error, fname + " modulus vector modulus vector op  GARBAGE  moduli");
+    }
+    else if (this->GetLength() != b.GetLength()) {
+      PALISADE_THROW(lbcrypto::math_error, fname + " vectors of different lengths");
     }
   }
 

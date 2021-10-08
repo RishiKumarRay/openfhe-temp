@@ -39,8 +39,7 @@ TEST(UTField2n, get_format) {
   DEBUG("Step 1");
   Field2n test(2, Format::COEFFICIENT, true);
   DEBUG("Step 2");
-  EXPECT_EQ(Format::COEFFICIENT, test.GetFormat())
-      << "Failed getter" << std::endl;
+  EXPECT_EQ(Format::COEFFICIENT, test.GetFormat()) << "Failed getter" << std::endl;
 }
 
 // TEST FOR INVERSE OF FIELD ELEMENT
@@ -110,10 +109,8 @@ TEST(UTField2n, minus) {
 
   Field2n d = a.Minus(b);
   for (int i = 0; i < 2; i++) {
-    EXPECT_LE(fabs(d.at(i).real() - c.at(i).real()),
-              fabs(c.at(i).real()) * 0.00001);
-    EXPECT_LE(fabs(d.at(i).imag() - c.at(i).imag()),
-              fabs(c.at(i).imag()) * 0.00001);
+    EXPECT_LE(fabs(d.at(i).real() - c.at(i).real()), fabs(c.at(i).real()) * 0.00001);
+    EXPECT_LE(fabs(d.at(i).imag() - c.at(i).imag()), fabs(c.at(i).imag()) * 0.00001);
   }
 }
 
@@ -135,10 +132,8 @@ TEST(UTField2n, times) {
   DEBUG("Step 4");
   Field2n d = a.Times(b);
   for (int i = 0; i < 2; i++) {
-    EXPECT_LE(fabs(d.at(i).real() - c.at(i).real()),
-              fabs(c.at(i).real()) * 0.00001);
-    EXPECT_LE(fabs(d.at(i).imag() - c.at(i).imag()),
-              fabs(c.at(i).imag()) * 0.00001);
+    EXPECT_LE(fabs(d.at(i).real() - c.at(i).real()), fabs(c.at(i).real()) * 0.00001);
+    EXPECT_LE(fabs(d.at(i).imag() - c.at(i).imag()), fabs(c.at(i).imag()) * 0.00001);
   }
 }
 
@@ -236,8 +231,7 @@ TEST(UTField2n, transpose_eval) {
   b.at(3) = std::complex<double>(-3, 0);
   DEBUG("Step 3");
   for (int i = 0; i < 4; i++) {
-    EXPECT_LE(fabs(b.at(i).real() - a.at(i).real()),
-              fabs(b.at(i).real()) * 0.0001);
+    EXPECT_LE(fabs(b.at(i).real() - a.at(i).real()), fabs(b.at(i).real()) * 0.0001);
   }
   DiscreteFourierTransform::Reset();
 }
@@ -263,8 +257,7 @@ TEST(UTField2n, automorphism) {
   b.at(3) = std::complex<double>(2, 0);
   DEBUG("Step 3");
   for (int i = 0; i < 4; i++) {
-    EXPECT_LE(fabs(b.at(i).real() - a.at(i).real()),
-              fabs(b.at(i).real()) * 0.0001);
+    EXPECT_LE(fabs(b.at(i).real() - a.at(i).real()), fabs(b.at(i).real()) * 0.0001);
   }
   DiscreteFourierTransform::Reset();
 }
@@ -387,10 +380,8 @@ TEST(UTField2n, COEFFICIENT_EVALUATION) {
   DEBUG("Step 3");
   a.SwitchFormat();
   for (int i = 0; i < 8; i++) {
-    EXPECT_LE(fabs(a.at(i).real() - b.at(i).real()),
-              fabs(b.at(i).real()) * 0.0001);
-    EXPECT_LE(fabs(a.at(i).imag() - b.at(i).imag()),
-              fabs(b.at(i).imag()) * 0.0001);
+    EXPECT_LE(fabs(a.at(i).real() - b.at(i).real()), fabs(b.at(i).real()) * 0.0001);
+    EXPECT_LE(fabs(a.at(i).imag() - b.at(i).imag()), fabs(b.at(i).imag()) * 0.0001);
   }
   DiscreteFourierTransform::Reset();
 }
@@ -423,8 +414,7 @@ TEST(UTField2n, EVALUATION_COEFFICIENT) {
   DEBUG("Step 3");
   b.SwitchFormat();
   for (int i = 0; i < 8; i++) {
-    EXPECT_LE(fabs(a.at(i).real() - b.at(i).real()),
-              fabs(a.at(i).real()) * 0.0001);
+    EXPECT_LE(fabs(a.at(i).real() - b.at(i).real()), fabs(a.at(i).real()) * 0.0001);
   }
   DiscreteFourierTransform::Reset();
 }

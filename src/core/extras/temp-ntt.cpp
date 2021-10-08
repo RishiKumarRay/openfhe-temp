@@ -40,14 +40,14 @@ int main() {
 void NTTDummy() {
   int mod = 17;
 
-  int W[8] = {1, 4, 15, 9, 7, 11, 3, 12};
-  int WI[8] = {1, 13, 8, 2, 5, 14, 6, 10};
+  int W[8]  = { 1, 4, 15, 9, 7, 11, 3, 12 };
+  int WI[8] = { 1, 13, 8, 2, 5, 14, 6, 10 };
 
-  int x[8] = {3, 3, 3, 4, 4, 4, 5, 5};
-  int y[8] = {3, 3, 3, 4, 4, 4, 5, 5};
-  int z[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  int q[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  int n = 8;
+  int x[8] = { 3, 3, 3, 4, 4, 4, 5, 5 };
+  int y[8] = { 3, 3, 3, 4, 4, 4, 5, 5 };
+  int z[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+  int q[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+  int n    = 8;
 
   for (int i = 0; i < 8; ++i) {
     std::cout << x[i] << ",";
@@ -64,7 +64,8 @@ void NTTDummy() {
       if (i + j < 8) {
         q[i + j] += (x[i] * y[j]);
         q[i + j] %= mod;
-      } else {
+      }
+      else {
         q[i + j - 8] += (mod * mod);
         q[i + j - 8] -= (x[i] * y[j]);
         q[i + j - 8] %= mod;
@@ -83,11 +84,11 @@ void NTTDummy() {
     for (int i = 0; i < m; ++i) {
       int j1 = 2 * i * t;
       int j2 = j1 + t;
-      int s = W[m + i];
+      int s  = W[m + i];
       for (int j = j1; j < j2; ++j) {
-        int u = x[j];
-        int v = (x[j + t] * s) % mod;
-        x[j] = (u + v) % mod;
+        int u    = x[j];
+        int v    = (x[j + t] * s) % mod;
+        x[j]     = (u + v) % mod;
         x[j + t] = (u + mod - v) % mod;
       }
     }
@@ -104,11 +105,11 @@ void NTTDummy() {
     for (int i = 0; i < m; ++i) {
       int j1 = 2 * i * t;
       int j2 = j1 + t;
-      int s = W[m + i];
+      int s  = W[m + i];
       for (int j = j1; j < j2; ++j) {
-        int u = y[j];
-        int v = (y[j + t] * s) % mod;
-        y[j] = ((u + v) % mod);
+        int u    = y[j];
+        int v    = (y[j + t] * s) % mod;
+        y[j]     = ((u + v) % mod);
         y[j + t] = ((u + mod - v) % mod);
       }
     }
@@ -131,14 +132,14 @@ void NTTDummy() {
   t = 1;
   for (int m = n; m > 1; m >>= 1) {
     int j1 = 0;
-    int h = m >> 1;
+    int h  = m >> 1;
     for (int i = 0; i < h; ++i) {
       int j2 = j1 + t;
-      int s = WI[h + i];
+      int s  = WI[h + i];
       for (int j = j1; j < j2; ++j) {
-        int u = z[j];
-        int v = z[j + t];
-        z[j] = u + v;
+        int u    = z[j];
+        int v    = z[j + t];
+        z[j]     = u + v;
         z[j + t] = ((u + mod - v) * s) % mod;
       }
       j1 += (t << 1);
@@ -157,7 +158,7 @@ void NTTDummy() {
 }
 
 void NTTSmall() {
-  usint m = 8;
+  usint m    = 8;
   usint phim = 4;
 
   NativeInteger modulusQ("73");
@@ -180,8 +181,7 @@ void NTTSmall() {
   y[2] = 1;
   y[3] = 1;
 
-  ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, m,
-                                                         modulusQ);
+  ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, m, modulusQ);
 
   std::cout << "-----------------------" << std::endl;
   for (usint i = 0; i < phim; ++i) {
@@ -190,11 +190,9 @@ void NTTSmall() {
   std::cout << std::endl;
   std::cout << "-----------------------" << std::endl;
 
-  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(
-      x, rootOfUnity, m, &xx);
+  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(x, rootOfUnity, m, &xx);
 
-  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(
-      y, rootOfUnity, m, &yy);
+  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(y, rootOfUnity, m, &yy);
 
   std::cout << "-----------------------" << std::endl;
   for (usint i = 0; i < phim; ++i) {
@@ -204,8 +202,7 @@ void NTTSmall() {
   std::cout << std::endl;
   std::cout << "-----------------------" << std::endl;
 
-  ChineseRemainderTransformFTT<NativeVector>().InverseTransformFromBitReverse(
-      xx, rootOfUnity, m, &x);
+  ChineseRemainderTransformFTT<NativeVector>().InverseTransformFromBitReverse(xx, rootOfUnity, m, &x);
 
   std::cout << "-----------------------" << std::endl;
   for (usint i = 0; i < phim; ++i) {
@@ -216,12 +213,12 @@ void NTTSmall() {
 }
 
 void NTTLarge() {
-  usint m = 2048;
+  usint m    = 2048;
   usint phim = 1024;
 
   NativeInteger modulusQ("288230376151748609");
   NativeInteger rootOfUnity = RootOfUnity(m, modulusQ);
-  NativeInteger mu = modulusQ.ComputeMu();
+  NativeInteger mu          = modulusQ.ComputeMu();
   DiscreteUniformGeneratorImpl<NativeVector> dug;
   dug.SetModulus(modulusQ);
   NativeVector x = dug.GenerateVector(phim);
@@ -231,26 +228,22 @@ void NTTLarge() {
   NativeVector z_ntt(phim, modulusQ);
   NativeVector z(phim, modulusQ);
 
-  ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, m,
-                                                         modulusQ);
+  ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, m, modulusQ);
 
-  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(
-      x, rootOfUnity, m, &x_ntt);
-  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(
-      y, rootOfUnity, m, &y_ntt);
+  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(x, rootOfUnity, m, &x_ntt);
+  ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(y, rootOfUnity, m, &y_ntt);
 
   for (usint i = 0; i < phim; ++i) {
     z_ntt[i] = x_ntt[i].ModMulFast(y_ntt[i], modulusQ, mu);
   }
 
-  ChineseRemainderTransformFTT<NativeVector>().InverseTransformFromBitReverse(
-      z_ntt, rootOfUnity, m, &z);
+  ChineseRemainderTransformFTT<NativeVector>().InverseTransformFromBitReverse(z_ntt, rootOfUnity, m, &z);
 }
 
 void NTTBenchmark() {
   usint counter = 1000;
   //  usint m = 2048;
-  usint m = (1 << 13);
+  usint m    = (1 << 13);
   usint phim = m / 2;
 
   //  NativeInteger modulusQ("288230376151748609");
@@ -265,14 +258,11 @@ void NTTBenchmark() {
   NativeVector x = dug.GenerateVector(phim);
   NativeVector x_ntt(phim);
 
-  ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, m,
-                                                         modulusQ);
+  ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, m, modulusQ);
 
   for (usint i = 0; i < counter; ++i) {
-    ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(
-        x, rootOfUnity, m, &x_ntt);
-    ChineseRemainderTransformFTT<NativeVector>().InverseTransformFromBitReverse(
-        x_ntt, rootOfUnity, m, &x);
+    ChineseRemainderTransformFTT<NativeVector>().ForwardTransformToBitReverse(x, rootOfUnity, m, &x_ntt);
+    ChineseRemainderTransformFTT<NativeVector>().InverseTransformFromBitReverse(x_ntt, rootOfUnity, m, &x);
   }
 
   std::cout << "finished" << std::endl;

@@ -30,7 +30,8 @@
 namespace lbcrypto {
 
 template <typename T>
-class BigIntegerInterface {
+class BigIntegerInterface
+{
  public:
   // CONSTRUCTORS
 
@@ -64,8 +65,12 @@ class BigIntegerInterface {
   const T& AddEq(const T& b);
 
   /// inline operators for the addition operation.
-  inline friend T operator+(const T& a, const T& b) { return a.Add(b); }
-  inline friend const T& operator+=(T& a, const T& b) { return a.AddEq(b); }
+  inline friend T operator+(const T& a, const T& b) {
+    return a.Add(b);
+  }
+  inline friend const T& operator+=(T& a, const T& b) {
+    return a.AddEq(b);
+  }
 
   /**
    * Subtraction operation.
@@ -77,8 +82,12 @@ class BigIntegerInterface {
   const T& SubEq(const T& b);
 
   /// inline operators for the subtraction operation.
-  inline friend T operator-(const T& a, const T& b) { return a.Sub(b); }
-  inline friend const T& operator-=(T& a, const T& b) { return a.SubEq(b); }
+  inline friend T operator-(const T& a, const T& b) {
+    return a.Sub(b);
+  }
+  inline friend const T& operator-=(T& a, const T& b) {
+    return a.SubEq(b);
+  }
 
   /**
    * Multiplication operation.
@@ -97,8 +106,12 @@ class BigIntegerInterface {
   const T& MulEq(const T& b);
 
   /// inline operators for the multiplication operation.
-  inline friend T operator*(const T& a, const T& b) { return a.Mul(b); }
-  inline friend const T& operator*=(T& a, const T& b) { return a.MulEq(b); }
+  inline friend T operator*(const T& a, const T& b) {
+    return a.Mul(b);
+  }
+  inline friend const T& operator*=(T& a, const T& b) {
+    return a.MulEq(b);
+  }
 
   /**
    * Division operation.
@@ -117,7 +130,9 @@ class BigIntegerInterface {
   const T& DividedByEq(const T& b);
 
   /// inline operators for the division operation.
-  inline friend T operator/(const T& a, const T& b) { return a.DividedBy(b); }
+  inline friend T operator/(const T& a, const T& b) {
+    return a.DividedBy(b);
+  }
   inline friend const T& operator/=(T& a, const T& b) {
     return a.DividedByEq(b);
   }
@@ -179,8 +194,12 @@ class BigIntegerInterface {
   const T& ModEq(const T& modulus);
 
   // inline operators for the modulus operation.
-  inline friend T operator%(const T& a, const T& b) { return a.Mod(b); }
-  inline friend const T& operator%=(T& a, const T& b) { return a.ModEq(b); }
+  inline friend T operator%(const T& a, const T& b) {
+    return a.Mod(b);
+  }
+  inline friend const T& operator%=(T& a, const T& b) {
+    return a.ModEq(b);
+  }
 
   /**
    * Precomputes a parameter mu for Barrett modular reduction.
@@ -519,13 +538,25 @@ class BigIntegerInterface {
   int Compare(const T& a) const;
 
   //// relational operators, using Compare
-  friend bool operator==(const T& a, const T& b) { return a.Compare(b) == 0; }
-  friend bool operator!=(const T& a, const T& b) { return a.Compare(b) != 0; }
+  friend bool operator==(const T& a, const T& b) {
+    return a.Compare(b) == 0;
+  }
+  friend bool operator!=(const T& a, const T& b) {
+    return a.Compare(b) != 0;
+  }
 
-  friend bool operator>(const T& a, const T& b) { return a.Compare(b) > 0; }
-  friend bool operator>=(const T& a, const T& b) { return a.Compare(b) >= 0; }
-  friend bool operator<(const T& a, const T& b) { return a.Compare(b) < 0; }
-  friend bool operator<=(const T& a, const T& b) { return a.Compare(b) <= 0; }
+  friend bool operator>(const T& a, const T& b) {
+    return a.Compare(b) > 0;
+  }
+  friend bool operator>=(const T& a, const T& b) {
+    return a.Compare(b) >= 0;
+  }
+  friend bool operator<(const T& a, const T& b) {
+    return a.Compare(b) < 0;
+  }
+  friend bool operator<=(const T& a, const T& b) {
+    return a.Compare(b) <= 0;
+  }
 
   // CONVERTERS
 
@@ -585,7 +616,8 @@ class BigIntegerInterface {
 };
 
 template <typename T, typename I>
-class BigVectorInterface {
+class BigVectorInterface
+{
  public:
   typedef I Integer;
 
@@ -647,8 +679,7 @@ class BigVectorInterface {
    * @return true if equal and false otherwise.
    */
   friend inline bool operator==(const T& a, const T& b) {
-    if ((a.GetLength() != b.GetLength()) ||
-        (a.GetModulus() != b.GetModulus())) {
+    if ((a.GetLength() != b.GetLength()) || (a.GetModulus() != b.GetModulus())) {
       return false;
     }
     for (size_t i = 0; i < a.GetLength(); ++i) {
@@ -665,7 +696,9 @@ class BigVectorInterface {
    * @param b is vector to be compared.
    * @return true if not equal and false otherwise.
    */
-  friend inline bool operator!=(const T& a, const T& b) { return !(a == b); }
+  friend inline bool operator!=(const T& a, const T& b) {
+    return !(a == b);
+  }
 
   // ACCESSORS
 
@@ -723,8 +756,12 @@ class BigVectorInterface {
   const T& ModEq(const I& modulus);
 
   /// inline operators for the modulus operations.
-  inline friend T operator%(const T& a, const I& b) { return a.Mod(b); }
-  inline friend const T& operator%=(T& a, const I& b) { return a.ModEq(b); }
+  inline friend T operator%(const T& a, const I& b) {
+    return a.Mod(b);
+  }
+  inline friend const T& operator%=(T& a, const I& b) {
+    return a.ModEq(b);
+  }
 
   /**
    * Scalar-to-vector modulus addition operation.
@@ -743,8 +780,12 @@ class BigVectorInterface {
   const T& ModAddEq(const I& b);
 
   /// inline operators for the scara-to-vector modulus addition operations.
-  inline friend T operator+(const T& a, const I& b) { return a.ModAdd(b); }
-  inline friend const T& operator+=(T& a, const I& b) { return a.ModAddEq(b); }
+  inline friend T operator+(const T& a, const I& b) {
+    return a.ModAdd(b);
+  }
+  inline friend const T& operator+=(T& a, const I& b) {
+    return a.ModAddEq(b);
+  }
 
   /**
    * Scalar modulus addition at a particular index.
@@ -782,8 +823,12 @@ class BigVectorInterface {
 
   /// inline operators for the vector component wise modulus addition
   /// operations.
-  inline friend T operator+(const T& a, const T& b) { return a.ModAdd(b); }
-  inline friend const T& operator+=(T& a, const T& b) { return a.ModAddEq(b); }
+  inline friend T operator+(const T& a, const T& b) {
+    return a.ModAdd(b);
+  }
+  inline friend const T& operator+=(T& a, const T& b) {
+    return a.ModAddEq(b);
+  }
 
   /**
    * Scalar-from-vector modulus subtraction operation.
@@ -803,8 +848,12 @@ class BigVectorInterface {
 
   /// inline operators for the scalar-from-vector modulus subtraction
   /// operations.
-  inline friend T operator-(const T& a, const I& b) { return a.ModSub(b); }
-  inline friend const T& operator-=(T& a, const I& b) { return a.ModSubEq(b); }
+  inline friend T operator-(const T& a, const I& b) {
+    return a.ModSub(b);
+  }
+  inline friend const T& operator-=(T& a, const I& b) {
+    return a.ModSubEq(b);
+  }
 
   /**
    * Vector component wise modulus subtraction.
@@ -824,8 +873,12 @@ class BigVectorInterface {
 
   /// inline operators for the vector component wise modulus subtraction
   /// operations.
-  inline friend T operator-(const T& a, const T& b) { return a.ModSub(b); }
-  inline friend const T& operator-=(T& a, const T& b) { return a.ModSubEq(b); }
+  inline friend T operator-(const T& a, const T& b) {
+    return a.ModSub(b);
+  }
+  inline friend const T& operator-=(T& a, const T& b) {
+    return a.ModSubEq(b);
+  }
 
   /// inline operator for the unary minus
   inline friend T operator-(const T& a) {
@@ -850,8 +903,12 @@ class BigVectorInterface {
 
   /// inline operators for the scalar-to-vector modulus multiplication
   /// operations.
-  inline friend T operator*(const T& a, const I& b) { return a.ModMul(b); }
-  inline friend const T& operator*=(T& a, const I& b) { return a.ModMulEq(b); }
+  inline friend T operator*(const T& a, const I& b) {
+    return a.ModMul(b);
+  }
+  inline friend const T& operator*=(T& a, const I& b) {
+    return a.ModMulEq(b);
+  }
 
   /**
    * Vector component wise modulus multiplication.
@@ -873,8 +930,12 @@ class BigVectorInterface {
 
   /// inline operators for the vector component wise modulus multiplication
   /// operations.
-  inline friend T operator*(const T& a, const T& b) { return a.ModMul(b); }
-  inline friend const T& operator*=(T& a, const T& b) { return a.ModMulEq(b); }
+  inline friend T operator*(const T& a, const T& b) {
+    return a.ModMul(b);
+  }
+  inline friend const T& operator*=(T& a, const T& b) {
+    return a.ModMulEq(b);
+  }
 
   /**
    * Scalar modulus exponentiation operation.
@@ -986,7 +1047,8 @@ class BigVectorInterface {
 };
 
 // TODO
-class BigMatrixInterface {};
+class BigMatrixInterface
+{};
 }  // namespace lbcrypto
 
 #endif

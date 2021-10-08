@@ -44,7 +44,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestBinInt : public ::testing::Test {
+class UnitTestBinInt : public ::testing::Test
+{
  protected:
   virtual void SetUp() {}
 
@@ -58,15 +59,21 @@ class UnitTestBinInt : public ::testing::Test {
 /*  TESTING METHODS OF Allocator CLASS    */
 /************************************************/
 
-class MyClass {
+class MyClass
+{
   XALLOCATOR
   // remaining class definition
 };
 
-class MyClassStatic {
+class MyClassStatic
+{
  public:
-  MyClassStatic() { memory = xmalloc(100); }
-  ~MyClassStatic() { xfree(memory); }
+  MyClassStatic() {
+    memory = xmalloc(100);
+  }
+  ~MyClassStatic() {
+    xfree(memory);
+  }
 
  private:
   void* memory;
@@ -87,8 +94,7 @@ static void out_of_memory() {
 static const int MAX_BLOCK_SIZE = 4000;
 // static const int MAX_ALLOCATIONS = 10000;
 #ifdef __ANDROID__
-static const int MAX_ALLOCATIONS =
-    512;  // reduce size of pool for limited memory
+static const int MAX_ALLOCATIONS = 512;  // reduce size of pool for limited memory
 #else
 static const int MAX_ALLOCATIONS = 2048;
 #endif
@@ -105,7 +111,7 @@ void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc);
 void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
   TimeVar t1, t_total;
 
-  float ElapsedMicroseconds, TotalElapsedMicroseconds = {0};
+  float ElapsedMicroseconds, TotalElapsedMicroseconds = { 0 };
 
   // Allocate MAX_ALLOCATIONS blocks MAX_BLOCK_SIZE / 2 sized blocks
   TIC(t_total);
@@ -119,7 +125,8 @@ void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
 
   // Deallocate MAX_ALLOCATIONS blocks (every other one)
   TIC(t1);
-  for (int i = 0; i < MAX_ALLOCATIONS; i += 2) deallocFunc(memoryPtrs[i]);
+  for (int i = 0; i < MAX_ALLOCATIONS; i += 2)
+    deallocFunc(memoryPtrs[i]);
   ElapsedMicroseconds = TOC_US(t1);
   PROFILELOG(name << " 1 deallocate time: " << ElapsedMicroseconds);
   TotalElapsedMicroseconds += ElapsedMicroseconds;
@@ -134,14 +141,16 @@ void Benchmark(const char* name, AllocFunc allocFunc, DeallocFunc deallocFunc) {
 
   // Deallocate MAX_ALLOCATIONS blocks (every other one)
   TIC(t1);
-  for (int i = 1; i < MAX_ALLOCATIONS; i += 2) deallocFunc(memoryPtrs[i]);
+  for (int i = 1; i < MAX_ALLOCATIONS; i += 2)
+    deallocFunc(memoryPtrs[i]);
   ElapsedMicroseconds = TOC_US(t1);
   PROFILELOG(name << " 2 deallocate time: " << ElapsedMicroseconds);
   TotalElapsedMicroseconds += ElapsedMicroseconds;
 
   // Deallocate MAX_ALLOCATIONS blocks
   TIC(t1);
-  for (int i = MAX_ALLOCATIONS - 1; i >= 0; i--) deallocFunc(memoryPtrs2[i]);
+  for (int i = MAX_ALLOCATIONS - 1; i >= 0; i--)
+    deallocFunc(memoryPtrs2[i]);
   ElapsedMicroseconds = TOC_US(t1);
   PROFILELOG(name << " 2 deallocate time: " << ElapsedMicroseconds);
   TotalElapsedMicroseconds += ElapsedMicroseconds;

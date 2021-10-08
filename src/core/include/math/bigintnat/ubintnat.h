@@ -68,8 +68,7 @@ using U128BITS = unsigned __int128;
 
 namespace bigintnat {
 
-const double LOG2_10 =
-    3.32192809;  //!< @brief A pre-computed  constant of Log base 2 of 10.
+const double LOG2_10 = 3.32192809;  //!< @brief A pre-computed  constant of Log base 2 of 10.
 
 const usint BARRETT_LEVELS = 8;  //!< @brief The number of levels (precomputed
                                  //!< values) used in the Barrett reductions.
@@ -124,11 +123,11 @@ struct DoubleDataType<unsigned __int128> {
  * @tparam NativeInt native unsigned integer type
  */
 template <typename NativeInt>
-class NativeIntegerT
-    : public lbcrypto::BigIntegerInterface<NativeIntegerT<NativeInt>> {
+class NativeIntegerT : public lbcrypto::BigIntegerInterface<NativeIntegerT<NativeInt>>
+{
  public:
-  using Integer = NativeInt;
-  using DNativeInt = typename DoubleDataType<NativeInt>::DoubleType;
+  using Integer         = NativeInt;
+  using DNativeInt      = typename DoubleDataType<NativeInt>::DoubleType;
   using SignedNativeInt = typename DoubleDataType<NativeInt>::SignedType;
 
   // a data structure to represent a double-word integer as two single-word
@@ -158,22 +157,23 @@ class NativeIntegerT
    *
    * @param &val is the native integer to be copied.
    */
-  NativeIntegerT(const NativeIntegerT &val) : m_value(val.m_value) {}
+  NativeIntegerT(const NativeIntegerT& val) : m_value(val.m_value) {}
 
   /**
    * Move constructor.
    *
    * @param &&val is the native integer to be copied.
    */
-  NativeIntegerT(const NativeIntegerT &&val)
-      : m_value(std::move(val.m_value)) {}
+  NativeIntegerT(const NativeIntegerT&& val) : m_value(std::move(val.m_value)) {}
 
   /**
    * Constructor from a string.
    *
    * @param &strval is the initial integer represented as a string.
    */
-  NativeIntegerT(const std::string &strval) { AssignVal(strval); }
+  NativeIntegerT(const std::string& strval) {
+    AssignVal(strval);
+  }
 
   /**
    * Constructor from an unsigned integer.
@@ -187,67 +187,48 @@ class NativeIntegerT
    * @param init
    */
   template <typename T = NativeInt>
-  NativeIntegerT(int16_t init,
-                 typename std::enable_if<!std::is_same<T, int16_t>::value,
-                                         bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(int16_t init, typename std::enable_if<!std::is_same<T, int16_t>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(uint16_t init,
-                 typename std::enable_if<!std::is_same<T, uint16_t>::value,
-                                         bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(uint16_t init, typename std::enable_if<!std::is_same<T, uint16_t>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(int32_t init,
-                 typename std::enable_if<!std::is_same<T, int32_t>::value,
-                                         bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(int32_t init, typename std::enable_if<!std::is_same<T, int32_t>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(uint32_t init,
-                 typename std::enable_if<!std::is_same<T, uint32_t>::value,
-                                         bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(uint32_t init, typename std::enable_if<!std::is_same<T, uint32_t>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(
-      long init,
-      typename std::enable_if<!std::is_same<T, long>::value, bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(long init, typename std::enable_if<!std::is_same<T, long>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
   NativeIntegerT(unsigned long init,
-                 typename std::enable_if<!std::is_same<T, unsigned long>::value,
-                                         bool>::type = true)
-      : m_value(init) {}
+                 typename std::enable_if<!std::is_same<T, unsigned long>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(long long init,
-                 typename std::enable_if<!std::is_same<T, long long>::value,
-                                         bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(long long init, typename std::enable_if<!std::is_same<T, long long>::value, bool>::type = true) :
+      m_value(init) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(
-      unsigned long long init,
-      typename std::enable_if<!std::is_same<T, unsigned long long>::value,
-                              bool>::type = true)
-      : m_value(init) {}
+  NativeIntegerT(unsigned long long init,
+                 typename std::enable_if<!std::is_same<T, unsigned long long>::value, bool>::type = true) :
+      m_value(init) {}
 
 #if defined(HAVE_INT128)
   template <typename T = NativeInt>
-  NativeIntegerT(
-      unsigned __int128 val,
-      typename std::enable_if<!std::is_same<T, unsigned __int128>::value,
-                              bool>::type = true)
-      : m_value(val) {}
+  NativeIntegerT(unsigned __int128 val,
+                 typename std::enable_if<!std::is_same<T, unsigned __int128>::value, bool>::type = true) :
+      m_value(val) {}
 
   template <typename T = NativeInt>
-  NativeIntegerT(__int128 val,
-                 typename std::enable_if<!std::is_same<T, __int128>::value,
-                                         bool>::type = true)
-      : m_value(val) {}
+  NativeIntegerT(__int128 val, typename std::enable_if<!std::is_same<T, __int128>::value, bool>::type = true) :
+      m_value(val) {}
 #endif
 
   /**
@@ -255,16 +236,14 @@ class NativeIntegerT
    *
    * @param &val is the initial integer represented as a big integer.
    */
-  NativeIntegerT(const lbcrypto::BigInteger &val)
-      : m_value(val.ConvertToInt()) {}
+  NativeIntegerT(const lbcrypto::BigInteger& val) : m_value(val.ConvertToInt()) {}
 
   /**
    * Constructor from double is not permitted
    *
    * @param val
    */
-  NativeIntegerT(double val)
-      __attribute__((deprecated("Cannot construct from a double")));
+  NativeIntegerT(double val) __attribute__((deprecated("Cannot construct from a double")));
 
   /// ASSIGNMENT OPERATORS
 
@@ -274,7 +253,7 @@ class NativeIntegerT
    * @param &val is the native integer to be assigned from.
    * @return assigned NativeIntegerT ref.
    */
-  const NativeIntegerT &operator=(const NativeIntegerT &val) {
+  const NativeIntegerT& operator=(const NativeIntegerT& val) {
     this->m_value = val.m_value;
     return *this;
   }
@@ -285,7 +264,7 @@ class NativeIntegerT
    * @param &&val is the native integer to be assigned from.
    * @return assigned NativeIntegerT ref.
    */
-  const NativeIntegerT &operator=(const NativeIntegerT &&val) {
+  const NativeIntegerT& operator=(const NativeIntegerT&& val) {
     this->m_value = val.m_value;
     return *this;
   }
@@ -296,7 +275,7 @@ class NativeIntegerT
    * @param strval is the string to be assigned from
    * @return the assigned NativeIntegerT ref.
    */
-  const NativeIntegerT &operator=(const std::string strval) {
+  const NativeIntegerT& operator=(const std::string strval) {
     *this = NativeIntegerT(strval);
     return *this;
   }
@@ -307,7 +286,7 @@ class NativeIntegerT
    * @param &val is the unsigned integer value that is assigned.
    * @return the assigned BigInteger ref.
    */
-  const NativeIntegerT &operator=(const NativeInt &val) {
+  const NativeIntegerT& operator=(const NativeInt& val) {
     this->m_value = val;
     return *this;
   }
@@ -320,7 +299,9 @@ class NativeIntegerT
    * @param &strval is the string representation of the native integer to be
    * copied.
    */
-  void SetValue(const std::string &strval) { AssignVal(strval); }
+  void SetValue(const std::string& strval) {
+    AssignVal(strval);
+  }
 
   /**
    * Basic set method for setting the value of a native integer
@@ -328,13 +309,17 @@ class NativeIntegerT
    * @param &val is the big binary integer representation of the native
    * integer to be assigned.
    */
-  void SetValue(const NativeIntegerT &val) { m_value = val.m_value; }
+  void SetValue(const NativeIntegerT& val) {
+    m_value = val.m_value;
+  }
 
   /**
    *  Set this int to 1.
    *  Note some compilers don't like using the ONE constant, above :(
    */
-  void SetIdentity() { this->m_value = 1; }
+  void SetIdentity() {
+    this->m_value = 1;
+  }
 
   // ARITHMETIC OPERATIONS
 
@@ -344,7 +329,7 @@ class NativeIntegerT
    * @param &b is the value to add.
    * @return result of the addition operation.
    */
-  NativeIntegerT Add(const NativeIntegerT &b) const {
+  NativeIntegerT Add(const NativeIntegerT& b) const {
     return NATIVEINT_DO_CHECKS ? AddCheck(b) : AddFast(b);
   }
 
@@ -354,7 +339,7 @@ class NativeIntegerT
    * @param &b is the value to add.
    * @return result of the addition operation.
    */
-  const NativeIntegerT &AddEq(const NativeIntegerT &b) {
+  const NativeIntegerT& AddEq(const NativeIntegerT& b) {
     return NATIVEINT_DO_CHECKS ? AddEqCheck(b) : AddEqFast(b);
   }
 
@@ -365,7 +350,7 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  const NativeIntegerT &AddEqCheck(const NativeIntegerT &b) {
+  const NativeIntegerT& AddEqCheck(const NativeIntegerT& b) {
     NativeInt oldv = m_value;
     m_value += b.m_value;
     if (m_value < oldv) {
@@ -381,7 +366,7 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  const NativeIntegerT &AddEqFast(const NativeIntegerT &b) {
+  const NativeIntegerT& AddEqFast(const NativeIntegerT& b) {
     m_value += b.m_value;
     return *this;
   }
@@ -392,7 +377,7 @@ class NativeIntegerT
    * @param &b is the value to subtract.
    * @return is the result of the subtraction operation.
    */
-  NativeIntegerT Sub(const NativeIntegerT &b) const {
+  NativeIntegerT Sub(const NativeIntegerT& b) const {
     return NATIVEINT_DO_CHECKS ? SubCheck(b) : SubFast(b);
   }
 
@@ -402,7 +387,7 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  NativeIntegerT SubCheck(const NativeIntegerT &b) const {
+  NativeIntegerT SubCheck(const NativeIntegerT& b) const {
     return m_value <= b.m_value ? 0 : m_value - b.m_value;
   }
 
@@ -412,7 +397,7 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  NativeIntegerT SubFast(const NativeIntegerT &b) const {
+  NativeIntegerT SubFast(const NativeIntegerT& b) const {
     return m_value - b.m_value;
   }
 
@@ -422,7 +407,7 @@ class NativeIntegerT
    * @param &b is the value to subtract.
    * @return is the result of the subtraction operation.
    */
-  const NativeIntegerT &SubEq(const NativeIntegerT &b) {
+  const NativeIntegerT& SubEq(const NativeIntegerT& b) {
     return NATIVEINT_DO_CHECKS ? SubEqCheck(b) : SubEqFast(b);
   }
 
@@ -433,7 +418,7 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  const NativeIntegerT &SubEqCheck(const NativeIntegerT &b) {
+  const NativeIntegerT& SubEqCheck(const NativeIntegerT& b) {
     m_value = m_value <= b.m_value ? 0 : m_value - b.m_value;
     return *this;
   }
@@ -445,14 +430,16 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  const NativeIntegerT &SubEqFast(const NativeIntegerT &b) {
+  const NativeIntegerT& SubEqFast(const NativeIntegerT& b) {
     m_value -= b.m_value;
     return *this;
   }
 
   // overloaded binary operators based on integer arithmetic and comparison
   // functions.
-  NativeIntegerT operator-() const { return NativeIntegerT(0).Sub(*this); }
+  NativeIntegerT operator-() const {
+    return NativeIntegerT(0).Sub(*this);
+  }
 
   /**
    * Multiplication operation.
@@ -460,7 +447,7 @@ class NativeIntegerT
    * @param &b is the value to multiply with.
    * @return is the result of the multiplication operation.
    */
-  NativeIntegerT Mul(const NativeIntegerT &b) const {
+  NativeIntegerT Mul(const NativeIntegerT& b) const {
     return NATIVEINT_DO_CHECKS ? MulCheck(b) : MulFast(b);
   }
 
@@ -470,10 +457,9 @@ class NativeIntegerT
    * @param b is the value to multiply with
    * @return result of the multiplication operation
    */
-  NativeIntegerT MulCheck(const NativeIntegerT &b) const {
+  NativeIntegerT MulCheck(const NativeIntegerT& b) const {
     NativeInt prod = m_value * b.m_value;
-    if (prod > 0 && (prod < m_value || prod < b.m_value))
-      PALISADE_THROW(lbcrypto::math_error, "Overflow");
+    if (prod > 0 && (prod < m_value || prod < b.m_value)) PALISADE_THROW(lbcrypto::math_error, "Overflow");
     return prod;
   }
 
@@ -483,7 +469,7 @@ class NativeIntegerT
    * @param b is the value to multiply with.
    * @return result of the multiplication operation.
    */
-  NativeIntegerT MulFast(const NativeIntegerT &b) const {
+  NativeIntegerT MulFast(const NativeIntegerT& b) const {
     return m_value * b.m_value;
   }
 
@@ -493,7 +479,7 @@ class NativeIntegerT
    * @param &b is the value to multiply with.
    * @return is the result of the multiplication operation.
    */
-  const NativeIntegerT &MulEq(const NativeIntegerT &b) {
+  const NativeIntegerT& MulEq(const NativeIntegerT& b) {
     return NATIVEINT_DO_CHECKS ? MulEqCheck(b) : MulEqFast(b);
   }
 
@@ -504,7 +490,7 @@ class NativeIntegerT
    * @param b is the value to multiply with
    * @return result of the multiplication operation
    */
-  const NativeIntegerT &MulEqCheck(const NativeIntegerT &b) {
+  const NativeIntegerT& MulEqCheck(const NativeIntegerT& b) {
     NativeInt oldval = m_value;
     m_value *= b.m_value;
     if (m_value < oldval) {
@@ -520,7 +506,7 @@ class NativeIntegerT
    * @param b is the value to multiply with
    * @return result of the multiplication operation
    */
-  const NativeIntegerT &MulEqFast(const NativeIntegerT &b) {
+  const NativeIntegerT& MulEqFast(const NativeIntegerT& b) {
     m_value *= b.m_value;
     return *this;
   }
@@ -531,7 +517,7 @@ class NativeIntegerT
    * @param &b is the value to divide by.
    * @return is the result of the division operation.
    */
-  NativeIntegerT DividedBy(const NativeIntegerT &b) const {
+  NativeIntegerT DividedBy(const NativeIntegerT& b) const {
     if (b.m_value == 0) PALISADE_THROW(lbcrypto::math_error, "Divide by zero");
     return this->m_value / b.m_value;
   }
@@ -542,7 +528,7 @@ class NativeIntegerT
    * @param &b is the value to divide by.
    * @return is the result of the division operation.
    */
-  const NativeIntegerT &DividedByEq(const NativeIntegerT &b) {
+  const NativeIntegerT& DividedByEq(const NativeIntegerT& b) {
     if (b.m_value == 0) PALISADE_THROW(lbcrypto::math_error, "Divide by zero");
     this->m_value /= b.m_value;
     return *this;
@@ -564,7 +550,8 @@ class NativeIntegerT
     NativeIntegerT tmp = (*this).Exp(p / 2);
     if (p % 2 == 0) {
       return tmp * tmp;
-    } else {
+    }
+    else {
       return tmp * tmp * (*this);
     }
   }
@@ -575,7 +562,7 @@ class NativeIntegerT
    * @param p the exponent.
    * @return is the result of the exponentiation operation.
    */
-  const NativeIntegerT &ExpEq(usint p) {
+  const NativeIntegerT& ExpEq(usint p) {
     if (p == 0) {
       this->m_value = 1;
       return *this;
@@ -587,7 +574,8 @@ class NativeIntegerT
     if (p % 2 == 0) {
       *this = (tmp * tmp);
       return *this;
-    } else {
+    }
+    else {
       (*this) *= (tmp * tmp);
       return *this;
     }
@@ -601,8 +589,7 @@ class NativeIntegerT
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  NativeIntegerT MultiplyAndRound(const NativeIntegerT &p,
-                                  const NativeIntegerT &q) const {
+  NativeIntegerT MultiplyAndRound(const NativeIntegerT& p, const NativeIntegerT& q) const {
     NativeIntegerT ans = m_value * p.m_value;
     return ans.DivideAndRound(q);
   }
@@ -615,8 +602,7 @@ class NativeIntegerT
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  const NativeIntegerT &MultiplyAndRoundEq(const NativeIntegerT &p,
-                                           const NativeIntegerT &q) {
+  const NativeIntegerT& MultiplyAndRoundEq(const NativeIntegerT& p, const NativeIntegerT& q) {
     this->MulEq(p);
     this->DivideAndRoundEq(q);
     return *this;
@@ -632,9 +618,8 @@ class NativeIntegerT
    */
   template <typename T = NativeInt>
   NativeIntegerT MultiplyAndDivideQuotient(
-      const NativeIntegerT &p, const NativeIntegerT &q,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+    const NativeIntegerT& p, const NativeIntegerT& q,
+    typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     DNativeInt xD = m_value;
     DNativeInt pD = p.m_value;
     DNativeInt qD = q.m_value;
@@ -643,9 +628,8 @@ class NativeIntegerT
 
   template <typename T = NativeInt>
   NativeIntegerT MultiplyAndDivideQuotient(
-      const NativeIntegerT &p, const NativeIntegerT &q,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+    const NativeIntegerT& p, const NativeIntegerT& q,
+    typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeInt xD = m_value;
     NativeInt pD = p.m_value;
     NativeInt qD = q.m_value;
@@ -662,9 +646,8 @@ class NativeIntegerT
    */
   template <typename T = NativeInt>
   NativeIntegerT MultiplyAndDivideRemainder(
-      const NativeIntegerT &p, const NativeIntegerT &q,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+    const NativeIntegerT& p, const NativeIntegerT& q,
+    typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     DNativeInt xD = m_value;
     DNativeInt pD = p.m_value;
     DNativeInt qD = q.m_value;
@@ -673,9 +656,8 @@ class NativeIntegerT
 
   template <typename T = NativeInt>
   NativeIntegerT MultiplyAndDivideRemainder(
-      const NativeIntegerT &p, const NativeIntegerT &q,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+    const NativeIntegerT& p, const NativeIntegerT& q,
+    typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeInt xD = m_value;
     NativeInt pD = p.m_value;
     NativeInt qD = q.m_value;
@@ -689,12 +671,12 @@ class NativeIntegerT
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  NativeIntegerT DivideAndRound(const NativeIntegerT &q) const {
+  NativeIntegerT DivideAndRound(const NativeIntegerT& q) const {
     if (q == 0) {
       PALISADE_THROW(lbcrypto::math_error, "Divide by zero");
     }
-    NativeInt ans = m_value / q.m_value;
-    NativeInt rem = m_value % q.m_value;
+    NativeInt ans   = m_value / q.m_value;
+    NativeInt rem   = m_value % q.m_value;
     NativeInt halfQ = q.m_value >> 1;
     if (!(rem <= halfQ)) {
       ans += 1;
@@ -709,7 +691,7 @@ class NativeIntegerT
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  const NativeIntegerT &DivideAndRoundEq(const NativeIntegerT &q) {
+  const NativeIntegerT& DivideAndRoundEq(const NativeIntegerT& q) {
     return *this = this->DivideAndRound(q);
   }
 
@@ -721,7 +703,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus operation.
    */
-  NativeIntegerT Mod(const NativeIntegerT &modulus) const {
+  NativeIntegerT Mod(const NativeIntegerT& modulus) const {
     return m_value % modulus.m_value;
   }
 
@@ -731,7 +713,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus operation.
    */
-  const NativeIntegerT &ModEq(const NativeIntegerT &modulus) {
+  const NativeIntegerT& ModEq(const NativeIntegerT& modulus) {
     m_value %= modulus.m_value;
     return *this;
   }
@@ -742,18 +724,14 @@ class NativeIntegerT
    * @return the precomputed parameter mu.
    */
   template <typename T = NativeInt>
-  NativeIntegerT ComputeMu(
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ComputeMu(typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     DNativeInt temp(1);
     temp <<= 2 * this->GetMSB() + 3;
     return NativeInt(temp / DNativeInt(this->m_value));
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT ComputeMu(
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ComputeMu(typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     lbcrypto::BigInteger temp(static_cast<T>(1));
     temp <<= 2 * this->GetMSB() + 3;
     return NativeInt((temp / lbcrypto::BigInteger(*this)).ConvertToInt());
@@ -769,18 +747,16 @@ class NativeIntegerT
    * @return is the result of the modulus operation.
    */
   template <typename T = NativeInt>
-  NativeIntegerT Mod(
-      const NativeIntegerT &modulus, const NativeIntegerT &mu,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT Mod(const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                     typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     typeD tmp1;
     tmp1.lo = this->m_value;
     tmp1.hi = 0;
     DNativeInt tmp(this->m_value);
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     // RShiftD is more efficient than the right-shifting of DNativeInt
     NativeInt ql = RShiftD(tmp1, n + beta);
@@ -803,17 +779,16 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT Mod(const NativeIntegerT &modulus, const NativeIntegerT &mu,
-                     typename std::enable_if<std::is_same<T, DNativeInt>::value,
-                                             bool>::type = true) const {
+  NativeIntegerT Mod(const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                     typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     typeD prod;
-    prod.lo = this->m_value;
-    prod.hi = 0;
+    prod.lo      = this->m_value;
+    prod.hi      = 0;
     typeD result = prod;
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     NativeInt ql = RShiftD(prod, n + beta);
     MultD(ql, mu.m_value, prod);
@@ -840,18 +815,16 @@ class NativeIntegerT
    * @return is the result of the modulus operation.
    */
   template <typename T = NativeInt>
-  const NativeIntegerT &ModEq(
-      const NativeIntegerT &modulus, const NativeIntegerT &mu,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModEq(const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                              typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) {
     typeD tmp1;
     tmp1.lo = this->m_value;
     tmp1.hi = 0;
     DNativeInt tmp(this->m_value);
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     // RShiftD is more efficient than the right-shifting of DNativeInt
     NativeInt ql = RShiftD(tmp1, n + beta);
@@ -873,18 +846,16 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  const NativeIntegerT &ModEq(
-      const NativeIntegerT &modulus, const NativeIntegerT &mu,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModEq(const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                              typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) {
     typeD prod;
-    prod.lo = this->m_value;
-    prod.hi = 0;
+    prod.lo      = this->m_value;
+    prod.hi      = 0;
     typeD result = prod;
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     NativeInt ql = RShiftD(prod, n + beta);
     MultD(ql, mu.m_value, prod);
@@ -908,8 +879,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  NativeIntegerT ModAdd(const NativeIntegerT &b,
-                        const NativeIntegerT &modulus) const {
+  NativeIntegerT ModAdd(const NativeIntegerT& b, const NativeIntegerT& modulus) const {
     NativeInt mod = modulus.m_value;
     NativeInt op1 = this->m_value;
     NativeInt op2 = b.m_value;
@@ -933,8 +903,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  const NativeIntegerT &ModAddEq(const NativeIntegerT &b,
-                                 const NativeIntegerT &modulus) {
+  const NativeIntegerT& ModAddEq(const NativeIntegerT& b, const NativeIntegerT& modulus) {
     NativeInt mod = modulus.m_value;
     NativeInt op2 = b.m_value;
     if (this->m_value >= mod) {
@@ -957,8 +926,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  inline NativeIntegerT ModAddFast(const NativeIntegerT &b,
-                                   const NativeIntegerT &modulus) const {
+  inline NativeIntegerT ModAddFast(const NativeIntegerT& b, const NativeIntegerT& modulus) const {
     NativeInt r = this->m_value + b.m_value;
     if (r >= modulus.m_value) {
       r -= modulus.m_value;
@@ -972,8 +940,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus addition operation.
    */
-  const NativeIntegerT &ModAddFastEq(const NativeIntegerT &b,
-                                     const NativeIntegerT &modulus) {
+  const NativeIntegerT& ModAddFastEq(const NativeIntegerT& b, const NativeIntegerT& modulus) {
     this->m_value += b.m_value;
     if (this->m_value >= modulus.m_value) {
       this->m_value -= modulus.m_value;
@@ -989,8 +956,7 @@ class NativeIntegerT
    * @param &mu is the Barrett value.
    * @return is the result of the modulus addition operation.
    */
-  NativeIntegerT ModAdd(const NativeIntegerT &b, const NativeIntegerT &modulus,
-                        const NativeIntegerT &mu) const {
+  NativeIntegerT ModAdd(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu) const {
     NativeInt mod(modulus.m_value);
     NativeIntegerT av(this->m_value);
     NativeIntegerT bv(b.m_value);
@@ -1015,9 +981,7 @@ class NativeIntegerT
    * @param &mu is the Barrett value.
    * @return is the result of the modulus addition operation.
    */
-  const NativeIntegerT &ModAddEq(const NativeIntegerT &b,
-                                 const NativeIntegerT &modulus,
-                                 const NativeIntegerT &mu) {
+  const NativeIntegerT& ModAddEq(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu) {
     NativeInt mod(modulus.m_value);
     NativeIntegerT bv(b.m_value);
     if (this->m_value >= mod) {
@@ -1040,8 +1004,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  NativeIntegerT ModSub(const NativeIntegerT &b,
-                        const NativeIntegerT &modulus) const {
+  NativeIntegerT ModSub(const NativeIntegerT& b, const NativeIntegerT& modulus) const {
     NativeInt mod(modulus.m_value);
     NativeInt av(this->m_value);
     NativeInt bv(b.m_value);
@@ -1056,7 +1019,8 @@ class NativeIntegerT
 
     if (av >= bv) {
       av -= bv;
-    } else {
+    }
+    else {
       av += (mod - bv);
     }
     return av;
@@ -1069,8 +1033,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  const NativeIntegerT &ModSubEq(const NativeIntegerT &b,
-                                 const NativeIntegerT &modulus) {
+  const NativeIntegerT& ModSubEq(const NativeIntegerT& b, const NativeIntegerT& modulus) {
     NativeInt mod(modulus.m_value);
     NativeInt bv(b.m_value);
     // reduce this to a value lower than modulus
@@ -1084,7 +1047,8 @@ class NativeIntegerT
 
     if (this->m_value >= bv) {
       this->m_value -= bv;
-    } else {
+    }
+    else {
       this->m_value += (mod - bv);
     }
     return *this;
@@ -1097,15 +1061,15 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  inline NativeIntegerT ModSubFast(const NativeIntegerT &b,
-                                   const NativeIntegerT &modulus) const {
+  inline NativeIntegerT ModSubFast(const NativeIntegerT& b, const NativeIntegerT& modulus) const {
     NativeInt mod(modulus.m_value);
     NativeInt av(this->m_value);
     NativeInt bv(b.m_value);
 
     if (av >= bv) {
       av -= bv;
-    } else {
+    }
+    else {
       av += (mod - bv);
     }
     return av;
@@ -1118,11 +1082,11 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus subtraction operation.
    */
-  const NativeIntegerT &ModSubFastEq(const NativeIntegerT &b,
-                                     const NativeIntegerT &modulus) {
+  const NativeIntegerT& ModSubFastEq(const NativeIntegerT& b, const NativeIntegerT& modulus) {
     if (this->m_value >= b.m_value) {
       this->m_value -= b.m_value;
-    } else {
+    }
+    else {
       this->m_value += (modulus.m_value - b.m_value);
     }
     return *this;
@@ -1136,8 +1100,7 @@ class NativeIntegerT
    * @param &mu is the Barrett value.
    * @return is the result of the modulus subtraction operation.
    */
-  NativeIntegerT ModSub(const NativeIntegerT &b, const NativeIntegerT &modulus,
-                        const NativeIntegerT &mu) const {
+  NativeIntegerT ModSub(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu) const {
     NativeInt mod(modulus.m_value);
     NativeIntegerT av(this->m_value);
     NativeIntegerT bv(b.m_value);
@@ -1150,7 +1113,8 @@ class NativeIntegerT
 
     if (av.m_value >= bv.m_value) {
       av.m_value -= bv.m_value;
-    } else {
+    }
+    else {
       av.m_value += (mod - bv.m_value);
     }
     return av;
@@ -1164,9 +1128,7 @@ class NativeIntegerT
    * @param &mu is the Barrett value.
    * @return is the result of the modulus subtraction operation.
    */
-  const NativeIntegerT &ModSubEq(const NativeIntegerT &b,
-                                 const NativeIntegerT &modulus,
-                                 const NativeIntegerT &mu) {
+  const NativeIntegerT& ModSubEq(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu) {
     NativeIntegerT bv(b.m_value);
     NativeInt mod(modulus.m_value);
     if (this->m_value >= mod) {
@@ -1178,7 +1140,8 @@ class NativeIntegerT
 
     if (this->m_value >= bv.m_value) {
       this->m_value -= bv.m_value;
-    } else {
+    }
+    else {
       this->m_value += (mod - bv.m_value);
     }
     return *this;
@@ -1192,13 +1155,11 @@ class NativeIntegerT
    * @return is the result of the modulus multiplication operation.
    */
   template <typename T = NativeInt>
-  NativeIntegerT ModMul(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModMul(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                        typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeInt aval = this->m_value;
     NativeInt bval = b.m_value;
-    NativeInt mod = modulus.m_value;
+    NativeInt mod  = modulus.m_value;
     if (aval > mod) {
       aval %= mod;
     }
@@ -1216,12 +1177,10 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT ModMul(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModMul(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                        typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeIntegerT mu(modulus.ComputeMu());
-    NativeIntegerT a = *this;
+    NativeIntegerT a  = *this;
     NativeIntegerT bW = b;
     if (a > modulus) {
       a.ModEq(modulus, mu);
@@ -1240,12 +1199,10 @@ class NativeIntegerT
    * @return is the result of the modulus multiplication operation.
    */
   template <typename T = NativeInt>
-  const NativeIntegerT &ModMulEq(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModMulEq(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                                 typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) {
     NativeInt bval = b.m_value;
-    NativeInt mod = modulus.m_value;
+    NativeInt mod  = modulus.m_value;
     if (this->m_value > mod) {
       this->m_value %= mod;
     }
@@ -1264,10 +1221,8 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  const NativeIntegerT &ModMulEq(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModMulEq(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                                 typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) {
     NativeIntegerT mu(modulus.ComputeMu());
     NativeIntegerT bW = b;
     if (*this > modulus) {
@@ -1288,8 +1243,7 @@ class NativeIntegerT
    * @param &mu is the Barrett value.
    * @return is the result of the modulus multiplication operation.
    */
-  NativeIntegerT ModMul(const NativeIntegerT &b, const NativeIntegerT &modulus,
-                        const NativeIntegerT &mu) const {
+  NativeIntegerT ModMul(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu) const {
     NativeIntegerT ans(*this);
     ans.ModMulEq(b, modulus, mu);
     return ans;
@@ -1304,11 +1258,8 @@ class NativeIntegerT
    * @return is the result of the modulus multiplication operation.
    */
   template <typename T = NativeInt>
-  const NativeIntegerT &ModMulEq(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      const NativeIntegerT &mu,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModMulEq(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                                 typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) {
     NativeIntegerT bb(b);
 
     if (this->m_value > modulus.m_value) {
@@ -1322,9 +1273,9 @@ class NativeIntegerT
     MultD(this->m_value, b.m_value, prod1);
     DNativeInt prod = GetD(prod1);
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     // RShiftD is more efficient than the right-shifting of DNativeInt
     NativeInt ql = RShiftD(prod1, n + beta);
@@ -1346,11 +1297,8 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  const NativeIntegerT &ModMulEq(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      const NativeIntegerT &mu,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModMulEq(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                                 typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) {
     NativeIntegerT bb(b);
 
     if (this->m_value > modulus.m_value) {
@@ -1364,9 +1312,9 @@ class NativeIntegerT
     MultD(this->m_value, b.m_value, prod1);
     typeD prod = prod1;
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     NativeInt ql = RShiftD(prod1, n + beta);
     MultD(ql, mu.m_value, prod1);
@@ -1393,10 +1341,8 @@ class NativeIntegerT
    * @return is the result of the modulus multiplication operation.
    */
   template <typename T = NativeInt>
-  NativeIntegerT ModMulFast(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModMulFast(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                            typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     DNativeInt av(m_value);
     DNativeInt bv(b.m_value);
     DNativeInt result = av * bv;
@@ -1408,12 +1354,10 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT ModMulFast(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModMulFast(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                            typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeIntegerT mu(modulus.ComputeMu());
-    NativeIntegerT a = *this;
+    NativeIntegerT a  = *this;
     NativeIntegerT bW = b;
     if (a > modulus) {
       a.ModEq(modulus, mu);
@@ -1432,8 +1376,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus multiplication operation.
    */
-  const NativeIntegerT &ModMulFastEq(const NativeIntegerT &b,
-                                     const NativeIntegerT &modulus) {
+  const NativeIntegerT& ModMulFastEq(const NativeIntegerT& b, const NativeIntegerT& modulus) {
     return *this = this->ModMulFast(b, modulus);
   }
 
@@ -1463,11 +1406,8 @@ class NativeIntegerT
     than 2^(2*n + 3). The value of \mu is computed by NativeVector::ComputeMu.
     */
   template <typename T = NativeInt>
-  NativeIntegerT ModMulFast(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      const NativeIntegerT &mu,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModMulFast(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                            typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeIntegerT ans(*this);
 
     typeD prod1;
@@ -1475,9 +1415,9 @@ class NativeIntegerT
     DNativeInt prod = GetD(prod1);
     typeD q0(prod1);
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     // RShiftD is more efficient than the right-shifting of DNativeInt
     NativeInt ql = RShiftD(q0, n + beta);
@@ -1499,20 +1439,17 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT ModMulFast(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      const NativeIntegerT &mu,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModMulFast(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                            typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeIntegerT ans(*this);
 
     typeD prod1;
     MultD(ans.m_value, b.m_value, prod1);
     typeD prod = prod1;
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     NativeInt ql = RShiftD(prod1, n + beta);
     MultD(ql, mu.m_value, prod1);
@@ -1541,19 +1478,16 @@ class NativeIntegerT
    * @return is the result of the modulus multiplication operation.
    */
   template <typename T = NativeInt>
-  const NativeIntegerT &ModMulFastEq(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      const NativeIntegerT &mu,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModMulFastEq(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                                     typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) {
     typeD prod1;
     MultD(this->m_value, b.m_value, prod1);
     DNativeInt prod = GetD(prod1);
     typeD q0(prod1);
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     // RShiftD is more efficient than the right-shifting of DNativeInt
     NativeInt ql = RShiftD(q0, n + beta);
@@ -1575,18 +1509,15 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  const NativeIntegerT &ModMulFastEq(
-      const NativeIntegerT &b, const NativeIntegerT &modulus,
-      const NativeIntegerT &mu,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) {
+  const NativeIntegerT& ModMulFastEq(const NativeIntegerT& b, const NativeIntegerT& modulus, const NativeIntegerT& mu,
+                                     typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) {
     typeD prod1;
     MultD(this->m_value, b.m_value, prod1);
     typeD prod = prod1;
 
-    long n = modulus.GetMSB();
+    long n     = modulus.GetMSB();
     long alpha = n + 3;
-    long beta = -2;
+    long beta  = -2;
 
     NativeInt ql = RShiftD(prod1, n + beta);
     MultD(ql, mu.m_value, prod1);
@@ -1622,21 +1553,17 @@ class NativeIntegerT
    */
   template <typename T = NativeInt>
   NativeIntegerT PrepModMulConst(
-      const NativeIntegerT &modulus,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+    const NativeIntegerT& modulus,
+    typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     DNativeInt w = DNativeInt(this->m_value) << MaxBits();
     return NativeInt(w / DNativeInt(modulus.m_value));
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT PrepModMulConst(
-      const NativeIntegerT &modulus,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT PrepModMulConst(const NativeIntegerT& modulus,
+                                 typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     lbcrypto::BigInteger w = lbcrypto::BigInteger(m_value) << MaxBits();
-    return NativeInt(
-        (w / lbcrypto::BigInteger(modulus.m_value)).ConvertToInt());
+    return NativeInt((w / lbcrypto::BigInteger(modulus.m_value)).ConvertToInt());
   }
 
   /**
@@ -1647,14 +1574,11 @@ class NativeIntegerT
    * @param &bInv precomputation for b.
    * @return is the result of the modulus multiplication operation.
    */
-  NativeIntegerT ModMulFastConst(const NativeIntegerT &b,
-                                 const NativeIntegerT &modulus,
-                                 const NativeIntegerT &bInv) const {
-    NativeInt q = MultDHi(this->m_value, bInv.m_value);
+  NativeIntegerT ModMulFastConst(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                                 const NativeIntegerT& bInv) const {
+    NativeInt q      = MultDHi(this->m_value, bInv.m_value);
     NativeInt yprime = this->m_value * b.m_value - q * modulus.m_value;
-    return SignedNativeInt(yprime) - SignedNativeInt(modulus.m_value) >= 0
-               ? yprime - modulus.m_value
-               : yprime;
+    return SignedNativeInt(yprime) - SignedNativeInt(modulus.m_value) >= 0 ? yprime - modulus.m_value : yprime;
   }
 
   /**
@@ -1666,15 +1590,11 @@ class NativeIntegerT
    * @param &bInv precomputation for b.
    * @return is the result of the modulus multiplication operation.
    */
-  const NativeIntegerT &ModMulFastConstEq(const NativeIntegerT &b,
-                                          const NativeIntegerT &modulus,
-                                          const NativeIntegerT &bInv) {
-    NativeInt q = MultDHi(this->m_value, bInv.m_value);
+  const NativeIntegerT& ModMulFastConstEq(const NativeIntegerT& b, const NativeIntegerT& modulus,
+                                          const NativeIntegerT& bInv) {
+    NativeInt q      = MultDHi(this->m_value, bInv.m_value);
     NativeInt yprime = this->m_value * b.m_value - q * modulus.m_value;
-    this->m_value =
-        SignedNativeInt(yprime) - SignedNativeInt(modulus.m_value) >= 0
-            ? yprime - modulus.m_value
-            : yprime;
+    this->m_value = SignedNativeInt(yprime) - SignedNativeInt(modulus.m_value) >= 0 ? yprime - modulus.m_value : yprime;
     return *this;
   }
 
@@ -1686,10 +1606,8 @@ class NativeIntegerT
    * @return is the result of the modulus exponentiation operation.
    */
   template <typename T = NativeInt>
-  NativeIntegerT ModExp(
-      const NativeIntegerT &b, const NativeIntegerT &mod,
-      typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModExp(const NativeIntegerT& b, const NativeIntegerT& mod,
+                        typename std::enable_if<!std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     DNativeInt exp(b.m_value);
     DNativeInt product(1);
     DNativeInt modulus(mod.m_value);
@@ -1722,10 +1640,8 @@ class NativeIntegerT
   }
 
   template <typename T = NativeInt>
-  NativeIntegerT ModExp(
-      const NativeIntegerT &b, const NativeIntegerT &mod,
-      typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type =
-          true) const {
+  NativeIntegerT ModExp(const NativeIntegerT& b, const NativeIntegerT& mod,
+                        typename std::enable_if<std::is_same<T, DNativeInt>::value, bool>::type = true) const {
     NativeInteger mu(mod.ComputeMu());
     NativeInteger exp(b.m_value);
     NativeInteger product(1);
@@ -1759,8 +1675,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform operations with.
    * @return is the result of the modulus exponentiation operation.
    */
-  const NativeIntegerT &ModExpEq(const NativeIntegerT &b,
-                                 const NativeIntegerT &mod) {
+  const NativeIntegerT& ModExpEq(const NativeIntegerT& b, const NativeIntegerT& mod) {
     *this = ModExp(b, mod);
     return *this;
   }
@@ -1771,13 +1686,11 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus inverse operation.
    */
-  NativeIntegerT ModInverse(const NativeIntegerT &mod) const {
+  NativeIntegerT ModInverse(const NativeIntegerT& mod) const {
     NativeInt modulus = mod.m_value;
-    NativeInt a = m_value % modulus;
+    NativeInt a       = m_value % modulus;
     if (a == 0) {
-      std::string msg = toString(m_value) +
-                        " does not have a ModInverse using " +
-                        toString(modulus);
+      std::string msg = toString(m_value) + " does not have a ModInverse using " + toString(modulus);
       PALISADE_THROW(lbcrypto::math_error, msg);
     }
     if (modulus == 1) {
@@ -1785,15 +1698,15 @@ class NativeIntegerT
     }
 
     SignedNativeInt m0 = modulus;
-    SignedNativeInt y = 0;
-    SignedNativeInt x = 1;
+    SignedNativeInt y  = 0;
+    SignedNativeInt x  = 1;
     while (a > 1) {
       // q is quotient
       SignedNativeInt q = a / modulus;
 
       SignedNativeInt t = modulus;
-      modulus = a % modulus;
-      a = t;
+      modulus           = a % modulus;
+      a                 = t;
 
       // Update y and x
       t = y;
@@ -1813,7 +1726,7 @@ class NativeIntegerT
    * @param &modulus is the modulus to perform.
    * @return is the result of the modulus inverse operation.
    */
-  const NativeIntegerT &ModInverseEq(const NativeIntegerT &mod) {
+  const NativeIntegerT& ModInverseEq(const NativeIntegerT& mod) {
     *this = ModInverse(mod);
     return *this;
   }
@@ -1826,7 +1739,9 @@ class NativeIntegerT
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  NativeIntegerT LShift(usshort shift) const { return m_value << shift; }
+  NativeIntegerT LShift(usshort shift) const {
+    return m_value << shift;
+  }
 
   /**
    * Left shift operation. In-place variant.
@@ -1834,7 +1749,7 @@ class NativeIntegerT
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  const NativeIntegerT &LShiftEq(usshort shift) {
+  const NativeIntegerT& LShiftEq(usshort shift) {
     m_value <<= shift;
     return *this;
   }
@@ -1845,7 +1760,9 @@ class NativeIntegerT
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  NativeIntegerT RShift(usshort shift) const { return m_value >> shift; }
+  NativeIntegerT RShift(usshort shift) const {
+    return m_value >> shift;
+  }
 
   /**
    * Right shift operation. In-place variant.
@@ -1853,7 +1770,7 @@ class NativeIntegerT
    * @param shift # of bits.
    * @return result of the shift operation.
    */
-  const NativeIntegerT &RShiftEq(usshort shift) {
+  const NativeIntegerT& RShiftEq(usshort shift) {
     m_value >>= shift;
     return *this;
   }
@@ -1867,9 +1784,8 @@ class NativeIntegerT
    * @return  -1 for strictly less than, 0 for equal to and 1 for strictly
    * greater than conditons.
    */
-  int Compare(const NativeIntegerT &a) const {
-    if (this->m_value < a.m_value)
-      return -1;
+  int Compare(const NativeIntegerT& a) const {
+    if (this->m_value < a.m_value) return -1;
     else if (this->m_value > a.m_value)
       return 1;
     return 0;
@@ -1896,7 +1812,9 @@ class NativeIntegerT
    *
    * @return double representation of the value.
    */
-  double ConvertToDouble() const { return static_cast<double>(m_value); }
+  double ConvertToDouble() const {
+    return static_cast<double>(m_value);
+  }
 
   /**
    * Convert a string representation of a binary number to a NativeIntegerT.
@@ -1904,17 +1822,15 @@ class NativeIntegerT
    * @param bitString the binary num in string.
    * @return the binary number represented as a big binary int.
    */
-  static NativeIntegerT FromBinaryString(const std::string &bitString) {
+  static NativeIntegerT FromBinaryString(const std::string& bitString) {
     if (bitString.length() > MaxBits()) {
-      PALISADE_THROW(lbcrypto::math_error,
-                     "Bit string is too long to fit in a bigintnat");
+      PALISADE_THROW(lbcrypto::math_error, "Bit string is too long to fit in a bigintnat");
     }
     NativeInt v = 0;
     for (size_t i = 0; i < bitString.length(); i++) {
       int n = bitString[i] - '0';
       if (n < 0 || n > 1) {
-        PALISADE_THROW(lbcrypto::math_error,
-                       "Bit string must contain only 0 or 1");
+        PALISADE_THROW(lbcrypto::math_error, "Bit string must contain only 0 or 1");
       }
       v <<= 1;
       v |= n;
@@ -1929,7 +1845,9 @@ class NativeIntegerT
    *
    * @return the index of the most significant bit.
    */
-  usint GetMSB() const { return lbcrypto::GetMSB(this->m_value); }
+  usint GetMSB() const {
+    return lbcrypto::GetMSB(this->m_value);
+  }
 
   /**
    * Get the number of digits using a specific base - support for arbitrary
@@ -1938,7 +1856,9 @@ class NativeIntegerT
    * @param base is the base with which to determine length in.
    * @return the length of the representation in a specific base.
    */
-  usint GetLengthForBase(usint base) const { return GetMSB(); }
+  usint GetLengthForBase(usint base) const {
+    return GetMSB();
+  }
 
   /**
    * Get a specific digit at "digit" index; big integer is seen as an array of
@@ -1956,7 +1876,7 @@ class NativeIntegerT
    */
   usint GetDigitAtIndexForBase(usint index, usint base) const {
     usint DigitLen = ceil(log2(base));
-    usint digit = 0;
+    usint digit    = 0;
     usint newIndex = 1 + (index - 1) * DigitLen;
     for (usint i = 1; i < base; i = i * 2) {
       digit += GetBitAtIndex(newIndex) * i;
@@ -1983,7 +1903,9 @@ class NativeIntegerT
    * A zero allocator that is called by the Matrix class.
    * It is used to initialize a Matrix of NativeIntegerT objects.
    */
-  static NativeIntegerT Allocator() { return 0; }
+  static NativeIntegerT Allocator() {
+    return 0;
+  }
 
   // STRINGS & STREAMS
 
@@ -1993,9 +1915,13 @@ class NativeIntegerT
    *
    * @return value of this NativeIntegerT in base 10 represented as a string.
    */
-  const std::string ToString() const { return toString(m_value); }
+  const std::string ToString() const {
+    return toString(m_value);
+  }
 
-  static const std::string IntegerTypeName() { return "UBNATINT"; }
+  static const std::string IntegerTypeName() {
+    return "UBNATINT";
+  }
 
   /**
    * Console output operation.
@@ -2004,8 +1930,7 @@ class NativeIntegerT
    * @param ptr_obj is NativeIntegerT to be printed.
    * @return is the ostream object.
    */
-  friend std::ostream &operator<<(std::ostream &os,
-                                  const NativeIntegerT &ptr_obj) {
+  friend std::ostream& operator<<(std::ostream& os, const NativeIntegerT& ptr_obj) {
     os << ptr_obj.ToString();
     return os;
   }
@@ -2013,28 +1938,25 @@ class NativeIntegerT
   // SERIALIZATION
 
   template <class Archive, typename T = void>
-  typename std::enable_if<std::is_same<NativeInt, U64BITS>::value ||
-                              std::is_same<NativeInt, U32BITS>::value,
-                          T>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<std::is_same<NativeInt, U64BITS>::value || std::is_same<NativeInt, U32BITS>::value, T>::type
+  load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_value));
   }
 
 #if defined(HAVE_INT128)
   template <class Archive>
-  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value &&
-                              !cereal::traits::is_text_archive<Archive>::value,
+  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value && !cereal::traits::is_text_archive<Archive>::value,
                           void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     // get an array with 2 unint64_t values for m_value
     uint64_t vec[2];
@@ -2045,14 +1967,13 @@ class NativeIntegerT
   }
 
   template <class Archive>
-  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value &&
-                              cereal::traits::is_text_archive<Archive>::value,
+  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value && cereal::traits::is_text_archive<Archive>::value,
                           void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     // get an array with 2 unint64_t values for m_value
     uint64_t vec[2];
@@ -2064,19 +1985,16 @@ class NativeIntegerT
 #endif
 
   template <class Archive, typename T = void>
-  typename std::enable_if<std::is_same<NativeInt, U64BITS>::value ||
-                              std::is_same<NativeInt, U32BITS>::value,
-                          T>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<std::is_same<NativeInt, U64BITS>::value || std::is_same<NativeInt, U32BITS>::value, T>::type
+  save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", m_value));
   }
 
 #if defined(HAVE_INT128)
   template <class Archive>
-  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value &&
-                              !cereal::traits::is_text_archive<Archive>::value,
+  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value && !cereal::traits::is_text_archive<Archive>::value,
                           void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  save(Archive& ar, std::uint32_t const version) const {
     // save 2 unint64_t values instead of unsigned __int128
     constexpr U128BITS mask = (static_cast<U128BITS>(1) << 64) - 1;
     uint64_t vec[2];
@@ -2086,10 +2004,9 @@ class NativeIntegerT
   }
 
   template <class Archive>
-  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value &&
-                              cereal::traits::is_text_archive<Archive>::value,
+  typename std::enable_if<std::is_same<NativeInt, U128BITS>::value && cereal::traits::is_text_archive<Archive>::value,
                           void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  save(Archive& ar, std::uint32_t const version) const {
     // save 2 unint64_t values instead of unsigned __int128
     constexpr U128BITS mask = (static_cast<U128BITS>(1) << 64) - 1;
     uint64_t vec[2];
@@ -2099,13 +2016,21 @@ class NativeIntegerT
   }
 #endif
 
-  std::string SerializedObjectName() const { return "NATInteger"; }
+  std::string SerializedObjectName() const {
+    return "NATInteger";
+  }
 
-  static uint32_t SerializedVersion() { return 1; }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
-  static constexpr unsigned MaxBits() { return m_uintBitLength; }
+  static constexpr unsigned MaxBits() {
+    return m_uintBitLength;
+  }
 
-  static bool IsNativeInt() { return true; }
+  static bool IsNativeInt() {
+    return true;
+  }
 
  protected:
   /**
@@ -2114,9 +2039,9 @@ class NativeIntegerT
    *
    * @param v The input string
    */
-  void AssignVal(const std::string &str) {
+  void AssignVal(const std::string& str) {
     NativeInt test_value = 0;
-    m_value = 0;
+    m_value              = 0;
     for (size_t i = 0; i < str.length(); i++) {
       int v = str[i] - '0';
       if (v < 0 || v > 9) {
@@ -2126,9 +2051,7 @@ class NativeIntegerT
       m_value += v;
 
       if (m_value < test_value) {
-        PALISADE_THROW(
-            lbcrypto::math_error,
-            str + " is too large to fit in this native integer object");
+        PALISADE_THROW(lbcrypto::math_error, str + " is too large to fit in this native integer object");
       }
       test_value = m_value;
     }
@@ -2151,7 +2074,7 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  inline NativeIntegerT AddCheck(const NativeIntegerT &b) const {
+  inline NativeIntegerT AddCheck(const NativeIntegerT& b) const {
     NativeInt newv = m_value + b.m_value;
     if (newv < m_value || newv < b.m_value) {
       PALISADE_THROW(lbcrypto::math_error, "Overflow");
@@ -2165,16 +2088,17 @@ class NativeIntegerT
    * @param b is the value to add to this.
    * @return result of the addition operation.
    */
-  inline NativeIntegerT AddFast(const NativeIntegerT &b) const {
+  inline NativeIntegerT AddFast(const NativeIntegerT& b) const {
     return m_value + b.m_value;
   }
 
   // Computes res -= a;
-  static inline void SubtractD(typeD &res, const typeD &a) {
+  static inline void SubtractD(typeD& res, const typeD& a) {
     if (res.lo < a.lo) {
       res.lo += m_uintMax + 1 - a.lo;
       res.hi--;
-    } else {
+    }
+    else {
       res.lo -= a.lo;
     }
 
@@ -2189,7 +2113,7 @@ class NativeIntegerT
    * @param shift the number of bits to shift by
    * @return the result of right-shifting
    */
-  static inline NativeInt RShiftD(const typeD &x, long shift) {
+  static inline NativeInt RShiftD(const typeD& x, long shift) {
     return (x.lo >> shift) | (x.hi << (MaxBits() - shift));
   }
 
@@ -2202,7 +2126,7 @@ class NativeIntegerT
    * @param b multiplicand
    * @param &x result of multiplication
    */
-  static inline void MultD(U64BITS a, U64BITS b, typeD &res) {
+  static inline void MultD(U64BITS a, U64BITS b, typeD& res) {
 #if defined(__x86_64__)
     // clang-format off
     __asm__("mulq %[b]"
@@ -2218,10 +2142,10 @@ class NativeIntegerT
     res.lo = x.lo * y;
     asm("umulh %0, %1, %2\n\t" : "=r"(res.hi) : "r"(x.lo), "r"(y));
     res.hi += x.hi * y;
-#elif defined(__arm__) // 32 bit processor
+#elif defined(__arm__)         // 32 bit processor
     uint64_t wres(0), wa(a), wb(b);
 
-    wres = wa * wb;  // should give us the lower 64 bits of 32*32
+    wres   = wa * wb;  // should give us the lower 64 bits of 32*32
     res.hi = wres >> 32;
     res.lo = (uint32_t)wres && 0xFFFFFFFF;
 #elif defined(__EMSCRIPTEN__)  // web assembly
@@ -2231,12 +2155,12 @@ class NativeIntegerT
     U64BITS b2 = (uint32_t)b;
 
     // use schoolbook multiplication
-    res.hi = a1 * b1;
-    res.lo = a2 * b2;
+    res.hi            = a1 * b1;
+    res.lo            = a2 * b2;
     U64BITS lowBefore = res.lo;
 
-    U64BITS p1 = a2 * b1;
-    U64BITS p2 = a1 * b2;
+    U64BITS p1   = a2 * b1;
+    U64BITS p2   = a1 * b2;
     U64BITS temp = p1 + p2;
     res.hi += temp >> 32;
     res.lo += U64BITS((uint32_t)temp) << 32;
@@ -2252,7 +2176,7 @@ class NativeIntegerT
   }
 
 #if defined(HAVE_INT128)
-  static inline void MultD(U128BITS a, U128BITS b, typeD &res) {
+  static inline void MultD(U128BITS a, U128BITS b, typeD& res) {
     // TODO: The performance of this function can be improved
     // Instead of 128-bit multiplication, we can use MultD from bigintnat
     // We would need to introduce a struct of 4 64-bit integers in this case
@@ -2262,12 +2186,12 @@ class NativeIntegerT
     U128BITS b2 = (uint64_t)b;
 
     // use schoolbook multiplication
-    res.hi = a1 * b1;
-    res.lo = a2 * b2;
+    res.hi             = a1 * b1;
+    res.lo             = a2 * b2;
     U128BITS lowBefore = res.lo;
 
-    U128BITS p1 = a2 * b1;
-    U128BITS p2 = a1 * b2;
+    U128BITS p1   = a2 * b1;
+    U128BITS p2   = a1 * b2;
     U128BITS temp = p1 + p2;
     res.hi += temp >> 64;
     res.lo += U128BITS((uint64_t)temp) << 64;
@@ -2280,10 +2204,10 @@ class NativeIntegerT
   }
 #endif
 
-  static inline void MultD(U32BITS a, U32BITS b, typeD &res) {
+  static inline void MultD(U32BITS a, U32BITS b, typeD& res) {
     DNativeInt prod = DNativeInt(a) * DNativeInt(b);
-    res.hi = (prod >> MaxBits()) & NATIVEINTMASK;
-    res.lo = prod & NATIVEINTMASK;
+    res.hi          = (prod >> MaxBits()) & NATIVEINTMASK;
+    res.lo          = prod & NATIVEINTMASK;
   }
 
   /**
@@ -2307,7 +2231,7 @@ class NativeIntegerT
    * @param &x double-word input
    * @return the result as DNativeInt
    */
-  inline DNativeInt GetD(const typeD &x) const {
+  inline DNativeInt GetD(const typeD& x) const {
     return (DNativeInt(x.hi) << MaxBits()) | x.lo;
   }
 
@@ -2325,7 +2249,7 @@ class NativeIntegerT
                                        // in every part after division below
 
     const uint64_t divisor = std::llrint(pow(10, maxChars));
-    uint64_t part3 = value % divisor;
+    uint64_t part3         = value % divisor;
     value /= divisor;
     uint64_t part2 = value % divisor;
     value /= divisor;
@@ -2338,7 +2262,7 @@ class NativeIntegerT
 
     bool appendNextPart = false;
     if (part1) {
-      ret = std::to_string(part1);
+      ret            = std::to_string(part1);
       appendNextPart = true;
     }
 
@@ -2347,11 +2271,13 @@ class NativeIntegerT
       if (appendNextPart) {
         ret += std::string(maxChars - part2str.size(), '0');
         ret += part2str;
-      } else {
-        ret = part2str;
+      }
+      else {
+        ret            = part2str;
         appendNextPart = true;
       }
-    } else if (appendNextPart) {
+    }
+    else if (appendNextPart) {
       ret += std::string(maxChars, '0');  // add zeroes only
     }
 
@@ -2360,12 +2286,15 @@ class NativeIntegerT
       if (appendNextPart) {
         ret += std::string(maxChars - part3str.size(), '0');
         ret += part3str;
-      } else {
+      }
+      else {
         ret = part3str;
       }
-    } else if (appendNextPart) {
+    }
+    else if (appendNextPart) {
       ret += std::string(maxChars, '0');
-    } else {
+    }
+    else {
       ret = "0";
     }
 

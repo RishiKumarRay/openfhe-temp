@@ -32,7 +32,7 @@
 #include "time.h"
 
 // function to verify our generated array
-void verify(float *foo, uint32_t array_size) {
+void verify(float* foo, uint32_t array_size) {
   // verify that the data was generated correctly.
   bool goodflag = true;
   for (size_t i = 1; i < array_size; ++i) {
@@ -42,7 +42,8 @@ void verify(float *foo, uint32_t array_size) {
   }
   if (goodflag) {
     std::cout << "verification succeeded" << std::endl;
-  } else {
+  }
+  else {
     std::cout << "verification failed" << std::endl;
     for (size_t i = 0; i < array_size; ++i) {
       std::cout << foo[i] << " ";
@@ -52,7 +53,7 @@ void verify(float *foo, uint32_t array_size) {
   return;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   // note if you set dbg_flag = true then all  the following DEBUG() statments
   // print to stdout.
   DEBUG_FLAG(true);
@@ -64,19 +65,18 @@ int main(int argc, char *argv[]) {
   DEBUGEXP(argv[0]);
 
   if (argc < 2) {
-    std::cout << "running " << argv[0] << " with default array size of 1000"
-              << std::endl;
-  } else {
+    std::cout << "running " << argv[0] << " with default array size of 1000" << std::endl;
+  }
+  else {
     array_size = atoi(argv[1]);
     if (array_size <= 0) {
-      std::cout << "error in argment " << argv[1]
-                << " must be greater than zero " << std::endl;
+      std::cout << "error in argment " << argv[1] << " must be greater than zero " << std::endl;
       exit(-1);
     }
   }
 
   // build the array and zero it out.
-  float *foo = new float[array_size];
+  float* foo = new float[array_size];
   for (size_t i = 0; i < array_size; i++) {
     foo[i] = 0;
   }
@@ -84,24 +84,16 @@ int main(int argc, char *argv[]) {
   TimeVar t_total;   // define timer variable for TIC() TOC() timing functions.
   double timeTotal;  // holds the resulting time
 
-  std::cout << "Parallel computation demo using " << omp_get_num_procs()
-            << " processors." << std::endl;
-  std::cout << "and maximum of " << omp_get_max_threads() << " threads."
-            << std::endl
-            << std::endl;
-  std::cout
-      << "to change # threads from the default, execute at the comamnd line "
-      << std::endl;
+  std::cout << "Parallel computation demo using " << omp_get_num_procs() << " processors." << std::endl;
+  std::cout << "and maximum of " << omp_get_max_threads() << " threads." << std::endl << std::endl;
+  std::cout << "to change # threads from the default, execute at the comamnd line " << std::endl;
   std::cout << " For the bash shell, enter:" << std::endl
             << "export OMP_NUM_THREADS=<number of threads to use>" << std::endl
             << "For the csh or tcsh shell, enter: " << std::endl
-            << " setenv OMP_NUM_THREADS <number of threads to use>"
-            << std::endl;
-  std::cout << " or use omp_set_num_threads() in your code." << std::endl
-            << std::endl;
+            << " setenv OMP_NUM_THREADS <number of threads to use>" << std::endl;
+  std::cout << " or use omp_set_num_threads() in your code." << std::endl << std::endl;
 
-  std::cout << "HINT: use export OMP_DISPLAY_ENV=TRUE to see all your settings"
-            << std::endl;
+  std::cout << "HINT: use export OMP_DISPLAY_ENV=TRUE to see all your settings" << std::endl;
 
   int nthreads, tid;
 // determine how many threads we will have.
@@ -166,7 +158,7 @@ int main(int argc, char *argv[]) {
 #pragma omp parallel for
   for (size_t i = 0; i < array_size; ++i) {
     float tmp = i;
-    foo[i] = tmp;
+    foo[i]    = tmp;
   }
 
   // read the timer to get the computation time in micro seconds

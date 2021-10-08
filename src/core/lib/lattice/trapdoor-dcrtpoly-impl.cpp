@@ -41,15 +41,11 @@ template class RLWETrapdoorUtility<DCRTPoly>;
 // https://eprint.iacr.org/2017/844.pdf and
 // "Implementing Token-Based Obfuscation under (Ring) LWE"
 template <>
-std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>>
-RLWETrapdoorUtility<DCRTPoly>::TrapdoorGen(shared_ptr<ParmType> params,
-                                           double stddev, int64_t base,
-                                           bool bal) {
-  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
-  auto gaussian_alloc = DCRTPoly::MakeDiscreteGaussianCoefficientAllocator(
-      params, COEFFICIENT, stddev);
-  auto uniform_alloc =
-      DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
+std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>> RLWETrapdoorUtility<DCRTPoly>::TrapdoorGen(
+  shared_ptr<ParmType> params, double stddev, int64_t base, bool bal) {
+  auto zero_alloc     = DCRTPoly::Allocator(params, EVALUATION);
+  auto gaussian_alloc = DCRTPoly::MakeDiscreteGaussianCoefficientAllocator(params, COEFFICIENT, stddev);
+  auto uniform_alloc  = DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
 
   NativeInteger q = params->GetParams()[0]->GetModulus();
 
@@ -81,20 +77,15 @@ RLWETrapdoorUtility<DCRTPoly>::TrapdoorGen(shared_ptr<ParmType> params,
     A(0, i + 2) = g(0, i) - (a * r(0, i) + e(0, i));
   }
 
-  return std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>>(
-      A, RLWETrapdoorPair<DCRTPoly>(r, e));
+  return std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>>(A, RLWETrapdoorPair<DCRTPoly>(r, e));
 }
 
 template <>
-std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>>
-RLWETrapdoorUtility<DCRTPoly>::TrapdoorGenSquareMat(shared_ptr<ParmType> params,
-                                                    double stddev, size_t d,
-                                                    int64_t base, bool bal) {
-  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
-  auto gaussian_alloc = DCRTPoly::MakeDiscreteGaussianCoefficientAllocator(
-      params, COEFFICIENT, stddev);
-  auto uniform_alloc =
-      DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
+std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>> RLWETrapdoorUtility<DCRTPoly>::TrapdoorGenSquareMat(
+  shared_ptr<ParmType> params, double stddev, size_t d, int64_t base, bool bal) {
+  auto zero_alloc     = DCRTPoly::Allocator(params, EVALUATION);
+  auto gaussian_alloc = DCRTPoly::MakeDiscreteGaussianCoefficientAllocator(params, COEFFICIENT, stddev);
+  auto uniform_alloc  = DCRTPoly::MakeDiscreteUniformAllocator(params, EVALUATION);
 
   NativeInteger q = params->GetParams()[0]->GetModulus();
 
@@ -116,16 +107,14 @@ RLWETrapdoorUtility<DCRTPoly>::TrapdoorGenSquareMat(shared_ptr<ParmType> params,
   R.SetFormat(Format::EVALUATION);
   E.SetFormat(Format::EVALUATION);
 
-  Matrix<DCRTPoly> G =
-      Matrix<DCRTPoly>(zero_alloc, d, d * k).GadgetVector(base);
+  Matrix<DCRTPoly> G = Matrix<DCRTPoly>(zero_alloc, d, d * k).GadgetVector(base);
 
   Matrix<DCRTPoly> A(zero_alloc, d, d * 2);
 
   for (size_t i = 0; i < d; i++) {
     for (size_t j = 0; j < d; j++) {
       A(i, j) = Abar(i, j);
-      if (i == j)
-        A(i, j + d) = 1;
+      if (i == j) A(i, j + d) = 1;
       else
         A(i, j + d) = 0;
     }
@@ -135,24 +124,22 @@ RLWETrapdoorUtility<DCRTPoly>::TrapdoorGenSquareMat(shared_ptr<ParmType> params,
 
   A.HStack(A1);
 
-  return std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>>(
-      A, RLWETrapdoorPair<DCRTPoly>(R, E));
+  return std::pair<Matrix<DCRTPoly>, RLWETrapdoorPair<DCRTPoly>>(A, RLWETrapdoorPair<DCRTPoly>(R, E));
 }
 
 // Gaussian sampling as described in Alogorithm 2 of
 // https://eprint.iacr.org/2017/844.pdf
 
 template <>
-Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(
-    size_t n, size_t k, const Matrix<DCRTPoly>& A,
-    const RLWETrapdoorPair<DCRTPoly>& T, const DCRTPoly& u, DggType& dgg,
-    DggType& dggLargeSigma, int64_t base) {
+Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(size_t n, size_t k, const Matrix<DCRTPoly>& A,
+                                                          const RLWETrapdoorPair<DCRTPoly>& T, const DCRTPoly& u,
+                                                          DggType& dgg, DggType& dggLargeSigma, int64_t base) {
   DEBUG_FLAG(false);
   TimeVar t1, t1_tot, t2, t2_tot;
   TIC(t1);
   TIC(t1_tot);
   const shared_ptr<ParmType> params = u.GetParams();
-  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
+  auto zero_alloc                   = DCRTPoly::Allocator(params, EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -192,8 +179,7 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(
 
     Matrix<int64_t> digits([]() { return 0; }, kRes, n);
     LatticeGaussSampUtility<NativePoly>::GaussSampGqArbBase(
-        perturbedSyndrome.GetElementAtIndex(u), c, kRes, qu, base, dgg,
-        &digits);
+      perturbedSyndrome.GetElementAtIndex(u), c, kRes, qu, base, dgg, &digits);
     for (size_t p = 0; p < kRes; p++) {
       for (size_t j = 0; j < n; j++) {
         zHatBBI(p + u * kRes, j) = digits(p, j);
@@ -205,8 +191,7 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(
   TIC(t2);
   // Convert zHat from a matrix of BBI to a vector of Element ring elements
   // zHat is in the coefficient representation
-  Matrix<DCRTPoly> zHat =
-      SplitInt64AltIntoElements<DCRTPoly>(zHatBBI, n, params);
+  Matrix<DCRTPoly> zHat = SplitInt64AltIntoElements<DCRTPoly>(zHatBBI, n, params);
 
   DEBUG("t2c: " << TOC(t2));  // takes 0
   // Now converting it to the evaluation representation before multiplication
@@ -229,12 +214,12 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSamp(
 // Ring (LWE)"
 
 template <>
-Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(
-    size_t n, size_t k, const Matrix<DCRTPoly>& A,
-    const RLWETrapdoorPair<DCRTPoly>& T, const Matrix<DCRTPoly>& U,
-    DggType& dgg, DggType& dggLargeSigma, int64_t base) {
+Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(size_t n, size_t k, const Matrix<DCRTPoly>& A,
+                                                                   const RLWETrapdoorPair<DCRTPoly>& T,
+                                                                   const Matrix<DCRTPoly>& U, DggType& dgg,
+                                                                   DggType& dggLargeSigma, int64_t base) {
   const shared_ptr<ParmType> params = U(0, 0).GetParams();
-  auto zero_alloc = DCRTPoly::Allocator(params, EVALUATION);
+  auto zero_alloc                   = DCRTPoly::Allocator(params, EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -270,8 +255,7 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(
         Matrix<int64_t> digits([]() { return 0; }, kRes, n);
 
         LatticeGaussSampUtility<NativePoly>::GaussSampGqArbBase(
-            perturbedSyndrome(i, j).GetElementAtIndex(u), c, kRes, qu, base,
-            dgg, &digits);
+          perturbedSyndrome(i, j).GetElementAtIndex(u), c, kRes, qu, base, dgg, &digits);
 
         for (size_t p = 0; p < kRes; p++) {
           for (size_t jj = 0; jj < n; jj++) {
@@ -282,14 +266,14 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(
 
       // Convert zHat from a matrix of BBI to a vector of DCRTPoly ring elements
       // zHat is in the coefficient representation
-      Matrix<DCRTPoly> zHat =
-          SplitInt64AltIntoElements<DCRTPoly>(zHatBBI, n, params);
+      Matrix<DCRTPoly> zHat = SplitInt64AltIntoElements<DCRTPoly>(zHatBBI, n, params);
 
       // Now converting it to the evaluation representation before
       // multiplication
       zHat.SetFormat(Format::EVALUATION);
 
-      for (size_t p = 0; p < k; p++) zHatMat(i * k + p, j) = zHat(p, 0);
+      for (size_t p = 0; p < k; p++)
+        zHatMat(i * k + p, j) = zHat(p, 0);
     }
   }
 
@@ -300,12 +284,11 @@ Matrix<DCRTPoly> RLWETrapdoorUtility<DCRTPoly>::GaussSampSquareMat(
 
   for (size_t j = 0; j < d; j++) {  // columns
     for (size_t i = 0; i < d; i++) {
-      zHatPrime(i, j) = (*pHat)(i, j) + rZhat(i, j);
+      zHatPrime(i, j)     = (*pHat)(i, j) + rZhat(i, j);
       zHatPrime(i + d, j) = (*pHat)(i + d, j) + eZhat(i, j);
 
       for (size_t p = 0; p < k; p++) {
-        zHatPrime(i * k + p + 2 * d, j) =
-            (*pHat)(i * k + p + 2 * d, j) + zHatMat(i * k + p, j);
+        zHatPrime(i * k + p + 2 * d, j) = (*pHat)(i * k + p + 2 * d, j) + zHatMat(i * k + p, j);
       }
     }
   }

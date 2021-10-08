@@ -38,7 +38,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTCKKSSer : public ::testing::Test {
+class UTCKKSSer : public ::testing::Test
+{
  public:
   UTCKKSSer() {}
   ~UTCKKSSer() {}
@@ -46,45 +47,32 @@ class UTCKKSSer : public ::testing::Test {
  protected:
   void SetUp() {}
 
-  void TearDown() { CryptoContextFactory<DCRTPoly>::ReleaseAllContexts(); }
+  void TearDown() {
+    CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
+  }
 };
 
 #if NATIVEINT == 128
 // This file unit tests the SHE capabilities for the CKKS scheme
-#define GENERATE_TEST_CASES_FUNC(x, y, ORD, SCALE, NUMPRIME, RELIN, BATCH)   \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, BV, APPROXRESCALE)                          \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, GHS, APPROXRESCALE)                         \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, HYBRID, APPROXRESCALE)                      \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, BV, APPROXAUTO)                             \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, GHS, APPROXAUTO)                            \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, HYBRID, APPROXAUTO)
+#define GENERATE_TEST_CASES_FUNC(x, y, ORD, SCALE, NUMPRIME, RELIN, BATCH)                                 \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, BV, APPROXRESCALE)     \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, GHS, APPROXRESCALE)    \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, HYBRID, APPROXRESCALE) \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, BV, APPROXAUTO)        \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, GHS, APPROXAUTO)       \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, HYBRID, APPROXAUTO)
 #else
 // This file unit tests the SHE capabilities for the CKKS scheme
-#define GENERATE_TEST_CASES_FUNC(x, y, ORD, SCALE, NUMPRIME, RELIN, BATCH)   \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, BV, APPROXRESCALE)                          \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, GHS, APPROXRESCALE)                         \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, HYBRID, APPROXRESCALE)                      \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, BV, APPROXAUTO)                             \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, GHS, APPROXAUTO)                            \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, HYBRID, APPROXAUTO)                         \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, BV, EXACTRESCALE)                           \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, GHS, EXACTRESCALE)                          \
-  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, \
-                          BATCH, HYBRID, EXACTRESCALE)
+#define GENERATE_TEST_CASES_FUNC(x, y, ORD, SCALE, NUMPRIME, RELIN, BATCH)                                 \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, BV, APPROXRESCALE)     \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, GHS, APPROXRESCALE)    \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, HYBRID, APPROXRESCALE) \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, BV, APPROXAUTO)        \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, GHS, APPROXAUTO)       \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, HYBRID, APPROXAUTO)    \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, BV, EXACTRESCALE)      \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, GHS, EXACTRESCALE)     \
+  GENERATE_CKKS_TEST_CASE(x, y, DCRTPoly, CKKS, ORD, SCALE, NUMPRIME, RELIN, BATCH, HYBRID, EXACTRESCALE)
 #endif
 
 /* *
@@ -98,11 +86,11 @@ class UTCKKSSer : public ::testing::Test {
  *       if you need rotations before any multiplications.
  * BATCH: The length of the packed vectors to be used with CKKS.
  */
-static const usint ORDER = 1024;  // 16384;
-static const usint SCALE = 50;
+static const usint ORDER    = 1024;  // 16384;
+static const usint SCALE    = 50;
 static const usint NUMPRIME = 4;
-static const usint RELIN = 20;
-static const usint BATCH = 8;
+static const usint RELIN    = 20;
+static const usint BATCH    = 8;
 
 /**
  * This function checks whether vectors of approximate numbers a and b are
@@ -116,31 +104,31 @@ static const usint BATCH = 8;
  * @param failmsg Debug message to display upon failure.
  */
 static void checkApproximateEquality(const std::vector<std::complex<double>>& a,
-                                     const std::vector<std::complex<double>>& b,
-                                     int vectorSize, double epsilon,
+                                     const std::vector<std::complex<double>>& b, int vectorSize, double epsilon,
                                      const string& failmsg) {
   std::vector<std::complex<double>> allTrue(vectorSize);
   std::vector<std::complex<double>> tmp(vectorSize);
   for (int i = 0; i < vectorSize; i++) {
     allTrue[i] = 1;
-    tmp[i] = abs(a[i] - b[i]) <= epsilon;
+    tmp[i]     = abs(a[i] - b[i]) <= epsilon;
   }
   EXPECT_TRUE(tmp == allTrue) << failmsg;
 }
 
 template <typename T, typename ST>
-static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype,
-                                       string msg) {
+static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype, string msg) {
   LPKeyPair<T> kp = cc->KeyGen();
 
   try {
     cc->EvalMultKeyGen(kp.secretKey);
-  } catch (...) {
+  }
+  catch (...) {
   }
 
   try {
     cc->EvalSumKeyGen(kp.secretKey, kp.publicKey);
-  } catch (...) {
+  }
+  catch (...) {
   }
 
   stringstream s;
@@ -157,14 +145,12 @@ static void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype,
   EXPECT_EQ(*cc, *newcc) << msg << " Mismatched context";
 
   EXPECT_EQ(*cc->GetEncryptionAlgorithm(), *newcc->GetEncryptionAlgorithm())
-      << msg << " Scheme mismatch after ser/deser";
+    << msg << " Scheme mismatch after ser/deser";
   EXPECT_EQ(*cc->GetCryptoParameters(), *newcc->GetCryptoParameters())
-      << msg << " Crypto parms mismatch after ser/deser";
-  EXPECT_EQ(*cc->GetEncodingParams(), *newcc->GetEncodingParams())
-      << msg << " Encoding parms mismatch after ser/deser";
-  EXPECT_EQ(cc->GetEncryptionAlgorithm()->GetEnabled(),
-            newcc->GetEncryptionAlgorithm()->GetEnabled())
-      << msg << " Enabled features mismatch after ser/deser";
+    << msg << " Crypto parms mismatch after ser/deser";
+  EXPECT_EQ(*cc->GetEncodingParams(), *newcc->GetEncodingParams()) << msg << " Encoding parms mismatch after ser/deser";
+  EXPECT_EQ(cc->GetEncryptionAlgorithm()->GetEnabled(), newcc->GetEncryptionAlgorithm()->GetEnabled())
+    << msg << " Enabled features mismatch after ser/deser";
 
   s.str("");
   s.clear();
@@ -186,12 +172,10 @@ static void UnitTestContext(CryptoContext<T> cc, const string& failmsg) {
   UnitTestContextWithSertype(cc, SerType::BINARY, "binary");
 }
 
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestContext, ORDER, SCALE, NUMPRIME,
-                         RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestContext, ORDER, SCALE, NUMPRIME, RELIN, BATCH)
 
 template <typename T, typename ST>
-static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
-                                   const string& failmsg) {
+static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype, const string& failmsg) {
   DEBUG_FLAG(false);
 
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
@@ -225,25 +209,21 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
     stringstream s;
     Serial::Serialize(kp.publicKey, s, sertype);
     Serial::Deserialize(kpnew.publicKey, s, sertype);
-    EXPECT_EQ(*kp.publicKey, *kpnew.publicKey)
-        << "Public key mismatch after ser/deser";
+    EXPECT_EQ(*kp.publicKey, *kpnew.publicKey) << "Public key mismatch after ser/deser";
   }
   DEBUG("step 2");
   {
     stringstream s;
     Serial::Serialize(kp.secretKey, s, sertype);
     Serial::Deserialize(kpnew.secretKey, s, sertype);
-    EXPECT_EQ(*kp.secretKey, *kpnew.secretKey)
-        << "Secret key mismatch after ser/deser";
+    EXPECT_EQ(*kp.secretKey, *kpnew.secretKey) << "Secret key mismatch after ser/deser";
   }
   DEBUG("step 3");
-  vector<std::complex<double>> vals = {1.0, 3.0, 5.0, 7.0, 9.0,
-                                       2.0, 4.0, 6.0, 8.0, 11.0};
-  Plaintext plaintextShort = cc->MakeCKKSPackedPlaintext(vals);
-  Plaintext plaintextShortL2D2 = cc->MakeCKKSPackedPlaintext(vals, 2, 2);
-  Ciphertext<DCRTPoly> ciphertext = cc->Encrypt(kp.publicKey, plaintextShort);
-  Ciphertext<DCRTPoly> ciphertextL2D2 =
-      cc->Encrypt(kp.publicKey, plaintextShortL2D2);
+  vector<std::complex<double>> vals   = { 1.0, 3.0, 5.0, 7.0, 9.0, 2.0, 4.0, 6.0, 8.0, 11.0 };
+  Plaintext plaintextShort            = cc->MakeCKKSPackedPlaintext(vals);
+  Plaintext plaintextShortL2D2        = cc->MakeCKKSPackedPlaintext(vals, 2, 2);
+  Ciphertext<DCRTPoly> ciphertext     = cc->Encrypt(kp.publicKey, plaintextShort);
+  Ciphertext<DCRTPoly> ciphertextL2D2 = cc->Encrypt(kp.publicKey, plaintextShortL2D2);
 
   DEBUG("step 4");
   Ciphertext<DCRTPoly> newC;
@@ -266,12 +246,15 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
   cc->Decrypt(kp.secretKey, newCL2D2, &plaintextShortNewL2D2);
 
   checkApproximateEquality(plaintextShortNew->GetCKKSPackedValue(),
-                           plaintextShort->GetCKKSPackedValue(), vecSize, eps,
+                           plaintextShort->GetCKKSPackedValue(),
+                           vecSize,
+                           eps,
                            failmsg + " Decrypted serialization test fails");
-  checkApproximateEquality(
-      plaintextShortNewL2D2->GetCKKSPackedValue(),
-      plaintextShort->GetCKKSPackedValue(), vecSize, eps,
-      failmsg + " Decrypted serialization test fails (level 2, depth 2)");
+  checkApproximateEquality(plaintextShortNewL2D2->GetCKKSPackedValue(),
+                           plaintextShort->GetCKKSPackedValue(),
+                           vecSize,
+                           eps,
+                           failmsg + " Decrypted serialization test fails (level 2, depth 2)");
 
   DEBUG("step 6");
   LPKeyPair<DCRTPoly> kp2 = cc->KeyGen();
@@ -284,36 +267,25 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
   DEBUG("step 7");
   // serialize a bunch of mult keys
   stringstream ser0;
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(
-                ser0, sertype, kp.secretKey->GetKeyTag()),
-            true)
-      << "single eval mult key ser fails";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser0, sertype, kp.secretKey->GetKeyTag()), true)
+    << "single eval mult key ser fails";
   stringstream ser2a;
-  EXPECT_EQ(
-      CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser2a, sertype, cc),
-      true)
-      << "context 1 eval mult key ser fails";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser2a, sertype, cc), true)
+    << "context 1 eval mult key ser fails";
   stringstream ser3;
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser3, sertype),
-            true)
-      << "all context eval mult key ser fails";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalMultKey(ser3, sertype), true)
+    << "all context eval mult key ser fails";
 
   DEBUG("step 8");
   // serialize a bunch of sum keys
   stringstream aser0;
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(
-                aser0, sertype, kp.secretKey->GetKeyTag()),
-            true)
-      << "single eval sum key ser fails";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser0, sertype, kp.secretKey->GetKeyTag()), true)
+    << "single eval sum key ser fails";
   stringstream aser2a;
-  EXPECT_EQ(
-      CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser2a, sertype, cc),
-      true)
-      << "single ctx eval sum key ser fails";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser2a, sertype, cc), true)
+    << "single ctx eval sum key ser fails";
   stringstream aser3;
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser3, sertype),
-            true)
-      << "all eval sum key ser fails";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::SerializeEvalSumKey(aser3, sertype), true) << "all eval sum key ser fails";
 
   DEBUG("step 9");
   cc.reset();
@@ -322,35 +294,28 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
   CryptoContextImpl<DCRTPoly>::ClearEvalSumKeys();
   CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 0)
-      << "after release" << endl;
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 0) << "after release" << endl;
 
   vector<LPEvalKey<DCRTPoly>> evalMultKeys;
   CryptoContextImpl<DCRTPoly>::DeserializeEvalMultKey(ser0, sertype);
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1)
-      << "one-key deser, context";
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalMultKeys().size(), 1U)
-      << "one-key deser, keys";
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1) << "one-key deser, context";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalMultKeys().size(), 1U) << "one-key deser, keys";
 
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
   CryptoContextImpl<DCRTPoly>::ClearEvalSumKeys();
   CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
 
   CryptoContextImpl<DCRTPoly>::DeserializeEvalMultKey(ser2a, sertype);
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1)
-      << "one-ctx deser, context";
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalMultKeys().size(), 2U)
-      << "one-ctx deser, keys";
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1) << "one-ctx deser, context";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalMultKeys().size(), 2U) << "one-ctx deser, keys";
 
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
   CryptoContextImpl<DCRTPoly>::ClearEvalSumKeys();
   CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
 
   CryptoContextImpl<DCRTPoly>::DeserializeEvalMultKey(ser3, sertype);
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1)
-      << "all-key deser, context";
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalMultKeys().size(), 2U)
-      << "all-key deser, keys";
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1) << "all-key deser, context";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalMultKeys().size(), 2U) << "all-key deser, keys";
 
   DEBUG("step 10");
   // test sum deserialize
@@ -360,30 +325,24 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
   CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
 
   CryptoContextImpl<DCRTPoly>::DeserializeEvalSumKey(aser0, sertype);
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1)
-      << "one-key deser, context";
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalSumKeys().size(), 1U)
-      << "one-key deser, keys";
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1) << "one-key deser, context";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalSumKeys().size(), 1U) << "one-key deser, keys";
 
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
   CryptoContextImpl<DCRTPoly>::ClearEvalSumKeys();
   CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
 
   CryptoContextImpl<DCRTPoly>::DeserializeEvalSumKey(aser2a, sertype);
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1)
-      << "one-ctx deser, context";
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalSumKeys().size(), 2U)
-      << "one-ctx deser, keys";
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1) << "one-ctx deser, context";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalSumKeys().size(), 2U) << "one-ctx deser, keys";
 
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
   CryptoContextImpl<DCRTPoly>::ClearEvalSumKeys();
   CryptoContextFactory<DCRTPoly>::ReleaseAllContexts();
 
   CryptoContextImpl<DCRTPoly>::DeserializeEvalSumKey(aser3, sertype);
-  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1)
-      << "all-key deser, context";
-  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalSumKeys().size(), 2U)
-      << "all-key deser, keys";
+  EXPECT_EQ(CryptoContextFactory<DCRTPoly>::GetContextCount(), 1) << "all-key deser, context";
+  EXPECT_EQ(CryptoContextImpl<DCRTPoly>::GetAllEvalSumKeys().size(), 2U) << "all-key deser, keys";
 
   // ending cleanup
   CryptoContextImpl<DCRTPoly>::ClearEvalMultKeys();
@@ -393,15 +352,13 @@ static void TestKeysAndCiphertexts(CryptoContext<T> cc, const ST& sertype,
 }
 
 template <typename T, typename ST>
-static void TestDecryptionSerNoCRTTables(CryptoContext<T> cc, const ST& sertype,
-                                         string msg) {
+static void TestDecryptionSerNoCRTTables(CryptoContext<T> cc, const ST& sertype, string msg) {
   LPKeyPair<T> kp = cc->KeyGen();
 
-  vector<std::complex<double>> vals = {1.0, 3.0, 5.0, 7.0, 9.0,
-                                       2.0, 4.0, 6.0, 8.0, 11.0};
-  Plaintext plaintextShort = cc->MakeCKKSPackedPlaintext(vals);
-  Ciphertext<DCRTPoly> ciphertext = cc->Encrypt(kp.publicKey, plaintextShort);
-  double eps = 0.000000001;
+  vector<std::complex<double>> vals = { 1.0, 3.0, 5.0, 7.0, 9.0, 2.0, 4.0, 6.0, 8.0, 11.0 };
+  Plaintext plaintextShort          = cc->MakeCKKSPackedPlaintext(vals);
+  Ciphertext<DCRTPoly> ciphertext   = cc->Encrypt(kp.publicKey, plaintextShort);
+  double eps                        = 0.000000001;
 
   stringstream s;
   Serial::Serialize(cc, s, sertype);
@@ -436,57 +393,44 @@ static void TestDecryptionSerNoCRTTables(CryptoContext<T> cc, const ST& sertype,
   result->SetLength(plaintextShort->GetLength());
   auto tmp_a = plaintextShort->GetCKKSPackedValue();
   auto tmp_b = result->GetCKKSPackedValue();
-  checkApproximateEquality(tmp_a, tmp_b, uint64_t(vals.size()), eps,
-                           msg + " Decryption Failed");
+  checkApproximateEquality(tmp_a, tmp_b, uint64_t(vals.size()), eps, msg + " Decryption Failed");
 }
 
 template <typename T>
-static void UnitTestKeysAndCiphertextsRelin0JSON(CryptoContext<T> cc,
-                                                 const string& failmsg) {
+static void UnitTestKeysAndCiphertextsRelin0JSON(CryptoContext<T> cc, const string& failmsg) {
   TestKeysAndCiphertexts(cc, SerType::JSON, "json");
 }
 
 template <typename T>
-static void UnitTestKeysAndCiphertextsRelin0BINARY(CryptoContext<T> cc,
-                                                   const string& failmsg) {
+static void UnitTestKeysAndCiphertextsRelin0BINARY(CryptoContext<T> cc, const string& failmsg) {
   TestKeysAndCiphertexts(cc, SerType::BINARY, "binary");
 }
 
 template <typename T>
-static void UnitTestKeysAndCiphertextsRelin20JSON(CryptoContext<T> cc,
-                                                  const string& failmsg) {
+static void UnitTestKeysAndCiphertextsRelin20JSON(CryptoContext<T> cc, const string& failmsg) {
   TestKeysAndCiphertexts(cc, SerType::JSON, "json");
 }
 
 template <typename T>
-static void UnitTestKeysAndCiphertextsRelin20BINARY(CryptoContext<T> cc,
-                                                    const string& failmsg) {
+static void UnitTestKeysAndCiphertextsRelin20BINARY(CryptoContext<T> cc, const string& failmsg) {
   TestKeysAndCiphertexts(cc, SerType::BINARY, "binary");
 }
 
 template <typename T>
-static void UnitTestDecryptionSerNoCRTTablesJSON(CryptoContext<T> cc,
-                                                 const string& failmsg) {
+static void UnitTestDecryptionSerNoCRTTablesJSON(CryptoContext<T> cc, const string& failmsg) {
   TestDecryptionSerNoCRTTables(cc, SerType::JSON, "json");
 }
 
 template <typename T>
-static void UnitTestDecryptionSerNoCRTTablesBINARY(CryptoContext<T> cc,
-                                                   const string& failmsg) {
+static void UnitTestDecryptionSerNoCRTTablesBINARY(CryptoContext<T> cc, const string& failmsg) {
   TestDecryptionSerNoCRTTables(cc, SerType::BINARY, "binary");
 }
 
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin0JSON, ORDER,
-                         SCALE, NUMPRIME, 0, BATCH)
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin0BINARY,
-                         ORDER, SCALE, NUMPRIME, 0, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin0JSON, ORDER, SCALE, NUMPRIME, 0, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin0BINARY, ORDER, SCALE, NUMPRIME, 0, BATCH)
 
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin20JSON,
-                         ORDER, SCALE, NUMPRIME, 20, BATCH)
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin20BINARY,
-                         ORDER, SCALE, NUMPRIME, 20, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin20JSON, ORDER, SCALE, NUMPRIME, 20, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestKeysAndCiphertextsRelin20BINARY, ORDER, SCALE, NUMPRIME, 20, BATCH)
 
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestDecryptionSerNoCRTTablesJSON, ORDER,
-                         SCALE, NUMPRIME, 0, BATCH)
-GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestDecryptionSerNoCRTTablesBINARY,
-                         ORDER, SCALE, NUMPRIME, 0, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestDecryptionSerNoCRTTablesJSON, ORDER, SCALE, NUMPRIME, 0, BATCH)
+GENERATE_TEST_CASES_FUNC(UTCKKSSer, UnitTestDecryptionSerNoCRTTablesBINARY, ORDER, SCALE, NUMPRIME, 0, BATCH)

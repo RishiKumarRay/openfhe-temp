@@ -43,10 +43,10 @@ namespace bigintfxd {
  * @brief The class for representing vectors of big binary integers.
  */
 template <class IntegerType>
-class BigVectorImpl
-    : public lbcrypto::BigVectorInterface<BigVectorImpl<IntegerType>,
-                                          IntegerType>,
-      public lbcrypto::Serializable {
+class BigVectorImpl :
+    public lbcrypto::BigVectorInterface<BigVectorImpl<IntegerType>, IntegerType>,
+    public lbcrypto::Serializable
+{
  public:
   // CONSTRUCTORS
 
@@ -55,8 +55,7 @@ class BigVectorImpl
    */
   BigVectorImpl();
 
-  static inline BigVectorImpl Single(const IntegerType &val,
-                                     const IntegerType &modulus) {
+  static inline BigVectorImpl Single(const IntegerType& val, const IntegerType& modulus) {
     BigVectorImpl vec(1, modulus);
     vec[0] = val;
     return vec;
@@ -69,21 +68,21 @@ class BigVectorImpl
    * number of entries.
    * @param modulus is the modulus of the ring.
    */
-  explicit BigVectorImpl(usint length, const IntegerType &modulus = 0);
+  explicit BigVectorImpl(usint length, const IntegerType& modulus = 0);
 
   /**
    * Basic constructor for copying a vector
    *
    * @param bigVector is the big binary vector to be copied.
    */
-  BigVectorImpl(const BigVectorImpl &bigVector);
+  BigVectorImpl(const BigVectorImpl& bigVector);
 
   /**
    * Basic move constructor for moving a vector
    *
    * @param &&bigVector is the big binary vector to be moved.
    */
-  BigVectorImpl(BigVectorImpl &&bigVector);  // move copy constructor
+  BigVectorImpl(BigVectorImpl&& bigVector);  // move copy constructor
 
   /**
    * Basic constructor for specifying the length of the vector
@@ -95,8 +94,7 @@ class BigVectorImpl
    * @param rhs is an initializer list of strings
    */
 
-  BigVectorImpl(usint length, const IntegerType &modulus,
-                std::initializer_list<std::string> rhs);
+  BigVectorImpl(usint length, const IntegerType& modulus, std::initializer_list<std::string> rhs);
 
   /**
    * Basic constructor for specifying the length of the vector
@@ -107,8 +105,7 @@ class BigVectorImpl
    * @param modulus is the modulus of the ring.
    * @param rhs is an initializer list of usint
    */
-  BigVectorImpl(usint length, const IntegerType &modulus,
-                std::initializer_list<uint64_t> rhs);
+  BigVectorImpl(usint length, const IntegerType& modulus, std::initializer_list<uint64_t> rhs);
 
   /**
    * Destructor.
@@ -123,7 +120,7 @@ class BigVectorImpl
    * @param &rhs is the big binary vector to be assigned from.
    * @return Assigned BigVectorImpl.
    */
-  const BigVectorImpl &operator=(const BigVectorImpl &rhs);
+  const BigVectorImpl& operator=(const BigVectorImpl& rhs);
 
   /**
    * Move assignment operator
@@ -131,7 +128,7 @@ class BigVectorImpl
    * @param &&rhs is the big binary vector to be moved.
    * @return moved BigVectorImpl object
    */
-  const BigVectorImpl &operator=(BigVectorImpl &&rhs);
+  const BigVectorImpl& operator=(BigVectorImpl&& rhs);
 
   /**
    * Initializer list for BigVectorImpl.
@@ -140,7 +137,7 @@ class BigVectorImpl
    * the BBV.
    * @return BigVectorImpl object
    */
-  const BigVectorImpl &operator=(std::initializer_list<std::string> rhs);
+  const BigVectorImpl& operator=(std::initializer_list<std::string> rhs);
 
   /**
    * Initializer list for BigVectorImpl.
@@ -148,7 +145,7 @@ class BigVectorImpl
    * @param &&rhs is the list of integers to be assigned to the BBV.
    * @return BigVectorImpl object
    */
-  const BigVectorImpl &operator=(std::initializer_list<uint64_t> rhs);
+  const BigVectorImpl& operator=(std::initializer_list<uint64_t> rhs);
 
   /**
    * Assignment operator to assign value val to first entry, 0 for the rest of
@@ -157,7 +154,7 @@ class BigVectorImpl
    * @param val is the value to be assigned at the first entry.
    * @return Assigned BigVectorImpl.
    */
-  const BigVectorImpl &operator=(uint64_t val) {
+  const BigVectorImpl& operator=(uint64_t val) {
     this->m_data[0] = val;
     if (this->m_modulus != 0) {
       this->m_data[0] %= this->m_modulus;
@@ -176,14 +173,14 @@ class BigVectorImpl
    *
    * @param index is the index to set a value at.
    */
-  IntegerType &at(size_t i) {
+  IntegerType& at(size_t i) {
     if (!this->IndexCheck(i)) {
       PALISADE_THROW(lbcrypto::math_error, "BigVector index out of range");
     }
     return this->m_data[i];
   }
 
-  const IntegerType &at(size_t i) const {
+  const IntegerType& at(size_t i) const {
     if (!this->IndexCheck(i)) {
       PALISADE_THROW(lbcrypto::math_error, "BigVector index out of range");
     }
@@ -195,9 +192,11 @@ class BigVectorImpl
    * @param idx is the index to get a value at.
    * @return is the value at the index.
    */
-  IntegerType &operator[](size_t idx) { return (this->m_data[idx]); }
+  IntegerType& operator[](size_t idx) {
+    return (this->m_data[idx]);
+  }
 
-  const IntegerType &operator[](size_t idx) const {
+  const IntegerType& operator[](size_t idx) const {
     return (this->m_data[idx]);
   }
 
@@ -207,28 +206,32 @@ class BigVectorImpl
    * @param value is the value to set.
    * @param value is the modulus value to set.
    */
-  void SetModulus(const IntegerType &value);
+  void SetModulus(const IntegerType& value);
 
   /**
    * Sets the vector modulus and changes the values to match the new modulus.
    *
    * @param value is the value to set.
    */
-  void SwitchModulus(const IntegerType &value);
+  void SwitchModulus(const IntegerType& value);
 
   /**
    * Gets the vector modulus.
    *
    * @return the vector modulus.
    */
-  const IntegerType &GetModulus() const { return this->m_modulus; }
+  const IntegerType& GetModulus() const {
+    return this->m_modulus;
+  }
 
   /**
    * Gets the vector length.
    *
    * @return vector length.
    */
-  size_t GetLength() const { return this->m_length; }
+  size_t GetLength() const {
+    return this->m_length;
+  }
 
   // MODULAR ARITHMETIC OPERATIONS
 
@@ -238,7 +241,7 @@ class BigVectorImpl
    * @param &modulus is the modulus to perform on the current vector entries.
    * @return is the result of the modulus operation on current vector.
    */
-  BigVectorImpl Mod(const IntegerType &modulus) const;
+  BigVectorImpl Mod(const IntegerType& modulus) const;
 
   /**
    * Vector modulus operator. In-place variant.
@@ -246,7 +249,7 @@ class BigVectorImpl
    * @param &modulus is the modulus to perform on the current vector entries.
    * @return is the result of the modulus operation on current vector.
    */
-  const BigVectorImpl &ModEq(const IntegerType &modulus);
+  const BigVectorImpl& ModEq(const IntegerType& modulus);
 
   /**
    * Scalar-to-vector modulus addition operation.
@@ -254,7 +257,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus addition operation.
    */
-  BigVectorImpl ModAdd(const IntegerType &b) const;
+  BigVectorImpl ModAdd(const IntegerType& b) const;
 
   /**
    * Scalar-to-vector modulus addition operation. In-place variant.
@@ -262,7 +265,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus addition operation.
    */
-  const BigVectorImpl &ModAddEq(const IntegerType &b);
+  const BigVectorImpl& ModAddEq(const IntegerType& b);
 
   /**
    * Scalar modulus addition at a particular index.
@@ -271,7 +274,7 @@ class BigVectorImpl
    * @param &b is the scalar to add.
    * @return is the result of the modulus addition operation.
    */
-  BigVectorImpl ModAddAtIndex(usint i, const IntegerType &b) const;
+  BigVectorImpl ModAddAtIndex(usint i, const IntegerType& b) const;
 
   /**
    * Scalar modulus addition at a particular index. In-place variant.
@@ -280,7 +283,7 @@ class BigVectorImpl
    * @param &b is the scalar to add.
    * @return is the result of the modulus addition operation.
    */
-  const BigVectorImpl &ModAddAtIndexEq(usint i, const IntegerType &b);
+  const BigVectorImpl& ModAddAtIndexEq(usint i, const IntegerType& b);
 
   /**
    * Vector component wise modulus addition.
@@ -288,7 +291,7 @@ class BigVectorImpl
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus addition operation.
    */
-  BigVectorImpl ModAdd(const BigVectorImpl &b) const;
+  BigVectorImpl ModAdd(const BigVectorImpl& b) const;
 
   /**
    * Vector component wise modulus addition. In-place variant.
@@ -296,7 +299,7 @@ class BigVectorImpl
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus addition operation.
    */
-  const BigVectorImpl &ModAddEq(const BigVectorImpl &b);
+  const BigVectorImpl& ModAddEq(const BigVectorImpl& b);
 
   /**
    * Scalar-from-vector modulus subtraction operation.
@@ -304,7 +307,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus subtraction operation.
    */
-  BigVectorImpl ModSub(const IntegerType &b) const;
+  BigVectorImpl ModSub(const IntegerType& b) const;
 
   /**
    * Scalar-from-vector modulus subtraction operation. In-place variant.
@@ -312,7 +315,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus subtraction operation.
    */
-  const BigVectorImpl &ModSubEq(const IntegerType &b);
+  const BigVectorImpl& ModSubEq(const IntegerType& b);
 
   /**
    * Vector component wise modulus subtraction.
@@ -320,7 +323,7 @@ class BigVectorImpl
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus subtraction operation.
    */
-  BigVectorImpl ModSub(const BigVectorImpl &b) const;
+  BigVectorImpl ModSub(const BigVectorImpl& b) const;
 
   /**
    * Vector component wise modulus subtraction. In-place variant.
@@ -328,7 +331,7 @@ class BigVectorImpl
    * @param &b is the vector to perform operation with.
    * @return is the result of the component wise modulus subtraction operation.
    */
-  const BigVectorImpl &ModSubEq(const BigVectorImpl &b);
+  const BigVectorImpl& ModSubEq(const BigVectorImpl& b);
 
   /**
    * Scalar-to-vector modulus multiplication operation.
@@ -337,7 +340,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus multiplication operation.
    */
-  BigVectorImpl ModMul(const IntegerType &b) const;
+  BigVectorImpl ModMul(const IntegerType& b) const;
 
   /**
    * Scalar-to-vector modulus multiplication operation. In-place variant.
@@ -346,7 +349,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus multiplication operation.
    */
-  const BigVectorImpl &ModMulEq(const IntegerType &b);
+  const BigVectorImpl& ModMulEq(const IntegerType& b);
 
   /**
    * Vector component wise modulus multiplication.
@@ -355,7 +358,7 @@ class BigVectorImpl
    * @return is the result of the component wise modulus multiplication
    * operation.
    */
-  BigVectorImpl ModMul(const BigVectorImpl &b) const;
+  BigVectorImpl ModMul(const BigVectorImpl& b) const;
 
   /**
    * Vector component wise modulus multiplication. In-place variant.
@@ -364,7 +367,7 @@ class BigVectorImpl
    * @return is the result of the component wise modulus multiplication
    * operation.
    */
-  const BigVectorImpl &ModMulEq(const BigVectorImpl &b);
+  const BigVectorImpl& ModMulEq(const BigVectorImpl& b);
 
   /**
    * Scalar modulus exponentiation operation.
@@ -372,7 +375,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus exponentiation operation.
    */
-  BigVectorImpl ModExp(const IntegerType &b) const;
+  BigVectorImpl ModExp(const IntegerType& b) const;
 
   /**
    * Scalar modulus exponentiation operation. In-place variant.
@@ -380,7 +383,7 @@ class BigVectorImpl
    * @param &b is the scalar to perform operation with.
    * @return is the result of the modulus exponentiation operation.
    */
-  const BigVectorImpl &ModExpEq(const IntegerType &b);
+  const BigVectorImpl& ModExpEq(const IntegerType& b);
 
   /**
    * Modulus inverse operation.
@@ -394,7 +397,7 @@ class BigVectorImpl
    *
    * @return is the result of the component wise modulus inverse operation.
    */
-  const BigVectorImpl &ModInverseEq();
+  const BigVectorImpl& ModInverseEq();
 
   /**
    * Modulus 2 operation, also a least significant bit.
@@ -410,7 +413,7 @@ class BigVectorImpl
    * @return is the result of the component wise modulus 2 operation, also a
    * least significant bit.
    */
-  const BigVectorImpl &ModByTwoEq();
+  const BigVectorImpl& ModByTwoEq();
 
   /**
    * Vector multiplication without applying the modulus operation.
@@ -418,7 +421,7 @@ class BigVectorImpl
    * @param &b is the vector to multiply.
    * @return is the result of the multiplication operation.
    */
-  BigVectorImpl MultWithOutMod(const BigVectorImpl &b) const;
+  BigVectorImpl MultWithOutMod(const BigVectorImpl& b) const;
 
   /**
    * Vector multiplication without applying the modulus operation. In-place
@@ -427,7 +430,7 @@ class BigVectorImpl
    * @param &b is the vector to multiply.
    * @return is the result of the multiplication operation.
    */
-  const BigVectorImpl &MultWithOutModEq(const BigVectorImpl &b);
+  const BigVectorImpl& MultWithOutModEq(const BigVectorImpl& b);
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -437,8 +440,7 @@ class BigVectorImpl
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  BigVectorImpl MultiplyAndRound(const IntegerType &p,
-                                 const IntegerType &q) const;
+  BigVectorImpl MultiplyAndRound(const IntegerType& p, const IntegerType& q) const;
 
   /**
    * Multiply and Rounding operation. Returns [x*p/q] where [] is the rounding
@@ -448,8 +450,7 @@ class BigVectorImpl
    * @param &q is the denominator to be divided.
    * @return is the result of multiply and round operation.
    */
-  const BigVectorImpl &MultiplyAndRoundEq(const IntegerType &p,
-                                          const IntegerType &q);
+  const BigVectorImpl& MultiplyAndRoundEq(const IntegerType& p, const IntegerType& q);
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -458,7 +459,7 @@ class BigVectorImpl
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  BigVectorImpl DivideAndRound(const IntegerType &q) const;
+  BigVectorImpl DivideAndRound(const IntegerType& q) const;
 
   /**
    * Divide and Rounding operation. Returns [x/q] where [] is the rounding
@@ -467,7 +468,7 @@ class BigVectorImpl
    * @param &q is the denominator to be divided.
    * @return is the result of divide and round operation.
    */
-  const BigVectorImpl &DivideAndRoundEq(const IntegerType &q);
+  const BigVectorImpl& DivideAndRoundEq(const IntegerType& q);
 
   // OTHER FUNCTIONS
 
@@ -500,8 +501,7 @@ class BigVectorImpl
    * @return std ostream object which captures the vector values.
    */
   template <class IntegerType_c>
-  friend std::ostream &operator<<(std::ostream &os,
-                                  const BigVectorImpl<IntegerType_c> &ptr_obj) {
+  friend std::ostream& operator<<(std::ostream& os, const BigVectorImpl<IntegerType_c>& ptr_obj) {
     auto len = ptr_obj.m_length;
     os << "[";
     for (usint i = 0; i < len; i++) {
@@ -515,18 +515,16 @@ class BigVectorImpl
   // SERIALIZATION
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("m", m_modulus));
     ar(::cereal::make_nvp("l", m_length));
     ar(::cereal::binary_data(m_data, sizeof(IntegerType) * m_length));
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  save(Archive &ar, std::uint32_t const version) const {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type save(
+    Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("m", m_modulus));
     ar(::cereal::make_nvp("l", m_length));
     for (size_t i = 0; i < m_length; i++) {
@@ -535,13 +533,12 @@ class BigVectorImpl
   }
 
   template <class Archive>
-  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<!cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("m", m_modulus));
     ar(::cereal::make_nvp("l", m_length));
@@ -550,13 +547,12 @@ class BigVectorImpl
   }
 
   template <class Archive>
-  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value,
-                          void>::type
-  load(Archive &ar, std::uint32_t const version) {
+  typename std::enable_if<cereal::traits::is_text_archive<Archive>::value, void>::type load(
+    Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(lbcrypto::deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        lbcrypto::deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("m", m_modulus));
     ar(::cereal::make_nvp("l", m_length));
@@ -566,13 +562,17 @@ class BigVectorImpl
     }
   }
 
-  std::string SerializedObjectName() const { return "FXDInteger"; }
+  std::string SerializedObjectName() const {
+    return "FXDInteger";
+  }
 
-  static uint32_t SerializedVersion() { return 1; }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // m_data is a pointer to the vector
-  IntegerType *m_data;
+  IntegerType* m_data;
   // m_length stores the length of the vector
   usint m_length;
   // m_modulus stores the internal modulus of the vector.
@@ -587,8 +587,7 @@ class BigVectorImpl
   }
 };
 
-extern template class BigVectorImpl<
-    BigInteger<integral_dtype, BigIntegerBitLength>>;
+extern template class BigVectorImpl<BigInteger<integral_dtype, BigIntegerBitLength>>;
 
 }  // namespace bigintfxd
 

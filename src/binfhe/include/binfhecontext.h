@@ -37,23 +37,23 @@ namespace lbcrypto {
 
 // security levels for predefined parameter sets
 enum BINFHEPARAMSET {
-  TOY,        // no security
-  MEDIUM,     // 108 bits of security for classical and 100 bits for quantum
-  STD128,     // more than 128 bits of security for classical
-              // computer attacks - uses the same setup as HE standard
-  STD128_AP,  // Optimized for AP (has higher failure probability for GINX) -
-              // more than 128 bits of security for classical computer attacks -
-              // uses the same setup as HE standard
-  STD192,     // more than 192 bits of security for classical computer attacks -
-              // uses the same setup as HE standard
-  STD256,     // more than 256 bits of security for classical computer attacks -
-              // uses the same setup as HE standard
-  STD128Q,    // more than 128 bits of security for quantum attacks - uses the
-              // same setup as HE standard
-  STD192Q,    // more than 192 bits of security for quantum attacks - uses the
-              // same setup as HE standard
-  STD256Q,    // more than 256 bits of security for quantum attacks - uses the
-              // same setup as HE standard
+  TOY,             // no security
+  MEDIUM,          // 108 bits of security for classical and 100 bits for quantum
+  STD128,          // more than 128 bits of security for classical
+                   // computer attacks - uses the same setup as HE standard
+  STD128_AP,       // Optimized for AP (has higher failure probability for GINX) -
+                   // more than 128 bits of security for classical computer attacks -
+                   // uses the same setup as HE standard
+  STD192,          // more than 192 bits of security for classical computer attacks -
+                   // uses the same setup as HE standard
+  STD256,          // more than 256 bits of security for classical computer attacks -
+                   // uses the same setup as HE standard
+  STD128Q,         // more than 128 bits of security for quantum attacks - uses the
+                   // same setup as HE standard
+  STD192Q,         // more than 192 bits of security for quantum attacks - uses the
+                   // same setup as HE standard
+  STD256Q,         // more than 256 bits of security for quantum attacks - uses the
+                   // same setup as HE standard
   SIGNED_MOD_TEST  // special parameter set for confirming the signed modular
                    // reduction in the accumulator updates works correctly
 };
@@ -81,7 +81,8 @@ using ConstLWEPrivateKey = const std::shared_ptr<const LWEPrivateKeyImpl>;
  *
  * The wrapper class for Boolean circuit FHE
  */
-class BinFHEContext : public Serializable {
+class BinFHEContext : public Serializable
+{
  public:
   BinFHEContext() {}
 
@@ -101,10 +102,8 @@ class BinFHEContext : public Serializable {
    * @param method the bootstrapping method (AP or GINX)
    * @return creates the cryptocontext
    */
-  void GenerateBinFHEContext(uint32_t n, uint32_t N, const NativeInteger &q,
-                             const NativeInteger &Q, double std,
-                             uint32_t baseKS, uint32_t baseG, uint32_t baseR,
-                             BINFHEMETHOD method = GINX);
+  void GenerateBinFHEContext(uint32_t n, uint32_t N, const NativeInteger& q, const NativeInteger& Q, double std,
+                             uint32_t baseKS, uint32_t baseG, uint32_t baseR, BINFHEMETHOD method = GINX);
 
   /**
    * Creates a crypto context using predefined parameters sets. Recommended for
@@ -156,8 +155,7 @@ class BinFHEContext : public Serializable {
    * generate a refreshed ciphertext (default)
    * @return a shared pointer to the ciphertext
    */
-  LWECiphertext Encrypt(ConstLWEPrivateKey sk, const LWEPlaintext &m,
-                        BINFHEOUTPUT output = BOOTSTRAPPED) const;
+  LWECiphertext Encrypt(ConstLWEPrivateKey sk, const LWEPlaintext& m, BINFHEOUTPUT output = BOOTSTRAPPED) const;
 
   /**
    * Decrypts a ciphertext using a secret key
@@ -166,8 +164,7 @@ class BinFHEContext : public Serializable {
    * @param ct the ciphertext
    * @param *result plaintext result
    */
-  void Decrypt(ConstLWEPrivateKey sk, ConstLWECiphertext ct,
-               LWEPlaintext *result) const;
+  void Decrypt(ConstLWEPrivateKey sk, ConstLWECiphertext ct, LWEPlaintext* result) const;
 
   /**
    * Generates a switching key to go from a secret key with (Q,N) to a secret
@@ -177,8 +174,7 @@ class BinFHEContext : public Serializable {
    * @param skN old secret key
    * @return a shared pointer to the switching key
    */
-  std::shared_ptr<LWESwitchingKey> KeySwitchGen(ConstLWEPrivateKey sk,
-                                                ConstLWEPrivateKey skN) const;
+  std::shared_ptr<LWESwitchingKey> KeySwitchGen(ConstLWEPrivateKey sk, ConstLWEPrivateKey skN) const;
 
   /**
    * Generates boostrapping keys
@@ -192,7 +188,9 @@ class BinFHEContext : public Serializable {
    *
    * @param key struct with the bootstrapping keys
    */
-  void BTKeyLoad(const RingGSWEvalKey &key) { m_BTKey = key; }
+  void BTKeyLoad(const RingGSWEvalKey& key) {
+    m_BTKey = key;
+  }
 
   /**
    * Clear the bootstrapping keys in the current context
@@ -210,8 +208,7 @@ class BinFHEContext : public Serializable {
    * @param ct2 second ciphertext
    * @return a shared pointer to the resulting ciphertext
    */
-  LWECiphertext EvalBinGate(const BINGATE gate, ConstLWECiphertext ct1,
-                            ConstLWECiphertext ct2) const;
+  LWECiphertext EvalBinGate(const BINGATE gate, ConstLWECiphertext ct1, ConstLWECiphertext ct2) const;
 
   /**
    * Bootstraps a ciphertext (without peforming any operation)
@@ -237,7 +234,9 @@ class BinFHEContext : public Serializable {
    */
   LWECiphertext EvalConstant(bool value) const;
 
-  const std::shared_ptr<RingGSWCryptoParams> GetParams() { return m_params; }
+  const std::shared_ptr<RingGSWCryptoParams> GetParams() {
+    return m_params;
+  }
 
   const std::shared_ptr<LWEEncryptionScheme> GetLWEScheme() {
     return m_LWEscheme;
@@ -248,22 +247,26 @@ class BinFHEContext : public Serializable {
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("params", m_params));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("params", m_params));
   }
 
-  std::string SerializedObjectName() const { return "RingGSWBTKey"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "RingGSWBTKey";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // Shared pointer to Ring GSW + LWE parameters

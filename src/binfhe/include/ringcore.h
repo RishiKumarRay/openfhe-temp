@@ -52,10 +52,10 @@ enum BINFHEMETHOD { AP, GINX };
  * @brief Class that stores all parameters for the RingGSW scheme used in
  * bootstrapping
  */
-class RingGSWCryptoParams : public Serializable {
+class RingGSWCryptoParams : public Serializable
+{
  public:
-  RingGSWCryptoParams()
-      : m_baseG(0), m_digitsG(0), m_digitsG2(0), m_baseR(0), m_method(GINX) {}
+  RingGSWCryptoParams() : m_baseG(0), m_digitsG(0), m_digitsG2(0), m_baseR(0), m_method(GINX) {}
 
   /**
    * Main constructor for RingGSWCryptoParams
@@ -65,13 +65,9 @@ class RingGSWCryptoParams : public Serializable {
    * @param baseR the base for the refreshing key
    * @param method bootstrapping method (AP or GINX)
    */
-  explicit RingGSWCryptoParams(const std::shared_ptr<LWECryptoParams> lweparams,
-                               uint32_t baseG, uint32_t baseR,
-                               BINFHEMETHOD method)
-      : m_LWEParams(lweparams),
-        m_baseG(baseG),
-        m_baseR(baseR),
-        m_method(method) {
+  explicit RingGSWCryptoParams(const std::shared_ptr<LWECryptoParams> lweparams, uint32_t baseG, uint32_t baseR,
+                               BINFHEMETHOD method) :
+      m_LWEParams(lweparams), m_baseG(baseG), m_baseR(baseR), m_method(method) {
     if (!IsPowerOfTwo(baseG)) {
       PALISADE_THROW(config_error, "Gadget base should be a power of two.");
     }
@@ -85,27 +81,24 @@ class RingGSWCryptoParams : public Serializable {
   void PreCompute() {
     const shared_ptr<LWECryptoParams> lweparams = m_LWEParams;
 
-    NativeInteger Q = lweparams->GetQ();
-    NativeInteger q = lweparams->Getq();
-    uint32_t N = lweparams->GetN();
+    NativeInteger Q           = lweparams->GetQ();
+    NativeInteger q           = lweparams->Getq();
+    uint32_t N                = lweparams->GetN();
     NativeInteger rootOfUnity = RootOfUnity<NativeInteger>(2 * N, Q);
 
     // Precomputes the table with twiddle factors to support fast NTT
-    ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, 2 * N,
-                                                           Q);
+    ChineseRemainderTransformFTT<NativeVector>().PreCompute(rootOfUnity, 2 * N, Q);
 
     // Precomputes a polynomial for MSB extraction
     m_polyParams = std::make_shared<ILNativeParams>(2 * N, Q, rootOfUnity);
 
-    m_digitsG = (uint32_t)std::ceil(log(Q.ConvertToDouble()) /
-                                    log(static_cast<double>(m_baseG)));
+    m_digitsG  = (uint32_t)std::ceil(log(Q.ConvertToDouble()) / log(static_cast<double>(m_baseG)));
     m_digitsG2 = m_digitsG * 2;
 
     // Computes baseR^i (only for AP bootstrapping)
     if (m_method == AP) {
       uint32_t digitCountR =
-          (uint32_t)std::ceil(log(static_cast<double>(q.ConvertToInt())) /
-                              log(static_cast<double>(m_baseR)));
+        (uint32_t)std::ceil(log(static_cast<double>(q.ConvertToInt())) / log(static_cast<double>(m_baseR)));
       // Populate digits
       NativeInteger value = 1;
       for (uint32_t i = 0; i < digitCountR; i++) {
@@ -123,12 +116,12 @@ class RingGSWCryptoParams : public Serializable {
 
     // Sets the gate constants for supported binary operations
     m_gateConst = {
-        NativeInteger(5) * (q >> 3),  // OR
-        NativeInteger(7) * (q >> 3),  // AND
-        NativeInteger(1) * (q >> 3),  // NOR
-        NativeInteger(3) * (q >> 3),  // NAND
-        NativeInteger(5) * (q >> 3),  // XOR_FAST
-        NativeInteger(1) * (q >> 3)   // XNOR_FAST
+      NativeInteger(5) * (q >> 3),  // OR
+      NativeInteger(7) * (q >> 3),  // AND
+      NativeInteger(1) * (q >> 3),  // NOR
+      NativeInteger(3) * (q >> 3),  // NAND
+      NativeInteger(5) * (q >> 3),  // XOR_FAST
+      NativeInteger(1) * (q >> 3)   // XNOR_FAST
     };
 
     // Computes polynomials X^m - 1 that are needed in the accumulator for the
@@ -172,31 +165,49 @@ class RingGSWCryptoParams : public Serializable {
     return m_LWEParams;
   }
 
-  uint32_t GetBaseG() const { return m_baseG; }
+  uint32_t GetBaseG() const {
+    return m_baseG;
+  }
 
-  uint32_t GetDigitsG() const { return m_digitsG; }
+  uint32_t GetDigitsG() const {
+    return m_digitsG;
+  }
 
-  uint32_t GetDigitsG2() const { return m_digitsG2; }
+  uint32_t GetDigitsG2() const {
+    return m_digitsG2;
+  }
 
-  uint32_t GetBaseR() const { return m_baseR; }
+  uint32_t GetBaseR() const {
+    return m_baseR;
+  }
 
-  const std::vector<NativeInteger>& GetDigitsR() const { return m_digitsR; }
+  const std::vector<NativeInteger>& GetDigitsR() const {
+    return m_digitsR;
+  }
 
   const shared_ptr<ILNativeParams> GetPolyParams() const {
     return m_polyParams;
   }
 
-  const std::vector<NativeInteger>& GetGPower() const { return m_Gpower; }
+  const std::vector<NativeInteger>& GetGPower() const {
+    return m_Gpower;
+  }
 
-  const std::vector<NativeInteger>& GetGateConst() const { return m_gateConst; }
+  const std::vector<NativeInteger>& GetGateConst() const {
+    return m_gateConst;
+  }
 
-  const NativePoly& GetMonomial(uint32_t i) const { return m_monomials[i]; }
+  const NativePoly& GetMonomial(uint32_t i) const {
+    return m_monomials[i];
+  }
 
-  BINFHEMETHOD GetMethod() const { return m_method; }
+  BINFHEMETHOD GetMethod() const {
+    return m_method;
+  }
 
   bool operator==(const RingGSWCryptoParams& other) const {
-    return *m_LWEParams == *other.m_LWEParams && m_baseR == other.m_baseR &&
-           m_baseG == other.m_baseG && m_method == other.m_method;
+    return *m_LWEParams == *other.m_LWEParams && m_baseR == other.m_baseR && m_baseG == other.m_baseG &&
+           m_method == other.m_method;
   }
 
   bool operator!=(const RingGSWCryptoParams& other) const {
@@ -214,9 +225,9 @@ class RingGSWCryptoParams : public Serializable {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("params", m_LWEParams));
     ar(::cereal::make_nvp("bR", m_baseR));
@@ -226,8 +237,12 @@ class RingGSWCryptoParams : public Serializable {
     this->PreCompute();
   }
 
-  std::string SerializedObjectName() const { return "RingGSWCryptoParams"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "RingGSWCryptoParams";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // shared pointer to an instance of LWECryptoParams
@@ -269,18 +284,18 @@ class RingGSWCryptoParams : public Serializable {
  * @brief Class that stores a RingGSW ciphertext; a two-dimensional vector of
  * ring elements
  */
-class RingGSWCiphertext : public Serializable {
+class RingGSWCiphertext : public Serializable
+{
  public:
   RingGSWCiphertext() {}
 
   RingGSWCiphertext(uint32_t rowSize, uint32_t colSize) {
     m_elements.resize(rowSize);
-    for (uint32_t i = 0; i < rowSize; i++) m_elements[i].resize(colSize);
+    for (uint32_t i = 0; i < rowSize; i++)
+      m_elements[i].resize(colSize);
   }
 
-  explicit RingGSWCiphertext(
-      const std::vector<std::vector<NativePoly>>& elements)
-      : m_elements(elements) {}
+  explicit RingGSWCiphertext(const std::vector<std::vector<NativePoly>>& elements) : m_elements(elements) {}
 
   explicit RingGSWCiphertext(const RingGSWCiphertext& rhs) {
     this->m_elements = rhs.m_elements;
@@ -319,7 +334,9 @@ class RingGSWCiphertext : public Serializable {
         m_elements[i][j].SetFormat(format);
   }
 
-  std::vector<NativePoly>& operator[](uint32_t i) { return m_elements[i]; }
+  std::vector<NativePoly>& operator[](uint32_t i) {
+    return m_elements[i];
+  }
 
   const std::vector<NativePoly>& operator[](usint i) const {
     return m_elements[i];
@@ -341,15 +358,19 @@ class RingGSWCiphertext : public Serializable {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("elements", m_elements));
   }
 
-  std::string SerializedObjectName() const { return "RingGSWCiphertext"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "RingGSWCiphertext";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   std::vector<std::vector<NativePoly>> m_elements;
@@ -359,7 +380,8 @@ class RingGSWCiphertext : public Serializable {
  * @brief Class that stores the refreshing key (used in bootstrapping)
  * A three-dimensional vector of RingGSW ciphertexts
  */
-class RingGSWBTKey : public Serializable {
+class RingGSWBTKey : public Serializable
+{
  public:
   RingGSWBTKey() {}
 
@@ -367,15 +389,16 @@ class RingGSWBTKey : public Serializable {
     m_key.resize(dim1);
     for (uint32_t i = 0; i < dim1; i++) {
       m_key[i].resize(dim2);
-      for (uint32_t j = 0; j < dim2; j++) m_key[i][j].resize(dim3);
+      for (uint32_t j = 0; j < dim2; j++)
+        m_key[i][j].resize(dim3);
     }
   }
 
-  explicit RingGSWBTKey(
-      const std::vector<std::vector<std::vector<RingGSWCiphertext>>>& key)
-      : m_key(key) {}
+  explicit RingGSWBTKey(const std::vector<std::vector<std::vector<RingGSWCiphertext>>>& key) : m_key(key) {}
 
-  explicit RingGSWBTKey(const RingGSWBTKey& rhs) { this->m_key = rhs.m_key; }
+  explicit RingGSWBTKey(const RingGSWBTKey& rhs) {
+    this->m_key = rhs.m_key;
+  }
 
   explicit RingGSWBTKey(const RingGSWBTKey&& rhs) {
     this->m_key = std::move(rhs.m_key);
@@ -391,13 +414,11 @@ class RingGSWBTKey : public Serializable {
     return *this;
   }
 
-  const std::vector<std::vector<std::vector<RingGSWCiphertext>>>& GetElements()
-      const {
+  const std::vector<std::vector<std::vector<RingGSWCiphertext>>>& GetElements() const {
     return m_key;
   }
 
-  void SetElements(
-      const std::vector<std::vector<std::vector<RingGSWCiphertext>>>& key) {
+  void SetElements(const std::vector<std::vector<std::vector<RingGSWCiphertext>>>& key) {
     m_key = key;
   }
 
@@ -413,7 +434,9 @@ class RingGSWBTKey : public Serializable {
     return m_key == other.m_key;
   }
 
-  bool operator!=(const RingGSWBTKey& other) const { return !(*this == other); }
+  bool operator!=(const RingGSWBTKey& other) const {
+    return !(*this == other);
+  }
 
   template <class Archive>
   void save(Archive& ar, std::uint32_t const version) const {
@@ -423,15 +446,19 @@ class RingGSWBTKey : public Serializable {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("key", m_key));
   }
 
-  std::string SerializedObjectName() const { return "RingGSWBTKey"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "RingGSWBTKey";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   std::vector<std::vector<std::vector<RingGSWCiphertext>>> m_key;

@@ -37,21 +37,19 @@ using namespace lbcrypto;
 const std::string DATAFOLDER = "demoData";
 
 int main() {
-  std::cout << "This program requres the subdirectory `" << DATAFOLDER
-            << "' to exist, otherwise you will get "
+  std::cout << "This program requres the subdirectory `" << DATAFOLDER << "' to exist, otherwise you will get "
             << "an error writing serializations." << std::endl;
   // Sample Program: Step 1: Set CryptoContext
 
   // Set the main parameters
-  int plaintextModulus = 65537;
-  double sigma = 3.2;
+  int plaintextModulus        = 65537;
+  double sigma                = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
-  uint32_t depth = 2;
+  uint32_t depth              = 2;
 
   // Instantiate the crypto context
-  CryptoContext<DCRTPoly> cryptoContext =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          plaintextModulus, securityLevel, sigma, 0, depth, 0, OPTIMIZED);
+  CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
+    plaintextModulus, securityLevel, sigma, 0, depth, 0, OPTIMIZED);
 
   // Enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -60,8 +58,7 @@ int main() {
   std::cout << "\nThe cryptocontext has been generated." << std::endl;
 
   // Serialize cryptocontext
-  if (!Serial::SerializeToFile(DATAFOLDER + "/cryptocontext.txt", cryptoContext,
-                               SerType::BINARY)) {
+  if (!Serial::SerializeToFile(DATAFOLDER + "/cryptocontext.txt", cryptoContext, SerType::BINARY)) {
     std::cerr << "Error writing serialization of the crypto context to "
                  "cryptocontext.txt"
               << std::endl;
@@ -80,19 +77,15 @@ int main() {
   std::cout << "The key pair has been generated." << std::endl;
 
   // Serialize the public key
-  if (!Serial::SerializeToFile(DATAFOLDER + "/key-public.txt",
-                               keyPair.publicKey, SerType::BINARY)) {
-    std::cerr << "Error writing serialization of public key to key-public.txt"
-              << std::endl;
+  if (!Serial::SerializeToFile(DATAFOLDER + "/key-public.txt", keyPair.publicKey, SerType::BINARY)) {
+    std::cerr << "Error writing serialization of public key to key-public.txt" << std::endl;
     return 1;
   }
   std::cout << "The public key has been serialized." << std::endl;
 
   // Serialize the secret key
-  if (!Serial::SerializeToFile(DATAFOLDER + "/key-private.txt",
-                               keyPair.secretKey, SerType::BINARY)) {
-    std::cerr << "Error writing serialization of private key to key-private.txt"
-              << std::endl;
+  if (!Serial::SerializeToFile(DATAFOLDER + "/key-private.txt", keyPair.secretKey, SerType::BINARY)) {
+    std::cerr << "Error writing serialization of private key to key-private.txt" << std::endl;
     return 1;
   }
   std::cout << "The secret key has been serialized." << std::endl;
@@ -104,8 +97,7 @@ int main() {
 
   // Serialize the relinearization (evaluation) key for homomorphic
   // multiplication
-  std::ofstream emkeyfile(DATAFOLDER + "/" + "key-eval-mult.txt",
-                          std::ios::out | std::ios::binary);
+  std::ofstream emkeyfile(DATAFOLDER + "/" + "key-eval-mult.txt", std::ios::out | std::ios::binary);
   if (emkeyfile.is_open()) {
     if (cryptoContext->SerializeEvalMultKey(emkeyfile, SerType::BINARY) == false) {
       std::cerr << "Error writing serialization of the eval mult keys to "
@@ -116,19 +108,19 @@ int main() {
     std::cout << "The eval mult keys have been serialized." << std::endl;
 
     emkeyfile.close();
-  } else {
+  }
+  else {
     std::cerr << "Error serializing eval mult keys" << std::endl;
     return 1;
   }
 
   // Generate the rotation evaluation keys
-  cryptoContext->EvalAtIndexKeyGen(keyPair.secretKey, {1, 2, -1, -2});
+  cryptoContext->EvalAtIndexKeyGen(keyPair.secretKey, { 1, 2, -1, -2 });
 
   std::cout << "The rotation keys have been generated." << std::endl;
 
   // Serialize the rotation keyhs
-  std::ofstream erkeyfile(DATAFOLDER + "/" + "key-eval-rot.txt",
-                          std::ios::out | std::ios::binary);
+  std::ofstream erkeyfile(DATAFOLDER + "/" + "key-eval-rot.txt", std::ios::out | std::ios::binary);
   if (erkeyfile.is_open()) {
     if (cryptoContext->SerializeEvalAutomorphismKey(erkeyfile, SerType::BINARY) == false) {
       std::cerr << "Error writing serialization of the eval rotation keys to "
@@ -139,7 +131,8 @@ int main() {
     std::cout << "The eval rotation keys have been serialized." << std::endl;
 
     erkeyfile.close();
-  } else {
+  }
+  else {
     std::cerr << "Error serializing eval rotation keys" << std::endl;
     return 1;
   }
@@ -147,14 +140,14 @@ int main() {
   // Sample Program: Step 3: Encryption
 
   // First plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext1 = cryptoContext->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext1               = cryptoContext->MakePackedPlaintext(vectorOfInts1);
   // Second plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts2 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext2 = cryptoContext->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext2               = cryptoContext->MakePackedPlaintext(vectorOfInts2);
   // Third plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts3 = {1, 2, 5, 2, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext3 = cryptoContext->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = { 1, 2, 5, 2, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext3               = cryptoContext->MakePackedPlaintext(vectorOfInts3);
 
   std::cout << "Plaintext #1: " << plaintext1 << std::endl;
   std::cout << "Plaintext #2: " << plaintext2 << std::endl;
@@ -167,33 +160,23 @@ int main() {
 
   std::cout << "The plaintexts have been encrypted." << std::endl;
 
-  if (!Serial::SerializeToFile(DATAFOLDER + "/" + "ciphertext1.txt",
-                               ciphertext1, SerType::BINARY)) {
-    std::cerr
-        << "Error writing serialization of ciphertext 1 to ciphertext1.txt"
-        << std::endl;
+  if (!Serial::SerializeToFile(DATAFOLDER + "/" + "ciphertext1.txt", ciphertext1, SerType::BINARY)) {
+    std::cerr << "Error writing serialization of ciphertext 1 to ciphertext1.txt" << std::endl;
     return 1;
   }
   std::cout << "The first ciphertext has been serialized." << std::endl;
 
-  if (!Serial::SerializeToFile(DATAFOLDER + "/" + "ciphertext2.txt",
-                               ciphertext2, SerType::BINARY)) {
-    std::cerr
-        << "Error writing serialization of ciphertext 2 to ciphertext2.txt"
-        << std::endl;
+  if (!Serial::SerializeToFile(DATAFOLDER + "/" + "ciphertext2.txt", ciphertext2, SerType::BINARY)) {
+    std::cerr << "Error writing serialization of ciphertext 2 to ciphertext2.txt" << std::endl;
     return 1;
   }
   std::cout << "The second ciphertext has been serialized." << std::endl;
 
-  if (!Serial::SerializeToFile(DATAFOLDER + "/" + "ciphertext3.txt",
-                               ciphertext3, SerType::BINARY)) {
-    std::cerr
-        << "Error writing serialization of ciphertext 3 to ciphertext3.txt"
-        << std::endl;
+  if (!Serial::SerializeToFile(DATAFOLDER + "/" + "ciphertext3.txt", ciphertext3, SerType::BINARY)) {
+    std::cerr << "Error writing serialization of ciphertext 3 to ciphertext3.txt" << std::endl;
     return 1;
   }
   std::cout << "The third ciphertext has been serialized." << std::endl;
-
 
   // Sample Program: Step 4: Evaluation
 
@@ -208,27 +191,22 @@ int main() {
 
   // Deserialize the crypto context
   CryptoContext<DCRTPoly> cc;
-  if (!Serial::DeserializeFromFile(DATAFOLDER + "/cryptocontext.txt", cc,
-                                   SerType::BINARY)) {
-    std::cerr << "I cannot read serialization from "
-              << DATAFOLDER + "/cryptocontext.txt" << std::endl;
+  if (!Serial::DeserializeFromFile(DATAFOLDER + "/cryptocontext.txt", cc, SerType::BINARY)) {
+    std::cerr << "I cannot read serialization from " << DATAFOLDER + "/cryptocontext.txt" << std::endl;
     return 1;
   }
   std::cout << "The cryptocontext has been deserialized." << std::endl;
 
   LPPublicKey<DCRTPoly> pk;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/key-public.txt", pk,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/key-public.txt", pk, SerType::BINARY) == false) {
     std::cerr << "Could not read public key" << std::endl;
     return 1;
   }
   std::cout << "The public key has been deserialized." << std::endl;
 
-  std::ifstream emkeys(DATAFOLDER + "/key-eval-mult.txt",
-                       std::ios::in | std::ios::binary);
+  std::ifstream emkeys(DATAFOLDER + "/key-eval-mult.txt", std::ios::in | std::ios::binary);
   if (!emkeys.is_open()) {
-    std::cerr << "I cannot read serialization from "
-              << DATAFOLDER + "/key-eval-mult.txt" << std::endl;
+    std::cerr << "I cannot read serialization from " << DATAFOLDER + "/key-eval-mult.txt" << std::endl;
     return 1;
   }
   if (cc->DeserializeEvalMultKey(emkeys, SerType::BINARY) == false) {
@@ -237,51 +215,45 @@ int main() {
   }
   std::cout << "Deserialized the eval mult keys." << std::endl;
 
-  std::ifstream erkeys(DATAFOLDER + "/key-eval-rot.txt",
-                       std::ios::in | std::ios::binary);
+  std::ifstream erkeys(DATAFOLDER + "/key-eval-rot.txt", std::ios::in | std::ios::binary);
   if (!erkeys.is_open()) {
-    std::cerr << "I cannot read serialization from "
-              << DATAFOLDER + "/key-eval-rot.txt" << std::endl;
+    std::cerr << "I cannot read serialization from " << DATAFOLDER + "/key-eval-rot.txt" << std::endl;
     return 1;
   }
   if (cc->DeserializeEvalAutomorphismKey(erkeys, SerType::BINARY) == false) {
-    std::cerr << "Could not deserialize the eval rotation key file"
-              << std::endl;
+    std::cerr << "Could not deserialize the eval rotation key file" << std::endl;
     return 1;
   }
   std::cout << "Deserialized the eval rotation keys." << std::endl;
 
   Ciphertext<DCRTPoly> ct1;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/ciphertext1.txt", ct1,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/ciphertext1.txt", ct1, SerType::BINARY) == false) {
     std::cerr << "Could not read the ciphertext" << std::endl;
     return 1;
   }
   std::cout << "The first ciphertext has been deserialized." << std::endl;
 
   Ciphertext<DCRTPoly> ct2;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/ciphertext2.txt", ct2,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/ciphertext2.txt", ct2, SerType::BINARY) == false) {
     std::cerr << "Could not read the ciphertext" << std::endl;
     return 1;
   }
   std::cout << "The second ciphertext has been deserialized." << std::endl;
 
   Ciphertext<DCRTPoly> ct3;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/ciphertext3.txt", ct3,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/ciphertext3.txt", ct3, SerType::BINARY) == false) {
     std::cerr << "Could not read the ciphertext" << std::endl;
     return 1;
   }
   std::cout << "The third ciphertext has been deserialized." << std::endl;
 
   // Homomorphic additions
-  auto ciphertextAdd12 = cc->EvalAdd(ct1, ct2);//iphertext2);
-  auto ciphertextAddResult = cc->EvalAdd(ciphertextAdd12, ct3);//iphertext3);
+  auto ciphertextAdd12     = cc->EvalAdd(ct1, ct2);              //iphertext2);
+  auto ciphertextAddResult = cc->EvalAdd(ciphertextAdd12, ct3);  //iphertext3);
 
   // Homomorphic multiplications
-  auto ciphertextMul12 = cc->EvalMult(ct1, ct2);//iphertext2);
-  auto ciphertextMultResult = cc->EvalMult(ciphertextMul12, ct3);//iphertext3);
+  auto ciphertextMul12      = cc->EvalMult(ct1, ct2);              //iphertext2);
+  auto ciphertextMultResult = cc->EvalMult(ciphertextMul12, ct3);  //iphertext3);
 
   // Homomorphic rotations
   auto ciphertextRot1 = cc->EvalAtIndex(ct1, 1);
@@ -292,8 +264,7 @@ int main() {
   // Sample Program: Step 5: Decryption
 
   LPPrivateKey<DCRTPoly> sk;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/key-private.txt", sk,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/key-private.txt", sk, SerType::BINARY) == false) {
     std::cerr << "Could not read secret key" << std::endl;
     return 1;
   }

@@ -42,28 +42,27 @@ namespace lbcrypto {
  * based on the hardness of Ring-LWE problem
  */
 template <class Element>
-class RLWETrapdoorPair {
+class RLWETrapdoorPair
+{
  public:
   // matrix of noise polynomials
   Matrix<Element> m_r;
   // matrix
   Matrix<Element> m_e;
   // CTOR with empty trapdoor pair for deserialization
-  RLWETrapdoorPair()
-      : m_r(Matrix<Element>([]() { return Element(); }, 0, 0)),
-        m_e(Matrix<Element>([]() { return Element(); }, 0, 0)) {}
+  RLWETrapdoorPair() :
+      m_r(Matrix<Element>([]() { return Element(); }, 0, 0)), m_e(Matrix<Element>([]() { return Element(); }, 0, 0)) {}
 
-  RLWETrapdoorPair(const Matrix<Element> &r, const Matrix<Element> &e)
-      : m_r(r), m_e(e) {}
+  RLWETrapdoorPair(const Matrix<Element>& r, const Matrix<Element>& e) : m_r(r), m_e(e) {}
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(CEREAL_NVP(m_r));
     ar(CEREAL_NVP(m_e));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     ar(CEREAL_NVP(m_r));
     ar(CEREAL_NVP(m_e));
   }
@@ -74,10 +73,11 @@ class RLWETrapdoorPair {
  * of https://eprint.iacr.org/2017/844.pdf
  */
 template <class Element>
-class RLWETrapdoorUtility {
+class RLWETrapdoorUtility
+{
   using ParmType = typename Element::Params;
-  using DggType = typename Element::DggType;
-  using IntType = typename Element::Integer;
+  using DggType  = typename Element::DggType;
+  using IntType  = typename Element::Integer;
 
  public:
   /**
@@ -93,9 +93,8 @@ class RLWETrapdoorUtility {
    * @return the trapdoor pair including the public key (matrix of rings)
    * and trapdoor itself
    */
-  static std::pair<Matrix<Element>, RLWETrapdoorPair<Element>> TrapdoorGen(
-      shared_ptr<ParmType> params, double stddev, int64_t base = 2,
-      bool bal = false);
+  static std::pair<Matrix<Element>, RLWETrapdoorPair<Element>> TrapdoorGen(shared_ptr<ParmType> params, double stddev,
+                                                                           int64_t base = 2, bool bal = false);
 
   /**
    * Generalized trapdoor generation method (described in "Implementing
@@ -111,9 +110,9 @@ class RLWETrapdoorUtility {
    * @return the trapdoor pair including the public key (matrix of rings) and
    * trapdoor itself
    */
-  static std::pair<Matrix<Element>, RLWETrapdoorPair<Element>>
-  TrapdoorGenSquareMat(shared_ptr<ParmType> params, double stddev,
-                       size_t dimension, int64_t base = 2, bool bal = false);
+  static std::pair<Matrix<Element>, RLWETrapdoorPair<Element>> TrapdoorGenSquareMat(shared_ptr<ParmType> params,
+                                                                                    double stddev, size_t dimension,
+                                                                                    int64_t base = 2, bool bal = false);
 
   /**
    * Gaussian sampling as described in Alogorithm 2 of
@@ -131,10 +130,8 @@ class RLWETrapdoorUtility {
    * @param base base of gadget matrix
    * @return the sampled vector (matrix)
    */
-  static Matrix<Element> GaussSamp(size_t n, size_t k, const Matrix<Element> &A,
-                                   const RLWETrapdoorPair<Element> &T,
-                                   const Element &u, DggType &dgg,
-                                   DggType &dggLargeSigma, int64_t base = 2);
+  static Matrix<Element> GaussSamp(size_t n, size_t k, const Matrix<Element>& A, const RLWETrapdoorPair<Element>& T,
+                                   const Element& u, DggType& dgg, DggType& dggLargeSigma, int64_t base = 2);
 
   /**
    * Gaussian sampling (described in "Implementing Token-Based Obfuscation under
@@ -151,10 +148,9 @@ class RLWETrapdoorUtility {
    * @param base base of gadget matrix
    * @return the sampled vector (matrix)
    */
-  static Matrix<Element> GaussSampSquareMat(
-      size_t n, size_t k, const Matrix<Element> &A,
-      const RLWETrapdoorPair<Element> &T, const Matrix<Element> &U,
-      DggType &dgg, DggType &dggLargeSigma, int64_t base = 2);
+  static Matrix<Element> GaussSampSquareMat(size_t n, size_t k, const Matrix<Element>& A,
+                                            const RLWETrapdoorPair<Element>& T, const Matrix<Element>& U, DggType& dgg,
+                                            DggType& dggLargeSigma, int64_t base = 2);
 
   /**
    * On-line stage of pre-image sampling (includes only G-sampling)
@@ -171,10 +167,9 @@ class RLWETrapdoorUtility {
    * @param &base base for G-lattice
    * @return the sampled vector (matrix)
    */
-  static Matrix<Element> GaussSampOnline(
-      size_t n, size_t k, const Matrix<Element> &A,
-      const RLWETrapdoorPair<Element> &T, const Element &u, DggType &dgg,
-      const shared_ptr<Matrix<Element>> perturbationVector, int64_t base = 2);
+  static Matrix<Element> GaussSampOnline(size_t n, size_t k, const Matrix<Element>& A,
+                                         const RLWETrapdoorPair<Element>& T, const Element& u, DggType& dgg,
+                                         const shared_ptr<Matrix<Element>> perturbationVector, int64_t base = 2);
 
   /**
    * Offline stage of pre-image sampling (perturbation sampling)
@@ -188,9 +183,8 @@ class RLWETrapdoorUtility {
    * @param &base base for G-lattice
    * @return the sampled vector (matrix)
    */
-  static shared_ptr<Matrix<Element>> GaussSampOffline(
-      size_t n, size_t k, const RLWETrapdoorPair<Element> &T, DggType &dgg,
-      DggType &dggLargeSigma, int64_t base = 2);
+  static shared_ptr<Matrix<Element>> GaussSampOffline(size_t n, size_t k, const RLWETrapdoorPair<Element>& T,
+                                                      DggType& dgg, DggType& dggLargeSigma, int64_t base = 2);
 
   /**
    * Method for perturbation generation as described in Algorithm 4 of
@@ -205,9 +199,8 @@ class RLWETrapdoorUtility {
    *sampling
    *@param *perturbationVector perturbation vector;output of the function
    */
-  static void ZSampleSigmaP(size_t n, double s, double sigma,
-                            const RLWETrapdoorPair<Element> &Tprime,
-                            const DggType &dgg, const DggType &dggLargeSigma,
+  static void ZSampleSigmaP(size_t n, double s, double sigma, const RLWETrapdoorPair<Element>& Tprime,
+                            const DggType& dgg, const DggType& dggLargeSigma,
                             shared_ptr<Matrix<Element>> perturbationVector) {
     DEBUG_FLAG(false);
     TimeVar t1, t1_tot;
@@ -277,10 +270,10 @@ class RLWETrapdoorUtility {
       for (size_t i = 0; i < n * k; i++) {
         p2ZVector(i, 0) = dgg.GenerateIntegerKarney(0, sigmaLarge);
       }
-    } else {
+    }
+    else {
       // Peikert's inversion sampling method
-      std::shared_ptr<int64_t> dggVector =
-          dggLargeSigma.GenerateIntVector(n * k);
+      std::shared_ptr<int64_t> dggVector = dggLargeSigma.GenerateIntVector(n * k);
       for (size_t i = 0; i < n * k; i++) {
         p2ZVector(i, 0) = (dggVector.get())[i];
       }
@@ -289,8 +282,7 @@ class RLWETrapdoorUtility {
     TIC(t1);
 
     // create k ring elements in coefficient representation
-    Matrix<Element> p2 =
-        SplitInt64IntoElements<Element>(p2ZVector, n, va.GetParams());
+    Matrix<Element> p2 = SplitInt64IntoElements<Element>(p2ZVector, n, va.GetParams());
     DEBUG("z1f2: " << TOC(t1));
     TIC(t1);
 
@@ -316,23 +308,18 @@ class RLWETrapdoorUtility {
 
     Matrix<Field2n> c([]() { return Field2n(); }, 2, 1);
 
-    c(0, 0) =
-        Field2n(Tp2(0, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
-    c(1, 0) =
-        Field2n(Tp2(1, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+    c(0, 0) = Field2n(Tp2(0, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+    c(1, 0) = Field2n(Tp2(1, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
 
-    auto p1ZVector =
-        std::make_shared<Matrix<int64_t>>([]() { return 0; }, n * 2, 1);
+    auto p1ZVector = std::make_shared<Matrix<int64_t>>([]() { return 0; }, n * 2, 1);
     DEBUG("z1i: " << TOC(t1));
     TIC(t1);
-    LatticeGaussSampUtility<Element>::ZSampleSigma2x2(a, b, d, c, dgg,
-                                                      p1ZVector);
+    LatticeGaussSampUtility<Element>::ZSampleSigma2x2(a, b, d, c, dgg, p1ZVector);
     DEBUG("z1j1: " << TOC(t1));  // 14
     TIC(t1);
 
     // create 2 ring elements in coefficient representation
-    Matrix<Element> p1 =
-        SplitInt64IntoElements<Element>(*p1ZVector, n, va.GetParams());
+    Matrix<Element> p1 = SplitInt64IntoElements<Element>(*p1ZVector, n, va.GetParams());
     DEBUG("z1j2: " << TOC(t1));
     TIC(t1);
 
@@ -359,10 +346,9 @@ class RLWETrapdoorUtility {
    *sampling
    *@param *perturbationVector perturbation vector;output of the function
    */
-  static void SamplePertSquareMat(
-      size_t n, double s, double sigma, const RLWETrapdoorPair<Element> &Tprime,
-      const DggType &dgg, const DggType &dggLargeSigma,
-      shared_ptr<Matrix<Element>> perturbationVector) {
+  static void SamplePertSquareMat(size_t n, double s, double sigma, const RLWETrapdoorPair<Element>& Tprime,
+                                  const DggType& dgg, const DggType& dggLargeSigma,
+                                  shared_ptr<Matrix<Element>> perturbationVector) {
     Matrix<Element> R = Tprime.m_r;
     Matrix<Element> E = Tprime.m_e;
 
@@ -385,10 +371,10 @@ class RLWETrapdoorUtility {
           p2ZVector(i, j) = dgg.GenerateIntegerKarney(0, sigmaLarge);
         }
       }
-    } else {
+    }
+    else {
       // Peikert's inversion sampling method
-      std::shared_ptr<int64_t> dggVector =
-          dggLargeSigma.GenerateIntVector(n * k * d);
+      std::shared_ptr<int64_t> dggVector = dggLargeSigma.GenerateIntVector(n * k * d);
 
       for (size_t i = 0; i < n * k; i++) {
         for (size_t j = 0; j < d; j++) {
@@ -398,11 +384,9 @@ class RLWETrapdoorUtility {
     }
 
     // create a matrix of d*k x d ring elements in coefficient representation
-    Matrix<Element> p2 =
-        SplitInt64IntoElements<Element>(p2ZVector.ExtractCol(0), n, params);
+    Matrix<Element> p2 = SplitInt64IntoElements<Element>(p2ZVector.ExtractCol(0), n, params);
     for (size_t i = 1; i < d; i++) {
-      p2.HStack(
-          SplitInt64IntoElements<Element>(p2ZVector.ExtractCol(i), n, params));
+      p2.HStack(SplitInt64IntoElements<Element>(p2ZVector.ExtractCol(i), n, params));
     }
 
     // now converting to Format::EVALUATION representation before multiplication
@@ -419,12 +403,9 @@ class RLWETrapdoorUtility {
     B.SetFormat(Format::COEFFICIENT);
     D.SetFormat(Format::COEFFICIENT);
 
-    Matrix<Field2n> AF([&]() { return Field2n(n, Format::EVALUATION, true); },
-                       d, d);
-    Matrix<Field2n> BF([&]() { return Field2n(n, Format::EVALUATION, true); },
-                       d, d);
-    Matrix<Field2n> DF([&]() { return Field2n(n, Format::EVALUATION, true); },
-                       d, d);
+    Matrix<Field2n> AF([&]() { return Field2n(n, Format::EVALUATION, true); }, d, d);
+    Matrix<Field2n> BF([&]() { return Field2n(n, Format::EVALUATION, true); }, d, d);
+    Matrix<Field2n> DF([&]() { return Field2n(n, Format::EVALUATION, true); }, d, d);
 
     double scalarFactor = -sigma * sigma;
 
@@ -457,24 +438,18 @@ class RLWETrapdoorUtility {
     Matrix<Element> p1(zero_alloc, 1, 1);
 
     for (size_t j = 0; j < d; j++) {
-      Matrix<Field2n> c([&]() { return Field2n(n, Format::COEFFICIENT); },
-                        2 * d, 1);
+      Matrix<Field2n> c([&]() { return Field2n(n, Format::COEFFICIENT); }, 2 * d, 1);
 
       for (size_t i = 0; i < d; i++) {
-        c(i, 0) = Field2n(Tp2(i, j)).ScalarMult(-sigma * sigma /
-                                                (s * s - sigma * sigma));
-        c(i + d, 0) = Field2n(Tp2(i + d, j))
-                          .ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+        c(i, 0)     = Field2n(Tp2(i, j)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+        c(i + d, 0) = Field2n(Tp2(i + d, j)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
       }
 
-      auto p1ZVector =
-          std::make_shared<Matrix<int64_t>>([]() { return 0; }, n * 2 * d, 1);
+      auto p1ZVector = std::make_shared<Matrix<int64_t>>([]() { return 0; }, n * 2 * d, 1);
 
-      LatticeGaussSampUtility<Element>::SampleMat(AF, BF, DF, c, dgg,
-                                                  p1ZVector);
+      LatticeGaussSampUtility<Element>::SampleMat(AF, BF, DF, c, dgg, p1ZVector);
 
-      if (j == 0)
-        p1 = SplitInt64IntoElements<Element>(*p1ZVector, n, params);
+      if (j == 0) p1 = SplitInt64IntoElements<Element>(*p1ZVector, n, params);
       else
         p1.HStack(SplitInt64IntoElements<Element>(*p1ZVector, n, params));
     }

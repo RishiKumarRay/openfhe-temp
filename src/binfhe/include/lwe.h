@@ -42,7 +42,8 @@ namespace lbcrypto {
 /**
  * @brief Additive LWE scheme
  */
-class LWEEncryptionScheme {
+class LWEEncryptionScheme
+{
  public:
   LWEEncryptionScheme() {}
 
@@ -52,8 +53,7 @@ class LWEEncryptionScheme {
    * @param params a shared pointer to LWE scheme parameters
    * @return a shared pointer to the secret key
    */
-  std::shared_ptr<LWEPrivateKeyImpl> KeyGen(
-      const std::shared_ptr<LWECryptoParams> params) const;
+  std::shared_ptr<LWEPrivateKeyImpl> KeyGen(const std::shared_ptr<LWECryptoParams> params) const;
 
   /**
    * Generates a secret key of dimension N using modulus Q
@@ -61,8 +61,7 @@ class LWEEncryptionScheme {
    * @param params a shared pointer to LWE scheme parameters
    * @return a shared pointer to the secret key
    */
-  std::shared_ptr<LWEPrivateKeyImpl> KeyGenN(
-      const std::shared_ptr<LWECryptoParams> params) const;
+  std::shared_ptr<LWEPrivateKeyImpl> KeyGenN(const std::shared_ptr<LWECryptoParams> params) const;
 
   /**
    * Encrypts a bit using a secret key (symmetric key encryption)
@@ -72,10 +71,9 @@ class LWEEncryptionScheme {
    * @param &m - the plaintext
    * @return a shared pointer to the ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> Encrypt(
-      const std::shared_ptr<LWECryptoParams> params,
-      const std::shared_ptr<const LWEPrivateKeyImpl> sk,
-      const LWEPlaintext& m) const;
+  std::shared_ptr<LWECiphertextImpl> Encrypt(const std::shared_ptr<LWECryptoParams> params,
+                                             const std::shared_ptr<const LWEPrivateKeyImpl> sk,
+                                             const LWEPlaintext& m) const;
 
   /**
    * Decrypts the ciphertext using secret key sk
@@ -85,10 +83,8 @@ class LWEEncryptionScheme {
    * @param ct the ciphertext
    * @param *result plaintext result
    */
-  void Decrypt(const std::shared_ptr<LWECryptoParams> params,
-               const std::shared_ptr<const LWEPrivateKeyImpl> sk,
-               const std::shared_ptr<const LWECiphertextImpl> ct,
-               LWEPlaintext* result) const;
+  void Decrypt(const std::shared_ptr<LWECryptoParams> params, const std::shared_ptr<const LWEPrivateKeyImpl> sk,
+               const std::shared_ptr<const LWECiphertextImpl> ct, LWEPlaintext* result) const;
 
   /**
    * Changes an LWE ciphertext modulo Q into an LWE ciphertext modulo q
@@ -97,9 +93,8 @@ class LWEEncryptionScheme {
    * @param ctQ the input ciphertext
    * @return resulting ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> ModSwitch(
-      const std::shared_ptr<LWECryptoParams> params,
-      const std::shared_ptr<const LWECiphertextImpl> ctQ) const;
+  std::shared_ptr<LWECiphertextImpl> ModSwitch(const std::shared_ptr<LWECryptoParams> params,
+                                               const std::shared_ptr<const LWECiphertextImpl> ctQ) const;
 
   /**
    * Generates a switching key to go from a secret key with (Q,N) to a secret
@@ -110,10 +105,9 @@ class LWEEncryptionScheme {
    * @param skN old secret key
    * @return a shared pointer to the switching key
    */
-  std::shared_ptr<LWESwitchingKey> KeySwitchGen(
-      const std::shared_ptr<LWECryptoParams> params,
-      const std::shared_ptr<const LWEPrivateKeyImpl> sk,
-      const std::shared_ptr<const LWEPrivateKeyImpl> skN) const;
+  std::shared_ptr<LWESwitchingKey> KeySwitchGen(const std::shared_ptr<LWECryptoParams> params,
+                                                const std::shared_ptr<const LWEPrivateKeyImpl> sk,
+                                                const std::shared_ptr<const LWEPrivateKeyImpl> skN) const;
 
   /**
    * Switches ciphertext from (Q,N) to (Q,n)
@@ -123,10 +117,9 @@ class LWEEncryptionScheme {
    * @param ctQN input ciphertext
    * @return a shared pointer to the resulting ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> KeySwitch(
-      const std::shared_ptr<LWECryptoParams> params,
-      const std::shared_ptr<LWESwitchingKey> K,
-      const std::shared_ptr<const LWECiphertextImpl> ctQN) const;
+  std::shared_ptr<LWECiphertextImpl> KeySwitch(const std::shared_ptr<LWECryptoParams> params,
+                                               const std::shared_ptr<LWESwitchingKey> K,
+                                               const std::shared_ptr<const LWECiphertextImpl> ctQN) const;
 
   /**
    * Embeds a plaintext bit without noise or encryption
@@ -135,9 +128,8 @@ class LWEEncryptionScheme {
    * @param &m - the plaintext
    * @return a shared pointer to the ciphertext
    */
-  std::shared_ptr<LWECiphertextImpl> NoiselessEmbedding(
-      const std::shared_ptr<LWECryptoParams> params,
-      const LWEPlaintext& m) const;
+  std::shared_ptr<LWECiphertextImpl> NoiselessEmbedding(const std::shared_ptr<LWECryptoParams> params,
+                                                        const LWEPlaintext& m) const;
 };
 
 }  // namespace lbcrypto

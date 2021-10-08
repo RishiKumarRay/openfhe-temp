@@ -34,12 +34,12 @@ using namespace lbcrypto;
 using CT = Ciphertext<DCRTPoly>;  // ciphertext
 using PT = Plaintext;             // plaintext
 
-using vecInt = vector<int64_t>;  // vector of ints
-using vecChar = vector<char>;    // vector of characters
+using vecInt  = vector<int64_t>;  // vector of ints
+using vecChar = vector<char>;     // vector of characters
 
 bool run_demo_pre(void);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   ////////////////////////////////////////////////////////////
   // Set-up of parameters
   ////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
 bool run_demo_pre(void) {
   // Generate parameters.
-  TimeVar t; //timer for tic toc
+  TimeVar t;  //timer for tic toc
   cout << "setting up BFV RNS crypto system" << endl;
   TIC(t);
   // int plaintextModulus = 786433; //plaintext prime modulus
@@ -62,39 +62,29 @@ bool run_demo_pre(void) {
 
   uint32_t multDepth = 1;
 
-  double sigma = 3.2;
+  double sigma                = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   // Instantiate the crypto context
-  CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          plaintextModulus, securityLevel, sigma, 0, multDepth, 0, OPTIMIZED);
+  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
+    plaintextModulus, securityLevel, sigma, 0, multDepth, 0, OPTIMIZED);
 
-  cout << "\nParam generation time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "\nParam generation time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   // Turn on features
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
   cc->Enable(PRE);
 
-  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus()
+  std::cout << "p = " << cc->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2 << std::endl;
+  std::cout << "log2 q = " << log2(cc->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
-  std::cout
-      << "n = "
-      << cc->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
-      << std::endl;
-  std::cout << "log2 q = "
-            << log2(cc->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
-            << std::endl;
-  std::cout << "r = " << cc->GetCryptoParameters()->GetRelinWindow()
-            << std::endl;
+  std::cout << "r = " << cc->GetCryptoParameters()->GetRelinWindow() << std::endl;
 
   auto ringsize = cc->GetRingDimension();
-  std::cout << "Alice can encrypt " << ringsize * 2 << " bytes of data"
-            << std::endl;
+  std::cout << "Alice can encrypt " << ringsize * 2 << " bytes of data" << std::endl;
   ////////////////////////////////////////////////////////////
   // Perform Key Generation Operation
   ////////////////////////////////////////////////////////////
@@ -102,12 +92,12 @@ bool run_demo_pre(void) {
   // Initialize Key Pair Containers
   LPKeyPair<DCRTPoly> keyPair1;
 
-  std::cout << "\nRunning Alice key generation (used for source data)..."
-            << std::endl;
+  std::cout << "\nRunning Alice key generation (used for source data)..." << std::endl;
 
   TIC(t);
   keyPair1 = cc->KeyGen();
-  cout << "Key generation time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Key generation time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   if (!keyPair1.good()) {
     std::cout << "Alice Key generation failed!" << std::endl;
@@ -122,7 +112,8 @@ bool run_demo_pre(void) {
 
   vecInt vShorts;
 
-  for (size_t i = 0; i < nshort; i++) vShorts.push_back(std::rand() % 65536);
+  for (size_t i = 0; i < nshort; i++)
+    vShorts.push_back(std::rand() % 65536);
 
   PT pt = cc->MakePackedPlaintext(vShorts);
 
@@ -132,7 +123,8 @@ bool run_demo_pre(void) {
 
   TIC(t);
   auto ct1 = cc->Encrypt(keyPair1.publicKey, pt);
-  cout << "Encryption time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Encryption time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   ////////////////////////////////////////////////////////////
   // Decryption of Ciphertext
@@ -142,7 +134,8 @@ bool run_demo_pre(void) {
 
   TIC(t);
   cc->Decrypt(keyPair1.secretKey, ct1, &ptDec1);
-  cout << "Decryption time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Decryption time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   ptDec1->SetLength(pt->GetLength());
 
@@ -157,7 +150,8 @@ bool run_demo_pre(void) {
 
   TIC(t);
   keyPair2 = cc->KeyGen();
-  cout << "Key generation time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Key generation time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   if (!keyPair2.good()) {
     std::cout << "Bob Key generation failed!" << std::endl;
@@ -176,7 +170,8 @@ bool run_demo_pre(void) {
 
   TIC(t);
   reencryptionKey12 = cc->ReKeyGen(keyPair2.publicKey, keyPair1.secretKey);
-  cout << "Key generation time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Key generation time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   ////////////////////////////////////////////////////////////
   // Re-Encryption
@@ -184,7 +179,8 @@ bool run_demo_pre(void) {
 
   TIC(t);
   auto ct2 = cc->ReEncrypt(reencryptionKey12, ct1);
-  cout << "Re-Encryption time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Re-Encryption time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   ////////////////////////////////////////////////////////////
   // Decryption of Ciphertext
@@ -194,14 +190,15 @@ bool run_demo_pre(void) {
 
   TIC(t);
   cc->Decrypt(keyPair2.secretKey, ct2, &ptDec2);
-  cout << "Decryption time: " << "\t" << TOC_MS(t) << " ms" << endl;
+  cout << "Decryption time: "
+       << "\t" << TOC_MS(t) << " ms" << endl;
 
   ptDec2->SetLength(pt->GetLength());
 
   auto unpacked0 = pt->GetPackedValue();
   auto unpacked1 = ptDec1->GetPackedValue();
   auto unpacked2 = ptDec2->GetPackedValue();
-  bool good = true;
+  bool good      = true;
 
   // note that PALISADE assumes that plaintext is in the range of -p/2..p/2
   // to recover 0...q simply add q if the unpacked value is negative
@@ -213,14 +210,14 @@ bool run_demo_pre(void) {
   // compare all the results for correctness
   for (unsigned int j = 0; j < pt->GetLength(); j++) {
     if ((unpacked0[j] != unpacked1[j]) || (unpacked0[j] != unpacked2[j])) {
-      cout << j << ", " << unpacked0[j] << ", " << unpacked1[j] << ", "
-           << unpacked2[j] << endl;
+      cout << j << ", " << unpacked0[j] << ", " << unpacked1[j] << ", " << unpacked2[j] << endl;
       good = false;
     }
   }
   if (good) {
     cout << "PRE passes" << endl;
-  } else {
+  }
+  else {
     cout << "PRE fails" << endl;
   }
 

@@ -39,7 +39,8 @@ namespace lbcrypto {
  * @class Field2n
  * @brief A class to represent field elements with power-of-2 dimension.
  */
-class Field2n : public std::vector<std::complex<double>>, public Serializable {
+class Field2n : public std::vector<std::complex<double>>, public Serializable
+{
  public:
   /**
    * @brief Default Constructor
@@ -56,11 +57,8 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param initializeElementToZero flag for initializing values to zero.  It is
    * set to false by default.
    */
-  Field2n(int size, Format f = Format::EVALUATION,
-          bool initializeElementToZero = false)
-      : std::vector<std::complex<double>>(
-            size,
-            initializeElementToZero ? 0 : -std::numeric_limits<double>::max()) {
+  Field2n(int size, Format f = Format::EVALUATION, bool initializeElementToZero = false) :
+      std::vector<std::complex<double>>(size, initializeElementToZero ? 0 : -std::numeric_limits<double>::max()) {
     this->format = f;
   }
 
@@ -68,32 +66,34 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @brief Constructor from ring element
    * @param & element ring element
    */
-  explicit Field2n(const Poly &element);
+  explicit Field2n(const Poly& element);
 
   /**
    * @brief Constructor from ring element
    * @param & element ring element
    */
-  explicit Field2n(const NativePoly &element);
+  explicit Field2n(const NativePoly& element);
 
   /**
    * @brief Constructor from DCRTPoly ring element
    * @param & element ring element
    */
-  explicit Field2n(const DCRTPoly &element);
+  explicit Field2n(const DCRTPoly& element);
 
   /**
    * @brief Constructor from a ring element matrix
    * @param &element ring element matrix
    */
-  explicit Field2n(const Matrix<int64_t> &element);
+  explicit Field2n(const Matrix<int64_t>& element);
 
   /**
    * @brief Method for getting the format/representation of the element
    *
    * @return format/representation of the field element
    */
-  Format GetFormat() const { return format; }
+  Format GetFormat() const {
+    return format;
+  }
 
   /**
    * @brief Inverse operation for the field elements
@@ -108,7 +108,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &rhs right hand side element for operation
    * @return result of the operation
    */
-  Field2n Plus(const Field2n &rhs) const;
+  Field2n Plus(const Field2n& rhs) const;
 
   /**
    * @brief Scalar addition operation for field elements
@@ -124,7 +124,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &rhs right hand side element for operation
    * @return result of the operation
    */
-  Field2n Minus(const Field2n &rhs) const;
+  Field2n Minus(const Field2n& rhs) const;
 
   /**
    * @brief Multiplication operation for field elements
@@ -132,7 +132,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &rhs right hand side element for operation
    * @return result of the operation
    */
-  Field2n Times(const Field2n &rhs) const;
+  Field2n Times(const Field2n& rhs) const;
 
   /**
    * @brief Right shift operation for the field element
@@ -217,7 +217,9 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    *
    * @return the size of the element
    */
-  size_t Size() const { return this->size(); }
+  size_t Size() const {
+    return this->size();
+  }
 
   /**
    * @brief Indexing operator for field elements
@@ -225,7 +227,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param idx index of the element
    * @return element at the index
    */
-  inline std::complex<double> &operator[](std::size_t idx) {
+  inline std::complex<double>& operator[](std::size_t idx) {
     return (this->at(idx));
   }
 
@@ -235,7 +237,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param idx index of the element
    * @return element at the index
    */
-  inline const std::complex<double> &operator[](std::size_t idx) const {
+  inline const std::complex<double>& operator[](std::size_t idx) const {
     return (this->at(idx));
   }
 
@@ -245,7 +247,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &element  right hand side element for operation
    * @return result of the operation
    */
-  const Field2n &operator+=(const Field2n &element) {
+  const Field2n& operator+=(const Field2n& element) {
     return *this = this->Plus(element);
   }
 
@@ -255,7 +257,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &element  right hand side element for operation
    * @return result of the operation
    */
-  const Field2n &operator-=(const Field2n &element) {
+  const Field2n& operator-=(const Field2n& element) {
     return *this = this->Minus(element);
   }
 
@@ -275,7 +277,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &b right hand side field element
    * @return result of the substraction operation
    */
-  friend inline Field2n operator-(const Field2n &a, const Field2n &b) {
+  friend inline Field2n operator-(const Field2n& a, const Field2n& b) {
     return a.Minus(b);
   }
 
@@ -286,7 +288,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &b right hand side field element
    * @return result of the addition operation
    */
-  friend inline Field2n operator+(const Field2n &a, const Field2n &b) {
+  friend inline Field2n operator+(const Field2n& a, const Field2n& b) {
     return a.Plus(b);
   }
 
@@ -297,7 +299,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &b  the scalar to be added
    * @return result of the addition operation
    */
-  friend inline Field2n operator+(const Field2n &a, double scalar) {
+  friend inline Field2n operator+(const Field2n& a, double scalar) {
     return a.Plus(scalar);
   }
 
@@ -308,29 +310,33 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
    * @param &b right hand side field element
    * @return result of the multiplication operation
    */
-  friend inline Field2n operator*(const Field2n &a, const Field2n &b) {
+  friend inline Field2n operator*(const Field2n& a, const Field2n& b) {
     return a.Times(b);
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<std::vector<std::complex<double>>>(this));
     ar(::cereal::make_nvp("f", format));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::base_class<std::vector<std::complex<double>>>(this));
     ar(::cereal::make_nvp("f", format));
   }
 
-  std::string SerializedObjectName() const { return "Field2n"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "Field2n";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // Format of the field element
@@ -344,7 +350,7 @@ class Field2n : public std::vector<std::complex<double>>, public Serializable {
  * @param &m matrix to be outputted
  * @return the chained stream
  */
-inline std::ostream &operator<<(std::ostream &os, const Field2n &m) {
+inline std::ostream& operator<<(std::ostream& os, const Field2n& m) {
   os << "[ ";
   for (size_t row = 0; row < m.size(); ++row) {
     os << m.at(row) << " ";

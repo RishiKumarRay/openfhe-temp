@@ -49,18 +49,15 @@ namespace lbcrypto {
 
 // makeSparse is not used by this scheme
 template <class Element>
-LPKeyPair<Element> LPAlgorithmBGVrns<Element>::KeyGen(CryptoContext<Element> cc,
-                                                      bool makeSparse) {
+LPKeyPair<Element> LPAlgorithmBGVrns<Element>::KeyGen(CryptoContext<Element> cc, bool makeSparse) {
   LPKeyPair<Element> kp(std::make_shared<LPPublicKeyImpl<Element>>(cc),
                         std::make_shared<LPPrivateKeyImpl<Element>>(cc));
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(cc->GetCryptoParameters());
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
-  const DggType &dgg = cryptoParams->GetDiscreteGaussianGenerator();
+  const DggType& dgg = cryptoParams->GetDiscreteGaussianGenerator();
   DugType dug;
   TugType tug;
 
@@ -104,29 +101,27 @@ LPKeyPair<Element> LPAlgorithmBGVrns<Element>::KeyGen(CryptoContext<Element> cc,
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAddCore(
-    ConstCiphertext<Element> ciphertext1,
-    ConstCiphertext<Element> ciphertext2) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAddCore(ConstCiphertext<Element> ciphertext1,
+                                                               ConstCiphertext<Element> ciphertext2) const {
   Ciphertext<Element> result = ciphertext1->Clone();
   EvalAddCoreInPlace(result, ciphertext2);
   return result;
 }
 
 template <class Element>
-void LPAlgorithmSHEBGVrns<Element>::EvalAddCoreInPlace(
-    Ciphertext<Element> &ciphertext1,
-    ConstCiphertext<Element> ciphertext2) const {
+void LPAlgorithmSHEBGVrns<Element>::EvalAddCoreInPlace(Ciphertext<Element>& ciphertext1,
+                                                       ConstCiphertext<Element> ciphertext2) const {
   if (ciphertext1->GetLevel() != ciphertext2->GetLevel()) {
     PALISADE_THROW(config_error,
                    "EvalAddCore cannot add ciphertexts with different number "
                    "of CRT components.");
   }
 
-  std::vector<Element> &cv1 = ciphertext1->GetElements();
-  const std::vector<Element> &cv2 = ciphertext2->GetElements();
+  std::vector<Element>& cv1       = ciphertext1->GetElements();
+  const std::vector<Element>& cv2 = ciphertext2->GetElements();
 
-  size_t c1Size = cv1.size();
-  size_t c2Size = cv2.size();
+  size_t c1Size     = cv1.size();
+  size_t c2Size     = cv2.size();
   size_t cSmallSize = std::min(c1Size, c2Size);
 
   for (size_t i = 0; i < cSmallSize; i++) {
@@ -139,16 +134,15 @@ void LPAlgorithmSHEBGVrns<Element>::EvalAddCoreInPlace(
     }
   }
 
-  ciphertext1->SetDepth(
-      std::max(ciphertext1->GetDepth(), ciphertext2->GetDepth()));
+  ciphertext1->SetDepth(std::max(ciphertext1->GetDepth(), ciphertext2->GetDepth()));
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAddCore(
-    ConstCiphertext<Element> ciphertext, Element ptxt) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAddCore(ConstCiphertext<Element> ciphertext,
+                                                               Element ptxt) const {
   Ciphertext<Element> result = ciphertext->CloneEmpty();
 
-  const std::vector<Element> &cv = ciphertext->GetElements();
+  const std::vector<Element>& cv = ciphertext->GetElements();
 
   ptxt.SetFormat(Format::EVALUATION);
 
@@ -164,9 +158,8 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAddCore(
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
-    ConstCiphertext<Element> ciphertext1,
-    ConstCiphertext<Element> ciphertext2) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(ConstCiphertext<Element> ciphertext1,
+                                                               ConstCiphertext<Element> ciphertext2) const {
   if (ciphertext1->GetLevel() != ciphertext2->GetLevel()) {
     PALISADE_THROW(config_error,
                    "EvalSubCore cannot sub ciphertexts with different number "
@@ -175,8 +168,8 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
 
   Ciphertext<Element> result = ciphertext1->CloneEmpty();
 
-  const std::vector<Element> &cv1 = ciphertext1->GetElements();
-  const std::vector<Element> &cv2 = ciphertext2->GetElements();
+  const std::vector<Element>& cv1 = ciphertext1->GetElements();
+  const std::vector<Element>& cv2 = ciphertext2->GetElements();
 
   size_t c1Size = cv1.size();
   size_t c2Size = cv2.size();
@@ -184,7 +177,8 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
   if (c1Size < c2Size) {
     cSmallSize = c1Size;
     cLargeSize = c2Size;
-  } else {
+  }
+  else {
     cSmallSize = c2Size;
     cLargeSize = c1Size;
   }
@@ -195,8 +189,7 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
     cvSub.push_back(std::move(cv1[i] - cv2[i]));
   }
   for (size_t i = cSmallSize; i < cLargeSize; i++) {
-    if (c1Size < c2Size)
-      cvSub.push_back(std::move(cv2[i].Negate()));
+    if (c1Size < c2Size) cvSub.push_back(std::move(cv2[i].Negate()));
     else
       cvSub.push_back(cv1[i]);
   }
@@ -210,11 +203,11 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
-    ConstCiphertext<Element> ciphertext, Element ptxt) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(ConstCiphertext<Element> ciphertext,
+                                                               Element ptxt) const {
   Ciphertext<Element> result = ciphertext->CloneEmpty();
 
-  const std::vector<Element> &cv = ciphertext->GetElements();
+  const std::vector<Element>& cv = ciphertext->GetElements();
 
   ptxt.SetFormat(Format::EVALUATION);
 
@@ -230,13 +223,11 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalSubCore(
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(
-    ConstCiphertext<Element> ciphertext1,
-    ConstCiphertext<Element> ciphertext2) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(ConstCiphertext<Element> ciphertext1,
+                                                                ConstCiphertext<Element> ciphertext2) const {
   if (ciphertext1->GetElements()[0].GetFormat() == Format::COEFFICIENT ||
       ciphertext2->GetElements()[0].GetFormat() == Format::COEFFICIENT) {
-    PALISADE_THROW(not_available_error,
-                   "EvalMult cannot multiply in COEFFICIENT domain.");
+    PALISADE_THROW(not_available_error, "EvalMult cannot multiply in COEFFICIENT domain.");
   }
 
   if (ciphertext1->GetLevel() != ciphertext2->GetLevel()) {
@@ -247,8 +238,8 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(
 
   Ciphertext<Element> result = ciphertext1->CloneEmpty();
 
-  const std::vector<Element> &cv1 = ciphertext1->GetElements();
-  const std::vector<Element> &cv2 = ciphertext2->GetElements();
+  const std::vector<Element>& cv1 = ciphertext1->GetElements();
+  const std::vector<Element>& cv2 = ciphertext2->GetElements();
 
   size_t cResultSize = cv1.size() + cv2.size() - 1;
 
@@ -260,9 +251,10 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(
   for (size_t i = 0; i < cv1.size(); i++) {
     for (size_t j = 0; j < cv2.size(); j++) {
       if (isFirstAdd[i + j] == true) {
-        cvMult[i + j] = cv1[i] * cv2[j];
+        cvMult[i + j]     = cv1[i] * cv2[j];
         isFirstAdd[i + j] = false;
-      } else {
+      }
+      else {
         cvMult[i + j] += cv1[i] * cv2[j];
       }
     }
@@ -277,11 +269,11 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(
-    ConstCiphertext<Element> ciphertext, Element ptxt) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(ConstCiphertext<Element> ciphertext,
+                                                                Element ptxt) const {
   Ciphertext<Element> result = ciphertext->CloneEmpty();
 
-  const std::vector<Element> &cv = ciphertext->GetElements();
+  const std::vector<Element>& cv = ciphertext->GetElements();
 
   ptxt.SetFormat(EVALUATION);
 
@@ -298,15 +290,15 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultCore(
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalNegate(
-    ConstCiphertext<Element> ciphertext) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalNegate(ConstCiphertext<Element> ciphertext) const {
   Ciphertext<Element> result = ciphertext->CloneEmpty();
 
-  const std::vector<Element> &cv = ciphertext->GetElements();
+  const std::vector<Element>& cv = ciphertext->GetElements();
 
   std::vector<Element> cvNegate;
 
-  for (size_t i = 0; i < cv.size(); i++) cvNegate.push_back(cv[i].Negate());
+  for (size_t i = 0; i < cv.size(); i++)
+    cvNegate.push_back(cv[i].Negate());
 
   result->SetElements(std::move(cvNegate));
 
@@ -317,14 +309,10 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalNegate(
 }
 
 template <class Element>
-LPEvalKey<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultKeyGen(
-    const LPPrivateKey<Element> privateKey) const {
-  LPPrivateKey<Element> privateKeySquared(
-      std::make_shared<LPPrivateKeyImpl<Element>>(
-          privateKey->GetCryptoContext()));
+LPEvalKey<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultKeyGen(const LPPrivateKey<Element> privateKey) const {
+  LPPrivateKey<Element> privateKeySquared(std::make_shared<LPPrivateKeyImpl<Element>>(privateKey->GetCryptoContext()));
 
-  Element sSquare(privateKey->GetPrivateElement() *
-                  privateKey->GetPrivateElement());
+  Element sSquare(privateKey->GetPrivateElement() * privateKey->GetPrivateElement());
 
   privateKeySquared->SetPrivateElement(std::move(sSquare));
 
@@ -333,18 +321,15 @@ LPEvalKey<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultKeyGen(
 
 template <class Element>
 vector<LPEvalKey<Element>> LPAlgorithmSHEBGVrns<Element>::EvalMultKeysGen(
-    const LPPrivateKey<Element> privateKey) const {
+  const LPPrivateKey<Element> privateKey) const {
   const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          privateKey->GetCryptoParameters());
+    std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(privateKey->GetCryptoParameters());
 
-  LPPrivateKey<Element> privateKeyPowered(
-      std::make_shared<LPPrivateKeyImpl<Element>>(
-          privateKey->GetCryptoContext()));
+  LPPrivateKey<Element> privateKeyPowered(std::make_shared<LPPrivateKeyImpl<Element>>(privateKey->GetCryptoContext()));
 
   vector<LPEvalKey<Element>> evalMultKeys;
 
-  const Element &s = privateKey->GetPrivateElement();
+  const Element& s = privateKey->GetPrivateElement();
 
   usint maxDepth = cryptoParams->GetMaxDepth();
   std::vector<Element> sPower(maxDepth);
@@ -352,7 +337,8 @@ vector<LPEvalKey<Element>> LPAlgorithmSHEBGVrns<Element>::EvalMultKeysGen(
   // Create powers of original key to be used in keyswitching as evaluation keys
   // after they are encrypted.
   sPower[0] = s * s;
-  for (size_t i = 1; i < maxDepth - 1; i++) sPower[i] = sPower[i - 1] * s;
+  for (size_t i = 1; i < maxDepth - 1; i++)
+    sPower[i] = sPower[i - 1] * s;
 
   for (size_t i = 0; i < maxDepth - 1; i++) {
     privateKeyPowered->SetPrivateElement(std::move(sPower[i]));
@@ -364,28 +350,27 @@ vector<LPEvalKey<Element>> LPAlgorithmSHEBGVrns<Element>::EvalMultKeysGen(
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMult(
-    ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
-    const LPEvalKey<Element> ek) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMult(ConstCiphertext<Element> ciphertext1,
+                                                            ConstCiphertext<Element> ciphertext2,
+                                                            const LPEvalKey<Element> ek) const {
   Ciphertext<Element> cMult = EvalMult(ciphertext1, ciphertext2);
   KeySwitchInPlace(ek, cMult);
   return cMult;
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultMutable(
-    Ciphertext<Element> &ciphertext1, Ciphertext<Element> &ciphertext2,
-    const LPEvalKey<Element> ek) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalMultMutable(Ciphertext<Element>& ciphertext1,
+                                                                   Ciphertext<Element>& ciphertext2,
+                                                                   const LPEvalKey<Element> ek) const {
   Ciphertext<Element> cMult = EvalMultMutable(ciphertext1, ciphertext2);
   KeySwitchInPlace(ek, cMult);
   return cMult;
 }
 
 template <class Element>
-Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(
-    ConstCiphertext<Element> ciphertext, usint i,
-    const std::map<usint, LPEvalKey<Element>> &evalKeys,
-    CALLER_INFO_ARGS_CPP) const {
+Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(ConstCiphertext<Element> ciphertext, usint i,
+                                                                    const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                                                    CALLER_INFO_ARGS_CPP) const {
   if (nullptr == ciphertext) {
     std::string errorMsg("Input ciphertext is nullptr");
     PALISADE_THROW(type_error, errorMsg + CALLER_INFO);
@@ -396,8 +381,7 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(
   }
   auto key = evalKeys.find(i);
   if (key == evalKeys.end()) {
-    std::string errorMsg(std::string("Could not find an EvalKey for index ") +
-                         std::to_string(i));
+    std::string errorMsg(std::string("Could not find an EvalKey for index ") + std::to_string(i));
     PALISADE_THROW(type_error, errorMsg + CALLER_INFO);
   }
   auto fk = key->second;
@@ -406,8 +390,7 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(
     PALISADE_THROW(type_error, errorMsg + CALLER_INFO);
   }
   if (ciphertext->GetCryptoContext() != fk->GetCryptoContext()) {
-    std::string errorMsg(
-        "Items were not created in the same CryptoContextImpl");
+    std::string errorMsg("Items were not created in the same CryptoContextImpl");
     PALISADE_THROW(type_error, errorMsg + CALLER_INFO);
   }
   if (ciphertext->GetKeyTag() != fk->GetKeyTag()) {
@@ -415,11 +398,9 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(
     PALISADE_THROW(type_error, errorMsg + CALLER_INFO);
   }
 
-  const std::vector<Element> &c = ciphertext->GetElements();
+  const std::vector<Element>& c = ciphertext->GetElements();
   if (c.size() < 2) {
-    std::string errorMsg(
-        std::string("Insufficient number of elements in ciphertext: ") +
-        std::to_string(c.size()));
+    std::string errorMsg(std::string("Insufficient number of elements in ciphertext: ") + std::to_string(c.size()));
     PALISADE_THROW(config_error, errorMsg + CALLER_INFO);
   }
 
@@ -428,8 +409,8 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(
   PrecomputeAutoMap(n, i, &map);
 
   Ciphertext<Element> permutedCiphertext = ciphertext->CloneEmpty();
-  permutedCiphertext->SetElements({std::move(c[0].AutomorphismTransform(i, map)),
-                                   std::move(c[1].AutomorphismTransform(i, map))});
+  permutedCiphertext->SetElements(
+    { std::move(c[0].AutomorphismTransform(i, map)), std::move(c[1].AutomorphismTransform(i, map)) });
   permutedCiphertext->SetDepth(ciphertext->GetDepth());
   permutedCiphertext->SetLevel(ciphertext->GetLevel());
 
@@ -438,22 +419,17 @@ Ciphertext<Element> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphism(
 }
 
 template <class Element>
-shared_ptr<std::map<usint, LPEvalKey<Element>>>
-LPAlgorithmSHEBGVrns<Element>::EvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey,
-    const std::vector<usint> &indexList) const {
-  const Element &s = privateKey->GetPrivateElement();
+shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmSHEBGVrns<Element>::EvalAutomorphismKeyGen(
+  const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const {
+  const Element& s = privateKey->GetPrivateElement();
 
   usint n = s.GetRingDimension();
 
-  LPPrivateKey<Element> privateKeyPermuted(
-      std::make_shared<LPPrivateKeyImpl<Element>>(
-          privateKey->GetCryptoContext()));
+  LPPrivateKey<Element> privateKeyPermuted(std::make_shared<LPPrivateKeyImpl<Element>>(privateKey->GetCryptoContext()));
 
   auto evalKeys = std::make_shared<std::map<usint, LPEvalKey<Element>>>();
 
-  if (indexList.size() > n - 1)
-    PALISADE_THROW(config_error, "size exceeds the ring dimension");
+  if (indexList.size() > n - 1) PALISADE_THROW(config_error, "size exceeds the ring dimension");
 
   for (usint i = 0; i < indexList.size(); i++) {
     Element sPermuted = s.AutomorphismTransform(indexList[i]);
@@ -469,18 +445,15 @@ LPAlgorithmSHEBGVrns<Element>::EvalAutomorphismKeyGen(
 // makeSparse is not used by this scheme
 template <class Element>
 LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(
-    CryptoContext<Element> cc, const vector<LPPrivateKey<Element>> &secretKeys,
-    bool makeSparse) {
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          cc->GetCryptoParameters());
+  CryptoContext<Element> cc, const vector<LPPrivateKey<Element>>& secretKeys, bool makeSparse) {
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(cc->GetCryptoParameters());
 
   LPKeyPair<Element> kp(std::make_shared<LPPublicKeyImpl<Element>>(cc),
                         std::make_shared<LPPrivateKeyImpl<Element>>(cc));
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
-  const auto t = cryptoParams->GetPlaintextModulus();
-  const DggType &dgg = cryptoParams->GetDiscreteGaussianGenerator();
+  const auto t                             = cryptoParams->GetPlaintextModulus();
+  const DggType& dgg                       = cryptoParams->GetDiscreteGaussianGenerator();
   DugType dug;
   TugType tug;
 
@@ -494,7 +467,7 @@ LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(
   size_t numKeys = secretKeys.size();
   for (size_t i = 0; i < numKeys; i++) {
     LPPrivateKey<Element> ski = secretKeys[i];
-    Element si = ski->GetPrivateElement();
+    Element si                = ski->GetPrivateElement();
     s += si;
   }
   // s.SwitchFormat();
@@ -515,19 +488,17 @@ LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(
 
 // makeSparse is not used by this scheme
 template <class Element>
-LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(
-    CryptoContext<Element> cc, const LPPublicKey<Element> publicKey,
-    bool makeSparse, bool fresh) {
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          cc->GetCryptoParameters());
+LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(CryptoContext<Element> cc,
+                                                                          const LPPublicKey<Element> publicKey,
+                                                                          bool makeSparse, bool fresh) {
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(cc->GetCryptoParameters());
 
   LPKeyPair<Element> kp(std::make_shared<LPPublicKeyImpl<Element>>(cc),
                         std::make_shared<LPPrivateKeyImpl<Element>>(cc));
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
-  const auto t = cryptoParams->GetPlaintextModulus();
-  const DggType &dgg = cryptoParams->GetDiscreteGaussianGenerator();
+  const auto t                             = cryptoParams->GetPlaintextModulus();
+  const DggType& dgg                       = cryptoParams->GetDiscreteGaussianGenerator();
   DugType dug;
   TugType tug;
 
@@ -562,8 +533,7 @@ LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(
   Element b;
 
   // When PRE is not used, a joint key is computed
-  if (!fresh)
-    b = t * e - a * s + publicKey->GetPublicElements()[0];
+  if (!fresh) b = t * e - a * s + publicKey->GetPublicElements()[0];
   else
     b = t * e - a * s;
 
@@ -576,17 +546,15 @@ LPKeyPair<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyKeyGen(
 
 template <class Element>
 Ciphertext<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyDecryptLead(
-    const LPPrivateKey<Element> privateKey,
-    ConstCiphertext<Element> ciphertext) const {
+  const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext) const {
   const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          privateKey->GetCryptoParameters());
+    std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(privateKey->GetCryptoParameters());
   const auto t = cryptoParams->GetPlaintextModulus();
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
-  const std::vector<Element> &cv = ciphertext->GetElements();
-  const Element &s = privateKey->GetPrivateElement();
+  const std::vector<Element>& cv = ciphertext->GetElements();
+  const Element& s               = privateKey->GetPrivateElement();
 
   DggType dgg(MP_SD);
   Element e(dgg, elementParams, Format::EVALUATION);
@@ -594,24 +562,22 @@ Ciphertext<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyDecryptLead(
   Element b = cv[0] + s * cv[1] + t * e;
 
   Ciphertext<Element> result = ciphertext->CloneEmpty();
-  result->SetElements({std::move(b)});
+  result->SetElements({ std::move(b) });
 
   return result;
 }
 
 template <class Element>
 Ciphertext<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyDecryptMain(
-    const LPPrivateKey<Element> privateKey,
-    ConstCiphertext<Element> ciphertext) const {
+  const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext) const {
   const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          privateKey->GetCryptoParameters());
+    std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(privateKey->GetCryptoParameters());
   const auto t = cryptoParams->GetPlaintextModulus();
 
   const shared_ptr<ParmType> elementParams = cryptoParams->GetElementParams();
 
-  const std::vector<Element> &cv = ciphertext->GetElements();
-  const Element &s = privateKey->GetPrivateElement();
+  const std::vector<Element>& cv = ciphertext->GetElements();
+  const Element& s               = privateKey->GetPrivateElement();
 
   DggType dgg(MP_SD);
   Element e(dgg, elementParams, Format::EVALUATION);
@@ -619,27 +585,25 @@ Ciphertext<Element> LPAlgorithmMultipartyBGVrns<Element>::MultipartyDecryptMain(
   Element b = s * cv[1] + t * e;
 
   Ciphertext<Element> result = ciphertext->CloneEmpty();
-  result->SetElements({std::move(b)});
+  result->SetElements({ std::move(b) });
 
   return result;
 }
 
 template <class Element>
 DecryptResult LPAlgorithmMultipartyBGVrns<Element>::MultipartyDecryptFusion(
-    const vector<Ciphertext<Element>> &ciphertextVec,
-    NativePoly *plaintext) const {
+  const vector<Ciphertext<Element>>& ciphertextVec, NativePoly* plaintext) const {
   const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          ciphertextVec[0]->GetCryptoParameters());
+    std::static_pointer_cast<LPCryptoParametersBGVrns<Element>>(ciphertextVec[0]->GetCryptoParameters());
 
   const auto t = cryptoParams->GetPlaintextModulus();
 
-  const std::vector<Element> &cv0 = ciphertextVec[0]->GetElements();
-  Element b = cv0[0];
+  const std::vector<Element>& cv0 = ciphertextVec[0]->GetElements();
+  Element b                       = cv0[0];
 
   size_t numCipher = ciphertextVec.size();
   for (size_t i = 1; i < numCipher; i++) {
-    const std::vector<Element> &cvi = ciphertextVec[i]->GetElements();
+    const std::vector<Element>& cvi = ciphertextVec[i]->GetElements();
     b += cvi[0];
   }
 
@@ -652,34 +616,28 @@ DecryptResult LPAlgorithmMultipartyBGVrns<Element>::MultipartyDecryptFusion(
 
 template <class Element>
 LPEvalKey<Element> LPAlgorithmMultipartyBGVrns<Element>::MultiKeySwitchGen(
-    const LPPrivateKey<Element> originalPrivateKey,
-    const LPPrivateKey<Element> newPrivateKey,
-    const LPEvalKey<Element> ek) const {
+  const LPPrivateKey<Element> originalPrivateKey, const LPPrivateKey<Element> newPrivateKey,
+  const LPEvalKey<Element> ek) const {
   const shared_ptr<LPCryptoParametersBGVrns<Element>> cryptoParamsLWE =
-      std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          ek->GetCryptoParameters());
+    std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(ek->GetCryptoParameters());
 
   const shared_ptr<LPCryptoParametersRLWE<Element>> cryptoParams =
-      std::dynamic_pointer_cast<LPCryptoParametersRLWE<Element>>(
-          originalPrivateKey->GetCryptoParameters());
+    std::dynamic_pointer_cast<LPCryptoParametersRLWE<Element>>(originalPrivateKey->GetCryptoParameters());
 
-  const shared_ptr<typename Element::Params> originalKeyParams =
-      cryptoParams->GetElementParams();
+  const shared_ptr<typename Element::Params> originalKeyParams = cryptoParams->GetElementParams();
 
-  const auto &p = cryptoParams->GetPlaintextModulus();
+  const auto& p = cryptoParams->GetPlaintextModulus();
 
-  LPEvalKey<Element> keySwitchHintRelin(
-      new LPEvalKeyRelinImpl<Element>(originalPrivateKey->GetCryptoContext()));
+  LPEvalKey<Element> keySwitchHintRelin(new LPEvalKeyRelinImpl<Element>(originalPrivateKey->GetCryptoContext()));
 
   // Getting a reference to the polynomials of new private key.
-  const Element &sNew = newPrivateKey->GetPrivateElement();
+  const Element& sNew = newPrivateKey->GetPrivateElement();
 
   // Getting a reference to the polynomials of original private key.
-  const Element &s = originalPrivateKey->GetPrivateElement();
+  const Element& s = originalPrivateKey->GetPrivateElement();
 
   // Getting a refernce to discrete gaussian distribution generator.
-  const typename Element::DggType &dgg =
-      cryptoParams->GetDiscreteGaussianGenerator();
+  const typename Element::DggType& dgg = cryptoParams->GetDiscreteGaussianGenerator();
 
   // Relinearization window is used to calculate the base exponent.
   usint relinWindow = cryptoParams->GetRelinWindow();
@@ -691,7 +649,7 @@ LPEvalKey<Element> LPAlgorithmMultipartyBGVrns<Element>::MultiKeySwitchGen(
   // evalKeyElementsGenerated hold the generated noise distribution.
   std::vector<Element> evalKeyElementsGenerated;
 
-  const std::vector<Element> &a = ek->GetAVector();
+  const std::vector<Element>& a = ek->GetAVector();
 
   for (usint i = 0; i < (evalKeyElements.size()); i++) {
     evalKeyElementsGenerated.push_back(a[i]);  // alpha's of i
@@ -710,36 +668,30 @@ LPEvalKey<Element> LPAlgorithmMultipartyBGVrns<Element>::MultiKeySwitchGen(
 }
 
 template <class Element>
-shared_ptr<std::map<usint, LPEvalKey<Element>>>
-LPAlgorithmMultipartyBGVrns<Element>::MultiEvalAutomorphismKeyGen(
-    const LPPrivateKey<Element> privateKey,
-    const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-    const std::vector<usint> &indexList) const {
+shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmMultipartyBGVrns<Element>::MultiEvalAutomorphismKeyGen(
+  const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+  const std::vector<usint>& indexList) const {
   const shared_ptr<LPCryptoParametersBGVrns<Element>> cryptoParamsLWE =
-      std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          privateKey->GetCryptoParameters());
+    std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(privateKey->GetCryptoParameters());
 
-  const Element &privateKeyElement = privateKey->GetPrivateElement();
+  const Element& privateKeyElement = privateKey->GetPrivateElement();
 
   usint n = privateKeyElement.GetRingDimension();
 
-  LPPrivateKey<Element> tempPrivateKey(
-      new LPPrivateKeyImpl<Element>(privateKey->GetCryptoContext()));
+  LPPrivateKey<Element> tempPrivateKey(new LPPrivateKeyImpl<Element>(privateKey->GetCryptoContext()));
 
-  shared_ptr<std::map<usint, LPEvalKey<Element>>> evalKeys(
-      new std::map<usint, LPEvalKey<Element>>());
+  shared_ptr<std::map<usint, LPEvalKey<Element>>> evalKeys(new std::map<usint, LPEvalKey<Element>>());
 
   if (indexList.size() > n - 1) {
     PALISADE_THROW(config_error, "size exceeds the ring dimension");
-  } else {
+  }
+  else {
     for (usint i = 0; i < indexList.size(); i++) {
-      Element permutedPrivateKeyElement =
-          privateKeyElement.AutomorphismTransform(indexList[i]);
+      Element permutedPrivateKeyElement = privateKeyElement.AutomorphismTransform(indexList[i]);
 
       tempPrivateKey->SetPrivateElement(permutedPrivateKeyElement);
 
-      (*evalKeys)[indexList[i]] = MultiKeySwitchGen(
-          tempPrivateKey, privateKey, eAuto->find(indexList[i])->second);
+      (*evalKeys)[indexList[i]] = MultiKeySwitchGen(tempPrivateKey, privateKey, eAuto->find(indexList[i])->second);
     }
   }
 
@@ -747,22 +699,17 @@ LPAlgorithmMultipartyBGVrns<Element>::MultiEvalAutomorphismKeyGen(
 }
 
 template <class Element>
-shared_ptr<std::map<usint, LPEvalKey<Element>>>
-LPAlgorithmMultipartyBGVrns<Element>::MultiEvalSumKeyGen(
-    const LPPrivateKey<Element> privateKey,
-    const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const {
+shared_ptr<std::map<usint, LPEvalKey<Element>>> LPAlgorithmMultipartyBGVrns<Element>::MultiEvalSumKeyGen(
+  const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const {
   const shared_ptr<LPCryptoParametersBGVrns<Element>> cryptoParamsLWE =
-      std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          privateKey->GetCryptoParameters());
+    std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(privateKey->GetCryptoParameters());
 
-  const shared_ptr<LPCryptoParameters<Element>> cryptoParams =
-      privateKey->GetCryptoParameters();
-  const EncodingParams encodingParams = cryptoParams->GetEncodingParams();
-  const shared_ptr<typename Element::Params> elementParams =
-      cryptoParams->GetElementParams();
+  const shared_ptr<LPCryptoParameters<Element>> cryptoParams = privateKey->GetCryptoParameters();
+  const EncodingParams encodingParams                        = cryptoParams->GetEncodingParams();
+  const shared_ptr<typename Element::Params> elementParams   = cryptoParams->GetElementParams();
 
   usint batchSize = encodingParams->GetBatchSize();
-  usint m = elementParams->GetCyclotomicOrder();
+  usint m         = elementParams->GetCyclotomicOrder();
 
   std::vector<usint> indices;
 
@@ -772,8 +719,7 @@ LPAlgorithmMultipartyBGVrns<Element>::MultiEvalSumKeyGen(
       indices.push_back(g);
       g = (g * g) % m;
     }
-    if (2 * batchSize < m)
-      indices.push_back(g);
+    if (2 * batchSize < m) indices.push_back(g);
     else
       indices.push_back(m - 1);
   }
@@ -782,29 +728,24 @@ LPAlgorithmMultipartyBGVrns<Element>::MultiEvalSumKeyGen(
 }
 
 template <class Element>
-LPEvalKey<Element> LPAlgorithmMultipartyBGVrns<Element>::MultiMultEvalKey(
-    LPEvalKey<Element> evalKey, LPPrivateKey<Element> sk) const {
+LPEvalKey<Element> LPAlgorithmMultipartyBGVrns<Element>::MultiMultEvalKey(LPEvalKey<Element> evalKey,
+                                                                          LPPrivateKey<Element> sk) const {
   const shared_ptr<LPCryptoParametersBGVrns<Element>> cryptoParamsLWE =
-      std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(
-          evalKey->GetCryptoParameters());
+    std::dynamic_pointer_cast<LPCryptoParametersBGVrns<Element>>(evalKey->GetCryptoParameters());
 
   const shared_ptr<LPCryptoParametersRLWE<Element>> cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersRLWE<Element>>(
-          evalKey->GetCryptoContext()->GetCryptoParameters());
-  const typename Element::DggType &dgg =
-      cryptoParams->GetDiscreteGaussianGenerator();
-  const shared_ptr<typename Element::Params> elementParams =
-      cryptoParams->GetElementParams();
+    std::static_pointer_cast<LPCryptoParametersRLWE<Element>>(evalKey->GetCryptoContext()->GetCryptoParameters());
+  const typename Element::DggType& dgg                     = cryptoParams->GetDiscreteGaussianGenerator();
+  const shared_ptr<typename Element::Params> elementParams = cryptoParams->GetElementParams();
 
-  const auto &p = cryptoParams->GetPlaintextModulus();
+  const auto& p = cryptoParams->GetPlaintextModulus();
 
-  LPEvalKey<Element> evalKeyResult(
-      new LPEvalKeyRelinImpl<Element>(evalKey->GetCryptoContext()));
+  LPEvalKey<Element> evalKeyResult(new LPEvalKeyRelinImpl<Element>(evalKey->GetCryptoContext()));
 
-  const std::vector<Element> &a0 = evalKey->GetAVector();
-  const std::vector<Element> &b0 = evalKey->GetBVector();
+  const std::vector<Element>& a0 = evalKey->GetAVector();
+  const std::vector<Element>& b0 = evalKey->GetBVector();
 
-  const Element &s = sk->GetPrivateElement();
+  const Element& s = sk->GetPrivateElement();
 
   std::vector<Element> a;
   std::vector<Element> b;
@@ -829,52 +770,38 @@ LPEvalKey<Element> LPAlgorithmMultipartyBGVrns<Element>::MultiMultEvalKey(
 
 // Enable for LPPublicKeyEncryptionSchemeBGVrns
 template <class Element>
-void LPPublicKeyEncryptionSchemeBGVrns<Element>::Enable(
-    PKESchemeFeature feature) {
+void LPPublicKeyEncryptionSchemeBGVrns<Element>::Enable(PKESchemeFeature feature) {
   switch (feature) {
     case ENCRYPTION:
       if (this->m_algorithmEncryption == nullptr)
-        this->m_algorithmEncryption =
-            std::make_shared<LPAlgorithmBGVrns<Element>>();
+        this->m_algorithmEncryption = std::make_shared<LPAlgorithmBGVrns<Element>>();
       break;
     case PRE:
       if (this->m_algorithmEncryption == nullptr)
-        this->m_algorithmEncryption =
-            std::make_shared<LPAlgorithmBGVrns<Element>>();
-      if (this->m_algorithmPRE == nullptr)
-        this->m_algorithmPRE =
-            std::make_shared<LPAlgorithmPREBGVrns<Element>>();
+        this->m_algorithmEncryption = std::make_shared<LPAlgorithmBGVrns<Element>>();
+      if (this->m_algorithmPRE == nullptr) this->m_algorithmPRE = std::make_shared<LPAlgorithmPREBGVrns<Element>>();
       break;
     case SHE:
       if (this->m_algorithmEncryption == nullptr)
-        this->m_algorithmEncryption =
-            std::make_shared<LPAlgorithmBGVrns<Element>>();
-      if (this->m_algorithmSHE == nullptr)
-        this->m_algorithmSHE =
-            std::make_shared<LPAlgorithmSHEBGVrns<Element>>();
+        this->m_algorithmEncryption = std::make_shared<LPAlgorithmBGVrns<Element>>();
+      if (this->m_algorithmSHE == nullptr) this->m_algorithmSHE = std::make_shared<LPAlgorithmSHEBGVrns<Element>>();
       break;
     case LEVELEDSHE:
       if (this->m_algorithmEncryption == nullptr)
-        this->m_algorithmEncryption =
-            std::make_shared<LPAlgorithmBGVrns<Element>>();
+        this->m_algorithmEncryption = std::make_shared<LPAlgorithmBGVrns<Element>>();
       if (this->m_algorithmLeveledSHE == nullptr)
-        this->m_algorithmLeveledSHE =
-            std::make_shared<LPLeveledSHEAlgorithmBGVrns<Element>>();
+        this->m_algorithmLeveledSHE = std::make_shared<LPLeveledSHEAlgorithmBGVrns<Element>>();
       break;
     case MULTIPARTY:
       if (this->m_algorithmEncryption == nullptr)
-        this->m_algorithmEncryption =
-            std::make_shared<LPAlgorithmBGVrns<Element>>();
+        this->m_algorithmEncryption = std::make_shared<LPAlgorithmBGVrns<Element>>();
       if (this->m_algorithmMultiparty == nullptr)
-        this->m_algorithmMultiparty =
-            std::make_shared<LPAlgorithmMultipartyBGVrns<Element>>();
+        this->m_algorithmMultiparty = std::make_shared<LPAlgorithmMultipartyBGVrns<Element>>();
       break;
     case FHE:
-      PALISADE_THROW(not_implemented_error,
-                     "FHE feature not supported for BGVrns scheme");
+      PALISADE_THROW(not_implemented_error, "FHE feature not supported for BGVrns scheme");
     case ADVANCEDSHE:
-      PALISADE_THROW(not_implemented_error,
-                     "ADVANCEDSHE feature not supported for BGVrns scheme");
+      PALISADE_THROW(not_implemented_error, "ADVANCEDSHE feature not supported for BGVrns scheme");
   }
 }
 

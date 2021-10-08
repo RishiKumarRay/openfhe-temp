@@ -40,7 +40,8 @@ typedef TernaryUniformGeneratorImpl<BigVector> TernaryUniformGenerator;
  * @brief A generator of the Ternary Uniform Distribution.
  */
 template <typename VecType>
-class TernaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
+class TernaryUniformGeneratorImpl : public DistributionGenerator<VecType>
+{
  public:
   /**
    * @brief Basic constructor for Binary Uniform Generator.
@@ -48,8 +49,7 @@ class TernaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
   TernaryUniformGeneratorImpl() : DistributionGenerator<VecType>() {}
   virtual ~TernaryUniformGeneratorImpl() {}
 
-  typename VecType::Integer GenerateInteger(
-      const typename VecType::Integer &) const {
+  typename VecType::Integer GenerateInteger(const typename VecType::Integer&) const {
     return (0);
   }
 
@@ -62,8 +62,7 @@ class TernaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
    * h = 0, the distribution is NOT sparse)
    * @return A vector of random values within the Ternary Uniform Distribution.
    */
-  VecType GenerateVector(usint size, const typename VecType::Integer &modulus,
-                         usint h = 0) const;
+  VecType GenerateVector(usint size, const typename VecType::Integer& modulus, usint h = 0) const;
 
   /**
    * @brief      Returns a generated vector of integers.

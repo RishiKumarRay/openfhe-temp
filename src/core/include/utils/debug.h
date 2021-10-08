@@ -65,16 +65,15 @@
   } while (0)
 
 // debugging macro prints value of x and location in codex on cerr
-#define DEBUGWHERE(x)                                               \
-  do {                                                              \
-    if (dbg_flag) {                                                 \
-      std::cerr << __FILE__ << ":" << __LINE__ << ": "              \
-                << #x << ":" << x << std::endl;                     \
-    }                                                               \
+#define DEBUGWHERE(x)                                                                  \
+  do {                                                                                 \
+    if (dbg_flag) {                                                                    \
+      std::cerr << __FILE__ << ":" << __LINE__ << ": " << #x << ":" << x << std::endl; \
+    }                                                                                  \
   } while (0)
 
 // debugging macro prints location in codex on cerr
-#define DEBUGHERE()                                                 \
+#define DEBUGHERE()                                                  \
   do {                                                               \
     if (dbg_flag) {                                                  \
       std::cerr << __FILE__ << ":" << __LINE__ << ": " << std::endl; \
@@ -99,12 +98,11 @@
   } while (0)
 
 // debugging macro prints value of x and location in codex on cerr
-#define PROFILELOGWHERE(x)                                          \
-  do {                                                              \
-    if (true) {                                                     \
-      std::cout << #x << ":" << x << " at " << __FILE__ << " line " \
-                << __LINE__ << std::endl;                           \
-    }                                                               \
+#define PROFILELOGWHERE(x)                                                                    \
+  do {                                                                                        \
+    if (true) {                                                                               \
+      std::cout << #x << ":" << x << " at " << __FILE__ << " line " << __LINE__ << std::endl; \
+    }                                                                                         \
   } while (0)
 
 #else  // #if!defined(PROFILE) // profiling a noop
@@ -114,8 +112,8 @@
 
 #endif  // PROFILE
 
-#define TIC(t) t = timeNow()
-#define TOC(t) duration(timeNow() - t)
+#define TIC(t)    t = timeNow()
+#define TOC(t)    duration(timeNow() - t)
 #define TOC_NS(t) duration_ns(timeNow() - t)
 #define TOC_US(t) duration_us(timeNow() - t)
 #define TOC_MS(t) duration_ms(timeNow() - t)
@@ -139,8 +137,8 @@
 #define PROFILELOGEXP(x)
 #define PROFILELOGWHERE(x)
 
-#define TIC(t) t = timeNow()
-#define TOC(t) std::chrono::steady_clock::duration::zero().count()
+#define TIC(t)    t = timeNow()
+#define TOC(t)    std::chrono::steady_clock::duration::zero().count()
 #define TOC_NS(t) std::chrono::steady_clock::duration::zero().count()
 #define TOC_US(t) std::chrono::steady_clock::duration::zero().count()
 #define TOC_MS(t) std::chrono::steady_clock::duration::zero().count()
@@ -170,16 +168,15 @@
   } while (0)
 
 // debugging macro prints value of x and location in codex on cerr
-#define PROFILELOGWHERE(x)                                          \
-  do {                                                              \
-    if (true) {                                                     \
-      std::cout << #x << ":" << x << " at " << __FILE__ << " line " \
-                << __LINE__ LL std::endl;                           \
-    }                                                               \
+#define PROFILELOGWHERE(x)                                                                    \
+  do {                                                                                        \
+    if (true) {                                                                               \
+      std::cout << #x << ":" << x << " at " << __FILE__ << " line " << __LINE__ LL std::endl; \
+    }                                                                                         \
   } while (0)
 
-#define TIC(t) t = timeNow()
-#define TOC(t) duration(timeNow() - t)
+#define TIC(t)    t = timeNow()
+#define TOC(t)    duration(timeNow() - t)
 #define TOC_NS(t) duration_ns(timeNow() - t)
 #define TOC_US(t) duration_us(timeNow() - t)
 #define TOC_MS(t) duration_ms(timeNow() - t)
@@ -190,15 +187,11 @@
 
 typedef std::chrono::high_resolution_clock::time_point TimeVar;
 
-#define duration(a) \
-  std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
-#define duration_ns(a) \
-  std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
-#define duration_us(a) \
-  std::chrono::duration_cast<std::chrono::microseconds>(a).count()
-#define duration_ms(a) \
-  std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
-#define timeNow() std::chrono::high_resolution_clock::now()
+#define duration(a)    std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
+#define duration_ns(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
+#define duration_us(a) std::chrono::duration_cast<std::chrono::microseconds>(a).count()
+#define duration_ms(a) std::chrono::duration_cast<std::chrono::milliseconds>(a).count()
+#define timeNow()      std::chrono::high_resolution_clock::now()
 
 double currentDateTime();
 

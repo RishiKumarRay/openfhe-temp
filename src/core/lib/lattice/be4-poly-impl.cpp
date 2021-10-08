@@ -64,9 +64,9 @@ template Matrix<M4Integer> Rotate(Matrix<M4DCRTPoly> const& inMat);
 template <>
 PolyImpl<NativeVector> PolyImpl<M4Vector>::ToNativePoly() const {
   PolyImpl<NativeVector> interp(
-      std::make_shared<ILParamsImpl<NativeInteger>>(
-          this->GetCyclotomicOrder(), std::numeric_limits<uint64_t>::max(), 1),
-      this->GetFormat(), true);
+    std::make_shared<ILParamsImpl<NativeInteger>>(this->GetCyclotomicOrder(), std::numeric_limits<uint64_t>::max(), 1),
+    this->GetFormat(),
+    true);
 
   for (usint i = 0; i < this->GetLength(); i++) {
     interp[i] = (*this)[i].ConvertToInt();
@@ -78,5 +78,4 @@ PolyImpl<NativeVector> PolyImpl<M4Vector>::ToNativePoly() const {
 }  // namespace lbcrypto
 
 CEREAL_CLASS_VERSION(lbcrypto::M4Poly, lbcrypto::M4Poly::SerializedVersion());
-CEREAL_CLASS_VERSION(lbcrypto::M4DCRTPoly,
-                     lbcrypto::M4DCRTPoly::SerializedVersion());
+CEREAL_CLASS_VERSION(lbcrypto::M4DCRTPoly, lbcrypto::M4DCRTPoly::SerializedVersion());

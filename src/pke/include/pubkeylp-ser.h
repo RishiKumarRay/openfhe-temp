@@ -35,8 +35,7 @@ extern template class lbcrypto::LPCryptoParametersRLWE<lbcrypto::Poly>;
 extern template class lbcrypto::LPCryptoParametersRLWE<lbcrypto::NativePoly>;
 
 extern template class lbcrypto::LPPublicKeyEncryptionScheme<lbcrypto::Poly>;
-extern template class lbcrypto::LPPublicKeyEncryptionScheme<
-    lbcrypto::NativePoly>;
+extern template class lbcrypto::LPPublicKeyEncryptionScheme<lbcrypto::NativePoly>;
 
 extern template class lbcrypto::LPEvalKeyImpl<lbcrypto::Poly>;
 extern template class lbcrypto::LPEvalKeyImpl<lbcrypto::NativePoly>;
@@ -57,8 +56,7 @@ CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersRLWE<lbcrypto::Poly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersRLWE<lbcrypto::NativePoly>);
 
 CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionScheme<lbcrypto::Poly>);
-CEREAL_REGISTER_TYPE(
-    lbcrypto::LPPublicKeyEncryptionScheme<lbcrypto::NativePoly>);
+CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionScheme<lbcrypto::NativePoly>);
 
 CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyImpl<lbcrypto::Poly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyImpl<lbcrypto::NativePoly>);
@@ -66,20 +64,17 @@ CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyImpl<lbcrypto::NativePoly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyRelinImpl<lbcrypto::Poly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyRelinImpl<lbcrypto::NativePoly>);
 
-CEREAL_REGISTER_POLYMORPHIC_RELATION(
-    lbcrypto::LPEvalKeyImpl<lbcrypto::Poly>,
-    lbcrypto::LPEvalKeyRelinImpl<lbcrypto::Poly>);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(
-    lbcrypto::LPEvalKeyImpl<lbcrypto::NativePoly>,
-    lbcrypto::LPEvalKeyRelinImpl<lbcrypto::NativePoly>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(lbcrypto::LPEvalKeyImpl<lbcrypto::Poly>,
+                                     lbcrypto::LPEvalKeyRelinImpl<lbcrypto::Poly>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(lbcrypto::LPEvalKeyImpl<lbcrypto::NativePoly>,
+                                     lbcrypto::LPEvalKeyRelinImpl<lbcrypto::NativePoly>);
 
 CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParameters<lbcrypto::DCRTPoly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersRLWE<lbcrypto::DCRTPoly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionScheme<lbcrypto::DCRTPoly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyImpl<lbcrypto::DCRTPoly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPEvalKeyRelinImpl<lbcrypto::DCRTPoly>);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(
-    lbcrypto::LPEvalKeyImpl<lbcrypto::DCRTPoly>,
-    lbcrypto::LPEvalKeyRelinImpl<lbcrypto::DCRTPoly>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(lbcrypto::LPEvalKeyImpl<lbcrypto::DCRTPoly>,
+                                     lbcrypto::LPEvalKeyRelinImpl<lbcrypto::DCRTPoly>);
 
 #endif

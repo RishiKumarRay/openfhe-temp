@@ -35,7 +35,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTEvalIP : public ::testing::Test {
+class UTEvalIP : public ::testing::Test
+{
  protected:
   void SetUp() {}
 
@@ -47,14 +48,13 @@ class UTEvalIP : public ::testing::Test {
  public:
 };
 
-int64_t ArbBFVInnerProductPackedArray(std::vector<int64_t>& input1,
-                                      std::vector<int64_t>& input2);
+int64_t ArbBFVInnerProductPackedArray(std::vector<int64_t>& input1, std::vector<int64_t>& input2);
 
 TEST_F(UTEvalIP, Test_BFV_EvalInnerProduct) {
   usint size = 10;
   std::vector<int64_t> input1(size, 0);
   std::vector<int64_t> input2(size, 0);
-  usint limit = 15;
+  usint limit         = 15;
   usint plainttextMod = 2333;
 
   PRNG rand_engine(1);
@@ -64,8 +64,7 @@ TEST_F(UTEvalIP, Test_BFV_EvalInnerProduct) {
   generate(input1.begin(), input1.end() - 2, gen);
   generate(input2.begin(), input2.end() - 2, gen);
 
-  int64_t expectedResult =
-      std::inner_product(input1.begin(), input1.end(), input2.begin(), 0);
+  int64_t expectedResult = std::inner_product(input1.begin(), input1.end(), input2.begin(), 0);
   expectedResult %= plainttextMod;
 
   int64_t half = int64_t(plainttextMod) / 2;
@@ -76,14 +75,14 @@ TEST_F(UTEvalIP, Test_BFV_EvalInnerProduct) {
     int64_t result = ArbBFVInnerProductPackedArray(input1, input2);
 
     EXPECT_EQ(result, expectedResult);
-  } catch (const std::logic_error &e) {
+  }
+  catch (const std::logic_error& e) {
     FAIL() << e.what();
   }
 }
 
-int64_t ArbBFVInnerProductPackedArray(std::vector<int64_t> &input1,
-                                      std::vector<int64_t> &input2) {
-  usint m = 22;
+int64_t ArbBFVInnerProductPackedArray(std::vector<int64_t>& input1, std::vector<int64_t>& input2) {
+  usint m            = 22;
   PlaintextModulus p = 2333;  // we choose s.t. 2m|p-1 to leverage CRTArb
   BigInteger modulusQ("1152921504606847009");
   BigInteger modulusP(p);
@@ -93,40 +92,43 @@ int64_t ArbBFVInnerProductPackedArray(std::vector<int64_t> &input1,
   BigInteger bigroot("13201431150704581233041184864526870950");
 
   auto cycloPoly = GetCyclotomicPolynomial<BigVector>(m, modulusQ);
-  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly,
-                                                                    modulusQ);
+  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly, modulusQ);
 
   float stdDev = 4;
-  auto params =
-      std::make_shared<ILParams>(m, modulusQ, rootOfUnity, bigmodulus, bigroot);
+  auto params  = std::make_shared<ILParams>(m, modulusQ, rootOfUnity, bigmodulus, bigroot);
 
   BigInteger bigEvalMultModulus("42535295865117307932921825928971026753");
   BigInteger bigEvalMultRootOfUnity("22649103892665819561201725524201801241");
-  BigInteger bigEvalMultModulusAlt(
-      "115792089237316195423570985008687907853269984665640564039457584007913129"
-      "642241");
-  BigInteger bigEvalMultRootOfUnityAlt(
-      "378615503042744655685234439862468415306448471137816667281217177222856678"
-      "62085");
+  BigInteger bigEvalMultModulusAlt("115792089237316195423570985008687907853269984665640564039457584007913129"
+                                   "642241");
+  BigInteger bigEvalMultRootOfUnityAlt("378615503042744655685234439862468415306448471137816667281217177222856678"
+                                       "62085");
 
   auto cycloPolyBig = GetCyclotomicPolynomial<BigVector>(m, bigEvalMultModulus);
-  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(
-        cycloPolyBig, bigEvalMultModulus);
+  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPolyBig, bigEvalMultModulus);
 
   usint batchSize = 8;
 
-  EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(
-      p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
+  EncodingParams encodingParams(
+    std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
 
   PackedEncoding::SetParams(m, encodingParams);
 
   BigInteger delta(modulusQ.DividedBy(modulusP));
 
-  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(
-      params, encodingParams, 1, stdDev, delta.ToString(), OPTIMIZED,
-      bigEvalMultModulus.ToString(), bigEvalMultRootOfUnity.ToString(), 1, 9,
-      1.006, bigEvalMultModulusAlt.ToString(),
-      bigEvalMultRootOfUnityAlt.ToString());
+  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(params,
+                                                                           encodingParams,
+                                                                           1,
+                                                                           stdDev,
+                                                                           delta.ToString(),
+                                                                           OPTIMIZED,
+                                                                           bigEvalMultModulus.ToString(),
+                                                                           bigEvalMultRootOfUnity.ToString(),
+                                                                           1,
+                                                                           9,
+                                                                           1.006,
+                                                                           bigEvalMultModulusAlt.ToString(),
+                                                                           bigEvalMultRootOfUnityAlt.ToString());
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);

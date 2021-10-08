@@ -124,23 +124,22 @@ struct DecryptResult {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPKey : public CryptoObject<Element>, public Serializable {
+class LPKey : public CryptoObject<Element>, public Serializable
+{
  public:
-  explicit LPKey(CryptoContext<Element> cc, const string &id = "")
-      : CryptoObject<Element>(cc, id) {}
+  explicit LPKey(CryptoContext<Element> cc, const string& id = "") : CryptoObject<Element>(cc, id) {}
 
-  explicit LPKey(shared_ptr<CryptoObject<Element>> co)
-      : CryptoObject<Element>(co) {}
+  explicit LPKey(shared_ptr<CryptoObject<Element>> co) : CryptoObject<Element>(co) {}
 
   virtual ~LPKey() {}
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<CryptoObject<Element>>(this));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     ar(::cereal::base_class<CryptoObject<Element>>(this));
   }
 };
@@ -156,7 +155,8 @@ using LPPublicKey = shared_ptr<LPPublicKeyImpl<Element>>;
  * @tparam Element a ring element.
  */
 template <typename Element>
-class LPPublicKeyImpl : public LPKey<Element> {
+class LPPublicKeyImpl : public LPKey<Element>
+{
  public:
   /**
    * Basic constructor
@@ -164,16 +164,15 @@ class LPPublicKeyImpl : public LPKey<Element> {
    * @param cc - CryptoContext
    * @param id - key identifier
    */
-  explicit LPPublicKeyImpl(CryptoContext<Element> cc = 0, const string &id = "")
-      : LPKey<Element>(cc, id) {}
+  explicit LPPublicKeyImpl(CryptoContext<Element> cc = 0, const string& id = "") : LPKey<Element>(cc, id) {}
 
   /**
    * Copy constructor
    *
    *@param &rhs LPPublicKeyImpl to copy from
    */
-  explicit LPPublicKeyImpl(const LPPublicKeyImpl<Element> &rhs)
-      : LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
+  explicit LPPublicKeyImpl(const LPPublicKeyImpl<Element>& rhs) :
+      LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
     m_h = rhs.m_h;
   }
 
@@ -182,8 +181,7 @@ class LPPublicKeyImpl : public LPKey<Element> {
    *
    *@param &rhs LPPublicKeyImpl to move from
    */
-  explicit LPPublicKeyImpl(LPPublicKeyImpl<Element> &&rhs)
-      : LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
+  explicit LPPublicKeyImpl(LPPublicKeyImpl<Element>&& rhs) : LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
     m_h = std::move(rhs.m_h);
   }
 
@@ -196,10 +194,9 @@ class LPPublicKeyImpl : public LPKey<Element> {
    *
    * @param &rhs LPPublicKeyImpl to copy from
    */
-  const LPPublicKeyImpl<Element> &operator=(
-      const LPPublicKeyImpl<Element> &rhs) {
+  const LPPublicKeyImpl<Element>& operator=(const LPPublicKeyImpl<Element>& rhs) {
     CryptoObject<Element>::operator=(rhs);
-    this->m_h = rhs.m_h;
+    this->m_h                      = rhs.m_h;
     return *this;
   }
 
@@ -208,9 +205,9 @@ class LPPublicKeyImpl : public LPKey<Element> {
    *
    * @param &rhs LPPublicKeyImpl to copy from
    */
-  const LPPublicKeyImpl<Element> &operator=(LPPublicKeyImpl<Element> &&rhs) {
+  const LPPublicKeyImpl<Element>& operator=(LPPublicKeyImpl<Element>&& rhs) {
     CryptoObject<Element>::operator=(rhs);
-    m_h = std::move(rhs.m_h);
+    m_h                            = std::move(rhs.m_h);
     return *this;
   }
 
@@ -220,7 +217,9 @@ class LPPublicKeyImpl : public LPKey<Element> {
    * Gets the computed public key
    * @return the public key element.
    */
-  const std::vector<Element> &GetPublicElements() const { return this->m_h; }
+  const std::vector<Element>& GetPublicElements() const {
+    return this->m_h;
+  }
 
   // @Set Properties
 
@@ -228,13 +227,15 @@ class LPPublicKeyImpl : public LPKey<Element> {
    * Sets the public key vector of Element.
    * @param &element is the public key Element vector to be copied.
    */
-  void SetPublicElements(const std::vector<Element> &element) { m_h = element; }
+  void SetPublicElements(const std::vector<Element>& element) {
+    m_h = element;
+  }
 
   /**
    * Sets the public key vector of Element.
    * @param &&element is the public key Element vector to be moved.
    */
-  void SetPublicElements(std::vector<Element> &&element) {
+  void SetPublicElements(std::vector<Element>&& element) {
     m_h = std::move(element);
   }
 
@@ -242,7 +243,7 @@ class LPPublicKeyImpl : public LPKey<Element> {
    * Sets the public key Element at index idx.
    * @param &element is the public key Element to be copied.
    */
-  void SetPublicElementAtIndex(usint idx, const Element &element) {
+  void SetPublicElementAtIndex(usint idx, const Element& element) {
     m_h.insert(m_h.begin() + idx, element);
   }
 
@@ -250,11 +251,11 @@ class LPPublicKeyImpl : public LPKey<Element> {
    * Sets the public key Element at index idx.
    * @param &&element is the public key Element to be moved.
    */
-  void SetPublicElementAtIndex(usint idx, Element &&element) {
+  void SetPublicElementAtIndex(usint idx, Element&& element) {
     m_h.insert(m_h.begin() + idx, std::move(element));
   }
 
-  bool operator==(const LPPublicKeyImpl &other) const {
+  bool operator==(const LPPublicKeyImpl& other) const {
     if (!CryptoObject<Element>::operator==(other)) {
       return false;
     }
@@ -272,29 +273,33 @@ class LPPublicKeyImpl : public LPKey<Element> {
     return true;
   }
 
-  bool operator!=(const LPPublicKeyImpl &other) const {
+  bool operator!=(const LPPublicKeyImpl& other) const {
     return !(*this == other);
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPKey<Element>>(this));
     ar(::cereal::make_nvp("h", m_h));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::base_class<LPKey<Element>>(this));
     ar(::cereal::make_nvp("h", m_h));
   }
 
-  std::string SerializedObjectName() const { return "PublicKey"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "PublicKey";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   std::vector<Element> m_h;
@@ -311,7 +316,8 @@ using LPEvalKey = shared_ptr<LPEvalKeyImpl<Element>>;
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPEvalKeyImpl : public LPKey<Element> {
+class LPEvalKeyImpl : public LPKey<Element>
+{
  public:
   /**
    * Basic constructor for setting crypto params
@@ -330,9 +336,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &a is the Element vector to be copied.
    */
 
-  virtual void SetAVector(const std::vector<Element> &a) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetAVector copy operation not supported");
+  virtual void SetAVector(const std::vector<Element>& a) {
+    PALISADE_THROW(not_implemented_error, "SetAVector copy operation not supported");
   }
 
   /**
@@ -342,9 +347,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &&a is the Element vector to be moved.
    */
 
-  virtual void SetAVector(std::vector<Element> &&a) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetAVector move operation not supported");
+  virtual void SetAVector(std::vector<Element>&& a) {
+    PALISADE_THROW(not_implemented_error, "SetAVector move operation not supported");
   }
 
   /**
@@ -354,7 +358,7 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @return Element vector A.
    */
 
-  virtual const std::vector<Element> &GetAVector() const {
+  virtual const std::vector<Element>& GetAVector() const {
     PALISADE_THROW(not_implemented_error, "GetAVector operation not supported");
   }
 
@@ -365,9 +369,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &b is the Element vector to be copied.
    */
 
-  virtual void SetBVector(const std::vector<Element> &b) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetBVector copy operation not supported");
+  virtual void SetBVector(const std::vector<Element>& b) {
+    PALISADE_THROW(not_implemented_error, "SetBVector copy operation not supported");
   }
 
   /**
@@ -377,9 +380,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &&b is the Element vector to be moved.
    */
 
-  virtual void SetBVector(std::vector<Element> &&b) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetBVector move operation not supported");
+  virtual void SetBVector(std::vector<Element>&& b) {
+    PALISADE_THROW(not_implemented_error, "SetBVector move operation not supported");
   }
 
   /**
@@ -389,7 +391,7 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @return  Element vector B.
    */
 
-  virtual const std::vector<Element> &GetBVector() const {
+  virtual const std::vector<Element>& GetBVector() const {
     PALISADE_THROW(not_implemented_error, "GetBVector operation not supported");
   }
 
@@ -400,7 +402,7 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &a is the Element to be copied.
    */
 
-  virtual void SetA(const Element &a) {
+  virtual void SetA(const Element& a) {
     PALISADE_THROW(not_implemented_error, "SetA copy operation not supported");
   }
 
@@ -410,7 +412,7 @@ class LPEvalKeyImpl : public LPKey<Element> {
    *
    * @param &&a is the Element to be moved.
    */
-  virtual void SetA(Element &&a) {
+  virtual void SetA(Element&& a) {
     PALISADE_THROW(not_implemented_error, "SetA move operation not supported");
   }
 
@@ -421,7 +423,7 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @return  Element.
    */
 
-  virtual const Element &GetA() const {
+  virtual const Element& GetA() const {
     PALISADE_THROW(not_implemented_error, "GetA operation not supported");
   }
 
@@ -432,9 +434,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &a is the Element to be copied.
    */
 
-  virtual void SetAinDCRT(const DCRTPoly &a) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetAinDCRT copy operation not supported");
+  virtual void SetAinDCRT(const DCRTPoly& a) {
+    PALISADE_THROW(not_implemented_error, "SetAinDCRT copy operation not supported");
   }
 
   /**
@@ -443,9 +444,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    *
    * @param &&a is the Element to be moved.
    */
-  virtual void SetAinDCRT(DCRTPoly &&a) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetAinDCRT move operation not supported");
+  virtual void SetAinDCRT(DCRTPoly&& a) {
+    PALISADE_THROW(not_implemented_error, "SetAinDCRT move operation not supported");
   }
 
   /**
@@ -455,7 +455,7 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @return  Element.
    */
 
-  virtual const DCRTPoly &GetAinDCRT() const {
+  virtual const DCRTPoly& GetAinDCRT() const {
     PALISADE_THROW(not_implemented_error, "GetAinDCRT operation not supported");
   }
 
@@ -466,9 +466,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @param &b is the Element to be copied.
    */
 
-  virtual void SetBinDCRT(const DCRTPoly &b) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetAinDCRT copy operation not supported");
+  virtual void SetBinDCRT(const DCRTPoly& b) {
+    PALISADE_THROW(not_implemented_error, "SetAinDCRT copy operation not supported");
   }
 
   /**
@@ -477,9 +476,8 @@ class LPEvalKeyImpl : public LPKey<Element> {
    *
    * @param &&b is the Element to be moved.
    */
-  virtual void SetBinDCRT(DCRTPoly &&b) {
-    PALISADE_THROW(not_implemented_error,
-                   "SetAinDCRT move operation not supported");
+  virtual void SetBinDCRT(DCRTPoly&& b) {
+    PALISADE_THROW(not_implemented_error, "SetAinDCRT move operation not supported");
   }
 
   /**
@@ -489,35 +487,38 @@ class LPEvalKeyImpl : public LPKey<Element> {
    * @return  Element.
    */
 
-  virtual const DCRTPoly &GetBinDCRT() const {
+  virtual const DCRTPoly& GetBinDCRT() const {
     PALISADE_THROW(not_implemented_error, "GetAinDCRT operation not supported");
   }
 
   virtual void ClearKeys() {
-    PALISADE_THROW(not_implemented_error,
-                   "ClearKeys operation is not supported");
+    PALISADE_THROW(not_implemented_error, "ClearKeys operation is not supported");
   }
 
-  friend bool operator==(const LPEvalKeyImpl &a, const LPEvalKeyImpl &b) {
+  friend bool operator==(const LPEvalKeyImpl& a, const LPEvalKeyImpl& b) {
     return a.key_compare(b);
   }
 
-  friend bool operator!=(const LPEvalKeyImpl &a, LPEvalKeyImpl &b) {
+  friend bool operator!=(const LPEvalKeyImpl& a, LPEvalKeyImpl& b) {
     return !(a == b);
   }
 
-  virtual bool key_compare(const LPEvalKeyImpl &other) const { return false; }
+  virtual bool key_compare(const LPEvalKeyImpl& other) const {
+    return false;
+  }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPKey<Element>>(this));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     ar(::cereal::base_class<LPKey<Element>>(this));
   }
-  std::string SerializedObjectName() const { return "EvalKey"; }
+  std::string SerializedObjectName() const {
+    return "EvalKey";
+  }
 };
 
 template <typename Element>
@@ -531,15 +532,15 @@ using LPEvalKeyRelin = shared_ptr<LPEvalKeyRelinImpl<Element>>;
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
+class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element>
+{
  public:
   /**
    * Basic constructor for setting crypto params
    *
    * @param &cryptoParams is the reference to cryptoParams
    */
-  explicit LPEvalKeyRelinImpl(CryptoContext<Element> cc = 0)
-      : LPEvalKeyImpl<Element>(cc) {}
+  explicit LPEvalKeyRelinImpl(CryptoContext<Element> cc = 0) : LPEvalKeyImpl<Element>(cc) {}
 
   virtual ~LPEvalKeyRelinImpl() {}
 
@@ -548,8 +549,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    *@param &rhs key to copy from
    */
-  explicit LPEvalKeyRelinImpl(const LPEvalKeyRelinImpl<Element> &rhs)
-      : LPEvalKeyImpl<Element>(rhs.GetCryptoContext()) {
+  explicit LPEvalKeyRelinImpl(const LPEvalKeyRelinImpl<Element>& rhs) : LPEvalKeyImpl<Element>(rhs.GetCryptoContext()) {
     m_rKey = rhs.m_rKey;
   }
 
@@ -558,8 +558,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    *@param &rhs key to move from
    */
-  explicit LPEvalKeyRelinImpl(LPEvalKeyRelinImpl<Element> &&rhs)
-      : LPEvalKeyImpl<Element>(rhs.GetCryptoContext()) {
+  explicit LPEvalKeyRelinImpl(LPEvalKeyRelinImpl<Element>&& rhs) : LPEvalKeyImpl<Element>(rhs.GetCryptoContext()) {
     m_rKey = std::move(rhs.m_rKey);
   }
 
@@ -572,10 +571,9 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &rhs key to copy from
    */
-  const LPEvalKeyRelinImpl<Element> &operator=(
-      const LPEvalKeyRelinImpl<Element> &rhs) {
+  const LPEvalKeyRelinImpl<Element>& operator=(const LPEvalKeyRelinImpl<Element>& rhs) {
     this->context = rhs.context;
-    this->m_rKey = rhs.m_rKey;
+    this->m_rKey  = rhs.m_rKey;
     return *this;
   }
 
@@ -584,11 +582,10 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &rhs key to move from
    */
-  const LPEvalKeyRelinImpl<Element> &operator=(
-      LPEvalKeyRelinImpl<Element> &&rhs) {
+  const LPEvalKeyRelinImpl<Element>& operator=(LPEvalKeyRelinImpl<Element>&& rhs) {
     this->context = rhs.context;
-    rhs.context = 0;
-    m_rKey = std::move(rhs.m_rKey);
+    rhs.context   = 0;
+    m_rKey        = std::move(rhs.m_rKey);
     return *this;
   }
 
@@ -598,7 +595,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &a is the Element vector to be copied.
    */
-  virtual void SetAVector(const std::vector<Element> &a) {
+  virtual void SetAVector(const std::vector<Element>& a) {
     m_rKey.insert(m_rKey.begin() + 0, a);
   }
 
@@ -608,7 +605,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &&a is the Element vector to be moved.
    */
-  virtual void SetAVector(std::vector<Element> &&a) {
+  virtual void SetAVector(std::vector<Element>&& a) {
     m_rKey.insert(m_rKey.begin() + 0, std::move(a));
   }
 
@@ -618,7 +615,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @return Element vector A.
    */
-  virtual const std::vector<Element> &GetAVector() const {
+  virtual const std::vector<Element>& GetAVector() const {
     return m_rKey.at(0);
   }
 
@@ -628,7 +625,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &b is the Element vector to be copied.
    */
-  virtual void SetBVector(const std::vector<Element> &b) {
+  virtual void SetBVector(const std::vector<Element>& b) {
     m_rKey.insert(m_rKey.begin() + 1, b);
   }
 
@@ -638,7 +635,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &&b is the Element vector to be moved.
    */
-  virtual void SetBVector(std::vector<Element> &&b) {
+  virtual void SetBVector(std::vector<Element>&& b) {
     m_rKey.insert(m_rKey.begin() + 1, std::move(b));
   }
 
@@ -648,7 +645,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @return Element vector B.
    */
-  virtual const std::vector<Element> &GetBVector() const {
+  virtual const std::vector<Element>& GetBVector() const {
     return m_rKey.at(1);
   }
 
@@ -659,7 +656,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    * @param &a is the Element to be copied.
    */
 
-  virtual void SetAinDCRT(const DCRTPoly &a) {
+  virtual void SetAinDCRT(const DCRTPoly& a) {
     m_dcrtKeys.insert(m_dcrtKeys.begin() + 0, a);
   }
 
@@ -669,7 +666,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &&a is the Element to be moved.
    */
-  virtual void SetAinDCRT(DCRTPoly &&a) {
+  virtual void SetAinDCRT(DCRTPoly&& a) {
     m_dcrtKeys.insert(m_dcrtKeys.begin() + 0, std::move(a));
   }
 
@@ -680,7 +677,9 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    * @return  Element.
    */
 
-  virtual const DCRTPoly &GetAinDCRT() const { return m_dcrtKeys.at(0); }
+  virtual const DCRTPoly& GetAinDCRT() const {
+    return m_dcrtKeys.at(0);
+  }
 
   /**
    * Setter function to store key switch Element.
@@ -689,7 +688,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    * @param &b is the Element to be copied.
    */
 
-  virtual void SetBinDCRT(const DCRTPoly &b) {
+  virtual void SetBinDCRT(const DCRTPoly& b) {
     m_dcrtKeys.insert(m_dcrtKeys.begin() + 1, b);
   }
 
@@ -699,7 +698,7 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    *
    * @param &&b is the Element to be moved.
    */
-  virtual void SetBinDCRT(DCRTPoly &&b) {
+  virtual void SetBinDCRT(DCRTPoly&& b) {
     m_dcrtKeys.insert(m_dcrtKeys.begin() + 1, std::move(b));
   }
 
@@ -710,16 +709,17 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
    * @return  Element.
    */
 
-  virtual const DCRTPoly &GetBinDCRT() const { return m_dcrtKeys.at(1); }
+  virtual const DCRTPoly& GetBinDCRT() const {
+    return m_dcrtKeys.at(1);
+  }
 
   virtual void ClearKeys() {
     m_rKey.clear();
     m_dcrtKeys.clear();
   }
 
-
-  bool key_compare(const LPEvalKeyImpl<Element> &other) const {
-    const auto &oth = static_cast<const LPEvalKeyRelinImpl<Element> &>(other);
+  bool key_compare(const LPEvalKeyImpl<Element>& other) const {
+    const auto& oth = static_cast<const LPEvalKeyRelinImpl<Element>&>(other);
 
     if (!CryptoObject<Element>::operator==(other)) return false;
 
@@ -734,23 +734,27 @@ class LPEvalKeyRelinImpl : public LPEvalKeyImpl<Element> {
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPEvalKeyImpl<Element>>(this));
     ar(::cereal::make_nvp("k", m_rKey));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::base_class<LPEvalKeyImpl<Element>>(this));
     ar(::cereal::make_nvp("k", m_rKey));
   }
-  std::string SerializedObjectName() const { return "EvalKeyRelin"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "EvalKeyRelin";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // private member to store vector of vector of Element.
@@ -771,21 +775,21 @@ using LPPrivateKey = shared_ptr<LPPrivateKeyImpl<Element>>;
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPrivateKeyImpl : public LPKey<Element> {
+class LPPrivateKeyImpl : public LPKey<Element>
+{
  public:
   /**
    * Construct in context
    */
 
-  explicit LPPrivateKeyImpl(CryptoContext<Element> cc = 0)
-      : LPKey<Element>(cc, GenerateUniqueKeyID()) {}
+  explicit LPPrivateKeyImpl(CryptoContext<Element> cc = 0) : LPKey<Element>(cc, GenerateUniqueKeyID()) {}
 
   /**
    * Copy constructor
    *@param &rhs the LPPrivateKeyImpl to copy from
    */
-  explicit LPPrivateKeyImpl(const LPPrivateKeyImpl<Element> &rhs)
-      : LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
+  explicit LPPrivateKeyImpl(const LPPrivateKeyImpl<Element>& rhs) :
+      LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
     this->m_sk = rhs.m_sk;
   }
 
@@ -793,12 +797,13 @@ class LPPrivateKeyImpl : public LPKey<Element> {
    * Move constructor
    *@param &rhs the LPPrivateKeyImpl to move from
    */
-  explicit LPPrivateKeyImpl(LPPrivateKeyImpl<Element> &&rhs)
-      : LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
+  explicit LPPrivateKeyImpl(LPPrivateKeyImpl<Element>&& rhs) : LPKey<Element>(rhs.GetCryptoContext(), rhs.GetKeyTag()) {
     this->m_sk = std::move(rhs.m_sk);
   }
 
-  operator bool() const { return static_cast<bool>(this->context); }
+  operator bool() const {
+    return static_cast<bool>(this->context);
+  }
 
   /**
    * Assignment Operator.
@@ -806,10 +811,9 @@ class LPPrivateKeyImpl : public LPKey<Element> {
    * @param &rhs LPPrivateKeyto assign from.
    * @return the resulting LPPrivateKeyImpl
    */
-  const LPPrivateKeyImpl<Element> &operator=(
-      const LPPrivateKeyImpl<Element> &rhs) {
+  const LPPrivateKeyImpl<Element>& operator=(const LPPrivateKeyImpl<Element>& rhs) {
     CryptoObject<Element>::operator=(rhs);
-    this->m_sk = rhs.m_sk;
+    this->m_sk                     = rhs.m_sk;
     return *this;
   }
 
@@ -819,9 +823,9 @@ class LPPrivateKeyImpl : public LPKey<Element> {
    * @param &rhs LPPrivateKeyImpl to assign from.
    * @return the resulting LPPrivateKeyImpl
    */
-  const LPPrivateKeyImpl<Element> &operator=(LPPrivateKeyImpl<Element> &&rhs) {
+  const LPPrivateKeyImpl<Element>& operator=(LPPrivateKeyImpl<Element>&& rhs) {
     CryptoObject<Element>::operator=(rhs);
-    this->m_sk = std::move(rhs.m_sk);
+    this->m_sk                     = std::move(rhs.m_sk);
     return *this;
   }
 
@@ -829,66 +833,77 @@ class LPPrivateKeyImpl : public LPKey<Element> {
    * Implementation of the Get accessor for private element.
    * @return the private element.
    */
-  const Element &GetPrivateElement() const { return m_sk; }
+  const Element& GetPrivateElement() const {
+    return m_sk;
+  }
 
   /**
    * Set accessor for private element.
    * @private &x private element to set to.
    */
-  void SetPrivateElement(const Element &x) { m_sk = x; }
+  void SetPrivateElement(const Element& x) {
+    m_sk = x;
+  }
 
   /**
    * Set accessor for private element.
    * @private &x private element to set to.
    */
-  void SetPrivateElement(Element &&x) { m_sk = std::move(x); }
+  void SetPrivateElement(Element&& x) {
+    m_sk = std::move(x);
+  }
 
-  bool operator==(const LPPrivateKeyImpl &other) const {
+  bool operator==(const LPPrivateKeyImpl& other) const {
     return CryptoObject<Element>::operator==(other) && m_sk == other.m_sk;
   }
 
-  bool operator!=(const LPPrivateKeyImpl &other) const {
+  bool operator!=(const LPPrivateKeyImpl& other) const {
     return !(*this == other);
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPKey<Element>>(this));
     ar(::cereal::make_nvp("s", m_sk));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::base_class<LPKey<Element>>(this));
     ar(::cereal::make_nvp("s", m_sk));
   }
 
-  std::string SerializedObjectName() const { return "PrivateKey"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "PrivateKey";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   Element m_sk;
 };
 
 template <class Element>
-class LPKeyPair {
+class LPKeyPair
+{
  public:
   LPPublicKey<Element> publicKey;
   LPPrivateKey<Element> secretKey;
 
-  LPKeyPair(LPPublicKey<Element> a, LPPrivateKey<Element> b)
-      : publicKey(a), secretKey(b) {}
+  LPKeyPair(LPPublicKey<Element> a, LPPrivateKey<Element> b) : publicKey(a), secretKey(b) {}
 
-  LPKeyPair(LPPublicKeyImpl<Element> *a = nullptr,
-            LPPrivateKeyImpl<Element> *b = nullptr)
-      : publicKey(a), secretKey(b) {}
+  LPKeyPair(LPPublicKeyImpl<Element>* a = nullptr, LPPrivateKeyImpl<Element>* b = nullptr) :
+      publicKey(a), secretKey(b) {}
 
-  bool good() { return publicKey && secretKey; }
+  bool good() {
+    return publicKey && secretKey;
+  }
 };
 
 /**
@@ -896,7 +911,8 @@ class LPKeyPair {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPParameterGenerationAlgorithm {
+class LPParameterGenerationAlgorithm
+{
  public:
   virtual ~LPParameterGenerationAlgorithm() {}
 
@@ -916,9 +932,8 @@ class LPParameterGenerationAlgorithm {
    * @param n ring dimension in case the user wants to use a custom ring
    * dimension
    */
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         int32_t evalAddCount = 0, int32_t evalMultCount = 0,
-                         int32_t keySwitchCount = 0, size_t dcrtBits = 0,
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, int32_t evalAddCount = 0,
+                         int32_t evalMultCount = 0, int32_t keySwitchCount = 0, size_t dcrtBits = 0,
                          uint32_t n = 0) const = 0;
 
   /**
@@ -937,14 +952,10 @@ class LPParameterGenerationAlgorithm {
    * @param rsTech the rescaling technique used (e.g., APPROXRESCALE or
    * EXACTRESCALE)
    */
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         usint cyclOrder, usint numPrimes, usint scaleExp,
-                         usint relinWindow, MODE mode,
-                         KeySwitchTechnique ksTech, usint firstModSize,
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, usint cyclOrder, usint numPrimes,
+                         usint scaleExp, usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint firstModSize,
                          RescalingTechnique rsTech) const {
-    PALISADE_THROW(
-        config_error,
-        "This signature for ParamsGen is not supported for this scheme.");
+    PALISADE_THROW(config_error, "This signature for ParamsGen is not supported for this scheme.");
   }
 
   /**
@@ -963,16 +974,11 @@ class LPParameterGenerationAlgorithm {
    * @param rsTech the rescaling technique used (e.g., APPROXRESCALE or
    * EXACTRESCALE)
    */
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         usint cyclOrder, usint numPrimes, usint scaleExp,
-                         usint relinWindow, MODE mode,
-                         KeySwitchTechnique ksTech = BV,
-                         usint firstModSize = 60,
-                         RescalingTechnique = APPROXRESCALE,
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, usint cyclOrder, usint numPrimes,
+                         usint scaleExp, usint relinWindow, MODE mode, KeySwitchTechnique ksTech = BV,
+                         usint firstModSize = 60, RescalingTechnique = APPROXRESCALE,
                          uint32_t numLargeDigits = 4) const {
-    PALISADE_THROW(
-        config_error,
-        "This signature for ParamsGen is not supported for this scheme.");
+    PALISADE_THROW(config_error, "This signature for ParamsGen is not supported for this scheme.");
   }
 
   /**
@@ -988,24 +994,21 @@ class LPParameterGenerationAlgorithm {
    * @param firstModSize the bit-size of the first modulus
    * @param dcrtBits the bit-width of moduli.
    */
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         usint cyclOrder, usint ptm, usint numPrimes,
-                         usint relinWindow, MODE mode,
-                         KeySwitchTechnique ksTech = BV,
-                         usint firstModSize = 60, usint dcrtBits = 60,
-                         uint32_t numLargeDigits = 4) const {
-    PALISADE_THROW(
-        not_implemented_error,
-        "This signature for ParamsGen is not supported for this scheme.");
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, usint cyclOrder, usint ptm,
+                         usint numPrimes, usint relinWindow, MODE mode, KeySwitchTechnique ksTech = BV,
+                         usint firstModSize = 60, usint dcrtBits = 60, uint32_t numLargeDigits = 4) const {
+    PALISADE_THROW(not_implemented_error, "This signature for ParamsGen is not supported for this scheme.");
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {}
+  void save(Archive& ar, std::uint32_t const version) const {}
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {}
+  void load(Archive& ar, std::uint32_t const version) {}
 
-  std::string SerializedObjectName() const { return "ParamsGen"; }
+  std::string SerializedObjectName() const {
+    return "ParamsGen";
+  }
 };
 
 /**
@@ -1013,7 +1016,8 @@ class LPParameterGenerationAlgorithm {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPEncryptionAlgorithm {
+class LPEncryptionAlgorithm
+{
  public:
   virtual ~LPEncryptionAlgorithm() {}
 
@@ -1027,8 +1031,7 @@ class LPEncryptionAlgorithm {
    * cryptocontext if false
    * @param *ciphertext ciphertext which results from encryption.
    */
-  virtual Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey,
-                                      Element plaintext) const = 0;
+  virtual Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey, Element plaintext) const = 0;
 
   /**
    * Method for encrypting plaintex using LBC
@@ -1040,8 +1043,7 @@ class LPEncryptionAlgorithm {
    * cryptocontext if false
    * @param *ciphertext ciphertext which results from encryption.
    */
-  virtual Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey,
-                                      Element plaintext) const = 0;
+  virtual Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey, Element plaintext) const = 0;
 
   /**
    * Method for decrypting plaintext using LBC
@@ -1051,9 +1053,8 @@ class LPEncryptionAlgorithm {
    * @param *plaintext the plaintext output.
    * @return the decoding result.
    */
-  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                                ConstCiphertext<Element> ciphertext,
-                                NativePoly *plaintext) const = 0;
+  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
+                                NativePoly* plaintext) const = 0;
 
   /**
    * Method for decrypting plaintext using LBC
@@ -1063,9 +1064,8 @@ class LPEncryptionAlgorithm {
    * @param *plaintext the plaintext output.
    * @return the decoding result.
    */
-  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                                ConstCiphertext<Element> ciphertext,
-                                Poly *plaintext) const {
+  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
+                                Poly* plaintext) const {
     PALISADE_THROW(config_error, "Decryption to Poly is not supported");
   }
 
@@ -1076,8 +1076,7 @@ class LPEncryptionAlgorithm {
    * @param &privateKey private key used for decryption.
    * @return function ran correctly.
    */
-  virtual LPKeyPair<Element> KeyGen(CryptoContext<Element> cc,
-                                    bool makeSparse = false) = 0;
+  virtual LPKeyPair<Element> KeyGen(CryptoContext<Element> cc, bool makeSparse = false) = 0;
 };
 
 /**
@@ -1085,7 +1084,8 @@ class LPEncryptionAlgorithm {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPLeveledSHEAlgorithm {
+class LPLeveledSHEAlgorithm
+{
  public:
   virtual ~LPLeveledSHEAlgorithm() {}
 
@@ -1095,8 +1095,7 @@ class LPLeveledSHEAlgorithm {
    * @param &cipherText Ciphertext to perform mod reduce on.
    * @param levels the number of towers to drop.
    */
-  virtual void ModReduceInPlace(Ciphertext<Element> &ciphertext,
-                                size_t levels = 1) const = 0;
+  virtual void ModReduceInPlace(Ciphertext<Element>& ciphertext, size_t levels = 1) const = 0;
 
   /**
    * Method for Modulus Reduction.
@@ -1104,8 +1103,7 @@ class LPLeveledSHEAlgorithm {
    * @param &cipherText Ciphertext to perform mod reduce on.
    * @param levels the number of towers to drop.
    */
-  virtual Ciphertext<Element> ModReduce(ConstCiphertext<Element> ciphertext,
-                                        size_t levels = 1) const {
+  virtual Ciphertext<Element> ModReduce(ConstCiphertext<Element> ciphertext, size_t levels = 1) const {
     auto rv = ciphertext->Clone();
     ModReduceInPlace(rv, levels);
     return rv;
@@ -1118,10 +1116,8 @@ class LPLeveledSHEAlgorithm {
    * @param levels the number of towers to drop.
    * @return ciphertext after the modulus reduction performed.
    */
-  virtual Ciphertext<Element> ModReduceInternal(
-      ConstCiphertext<Element> ciphertext, size_t levels = 1) const {
-    PALISADE_THROW(config_error,
-                   "ModReduceInternal is not supported for this scheme");
+  virtual Ciphertext<Element> ModReduceInternal(ConstCiphertext<Element> ciphertext, size_t levels = 1) const {
+    PALISADE_THROW(config_error, "ModReduceInternal is not supported for this scheme");
   }
 
   /**
@@ -1131,14 +1127,11 @@ class LPLeveledSHEAlgorithm {
    * @param levels the number of towers to drop.
    * @details \p cipherText will have modulus reduction performed in-place.
    */
-  virtual void ModReduceInternalInPlace(Ciphertext<Element> &ciphertext,
-                                        size_t levels = 1) const {
-    PALISADE_THROW(config_error,
-                   "ModReduceInternalInPlace is not supported for this scheme");
+  virtual void ModReduceInternalInPlace(Ciphertext<Element>& ciphertext, size_t levels = 1) const {
+    PALISADE_THROW(config_error, "ModReduceInternalInPlace is not supported for this scheme");
   }
 
-  virtual Ciphertext<Element> Compress(ConstCiphertext<Element> ciphertext,
-                                       size_t towersLeft = 1) const {
+  virtual Ciphertext<Element> Compress(ConstCiphertext<Element> ciphertext, size_t towersLeft = 1) const {
     PALISADE_THROW(config_error, "Compress is not supported for this scheme");
   }
 
@@ -1154,10 +1147,9 @@ class LPLeveledSHEAlgorithm {
    * @param &cipherTextResult is the resulting ciphertext that can be
    * decrypted with the secret key of the particular level.
    */
-  virtual Ciphertext<Element> ComposedEvalMult(
-      ConstCiphertext<Element> cipherText1,
-      ConstCiphertext<Element> cipherText2,
-      const LPEvalKey<Element> quadKeySwitchHint) const = 0;
+  virtual Ciphertext<Element> ComposedEvalMult(ConstCiphertext<Element> cipherText1,
+                                               ConstCiphertext<Element> cipherText2,
+                                               const LPEvalKey<Element> quadKeySwitchHint) const = 0;
 
   /**
    * Method for Level Reduction from sk -> sk1. This method peforms a
@@ -1169,9 +1161,8 @@ class LPLeveledSHEAlgorithm {
    * key switch operation.
    * @param &cipherTextResult is the resulting ciphertext.
    */
-  virtual Ciphertext<Element> LevelReduce(
-      ConstCiphertext<Element> cipherText1,
-      const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const = 0;
+  virtual Ciphertext<Element> LevelReduce(ConstCiphertext<Element> cipherText1,
+                                          const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const = 0;
 
   /**
    * Method for Level Reduction in the CKKS scheme. It just drops "levels"
@@ -1183,11 +1174,9 @@ class LPLeveledSHEAlgorithm {
    * @param levels the number of towers to drop.
    * @return resulting ciphertext.
    */
-  virtual Ciphertext<Element> LevelReduceInternal(
-      ConstCiphertext<Element> cipherText1,
-      const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
-    PALISADE_THROW(config_error,
-                   "LevelReduceInternal is not supported for this scheme");
+  virtual Ciphertext<Element> LevelReduceInternal(ConstCiphertext<Element> cipherText1,
+                                                  const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
+    PALISADE_THROW(config_error, "LevelReduceInternal is not supported for this scheme");
   }
 
   /**
@@ -1199,12 +1188,9 @@ class LPLeveledSHEAlgorithm {
    * @param linearKeySwitchHint not used in the CKKS scheme.
    * @param levels the number of towers to drop.
    */
-  virtual void LevelReduceInternalInPlace(
-      Ciphertext<Element> &cipherText1,
-      const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
-    PALISADE_THROW(
-        config_error,
-        "LevelReduceInternalInPlace is not supported for this scheme");
+  virtual void LevelReduceInternalInPlace(Ciphertext<Element>& cipherText1,
+                                          const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
+    PALISADE_THROW(config_error, "LevelReduceInternalInPlace is not supported for this scheme");
   }
 
   /**
@@ -1216,19 +1202,20 @@ class LPLeveledSHEAlgorithm {
    * size of the vector is the degree of the polynomial + 1
    * @return the result of polynomial evaluation.
    */
-  virtual Ciphertext<Element> EvalPoly(
-      ConstCiphertext<Element> cipherText,
-      const std::vector<double> &coefficients) const {
+  virtual Ciphertext<Element> EvalPoly(ConstCiphertext<Element> cipherText,
+                                       const std::vector<double>& coefficients) const {
     PALISADE_THROW(config_error, "EvalPoly is not supported for the scheme.");
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {}
+  void save(Archive& ar, std::uint32_t const version) const {}
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {}
+  void load(Archive& ar, std::uint32_t const version) {}
 
-  std::string SerializedObjectName() const { return "LeveledSHE"; }
+  std::string SerializedObjectName() const {
+    return "LeveledSHE";
+  }
 };
 
 /**
@@ -1236,7 +1223,8 @@ class LPLeveledSHEAlgorithm {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPREAlgorithm {
+class LPPREAlgorithm
+{
  public:
   virtual ~LPPREAlgorithm() {}
 
@@ -1250,9 +1238,8 @@ class LPPREAlgorithm {
    * @param *evalKey the evaluation key.
    * @return the re-encryption key.
    */
-  virtual LPEvalKey<Element> ReKeyGen(
-      const LPPublicKey<Element> newKey,
-      const LPPrivateKey<Element> origPrivateKey) const = 0;
+  virtual LPEvalKey<Element> ReKeyGen(const LPPublicKey<Element> newKey,
+                                      const LPPrivateKey<Element> origPrivateKey) const = 0;
 
   /**
    * Virtual function to define the interface for re-encypting ciphertext
@@ -1264,9 +1251,8 @@ class LPPREAlgorithm {
    * ciphertext.
    * @param *newCiphertext the new ciphertext.
    */
-  virtual Ciphertext<Element> ReEncrypt(
-      const LPEvalKey<Element> evalKey, ConstCiphertext<Element> ciphertext,
-      const LPPublicKey<Element> publicKey = nullptr) const = 0;
+  virtual Ciphertext<Element> ReEncrypt(const LPEvalKey<Element> evalKey, ConstCiphertext<Element> ciphertext,
+                                        const LPPublicKey<Element> publicKey = nullptr) const = 0;
 };
 
 /**
@@ -1296,7 +1282,8 @@ class LPPREAlgorithm {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPMultipartyAlgorithm {
+class LPMultipartyAlgorithm
+{
  public:
   virtual ~LPMultipartyAlgorithm() {}
 
@@ -1314,10 +1301,8 @@ class LPMultipartyAlgorithm {
    * @return key pair including the secret share for the current party and
    * joined public key
    */
-  virtual LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc,
-                                              const LPPublicKey<Element> pk1,
-                                              bool makeSparse = false,
-                                              bool fresh = false) = 0;
+  virtual LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc, const LPPublicKey<Element> pk1,
+                                              bool makeSparse = false, bool fresh = false) = 0;
 
   /**
    * Threshold FHE: Generates a public key from a vector of secret shares.
@@ -1330,10 +1315,9 @@ class LPMultipartyAlgorithm {
    * @return key pair including the private for the current party and joined
    * public key
    */
-  virtual LPKeyPair<Element> MultipartyKeyGen(
-      CryptoContext<Element> cc,
-      const vector<LPPrivateKey<Element>> &secretKeys,
-      bool makeSparse = false) = 0;
+  virtual LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc,
+                                              const vector<LPPrivateKey<Element>>& secretKeys,
+                                              bool makeSparse = false) = 0;
 
   /**
    * Threshold FHE: "Partial" decryption computed by all parties except for the
@@ -1342,9 +1326,8 @@ class LPMultipartyAlgorithm {
    * @param privateKey secret key share used for decryption.
    * @param ciphertext ciphertext that is being decrypted.
    */
-  virtual Ciphertext<Element> MultipartyDecryptMain(
-      const LPPrivateKey<Element> privateKey,
-      ConstCiphertext<Element> ciphertext) const = 0;
+  virtual Ciphertext<Element> MultipartyDecryptMain(const LPPrivateKey<Element> privateKey,
+                                                    ConstCiphertext<Element> ciphertext) const = 0;
 
   /**
    * Threshold FHE: Method for decryption operation run by the lead decryption
@@ -1353,9 +1336,8 @@ class LPMultipartyAlgorithm {
    * @param privateKey secret key share used for decryption.
    * @param ciphertext ciphertext id decrypted.
    */
-  virtual Ciphertext<Element> MultipartyDecryptLead(
-      const LPPrivateKey<Element> privateKey,
-      ConstCiphertext<Element> ciphertext) const = 0;
+  virtual Ciphertext<Element> MultipartyDecryptLead(const LPPrivateKey<Element> privateKey,
+                                                    ConstCiphertext<Element> ciphertext) const = 0;
 
   /**
    * Threshold FHE: Method for combining the partially decrypted ciphertexts
@@ -1365,9 +1347,8 @@ class LPMultipartyAlgorithm {
    * @param *plaintext the plaintext output as a NativePoly.
    * @return the decoding result.
    */
-  virtual DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>> &ciphertextVec,
-      NativePoly *plaintext) const = 0;
+  virtual DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                                NativePoly* plaintext) const = 0;
 
   /**
    * Threshold FHE: Method for combining the partially decrypted ciphertexts
@@ -1377,8 +1358,8 @@ class LPMultipartyAlgorithm {
    * @param *plaintext the plaintext output as a Poly.
    * @return the decoding result.
    */
-  virtual DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>> &ciphertextVec, Poly *plaintext) const {
+  virtual DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                                Poly* plaintext) const {
     PALISADE_THROW(config_error, "Decryption to Poly is not supported");
   }
 
@@ -1392,10 +1373,9 @@ class LPMultipartyAlgorithm {
    * @param ek the prior joined evaluation key.
    * @return the new joined evaluation key.
    */
-  virtual LPEvalKey<Element> MultiKeySwitchGen(
-      const LPPrivateKey<Element> originalPrivateKey,
-      const LPPrivateKey<Element> newPrivateKey,
-      const LPEvalKey<Element> ek) const {
+  virtual LPEvalKey<Element> MultiKeySwitchGen(const LPPrivateKey<Element> originalPrivateKey,
+                                               const LPPrivateKey<Element> newPrivateKey,
+                                               const LPEvalKey<Element> ek) const {
     PALISADE_THROW(not_implemented_error,
                    "MultiKeySwitchGen multi-party capability is not supported "
                    "for this scheme");
@@ -1411,11 +1391,9 @@ class LPMultipartyAlgorithm {
    * @param &indexList a vector of automorphism indices.
    * @return a dictionary with new joined automorphism keys.
    */
-  virtual std::shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  MultiEvalAutomorphismKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-      const std::vector<usint> &indexList) const {
+  virtual std::shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAutomorphismKeyGen(
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+    const std::vector<usint>& indexList) const {
     PALISADE_THROW(not_implemented_error,
                    "MultiEvalAutomorphismKeyGen multi-party capability is not "
                    "supported for this scheme");
@@ -1431,8 +1409,7 @@ class LPMultipartyAlgorithm {
    * @return new joined summation keys.
    */
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalSumKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const {
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum) const {
     PALISADE_THROW(not_implemented_error,
                    "MultiEvalSumKeyGen multi-party capability is not supported "
                    "for this scheme");
@@ -1445,24 +1422,19 @@ class LPMultipartyAlgorithm {
    * @param evalKey2 second public key.
    * @return the new joined key.
    */
-  virtual LPPublicKey<Element> MultiAddPubKeys(
-      LPPublicKey<Element> pubKey1, LPPublicKey<Element> pubKey2) const {
-    if (!pubKey1)
-      PALISADE_THROW(config_error, "Input first public key is nullptr");
-    if (!pubKey2)
-      PALISADE_THROW(config_error, "Input second public key is nullptr");
+  virtual LPPublicKey<Element> MultiAddPubKeys(LPPublicKey<Element> pubKey1, LPPublicKey<Element> pubKey2) const {
+    if (!pubKey1) PALISADE_THROW(config_error, "Input first public key is nullptr");
+    if (!pubKey2) PALISADE_THROW(config_error, "Input second public key is nullptr");
 
-    LPPublicKey<Element> pubKey(
-        new LPPublicKeyImpl<Element>(pubKey1->GetCryptoContext()));
+    LPPublicKey<Element> pubKey(new LPPublicKeyImpl<Element>(pubKey1->GetCryptoContext()));
 
     if (pubKey1->GetPublicElements()[1] != pubKey2->GetPublicElements()[1])
-      PALISADE_THROW(type_error,
-                     "MultiAddPubKeys: public keys are not compatible");
+      PALISADE_THROW(type_error, "MultiAddPubKeys: public keys are not compatible");
 
-    const Element &a = pubKey1->GetPublicElements()[1];
+    const Element& a = pubKey1->GetPublicElements()[1];
 
-    const Element &b1 = pubKey1->GetPublicElements()[0];
-    const Element &b2 = pubKey2->GetPublicElements()[0];
+    const Element& b1 = pubKey1->GetPublicElements()[0];
+    const Element& b2 = pubKey2->GetPublicElements()[0];
 
     pubKey->SetPublicElementAtIndex(0, std::move(b1 + b2));
     pubKey->SetPublicElementAtIndex(1, a);
@@ -1477,20 +1449,16 @@ class LPMultipartyAlgorithm {
    * @param evalKey2 second evaluation key.
    * @return the new joined key.
    */
-  virtual LPEvalKey<Element> MultiAddEvalKeys(
-      LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2) const {
-    if (!evalKey1)
-      PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
-    if (!evalKey2)
-      PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
+  virtual LPEvalKey<Element> MultiAddEvalKeys(LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2) const {
+    if (!evalKey1) PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
+    if (!evalKey2) PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
 
-    LPEvalKey<Element> evalKeySum(
-        new LPEvalKeyRelinImpl<Element>(evalKey1->GetCryptoContext()));
+    LPEvalKey<Element> evalKeySum(new LPEvalKeyRelinImpl<Element>(evalKey1->GetCryptoContext()));
 
-    const std::vector<Element> &a = evalKey1->GetAVector();
+    const std::vector<Element>& a = evalKey1->GetAVector();
 
-    const std::vector<Element> &b1 = evalKey1->GetBVector();
-    const std::vector<Element> &b2 = evalKey2->GetBVector();
+    const std::vector<Element>& b1 = evalKey1->GetBVector();
+    const std::vector<Element>& b2 = evalKey2->GetBVector();
 
     std::vector<Element> b;
 
@@ -1513,8 +1481,7 @@ class LPMultipartyAlgorithm {
    * @param sk current secret share.
    * @return the new joined key.
    */
-  virtual LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey,
-                                              LPPrivateKey<Element> sk) const {
+  virtual LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey, LPPrivateKey<Element> sk) const {
     PALISADE_THROW(not_implemented_error,
                    "MultiMultEvalKey multi-party capability is not supported "
                    "for this scheme");
@@ -1528,20 +1495,16 @@ class LPMultipartyAlgorithm {
    * @return the new joined key set for summation.
    */
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiAddEvalSumKeys(
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2) const {
-    if (!es1)
-      PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
-    if (!es2)
-      PALISADE_THROW(config_error,
-                     "Input second evaluation key map is nullptr");
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2) const {
+    if (!es1) PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
+    if (!es2) PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
 
     auto evalSumKeys = std::make_shared<std::map<usint, LPEvalKey<Element>>>();
 
     for (auto it = es1->begin(); it != es1->end(); ++it) {
       auto it2 = es2->find(it->first);
-      if (it2 != es2->end())
-        (*evalSumKeys)[it->first] = MultiAddEvalKeys(it->second, it2->second);
+      if (it2 != es2->end()) (*evalSumKeys)[it->first] = MultiAddEvalKeys(it->second, it2->second);
     }
 
     return evalSumKeys;
@@ -1554,24 +1517,17 @@ class LPMultipartyAlgorithm {
    * @param es2 second automorphism key set.
    * @return the new joined key set for summation.
    */
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  MultiAddEvalAutomorphismKeys(
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2) const {
-    if (!es1)
-      PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
-    if (!es2)
-      PALISADE_THROW(config_error,
-                     "Input second evaluation key map is nullptr");
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiAddEvalAutomorphismKeys(
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2) const {
+    if (!es1) PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
+    if (!es2) PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
 
-    auto evalAutomorphismKeys =
-        std::make_shared<std::map<usint, LPEvalKey<Element>>>();
+    auto evalAutomorphismKeys = std::make_shared<std::map<usint, LPEvalKey<Element>>>();
 
     for (auto it = es1->begin(); it != es1->end(); ++it) {
       auto it2 = es2->find(it->first);
-      if (it2 != es2->end())
-        (*evalAutomorphismKeys)[it->first] =
-            MultiAddEvalKeys(it->second, it2->second);
+      if (it2 != es2->end()) (*evalAutomorphismKeys)[it->first] = MultiAddEvalKeys(it->second, it2->second);
     }
 
     return evalAutomorphismKeys;
@@ -1584,21 +1540,17 @@ class LPMultipartyAlgorithm {
    * @param evalKey2 second evaluation key.
    * @return the new joined key.
    */
-  virtual LPEvalKey<Element> MultiAddEvalMultKeys(
-      LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2) const {
-    if (!evalKey1)
-      PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
-    if (!evalKey2)
-      PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
+  virtual LPEvalKey<Element> MultiAddEvalMultKeys(LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2) const {
+    if (!evalKey1) PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
+    if (!evalKey2) PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
 
-    LPEvalKey<Element> evalKeySum(
-        new LPEvalKeyRelinImpl<Element>(evalKey1->GetCryptoContext()));
+    LPEvalKey<Element> evalKeySum(new LPEvalKeyRelinImpl<Element>(evalKey1->GetCryptoContext()));
 
-    const std::vector<Element> &a1 = evalKey1->GetAVector();
-    const std::vector<Element> &a2 = evalKey2->GetAVector();
+    const std::vector<Element>& a1 = evalKey1->GetAVector();
+    const std::vector<Element>& a2 = evalKey2->GetAVector();
 
-    const std::vector<Element> &b1 = evalKey1->GetBVector();
-    const std::vector<Element> &b2 = evalKey2->GetBVector();
+    const std::vector<Element>& b1 = evalKey1->GetBVector();
+    const std::vector<Element>& b2 = evalKey2->GetBVector();
 
     std::vector<Element> a;
     std::vector<Element> b;
@@ -1625,21 +1577,16 @@ class LPMultipartyAlgorithm {
    * @param indexList list of indices to be computed
    * @return returns the joined evaluation keys
    */
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  MultiEvalAtIndexKeyGen(
-      const LPPrivateKey<Element> secretShare,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-      const std::vector<int32_t> &indexList) const {
-    if (!secretShare)
-      PALISADE_THROW(config_error, "Input private key is nullptr");
-    if (!eAuto)
-      PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
-    if (!indexList.size())
-      PALISADE_THROW(config_error, "Input index vector is empty");
-    const auto cryptoParams = secretShare->GetCryptoParameters();
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAtIndexKeyGen(
+    const LPPrivateKey<Element> secretShare, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+    const std::vector<int32_t>& indexList) const {
+    if (!secretShare) PALISADE_THROW(config_error, "Input private key is nullptr");
+    if (!eAuto) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+    if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+    const auto cryptoParams   = secretShare->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
-    uint32_t m = elementParams->GetCyclotomicOrder();
+    const auto elementParams  = cryptoParams->GetElementParams();
+    uint32_t m                = elementParams->GetCyclotomicOrder();
 
     std::vector<uint32_t> autoIndices(indexList.size());
 
@@ -1647,28 +1594,28 @@ class LPMultipartyAlgorithm {
       for (size_t i = 0; i < indexList.size(); i++) {
         auto ccInst = secretShare->GetCryptoContext();
         // CKKS Packing
-        if (ccInst->getSchemeId() == "CKKS")
-          autoIndices[i] = FindAutomorphismIndex2nComplex(indexList[i], m);
+        if (ccInst->getSchemeId() == "CKKS") autoIndices[i] = FindAutomorphismIndex2nComplex(indexList[i], m);
         else
           autoIndices[i] = FindAutomorphismIndex2n(indexList[i], m);
       }
-
-    } else {  // cyclic groups
+    }
+    else {  // cyclic groups
       for (size_t i = 0; i < indexList.size(); i++)
-        autoIndices[i] = FindAutomorphismIndexCyclic(
-            indexList[i], m, encodingParams->GetPlaintextGenerator());
+        autoIndices[i] = FindAutomorphismIndexCyclic(indexList[i], m, encodingParams->GetPlaintextGenerator());
     }
 
     return MultiEvalAutomorphismKeyGen(secretShare, eAuto, autoIndices);
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {}
+  void save(Archive& ar, std::uint32_t const version) const {}
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {}
+  void load(Archive& ar, std::uint32_t const version) {}
 
-  std::string SerializedObjectName() const { return "MultiParty"; }
+  std::string SerializedObjectName() const {
+    return "MultiParty";
+  }
 };
 
 /**
@@ -1676,7 +1623,8 @@ class LPMultipartyAlgorithm {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPSHEAlgorithm {
+class LPSHEAlgorithm
+{
  public:
   virtual ~LPSHEAlgorithm() {}
 
@@ -1688,9 +1636,8 @@ class LPSHEAlgorithm {
    * @param ciphertext2 the input ciphertext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalAdd(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const {
+  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext1,
+                                      ConstCiphertext<Element> ciphertext2) const {
     auto rv = ciphertext1->Clone();
     EvalAddInPlace(rv, ciphertext2);
     return rv;
@@ -1703,8 +1650,7 @@ class LPSHEAlgorithm {
    * @param ciphertext1 the input/output ciphertext.
    * @param ciphertext2 the input ciphertext.
    */
-  virtual void EvalAddInPlace(Ciphertext<Element> &ciphertext1,
-                              ConstCiphertext<Element> ciphertext2) const = 0;
+  virtual void EvalAddInPlace(Ciphertext<Element>& ciphertext1, ConstCiphertext<Element> ciphertext2) const = 0;
 
   /**
    * Virtual function to define the interface for homomorphic addition of
@@ -1715,11 +1661,8 @@ class LPSHEAlgorithm {
    * @param ciphertext2 the input ciphertext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalAddMutable(
-      Ciphertext<Element> &ciphertext1,
-      Ciphertext<Element> &ciphertext2) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalAddMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2) const {
+    PALISADE_THROW(not_implemented_error, "EvalAddMutable is not implemented for this scheme");
   }
 
   /**
@@ -1730,8 +1673,7 @@ class LPSHEAlgorithm {
    * @param plaintext the input plaintext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext,
-                                      ConstPlaintext plaintext) const = 0;
+  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const = 0;
 
   /**
    * Virtual function to define the interface for homomorphic addition of
@@ -1742,10 +1684,8 @@ class LPSHEAlgorithm {
    * @param plaintext the input plaintext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element> &ciphertext,
-                                             Plaintext plaintext) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalAddMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext, Plaintext plaintext) const {
+    PALISADE_THROW(not_implemented_error, "EvalAddMutable is not implemented for this scheme");
   }
 
   /**
@@ -1755,10 +1695,8 @@ class LPSHEAlgorithm {
    * @param constant the input constant.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext,
-                                      double constant) const {
-    PALISADE_THROW(not_implemented_error,
-                   "Scalar addition is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext, double constant) const {
+    PALISADE_THROW(not_implemented_error, "Scalar addition is not implemented for this scheme");
   }
 
   /**
@@ -1769,8 +1707,7 @@ class LPSHEAlgorithm {
    * @param constants vector containing double weights.
    * @return A ciphertext containing the linear weighted sum.
    */
-  virtual Ciphertext<Element> EvalLinearWSum(
-      vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const {
+  virtual Ciphertext<Element> EvalLinearWSum(vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const {
     std::string errMsg = "EvalLinearWSum is not implemented for this scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
@@ -1784,10 +1721,9 @@ class LPSHEAlgorithm {
    * @param constants vector containing double weights.
    * @return A ciphertext containing the linear weighted sum.
    */
-  virtual Ciphertext<Element> EvalLinearWSumMutable(
-      vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const {
-    std::string errMsg =
-        "EvalLinearWSumMutable is not implemented for this scheme.";
+  virtual Ciphertext<Element> EvalLinearWSumMutable(vector<Ciphertext<Element>> ciphertexts,
+                                                    vector<double> constants) const {
+    std::string errMsg = "EvalLinearWSumMutable is not implemented for this scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -1799,9 +1735,8 @@ class LPSHEAlgorithm {
    * @param ciphertext2 the input ciphertext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalSub(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const = 0;
+  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1,
+                                      ConstCiphertext<Element> ciphertext2) const = 0;
 
   /**
    * Virtual function to define the interface for homomorphic subtraction of
@@ -1812,11 +1747,8 @@ class LPSHEAlgorithm {
    * @param ciphertext2 the input ciphertext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalSubMutable(
-      Ciphertext<Element> &ciphertext1,
-      Ciphertext<Element> &ciphertext2) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalSubMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2) const {
+    PALISADE_THROW(not_implemented_error, "EvalSubMutable is not implemented for this scheme");
   }
 
   /**
@@ -1827,8 +1759,7 @@ class LPSHEAlgorithm {
    * @param plaintext the input plaintext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext,
-                                      ConstPlaintext plaintext) const = 0;
+  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const = 0;
 
   /**
    * Virtual function to define the interface for homomorphic subtraction of
@@ -1839,10 +1770,8 @@ class LPSHEAlgorithm {
    * @param plaintext the input plaintext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element> &ciphertext,
-                                             Plaintext plaintext) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalSubMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element>& ciphertext, Plaintext plaintext) const {
+    PALISADE_THROW(not_implemented_error, "EvalSubMutable is not implemented for this scheme");
   }
 
   /**
@@ -1852,10 +1781,8 @@ class LPSHEAlgorithm {
    * @param constant the input constant.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext,
-                                      double constant) const {
-    PALISADE_THROW(not_implemented_error,
-                   "Scalar subtraction is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext, double constant) const {
+    PALISADE_THROW(not_implemented_error, "Scalar subtraction is not implemented for this scheme");
   }
 
   /**
@@ -1866,9 +1793,8 @@ class LPSHEAlgorithm {
    * @param ciphertext2 the input ciphertext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMult(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const = 0;
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1,
+                                       ConstCiphertext<Element> ciphertext2) const = 0;
 
   /**
    * Virtual function to define the interface for multiplicative homomorphic
@@ -1879,11 +1805,9 @@ class LPSHEAlgorithm {
    * @param ciphertext2 the input ciphertext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMultMutable(
-      Ciphertext<Element> &ciphertext1,
-      Ciphertext<Element> &ciphertext2) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalMultMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1,
+                                              Ciphertext<Element>& ciphertext2) const {
+    PALISADE_THROW(not_implemented_error, "EvalMultMutable is not implemented for this scheme");
   }
 
   /**
@@ -1894,8 +1818,7 @@ class LPSHEAlgorithm {
    * @param plaintext the input plaintext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext,
-                                       ConstPlaintext plaintext) const = 0;
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const = 0;
 
   /**
    * Virtual function to define the interface for multiplication of ciphertext
@@ -1906,10 +1829,8 @@ class LPSHEAlgorithm {
    * @param plaintext the input plaintext.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element> &ciphertext,
-                                              Plaintext plaintext) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalMultMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext, Plaintext plaintext) const {
+    PALISADE_THROW(not_implemented_error, "EvalMultMutable is not implemented for this scheme");
   }
 
   /**
@@ -1920,10 +1841,8 @@ class LPSHEAlgorithm {
    * @param constant the input constant.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext,
-                                       double constant) const {
-    PALISADE_THROW(not_implemented_error,
-                   "Scalar multiplication is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext, double constant) const {
+    PALISADE_THROW(not_implemented_error, "Scalar multiplication is not implemented for this scheme");
   }
 
   /**
@@ -1935,10 +1854,8 @@ class LPSHEAlgorithm {
    * @param constant the input constant.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element> &ciphertext,
-                                              double constant) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalMultMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext, double constant) const {
+    PALISADE_THROW(not_implemented_error, "EvalMultMutable is not implemented for this scheme");
   }
 
   /**
@@ -1951,8 +1868,7 @@ class LPSHEAlgorithm {
    * the same secret key as that of ciphertext1 and ciphertext2.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1,
-                                       ConstCiphertext<Element> ciphertext2,
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
                                        const LPEvalKey<Element> ek) const = 0;
 
   /**
@@ -1967,11 +1883,9 @@ class LPSHEAlgorithm {
    * the same secret key as that of ciphertext1 and ciphertext2.
    * @return the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalMultMutable(
-      Ciphertext<Element> &ciphertext1, Ciphertext<Element> &ciphertext2,
-      const LPEvalKey<Element> ek) const {
-    PALISADE_THROW(not_implemented_error,
-                   "EvalMultMutable is not implemented for this scheme");
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2,
+                                              const LPEvalKey<Element> ek) const {
+    PALISADE_THROW(not_implemented_error, "EvalMultMutable is not implemented for this scheme");
   }
 
   /**
@@ -1983,27 +1897,23 @@ class LPSHEAlgorithm {
    *  decryptable by the same secret key as that of ciphertext list.
    * @param *newCiphertext the new resulting ciphertext.
    */
-  virtual Ciphertext<Element> EvalMultMany(
-      const vector<Ciphertext<Element>> &cipherTextList,
-      const vector<LPEvalKey<Element>> &evalKeys) const {
+  virtual Ciphertext<Element> EvalMultMany(const vector<Ciphertext<Element>>& cipherTextList,
+                                           const vector<LPEvalKey<Element>>& evalKeys) const {
     // default implementation if you don't have one in your scheme
     // TODO: seems that we can simply call EvalAddMany() here.
     // TODO: see EvalAddMany() below
-    if (cipherTextList.size() < 1)
-      PALISADE_THROW(config_error,
-                     "Input ciphertext vector size should be 1 or more");
+    if (cipherTextList.size() < 1) PALISADE_THROW(config_error, "Input ciphertext vector size should be 1 or more");
 
     const size_t inSize = cipherTextList.size();
-    const size_t lim = inSize * 2 - 2;
+    const size_t lim    = inSize * 2 - 2;
     vector<Ciphertext<Element>> cipherTextResults;
     cipherTextResults.resize(inSize - 1);
     size_t ctrIndex = 0;
 
     for (size_t i = 0; i < lim; i = i + 2) {
-      cipherTextResults[ctrIndex++] = this->EvalMult(
-          i < inSize ? cipherTextList[i] : cipherTextResults[i - inSize],
-          i + 1 < inSize ? cipherTextList[i + 1]
-                         : cipherTextResults[i + 1 - inSize]);
+      cipherTextResults[ctrIndex++] =
+        this->EvalMult(i < inSize ? cipherTextList[i] : cipherTextResults[i - inSize],
+                       i + 1 < inSize ? cipherTextList[i + 1] : cipherTextResults[i + 1 - inSize]);
     }
 
     return cipherTextResults.back();
@@ -2015,23 +1925,19 @@ class LPSHEAlgorithm {
    * @param ctList  is the ciphertext list.
    * @param *newCiphertext the new resulting ciphertext.
    */
-  virtual Ciphertext<Element> EvalAddMany(
-      const vector<Ciphertext<Element>> &ctList) const {
+  virtual Ciphertext<Element> EvalAddMany(const vector<Ciphertext<Element>>& ctList) const {
     // default implementation if you don't have one in your scheme
-    if (ctList.size() < 1)
-      PALISADE_THROW(config_error,
-                     "Input ciphertext vector size should be 1 or more");
+    if (ctList.size() < 1) PALISADE_THROW(config_error, "Input ciphertext vector size should be 1 or more");
 
     const size_t inSize = ctList.size();
-    const size_t lim = inSize * 2 - 2;
+    const size_t lim    = inSize * 2 - 2;
     vector<Ciphertext<Element>> cipherTextResults;
     cipherTextResults.resize(inSize - 1);
     size_t ctrIndex = 0;
 
     for (size_t i = 0; i < lim; i = i + 2) {
-      cipherTextResults[ctrIndex++] = this->EvalAdd(
-          i < inSize ? ctList[i] : cipherTextResults[i - inSize],
-          i + 1 < inSize ? ctList[i + 1] : cipherTextResults[i + 1 - inSize]);
+      cipherTextResults[ctrIndex++] = this->EvalAdd(i < inSize ? ctList[i] : cipherTextResults[i - inSize],
+                                                    i + 1 < inSize ? ctList[i + 1] : cipherTextResults[i + 1 - inSize]);
     }
 
     return cipherTextResults.back();
@@ -2044,19 +1950,17 @@ class LPSHEAlgorithm {
    * @param ctList  is the ciphertext list.
    * @param *newCiphertext the new resulting ciphertext.
    */
-  virtual Ciphertext<Element> EvalAddManyInPlace(
-      vector<Ciphertext<Element>> &ctList) const {
+  virtual Ciphertext<Element> EvalAddManyInPlace(vector<Ciphertext<Element>>& ctList) const {
     // default implementation if you don't have one in your scheme
-    if (ctList.size() < 1)
-      PALISADE_THROW(config_error,
-                     "Input ciphertext vector size should be 1 or more");
+    if (ctList.size() < 1) PALISADE_THROW(config_error, "Input ciphertext vector size should be 1 or more");
 
     for (size_t j = 1; j < ctList.size(); j = j * 2) {
       for (size_t i = 0; i < ctList.size(); i = i + 2 * j) {
         if ((i + j) < ctList.size()) {
           if (ctList[i] != nullptr && ctList[i + j] != nullptr) {
             ctList[i] = EvalAdd(ctList[i], ctList[i + j]);
-          } else if (ctList[i] == nullptr && ctList[i + j] != nullptr) {
+          }
+          else if (ctList[i] == nullptr && ctList[i + j] != nullptr) {
             ctList[i] = ctList[i + j];
           }  // In all remaining cases (ctList[i+j]), ctList[i] needs to
              // remain unchanged.
@@ -2064,8 +1968,7 @@ class LPSHEAlgorithm {
       }
     }
 
-    Ciphertext<Element> result(
-        std::make_shared<CiphertextImpl<Element>>(*(ctList[0])));
+    Ciphertext<Element> result(std::make_shared<CiphertextImpl<Element>>(*(ctList[0])));
 
     return result;
   }
@@ -2081,9 +1984,8 @@ class LPSHEAlgorithm {
    * ciphertext2.
    * @param *newCiphertext the new resulting ciphertext.
    */
-  virtual Ciphertext<Element> EvalMultAndRelinearize(
-      ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2,
-      const vector<LPEvalKey<Element>> &ek) const = 0;
+  virtual Ciphertext<Element> EvalMultAndRelinearize(ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2,
+                                                     const vector<LPEvalKey<Element>>& ek) const = 0;
 
   /**
    * Virtual function to do relinearization
@@ -2094,9 +1996,8 @@ class LPSHEAlgorithm {
    * ciphertext2.
    * @return the new resulting ciphertext.
    */
-  virtual Ciphertext<Element> Relinearize(
-      ConstCiphertext<Element> ciphertext,
-      const vector<LPEvalKey<Element>> &ek) const {
+  virtual Ciphertext<Element> Relinearize(ConstCiphertext<Element> ciphertext,
+                                          const vector<LPEvalKey<Element>>& ek) const {
     PALISADE_THROW(config_error, "Relinearize operation not supported");
   }
 
@@ -2107,9 +2008,7 @@ class LPSHEAlgorithm {
    * @param ek are the evaluation keys
    * @return the new resulting ciphertext.
    */
-  virtual void RelinearizeInPlace(
-      Ciphertext<Element> &ciphertext,
-      const vector<LPEvalKey<Element>> &ek) const {
+  virtual void RelinearizeInPlace(Ciphertext<Element>& ciphertext, const vector<LPEvalKey<Element>>& ek) const {
     PALISADE_THROW(config_error, "RelinearizeInPlace operation not supported");
   }
 
@@ -2120,8 +2019,7 @@ class LPSHEAlgorithm {
    * @param &ciphertext the input ciphertext.
    * @param *newCiphertext the new ciphertext.
    */
-  virtual Ciphertext<Element> EvalNegate(
-      ConstCiphertext<Element> ciphertext) const = 0;
+  virtual Ciphertext<Element> EvalNegate(ConstCiphertext<Element> ciphertext) const = 0;
 
   /**
    * Function to add random noise to all plaintext slots except for the first
@@ -2130,17 +2028,15 @@ class LPSHEAlgorithm {
    * @param &ciphertext the input ciphertext.
    * @return modified ciphertext
    */
-  virtual Ciphertext<Element> AddRandomNoise(
-      ConstCiphertext<Element> ciphertext) const {
-    if (!ciphertext)
-      PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+  virtual Ciphertext<Element> AddRandomNoise(ConstCiphertext<Element> ciphertext) const {
+    if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
 
     std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
-    string kID = ciphertext->GetKeyTag();
-    const auto cryptoParams = ciphertext->GetCryptoParameters();
+    string kID                = ciphertext->GetKeyTag();
+    const auto cryptoParams   = ciphertext->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
     usint n = elementParams->GetRingDimension();
 
@@ -2155,14 +2051,12 @@ class LPSHEAlgorithm {
       randomIntVector[0].real(0);
 
       for (usint i = 0; i < n - 1; i++) {
-        randomIntVector[i + 1].real(
-            distribution(PseudoRandomNumberGenerator::GetPRNG()));
+        randomIntVector[i + 1].real(distribution(PseudoRandomNumberGenerator::GetPRNG()));
       }
 
-      plaintext =
-          cc->MakeCKKSPackedPlaintext(randomIntVector, ciphertext->GetDepth());
-
-    } else {
+      plaintext = cc->MakeCKKSPackedPlaintext(randomIntVector, ciphertext->GetDepth());
+    }
+    else {
       DiscreteUniformGenerator dug;
       dug.SetModulus(encodingParams->GetPlaintextModulus());
       BigVector randomVector = dug.GenerateVector(n - 1);
@@ -2195,9 +2089,8 @@ class LPSHEAlgorithm {
    * @param *KeySwitchHint is where the resulting keySwitchHint will be
    * placed.
    */
-  virtual LPEvalKey<Element> KeySwitchGen(
-      const LPPrivateKey<Element> originalPrivateKey,
-      const LPPrivateKey<Element> newPrivateKey) const = 0;
+  virtual LPEvalKey<Element> KeySwitchGen(const LPPrivateKey<Element> originalPrivateKey,
+                                          const LPPrivateKey<Element> newPrivateKey) const = 0;
 
   /**
    * Method for KeySwitch
@@ -2206,12 +2099,10 @@ class LPSHEAlgorithm {
    * @param &cipherText Original ciphertext to perform switching on.
    */
 
-  virtual void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint,
-                                Ciphertext<Element> &cipherText) const = 0;
+  virtual void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& cipherText) const = 0;
 
-  virtual Ciphertext<Element> KeySwitch(
-      const LPEvalKey<Element> keySwitchHint,
-      ConstCiphertext<Element> cipherText) const {
+  virtual Ciphertext<Element> KeySwitch(const LPEvalKey<Element> keySwitchHint,
+                                        ConstCiphertext<Element> cipherText) const {
     auto ret = cipherText->Clone();
     KeySwitchInPlace(keySwitchHint, ret);
     return ret;
@@ -2227,8 +2118,7 @@ class LPSHEAlgorithm {
    * the same secret key as that of ciphertext1 and ciphertext2.
    * @param *newCiphertext the new resulting ciphertext.
    */
-  virtual LPEvalKey<Element> EvalMultKeyGen(
-      const LPPrivateKey<Element> originalPrivateKey) const = 0;
+  virtual LPEvalKey<Element> EvalMultKeyGen(const LPPrivateKey<Element> originalPrivateKey) const = 0;
 
   /**
    * Virtual function to define the interface for generating a evaluation key
@@ -2237,8 +2127,7 @@ class LPSHEAlgorithm {
    * @param &originalPrivateKey Original private key used for encryption.
    * @param *evalMultKeys the resulting evalution key vector list.
    */
-  virtual vector<LPEvalKey<Element>> EvalMultKeysGen(
-      const LPPrivateKey<Element> originalPrivateKey) const = 0;
+  virtual vector<LPEvalKey<Element>> EvalMultKeysGen(const LPPrivateKey<Element> originalPrivateKey) const = 0;
 
   /**
    * Virtual function to generate all isomorphism keys for a given private key
@@ -2248,10 +2137,9 @@ class LPSHEAlgorithm {
    * @param indexList list of automorphism indices to be computed
    * @return returns the evaluation keys
    */
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  EvalAutomorphismKeyGen(const LPPublicKey<Element> publicKey,
-                         const LPPrivateKey<Element> origPrivateKey,
-                         const std::vector<usint> &indexList) const = 0;
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
+    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> origPrivateKey,
+    const std::vector<usint>& indexList) const = 0;
 
   /**
    * Virtual function for the precomputation step of hoisted
@@ -2260,11 +2148,9 @@ class LPSHEAlgorithm {
    * @param ct the input ciphertext on which to do the precomputation (digit
    * decomposition)
    */
-  virtual shared_ptr<vector<Element>> EvalFastRotationPrecompute(
-      ConstCiphertext<Element> cipherText) const {
-    std::string errMsg =
-        "LPSHEAlgorithm::EvalFastRotationPrecompute is not implemented for "
-        "this Scheme.";
+  virtual shared_ptr<vector<Element>> EvalFastRotationPrecompute(ConstCiphertext<Element> cipherText) const {
+    std::string errMsg = "LPSHEAlgorithm::EvalFastRotationPrecompute is not implemented for "
+                         "this Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -2279,12 +2165,10 @@ class LPSHEAlgorithm {
    * @param digits the digit decomposition created by
    * EvalFastRotationPrecompute at the precomputation step.
    */
-  virtual Ciphertext<Element> EvalFastRotation(
-      ConstCiphertext<Element> cipherText, const usint index, const usint m,
-      const shared_ptr<vector<Element>> digits) const {
-    std::string errMsg =
-        "LPSHEAlgorithm::EvalFastRotation is not implemented for this "
-        "Scheme.";
+  virtual Ciphertext<Element> EvalFastRotation(ConstCiphertext<Element> cipherText, const usint index, const usint m,
+                                               const shared_ptr<vector<Element>> digits) const {
+    std::string errMsg = "LPSHEAlgorithm::EvalFastRotation is not implemented for this "
+                         "Scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -2298,19 +2182,17 @@ class LPSHEAlgorithm {
    * @return returns the evaluation keys
    */
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAtIndexKeyGen(
-      const LPPublicKey<Element> publicKey,
-      const LPPrivateKey<Element> origPrivateKey,
-      const std::vector<int32_t> &indexList) const {
+    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> origPrivateKey,
+    const std::vector<int32_t>& indexList) const {
     /*
      * we don't validate publicKey as it is needed by NTRU-based scheme only
      * NTRU-based scheme only and it is checked for null later.
      */
-    if (!origPrivateKey)
-      PALISADE_THROW(config_error, "Input private key is nullptr");
-    const auto cryptoParams = origPrivateKey->GetCryptoParameters();
+    if (!origPrivateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+    const auto cryptoParams   = origPrivateKey->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
-    uint32_t m = elementParams->GetCyclotomicOrder();
+    const auto elementParams  = cryptoParams->GetElementParams();
+    uint32_t m                = elementParams->GetCyclotomicOrder();
 
     std::vector<uint32_t> autoIndices(indexList.size());
 
@@ -2318,16 +2200,14 @@ class LPSHEAlgorithm {
       for (size_t i = 0; i < indexList.size(); i++) {
         auto ccInst = origPrivateKey->GetCryptoContext();
         // CKKS Packing
-        if (ccInst->getSchemeId() == "CKKS")
-          autoIndices[i] = FindAutomorphismIndex2nComplex(indexList[i], m);
+        if (ccInst->getSchemeId() == "CKKS") autoIndices[i] = FindAutomorphismIndex2nComplex(indexList[i], m);
         else
           autoIndices[i] = FindAutomorphismIndex2n(indexList[i], m);
       }
-
-    } else {  // cyclic groups
+    }
+    else {  // cyclic groups
       for (size_t i = 0; i < indexList.size(); i++)
-        autoIndices[i] = FindAutomorphismIndexCyclic(
-            indexList[i], m, encodingParams->GetPlaintextGenerator());
+        autoIndices[i] = FindAutomorphismIndexCyclic(indexList[i], m, encodingParams->GetPlaintextGenerator());
     }
 
     if (publicKey)
@@ -2347,10 +2227,9 @@ class LPSHEAlgorithm {
    * by EvalAutomorphismKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalAutomorphism(
-      ConstCiphertext<Element> ciphertext, usint i,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      CALLER_INFO_ARGS_HDR) const = 0;
+  virtual Ciphertext<Element> EvalAutomorphism(ConstCiphertext<Element> ciphertext, usint i,
+                                               const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                               CALLER_INFO_ARGS_HDR) const = 0;
 
   /**
    * Moves i-th slot to slot 0
@@ -2361,29 +2240,25 @@ class LPSHEAlgorithm {
    * generated by EvalAtIndexKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalAtIndex(
-      ConstCiphertext<Element> ciphertext, int32_t index,
-      const std::map<usint, LPEvalKey<Element>> &evalAtIndexKeys) const {
-    if (!ciphertext)
-      PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-    if (!evalAtIndexKeys.size())
-      PALISADE_THROW(config_error, "Input index map is empty");
-    const auto cryptoParams = ciphertext->GetCryptoParameters();
+  virtual Ciphertext<Element> EvalAtIndex(ConstCiphertext<Element> ciphertext, int32_t index,
+                                          const std::map<usint, LPEvalKey<Element>>& evalAtIndexKeys) const {
+    if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+    if (!evalAtIndexKeys.size()) PALISADE_THROW(config_error, "Input index map is empty");
+    const auto cryptoParams   = ciphertext->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
-    uint32_t m = elementParams->GetCyclotomicOrder();
+    const auto elementParams  = cryptoParams->GetElementParams();
+    uint32_t m                = elementParams->GetCyclotomicOrder();
 
     uint32_t autoIndex;
 
     // power-of-two cyclotomics
     if (IsPowerOfTwo(m)) {
-      if (ciphertext->GetEncodingType() == CKKSPacked)
-        autoIndex = FindAutomorphismIndex2nComplex(index, m);
+      if (ciphertext->GetEncodingType() == CKKSPacked) autoIndex = FindAutomorphismIndex2nComplex(index, m);
       else
         autoIndex = FindAutomorphismIndex2n(index, m);
-    } else {  // cyclic-group cyclotomics
-      autoIndex = FindAutomorphismIndexCyclic(
-          index, m, encodingParams->GetPlaintextGenerator());
+    }
+    else {  // cyclic-group cyclotomics
+      autoIndex = FindAutomorphismIndexCyclic(index, m, encodingParams->GetPlaintextGenerator());
     }
 
     return EvalAutomorphism(ciphertext, autoIndex, evalAtIndexKeys);
@@ -2397,9 +2272,8 @@ class LPSHEAlgorithm {
    * @param indexList list of automorphism indices to be computed
    * @return returns the evaluation keys
    */
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  EvalAutomorphismKeyGen(const LPPrivateKey<Element> privateKey,
-                         const std::vector<usint> &indexList) const = 0;
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
+    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const = 0;
 
   /**
    * Virtual function to generate the automorphism keys for EvalSum; works
@@ -2408,21 +2282,19 @@ class LPSHEAlgorithm {
    * @param privateKey private key.
    * @return returns the evaluation keys
    */
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const LPPublicKey<Element> publicKey) const {
-    if (!privateKey)
-      PALISADE_THROW(config_error, "Input private key is nullptr");
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumKeyGen(const LPPrivateKey<Element> privateKey,
+                                                                        const LPPublicKey<Element> publicKey) const {
+    if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
     /*
      * we don't validate publicKey as it is needed by NTRU-based scheme only
      * NTRU-based scheme only and it is checked for null later.
      */
-    const auto cryptoParams = privateKey->GetCryptoParameters();
+    const auto cryptoParams   = privateKey->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
     usint batchSize = encodingParams->GetBatchSize();
-    usint m = elementParams->GetCyclotomicOrder();
+    usint m         = elementParams->GetCyclotomicOrder();
 
     // stores automorphism indices needed for EvalSum
     std::vector<usint> indices;
@@ -2430,11 +2302,11 @@ class LPSHEAlgorithm {
     if (IsPowerOfTwo(m)) {
       auto ccInst = privateKey->GetCryptoContext();
       // CKKS Packing
-      if (ccInst->getSchemeId() == "CKKS")
-        indices = GenerateIndices2nComplex(batchSize, m);
+      if (ccInst->getSchemeId() == "CKKS") indices = GenerateIndices2nComplex(batchSize, m);
       else
         indices = GenerateIndices_2n(batchSize, m);
-    } else {  // Arbitrary cyclotomics
+    }
+    else {  // Arbitrary cyclotomics
       usint g = encodingParams->GetPlaintextGenerator();
       for (int i = 0; i < floor(log2(batchSize)); i++) {
         indices.push_back(g);
@@ -2459,18 +2331,15 @@ class LPSHEAlgorithm {
    * @param subringDim subring dimension (set to cyclotomic order if set to 0)
    * @return returns the evaluation keys
    */
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumRowsKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const LPPublicKey<Element> publicKey, usint rowSize,
-      usint subringDim = 0) const {
-    if (!privateKey)
-      PALISADE_THROW(config_error, "Input private key is nullptr");
-    const auto cryptoParams = privateKey->GetCryptoParameters();
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumRowsKeyGen(const LPPrivateKey<Element> privateKey,
+                                                                            const LPPublicKey<Element> publicKey,
+                                                                            usint rowSize, usint subringDim = 0) const {
+    if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+    const auto cryptoParams   = privateKey->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
-    usint m =
-        (subringDim == 0) ? elementParams->GetCyclotomicOrder() : subringDim;
+    usint m = (subringDim == 0) ? elementParams->GetCyclotomicOrder() : subringDim;
 
     // stores automorphism indices needed for EvalSum
     std::vector<usint> indices;
@@ -2478,14 +2347,13 @@ class LPSHEAlgorithm {
     if (IsPowerOfTwo(m)) {
       auto ccInst = privateKey->GetCryptoContext();
       // CKKS Packing
-      if (ccInst->getSchemeId() == "CKKS")
-        indices = GenerateIndices2nComplexRows(rowSize, m);
+      if (ccInst->getSchemeId() == "CKKS") indices = GenerateIndices2nComplexRows(rowSize, m);
       else
         PALISADE_THROW(config_error,
                        "Matrix summation of row-vectors is only supported for "
                        "CKKSPackedEncoding.");
-
-    } else {  // Arbitrary cyclotomics
+    }
+    else {  // Arbitrary cyclotomics
       PALISADE_THROW(config_error,
                      "Matrix summation of row-vectors is not supported for "
                      "arbitrary cyclotomics.");
@@ -2510,16 +2378,14 @@ class LPSHEAlgorithm {
    * @return returns the evaluation keys
    */
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumColsKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const LPPublicKey<Element> publicKey) const {
-    if (!privateKey)
-      PALISADE_THROW(config_error, "Input private key is nullptr");
-    const auto cryptoParams = privateKey->GetCryptoParameters();
+    const LPPrivateKey<Element> privateKey, const LPPublicKey<Element> publicKey) const {
+    if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+    const auto cryptoParams   = privateKey->GetCryptoParameters();
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
     usint batchSize = encodingParams->GetBatchSize();
-    usint m = elementParams->GetCyclotomicOrder();
+    usint m         = elementParams->GetCyclotomicOrder();
 
     auto ccInst = privateKey->GetCryptoContext();
     // CKKS Packing
@@ -2529,7 +2395,8 @@ class LPSHEAlgorithm {
 
       if (IsPowerOfTwo(m)) {
         indices = GenerateIndices2nComplexCols(batchSize, m);
-      } else {  // Arbitrary cyclotomics
+      }
+      else {  // Arbitrary cyclotomics
         PALISADE_THROW(config_error,
                        "Matrix summation of column-vectors is not supported "
                        "for arbitrary cyclotomics.");
@@ -2541,7 +2408,8 @@ class LPSHEAlgorithm {
       else
         // Regular RLWE scheme
         return EvalAutomorphismKeyGen(privateKey, indices);
-    } else {
+    }
+    else {
       PALISADE_THROW(config_error,
                      "Matrix summation of column-vectors is only supported for "
                      "CKKSPackedEncoding.");
@@ -2558,49 +2426,44 @@ class LPSHEAlgorithm {
    * EvalAutomorphismKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalSum(
-      ConstCiphertext<Element> ciphertext, usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys) const {
-    if (!ciphertext)
-      PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-    if (!evalKeys.size())
-      PALISADE_THROW(config_error, "Input index map is empty");
-    const shared_ptr<LPCryptoParameters<Element>> cryptoParams =
-        ciphertext->GetCryptoParameters();
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  virtual Ciphertext<Element> EvalSum(ConstCiphertext<Element> ciphertext, usint batchSize,
+                                      const std::map<usint, LPEvalKey<Element>>& evalKeys) const {
+    if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+    if (!evalKeys.size()) PALISADE_THROW(config_error, "Input index map is empty");
+    const shared_ptr<LPCryptoParameters<Element>> cryptoParams = ciphertext->GetCryptoParameters();
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
     usint m = elementParams->GetCyclotomicOrder();
 
     if ((encodingParams->GetBatchSize() == 0)) {
-      PALISADE_THROW(
-          config_error,
-          "EvalSum: Packed encoding parameters 'batch size' is not set; "
-          "Please "
-          "check the EncodingParams passed to the crypto context.");
-    } else {
+      PALISADE_THROW(config_error,
+                     "EvalSum: Packed encoding parameters 'batch size' is not set; "
+                     "Please "
+                     "check the EncodingParams passed to the crypto context.");
+    }
+    else {
       if (IsPowerOfTwo(m)) {
         if (ciphertext->GetEncodingType() == CKKSPacked)
-          newCiphertext =
-              EvalSum2nComplex(batchSize, m, evalKeys, newCiphertext);
+          newCiphertext = EvalSum2nComplex(batchSize, m, evalKeys, newCiphertext);
         else
           newCiphertext = EvalSum_2n(batchSize, m, evalKeys, newCiphertext);
-
-      } else {  // Arbitrary cyclotomics
+      }
+      else {  // Arbitrary cyclotomics
         if (encodingParams->GetPlaintextGenerator() == 0) {
           PALISADE_THROW(config_error,
                          "EvalSum: Packed encoding parameters 'plaintext "
                          "generator' is not set; Please check the "
                          "EncodingParams passed to the crypto context.");
-        } else {
+        }
+        else {
           usint g = encodingParams->GetPlaintextGenerator();
           for (int i = 0; i < floor(log2(batchSize)); i++) {
-            auto ea = EvalAutomorphism(newCiphertext, g, evalKeys);
+            auto ea       = EvalAutomorphism(newCiphertext, g, evalKeys);
             newCiphertext = EvalAdd(newCiphertext, ea);
-            g = (g * g) % m;
+            g             = (g * g) % m;
           }
         }
       }
@@ -2620,42 +2483,35 @@ class LPSHEAlgorithm {
    * 0, we use the full cyclotomic order. EvalAutomorphismKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalSumRows(
-      ConstCiphertext<Element> ciphertext, usint rowSize,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      usint subringDim = 0) const {
-    if (!ciphertext)
-      PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-    if (!evalKeys.size())
-      PALISADE_THROW(config_error, "Input index map is empty");
-    const shared_ptr<LPCryptoParameters<Element>> cryptoParams =
-        ciphertext->GetCryptoParameters();
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  virtual Ciphertext<Element> EvalSumRows(ConstCiphertext<Element> ciphertext, usint rowSize,
+                                          const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                          usint subringDim = 0) const {
+    if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+    if (!evalKeys.size()) PALISADE_THROW(config_error, "Input index map is empty");
+    const shared_ptr<LPCryptoParameters<Element>> cryptoParams = ciphertext->GetCryptoParameters();
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
-    usint m =
-        (subringDim == 0) ? elementParams->GetCyclotomicOrder() : subringDim;
+    usint m = (subringDim == 0) ? elementParams->GetCyclotomicOrder() : subringDim;
 
     if ((encodingParams->GetBatchSize() == 0)) {
-      PALISADE_THROW(
-          config_error,
-          "EvalSum: Packed encoding parameters 'batch size' is not set; "
-          "Please "
-          "check the EncodingParams passed to the crypto context.");
-    } else {
+      PALISADE_THROW(config_error,
+                     "EvalSum: Packed encoding parameters 'batch size' is not set; "
+                     "Please "
+                     "check the EncodingParams passed to the crypto context.");
+    }
+    else {
       if (IsPowerOfTwo(m)) {
         if (ciphertext->GetEncodingType() == CKKSPacked)
-          newCiphertext =
-              EvalSum2nComplexRows(rowSize, m, evalKeys, newCiphertext);
+          newCiphertext = EvalSum2nComplexRows(rowSize, m, evalKeys, newCiphertext);
         else
           PALISADE_THROW(config_error,
                          "Matrix summation of row-vectors is only supported "
                          "for CKKS packed encoding.");
-
-      } else {  // Arbitrary cyclotomics
+      }
+      else {  // Arbitrary cyclotomics
         PALISADE_THROW(config_error,
                        "Matrix summation of row-vectors is not supported for "
                        "arbitrary cyclotomics.");
@@ -2675,41 +2531,33 @@ class LPSHEAlgorithm {
    * EvalAutomorphismKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalSumCols(
-      ConstCiphertext<Element> ciphertext, usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      const std::map<usint, LPEvalKey<Element>> &rightEvalKeys) const {
-    if (!ciphertext)
-      PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-    if (!evalKeys.size())
-      PALISADE_THROW(config_error, "Input evalKeys map is empty");
-    if (!rightEvalKeys.size())
-      PALISADE_THROW(config_error, "Input rightEvalKeys map is empty");
-    const shared_ptr<LPCryptoParameters<Element>> cryptoParams =
-        ciphertext->GetCryptoParameters();
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  virtual Ciphertext<Element> EvalSumCols(ConstCiphertext<Element> ciphertext, usint batchSize,
+                                          const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                          const std::map<usint, LPEvalKey<Element>>& rightEvalKeys) const {
+    if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+    if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evalKeys map is empty");
+    if (!rightEvalKeys.size()) PALISADE_THROW(config_error, "Input rightEvalKeys map is empty");
+    const shared_ptr<LPCryptoParameters<Element>> cryptoParams = ciphertext->GetCryptoParameters();
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     const auto encodingParams = cryptoParams->GetEncodingParams();
-    const auto elementParams = cryptoParams->GetElementParams();
+    const auto elementParams  = cryptoParams->GetElementParams();
 
     usint m = elementParams->GetCyclotomicOrder();
 
     if ((encodingParams->GetBatchSize() == 0)) {
-      PALISADE_THROW(
-          config_error,
-          "EvalSumCols: Packed encoding parameters 'batch size' is not set; "
-          "Please check the EncodingParams passed to the crypto context.");
-    } else {
+      PALISADE_THROW(config_error,
+                     "EvalSumCols: Packed encoding parameters 'batch size' is not set; "
+                     "Please check the EncodingParams passed to the crypto context.");
+    }
+    else {
       if (ciphertext->GetEncodingType() == CKKSPacked) {
         if (IsPowerOfTwo(m)) {
-          newCiphertext =
-              EvalSum2nComplex(batchSize, m, evalKeys, newCiphertext);
+          newCiphertext = EvalSum2nComplex(batchSize, m, evalKeys, newCiphertext);
 
           std::vector<std::complex<double>> mask(m / 4);
           for (size_t i = 0; i < mask.size(); i++) {
-            if (i % batchSize == 0)
-              mask[i] = 1;
+            if (i % batchSize == 0) mask[i] = 1;
             else
               mask[i] = 0;
           }
@@ -2720,15 +2568,15 @@ class LPSHEAlgorithm {
 
           newCiphertext = EvalMult(newCiphertext, plaintext);
 
-          newCiphertext =
-              EvalSum2nComplexCols(batchSize, m, rightEvalKeys, newCiphertext);
-
-        } else {  // Arbitrary cyclotomics
+          newCiphertext = EvalSum2nComplexCols(batchSize, m, rightEvalKeys, newCiphertext);
+        }
+        else {  // Arbitrary cyclotomics
           PALISADE_THROW(config_error,
                          "Matrix summation of column-vectors is not supported "
                          "for arbitrary cyclotomics.");
         }
-      } else {
+      }
+      else {
         PALISADE_THROW(config_error,
                        "Matrix summation of column-vectors is only supported "
                        "for CKKS packed encoding.");
@@ -2750,13 +2598,11 @@ class LPSHEAlgorithm {
    * EvalMultKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalInnerProduct(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2, usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalSumKeys,
-      const LPEvalKey<Element> evalMultKey) const {
-    Ciphertext<Element> result =
-        EvalMult(ciphertext1, ciphertext2, evalMultKey);
+  virtual Ciphertext<Element> EvalInnerProduct(ConstCiphertext<Element> ciphertext1,
+                                               ConstCiphertext<Element> ciphertext2, usint batchSize,
+                                               const std::map<usint, LPEvalKey<Element>>& evalSumKeys,
+                                               const LPEvalKey<Element> evalMultKey) const {
+    Ciphertext<Element> result = EvalMult(ciphertext1, ciphertext2, evalMultKey);
 
     result = EvalSum(result, batchSize, evalSumKeys);
 
@@ -2779,10 +2625,9 @@ class LPSHEAlgorithm {
    * EvalMultKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalInnerProduct(
-      ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext,
-      usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalSumKeys) const {
+  virtual Ciphertext<Element> EvalInnerProduct(ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext,
+                                               usint batchSize,
+                                               const std::map<usint, LPEvalKey<Element>>& evalSumKeys) const {
     Ciphertext<Element> result = EvalMult(ciphertext1, plaintext);
 
     result = EvalSum(result, batchSize, evalSumKeys);
@@ -2804,36 +2649,33 @@ class LPSHEAlgorithm {
    * EvalAutomorphismKeyGen.
    * @return resulting ciphertext
    */
-  virtual Ciphertext<Element> EvalMerge(
-      const vector<Ciphertext<Element>> &ciphertextVector,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys) const {
+  virtual Ciphertext<Element> EvalMerge(const vector<Ciphertext<Element>>& ciphertextVector,
+                                        const std::map<usint, LPEvalKey<Element>>& evalKeys) const {
     if (ciphertextVector.size() == 0)
       PALISADE_THROW(math_error,
                      "EvalMerge: the vector of ciphertexts to be merged "
                      "cannot be empty");
 
-    const shared_ptr<LPCryptoParameters<Element>> cryptoParams =
-        ciphertextVector[0]->GetCryptoParameters();
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*(ciphertextVector[0])));
+    const shared_ptr<LPCryptoParameters<Element>> cryptoParams = ciphertextVector[0]->GetCryptoParameters();
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*(ciphertextVector[0])));
 
     auto cc = ciphertextVector[0]->GetCryptoContext();
 
     Plaintext plaintext;
     if (ciphertextVector[0]->GetEncodingType() == CKKSPacked) {
-      std::vector<std::complex<double>> plaintextVector({{1, 0}, {0, 0}});
+      std::vector<std::complex<double>> plaintextVector({ { 1, 0 }, { 0, 0 } });
       plaintext = cc->MakeCKKSPackedPlaintext(plaintextVector);
-    } else {
-      std::vector<int64_t> plaintextVector = {1, 0};
-      plaintext = cc->MakePackedPlaintext(plaintextVector);
+    }
+    else {
+      std::vector<int64_t> plaintextVector = { 1, 0 };
+      plaintext                            = cc->MakePackedPlaintext(plaintextVector);
     }
 
     newCiphertext = EvalMult(newCiphertext, plaintext);
 
     for (size_t i = 1; i < ciphertextVector.size(); i++) {
-      newCiphertext = EvalAdd(
-          newCiphertext, EvalAtIndex(EvalMult(ciphertextVector[i], plaintext),
-                                     -(int32_t)i, evalKeys));
+      newCiphertext =
+        EvalAdd(newCiphertext, EvalAtIndex(EvalMult(ciphertextVector[i], plaintext), -(int32_t)i, evalKeys));
     }
 
     return newCiphertext;
@@ -2847,10 +2689,8 @@ class LPSHEAlgorithm {
    * @return A ciphertext containing the same value as c1, but at level
    * targetLevel.
    */
-  virtual Ciphertext<Element> AdjustLevelWithRescale(
-      Ciphertext<Element> &c1, uint32_t targetLevel) const {
-    std::string errMsg =
-        "AdjustLevelWithoutRescale is not implemented for this scheme.";
+  virtual Ciphertext<Element> AdjustLevelWithRescale(Ciphertext<Element>& c1, uint32_t targetLevel) const {
+    std::string errMsg = "AdjustLevelWithoutRescale is not implemented for this scheme.";
     PALISADE_THROW(not_implemented_error, errMsg);
   }
 
@@ -2865,8 +2705,7 @@ class LPSHEAlgorithm {
         indices.push_back(g);
         g = (g * g) % m;
       }
-      if (2 * batchSize < m)
-        indices.push_back(g);
+      if (2 * batchSize < m) indices.push_back(g);
       else
         indices.push_back(m - 1);
     }
@@ -2879,7 +2718,7 @@ class LPSHEAlgorithm {
     std::vector<usint> indices;
 
     // generator
-    int32_t g = 5;
+    int32_t g    = 5;
     usint gFinal = g;
 
     for (size_t j = 0; j < ceil(log2(batchSize)); j++) {
@@ -2892,8 +2731,7 @@ class LPSHEAlgorithm {
     return indices;
   }
 
-  std::vector<usint> GenerateIndices2nComplexRows(usint rowSize,
-                                                  usint m) const {
+  std::vector<usint> GenerateIndices2nComplexRows(usint rowSize, usint m) const {
     // stores automorphism indices needed for EvalSum
     std::vector<usint> indices;
 
@@ -2901,7 +2739,7 @@ class LPSHEAlgorithm {
 
     // generator
     int32_t g0 = 5;
-    usint g = 0;
+    usint g    = 0;
 
     int32_t f = (NativeInteger(g0).ModExp(rowSize, m)).ConvertToInt();
 
@@ -2916,13 +2754,12 @@ class LPSHEAlgorithm {
     return indices;
   }
 
-  std::vector<usint> GenerateIndices2nComplexCols(usint batchSize,
-                                                  usint m) const {
+  std::vector<usint> GenerateIndices2nComplexCols(usint batchSize, usint m) const {
     // stores automorphism indices needed for EvalSum
     std::vector<usint> indices;
 
     // generator
-    int32_t g = NativeInteger(5).ModInverse(m).ConvertToInt();
+    int32_t g    = NativeInteger(5).ModInverse(m).ConvertToInt();
     usint gFinal = g;
 
     for (size_t j = 0; j < ceil(log2(batchSize)); j++) {
@@ -2935,46 +2772,35 @@ class LPSHEAlgorithm {
     return indices;
   }
 
-  Ciphertext<Element> EvalSum_2n(
-      usint batchSize, usint m,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      ConstCiphertext<Element> ciphertext) const {
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  Ciphertext<Element> EvalSum_2n(usint batchSize, usint m, const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                 ConstCiphertext<Element> ciphertext) const {
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     if (batchSize > 1) {
       usint g = 5;
       for (int i = 0; i < ceil(log2(batchSize)) - 1; i++) {
-        newCiphertext = EvalAdd(newCiphertext,
-                                EvalAutomorphism(newCiphertext, g, evalKeys));
-        g = (g * g) % m;
+        newCiphertext = EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, g, evalKeys));
+        g             = (g * g) % m;
       }
-      if (2 * batchSize < m)
-        newCiphertext = EvalAdd(newCiphertext,
-                                EvalAutomorphism(newCiphertext, g, evalKeys));
+      if (2 * batchSize < m) newCiphertext = EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, g, evalKeys));
       else
-        newCiphertext = EvalAdd(
-            newCiphertext, EvalAutomorphism(newCiphertext, m - 1, evalKeys));
+        newCiphertext = EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, m - 1, evalKeys));
     }
 
     return newCiphertext;
   }
 
-  Ciphertext<Element> EvalSum2nComplex(
-      usint batchSize, usint m,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      ConstCiphertext<Element> ciphertext) const {
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  Ciphertext<Element> EvalSum2nComplex(usint batchSize, usint m, const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                       ConstCiphertext<Element> ciphertext) const {
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     // generator
-    int32_t g = 5;
+    int32_t g    = 5;
     usint gFinal = g;
 
     for (int i = 0; i < ceil(log2(batchSize)); i++) {
-      newCiphertext = EvalAdd(
-          newCiphertext, EvalAutomorphism(newCiphertext, gFinal, evalKeys));
-      g = (g * g) % m;
+      newCiphertext = EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, gFinal, evalKeys));
+      g             = (g * g) % m;
 
       gFinal = g;
     }
@@ -2982,25 +2808,21 @@ class LPSHEAlgorithm {
     return newCiphertext;
   }
 
-  Ciphertext<Element> EvalSum2nComplexRows(
-      usint rowSize, usint m,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      ConstCiphertext<Element> ciphertext) const {
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  Ciphertext<Element> EvalSum2nComplexRows(usint rowSize, usint m, const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                           ConstCiphertext<Element> ciphertext) const {
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     usint colSize = m / (4 * rowSize);
 
     // generator
     int32_t g0 = 5;
-    usint g = 0;
-    int32_t f = (NativeInteger(g0).ModExp(rowSize, m)).ConvertToInt();
+    usint g    = 0;
+    int32_t f  = (NativeInteger(g0).ModExp(rowSize, m)).ConvertToInt();
 
     for (size_t j = 0; j < ceil(log2(colSize)); j++) {
       g = f;
 
-      newCiphertext =
-          EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, g, evalKeys));
+      newCiphertext = EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, g, evalKeys));
 
       f = (f * f) % m;
     }
@@ -3008,21 +2830,18 @@ class LPSHEAlgorithm {
     return newCiphertext;
   }
 
-  Ciphertext<Element> EvalSum2nComplexCols(
-      usint batchSize, usint m,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      ConstCiphertext<Element> ciphertext) const {
-    Ciphertext<Element> newCiphertext(
-        std::make_shared<CiphertextImpl<Element>>(*ciphertext));
+  Ciphertext<Element> EvalSum2nComplexCols(usint batchSize, usint m,
+                                           const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                           ConstCiphertext<Element> ciphertext) const {
+    Ciphertext<Element> newCiphertext(std::make_shared<CiphertextImpl<Element>>(*ciphertext));
 
     // generator
-    int32_t g = NativeInteger(5).ModInverse(m).ConvertToInt();
+    int32_t g    = NativeInteger(5).ModInverse(m).ConvertToInt();
     usint gFinal = g;
 
     for (int i = 0; i < ceil(log2(batchSize)); i++) {
-      newCiphertext = EvalAdd(
-          newCiphertext, EvalAutomorphism(newCiphertext, gFinal, evalKeys));
-      g = (g * g) % m;
+      newCiphertext = EvalAdd(newCiphertext, EvalAutomorphism(newCiphertext, gFinal, evalKeys));
+      g             = (g * g) % m;
 
       gFinal = g;
     }
@@ -3037,7 +2856,8 @@ class LPSHEAlgorithm {
  * @tparam Element a ring element.
  */
 template <typename Element>
-class LPCryptoParameters : public Serializable {
+class LPCryptoParameters : public Serializable
+{
  public:
   LPCryptoParameters() {}
 
@@ -3048,7 +2868,7 @@ class LPCryptoParameters : public Serializable {
    *
    * @return the plaintext modulus.
    */
-  virtual const PlaintextModulus &GetPlaintextModulus() const {
+  virtual const PlaintextModulus& GetPlaintextModulus() const {
     return m_encodingParams->GetPlaintextModulus();
   }
 
@@ -3073,12 +2893,12 @@ class LPCryptoParameters : public Serializable {
   /**
    * Sets the value of plaintext modulus p
    */
-  virtual void SetPlaintextModulus(const PlaintextModulus &plaintextModulus) {
+  virtual void SetPlaintextModulus(const PlaintextModulus& plaintextModulus) {
     m_encodingParams->SetPlaintextModulus(plaintextModulus);
   }
 
-  virtual bool operator==(const LPCryptoParameters<Element> &cmp) const = 0;
-  virtual bool operator!=(const LPCryptoParameters<Element> &cmp) const {
+  virtual bool operator==(const LPCryptoParameters<Element>& cmp) const = 0;
+  virtual bool operator!=(const LPCryptoParameters<Element>& cmp) const {
     return !(*this == cmp);
   }
 
@@ -3090,19 +2910,23 @@ class LPCryptoParameters : public Serializable {
    * @param item - reference to the item to print
    * @return the stream
    */
-  friend std::ostream &operator<<(std::ostream &out,
-                                  const LPCryptoParameters &item) {
+  friend std::ostream& operator<<(std::ostream& out, const LPCryptoParameters& item) {
     item.PrintParameters(out);
     return out;
   }
 
-  virtual usint GetRelinWindow() const { return 0; }
+  virtual usint GetRelinWindow() const {
+    return 0;
+  }
 
-  virtual int GetDepth() const { return 0; }
-  virtual size_t GetMaxDepth() const { return 0; }
+  virtual int GetDepth() const {
+    return 0;
+  }
+  virtual size_t GetMaxDepth() const {
+    return 0;
+  }
 
-  virtual const typename Element::DggType &GetDiscreteGaussianGenerator()
-      const {
+  virtual const typename Element::DggType& GetDiscreteGaussianGenerator() const {
     PALISADE_THROW(config_error, "No DGG Available for this parameter set");
   }
 
@@ -3121,49 +2945,50 @@ class LPCryptoParameters : public Serializable {
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("elp", m_params));
     ar(::cereal::make_nvp("enp", m_encodingParams));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("elp", m_params));
     ar(::cereal::make_nvp("enp", m_encodingParams));
   }
 
-  std::string SerializedObjectName() const { return "CryptoParameters"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "CryptoParameters";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  protected:
-  explicit LPCryptoParameters(const PlaintextModulus &plaintextModulus) {
+  explicit LPCryptoParameters(const PlaintextModulus& plaintextModulus) {
     m_encodingParams = std::make_shared<EncodingParamsImpl>(plaintextModulus);
   }
 
-  LPCryptoParameters(shared_ptr<typename Element::Params> params,
-                     const PlaintextModulus &plaintextModulus) {
-    m_params = params;
+  LPCryptoParameters(shared_ptr<typename Element::Params> params, const PlaintextModulus& plaintextModulus) {
+    m_params         = params;
     m_encodingParams = std::make_shared<EncodingParamsImpl>(plaintextModulus);
   }
 
-  LPCryptoParameters(shared_ptr<typename Element::Params> params,
-                     EncodingParams encodingParams) {
-    m_params = params;
+  LPCryptoParameters(shared_ptr<typename Element::Params> params, EncodingParams encodingParams) {
+    m_params         = params;
     m_encodingParams = encodingParams;
   }
 
-  LPCryptoParameters(LPCryptoParameters<Element> *from,
-                     shared_ptr<typename Element::Params> newElemParms) {
-    *this = *from;
+  LPCryptoParameters(LPCryptoParameters<Element>* from, shared_ptr<typename Element::Params> newElemParms) {
+    *this    = *from;
     m_params = newElemParms;
   }
 
-  virtual void PrintParameters(std::ostream &out) const {
+  virtual void PrintParameters(std::ostream& out) const {
     out << "Element Parameters: " << *m_params << std::endl;
     out << "Encoding Parameters: " << *m_encodingParams << std::endl;
   }
@@ -3181,17 +3006,18 @@ template <typename Element>
 class LPPublicKeyEncryptionScheme;
 
 template <typename Element>
-class PalisadeSchemeIdentifier {
+class PalisadeSchemeIdentifier
+{
   string schemeName;
-  LPPublicKeyEncryptionScheme<Element> *(*schemeMaker)();
+  LPPublicKeyEncryptionScheme<Element>* (*schemeMaker)();
 
  public:
-  PalisadeSchemeIdentifier(string n,
-                           LPPublicKeyEncryptionScheme<Element> (*f)())
-      : schemeName(n), schemeMaker(f) {}
+  PalisadeSchemeIdentifier(string n, LPPublicKeyEncryptionScheme<Element> (*f)()) : schemeName(n), schemeMaker(f) {}
 
-  const string &GetName() const { return schemeName; }
-  LPPublicKeyEncryptionScheme<Element> *GetScheme() const {
+  const string& GetName() const {
+    return schemeName;
+  }
+  LPPublicKeyEncryptionScheme<Element>* GetScheme() const {
     return (*schemeMaker)();
   }
 };
@@ -3201,15 +3027,14 @@ class PalisadeSchemeIdentifier {
  * @tparam Element a ring element.
  */
 template <typename Element>
-class LPPublicKeyEncryptionScheme {
+class LPPublicKeyEncryptionScheme
+{
  private:
-  inline void CheckMultipartyDecryptCompatibility(
-      ConstCiphertext<Element> &ciphertext, CALLER_INFO_ARGS_HDR) const {
+  inline void CheckMultipartyDecryptCompatibility(ConstCiphertext<Element>& ciphertext, CALLER_INFO_ARGS_HDR) const {
     if (ciphertext->GetElements().size() > 2) {
       std::string errorMsg(std::string("ciphertext's number of elements is [") +
                            std::to_string(ciphertext->GetElements().size()) +
-                           "]. Must be 2 or less for Multiparty Decryption." +
-                           CALLER_INFO);
+                           "]. Must be 2 or less for Multiparty Decryption." + CALLER_INFO);
       PALISADE_THROW(palisade_error, errorMsg);
     }
   }
@@ -3219,9 +3044,9 @@ class LPPublicKeyEncryptionScheme {
 
   virtual ~LPPublicKeyEncryptionScheme() {}
 
-  virtual bool operator==(const LPPublicKeyEncryptionScheme &sch) const = 0;
+  virtual bool operator==(const LPPublicKeyEncryptionScheme& sch) const = 0;
 
-  virtual bool operator!=(const LPPublicKeyEncryptionScheme &sch) const {
+  virtual bool operator!=(const LPPublicKeyEncryptionScheme& sch) const {
     return !(*this == sch);
   }
 
@@ -3260,17 +3085,13 @@ class LPPublicKeyEncryptionScheme {
   // wrapper for LPParameterSelectionAlgorithm
   //
 
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         int32_t evalAddCount = 0, int32_t evalMultCount = 0,
-                         int32_t keySwitchCount = 0, size_t dcrtBits = 0,
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, int32_t evalAddCount = 0,
+                         int32_t evalMultCount = 0, int32_t keySwitchCount = 0, size_t dcrtBits = 0,
                          uint32_t n = 0) const {
     if (m_algorithmParamsGen) {
-      return m_algorithmParamsGen->ParamsGen(cryptoParams, evalAddCount,
-                                             evalMultCount, keySwitchCount,
-                                             dcrtBits, n);
+      return m_algorithmParamsGen->ParamsGen(cryptoParams, evalAddCount, evalMultCount, keySwitchCount, dcrtBits, n);
     }
-    PALISADE_THROW(not_implemented_error,
-                   "Parameter generation operation has not been implemented");
+    PALISADE_THROW(not_implemented_error, "Parameter generation operation has not been implemented");
   }
 
   /////////////////////////////////////////
@@ -3278,43 +3099,39 @@ class LPPublicKeyEncryptionScheme {
   // LPEncryptionAlgorithm (ENCRYPT)
   //
 
-  virtual Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey,
-                                      const Element &plaintext) const {
+  virtual Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey, const Element& plaintext) const {
     if (m_algorithmEncryption) {
       return m_algorithmEncryption->Encrypt(publicKey, plaintext);
-    } else {
+    }
+    else {
       PALISADE_THROW(config_error, "Encrypt operation has not been enabled");
     }
   }
 
-  virtual Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey,
-                                      const Element &plaintext) const {
+  virtual Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey, const Element& plaintext) const {
     if (m_algorithmEncryption) {
       return m_algorithmEncryption->Encrypt(privateKey, plaintext);
     }
     PALISADE_THROW(config_error, "Encrypt operation has not been enabled");
   }
 
-  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                                ConstCiphertext<Element> ciphertext,
-                                NativePoly *plaintext) const {
+  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
+                                NativePoly* plaintext) const {
     if (m_algorithmEncryption) {
       return m_algorithmEncryption->Decrypt(privateKey, ciphertext, plaintext);
     }
     PALISADE_THROW(config_error, "Decrypt operation has not been enabled");
   }
 
-  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                                ConstCiphertext<Element> ciphertext,
-                                Poly *plaintext) const {
+  virtual DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
+                                Poly* plaintext) const {
     if (m_algorithmEncryption) {
       return m_algorithmEncryption->Decrypt(privateKey, ciphertext, plaintext);
     }
     PALISADE_THROW(config_error, "Decrypt operation has not been enabled");
   }
 
-  virtual LPKeyPair<Element> KeyGen(CryptoContext<Element> cc,
-                                    bool makeSparse) {
+  virtual LPKeyPair<Element> KeyGen(CryptoContext<Element> cc, bool makeSparse) {
     if (m_algorithmEncryption) {
       auto kp = m_algorithmEncryption->KeyGen(cc, makeSparse);
       kp.publicKey->SetKeyTag(kp.secretKey->GetKeyTag());
@@ -3327,9 +3144,8 @@ class LPPublicKeyEncryptionScheme {
   // the three functions below are wrappers for things in LPPREAlgorithm (PRE)
   //
 
-  virtual LPEvalKey<Element> ReKeyGen(
-      const LPPublicKey<Element> newKey,
-      const LPPrivateKey<Element> origPrivateKey) const {
+  virtual LPEvalKey<Element> ReKeyGen(const LPPublicKey<Element> newKey,
+                                      const LPPrivateKey<Element> origPrivateKey) const {
     if (m_algorithmPRE) {
       auto rk = m_algorithmPRE->ReKeyGen(newKey, origPrivateKey);
       rk->SetKeyTag(newKey->GetKeyTag());
@@ -3338,9 +3154,8 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "ReKeyGen operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> ReEncrypt(
-      const LPEvalKey<Element> evalKey, ConstCiphertext<Element> ciphertext,
-      const LPPublicKey<Element> publicKey) const {
+  virtual Ciphertext<Element> ReEncrypt(const LPEvalKey<Element> evalKey, ConstCiphertext<Element> ciphertext,
+                                        const LPPublicKey<Element> publicKey) const {
     if (m_algorithmPRE) {
       auto ct = m_algorithmPRE->ReEncrypt(evalKey, ciphertext, publicKey);
       ct->SetKeyTag(evalKey->GetKeyTag());
@@ -3355,119 +3170,91 @@ class LPPublicKeyEncryptionScheme {
   //
 
   // Wrapper for Multiparty Key Gen
-  virtual LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc,
-                                              const LPPublicKey<Element> pk1,
+  virtual LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc, const LPPublicKey<Element> pk1,
                                               bool makeSparse, bool PRE) {
     if (m_algorithmMultiparty) {
       if (!cc) PALISADE_THROW(config_error, "Input crypto context is nullptr");
       if (!pk1) PALISADE_THROW(config_error, "Input public key is empty");
-      auto k =
-          m_algorithmMultiparty->MultipartyKeyGen(cc, pk1, makeSparse, PRE);
+      auto k = m_algorithmMultiparty->MultipartyKeyGen(cc, pk1, makeSparse, PRE);
       k.publicKey->SetKeyTag(k.secretKey->GetKeyTag());
       return k;
     }
-    PALISADE_THROW(config_error,
-                   "MultipartyKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "MultipartyKeyGen operation has not been enabled");
   }
 
   // Wrapper for Multiparty Key Gen
-  virtual LPKeyPair<Element> MultipartyKeyGen(
-      CryptoContext<Element> cc,
-      const vector<LPPrivateKey<Element>> &secretKeys, bool makeSparse) {
+  virtual LPKeyPair<Element> MultipartyKeyGen(CryptoContext<Element> cc,
+                                              const vector<LPPrivateKey<Element>>& secretKeys, bool makeSparse) {
     if (m_algorithmMultiparty) {
       if (!cc) PALISADE_THROW(config_error, "Input crypto context is nullptr");
-      if (!secretKeys.size())
-        PALISADE_THROW(config_error, "Input private key vector is empty");
-      auto k =
-          m_algorithmMultiparty->MultipartyKeyGen(cc, secretKeys, makeSparse);
+      if (!secretKeys.size()) PALISADE_THROW(config_error, "Input private key vector is empty");
+      auto k = m_algorithmMultiparty->MultipartyKeyGen(cc, secretKeys, makeSparse);
       k.publicKey->SetKeyTag(k.secretKey->GetKeyTag());
       return k;
     }
-    PALISADE_THROW(config_error,
-                   "MultipartyKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "MultipartyKeyGen operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> MultipartyDecryptMain(
-      const LPPrivateKey<Element> privateKey,
-      ConstCiphertext<Element> ciphertext) const {
+  virtual Ciphertext<Element> MultipartyDecryptMain(const LPPrivateKey<Element> privateKey,
+                                                    ConstCiphertext<Element> ciphertext) const {
     if (m_algorithmMultiparty) {
       CheckMultipartyDecryptCompatibility(ciphertext);
-      auto ct =
-          m_algorithmMultiparty->MultipartyDecryptMain(privateKey, ciphertext);
+      auto ct = m_algorithmMultiparty->MultipartyDecryptMain(privateKey, ciphertext);
       ct->SetKeyTag(privateKey->GetKeyTag());
       return ct;
     }
-    PALISADE_THROW(config_error,
-                   "MultipartyDecryptMain operation has not been enabled");
+    PALISADE_THROW(config_error, "MultipartyDecryptMain operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> MultipartyDecryptLead(
-      const LPPrivateKey<Element> privateKey,
-      ConstCiphertext<Element> ciphertext) const {
+  virtual Ciphertext<Element> MultipartyDecryptLead(const LPPrivateKey<Element> privateKey,
+                                                    ConstCiphertext<Element> ciphertext) const {
     if (m_algorithmMultiparty) {
       CheckMultipartyDecryptCompatibility(ciphertext);
-      auto ct =
-          m_algorithmMultiparty->MultipartyDecryptLead(privateKey, ciphertext);
+      auto ct = m_algorithmMultiparty->MultipartyDecryptLead(privateKey, ciphertext);
       ct->SetKeyTag(privateKey->GetKeyTag());
       return ct;
     }
-    PALISADE_THROW(config_error,
-                   "MultipartyDecryptLead operation has not been enabled");
+    PALISADE_THROW(config_error, "MultipartyDecryptLead operation has not been enabled");
   }
 
-  virtual DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>> &ciphertextVec,
-      NativePoly *plaintext) const {
+  virtual DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                                NativePoly* plaintext) const {
     if (m_algorithmMultiparty) {
-      return m_algorithmMultiparty->MultipartyDecryptFusion(ciphertextVec,
-                                                            plaintext);
+      return m_algorithmMultiparty->MultipartyDecryptFusion(ciphertextVec, plaintext);
     }
-    PALISADE_THROW(config_error,
-                   "MultipartyDecrypt operation has not been enabled");
+    PALISADE_THROW(config_error, "MultipartyDecrypt operation has not been enabled");
   }
 
-  virtual DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>> &ciphertextVec, Poly *plaintext) const {
+  virtual DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                                Poly* plaintext) const {
     if (m_algorithmMultiparty) {
-      return m_algorithmMultiparty->MultipartyDecryptFusion(ciphertextVec,
-                                                            plaintext);
+      return m_algorithmMultiparty->MultipartyDecryptFusion(ciphertextVec, plaintext);
     }
-    PALISADE_THROW(config_error,
-                   "MultipartyDecrypt operation has not been enabled");
+    PALISADE_THROW(config_error, "MultipartyDecrypt operation has not been enabled");
   }
 
-  virtual LPEvalKey<Element> MultiKeySwitchGen(
-      const LPPrivateKey<Element> originalPrivateKey,
-      const LPPrivateKey<Element> newPrivateKey,
-      const LPEvalKey<Element> ek) const {
+  virtual LPEvalKey<Element> MultiKeySwitchGen(const LPPrivateKey<Element> originalPrivateKey,
+                                               const LPPrivateKey<Element> newPrivateKey,
+                                               const LPEvalKey<Element> ek) const {
     if (m_algorithmMultiparty) {
-      if (!originalPrivateKey)
-        PALISADE_THROW(config_error, "Input first private key is nullptr");
-      if (!newPrivateKey)
-        PALISADE_THROW(config_error, "Input second private key is nullptr");
+      if (!originalPrivateKey) PALISADE_THROW(config_error, "Input first private key is nullptr");
+      if (!newPrivateKey) PALISADE_THROW(config_error, "Input second private key is nullptr");
       if (!ek) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      auto k = m_algorithmMultiparty->MultiKeySwitchGen(originalPrivateKey,
-                                                        newPrivateKey, ek);
+      auto k = m_algorithmMultiparty->MultiKeySwitchGen(originalPrivateKey, newPrivateKey, ek);
       k->SetKeyTag(newPrivateKey->GetKeyTag());
       return k;
     }
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  MultiEvalAutomorphismKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-      const std::vector<usint> &indexList, const std::string &keyId = "") {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAutomorphismKeyGen(
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+    const std::vector<usint>& indexList, const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
-      if (!eAuto)
-        PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
-      if (!indexList.size())
-        PALISADE_THROW(config_error, "Input index vector is empty");
-      auto keys = m_algorithmMultiparty->MultiEvalAutomorphismKeyGen(
-          privateKey, eAuto, indexList);
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!eAuto) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+      if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+      auto keys = m_algorithmMultiparty->MultiEvalAutomorphismKeyGen(privateKey, eAuto, indexList);
       for (auto it = keys->begin(); it != keys->end(); ++it) {
         if (it->second) {
           it->second->SetKeyTag(keyId);
@@ -3478,20 +3265,14 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  MultiEvalAtIndexKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
-      const std::vector<int32_t> &indexList, const std::string &keyId = "") {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalAtIndexKeyGen(
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eAuto,
+    const std::vector<int32_t>& indexList, const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
-      if (!eAuto)
-        PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
-      if (!indexList.size())
-        PALISADE_THROW(config_error, "Input index vector is empty");
-      auto keys = m_algorithmMultiparty->MultiEvalAtIndexKeyGen(
-          privateKey, eAuto, indexList);
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!eAuto) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+      if (!indexList.size()) PALISADE_THROW(config_error, "Input index vector is empty");
+      auto keys = m_algorithmMultiparty->MultiEvalAtIndexKeyGen(privateKey, eAuto, indexList);
       for (auto it = keys->begin(); it != keys->end(); ++it) {
         if (it->second) {
           it->second->SetKeyTag(keyId);
@@ -3503,14 +3284,11 @@ class LPPublicKeyEncryptionScheme {
   }
 
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiEvalSumKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum,
-      const std::string &keyId = "") {
+    const LPPrivateKey<Element> privateKey, const shared_ptr<std::map<usint, LPEvalKey<Element>>> eSum,
+    const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
-      if (!eSum)
-        PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!eSum) PALISADE_THROW(config_error, "Input evaluation key map is nullptr");
       auto keys = m_algorithmMultiparty->MultiEvalSumKeyGen(privateKey, eSum);
       for (auto it = keys->begin(); it != keys->end(); ++it) {
         if (it->second) {
@@ -3522,14 +3300,11 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual LPEvalKey<Element> MultiAddEvalKeys(LPEvalKey<Element> a,
-                                              LPEvalKey<Element> b,
-                                              const std::string &keyId = "") {
+  virtual LPEvalKey<Element> MultiAddEvalKeys(LPEvalKey<Element> a, LPEvalKey<Element> b,
+                                              const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!a)
-        PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
-      if (!b)
-        PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
+      if (!a) PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
+      if (!b) PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
 
       auto key = m_algorithmMultiparty->MultiAddEvalKeys(a, b);
       key->SetKeyTag(keyId);
@@ -3538,12 +3313,10 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey,
-                                              LPPrivateKey<Element> sk,
-                                              const std::string &keyId = "") {
+  virtual LPEvalKey<Element> MultiMultEvalKey(LPEvalKey<Element> evalKey, LPPrivateKey<Element> sk,
+                                              const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!evalKey)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      if (!evalKey) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
       if (!sk) PALISADE_THROW(config_error, "Input private key is nullptr");
 
       auto key = m_algorithmMultiparty->MultiMultEvalKey(evalKey, sk);
@@ -3554,16 +3327,11 @@ class LPPublicKeyEncryptionScheme {
   }
 
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiAddEvalSumKeys(
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2,
-      const std::string &keyId = "") {
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2, const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!es1)
-        PALISADE_THROW(config_error,
-                       "Input first evaluation key map is nullptr");
-      if (!es2)
-        PALISADE_THROW(config_error,
-                       "Input second evaluation key map is nullptr");
+      if (!es1) PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
+      if (!es2) PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
       auto keys = m_algorithmMultiparty->MultiAddEvalSumKeys(es1, es2);
       for (auto it = keys->begin(); it != keys->end(); ++it) {
         if (it->second) {
@@ -3575,18 +3343,12 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  MultiAddEvalAutomorphismKeys(
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
-      const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2,
-      const std::string &keyId = "") {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> MultiAddEvalAutomorphismKeys(
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es1,
+    const shared_ptr<std::map<usint, LPEvalKey<Element>>> es2, const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!es1)
-        PALISADE_THROW(config_error,
-                       "Input first evaluation key map is nullptr");
-      if (!es2)
-        PALISADE_THROW(config_error,
-                       "Input second evaluation key map is nullptr");
+      if (!es1) PALISADE_THROW(config_error, "Input first evaluation key map is nullptr");
+      if (!es2) PALISADE_THROW(config_error, "Input second evaluation key map is nullptr");
 
       auto keys = m_algorithmMultiparty->MultiAddEvalAutomorphismKeys(es1, es2);
       for (auto it = keys->begin(); it != keys->end(); ++it) {
@@ -3599,14 +3361,11 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual LPPublicKey<Element> MultiAddPubKeys(LPPublicKey<Element> pubKey1,
-                                               LPPublicKey<Element> pubKey2,
-                                               const std::string &keyId = "") {
+  virtual LPPublicKey<Element> MultiAddPubKeys(LPPublicKey<Element> pubKey1, LPPublicKey<Element> pubKey2,
+                                               const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!pubKey1)
-        PALISADE_THROW(config_error, "Input first public key is nullptr");
-      if (!pubKey2)
-        PALISADE_THROW(config_error, "Input second public key is nullptr");
+      if (!pubKey1) PALISADE_THROW(config_error, "Input first public key is nullptr");
+      if (!pubKey2) PALISADE_THROW(config_error, "Input second public key is nullptr");
 
       auto key = m_algorithmMultiparty->MultiAddPubKeys(pubKey1, pubKey2);
       key->SetKeyTag(keyId);
@@ -3615,16 +3374,12 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "Multiparty capability has not been enabled");
   }
 
-  virtual LPEvalKey<Element> MultiAddEvalMultKeys(
-      LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2,
-      const std::string &keyId = "") {
+  virtual LPEvalKey<Element> MultiAddEvalMultKeys(LPEvalKey<Element> evalKey1, LPEvalKey<Element> evalKey2,
+                                                  const std::string& keyId = "") {
     if (m_algorithmMultiparty) {
-      if (!evalKey1)
-        PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
-      if (!evalKey2)
-        PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
-      auto key =
-          m_algorithmMultiparty->MultiAddEvalMultKeys(evalKey1, evalKey2);
+      if (!evalKey1) PALISADE_THROW(config_error, "Input first evaluation key is nullptr");
+      if (!evalKey2) PALISADE_THROW(config_error, "Input second evaluation key is nullptr");
+      auto key = m_algorithmMultiparty->MultiAddEvalMultKeys(evalKey1, evalKey2);
       key->SetKeyTag(keyId);
       return key;
     }
@@ -3635,584 +3390,443 @@ class LPPublicKeyEncryptionScheme {
   // the three functions below are wrappers for things in LPSHEAlgorithm (SHE)
   //
 
-  virtual Ciphertext<Element> AddRandomNoise(
-      ConstCiphertext<Element> ciphertext) const {
+  virtual Ciphertext<Element> AddRandomNoise(ConstCiphertext<Element> ciphertext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmSHE->AddRandomNoise(ciphertext);
     }
-    PALISADE_THROW(config_error,
-                   "AddRandomNoise operation has not been enabled");
+    PALISADE_THROW(config_error, "AddRandomNoise operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAdd(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const {
+  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext1,
+                                      ConstCiphertext<Element> ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       return m_algorithmSHE->EvalAdd(ciphertext1, ciphertext2);
     }
     PALISADE_THROW(config_error, "EvalAdd operation has not been enabled");
   }
 
-  virtual void EvalAddInPlace(Ciphertext<Element> &ciphertext1,
-                              ConstCiphertext<Element> ciphertext2) const {
+  virtual void EvalAddInPlace(Ciphertext<Element>& ciphertext1, ConstCiphertext<Element> ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       m_algorithmSHE->EvalAddInPlace(ciphertext1, ciphertext2);
       return;
     }
-    PALISADE_THROW(config_error,
-                   "EvalAddInPlace operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalAddInPlace operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAddMutable(
-      Ciphertext<Element> &ciphertext1,
-      Ciphertext<Element> &ciphertext2) const {
+  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       return m_algorithmSHE->EvalAddMutable(ciphertext1, ciphertext2);
     }
     PALISADE_THROW(config_error, "EvalAdd operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext1,
-                                      ConstPlaintext plaintext) const {
+  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
       return m_algorithmSHE->EvalAdd(ciphertext1, plaintext);
     }
     PALISADE_THROW(config_error, "EvalAdd operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element> &ciphertext1,
-                                             Plaintext plaintext) const {
+  virtual Ciphertext<Element> EvalAddMutable(Ciphertext<Element>& ciphertext1, Plaintext plaintext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
       return m_algorithmSHE->EvalAddMutable(ciphertext1, plaintext);
     }
     PALISADE_THROW(config_error, "EvalAdd operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext1,
-                                      double constant) const {
+  virtual Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ciphertext1, double constant) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmSHE->EvalAdd(ciphertext1, constant);
     }
     PALISADE_THROW(config_error, "EvalAdd operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalLinearWSum(
-      vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const {
+  virtual Ciphertext<Element> EvalLinearWSum(vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const {
     if (m_algorithmSHE) {
-      if (!ciphertexts.size())
-        PALISADE_THROW(config_error, "Input ciphertext vector is empty");
+      if (!ciphertexts.size()) PALISADE_THROW(config_error, "Input ciphertext vector is empty");
       return m_algorithmSHE->EvalLinearWSum(ciphertexts, constants);
     }
-    PALISADE_THROW(config_error,
-                   "EvalLinearWSum operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalLinearWSum operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalLinearWSumMutable(
-      vector<Ciphertext<Element>> ciphertexts, vector<double> constants) const {
+  virtual Ciphertext<Element> EvalLinearWSumMutable(vector<Ciphertext<Element>> ciphertexts,
+                                                    vector<double> constants) const {
     if (m_algorithmSHE) {
-      if (!ciphertexts.size())
-        PALISADE_THROW(config_error, "Input ciphertext vector is empty");
+      if (!ciphertexts.size()) PALISADE_THROW(config_error, "Input ciphertext vector is empty");
       return m_algorithmSHE->EvalLinearWSumMutable(ciphertexts, constants);
     }
-    PALISADE_THROW(config_error,
-                   "EvalLinearWSum operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalLinearWSum operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSub(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const {
+  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1,
+                                      ConstCiphertext<Element> ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       return m_algorithmSHE->EvalSub(ciphertext1, ciphertext2);
     }
     PALISADE_THROW(config_error, "EvalSub operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSubMutable(
-      Ciphertext<Element> &ciphertext1,
-      Ciphertext<Element> &ciphertext2) const {
+  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       return m_algorithmSHE->EvalSubMutable(ciphertext1, ciphertext2);
     }
     PALISADE_THROW(config_error, "EvalSub operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1,
-                                      ConstPlaintext plaintext) const {
+  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
       return m_algorithmSHE->EvalSub(ciphertext1, plaintext);
     }
     PALISADE_THROW(config_error, "EvalSub operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element> &ciphertext1,
-                                             Plaintext plaintext) const {
+  virtual Ciphertext<Element> EvalSubMutable(Ciphertext<Element>& ciphertext1, Plaintext plaintext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
       return m_algorithmSHE->EvalSubMutable(ciphertext1, plaintext);
     }
     PALISADE_THROW(config_error, "EvalSub operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1,
-                                      double constant) const {
+  virtual Ciphertext<Element> EvalSub(ConstCiphertext<Element> ciphertext1, double constant) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmSHE->EvalSub(ciphertext1, constant);
     }
     PALISADE_THROW(config_error, "EvalSub operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMult(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2) const {
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1,
+                                       ConstCiphertext<Element> ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       return m_algorithmSHE->EvalMult(ciphertext1, ciphertext2);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMultMutable(
-      Ciphertext<Element> &ciphertext1,
-      Ciphertext<Element> &ciphertext2) const {
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1,
+                                              Ciphertext<Element>& ciphertext2) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
       return m_algorithmSHE->EvalMultMutable(ciphertext1, ciphertext2);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext,
-                                       ConstPlaintext plaintext) const {
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext, ConstPlaintext plaintext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
       return m_algorithmSHE->EvalMult(ciphertext, plaintext);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element> &ciphertext,
-                                              Plaintext plaintext) const {
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext, Plaintext plaintext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
       return m_algorithmSHE->EvalMultMutable(ciphertext, plaintext);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1,
-                                       double constant) const {
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1, double constant) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmSHE->EvalMult(ciphertext1, constant);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element> &ciphertext1,
-                                              double constant) const {
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1, double constant) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmSHE->EvalMultMutable(ciphertext1, constant);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1,
-                                       ConstCiphertext<Element> ciphertext2,
+  virtual Ciphertext<Element> EvalMult(ConstCiphertext<Element> ciphertext1, ConstCiphertext<Element> ciphertext2,
                                        const LPEvalKey<Element> evalKey) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
-      if (!evalKey)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!evalKey) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
       return m_algorithmSHE->EvalMult(ciphertext1, ciphertext2, evalKey);
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMultMutable(
-      Ciphertext<Element> &ciphertext1, Ciphertext<Element> &ciphertext2,
-      const LPEvalKey<Element> evalKey) const {
+  virtual Ciphertext<Element> EvalMultMutable(Ciphertext<Element>& ciphertext1, Ciphertext<Element>& ciphertext2,
+                                              const LPEvalKey<Element> evalKey) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
-      if (!evalKey)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      auto ct =
-          m_algorithmSHE->EvalMultMutable(ciphertext1, ciphertext2, evalKey);
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!evalKey) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      auto ct = m_algorithmSHE->EvalMultMutable(ciphertext1, ciphertext2, evalKey);
       return ct;
     }
     PALISADE_THROW(config_error, "EvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMultMany(
-      const vector<Ciphertext<Element>> &ciphertext,
-      const vector<LPEvalKey<Element>> &evalKeys) const {
+  virtual Ciphertext<Element> EvalMultMany(const vector<Ciphertext<Element>>& ciphertext,
+                                           const vector<LPEvalKey<Element>>& evalKeys) const {
     if (m_algorithmSHE) {
-      if (!ciphertext.size())
-        PALISADE_THROW(config_error, "Input ciphertext vector is empty");
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key vector is empty");
+      if (!ciphertext.size()) PALISADE_THROW(config_error, "Input ciphertext vector is empty");
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evaluation key vector is empty");
       return m_algorithmSHE->EvalMultMany(ciphertext, evalKeys);
     }
     PALISADE_THROW(config_error, "EvalMultMany operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAddMany(
-      const vector<Ciphertext<Element>> &ciphertexts) const {
+  virtual Ciphertext<Element> EvalAddMany(const vector<Ciphertext<Element>>& ciphertexts) const {
     if (m_algorithmSHE) {
-      if (!ciphertexts.size())
-        PALISADE_THROW(config_error, "Input ciphertext vector is empty");
+      if (!ciphertexts.size()) PALISADE_THROW(config_error, "Input ciphertext vector is empty");
       return m_algorithmSHE->EvalAddMany(ciphertexts);
     }
     PALISADE_THROW(config_error, "EvalAddMany operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAddManyInPlace(
-      vector<Ciphertext<Element>> &ciphertexts) const {
+  virtual Ciphertext<Element> EvalAddManyInPlace(vector<Ciphertext<Element>>& ciphertexts) const {
     if (m_algorithmSHE) {
-      if (!ciphertexts.size())
-        PALISADE_THROW(config_error, "Input ciphertext vector is empty");
+      if (!ciphertexts.size()) PALISADE_THROW(config_error, "Input ciphertext vector is empty");
       return m_algorithmSHE->EvalAddManyInPlace(ciphertexts);
     }
-    PALISADE_THROW(config_error,
-                   "EvalAddManyInPlace operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalAddManyInPlace operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalNegate(
-      ConstCiphertext<Element> ciphertext) const {
+  virtual Ciphertext<Element> EvalNegate(ConstCiphertext<Element> ciphertext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       auto ct = m_algorithmSHE->EvalNegate(ciphertext);
       return ct;
     }
     PALISADE_THROW(config_error, "EvalNegate operation has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  EvalAutomorphismKeyGen(const LPPublicKey<Element> publicKey,
-                         const LPPrivateKey<Element> origPrivateKey,
-                         const std::vector<usint> &indexList) const {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
+    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> origPrivateKey,
+    const std::vector<usint>& indexList) const {
     if (m_algorithmSHE) {
-      if (!publicKey)
-        PALISADE_THROW(config_error, "Input public key is nullptr");
-      if (!origPrivateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
-      auto km = m_algorithmSHE->EvalAutomorphismKeyGen(
-          publicKey, origPrivateKey, indexList);
-      for (auto &k : *km) k.second->SetKeyTag(origPrivateKey->GetKeyTag());
+      if (!publicKey) PALISADE_THROW(config_error, "Input public key is nullptr");
+      if (!origPrivateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+      auto km = m_algorithmSHE->EvalAutomorphismKeyGen(publicKey, origPrivateKey, indexList);
+      for (auto& k: *km)
+        k.second->SetKeyTag(origPrivateKey->GetKeyTag());
       return km;
     }
-    PALISADE_THROW(config_error,
-                   "EvalAutomorphismKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalAutomorphismKeyGen operation has not been enabled");
   }
 
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAtIndexKeyGen(
-      const LPPublicKey<Element> publicKey,
-      const LPPrivateKey<Element> origPrivateKey,
-      const std::vector<int32_t> &indexList) const {
+    const LPPublicKey<Element> publicKey, const LPPrivateKey<Element> origPrivateKey,
+    const std::vector<int32_t>& indexList) const {
     if (m_algorithmSHE) {
-      if (!origPrivateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
-      auto km = m_algorithmSHE->EvalAtIndexKeyGen(publicKey, origPrivateKey,
-                                                  indexList);
-      for (auto &k : *km) k.second->SetKeyTag(origPrivateKey->GetKeyTag());
+      if (!origPrivateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+      auto km = m_algorithmSHE->EvalAtIndexKeyGen(publicKey, origPrivateKey, indexList);
+      for (auto& k: *km)
+        k.second->SetKeyTag(origPrivateKey->GetKeyTag());
       return km;
     }
-    PALISADE_THROW(config_error,
-                   "EvalAtIndexKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalAtIndexKeyGen operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalAutomorphism(
-      ConstCiphertext<Element> ciphertext, usint i,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      CALLER_INFO_ARGS_HDR) const {
+  virtual Ciphertext<Element> EvalAutomorphism(ConstCiphertext<Element> ciphertext, usint i,
+                                               const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                               CALLER_INFO_ARGS_HDR) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
       auto ct = m_algorithmSHE->EvalAutomorphism(ciphertext, i, evalKeys);
       return ct;
     }
-    std::string errorMsg(
-        std::string("EvalAutomorphism operation has not been enabled") +
-        CALLER_INFO);
+    std::string errorMsg(std::string("EvalAutomorphism operation has not been enabled") + CALLER_INFO);
     PALISADE_THROW(config_error, errorMsg);
   }
 
-  virtual Ciphertext<Element> EvalAtIndex(
-      ConstCiphertext<Element> ciphertext, usint i,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys) const {
+  virtual Ciphertext<Element> EvalAtIndex(ConstCiphertext<Element> ciphertext, usint i,
+                                          const std::map<usint, LPEvalKey<Element>>& evalKeys) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
       auto ct = m_algorithmSHE->EvalAtIndex(ciphertext, i, evalKeys);
       return ct;
     }
     PALISADE_THROW(config_error, "EvalAtIndex operation has not been enabled");
   }
 
-  virtual shared_ptr<vector<Element>> EvalFastRotationPrecompute(
-      ConstCiphertext<Element> ciphertext) const {
+  virtual shared_ptr<vector<Element>> EvalFastRotationPrecompute(ConstCiphertext<Element> ciphertext) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       auto ct = m_algorithmSHE->EvalFastRotationPrecompute(ciphertext);
       return ct;
     }
-    PALISADE_THROW(config_error,
-                   "EvalFastRotationPrecompute operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalFastRotationPrecompute operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalFastRotation(
-      ConstCiphertext<Element> ciphertext, const usint index, const usint m,
-      const shared_ptr<vector<Element>> digits) const {
+  virtual Ciphertext<Element> EvalFastRotation(ConstCiphertext<Element> ciphertext, const usint index, const usint m,
+                                               const shared_ptr<vector<Element>> digits) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       auto ct = m_algorithmSHE->EvalFastRotation(ciphertext, index, m, digits);
       return ct;
     }
-    PALISADE_THROW(config_error,
-                   "EvalFastRotation operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalFastRotation operation has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>>
-  EvalAutomorphismKeyGen(const LPPrivateKey<Element> privateKey,
-                         const std::vector<usint> &indexList) const {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalAutomorphismKeyGen(
+    const LPPrivateKey<Element> privateKey, const std::vector<usint>& indexList) const {
     if (m_algorithmSHE) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
       auto km = m_algorithmSHE->EvalAutomorphismKeyGen(privateKey, indexList);
-      for (auto &k : *km) k.second->SetKeyTag(privateKey->GetKeyTag());
+      for (auto& k: *km)
+        k.second->SetKeyTag(privateKey->GetKeyTag());
       return km;
     }
-    PALISADE_THROW(config_error,
-                   "EvalAutomorphismKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalAutomorphismKeyGen operation has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const LPPublicKey<Element> publicKey) const {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumKeyGen(const LPPrivateKey<Element> privateKey,
+                                                                        const LPPublicKey<Element> publicKey) const {
     if (m_algorithmSHE) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
       auto km = m_algorithmSHE->EvalSumKeyGen(privateKey, publicKey);
-      for (auto &k : *km) {
+      for (auto& k: *km) {
         k.second->SetKeyTag(privateKey->GetKeyTag());
       }
       return km;
     }
-    PALISADE_THROW(config_error,
-                   "EvalSumKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalSumKeyGen operation has not been enabled");
   }
 
-  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumRowsKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const LPPublicKey<Element> publicKey, usint rowSize,
-      usint subringDim = 0) const {
+  virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumRowsKeyGen(const LPPrivateKey<Element> privateKey,
+                                                                            const LPPublicKey<Element> publicKey,
+                                                                            usint rowSize, usint subringDim = 0) const {
     if (m_algorithmSHE) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
-      auto km = m_algorithmSHE->EvalSumRowsKeyGen(privateKey, publicKey,
-                                                  rowSize, subringDim);
-      for (auto &k : *km) {
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
+      auto km = m_algorithmSHE->EvalSumRowsKeyGen(privateKey, publicKey, rowSize, subringDim);
+      for (auto& k: *km) {
         k.second->SetKeyTag(privateKey->GetKeyTag());
       }
       return km;
     }
-    PALISADE_THROW(config_error,
-                   "EvalSumRowsKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalSumRowsKeyGen operation has not been enabled");
   }
 
   virtual shared_ptr<std::map<usint, LPEvalKey<Element>>> EvalSumColsKeyGen(
-      const LPPrivateKey<Element> privateKey,
-      const LPPublicKey<Element> publicKey) const {
+    const LPPrivateKey<Element> privateKey, const LPPublicKey<Element> publicKey) const {
     if (m_algorithmSHE) {
-      if (!privateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!privateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
       auto km = m_algorithmSHE->EvalSumColsKeyGen(privateKey, publicKey);
-      for (auto &k : *km) {
+      for (auto& k: *km) {
         k.second->SetKeyTag(privateKey->GetKeyTag());
       }
       return km;
     }
-    PALISADE_THROW(config_error,
-                   "EvalSumColsKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalSumColsKeyGen operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSum(
-      ConstCiphertext<Element> ciphertext, usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys) const {
+  virtual Ciphertext<Element> EvalSum(ConstCiphertext<Element> ciphertext, usint batchSize,
+                                      const std::map<usint, LPEvalKey<Element>>& evalKeys) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
       auto ct = m_algorithmSHE->EvalSum(ciphertext, batchSize, evalKeys);
       return ct;
     }
     PALISADE_THROW(config_error, "EvalSum operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSumRows(
-      ConstCiphertext<Element> ciphertext, usint rowSize,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      usint subringDim = 0) const {
+  virtual Ciphertext<Element> EvalSumRows(ConstCiphertext<Element> ciphertext, usint rowSize,
+                                          const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                          usint subringDim = 0) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
-      auto ct = m_algorithmSHE->EvalSumRows(ciphertext, rowSize, evalKeys,
-                                            subringDim);
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      auto ct = m_algorithmSHE->EvalSumRows(ciphertext, rowSize, evalKeys, subringDim);
       return ct;
     }
     PALISADE_THROW(config_error, "EvalSumRow operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalSumCols(
-      ConstCiphertext<Element> ciphertext, usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys,
-      const std::map<usint, LPEvalKey<Element>> &rightEvalKeys) const {
+  virtual Ciphertext<Element> EvalSumCols(ConstCiphertext<Element> ciphertext, usint batchSize,
+                                          const std::map<usint, LPEvalKey<Element>>& evalKeys,
+                                          const std::map<usint, LPEvalKey<Element>>& rightEvalKeys) const {
     if (m_algorithmSHE) {
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input first evaluation key map is empty");
-      if (!rightEvalKeys.size())
-        PALISADE_THROW(config_error,
-                       "Input second evaluation key map is empty");
-      auto ct = m_algorithmSHE->EvalSumCols(ciphertext, batchSize, evalKeys,
-                                            rightEvalKeys);
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input first evaluation key map is empty");
+      if (!rightEvalKeys.size()) PALISADE_THROW(config_error, "Input second evaluation key map is empty");
+      auto ct = m_algorithmSHE->EvalSumCols(ciphertext, batchSize, evalKeys, rightEvalKeys);
       return ct;
     }
     PALISADE_THROW(config_error, "EvalSumCols operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalInnerProduct(
-      ConstCiphertext<Element> ciphertext1,
-      ConstCiphertext<Element> ciphertext2, usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalSumKeys,
-      const LPEvalKey<Element> evalMultKey) const {
+  virtual Ciphertext<Element> EvalInnerProduct(ConstCiphertext<Element> ciphertext1,
+                                               ConstCiphertext<Element> ciphertext2, usint batchSize,
+                                               const std::map<usint, LPEvalKey<Element>>& evalSumKeys,
+                                               const LPEvalKey<Element> evalMultKey) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ciphertext2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
-      if (!evalSumKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
-      if (!evalMultKey)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      auto ct = m_algorithmSHE->EvalInnerProduct(
-          ciphertext1, ciphertext2, batchSize, evalSumKeys, evalMultKey);
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ciphertext2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!evalSumKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      if (!evalMultKey) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      auto ct = m_algorithmSHE->EvalInnerProduct(ciphertext1, ciphertext2, batchSize, evalSumKeys, evalMultKey);
       ct->SetKeyTag(evalSumKeys.begin()->second->GetKeyTag());
       return ct;
     }
-    PALISADE_THROW(config_error,
-                   "EvalInnerProduct operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalInnerProduct operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMerge(
-      const vector<Ciphertext<Element>> &ciphertextVector,
-      const std::map<usint, LPEvalKey<Element>> &evalKeys) const {
+  virtual Ciphertext<Element> EvalMerge(const vector<Ciphertext<Element>>& ciphertextVector,
+                                        const std::map<usint, LPEvalKey<Element>>& evalKeys) const {
     if (m_algorithmSHE) {
-      if (!ciphertextVector.size())
-        PALISADE_THROW(config_error, "Input ciphertext vector is empty");
-      if (!evalKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      if (!ciphertextVector.size()) PALISADE_THROW(config_error, "Input ciphertext vector is empty");
+      if (!evalKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
       return m_algorithmSHE->EvalMerge(ciphertextVector, evalKeys);
     }
     PALISADE_THROW(config_error, "EvalMerge operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalInnerProduct(
-      ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext,
-      usint batchSize,
-      const std::map<usint, LPEvalKey<Element>> &evalSumKeys) const {
+  virtual Ciphertext<Element> EvalInnerProduct(ConstCiphertext<Element> ciphertext1, ConstPlaintext plaintext,
+                                               usint batchSize,
+                                               const std::map<usint, LPEvalKey<Element>>& evalSumKeys) const {
     if (m_algorithmSHE) {
-      if (!ciphertext1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!plaintext)
-        PALISADE_THROW(config_error, "Input plaintext is nullptr");
-      if (!evalSumKeys.size())
-        PALISADE_THROW(config_error, "Input evaluation key map is empty");
-      return m_algorithmSHE->EvalInnerProduct(ciphertext1, plaintext, batchSize,
-                                              evalSumKeys);
+      if (!ciphertext1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!plaintext) PALISADE_THROW(config_error, "Input plaintext is nullptr");
+      if (!evalSumKeys.size()) PALISADE_THROW(config_error, "Input evaluation key map is empty");
+      return m_algorithmSHE->EvalInnerProduct(ciphertext1, plaintext, batchSize, evalSumKeys);
     }
-    PALISADE_THROW(config_error,
-                   "EvalInnerProduct operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalInnerProduct operation has not been enabled");
   }
 
-  virtual LPEvalKey<Element> KeySwitchGen(
-      const LPPrivateKey<Element> originalPrivateKey,
-      const LPPrivateKey<Element> newPrivateKey) const {
+  virtual LPEvalKey<Element> KeySwitchGen(const LPPrivateKey<Element> originalPrivateKey,
+                                          const LPPrivateKey<Element> newPrivateKey) const {
     if (m_algorithmSHE) {
-      if (!originalPrivateKey)
-        PALISADE_THROW(config_error, "Input first private key is nullptr");
-      if (!newPrivateKey)
-        PALISADE_THROW(config_error, "Input second private key is nullptr");
+      if (!originalPrivateKey) PALISADE_THROW(config_error, "Input first private key is nullptr");
+      if (!newPrivateKey) PALISADE_THROW(config_error, "Input second private key is nullptr");
       auto kp = m_algorithmSHE->KeySwitchGen(originalPrivateKey, newPrivateKey);
       kp->SetKeyTag(newPrivateKey->GetKeyTag());
       return kp;
@@ -4220,98 +3834,73 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "KeySwitchGen operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> KeySwitch(
-      const LPEvalKey<Element> keySwitchHint,
-      ConstCiphertext<Element> cipherText) const {
+  virtual Ciphertext<Element> KeySwitch(const LPEvalKey<Element> keySwitchHint,
+                                        ConstCiphertext<Element> cipherText) const {
     if (m_algorithmSHE) {
-      if (!keySwitchHint)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!keySwitchHint) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       auto ct = m_algorithmSHE->KeySwitch(keySwitchHint, cipherText);
       return ct;
     }
     PALISADE_THROW(config_error, "KeySwitch operation has not been enabled");
   }
 
-  virtual void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint,
-                                Ciphertext<Element> &cipherText) const {
+  virtual void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& cipherText) const {
     if (m_algorithmSHE) {
-      if (!keySwitchHint)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!keySwitchHint) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       m_algorithmSHE->KeySwitchInPlace(keySwitchHint, cipherText);
       return;
     }
-    PALISADE_THROW(config_error,
-                   "KeySwitchInPlace operation has not been enabled");
+    PALISADE_THROW(config_error, "KeySwitchInPlace operation has not been enabled");
   }
 
-  virtual LPEvalKey<Element> EvalMultKeyGen(
-      const LPPrivateKey<Element> originalPrivateKey) const {
+  virtual LPEvalKey<Element> EvalMultKeyGen(const LPPrivateKey<Element> originalPrivateKey) const {
     if (m_algorithmSHE) {
-      if (!originalPrivateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!originalPrivateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
       auto ek = m_algorithmSHE->EvalMultKeyGen(originalPrivateKey);
       ek->SetKeyTag(originalPrivateKey->GetKeyTag());
       return ek;
     }
-    PALISADE_THROW(config_error,
-                   "EvalMultKeyGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalMultKeyGen operation has not been enabled");
   }
 
-  virtual vector<LPEvalKey<Element>> EvalMultKeysGen(
-      const LPPrivateKey<Element> originalPrivateKey) const {
+  virtual vector<LPEvalKey<Element>> EvalMultKeysGen(const LPPrivateKey<Element> originalPrivateKey) const {
     if (m_algorithmSHE) {
-      if (!originalPrivateKey)
-        PALISADE_THROW(config_error, "Input private key is nullptr");
+      if (!originalPrivateKey) PALISADE_THROW(config_error, "Input private key is nullptr");
       auto ek = m_algorithmSHE->EvalMultKeysGen(originalPrivateKey);
       for (size_t i = 0; i < ek.size(); i++)
         ek[i]->SetKeyTag(originalPrivateKey->GetKeyTag());
       return ek;
     }
-    PALISADE_THROW(config_error,
-                   "EvalMultKeysGen operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalMultKeysGen operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> EvalMultAndRelinearize(
-      ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2,
-      const vector<LPEvalKey<Element>> &ek) const {
+  virtual Ciphertext<Element> EvalMultAndRelinearize(ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2,
+                                                     const vector<LPEvalKey<Element>>& ek) const {
     if (m_algorithmSHE) {
-      if (!ct1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!ct2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
-      if (!ek.size())
-        PALISADE_THROW(config_error, "Input evaluation key vector is empty");
+      if (!ct1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!ct2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!ek.size()) PALISADE_THROW(config_error, "Input evaluation key vector is empty");
       return m_algorithmSHE->EvalMultAndRelinearize(ct1, ct2, ek);
     }
-    PALISADE_THROW(config_error,
-                   "EvalMultAndRelinearize operation has not been enabled");
+    PALISADE_THROW(config_error, "EvalMultAndRelinearize operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> Relinearize(
-      ConstCiphertext<Element> ciphertext,
-      const vector<LPEvalKey<Element>> &ek) const {
+  virtual Ciphertext<Element> Relinearize(ConstCiphertext<Element> ciphertext,
+                                          const vector<LPEvalKey<Element>>& ek) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!ek.size())
-        PALISADE_THROW(config_error, "Input evaluation key vector is empty");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ek.size()) PALISADE_THROW(config_error, "Input evaluation key vector is empty");
       return m_algorithmSHE->Relinearize(ciphertext, ek);
     }
     PALISADE_THROW(config_error, "Relinearize operation has not been enabled");
   }
 
-  virtual void RelinearizeInPlace(
-      Ciphertext<Element> &ciphertext,
-      const vector<LPEvalKey<Element>> &ek) const {
+  virtual void RelinearizeInPlace(Ciphertext<Element>& ciphertext, const vector<LPEvalKey<Element>>& ek) const {
     if (m_algorithmSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      if (!ek.size())
-        PALISADE_THROW(config_error, "Input evaluation key vector is empty");
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!ek.size()) PALISADE_THROW(config_error, "Input evaluation key vector is empty");
       return m_algorithmSHE->RelinearizeInPlace(ciphertext, ek);
     }
     PALISADE_THROW(config_error, "RelinearizeInPlace operation has not been enabled");
@@ -4326,11 +3915,9 @@ class LPPublicKeyEncryptionScheme {
   // the functions below are wrappers for things in LPSHEAlgorithm (SHE)
   //
 
-  virtual Ciphertext<Element> ModReduce(ConstCiphertext<Element> cipherText,
-                                        size_t levels = 1) const {
+  virtual Ciphertext<Element> ModReduce(ConstCiphertext<Element> cipherText, size_t levels = 1) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       auto ct = m_algorithmLeveledSHE->ModReduce(cipherText, levels);
       ct->SetKeyTag(cipherText->GetKeyTag());
       return ct;
@@ -4338,47 +3925,36 @@ class LPPublicKeyEncryptionScheme {
     PALISADE_THROW(config_error, "ModReduce operation has not been enabled");
   }
 
-  virtual void ModReduceInPlace(Ciphertext<Element> &cipherText,
-                                size_t levels = 1) const {
+  virtual void ModReduceInPlace(Ciphertext<Element>& cipherText, size_t levels = 1) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       m_algorithmLeveledSHE->ModReduceInPlace(cipherText, levels);
       return;
     }
     PALISADE_THROW(config_error, "ModReduce operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> ComposedEvalMult(
-      ConstCiphertext<Element> cipherText1,
-      ConstCiphertext<Element> cipherText2,
-      const LPEvalKey<Element> quadKeySwitchHint) const {
+  virtual Ciphertext<Element> ComposedEvalMult(ConstCiphertext<Element> cipherText1,
+                                               ConstCiphertext<Element> cipherText2,
+                                               const LPEvalKey<Element> quadKeySwitchHint) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText1)
-        PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
-      if (!cipherText2)
-        PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
-      if (!quadKeySwitchHint)
-        PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      auto ct = m_algorithmLeveledSHE->ComposedEvalMult(
-          cipherText1, cipherText2, quadKeySwitchHint);
+      if (!cipherText1) PALISADE_THROW(config_error, "Input first ciphertext is nullptr");
+      if (!cipherText2) PALISADE_THROW(config_error, "Input second ciphertext is nullptr");
+      if (!quadKeySwitchHint) PALISADE_THROW(config_error, "Input evaluation key is nullptr");
+      auto ct = m_algorithmLeveledSHE->ComposedEvalMult(cipherText1, cipherText2, quadKeySwitchHint);
       ct->SetKeyTag(quadKeySwitchHint->GetKeyTag());
       return ct;
     }
-    PALISADE_THROW(config_error,
-                   "ComposedEvalMult operation has not been enabled");
+    PALISADE_THROW(config_error, "ComposedEvalMult operation has not been enabled");
   }
 
-  virtual Ciphertext<Element> LevelReduce(
-      ConstCiphertext<Element> cipherText1,
-      const LPEvalKey<Element> linearKeySwitchHint, size_t levels = 1) const {
+  virtual Ciphertext<Element> LevelReduce(ConstCiphertext<Element> cipherText1,
+                                          const LPEvalKey<Element> linearKeySwitchHint, size_t levels = 1) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       // if (!linearKeySwitchHint)
       //    PALISADE_THROW(config_error, "Input evaluation key is nullptr");
-      auto ct = m_algorithmLeveledSHE->LevelReduce(cipherText1,
-                                                   linearKeySwitchHint, levels);
+      auto ct = m_algorithmLeveledSHE->LevelReduce(cipherText1, linearKeySwitchHint, levels);
       ct->SetKeyTag(cipherText1->GetKeyTag());
       return ct;
     }
@@ -4394,15 +3970,13 @@ class LPPublicKeyEncryptionScheme {
    * size of the vector is the degree of the polynomial + 1
    * @return the result of polynomial evaluation.
    */
-  Ciphertext<Element> EvalPoly(ConstCiphertext<Element> ciphertext,
-                               const std::vector<double> &coefficients) const {
+  Ciphertext<Element> EvalPoly(ConstCiphertext<Element> ciphertext, const std::vector<double>& coefficients) const {
     if (this->m_algorithmLeveledSHE) {
-      if (!ciphertext)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      auto ctm =
-          this->m_algorithmLeveledSHE->EvalPoly(ciphertext, coefficients);
+      if (!ciphertext) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      auto ctm = this->m_algorithmLeveledSHE->EvalPoly(ciphertext, coefficients);
       return ctm;
-    } else {
+    }
+    else {
       PALISADE_THROW(config_error, "EvalPoly operation has not been enabled");
     }
   }
@@ -4413,16 +3987,12 @@ class LPPublicKeyEncryptionScheme {
    * LPAlgorithmParamsGenCKKS::ParamsGen for a description of the arguments.
    *
    */
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         usint cyclOrder, usint numPrimes, usint scaleExp,
-                         usint relinWindow, MODE mode,
-                         enum KeySwitchTechnique ksTech, usint firstModSize,
-                         RescalingTechnique rsTech,
-                         uint32_t numLargeDigits) const {
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, usint cyclOrder, usint numPrimes,
+                         usint scaleExp, usint relinWindow, MODE mode, enum KeySwitchTechnique ksTech,
+                         usint firstModSize, RescalingTechnique rsTech, uint32_t numLargeDigits) const {
     if (m_algorithmParamsGen) {
       return m_algorithmParamsGen->ParamsGen(
-          cryptoParams, cyclOrder, numPrimes, scaleExp, relinWindow, mode,
-          ksTech, firstModSize, rsTech, numLargeDigits);
+        cryptoParams, cyclOrder, numPrimes, scaleExp, relinWindow, mode, ksTech, firstModSize, rsTech, numLargeDigits);
     }
     PALISADE_THROW(not_implemented_error,
                    "Parameter generation operation has not been implemented "
@@ -4435,20 +4005,16 @@ class LPPublicKeyEncryptionScheme {
    * LPAlgorithmParamsGenBGVrns::ParamsGen for a description of the arguments.
    *
    */
-  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                         usint cyclOrder, usint ptm, usint numPrimes,
-                         usint relinWindow, MODE mode,
-                         enum KeySwitchTechnique ksTech, usint firstModSize,
-                         usint dcrtBits, uint32_t numLargeDigits) const {
+  virtual bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, usint cyclOrder, usint ptm,
+                         usint numPrimes, usint relinWindow, MODE mode, enum KeySwitchTechnique ksTech,
+                         usint firstModSize, usint dcrtBits, uint32_t numLargeDigits) const {
     if (m_algorithmParamsGen) {
       return m_algorithmParamsGen->ParamsGen(
-          cryptoParams, cyclOrder, ptm, numPrimes, relinWindow, mode, ksTech,
-          firstModSize, dcrtBits, numLargeDigits);
+        cryptoParams, cyclOrder, ptm, numPrimes, relinWindow, mode, ksTech, firstModSize, dcrtBits, numLargeDigits);
     }
-    PALISADE_THROW(
-        not_implemented_error,
-        "Parameter generation operation has not been implemented for this "
-        "scheme.");
+    PALISADE_THROW(not_implemented_error,
+                   "Parameter generation operation has not been implemented for this "
+                   "scheme.");
   }
 
   /*
@@ -4464,17 +4030,13 @@ class LPPublicKeyEncryptionScheme {
    *         but with fewer towers.
    *
    */
-  virtual Ciphertext<Element> LevelReduceInternal(
-      ConstCiphertext<Element> cipherText1,
-      const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
+  virtual Ciphertext<Element> LevelReduceInternal(ConstCiphertext<Element> cipherText1,
+                                                  const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      return m_algorithmLeveledSHE->LevelReduceInternal(
-          cipherText1, linearKeySwitchHint, levels);
+      if (!cipherText1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      return m_algorithmLeveledSHE->LevelReduceInternal(cipherText1, linearKeySwitchHint, levels);
     }
-    PALISADE_THROW(not_implemented_error,
-                   "LevelReduceInternal has not been enabled for this scheme.");
+    PALISADE_THROW(not_implemented_error, "LevelReduceInternal has not been enabled for this scheme.");
   }
 
   /*
@@ -4490,19 +4052,14 @@ class LPPublicKeyEncryptionScheme {
    *         but with fewer towers.
    *
    */
-  virtual void LevelReduceInternalInPlace(
-      Ciphertext<Element> &cipherText1,
-      const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
+  virtual void LevelReduceInternalInPlace(Ciphertext<Element>& cipherText1,
+                                          const LPEvalKey<Element> linearKeySwitchHint, size_t levels) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText1)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
-      m_algorithmLeveledSHE->LevelReduceInternalInPlace(
-          cipherText1, linearKeySwitchHint, levels);
+      if (!cipherText1) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      m_algorithmLeveledSHE->LevelReduceInternalInPlace(cipherText1, linearKeySwitchHint, levels);
       return;
     }
-    PALISADE_THROW(
-        not_implemented_error,
-        "LevelReduceInternalInPlace has not been enabled for this scheme.");
+    PALISADE_THROW(not_implemented_error, "LevelReduceInternalInPlace has not been enabled for this scheme.");
   }
 
   /*
@@ -4515,51 +4072,37 @@ class LPPublicKeyEncryptionScheme {
    * @return the rescaled ciphertext.
    *
    */
-  virtual Ciphertext<Element> ModReduceInternal(
-      ConstCiphertext<Element> cipherText, size_t levels = 1) const {
+  virtual Ciphertext<Element> ModReduceInternal(ConstCiphertext<Element> cipherText, size_t levels = 1) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmLeveledSHE->ModReduceInternal(cipherText, levels);
     }
-    PALISADE_THROW(config_error,
-                   "ModReduceInternal has not been enabled for this scheme.");
+    PALISADE_THROW(config_error, "ModReduceInternal has not been enabled for this scheme.");
   }
 
-  virtual void ModReduceInternalInPlace(Ciphertext<Element> &cipherText,
-                                        size_t levels = 1) const {
+  virtual void ModReduceInternalInPlace(Ciphertext<Element>& cipherText, size_t levels = 1) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       m_algorithmLeveledSHE->ModReduceInternalInPlace(cipherText, levels);
       return;
     }
-    PALISADE_THROW(
-        config_error,
-        "ModReduceInternalInPlace has not been enabled for this scheme.");
+    PALISADE_THROW(config_error, "ModReduceInternalInPlace has not been enabled for this scheme.");
   }
 
-  virtual Ciphertext<Element> Compress(ConstCiphertext<Element> cipherText,
-                                       size_t towersLeft = 1) const {
+  virtual Ciphertext<Element> Compress(ConstCiphertext<Element> cipherText, size_t towersLeft = 1) const {
     if (m_algorithmLeveledSHE) {
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmLeveledSHE->Compress(cipherText, towersLeft);
     }
-    PALISADE_THROW(config_error,
-                   "Compress has not been enabled for this scheme.");
+    PALISADE_THROW(config_error, "Compress has not been enabled for this scheme.");
   }
 
-  virtual Ciphertext<Element> AdjustLevelWithRescale(
-      Ciphertext<Element> cipherText, uint32_t targetLevel) const {
+  virtual Ciphertext<Element> AdjustLevelWithRescale(Ciphertext<Element> cipherText, uint32_t targetLevel) const {
     if (m_algorithmSHE) {
-      if (!cipherText)
-        PALISADE_THROW(config_error, "Input ciphertext is nullptr");
+      if (!cipherText) PALISADE_THROW(config_error, "Input ciphertext is nullptr");
       return m_algorithmSHE->AdjustLevelWithRescale(cipherText, targetLevel);
     }
-    PALISADE_THROW(
-        config_error,
-        "AdjustLevelWithRescale has not been enabled for this scheme.");
+    PALISADE_THROW(config_error, "AdjustLevelWithRescale has not been enabled for this scheme.");
   }
 
   const std::shared_ptr<LPEncryptionAlgorithm<Element>> getAlgorithm() const {
@@ -4567,16 +4110,16 @@ class LPPublicKeyEncryptionScheme {
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("enabled", GetEnabled()));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
 
     usint enabled;
@@ -4584,32 +4127,21 @@ class LPPublicKeyEncryptionScheme {
     this->Enable(enabled);
   }
 
-  virtual std::string SerializedObjectName() const { return "Scheme"; }
-  static uint32_t SerializedVersion() { return 1; }
+  virtual std::string SerializedObjectName() const {
+    return "Scheme";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
-  friend std::ostream &operator<<(
-      std::ostream &out, const LPPublicKeyEncryptionScheme<Element> &s) {
+  friend std::ostream& operator<<(std::ostream& out, const LPPublicKeyEncryptionScheme<Element>& s) {
     out << typeid(s).name() << ":";
-    out << " ParameterGeneration "
-        << (s.m_algorithmParamsGen == 0
-                ? "none"
-                : typeid(*s.m_algorithmParamsGen).name());
-    out << ", Encryption "
-        << (s.m_algorithmEncryption == 0
-                ? "none"
-                : typeid(*s.m_algorithmEncryption).name());
-    out << ", PRE "
-        << (s.m_algorithmPRE == 0 ? "none" : typeid(*s.m_algorithmPRE).name());
-    out << ", Multiparty "
-        << (s.m_algorithmMultiparty == 0
-                ? "none"
-                : typeid(*s.m_algorithmMultiparty).name());
-    out << ", SHE "
-        << (s.m_algorithmSHE == 0 ? "none" : typeid(*s.m_algorithmSHE).name());
-    out << ", LeveledSHE "
-        << (s.m_algorithmLeveledSHE == 0
-                ? "none"
-                : typeid(*s.m_algorithmLeveledSHE).name());
+    out << " ParameterGeneration " << (s.m_algorithmParamsGen == 0 ? "none" : typeid(*s.m_algorithmParamsGen).name());
+    out << ", Encryption " << (s.m_algorithmEncryption == 0 ? "none" : typeid(*s.m_algorithmEncryption).name());
+    out << ", PRE " << (s.m_algorithmPRE == 0 ? "none" : typeid(*s.m_algorithmPRE).name());
+    out << ", Multiparty " << (s.m_algorithmMultiparty == 0 ? "none" : typeid(*s.m_algorithmMultiparty).name());
+    out << ", SHE " << (s.m_algorithmSHE == 0 ? "none" : typeid(*s.m_algorithmSHE).name());
+    out << ", LeveledSHE " << (s.m_algorithmLeveledSHE == 0 ? "none" : typeid(*s.m_algorithmLeveledSHE).name());
     return out;
   }
 

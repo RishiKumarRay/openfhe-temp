@@ -51,7 +51,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestBinInt : public ::testing::Test {
+class UnitTestBinInt : public ::testing::Test
+{
  protected:
   virtual void SetUp() {}
 
@@ -99,7 +100,8 @@ static void out_of_memory() {
 //------------------------------------------------------------------------------
 void MapGlobalHeapTest() {
   map<int, char> myMap;
-  for (int i = 0; i < MAX_BENCHMARK; i++) myMap[i] = 'a';
+  for (int i = 0; i < MAX_BENCHMARK; i++)
+    myMap[i] = 'a';
   myMap.clear();
 }
 
@@ -108,7 +110,8 @@ void MapGlobalHeapTest() {
 //------------------------------------------------------------------------------
 void MapFixedBlockTest() {
   xmap<int, char> myMap;
-  for (int i = 0; i < MAX_BENCHMARK; i++) myMap[i] = 'a';
+  for (int i = 0; i < MAX_BENCHMARK; i++)
+    myMap[i] = 'a';
   myMap.clear();
 }
 
@@ -117,7 +120,8 @@ void MapFixedBlockTest() {
 //------------------------------------------------------------------------------
 void ListGlobalHeapTest() {
   list<int> myList;
-  for (int i = 0; i < MAX_BENCHMARK; i++) myList.push_back(123);
+  for (int i = 0; i < MAX_BENCHMARK; i++)
+    myList.push_back(123);
   myList.clear();
 }
 
@@ -126,7 +130,8 @@ void ListGlobalHeapTest() {
 //------------------------------------------------------------------------------
 void ListFixedBlockTest() {
   xlist<int> myList;
-  for (int i = 0; i < MAX_BENCHMARK; i++) myList.push_back(123);
+  for (int i = 0; i < MAX_BENCHMARK; i++)
+    myList.push_back(123);
   myList.clear();
 }
 
@@ -135,7 +140,8 @@ void ListFixedBlockTest() {
 //------------------------------------------------------------------------------
 void VectorGlobalHeapTest() {
   vector<int> myVector;
-  for (int i = 0; i < MAX_BENCHMARK; i++) myVector.push_back(123);
+  for (int i = 0; i < MAX_BENCHMARK; i++)
+    myVector.push_back(123);
   myVector.clear();
 }
 
@@ -144,7 +150,8 @@ void VectorGlobalHeapTest() {
 //------------------------------------------------------------------------------
 void VectorFixedBlockTest() {
   xvector<int> myVector;
-  for (int i = 0; i < MAX_BENCHMARK; i++) myVector.push_back(123);
+  for (int i = 0; i < MAX_BENCHMARK; i++)
+    myVector.push_back(123);
   myVector.clear();
 }
 
@@ -155,11 +162,10 @@ void StringGlobalHeapTest() {
   list<string> myList;
   for (int i = 0; i < MAX_BENCHMARK; i++) {
     string myString("benchmark");
-    myString +=
-        "benchmark test benchmark test benchmark test benchmark test benchmark "
-        "test benchmark test benchmark test "
-        "benchmark test benchmark test benchmark test benchmark test benchmark "
-        "test benchmark test benchmark test";
+    myString += "benchmark test benchmark test benchmark test benchmark test benchmark "
+                "test benchmark test benchmark test "
+                "benchmark test benchmark test benchmark test benchmark test benchmark "
+                "test benchmark test benchmark test";
     myList.push_back(myString);
   }
   myList.clear();
@@ -172,11 +178,10 @@ void StringFixedBlockTest() {
   xlist<xstring> myList;
   for (int i = 0; i < MAX_BENCHMARK; i++) {
     xstring myString("benchmark");
-    myString +=
-        "benchmark test benchmark test benchmark test benchmark test benchmark "
-        "test benchmark test benchmark test "
-        "benchmark test benchmark test benchmark test benchmark test benchmark "
-        "test benchmark test benchmark test";
+    myString += "benchmark test benchmark test benchmark test benchmark test benchmark "
+                "test benchmark test benchmark test "
+                "benchmark test benchmark test benchmark test benchmark test benchmark "
+                "test benchmark test benchmark test";
     myList.push_back(myString);
   }
   myList.clear();

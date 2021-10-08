@@ -73,12 +73,12 @@ using Serialized = void*;
  * The class contains some deprecated methods from the older mechanisms
  * for serialization
  */
-class Serializable {
+class Serializable
+{
  public:
   virtual ~Serializable() {}
 
   virtual std::string SerializedObjectName() const = 0;
-
 };
 
 // helper template to stream vector contents provided T has an stream operator<<

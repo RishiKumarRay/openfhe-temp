@@ -35,7 +35,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTEvalSum : public ::testing::Test {
+class UTEvalSum : public ::testing::Test
+{
  protected:
   void SetUp() {}
 
@@ -47,11 +48,9 @@ class UTEvalSum : public ::testing::Test {
  public:
 };
 
-int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t> &clearVector,
-                                 PlaintextModulus p);
+int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t>& clearVector, PlaintextModulus p);
 
-void EvalSumSetup(std::vector<int64_t> &input, int64_t &expectedSum,
-                  PlaintextModulus plaintextMod) {
+void EvalSumSetup(std::vector<int64_t>& input, int64_t& expectedSum, PlaintextModulus plaintextMod) {
   usint limit = 15;
 
   PRNG random_engine(1);
@@ -81,8 +80,7 @@ TEST_F(UTEvalSum, Test_BFV_EvalSum) {
   EXPECT_EQ(expectedSum, result);
 }
 
-int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t> &clearVector,
-                                 PlaintextModulus p) {
+int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t>& clearVector, PlaintextModulus p) {
   usint m = 22;
   BigInteger modulusP(p);
 
@@ -93,25 +91,23 @@ int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t> &clearVector,
   BigInteger bigroot("77936753846653065954043047918387");
 
   auto cycloPoly = GetCyclotomicPolynomial<BigVector>(m, modulusQ);
-  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly,
-                                                                    modulusQ);
+  ChineseRemainderTransformArb<BigVector>().SetCylotomicPolynomial(cycloPoly, modulusQ);
 
   float stdDev = 4;
 
   usint batchSize = 8;
 
-  auto params = std::make_shared<ILParams>(m, modulusQ, squareRootOfRoot,
-                                           bigmodulus, bigroot);
+  auto params = std::make_shared<ILParams>(m, modulusQ, squareRootOfRoot, bigmodulus, bigroot);
 
-  EncodingParams encodingParams(std::make_shared<EncodingParamsImpl>(
-      p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
+  EncodingParams encodingParams(
+    std::make_shared<EncodingParamsImpl>(p, batchSize, PackedEncoding::GetAutomorphismGenerator(m)));
 
   PackedEncoding::SetParams(m, encodingParams);
 
   BigInteger delta(modulusQ.DividedBy(modulusP));
 
-  CryptoContext<Poly> cc = CryptoContextFactory<Poly>::genCryptoContextBFV(
-      params, encodingParams, 8, stdDev, delta.ToString());
+  CryptoContext<Poly> cc =
+    CryptoContextFactory<Poly>::genCryptoContextBFV(params, encodingParams, 8, stdDev, delta.ToString());
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -122,7 +118,7 @@ int64_t ArbBFVEvalSumPackedArray(std::vector<int64_t> &clearVector,
   Ciphertext<Poly> ciphertext;
 
   std::vector<int64_t> vectorOfInts = std::move(clearVector);
-  Plaintext intArray = cc->MakePackedPlaintext(vectorOfInts);
+  Plaintext intArray                = cc->MakePackedPlaintext(vectorOfInts);
 
   cc->EvalSumKeyGen(kp.secretKey);
 

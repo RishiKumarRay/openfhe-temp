@@ -41,19 +41,19 @@ TEST(UnitTestFHEDeep, NOT_VERY_LONG) {
   unsigned int nLoop(2000);
 
   LWECiphertext stmp = cc.Encrypt(sk, input);
-  unsigned int tmp = input;
+  unsigned int tmp   = input;
   // not loop
   for (unsigned int ix = 0; ix < nLoop; ix++) {
     // if (ix % 100 == 0) std::cout << ix << std::endl;
     LWECiphertext a(stmp);
-    auto b = cc.EvalNOT(a);
+    auto b         = cc.EvalNOT(a);
     unsigned int c = !tmp;
     LWEPlaintext res;
     cc.Decrypt(sk, b, &res);
     std::string failed = "Failed in iteration " + std::to_string(ix);
     ASSERT_EQ(res, c) << failed;
     stmp = b;
-    tmp = c;
+    tmp  = c;
   }
 }
 
@@ -74,11 +74,11 @@ TEST(UnitTestFHEDeep, AND_GINX_VERY_LONG) {
 
   LWECiphertext stmp1 = cc.Encrypt(sk, input1);
   LWECiphertext stmp2 = cc.Encrypt(sk, input2);
-  auto d = cc.EvalBinGate(AND, stmp1, stmp2);
-  stmp1 = cc.Encrypt(sk, input1);
-  stmp2 = cc.Encrypt(sk, input2);
-  unsigned int tmp1 = input1;
-  unsigned int tmp2 = input2;
+  auto d              = cc.EvalBinGate(AND, stmp1, stmp2);
+  stmp1               = cc.Encrypt(sk, input1);
+  stmp2               = cc.Encrypt(sk, input2);
+  unsigned int tmp1   = input1;
+  unsigned int tmp2   = input2;
 
   // and loop
   for (unsigned int ix = 0; ix < nLoop; ix++) {
@@ -97,8 +97,8 @@ TEST(UnitTestFHEDeep, AND_GINX_VERY_LONG) {
 
     stmp1 = b;
     stmp2 = cc.EvalBinGate(AND, b, d);
-    tmp1 = c;
-    tmp2 = c;
+    tmp1  = c;
+    tmp2  = c;
   }
 }
 
@@ -119,9 +119,9 @@ TEST(UnitTestFHEDeep, AND_AP_VERY_LONG) {
 
   LWECiphertext stmp1 = cc.Encrypt(sk, input1);
   LWECiphertext stmp2 = cc.Encrypt(sk, input2);
-  auto d = cc.EvalBinGate(AND, stmp1, stmp2);
-  stmp1 = cc.Encrypt(sk, input1);
-  stmp2 = cc.Encrypt(sk, input2);
+  auto d              = cc.EvalBinGate(AND, stmp1, stmp2);
+  stmp1               = cc.Encrypt(sk, input1);
+  stmp2               = cc.Encrypt(sk, input2);
   // LWECiphertext eone = cc.Encrypt(sk, one);
   unsigned int tmp1 = input1;
   unsigned int tmp2 = input2;
@@ -166,9 +166,9 @@ TEST(UnitTestFHEDeep, XOR_AP_VERY_LONG) {
 
   LWECiphertext stmp1 = cc.Encrypt(sk, input1);
   LWECiphertext stmp2 = cc.Encrypt(sk, input2);
-  LWECiphertext eone = cc.Encrypt(sk, one);
-  unsigned int tmp1 = input1;
-  unsigned int tmp2 = input2;
+  LWECiphertext eone  = cc.Encrypt(sk, one);
+  unsigned int tmp1   = input1;
+  unsigned int tmp2   = input2;
 
   // xor loop
   for (unsigned int ix = 0; ix < nLoop; ix++) {
@@ -209,9 +209,9 @@ TEST(UnitTestFHEDeep, XOR_GINX_VERY_LONG) {
 
   LWECiphertext stmp1 = cc.Encrypt(sk, input1);
   LWECiphertext stmp2 = cc.Encrypt(sk, input2);
-  LWECiphertext eone = cc.Encrypt(sk, one);
-  unsigned int tmp1 = input1;
-  unsigned int tmp2 = input2;
+  LWECiphertext eone  = cc.Encrypt(sk, one);
+  unsigned int tmp1   = input1;
+  unsigned int tmp2   = input2;
 
   // xor loop
   for (unsigned int ix = 0; ix < nLoop; ix++) {
@@ -252,8 +252,8 @@ TEST(UnitTestFHEDeep, OR_AP_VERY_LONG) {
 
   LWECiphertext stmp1 = cc.Encrypt(sk, input1);
   LWECiphertext stmp2 = cc.Encrypt(sk, input2);
-  unsigned int tmp1 = input1;
-  unsigned int tmp2 = input2;
+  unsigned int tmp1   = input1;
+  unsigned int tmp2   = input2;
 
   // or loop
   for (unsigned int ix = 0; ix < nLoop; ix++) {
@@ -266,7 +266,7 @@ TEST(UnitTestFHEDeep, OR_AP_VERY_LONG) {
     std::string failed = "Failed in iteration " + std::to_string(ix);
     ASSERT_EQ(res, c) << failed;
     stmp1 = b;
-    tmp1 = c;
+    tmp1  = c;
   }
 }
 
@@ -286,8 +286,8 @@ TEST(UnitTestFHEDeep, OR_GINX_VERY_LONG) {
 
   LWECiphertext stmp1 = cc.Encrypt(sk, input1);
   LWECiphertext stmp2 = cc.Encrypt(sk, input2);
-  unsigned int tmp1 = input1;
-  unsigned int tmp2 = input2;
+  unsigned int tmp1   = input1;
+  unsigned int tmp2   = input2;
 
   // or loop
   for (unsigned int ix = 0; ix < nLoop; ix++) {
@@ -300,6 +300,6 @@ TEST(UnitTestFHEDeep, OR_GINX_VERY_LONG) {
     std::string failed = "Failed in iteration " + std::to_string(ix);
     ASSERT_EQ(res, c) << failed;
     stmp1 = b;
-    tmp1 = c;
+    tmp1  = c;
   }
 }

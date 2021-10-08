@@ -42,20 +42,21 @@ const double MP_SD = 1048576;
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
+class LPCryptoParametersRLWE : public LPCryptoParameters<Element>
+{
  public:
   /**
    * Default Constructor
    */
   LPCryptoParametersRLWE() : LPCryptoParameters<Element>() {
     m_distributionParameter = 0.0f;
-    m_assuranceMeasure = 0.0f;
-    m_securityLevel = 0.0f;
-    m_relinWindow = 1;
+    m_assuranceMeasure      = 0.0f;
+    m_securityLevel         = 0.0f;
+    m_relinWindow           = 1;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth = 0;
+    m_depth    = 0;
     m_maxDepth = 2;
-    m_mode = RLWE;
+    m_mode     = RLWE;
     m_stdLevel = HEStd_NotSet;
   }
 
@@ -63,17 +64,16 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    * Copy constructor.
    *
    */
-  LPCryptoParametersRLWE(const LPCryptoParametersRLWE &rhs)
-      : LPCryptoParameters<Element>(rhs.GetElementParams(),
-                                    rhs.GetPlaintextModulus()) {
+  LPCryptoParametersRLWE(const LPCryptoParametersRLWE& rhs) :
+      LPCryptoParameters<Element>(rhs.GetElementParams(), rhs.GetPlaintextModulus()) {
     m_distributionParameter = rhs.m_distributionParameter;
-    m_assuranceMeasure = rhs.m_assuranceMeasure;
-    m_securityLevel = rhs.m_securityLevel;
-    m_relinWindow = rhs.m_relinWindow;
+    m_assuranceMeasure      = rhs.m_assuranceMeasure;
+    m_securityLevel         = rhs.m_securityLevel;
+    m_relinWindow           = rhs.m_relinWindow;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth = rhs.m_depth;
+    m_depth    = rhs.m_depth;
     m_maxDepth = rhs.m_maxDepth;
-    m_mode = rhs.m_mode;
+    m_mode     = rhs.m_mode;
     m_stdLevel = rhs.m_stdLevel;
   }
 
@@ -92,20 +92,18 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    * relinearization key is generated
    * @param mode mode for secret polynomial, defaults to RLWE.
    */
-  LPCryptoParametersRLWE(shared_ptr<typename Element::Params> params,
-                         EncodingParams encodingParams,
-                         float distributionParameter, float assuranceMeasure,
-                         float securityLevel, usint relinWindow, int depth = 1,
-                         int maxDepth = 2, MODE mode = RLWE)
-      : LPCryptoParameters<Element>(params, encodingParams) {
+  LPCryptoParametersRLWE(shared_ptr<typename Element::Params> params, EncodingParams encodingParams,
+                         float distributionParameter, float assuranceMeasure, float securityLevel, usint relinWindow,
+                         int depth = 1, int maxDepth = 2, MODE mode = RLWE) :
+      LPCryptoParameters<Element>(params, encodingParams) {
     m_distributionParameter = distributionParameter;
-    m_assuranceMeasure = assuranceMeasure;
-    m_securityLevel = securityLevel;
-    m_relinWindow = relinWindow;
+    m_assuranceMeasure      = assuranceMeasure;
+    m_securityLevel         = securityLevel;
+    m_relinWindow           = relinWindow;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth = depth;
+    m_depth    = depth;
     m_maxDepth = maxDepth;
-    m_mode = mode;
+    m_mode     = mode;
     m_stdLevel = HEStd_NotSet;
   }
 
@@ -125,20 +123,18 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    * relinearization key is generated
    * @param mode mode for secret polynomial, defaults to RLWE.
    */
-  LPCryptoParametersRLWE(shared_ptr<typename Element::Params> params,
-                         EncodingParams encodingParams,
-                         float distributionParameter, float assuranceMeasure,
-                         SecurityLevel stdLevel, usint relinWindow,
-                         int depth = 1, int maxDepth = 2, MODE mode = RLWE)
-      : LPCryptoParameters<Element>(params, encodingParams) {
+  LPCryptoParametersRLWE(shared_ptr<typename Element::Params> params, EncodingParams encodingParams,
+                         float distributionParameter, float assuranceMeasure, SecurityLevel stdLevel, usint relinWindow,
+                         int depth = 1, int maxDepth = 2, MODE mode = RLWE) :
+      LPCryptoParameters<Element>(params, encodingParams) {
     m_distributionParameter = distributionParameter;
-    m_assuranceMeasure = assuranceMeasure;
-    m_securityLevel = 0;
-    m_relinWindow = relinWindow;
+    m_assuranceMeasure      = assuranceMeasure;
+    m_securityLevel         = 0;
+    m_relinWindow           = relinWindow;
     m_dgg.SetStd(m_distributionParameter);
-    m_depth = depth;
+    m_depth    = depth;
     m_maxDepth = maxDepth;
-    m_mode = mode;
+    m_mode     = mode;
     m_stdLevel = stdLevel;
   }
 
@@ -153,28 +149,36 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    *
    * @return the standard deviation r.
    */
-  float GetDistributionParameter() const { return m_distributionParameter; }
+  float GetDistributionParameter() const {
+    return m_distributionParameter;
+  }
 
   /**
    * Returns the values of assurance measure alpha
    *
    * @return the assurance measure.
    */
-  float GetAssuranceMeasure() const { return m_assuranceMeasure; }
+  float GetAssuranceMeasure() const {
+    return m_assuranceMeasure;
+  }
 
   /**
    * Returns the value of root Hermite factor security level /delta.
    *
    * @return the root Hermite factor /delta.
    */
-  float GetSecurityLevel() const { return m_securityLevel; }
+  float GetSecurityLevel() const {
+    return m_securityLevel;
+  }
 
   /**
    * Returns the value of relinearization window.
    *
    * @return the relinearization window.
    */
-  usint GetRelinWindow() const { return m_relinWindow; }
+  usint GetRelinWindow() const {
+    return m_relinWindow;
+  }
 
   /**
    * Returns the depth of computation circuit supported for these parameters
@@ -182,7 +186,9 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    *
    * @return the computation depth supported d.
    */
-  int GetDepth() const { return m_depth; }
+  int GetDepth() const {
+    return m_depth;
+  }
 
   /**
    * Returns the maximum homomorphic multiplication depth before performing
@@ -190,28 +196,34 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    *
    * @return the computation depth supported d.
    */
-  size_t GetMaxDepth() const { return m_maxDepth; }
+  size_t GetMaxDepth() const {
+    return m_maxDepth;
+  }
 
   /**
    * Gets the mode setting: RLWE or OPTIMIZED.
    *
    * @return the mode setting.
    */
-  MODE GetMode() const { return m_mode; }
+  MODE GetMode() const {
+    return m_mode;
+  }
 
   /**
    * Gets the standard security level
    *
    * @return the security level.
    */
-  SecurityLevel GetStdLevel() const { return m_stdLevel; }
+  SecurityLevel GetStdLevel() const {
+    return m_stdLevel;
+  }
 
   /**
    * Returns reference to Discrete Gaussian Generator
    *
    * @return reference to Discrete Gaussian Generaror.
    */
-  const typename Element::DggType &GetDiscreteGaussianGenerator() const {
+  const typename Element::DggType& GetDiscreteGaussianGenerator() const {
     return m_dgg;
   }
 
@@ -246,42 +258,51 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
    * Sets the standard security level
    * @param standard security level
    */
-  void SetStdLevel(SecurityLevel securityLevel) { m_stdLevel = securityLevel; }
+  void SetStdLevel(SecurityLevel securityLevel) {
+    m_stdLevel = securityLevel;
+  }
 
   /**
    * Sets the value of relinearization window
    * @param relinWindow
    */
-  void SetRelinWindow(usint relinWindow) { m_relinWindow = relinWindow; }
+  void SetRelinWindow(usint relinWindow) {
+    m_relinWindow = relinWindow;
+  }
 
   /**
    * Sets the depth of computation circuit supported for these parameters (not
    * used now; for future use).
    * @param depth
    */
-  void SetDepth(int depth) { m_depth = depth; }
+  void SetDepth(int depth) {
+    m_depth = depth;
+  }
 
   /**
    * Sets the value of the maximum power of secret key for which the
    * relinearization key is generated
    * @param depth
    */
-  void SetMaxDepth(size_t maxDepth) { m_maxDepth = maxDepth; }
+  void SetMaxDepth(size_t maxDepth) {
+    m_maxDepth = maxDepth;
+  }
 
   /**
    * Configures the mode for generating the secret key polynomial
    * @param mode is RLWE or OPTIMIZED.
    */
-  void SetMode(MODE mode) { m_mode = mode; }
+  void SetMode(MODE mode) {
+    m_mode = mode;
+  }
 
   /**
    * == operator to compare to this instance of LPCryptoParametersRLWE object.
    *
    * @param &rhs LPCryptoParameters to check equality against.
    */
-  bool operator==(const LPCryptoParameters<Element> &rhs) const {
-    const auto *el =
-        dynamic_cast<const LPCryptoParametersRLWE<Element> *>(&rhs);
+  bool operator==(const LPCryptoParameters<Element>& rhs) const {
+    const auto* el = dynamic_cast<const LPCryptoParametersRLWE<Element>*>(&rhs);
 
     if (el == nullptr) return false;
 
@@ -289,24 +310,20 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
            *this->GetElementParams() == *el->GetElementParams() &&
            *this->GetEncodingParams() == *el->GetEncodingParams() &&
            m_distributionParameter == el->GetDistributionParameter() &&
-           m_assuranceMeasure == el->GetAssuranceMeasure() &&
-           m_securityLevel == el->GetSecurityLevel() &&
-           m_relinWindow == el->GetRelinWindow() && m_mode == el->GetMode() &&
-           m_stdLevel == el->GetStdLevel();
+           m_assuranceMeasure == el->GetAssuranceMeasure() && m_securityLevel == el->GetSecurityLevel() &&
+           m_relinWindow == el->GetRelinWindow() && m_mode == el->GetMode() && m_stdLevel == el->GetStdLevel();
   }
 
-  void PrintParameters(std::ostream &os) const {
+  void PrintParameters(std::ostream& os) const {
     LPCryptoParameters<Element>::PrintParameters(os);
 
-    os << "Distrib parm " << GetDistributionParameter()
-       << ", Assurance measure " << GetAssuranceMeasure() << ", Security level "
-       << GetSecurityLevel() << ", Relin window " << GetRelinWindow()
-       << ", Depth " << GetDepth() << ", Mode " << GetMode()
-       << ", Standard security level " << GetStdLevel() << std::endl;
+    os << "Distrib parm " << GetDistributionParameter() << ", Assurance measure " << GetAssuranceMeasure()
+       << ", Security level " << GetSecurityLevel() << ", Relin window " << GetRelinWindow() << ", Depth " << GetDepth()
+       << ", Mode " << GetMode() << ", Standard security level " << GetStdLevel() << std::endl;
   }
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPCryptoParameters<Element>>(this));
     ar(::cereal::make_nvp("dp", m_distributionParameter));
     ar(::cereal::make_nvp("am", m_assuranceMeasure));
@@ -319,7 +336,7 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     ar(::cereal::base_class<LPCryptoParameters<Element>>(this));
     ar(::cereal::make_nvp("dp", m_distributionParameter));
     m_dgg.SetStd(m_distributionParameter);
@@ -332,7 +349,9 @@ class LPCryptoParametersRLWE : public LPCryptoParameters<Element> {
     ar(::cereal::make_nvp("slv", m_stdLevel));
   }
 
-  std::string SerializedObjectName() const { return "RLWESchemeParameters"; }
+  std::string SerializedObjectName() const {
+    return "RLWESchemeParameters";
+  }
 
  protected:
   // standard deviation in Discrete Gaussian Distribution

@@ -69,12 +69,13 @@ namespace lbcrypto {
  * @tparam Element a ring element type.
  */
 template <class Element>
-class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
+class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -86,7 +87,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    * Copy constructor.
    * @param rhs - source
    */
-  LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB &rhs);
+  LPCryptoParametersBFVrnsB(const LPCryptoParametersBFVrnsB& rhs);
   /**
    * Constructor that initializes values.  Note that it is possible to set
    * parameters in a way that is overall infeasible for actual use.  There are
@@ -123,10 +124,8 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    * @param maxDepth the maximum power of secret key for which the
    * relinearization key is generated
    */
-  LPCryptoParametersBFVrnsB(shared_ptr<typename Element::Params> params,
-                            const PlaintextModulus &plaintextModulus,
-                            float distributionParameter, float assuranceMeasure,
-                            float securityLevel, usint relinWindow,
+  LPCryptoParametersBFVrnsB(shared_ptr<typename Element::Params> params, const PlaintextModulus& plaintextModulus,
+                            float distributionParameter, float assuranceMeasure, float securityLevel, usint relinWindow,
                             MODE mode = RLWE, int depth = 1, int maxDepth = 2);
 
   /**
@@ -144,10 +143,8 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    * @param maxDepth the maximum power of secret key for which the
    * relinearization key is generated
    */
-  LPCryptoParametersBFVrnsB(shared_ptr<typename Element::Params> params,
-                            EncodingParams encodingParams,
-                            float distributionParameter, float assuranceMeasure,
-                            float securityLevel, usint relinWindow,
+  LPCryptoParametersBFVrnsB(shared_ptr<typename Element::Params> params, EncodingParams encodingParams,
+                            float distributionParameter, float assuranceMeasure, float securityLevel, usint relinWindow,
                             MODE mode = RLWE, int depth = 1, int maxDepth = 2);
 
   /**
@@ -165,11 +162,9 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    * @param maxDepth the maximum power of secret key for which the
    * relinearization key is generated
    */
-  LPCryptoParametersBFVrnsB(shared_ptr<typename Element::Params> params,
-                            EncodingParams encodingParams,
-                            float distributionParameter, float assuranceMeasure,
-                            SecurityLevel securityLevel, usint relinWindow,
-                            MODE mode = RLWE, int depth = 1, int maxDepth = 2);
+  LPCryptoParametersBFVrnsB(shared_ptr<typename Element::Params> params, EncodingParams encodingParams,
+                            float distributionParameter, float assuranceMeasure, SecurityLevel securityLevel,
+                            usint relinWindow, MODE mode = RLWE, int depth = 1, int maxDepth = 2);
 
   /**
    * Destructor
@@ -189,16 +184,15 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @param &rhs LPCryptoParameters to check equality against.
    */
-  bool operator==(const LPCryptoParameters<Element> &rhs) const {
-    const auto *el =
-        dynamic_cast<const LPCryptoParametersBFVrnsB<Element> *>(&rhs);
+  bool operator==(const LPCryptoParameters<Element>& rhs) const {
+    const auto* el = dynamic_cast<const LPCryptoParametersBFVrnsB<Element>*>(&rhs);
 
     if (el == nullptr) return false;
 
     return LPCryptoParametersRLWE<Element>::operator==(rhs);
   }
 
-  void PrintParameters(std::ostream &os) const {
+  void PrintParameters(std::ostream& os) const {
     LPCryptoParametersRLWE<Element>::PrintParameters(os);
   }
 
@@ -217,14 +211,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetModuliQ() const { return m_moduliQ; }
+  std::vector<NativeInteger> const& GetModuliQ() const {
+    return m_moduliQ;
+  }
 
   /**
    * Gets the Barrett modulo reduction precomputation for q_i
    *
    * @return the precomputed table
    */
-  std::vector<DoubleNativeInt> const &GetModqBarrettMu() const {
+  std::vector<DoubleNativeInt> const& GetModqBarrettMu() const {
     return m_modqBarrettMu;
   }
 
@@ -233,14 +229,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetModuliBsk() const { return m_moduliBsk; }
+  std::vector<NativeInteger> const& GetModuliBsk() const {
+    return m_moduliBsk;
+  }
 
   /**
    * Gets the Barrett modulo reduction precomputation for bsk_j
    *
    * @return the precomputed table
    */
-  std::vector<DoubleNativeInt> const &GetModbskBarrettMu() const {
+  std::vector<DoubleNativeInt> const& GetModbskBarrettMu() const {
     return m_modbskBarrettMu;
   }
 
@@ -249,14 +247,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  const std::vector<NativeInteger> &GetDelta() const { return m_QDivtModq; }
+  const std::vector<NativeInteger>& GetDelta() const {
+    return m_QDivtModq;
+  }
 
   /**
    * Gets the precomputed table of [mtilde*(Q/q_i)^{-1}]_{q_i}
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetmtildeQHatInvModq() const {
+  std::vector<NativeInteger> const& GetmtildeQHatInvModq() const {
     return m_mtildeQHatInvModq;
   }
 
@@ -265,7 +265,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetmtildeQHatInvModqPrecon() const {
+  std::vector<NativeInteger> const& GetmtildeQHatInvModqPrecon() const {
     return m_mtildeQHatInvModqPrecon;
   }
 
@@ -274,7 +274,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<std::vector<NativeInteger>> const &GetQHatModbsk() const {
+  std::vector<std::vector<NativeInteger>> const& GetQHatModbsk() const {
     return m_QHatModbsk;
   }
 
@@ -283,7 +283,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<std::vector<NativeInteger>> const &GetqInvModbsk() const {
+  std::vector<std::vector<NativeInteger>> const& GetqInvModbsk() const {
     return m_qInvModbsk;
   }
 
@@ -292,7 +292,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<uint16_t> const &GetQHatModmtilde() const {
+  std::vector<uint16_t> const& GetQHatModmtilde() const {
     return m_QHatModmtilde;
   }
 
@@ -301,14 +301,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetQModbsk() const { return m_QModbsk; }
+  std::vector<NativeInteger> const& GetQModbsk() const {
+    return m_QModbsk;
+  }
 
   /**
    * Gets the NTL precomputations for [Q]_{bsk_j}
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetQModbskPrecon() const {
+  std::vector<NativeInteger> const& GetQModbskPrecon() const {
     return m_QModbskPrecon;
   }
 
@@ -317,14 +319,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed value
    */
-  uint16_t const &GetNegQInvModmtilde() const { return m_negQInvModmtilde; }
+  uint16_t const& GetNegQInvModmtilde() const {
+    return m_negQInvModmtilde;
+  }
 
   /**
    * Gets the precomputed table of [mtilde^{-1}]_{bsk_j}
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetmtildeInvModbsk() const {
+  std::vector<NativeInteger> const& GetmtildeInvModbsk() const {
     return m_mtildeInvModbsk;
   }
 
@@ -333,7 +337,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetmtildeInvModbskPrecon() const {
+  std::vector<NativeInteger> const& GetmtildeInvModbskPrecon() const {
     return m_mtildeInvModbskPrecon;
   }
 
@@ -342,7 +346,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetQHatInvModq() const {
+  std::vector<NativeInteger> const& GetQHatInvModq() const {
     return m_QHatInvModq;
   }
 
@@ -351,7 +355,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GettQHatInvModq() const {
+  std::vector<NativeInteger> const& GettQHatInvModq() const {
     return m_tQHatInvModq;
   }
 
@@ -360,7 +364,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GettQHatInvModqPrecon() const {
+  std::vector<NativeInteger> const& GettQHatInvModqPrecon() const {
     return m_tQHatInvModqPrecon;
   }
 
@@ -369,7 +373,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GettgammaQHatInvModq() const {
+  std::vector<NativeInteger> const& GettgammaQHatInvModq() const {
     return m_tgammaQHatInvModq;
   }
 
@@ -378,7 +382,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GettgammaQHatInvModqPrecon() const {
+  std::vector<NativeInteger> const& GettgammaQHatInvModqPrecon() const {
     return m_tgammaQHatInvModqPrecon;
   }
 
@@ -387,7 +391,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GettQInvModbsk() const {
+  std::vector<NativeInteger> const& GettQInvModbsk() const {
     return m_tQInvModbsk;
   }
 
@@ -396,7 +400,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GettQInvModbskPrecon() const {
+  std::vector<NativeInteger> const& GettQInvModbskPrecon() const {
     return m_tQInvModbskPrecon;
   }
 
@@ -405,7 +409,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetBHatInvModb() const {
+  std::vector<NativeInteger> const& GetBHatInvModb() const {
     return m_BHatInvModb;
   }
 
@@ -414,7 +418,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetBHatInvModbPrecon() const {
+  std::vector<NativeInteger> const& GetBHatInvModbPrecon() const {
     return m_BHatInvModbPrecon;
   }
 
@@ -423,7 +427,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetBHatModmsk() const {
+  std::vector<NativeInteger> const& GetBHatModmsk() const {
     return m_BHatModmsk;
   }
 
@@ -432,14 +436,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed value
    */
-  NativeInteger const &GetBInvModmsk() const { return m_BInvModmsk; }
+  NativeInteger const& GetBInvModmsk() const {
+    return m_BInvModmsk;
+  }
 
   /**
    * Gets the NTL precomputions for [B^{-1}]_msk
    *
    * @return the precomputed value
    */
-  NativeInteger const &GetBInvModmskPrecon() const {
+  NativeInteger const& GetBInvModmskPrecon() const {
     return m_BInvModmskPrecon;
   }
 
@@ -448,7 +454,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<std::vector<NativeInteger>> const &GetBHatModq() const {
+  std::vector<std::vector<NativeInteger>> const& GetBHatModq() const {
     return m_BHatModq;
   }
 
@@ -457,14 +463,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetBModq() const { return m_BModq; }
+  std::vector<NativeInteger> const& GetBModq() const {
+    return m_BModq;
+  }
 
   /**
    * Gets the NTL precomputions for [B]_{q_i}
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetBModqPrecon() const {
+  std::vector<NativeInteger> const& GetBModqPrecon() const {
     return m_BModqPrecon;
   }
 
@@ -473,7 +481,9 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return gamma
    */
-  uint32_t const &Getgamma() const { return m_gamma; }
+  uint32_t const& Getgamma() const {
+    return m_gamma;
+  }
 
   // TODO: use 64 bit words in case NativeInteger uses smaller word size
   /**
@@ -481,14 +491,16 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return t*gamma
    */
-  NativeInteger const &Gettgamma() const { return m_tgamma; }
+  NativeInteger const& Gettgamma() const {
+    return m_tgamma;
+  }
 
   /**
    * Gets the precomputed table of [-(q_i)^{-1}]_{t*gamma}
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetNegInvqModtgamma() const {
+  std::vector<NativeInteger> const& GetNegInvqModtgamma() const {
     return m_negInvqModtgamma;
   }
 
@@ -497,7 +509,7 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
    *
    * @return the precomputed table
    */
-  std::vector<NativeInteger> const &GetNegInvqModtgammaPrecon() const {
+  std::vector<NativeInteger> const& GetNegInvqModtgammaPrecon() const {
     return m_negInvqModtgammaPrecon;
   }
 
@@ -505,22 +517,26 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
   // they are all cached computations, and get recomputed in any
   // implementation that does a deserialization
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPCryptoParametersRLWE<Element>>(this));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::base_class<LPCryptoParametersRLWE<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BFVrnsBSchemeParameters"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "BFVrnsBSchemeParameters";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // Stores a precomputed table of [\floor{Q/t}]_{q_i}
@@ -647,12 +663,13 @@ class LPCryptoParametersBFVrnsB : public LPCryptoParametersRLWE<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element> {
+class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -675,9 +692,8 @@ class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element> {
    * @param n ring dimension in case the user wants to use a custom ring
    * dimension
    */
-  bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams,
-                 int32_t evalAddCount = 0, int32_t evalMultCount = 0,
-                 int32_t keySwitchCount = 0, size_t dcrBits = 60,
+  bool ParamsGen(shared_ptr<LPCryptoParameters<Element>> cryptoParams, int32_t evalAddCount = 0,
+                 int32_t evalMultCount = 0, int32_t keySwitchCount = 0, size_t dcrBits = 60,
                  uint32_t n = 0) const override;
 };
 
@@ -689,12 +705,13 @@ class LPAlgorithmParamsGenBFVrnsB : public LPAlgorithmParamsGenBFV<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element> {
+class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -709,8 +726,7 @@ class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element> {
    * @param plaintext the plaintext input.
    * @return ciphertext which results from encryption.
    */
-  Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey,
-                              Element plaintext) const override;
+  Ciphertext<Element> Encrypt(const LPPublicKey<Element> publicKey, Element plaintext) const override;
 
   /**
    * Method for encrypting plaintext with private key using BFVrnsB.
@@ -719,8 +735,7 @@ class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element> {
    * @param plaintext the plaintext input.
    * @return ciphertext which results from encryption.
    */
-  Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey,
-                              Element plaintext) const override;
+  Ciphertext<Element> Encrypt(const LPPrivateKey<Element> privateKey, Element plaintext) const override;
 
   /**
    * Method for decrypting using BFVrnsB. See the class description for
@@ -731,9 +746,8 @@ class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element> {
    * @param *plaintext the plaintext output.
    * @return the decrypted plaintext returned.
    */
-  DecryptResult Decrypt(const LPPrivateKey<Element> privateKey,
-                        ConstCiphertext<Element> ciphertext,
-                        NativePoly *plaintext) const override;
+  DecryptResult Decrypt(const LPPrivateKey<Element> privateKey, ConstCiphertext<Element> ciphertext,
+                        NativePoly* plaintext) const override;
 };
 
 /**
@@ -742,12 +756,13 @@ class LPAlgorithmBFVrnsB : public LPAlgorithmBFV<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
+class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -762,8 +777,7 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
    * @param pt input plaintext.
    * @return new ciphertext.
    */
-  Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ct,
-                              ConstPlaintext pt) const override;
+  Ciphertext<Element> EvalAdd(ConstCiphertext<Element> ct, ConstPlaintext pt) const override;
 
   /**
    * Function for homomorphic subtraction of ciphertext ans plaintext.
@@ -772,8 +786,7 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
    * @param pt input plaintext.
    * @return new ciphertext.
    */
-  Ciphertext<Element> EvalSub(ConstCiphertext<Element> ct,
-                              ConstPlaintext pt) const override;
+  Ciphertext<Element> EvalSub(ConstCiphertext<Element> ct, ConstPlaintext pt) const override;
 
   /**
    * Function for homomorphic evaluation of ciphertexts.
@@ -785,8 +798,7 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
    * @param ct2 second input ciphertext.
    * @return resulting EvalMult ciphertext.
    */
-  Ciphertext<Element> EvalMult(ConstCiphertext<Element> ct1,
-                               ConstCiphertext<Element> ct2) const override;
+  Ciphertext<Element> EvalMult(ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2) const override;
 
   /**
    * Method for generating a KeySwitchHint using RLWE relinearization
@@ -795,9 +807,8 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
    * @param newKey New private key to generate the keyswitch hint.
    * @return resulting keySwitchHint.
    */
-  LPEvalKey<Element> KeySwitchGen(
-      const LPPrivateKey<Element> oldKey,
-      const LPPrivateKey<Element> newKey) const override;
+  LPEvalKey<Element> KeySwitchGen(const LPPrivateKey<Element> oldKey,
+                                  const LPPrivateKey<Element> newKey) const override;
 
   /**
    * Method for in-place key switching based on a KeySwitchHint using RLWE
@@ -807,8 +818,7 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
    * @param &cipherText Original ciphertext to perform in-place key switching
    * on.
    */
-  void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint,
-                        Ciphertext<Element>& ciphertext) const override;
+  void KeySwitchInPlace(const LPEvalKey<Element> keySwitchHint, Ciphertext<Element>& ciphertext) const override;
 
   /**
    * Function for evaluating multiplication on ciphertext followed by
@@ -823,9 +833,8 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
    * ciphertext2.
    * @return new ciphertext
    */
-  Ciphertext<Element> EvalMultAndRelinearize(
-      ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2,
-      const vector<LPEvalKey<Element>> &ek) const override;
+  Ciphertext<Element> EvalMultAndRelinearize(ConstCiphertext<Element> ct1, ConstCiphertext<Element> ct2,
+                                             const vector<LPEvalKey<Element>>& ek) const override;
 };
 
 /**
@@ -834,12 +843,13 @@ class LPAlgorithmSHEBFVrnsB : public LPAlgorithmSHEBFV<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element> {
+class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -873,9 +883,7 @@ class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element> {
    * @return evalKey the evaluation key for switching the ciphertext to be
    * decryptable by new private key.
    */
-  LPEvalKey<Element> ReKeyGen(
-      const LPPublicKey<Element> newKey,
-      const LPPrivateKey<Element> oldKey) const override;
+  LPEvalKey<Element> ReKeyGen(const LPPublicKey<Element> newKey, const LPPrivateKey<Element> oldKey) const override;
 
   /**
    * This method implements re-encryption using the evaluation key generated
@@ -903,9 +911,8 @@ class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element> {
    * ciphertext.
    * @return resulting ciphertext after the re-encryption operation.
    */
-  Ciphertext<Element> ReEncrypt(
-      const LPEvalKey<Element> ek, ConstCiphertext<Element> ciphertext,
-      const LPPublicKey<Element> publicKey = nullptr) const override;
+  Ciphertext<Element> ReEncrypt(const LPEvalKey<Element> ek, ConstCiphertext<Element> ciphertext,
+                                const LPPublicKey<Element> publicKey = nullptr) const override;
 };
 
 /**
@@ -935,12 +942,13 @@ class LPAlgorithmPREBFVrnsB : public LPAlgorithmPREBFV<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element> {
+class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   /**
@@ -956,9 +964,8 @@ class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element> {
    * @param *plaintext the plaintext output as a NativePoly.
    * @return the decoding result.
    */
-  DecryptResult MultipartyDecryptFusion(
-      const vector<Ciphertext<Element>> &ciphertextVec,
-      NativePoly *plaintext) const override;
+  DecryptResult MultipartyDecryptFusion(const vector<Ciphertext<Element>>& ciphertextVec,
+                                        NativePoly* plaintext) const override;
 
   /**
    * Threshold FHE: Generates a joined evaluation key
@@ -970,21 +977,22 @@ class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element> {
    * @param ek the prior joined evaluation key.
    * @return the new joined evaluation key.
    */
-  LPEvalKey<Element> MultiKeySwitchGen(
-      const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
-      const LPEvalKey<Element> ek) const override;
+  LPEvalKey<Element> MultiKeySwitchGen(const LPPrivateKey<Element> oldKey, const LPPrivateKey<Element> newKey,
+                                       const LPEvalKey<Element> ek) const override;
 
   template <class Archive>
-  void save(Archive &ar) const {
+  void save(Archive& ar) const {
     ar(cereal::base_class<LPAlgorithmMultipartyBFV<Element>>(this));
   }
 
   template <class Archive>
-  void load(Archive &ar) {
+  void load(Archive& ar) {
     ar(cereal::base_class<LPAlgorithmMultipartyBFV<Element>>(this));
   }
 
-  std::string SerializedObjectName() const { return "BFVrnsBMultiparty"; }
+  std::string SerializedObjectName() const {
+    return "BFVrnsBMultiparty";
+  }
 };
 
 /**
@@ -992,36 +1000,36 @@ class LPAlgorithmMultipartyBFVrnsB : public LPAlgorithmMultipartyBFV<Element> {
  * @tparam Element a ring element.
  */
 template <class Element>
-class LPPublicKeyEncryptionSchemeBFVrnsB
-    : public LPPublicKeyEncryptionScheme<Element> {
+class LPPublicKeyEncryptionSchemeBFVrnsB : public LPPublicKeyEncryptionScheme<Element>
+{
   using ParmType = typename Element::Params;
-  using IntType = typename Element::Integer;
-  using DugType = typename Element::DugType;
-  using DggType = typename Element::DggType;
-  using TugType = typename Element::TugType;
+  using IntType  = typename Element::Integer;
+  using DugType  = typename Element::DugType;
+  using DggType  = typename Element::DggType;
+  using TugType  = typename Element::TugType;
 
  public:
   LPPublicKeyEncryptionSchemeBFVrnsB();
 
-  bool operator==(
-      const LPPublicKeyEncryptionScheme<Element> &sch) const override {
-    return dynamic_cast<const LPPublicKeyEncryptionSchemeBFVrnsB<Element> *>(
-               &sch) != nullptr;
+  bool operator==(const LPPublicKeyEncryptionScheme<Element>& sch) const override {
+    return dynamic_cast<const LPPublicKeyEncryptionSchemeBFVrnsB<Element>*>(&sch) != nullptr;
   }
 
   void Enable(PKESchemeFeature feature) override;
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::base_class<LPPublicKeyEncryptionScheme<Element>>(this));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     ar(::cereal::base_class<LPPublicKeyEncryptionScheme<Element>>(this));
   }
 
-  std::string SerializedObjectName() const override { return "BFVrnsScheme"; }
+  std::string SerializedObjectName() const override {
+    return "BFVrnsScheme";
+  }
 };
 
 }  // namespace lbcrypto

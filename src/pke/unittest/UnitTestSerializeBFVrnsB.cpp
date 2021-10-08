@@ -29,7 +29,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTPKESer : public ::testing::Test {
+class UTPKESer : public ::testing::Test
+{
  protected:
   void SetUp() {}
 
@@ -43,8 +44,7 @@ class UTPKESer : public ::testing::Test {
   }
 };
 
-extern CryptoContext<DCRTPoly> GenerateTestDCRTCryptoContext(
-    const string& parmsetName, usint nTower, usint pbits);
+extern CryptoContext<DCRTPoly> GenerateTestDCRTCryptoContext(const string& parmsetName, usint nTower, usint pbits);
 
 template <typename T>
 void UnitTestContext(CryptoContext<T> cc) {

@@ -39,30 +39,33 @@ int main(int argc, char* argv[]) {
   usint m = 4096;
 
   usint init_size = 7;
-  usint dcrtBits = 50;
+  usint dcrtBits  = 50;
 
-  CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(
-          init_size - 1, dcrtBits, 16, HEStd_NotSet, m / 2, /*ringDimension*/
-          EXACTRESCALE, HYBRID, 3,                          /*numLargeDigits*/
-          2,                                                /*maxDepth*/
-          60,                                               /*firstMod*/
-          0, OPTIMIZED);
+  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextCKKS(init_size - 1,
+                                                                                    dcrtBits,
+                                                                                    16,
+                                                                                    HEStd_NotSet,
+                                                                                    m / 2, /*ringDimension*/
+                                                                                    EXACTRESCALE,
+                                                                                    HYBRID,
+                                                                                    3,  /*numLargeDigits*/
+                                                                                    2,  /*maxDepth*/
+                                                                                    60, /*firstMod*/
+                                                                                    0,
+                                                                                    OPTIMIZED);
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
   cc->Enable(LEVELEDSHE);
 
-  std::vector<std::complex<double>> input({0.5, 0.7, 0.9, 0.95, 0.93});
+  std::vector<std::complex<double>> input({ 0.5, 0.7, 0.9, 0.95, 0.93 });
 
   size_t encodedLength = input.size();
 
-  std::vector<double> coefficients1(
-      {0.15, 0.75, 0, 1.25, 0, 0, 1, 0, 1, 2, 0, 1, 0, 0, 0, 0, 1});
-  std::vector<double> coefficients2(
-      {1,   2,   3,   4,   5,   -1,   -2,   -3,   -4,   -5,
-       0.1, 0.2, 0.3, 0.4, 0.5, -0.1, -0.2, -0.3, -0.4, -0.5,
-       0.1, 0.2, 0.3, 0.4, 0.5, -0.1, -0.2, -0.3, -0.4, -0.5});
+  std::vector<double> coefficients1({ 0.15, 0.75, 0, 1.25, 0, 0, 1, 0, 1, 2, 0, 1, 0, 0, 0, 0, 1 });
+  std::vector<double> coefficients2({ 1,   2,   3,   4,   5,   -1,   -2,   -3,   -4,   -5,
+                                      0.1, 0.2, 0.3, 0.4, 0.5, -0.1, -0.2, -0.3, -0.4, -0.5,
+                                      0.1, 0.2, 0.3, 0.4, 0.5, -0.1, -0.2, -0.3, -0.4, -0.5 });
   Plaintext plaintext1 = cc->MakeCKKSPackedPlaintext(input);
 
   auto keyPair = cc->KeyGen();
@@ -102,8 +105,7 @@ int main(int argc, char* argv[]) {
   cout << "\n Original Plaintext #1: \n";
   cout << plaintext1 << endl;
 
-  cout << "\n Result of evaluating a polynomial with coefficients "
-       << coefficients1 << " \n";
+  cout << "\n Result of evaluating a polynomial with coefficients " << coefficients1 << " \n";
   cout << plaintextDec << endl;
 
   cout << "\n Expected result: (0.70519107, 1.38285078, 3.97211180, "
@@ -112,8 +114,7 @@ int main(int argc, char* argv[]) {
 
   cout << "\n Evaluation time: " << timeEvalPoly1 << " ms" << endl;
 
-  cout << "\n Result of evaluating a polynomial with coefficients "
-       << coefficients2 << " \n";
+  cout << "\n Result of evaluating a polynomial with coefficients " << coefficients2 << " \n";
   cout << plaintextDec2 << endl;
 
   cout << "\n Expected result: (3.4515092326, 5.3752765397, 4.8993108833, "

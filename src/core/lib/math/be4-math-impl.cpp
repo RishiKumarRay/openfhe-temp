@@ -39,38 +39,26 @@ template class BinaryUniformGeneratorImpl<M4Vector>;
 template class TernaryUniformGeneratorImpl<M4Vector>;
 template class DiscreteUniformGeneratorImpl<M4Vector>;
 
-template M4Integer RootOfUnity<M4Integer>(usint m, const M4Integer &modulo);
-template std::vector<M4Integer> RootsOfUnity(
-    usint m, const std::vector<M4Integer> moduli);
-template M4Integer GreatestCommonDivisor(const M4Integer &a,
-                                         const M4Integer &b);
-template bool MillerRabinPrimalityTest(const M4Integer &p, const usint niter);
-template const M4Integer PollardRhoFactorization(const M4Integer &n);
-template void PrimeFactorize(M4Integer n, std::set<M4Integer> &primeFactors);
+template M4Integer RootOfUnity<M4Integer>(usint m, const M4Integer& modulo);
+template std::vector<M4Integer> RootsOfUnity(usint m, const std::vector<M4Integer> moduli);
+template M4Integer GreatestCommonDivisor(const M4Integer& a, const M4Integer& b);
+template bool MillerRabinPrimalityTest(const M4Integer& p, const usint niter);
+template const M4Integer PollardRhoFactorization(const M4Integer& n);
+template void PrimeFactorize(M4Integer n, std::set<M4Integer>& primeFactors);
 template M4Integer FirstPrime(uint64_t nBits, uint64_t m);
-template M4Integer NextPrime(const M4Integer &q, uint64_t cyclotomicOrder);
-template M4Integer PreviousPrime(const M4Integer &q, uint64_t cyclotomicOrder);
-template std::vector<M4Integer> GetTotientList(const M4Integer &n);
-template M4Vector PolyMod(const M4Vector &dividend, const M4Vector &divisor,
-                          const M4Integer &modulus);
-template M4Vector PolynomialMultiplication(const M4Vector &a,
-                                           const M4Vector &b);
-template M4Vector GetCyclotomicPolynomial(usint m, const M4Integer &modulus);
-template M4Integer SyntheticRemainder(const M4Vector &dividend,
-                                      const M4Integer &a,
-                                      const M4Integer &modulus);
-template M4Vector SyntheticPolyRemainder(const M4Vector &dividend,
-                                         const M4Vector &aList,
-                                         const M4Integer &modulus);
-template M4Vector PolynomialPower<M4Vector>(const M4Vector &input, usint power);
-template M4Vector SyntheticPolynomialDivision(const M4Vector &dividend,
-                                              const M4Integer &a,
-                                              const M4Integer &modulus);
-template M4Integer FindGeneratorCyclic(const M4Integer &modulo);
-template bool IsGenerator(const M4Integer &g, const M4Integer &modulo);
-template std::shared_ptr<std::vector<int64_t>> GetDigits(const M4Integer &u,
-                                                         uint64_t base,
-                                                         uint32_t k);
+template M4Integer NextPrime(const M4Integer& q, uint64_t cyclotomicOrder);
+template M4Integer PreviousPrime(const M4Integer& q, uint64_t cyclotomicOrder);
+template std::vector<M4Integer> GetTotientList(const M4Integer& n);
+template M4Vector PolyMod(const M4Vector& dividend, const M4Vector& divisor, const M4Integer& modulus);
+template M4Vector PolynomialMultiplication(const M4Vector& a, const M4Vector& b);
+template M4Vector GetCyclotomicPolynomial(usint m, const M4Integer& modulus);
+template M4Integer SyntheticRemainder(const M4Vector& dividend, const M4Integer& a, const M4Integer& modulus);
+template M4Vector SyntheticPolyRemainder(const M4Vector& dividend, const M4Vector& aList, const M4Integer& modulus);
+template M4Vector PolynomialPower<M4Vector>(const M4Vector& input, usint power);
+template M4Vector SyntheticPolynomialDivision(const M4Vector& dividend, const M4Integer& a, const M4Integer& modulus);
+template M4Integer FindGeneratorCyclic(const M4Integer& modulo);
+template bool IsGenerator(const M4Integer& g, const M4Integer& modulo);
+template std::shared_ptr<std::vector<int64_t>> GetDigits(const M4Integer& u, uint64_t base, uint32_t k);
 
 template class Matrix<M4Integer>;
 ONES_FOR_TYPE(M4Integer)

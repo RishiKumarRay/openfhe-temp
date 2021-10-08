@@ -41,7 +41,8 @@ typedef BinaryUniformGeneratorImpl<BigVector> BinaryUniformGenerator;
  * @brief A generator of the Binary Uniform Distribution.
  */
 template <typename VecType>
-class BinaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
+class BinaryUniformGeneratorImpl : public DistributionGenerator<VecType>
+{
  public:
   /**
    * @brief Basic constructor for Binary Uniform Generator.
@@ -60,8 +61,7 @@ class BinaryUniformGeneratorImpl : public DistributionGenerator<VecType> {
    * Distribution.
    * @return A vector of random values within this Binary Uniform Distribution.
    */
-  VecType GenerateVector(const usint size,
-                         const typename VecType::Integer &modulus) const;
+  VecType GenerateVector(const usint size, const typename VecType::Integer& modulus) const;
 
  private:
   static std::bernoulli_distribution m_distribution;

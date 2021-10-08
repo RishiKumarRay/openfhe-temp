@@ -47,31 +47,26 @@ void testDCRTPolyConstructorNegative(std::vector<NativePoly>& towers);
 template <typename Element>
 void DCRT_constructors(const string& msg) {
   DEBUG_FLAG(false);
-  usint m = 8;
+  usint m         = 8;
   usint towersize = 3;
 
   std::vector<NativeInteger> moduli(towersize);
-  moduli = {NativeInteger("8353"), NativeInteger("8369"),
-            NativeInteger("8513")};
+  moduli = { NativeInteger("8353"), NativeInteger("8369"), NativeInteger("8513") };
   std::vector<NativeInteger> rootsOfUnity(towersize);
-  rootsOfUnity = {NativeInteger("8163"), NativeInteger("6677"),
-                  NativeInteger("156")};
+  rootsOfUnity = { NativeInteger("8163"), NativeInteger("6677"), NativeInteger("156") };
 
   typename Element::Integer modulus(1);
   for (usint i = 0; i < towersize; ++i) {
     modulus = modulus * typename Element::Integer(moduli[i].ConvertToInt());
   }
 
-  auto ilparams0 =
-      std::make_shared<ILNativeParams>(m, moduli[0], rootsOfUnity[0]);
-  auto ilparams1 =
-      std::make_shared<ILNativeParams>(m, moduli[1], rootsOfUnity[1]);
-  auto ilparams2 =
-      std::make_shared<ILNativeParams>(m, moduli[2], rootsOfUnity[2]);
+  auto ilparams0 = std::make_shared<ILNativeParams>(m, moduli[0], rootsOfUnity[0]);
+  auto ilparams1 = std::make_shared<ILNativeParams>(m, moduli[1], rootsOfUnity[1]);
+  auto ilparams2 = std::make_shared<ILNativeParams>(m, moduli[2], rootsOfUnity[2]);
 
   NativePoly ilv0(ilparams0);
   NativeVector bbv0(m / 2, moduli[0]);
-  bbv0 = {"2", "4", "3", "2"};
+  bbv0 = { "2", "4", "3", "2" };
   ilv0.SetValues(bbv0, Format::EVALUATION);
 
   NativePoly ilv1(ilv0);
@@ -80,8 +75,7 @@ void DCRT_constructors(const string& msg) {
   NativePoly ilv2(ilv0);
   ilv2.SwitchModulus(moduli[2], rootsOfUnity[2]);
 
-  auto ildcrtparams = std::make_shared<ILDCRTParams<typename Element::Integer>>(
-      m, moduli, rootsOfUnity);
+  auto ildcrtparams = std::make_shared<ILDCRTParams<typename Element::Integer>>(m, moduli, rootsOfUnity);
 
   std::vector<NativePoly> ilvector2nVector;
   ilvector2nVector.push_back(ilv0);
@@ -95,14 +89,10 @@ void DCRT_constructors(const string& msg) {
   {
     Element ilva(ildcrtparams);
 
-    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat())
-        << msg << " Failure: ildcrtparams ctor ilva.GetFormat()";
-    EXPECT_EQ(modulus, ilva.GetModulus())
-        << msg << " Failure: ildcrtparams ctor ilva.GetModulus()";
-    EXPECT_EQ(m, ilva.GetCyclotomicOrder())
-        << msg << " Failure: ildcrtparams ctor ilva.GetModulus()";
-    EXPECT_EQ(towersize, ilva.GetNumOfElements())
-        << msg << " Failure: ildcrtparams ctor ilva.GetNumOfElements()";
+    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat()) << msg << " Failure: ildcrtparams ctor ilva.GetFormat()";
+    EXPECT_EQ(modulus, ilva.GetModulus()) << msg << " Failure: ildcrtparams ctor ilva.GetModulus()";
+    EXPECT_EQ(m, ilva.GetCyclotomicOrder()) << msg << " Failure: ildcrtparams ctor ilva.GetModulus()";
+    EXPECT_EQ(towersize, ilva.GetNumOfElements()) << msg << " Failure: ildcrtparams ctor ilva.GetNumOfElements()";
   }
 
   DEBUG("2");
@@ -110,19 +100,14 @@ void DCRT_constructors(const string& msg) {
     Element ilva(ilvector2nVector);
 
     DEBUG("2.0");
-    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat())
-        << msg << " Failure: ctor ilva.GetFormat()";
-    EXPECT_EQ(modulus, ilva.GetModulus())
-        << msg << " Failure: ctor ilva.GetModulus()";
-    EXPECT_EQ(m, ilva.GetCyclotomicOrder())
-        << msg << " Failure: ctor ilva.GetCyclotomicOrder()";
-    EXPECT_EQ(towersize, ilva.GetNumOfElements())
-        << msg << " Failure: ctor ilva.GetNumOfElements()";
+    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat()) << msg << " Failure: ctor ilva.GetFormat()";
+    EXPECT_EQ(modulus, ilva.GetModulus()) << msg << " Failure: ctor ilva.GetModulus()";
+    EXPECT_EQ(m, ilva.GetCyclotomicOrder()) << msg << " Failure: ctor ilva.GetCyclotomicOrder()";
+    EXPECT_EQ(towersize, ilva.GetNumOfElements()) << msg << " Failure: ctor ilva.GetNumOfElements()";
 
     DEBUG("2.1");
     std::vector<NativePoly> ilvector2nVectorInconsistent(towersize);
-    auto ilparamsNegativeTestCase = std::make_shared<ILNativeParams>(
-        128, NativeInteger("1231"), NativeInteger("213"));
+    auto ilparamsNegativeTestCase = std::make_shared<ILNativeParams>(128, NativeInteger("1231"), NativeInteger("213"));
     NativePoly ilvNegative(ilparamsNegativeTestCase);
     ilvector2nVectorInconsistent[0] = ilvNegative;
     ilvector2nVectorInconsistent[1] = ilv1;
@@ -130,12 +115,10 @@ void DCRT_constructors(const string& msg) {
 
     DEBUG("2.2");
     for (size_t ii = 0; ii < ilvector2nVectorInconsistent.size(); ii++) {
-      DEBUG(ii << " item "
-               << ilvector2nVectorInconsistent.at(ii).GetParams().use_count());
+      DEBUG(ii << " item " << ilvector2nVectorInconsistent.at(ii).GetParams().use_count());
     }
-    EXPECT_THROW(testDCRTPolyConstructorNegative(ilvector2nVectorInconsistent),
-                 math_error)
-        << msg << " Failure: ilvector2nVectorInconsistent";
+    EXPECT_THROW(testDCRTPolyConstructorNegative(ilvector2nVectorInconsistent), math_error)
+      << msg << " Failure: ilvector2nVectorInconsistent";
   }
 
   DEBUG("4");
@@ -144,36 +127,30 @@ void DCRT_constructors(const string& msg) {
     Element ilva1(ildcrtparams);
     Element ilva2(ilvector2nVector);
 
-    std::vector<Element> ilvaVector({ilva0, ilva1, ilva2});
+    std::vector<Element> ilvaVector({ ilva0, ilva1, ilva2 });
 
     // copy constructor
     Element ilva0Copy(ilva0);
     Element ilva1Copy(ilva1);
     Element ilva2Copy(ilva2);
 
-    std::vector<Element> ilvaCopyVector({ilva0Copy, ilva1Copy, ilva2Copy});
+    std::vector<Element> ilvaCopyVector({ ilva0Copy, ilva1Copy, ilva2Copy });
 
     for (usint i = 0; i < 3; ++i) {
       EXPECT_EQ(ilvaVector[i].GetFormat(), ilvaCopyVector[i].GetFormat())
-          << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetFormat()";
+        << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetFormat()";
       EXPECT_EQ(ilvaVector[i].GetModulus(), ilvaCopyVector[i].GetModulus())
-          << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetModulus()";
-      EXPECT_EQ(ilvaVector[i].GetCyclotomicOrder(),
-                ilvaCopyVector[i].GetCyclotomicOrder())
-          << msg << " Failure: ctor ilvaCopyVector[" << i
-          << "].GetCyclotomicOrder()";
-      EXPECT_EQ(ilvaVector[i].GetNumOfElements(),
-                ilvaCopyVector[i].GetNumOfElements())
-          << msg << " Failure: ctor ilvaCopyVector[" << i
-          << "].GetNumOfElements()";
+        << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetModulus()";
+      EXPECT_EQ(ilvaVector[i].GetCyclotomicOrder(), ilvaCopyVector[i].GetCyclotomicOrder())
+        << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetCyclotomicOrder()";
+      EXPECT_EQ(ilvaVector[i].GetNumOfElements(), ilvaCopyVector[i].GetNumOfElements())
+        << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetNumOfElements()";
       // to ensure that GetElementAtIndex is not called
       // on uninitialized DCRTPoly objects.
       if (i == 0 || i == 1) continue;
       for (usint j = 0; j < towersize; ++j) {
-        EXPECT_EQ(ilvaVector[i].GetElementAtIndex(j),
-                  ilvaCopyVector[i].GetElementAtIndex(j))
-            << msg << " Failure: ctor ilvaCopyVector[" << i
-            << "].GetElementAtIndex(" << j << ")";
+        EXPECT_EQ(ilvaVector[i].GetElementAtIndex(j), ilvaCopyVector[i].GetElementAtIndex(j))
+          << msg << " Failure: ctor ilvaCopyVector[" << i << "].GetElementAtIndex(" << j << ")";
       }
     }
   }
@@ -183,14 +160,10 @@ void DCRT_constructors(const string& msg) {
     DEBUG("ild mod " << ildcrtparams->GetModulus());
     Element ilva(dgg, ildcrtparams);
 
-    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat())
-        << msg << " Failure: ctor(dgg, ldcrtparams) ilva.GetFormat()";
-    EXPECT_EQ(modulus, ilva.GetModulus())
-        << msg << " Failure: ctor(dgg, ildcrtparams) ilva.GetModulus()";
-    EXPECT_EQ(m, ilva.GetCyclotomicOrder())
-        << msg << " Failure: ctor(dgg, ildcrtparams) ilva.GetCyclotomicOrder()";
-    EXPECT_EQ(towersize, ilva.GetNumOfElements())
-        << msg << " Failure: ctor(dgg, ildcrtparams) ilva.GetNumOfElements()";
+    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat()) << msg << " Failure: ctor(dgg, ldcrtparams) ilva.GetFormat()";
+    EXPECT_EQ(modulus, ilva.GetModulus()) << msg << " Failure: ctor(dgg, ildcrtparams) ilva.GetModulus()";
+    EXPECT_EQ(m, ilva.GetCyclotomicOrder()) << msg << " Failure: ctor(dgg, ildcrtparams) ilva.GetCyclotomicOrder()";
+    EXPECT_EQ(towersize, ilva.GetNumOfElements()) << msg << " Failure: ctor(dgg, ildcrtparams) ilva.GetNumOfElements()";
   }
 
   DEBUG("6");
@@ -200,12 +173,10 @@ void DCRT_constructors(const string& msg) {
 
     std::vector<NativePoly> towersInClone = ilvaClone.GetAllElements();
 
-    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat())
-        << msg << "Failure: clone parameters format mismatch";
-    EXPECT_EQ(ilva.GetParams(), ilvaClone.GetParams())
-        << msg << "Failure: clone parameters parameter mismatch";
+    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat()) << msg << "Failure: clone parameters format mismatch";
+    EXPECT_EQ(ilva.GetParams(), ilvaClone.GetParams()) << msg << "Failure: clone parameters parameter mismatch";
     EXPECT_EQ(towersInClone.size(), ilva.GetAllElements().size())
-        << msg << "Failure: clone parameters towers size mismatch";
+      << msg << "Failure: clone parameters towers size mismatch";
   }
 }
 
@@ -215,33 +186,28 @@ TEST(UTDCRTPoly, DCRT_constructors) {
 
 template <typename Element>
 void DCRT_getters_and_ops(const string& msg) {
-  usint m = 8;
+  usint m         = 8;
   usint towersize = 3;
 
   std::vector<NativeInteger> moduli(towersize);
-  moduli = {NativeInteger("8353"), NativeInteger("8369"),
-            NativeInteger("8513")};
+  moduli = { NativeInteger("8353"), NativeInteger("8369"), NativeInteger("8513") };
 
   std::vector<NativeInteger> rootsOfUnity(towersize);
 
-  rootsOfUnity = {NativeInteger("8163"), NativeInteger("6677"),
-                  NativeInteger("156")};
+  rootsOfUnity = { NativeInteger("8163"), NativeInteger("6677"), NativeInteger("156") };
 
   typename Element::Integer modulus(1);
   for (usint i = 0; i < towersize; ++i) {
     modulus = modulus * typename Element::Integer(moduli[i].ConvertToInt());
   }
 
-  auto ilparams0 =
-      std::make_shared<ILNativeParams>(m, moduli[0], rootsOfUnity[0]);
-  auto ilparams1 =
-      std::make_shared<ILNativeParams>(m, moduli[1], rootsOfUnity[1]);
-  auto ilparams2 =
-      std::make_shared<ILNativeParams>(m, moduli[2], rootsOfUnity[2]);
+  auto ilparams0 = std::make_shared<ILNativeParams>(m, moduli[0], rootsOfUnity[0]);
+  auto ilparams1 = std::make_shared<ILNativeParams>(m, moduli[1], rootsOfUnity[1]);
+  auto ilparams2 = std::make_shared<ILNativeParams>(m, moduli[2], rootsOfUnity[2]);
 
   NativePoly ilv0(ilparams0);
   NativeVector bbv0(ilparams0->GetRingDimension(), moduli[0]);
-  bbv0 = {"2", "4", "3", "2"};
+  bbv0 = { "2", "4", "3", "2" };
   ilv0.SetValues(bbv0, Format::EVALUATION);
 
   NativePoly ilv1(ilv0);
@@ -250,22 +216,18 @@ void DCRT_getters_and_ops(const string& msg) {
   NativePoly ilv2(ilv0);
   ilv2.SwitchModulus(moduli[2], rootsOfUnity[2]);
 
-  auto ildcrtparams = std::make_shared<ILDCRTParams<typename Element::Integer>>(
-      m, moduli, rootsOfUnity);
+  auto ildcrtparams = std::make_shared<ILDCRTParams<typename Element::Integer>>(m, moduli, rootsOfUnity);
 
   std::vector<NativePoly> ilvector2nVector(towersize);
 
-  ilvector2nVector = {ilv0, ilv1, ilv2};
+  ilvector2nVector = { ilv0, ilv1, ilv2 };
   {
     Element ilva(ildcrtparams);
 
-    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat())
-        << msg << " Failure: ilva format";
+    EXPECT_EQ(Format::EVALUATION, ilva.GetFormat()) << msg << " Failure: ilva format";
     EXPECT_EQ(modulus, ilva.GetModulus()) << msg << " Failure: ilva modulus";
-    EXPECT_EQ(m, ilva.GetCyclotomicOrder())
-        << msg << " Failure: ilva cyclotomicOrder";
-    EXPECT_EQ(towersize, ilva.GetNumOfElements())
-        << msg << " Failure: ilva number of elements";
+    EXPECT_EQ(m, ilva.GetCyclotomicOrder()) << msg << " Failure: ilva cyclotomicOrder";
+    EXPECT_EQ(towersize, ilva.GetNumOfElements()) << msg << " Failure: ilva number of elements";
   }
 
   Element ilva(ilvector2nVector);
@@ -282,14 +244,14 @@ void DCRT_getters_and_ops(const string& msg) {
 
   {
     Element ilva1(ildcrtparams);
-    ilva1 = {2, 4, 3, 2};
+    ilva1 = { 2, 4, 3, 2 };
     EXPECT_EQ(ilva, ilva1) << msg << " Failure: ilva CTOR(params)";
   }
 
   {
     NativePoly ilvect0(ilparams0);
     NativeVector bbv1(m / 2, moduli[0]);
-    bbv1 = {"2", "1", "3", "2"};
+    bbv1 = { "2", "1", "3", "2" };
     ilvect0.SetValues(bbv1, Format::EVALUATION);
 
     NativePoly ilvect1(ilvect0);
@@ -299,7 +261,7 @@ void DCRT_getters_and_ops(const string& msg) {
     ilvect2.SwitchModulus(moduli[2], rootsOfUnity[2]);
 
     std::vector<NativePoly> ilvector2nVector1(towersize);
-    ilvector2nVector1 = {ilvect0, ilvect1, ilvect2};
+    ilvector2nVector1 = { ilvect0, ilvect1, ilvect2 };
 
     Element ilva1(ilvector2nVector1);
 
@@ -313,31 +275,26 @@ TEST(UTDCRTPoly, DCRT_getters_and_ops) {
 
 template <typename Element>
 void DCRT_arithmetic_ops_element(const string& msg) {
-  usint m = 8;
+  usint m         = 8;
   usint towersize = 3;
 
   std::vector<NativeInteger> moduli(towersize);
-  moduli = {NativeInteger("8353"), NativeInteger("8369"),
-            NativeInteger("8513")};
+  moduli = { NativeInteger("8353"), NativeInteger("8369"), NativeInteger("8513") };
   std::vector<NativeInteger> rootsOfUnity(towersize);
-  rootsOfUnity = {NativeInteger("8163"), NativeInteger("6677"),
-                  NativeInteger("156")};
+  rootsOfUnity = { NativeInteger("8163"), NativeInteger("6677"), NativeInteger("156") };
 
   typename Element::Integer modulus(1);
   for (usint i = 0; i < towersize; ++i) {
     modulus = modulus * typename Element::Integer(moduli[i].ConvertToInt());
   }
 
-  auto ilparams0 =
-      std::make_shared<ILNativeParams>(m, moduli[0], rootsOfUnity[0]);
-  auto ilparams1 =
-      std::make_shared<ILNativeParams>(m, moduli[1], rootsOfUnity[1]);
-  auto ilparams2 =
-      std::make_shared<ILNativeParams>(m, moduli[2], rootsOfUnity[2]);
+  auto ilparams0 = std::make_shared<ILNativeParams>(m, moduli[0], rootsOfUnity[0]);
+  auto ilparams1 = std::make_shared<ILNativeParams>(m, moduli[1], rootsOfUnity[1]);
+  auto ilparams2 = std::make_shared<ILNativeParams>(m, moduli[2], rootsOfUnity[2]);
 
   NativePoly ilv0(ilparams0);
   NativeVector bbv0(m / 2, moduli[0]);
-  bbv0 = {"2", "4", "3", "2"};
+  bbv0 = { "2", "4", "3", "2" };
   ilv0.SetValues(bbv0, Format::EVALUATION);
 
   NativePoly ilv1(ilv0);
@@ -346,8 +303,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
   NativePoly ilv2(ilv0);
   ilv2.SwitchModulus(moduli[2], rootsOfUnity[2]);
 
-  auto ildcrtparams = std::make_shared<ILDCRTParams<typename Element::Integer>>(
-      m, moduli, rootsOfUnity);
+  auto ildcrtparams = std::make_shared<ILDCRTParams<typename Element::Integer>>(m, moduli, rootsOfUnity);
 
   std::vector<NativePoly> ilvector2nVector(towersize);
   ilvector2nVector[0] = ilv0;
@@ -358,7 +314,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
 
   NativePoly ilvect0(ilparams0);
   NativeVector bbv1(m / 2, moduli[0]);
-  bbv1 = {"2", "1", "2", "0"};
+  bbv1 = { "2", "1", "2", "0" };
   ilvect0.SetValues(bbv1, Format::EVALUATION);
 
   NativePoly ilvect1(ilvect0);
@@ -381,7 +337,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"4", "5", "5", "2"};
+      expected = { "4", "5", "5", "2" };
       EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: Plus()";
     }
   }
@@ -393,7 +349,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"4", "5", "5", "2"};
+      expected = { "4", "5", "5", "2" };
       EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: +";
     }
   }
@@ -406,7 +362,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"4", "5", "5", "2"};
+      expected = { "4", "5", "5", "2" };
       EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: +=";
     }
   }
@@ -416,7 +372,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"0", "3", "1", "2"};
+      expected = { "0", "3", "1", "2" };
       EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: Minus";
     }
   }
@@ -426,7 +382,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaResult.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaResult.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"0", "3", "1", "2"};
+      expected = { "0", "3", "1", "2" };
       EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: -=";
     }
   }
@@ -435,7 +391,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaResult.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaResult.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"4", "4", "6", "0"};
+      expected = { "4", "4", "6", "0" };
       EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: Times()";
     }
   }
@@ -446,9 +402,8 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"3", "5", "4", "3"};
-      EXPECT_EQ(expected, ilv.GetValues())
-          << msg << " Failure: AddILElementOne";
+      expected = { "3", "5", "4", "3" };
+      EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: AddILElementOne";
     }
   }
 
@@ -460,33 +415,29 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     NativePoly ilvectInv1 = ilvaInv.GetElementAtIndex(1);
     NativePoly ilvectInv2 = ilvaInv.GetElementAtIndex(2);
     NativeVector expected0(4, ilvectInv0.GetModulus());
-    expected0 = {"4177", "6265", "5569", "4177"};
-    EXPECT_EQ(expected0, ilvectInv0.GetValues())
-        << msg << " Failure: ilvectInv0 MultiplicativeInverse()";
+    expected0 = { "4177", "6265", "5569", "4177" };
+    EXPECT_EQ(expected0, ilvectInv0.GetValues()) << msg << " Failure: ilvectInv0 MultiplicativeInverse()";
     EXPECT_EQ(NativeInteger("8353"), ilvectInv0.GetModulus())
-        << msg << " Failure: ilvectInv0 MultiplicativeInverse() modulus";
+      << msg << " Failure: ilvectInv0 MultiplicativeInverse() modulus";
     EXPECT_EQ(NativeInteger("8163"), ilvectInv0.GetRootOfUnity())
-        << msg << " Failure: ilvectInv0 MultiplicativeInverse() rootOfUnity";
+      << msg << " Failure: ilvectInv0 MultiplicativeInverse() rootOfUnity";
 
     NativeVector expected1(4, ilvectInv1.GetModulus());
-    expected1 = {"4185", "6277", "2790", "4185"};
-    EXPECT_EQ(expected1, ilvectInv1.GetValues())
-        << msg << " Failure: ilvectInv1 MultiplicativeInverse()";
+    expected1 = { "4185", "6277", "2790", "4185" };
+    EXPECT_EQ(expected1, ilvectInv1.GetValues()) << msg << " Failure: ilvectInv1 MultiplicativeInverse()";
     EXPECT_EQ(NativeInteger("8369"), ilvectInv1.GetModulus())
-        << msg << " Failure: ilvectInv1 MultiplicativeInverse() modulus";
+      << msg << " Failure: ilvectInv1 MultiplicativeInverse() modulus";
     EXPECT_EQ(NativeInteger("6677"), ilvectInv1.GetRootOfUnity())
-        << msg << " Failure: ilvectInv1 MultiplicativeInverse() rootOfUnity";
+      << msg << " Failure: ilvectInv1 MultiplicativeInverse() rootOfUnity";
 
     NativeVector expected2(4, ilvectInv2.GetModulus());
-    expected2 = {"4257", "6385", "2838", "4257"};
-    EXPECT_EQ(expected2, ilvectInv2.GetValues())
-        << msg << " Failure: ilvectInv2 MultiplicativeInverse()";
+    expected2 = { "4257", "6385", "2838", "4257" };
+    EXPECT_EQ(expected2, ilvectInv2.GetValues()) << msg << " Failure: ilvectInv2 MultiplicativeInverse()";
     EXPECT_EQ(NativeInteger("8513"), ilvectInv2.GetModulus())
-        << msg << " Failure: ilvectInv2 MultiplicativeInverse() modulus";
+      << msg << " Failure: ilvectInv2 MultiplicativeInverse() modulus";
     EXPECT_EQ(NativeInteger("156"), ilvectInv2.GetRootOfUnity())
-        << msg << " Failure: ilvectInv2 MultiplicativeInverse() rootOfUnity";
-    EXPECT_THROW(ilva1.MultiplicativeInverse(), math_error)
-        << msg << " Failure: throw MultiplicativeInverse()";
+      << msg << " Failure: ilvectInv2 MultiplicativeInverse() rootOfUnity";
+    EXPECT_THROW(ilva1.MultiplicativeInverse(), math_error) << msg << " Failure: throw MultiplicativeInverse()";
   }
 
   {
@@ -497,18 +448,14 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
 
-      EXPECT_EQ(NativeInteger(0), ilv.at(1))
-          << msg << " Failure MakeSparse() index 1";
-      EXPECT_EQ(NativeInteger(0), ilv.at(3))
-          << msg << " Failure MakeSparse() index 3";
+      EXPECT_EQ(NativeInteger(0), ilv.at(1)) << msg << " Failure MakeSparse() index 1";
+      EXPECT_EQ(NativeInteger(0), ilv.at(3)) << msg << " Failure MakeSparse() index 3";
     }
   }
 
   {
-    EXPECT_TRUE(ilva.InverseExists())
-        << msg << " Failure: ilva.InverseExists()";
-    EXPECT_FALSE(ilva1.InverseExists())
-        << msg << " Failure: ilva1.InverseExists()";
+    EXPECT_TRUE(ilva.InverseExists()) << msg << " Failure: ilva.InverseExists()";
+    EXPECT_FALSE(ilva1.InverseExists()) << msg << " Failure: ilva1.InverseExists()";
   }
 
   // this case is NOT used because SwitchModulus is not really defined for an
@@ -516,7 +463,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
   if (false) {
     NativePoly ilvS0(ilparams0);
     NativeVector bbvS0(m / 2, moduli[0]);
-    bbvS0 = {"23462", "467986", "33863", "2113"};
+    bbvS0 = { "23462", "467986", "33863", "2113" };
     ilvS0.SetValues(bbvS0, Format::EVALUATION);
 
     NativePoly ilvS1(ilvS0);
@@ -533,8 +480,7 @@ void DCRT_arithmetic_ops_element(const string& msg) {
 
     Element ilvaS(ilvector2nVectorS);
     typename Element::Integer modulus2("113");
-    typename Element::Integer rootOfUnity2(
-        lbcrypto::RootOfUnity<typename Element::Integer>(m, modulus2));
+    typename Element::Integer rootOfUnity2(lbcrypto::RootOfUnity<typename Element::Integer>(m, modulus2));
 
     ilvaS.SwitchModulus(modulus2, rootOfUnity2);
 
@@ -547,46 +493,40 @@ void DCRT_arithmetic_ops_element(const string& msg) {
     EXPECT_EQ(NativeInteger("85"), ilvectS0.at(2));
     EXPECT_EQ(NativeInteger("79"), ilvectS0.at(3));
     EXPECT_EQ(NativeInteger("113"), ilvectS0.GetModulus());
-    EXPECT_EQ(rootOfUnity2.ConvertToInt(),
-              ilvectS0.GetRootOfUnity().ConvertToInt());
+    EXPECT_EQ(rootOfUnity2.ConvertToInt(), ilvectS0.GetRootOfUnity().ConvertToInt());
 
     EXPECT_EQ(NativeInteger("66"), ilvectS1.at(0));
     EXPECT_EQ(NativeInteger("16"), ilvectS1.at(1));
     EXPECT_EQ(NativeInteger("64"), ilvectS1.at(2));
     EXPECT_EQ(NativeInteger("79"), ilvectS1.at(3));
     EXPECT_EQ(NativeInteger("113"), ilvectS1.GetModulus());
-    EXPECT_EQ(rootOfUnity2.ConvertToInt(),
-              ilvectS1.GetRootOfUnity().ConvertToInt());
+    EXPECT_EQ(rootOfUnity2.ConvertToInt(), ilvectS1.GetRootOfUnity().ConvertToInt());
 
     EXPECT_EQ(NativeInteger(4), ilvectS2.at(0));
     EXPECT_EQ(NativeInteger("44"), ilvectS2.at(1));
     EXPECT_EQ(NativeInteger("84"), ilvectS2.at(2));
     EXPECT_EQ(NativeInteger("79"), ilvectS2.at(3));
     EXPECT_EQ(NativeInteger("113"), ilvectS2.GetModulus());
-    EXPECT_EQ(rootOfUnity2.ConvertToInt(),
-              ilvectS2.GetRootOfUnity().ConvertToInt());
+    EXPECT_EQ(rootOfUnity2.ConvertToInt(), ilvectS2.GetRootOfUnity().ConvertToInt());
   }
 
   {
     Element ilvaCopy(ilva);
     typename Element::Integer modulus2("113");
-    typename Element::Integer rootOfUnity2(
-        lbcrypto::RootOfUnity<typename Element::Integer>(m, modulus2));
+    typename Element::Integer rootOfUnity2(lbcrypto::RootOfUnity<typename Element::Integer>(m, modulus2));
     ilvaCopy.SwitchModulusAtIndex(0, modulus2, rootOfUnity2);
 
     for (usint i = 0; i < ilvaCopy.GetNumOfElements(); ++i) {
       NativePoly ilv = ilvaCopy.GetElementAtIndex(i);
       NativeVector expected(4, ilv.GetModulus());
-      expected = {"2", "4", "3", "2"};
-      EXPECT_EQ(expected, ilv.GetValues())
-          << msg << " Failure: ilv.SwitchModulusAtIndex";
+      expected = { "2", "4", "3", "2" };
+      EXPECT_EQ(expected, ilv.GetValues()) << msg << " Failure: ilv.SwitchModulusAtIndex";
 
       if (i == 0) {
         EXPECT_EQ(modulus2.ConvertToInt(), ilv.GetModulus().ConvertToInt())
-            << msg << " Failure: SwitchModulusAtIndex modulus";
-        EXPECT_EQ(rootOfUnity2.ConvertToInt(),
-                  ilv.GetRootOfUnity().ConvertToInt())
-            << msg << " Failure: SwitchModulusAtIndex rootOfUnity";
+          << msg << " Failure: SwitchModulusAtIndex modulus";
+        EXPECT_EQ(rootOfUnity2.ConvertToInt(), ilv.GetRootOfUnity().ConvertToInt())
+          << msg << " Failure: SwitchModulusAtIndex rootOfUnity";
       }
     }
   }
@@ -598,12 +538,12 @@ TEST(UTDCRTPoly, DCRT_arithmetic_ops_element) {
 
 template <typename Element>
 void DCRT_mod_ops_on_two_elements(const string& msg) {
-  usint order = 16;
-  usint nBits = 24;
+  usint order     = 16;
+  usint nBits     = 24;
   usint towersize = 3;
 
   shared_ptr<ILDCRTParams<typename Element::Integer>> ildcrtparams =
-      GenerateDCRTParams<typename Element::Integer>(order, towersize, nBits);
+    GenerateDCRTParams<typename Element::Integer>(order, towersize, nBits);
 
   typename Element::DugType dug;
 
@@ -616,12 +556,10 @@ void DCRT_mod_ops_on_two_elements(const string& msg) {
     for (usint i = 0; i < towersize; i++) {
       for (usint j = 0; j < ildcrtparams->GetRingDimension(); j++) {
         NativeInteger actualResult(sum.GetElementAtIndex(i).at(j));
-        NativeInteger expectedResult(
-            (op1.GetElementAtIndex(i).at(j) + op2.GetElementAtIndex(i).at(j))
-                .Mod(ildcrtparams->GetParams()[i]->GetModulus()));
+        NativeInteger expectedResult((op1.GetElementAtIndex(i).at(j) + op2.GetElementAtIndex(i).at(j))
+                                       .Mod(ildcrtparams->GetParams()[i]->GetModulus()));
         EXPECT_EQ(actualResult, expectedResult)
-            << msg << " Failure: DCRTPoly + operation tower " << i << " index "
-            << j;
+          << msg << " Failure: DCRTPoly + operation tower " << i << " index " << j;
       }
     }
   }
@@ -632,20 +570,17 @@ void DCRT_mod_ops_on_two_elements(const string& msg) {
     for (usint i = 0; i < towersize; i++) {
       for (usint j = 0; j < ildcrtparams->GetRingDimension(); j++) {
         NativeInteger actualResult(prod.GetElementAtIndex(i).at(j));
-        NativeInteger expectedResult(
-            (op1.GetElementAtIndex(i).at(j) * op2.GetElementAtIndex(i).at(j))
-                .Mod(ildcrtparams->GetParams()[i]->GetModulus()));
+        NativeInteger expectedResult((op1.GetElementAtIndex(i).at(j) * op2.GetElementAtIndex(i).at(j))
+                                       .Mod(ildcrtparams->GetParams()[i]->GetModulus()));
         EXPECT_EQ(actualResult, expectedResult)
-            << msg << " Failure: DCRTPoly * operation tower " << i << " index "
-            << j;
+          << msg << " Failure: DCRTPoly * operation tower " << i << " index " << j;
       }
     }
   }
 }
 
 TEST(UTDCRTPoly, DCRT_mod_ops_on_two_elements) {
-  RUN_BIG_DCRTPOLYS(DCRT_mod_ops_on_two_elements,
-                    "DCRT DCRT_mod_ops_on_two_elements");
+  RUN_BIG_DCRTPOLYS(DCRT_mod_ops_on_two_elements, "DCRT DCRT_mod_ops_on_two_elements");
 }
 
 // only need to try this with one

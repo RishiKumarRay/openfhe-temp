@@ -59,30 +59,21 @@
 
 #ifdef BUILTIN_INFO_AVAILABLE
 
-#define CALLER_INFO_ARGS_HDR                       \
-    const char* callerFile = __builtin_FILE(),     \
-    const char* callerFunc = __builtin_FUNCTION(), \
-    size_t      callerLine = __builtin_LINE()
+#define CALLER_INFO_ARGS_HDR                                                                \
+  const char *callerFile = __builtin_FILE(), const char *callerFunc = __builtin_FUNCTION(), \
+             size_t callerLine = __builtin_LINE()
 
-#define CALLER_INFO std::string(" [called from: ") + callerFile + ":" + \
-                    callerFunc + "():l." + std::to_string(callerLine) + "]"
+#define CALLER_INFO \
+  std::string(" [called from: ") + callerFile + ":" + callerFunc + "():l." + std::to_string(callerLine) + "]"
 
 #else
 
-#define CALLER_INFO_ARGS_HDR     \
-    const char* callerFile = "", \
-    const char* callerFunc = "", \
-    size_t      callerLine = 0
+#define CALLER_INFO_ARGS_HDR const char *callerFile = "", const char *callerFunc = "", size_t callerLine = 0
 
 #define CALLER_INFO std::string("")
 
-#endif // BUILTIN_INFO_AVAILABLE
+#endif  // BUILTIN_INFO_AVAILABLE
 
+#define CALLER_INFO_ARGS_CPP const char *callerFile, const char *callerFunc, size_t callerLine
 
-#define CALLER_INFO_ARGS_CPP \
-    const char* callerFile,  \
-    const char* callerFunc,  \
-    size_t      callerLine
-
-
-#endif // _CALLER_INFO_H_ 
+#endif  // _CALLER_INFO_H_

@@ -46,17 +46,13 @@ class CiphertextImpl;
  * @tparam Element a ring element.
  */
 template <class Element>
-class CiphertextImpl : public CryptoObject<Element> {
+class CiphertextImpl : public CryptoObject<Element>
+{
  public:
   /**
    * Default constructor
    */
-  CiphertextImpl()
-      : CryptoObject<Element>(),
-        m_depth(1),
-        encodingType(Unknown),
-        m_scalingFactor(1),
-        m_level(0) {
+  CiphertextImpl() : CryptoObject<Element>(), m_depth(1), encodingType(Unknown), m_scalingFactor(1), m_level(0) {
     m_metadataMap = std::make_shared<std::map<string, shared_ptr<Metadata>>>();
   }
 
@@ -65,13 +61,8 @@ class CiphertextImpl : public CryptoObject<Element> {
    *
    * @param cc
    */
-  explicit CiphertextImpl(CryptoContext<Element> cc, const string& id = "",
-                          PlaintextEncodings encType = Unknown)
-      : CryptoObject<Element>(cc, id),
-        m_depth(1),
-        encodingType(encType),
-        m_scalingFactor(1),
-        m_level(0) {
+  explicit CiphertextImpl(CryptoContext<Element> cc, const string& id = "", PlaintextEncodings encType = Unknown) :
+      CryptoObject<Element>(cc, id), m_depth(1), encodingType(encType), m_scalingFactor(1), m_level(0) {
     m_metadataMap = std::make_shared<std::map<string, shared_ptr<Metadata>>>();
   }
 
@@ -80,59 +71,55 @@ class CiphertextImpl : public CryptoObject<Element> {
    *
    * @param k key whose CryptoObject parameters will get cloned
    */
-  explicit CiphertextImpl(const shared_ptr<LPKey<Element>> k)
-      : CryptoObject<Element>(k->GetCryptoContext(), k->GetKeyTag()),
-        m_depth(1),
-        encodingType(Unknown),
-        m_scalingFactor(1),
-        m_level(0) {
+  explicit CiphertextImpl(const shared_ptr<LPKey<Element>> k) :
+      CryptoObject<Element>(k->GetCryptoContext(), k->GetKeyTag()),
+      m_depth(1),
+      encodingType(Unknown),
+      m_scalingFactor(1),
+      m_level(0) {
     m_metadataMap = std::make_shared<std::map<string, shared_ptr<Metadata>>>();
   }
 
   /**
    * Copy constructor
    */
-  CiphertextImpl(const CiphertextImpl<Element>& ciphertext)
-      : CryptoObject<Element>(ciphertext) {
-    m_elements = ciphertext.m_elements;
-    m_depth = ciphertext.m_depth;
-    m_level = ciphertext.m_level;
+  CiphertextImpl(const CiphertextImpl<Element>& ciphertext) : CryptoObject<Element>(ciphertext) {
+    m_elements      = ciphertext.m_elements;
+    m_depth         = ciphertext.m_depth;
+    m_level         = ciphertext.m_level;
     m_scalingFactor = ciphertext.m_scalingFactor;
-    encodingType = ciphertext.encodingType;
-    m_metadataMap = ciphertext.m_metadataMap;
+    encodingType    = ciphertext.encodingType;
+    m_metadataMap   = ciphertext.m_metadataMap;
   }
 
-  explicit CiphertextImpl(Ciphertext<Element> ciphertext)
-      : CryptoObject<Element>(*ciphertext) {
-    m_elements = ciphertext->m_elements;
-    m_depth = ciphertext->m_depth;
-    m_level = ciphertext->m_level;
+  explicit CiphertextImpl(Ciphertext<Element> ciphertext) : CryptoObject<Element>(*ciphertext) {
+    m_elements      = ciphertext->m_elements;
+    m_depth         = ciphertext->m_depth;
+    m_level         = ciphertext->m_level;
     m_scalingFactor = ciphertext->m_scalingFactor;
-    encodingType = ciphertext->encodingType;
-    m_metadataMap = ciphertext->m_metadataMap;
+    encodingType    = ciphertext->encodingType;
+    m_metadataMap   = ciphertext->m_metadataMap;
   }
 
   /**
    * Move constructor
    */
-  CiphertextImpl(CiphertextImpl<Element>&& ciphertext)
-      : CryptoObject<Element>(ciphertext) {
-    m_elements = std::move(ciphertext.m_elements);
-    m_depth = std::move(ciphertext.m_depth);
-    m_level = std::move(ciphertext.m_level);
+  CiphertextImpl(CiphertextImpl<Element>&& ciphertext) : CryptoObject<Element>(ciphertext) {
+    m_elements      = std::move(ciphertext.m_elements);
+    m_depth         = std::move(ciphertext.m_depth);
+    m_level         = std::move(ciphertext.m_level);
     m_scalingFactor = std::move(ciphertext.m_scalingFactor);
-    encodingType = std::move(ciphertext.encodingType);
-    m_metadataMap = std::move(ciphertext.m_metadataMap);
+    encodingType    = std::move(ciphertext.encodingType);
+    m_metadataMap   = std::move(ciphertext.m_metadataMap);
   }
 
-  explicit CiphertextImpl(Ciphertext<Element>&& ciphertext)
-      : CryptoObject<Element>(*ciphertext) {
-    m_elements = std::move(ciphertext->m_elements);
-    m_depth = std::move(ciphertext->m_depth);
-    m_level = std::move(ciphertext->m_level);
+  explicit CiphertextImpl(Ciphertext<Element>&& ciphertext) : CryptoObject<Element>(*ciphertext) {
+    m_elements      = std::move(ciphertext->m_elements);
+    m_depth         = std::move(ciphertext->m_depth);
+    m_level         = std::move(ciphertext->m_level);
     m_scalingFactor = std::move(ciphertext->m_scalingFactor);
-    encodingType = std::move(ciphertext->encodingType);
-    m_metadataMap = std::move(ciphertext->m_metadataMap);
+    encodingType    = std::move(ciphertext->encodingType);
+    m_metadataMap   = std::move(ciphertext->m_metadataMap);
   }
 
   /**
@@ -141,11 +128,10 @@ class CiphertextImpl : public CryptoObject<Element> {
    * and metadata.
    */
   virtual Ciphertext<Element> CloneEmpty() const {
-    Ciphertext<Element> ct(std::make_shared<CiphertextImpl<Element>>(
-        this->GetCryptoContext(), this->GetKeyTag(), this->GetEncodingType()));
+    Ciphertext<Element> ct(
+      std::make_shared<CiphertextImpl<Element>>(this->GetCryptoContext(), this->GetKeyTag(), this->GetEncodingType()));
 
-    ct->m_metadataMap =
-        std::make_shared<std::map<string, shared_ptr<Metadata>>>();
+    ct->m_metadataMap    = std::make_shared<std::map<string, shared_ptr<Metadata>>>();
     *(ct->m_metadataMap) = *(this->m_metadataMap);
 
     return ct;
@@ -161,14 +147,18 @@ class CiphertextImpl : public CryptoObject<Element> {
    * @return how the Plaintext that this CiphertextImpl was created from was
    * encoded
    */
-  PlaintextEncodings GetEncodingType() const { return encodingType; }
+  PlaintextEncodings GetEncodingType() const {
+    return encodingType;
+  }
 
   /**
    * SetEncodingType - after Encrypt, remember the CiphertextImpl's encoding
    * type
    * @param et
    */
-  void SetEncodingType(PlaintextEncodings et) { encodingType = et; }
+  void SetEncodingType(PlaintextEncodings et) {
+    encodingType = et;
+  }
 
   /**
    * Assignment Operator.
@@ -179,12 +169,12 @@ class CiphertextImpl : public CryptoObject<Element> {
   CiphertextImpl<Element>& operator=(const CiphertextImpl<Element>& rhs) {
     if (this != &rhs) {
       CryptoObject<Element>::operator=(rhs);
-      this->m_elements = rhs.m_elements;
-      this->m_depth = rhs.m_depth;
-      this->m_level = rhs.m_level;
-      this->m_scalingFactor = rhs.m_scalingFactor;
-      this->encodingType = rhs.encodingType;
-      this->m_metadataMap = rhs.m_metadataMap;
+      this->m_elements               = rhs.m_elements;
+      this->m_depth                  = rhs.m_depth;
+      this->m_level                  = rhs.m_level;
+      this->m_scalingFactor          = rhs.m_scalingFactor;
+      this->encodingType             = rhs.encodingType;
+      this->m_metadataMap            = rhs.m_metadataMap;
     }
 
     return *this;
@@ -199,12 +189,12 @@ class CiphertextImpl : public CryptoObject<Element> {
   CiphertextImpl<Element>& operator=(CiphertextImpl<Element>&& rhs) {
     if (this != &rhs) {
       CryptoObject<Element>::operator=(rhs);
-      this->m_elements = std::move(rhs.m_elements);
-      this->m_depth = std::move(rhs.m_depth);
-      this->m_level = std::move(rhs.m_level);
-      this->m_scalingFactor = std::move(rhs.m_scalingFactor);
-      this->encodingType = std::move(rhs.encodingType);
-      this->m_metadataMap = std::move(rhs.m_metadataMap);
+      this->m_elements               = std::move(rhs.m_elements);
+      this->m_depth                  = std::move(rhs.m_depth);
+      this->m_level                  = std::move(rhs.m_level);
+      this->m_scalingFactor          = std::move(rhs.m_scalingFactor);
+      this->encodingType             = std::move(rhs.encodingType);
+      this->m_metadataMap            = std::move(rhs.m_metadataMap);
     }
 
     return *this;
@@ -224,7 +214,7 @@ class CiphertextImpl : public CryptoObject<Element> {
                    "Ciphertext with a single element");
   }
 
-    /**
+  /**
    * GetElement - get the ring element for the cases that use only one element
    * in the vector this method will throw an exception if it's ever called in
    * cases with other than 1 element
@@ -242,13 +232,17 @@ class CiphertextImpl : public CryptoObject<Element> {
    * GetElements: get all of the ring elements in the CiphertextImpl
    * @return vector of ring elements
    */
-  const std::vector<Element>& GetElements() const { return m_elements; }
+  const std::vector<Element>& GetElements() const {
+    return m_elements;
+  }
 
   /**
    * GetElements: get all of the ring elements in the CiphertextImpl
    * @return vector of ring elements
    */
-  std::vector<Element>& GetElements() { return m_elements; }
+  std::vector<Element>& GetElements() {
+    return m_elements;
+  }
 
   /**
    * SetElement - sets the ring element for the cases that use only one element
@@ -257,8 +251,7 @@ class CiphertextImpl : public CryptoObject<Element> {
    * @param &element is a polynomial ring element.
    */
   void SetElement(const Element& element) {
-    if (m_elements.size() == 0)
-      m_elements.push_back(element);
+    if (m_elements.size() == 0) m_elements.push_back(element);
     else if (m_elements.size() == 1)
       m_elements[0] = element;
     else
@@ -290,44 +283,60 @@ class CiphertextImpl : public CryptoObject<Element> {
    * It will be used in multiplication/addition/subtraction to handle the
    * keyswitching.
    */
-  size_t GetDepth() const { return m_depth; }
+  size_t GetDepth() const {
+    return m_depth;
+  }
 
   /**
    * Set the depth of the ciphertext.
    * It will be used in multiplication/addition/subtraction to handle the
    * keyswitching.
    */
-  void SetDepth(size_t depth) { m_depth = depth; }
+  void SetDepth(size_t depth) {
+    m_depth = depth;
+  }
 
   /**
    * Get the level of the ciphertext.
    */
-  size_t GetLevel() const { return m_level; }
+  size_t GetLevel() const {
+    return m_level;
+  }
 
   /**
    * Set the level of the ciphertext.
    */
-  void SetLevel(size_t level) { m_level = level; }
+  void SetLevel(size_t level) {
+    m_level = level;
+  }
 
   /**
    * Get the scaling factor of the ciphertext.
    */
-  double GetScalingFactor() const { return m_scalingFactor; }
+  double GetScalingFactor() const {
+    return m_scalingFactor;
+  }
 
   /**
    * Set the scaling factor of the ciphertext.
    */
-  void SetScalingFactor(double sf) { m_scalingFactor = sf; }
+  void SetScalingFactor(double sf) {
+    m_scalingFactor = sf;
+  }
 
   /**
    * Get the Metadata map of the ciphertext.
    */
-  MetadataMap GetMetadataMap() const { return this->m_metadataMap; }
+  MetadataMap GetMetadataMap() const {
+    return this->m_metadataMap;
+  }
 
   /**
    * Set the Metadata map of the ciphertext.
    */
-  void SetMetadataMap(MetadataMap mdata) { this->m_metadataMap = mdata; }
+  void SetMetadataMap(MetadataMap mdata) {
+    this->m_metadataMap = mdata;
+  }
 
   /**
    * This method searches the metadata map for metadata of a specific key.
@@ -336,8 +345,7 @@ class CiphertextImpl : public CryptoObject<Element> {
    * @return an iterator pointing at the position in the map where the key
    *         was found (or the map.end() if not found).
    */
-  std::map<string, shared_ptr<Metadata>>::iterator FindMetadataByKey(
-      string key) const {
+  std::map<string, shared_ptr<Metadata>>::iterator FindMetadataByKey(string key) const {
     return m_metadataMap->find(key);
   }
 
@@ -349,8 +357,7 @@ class CiphertextImpl : public CryptoObject<Element> {
    *         was found (or the map.end() if not found).
    * @return a boolean value indicating whether the key was found or not.
    */
-  bool MetadataFound(
-      std::map<string, shared_ptr<Metadata>>::iterator it) const {
+  bool MetadataFound(std::map<string, shared_ptr<Metadata>>::iterator it) const {
     return (it != m_metadataMap->end());
   }
 
@@ -362,8 +369,7 @@ class CiphertextImpl : public CryptoObject<Element> {
    *         was found (or the map.end() if not found).
    * @return a shared pointer pointing to the Metadata object in the map.
    */
-  shared_ptr<Metadata>& GetMetadata(
-      std::map<string, shared_ptr<Metadata>>::iterator it) const {
+  shared_ptr<Metadata>& GetMetadata(std::map<string, shared_ptr<Metadata>>::iterator it) const {
     return it->second;
   }
 
@@ -413,16 +419,13 @@ class CiphertextImpl : public CryptoObject<Element> {
       if (lE != rE) return false;
     }
 
-    const shared_ptr<std::map<string, shared_ptr<Metadata>>> lhsMap =
-        this->m_metadataMap;
-    const shared_ptr<std::map<string, shared_ptr<Metadata>>> rhsMap =
-        rhs.m_metadataMap;
+    const shared_ptr<std::map<string, shared_ptr<Metadata>>> lhsMap = this->m_metadataMap;
+    const shared_ptr<std::map<string, shared_ptr<Metadata>>> rhsMap = rhs.m_metadataMap;
 
     if (lhsMap->size() != rhsMap->size()) return false;
 
     if (lhsMap->size() > 0) {
-      for (auto i = lhsMap->begin(), j = rhsMap->begin(); i != lhsMap->end();
-           ++i, ++j)
+      for (auto i = lhsMap->begin(), j = rhsMap->begin(); i != lhsMap->end(); ++i, ++j)
         if (!(*(i->second) == *(j->second))) return false;
     }
 
@@ -433,8 +436,7 @@ class CiphertextImpl : public CryptoObject<Element> {
     return !(*this == rhs);
   }
 
-  friend std::ostream& operator<<(std::ostream& out,
-                                  const CiphertextImpl<Element>& c) {
+  friend std::ostream& operator<<(std::ostream& out, const CiphertextImpl<Element>& c) {
     out << "enc=" << c.encodingType << " depth=" << c.m_depth << std::endl;
     out << "metadata: [ ";
     for (auto i = c.m_metadataMap->begin(); i != c.m_metadataMap->end(); ++i)
@@ -465,9 +467,9 @@ class CiphertextImpl : public CryptoObject<Element> {
   template <class Archive>
   void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(cereal::base_class<CryptoObject<Element>>(this));
     ar(cereal::make_nvp("v", m_elements));
@@ -478,16 +480,19 @@ class CiphertextImpl : public CryptoObject<Element> {
     ar(cereal::make_nvp("m", m_metadataMap));
   }
 
-  std::string SerializedObjectName() const { return "Ciphertext"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const {
+    return "Ciphertext";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  private:
   // FUTURE ENHANCEMENT: current value of error norm
   // BigInteger m_norm;
 
-  std::vector<Element>
-      m_elements;  /*!< vector of ring elements for this Ciphertext */
-  size_t m_depth;  // holds the multiplicative depth of the ciphertext.
+  std::vector<Element> m_elements; /*!< vector of ring elements for this Ciphertext */
+  size_t m_depth;                  // holds the multiplicative depth of the ciphertext.
   PlaintextEncodings encodingType; /*!< how was this Ciphertext encoded? */
 
   double m_scalingFactor;
@@ -511,8 +516,7 @@ class CiphertextImpl : public CryptoObject<Element> {
  * @return The result of addition.
  */
 template <class Element>
-Ciphertext<Element> operator+(const Ciphertext<Element>& a,
-                              const Ciphertext<Element>& b) {
+Ciphertext<Element> operator+(const Ciphertext<Element>& a, const Ciphertext<Element>& b) {
   return a->GetCryptoContext()->EvalAdd(a, b);
 }
 
@@ -526,8 +530,7 @@ Ciphertext<Element> operator+(const Ciphertext<Element>& a,
  * @return &a
  */
 template <class Element>
-const Ciphertext<Element>& operator+=(Ciphertext<Element>& a,
-                                      const Ciphertext<Element>& b) {
+const Ciphertext<Element>& operator+=(Ciphertext<Element>& a, const Ciphertext<Element>& b) {
   return a = a->GetCryptoContext()->EvalAdd(a, b);
 }
 
@@ -552,8 +555,7 @@ Ciphertext<Element> operator-(const Ciphertext<Element>& a) {
  * @return The result of subtraction.
  */
 template <class Element>
-Ciphertext<Element> operator-(const Ciphertext<Element>& a,
-                              const Ciphertext<Element>& b) {
+Ciphertext<Element> operator-(const Ciphertext<Element>& a, const Ciphertext<Element>& b) {
   return a->GetCryptoContext()->EvalSub(a, b);
 }
 
@@ -567,8 +569,7 @@ Ciphertext<Element> operator-(const Ciphertext<Element>& a,
  * @return &a
  */
 template <class Element>
-const Ciphertext<Element>& operator-=(Ciphertext<Element>& a,
-                                      const Ciphertext<Element>& b) {
+const Ciphertext<Element>& operator-=(Ciphertext<Element>& a, const Ciphertext<Element>& b) {
   return a = a->GetCryptoContext()->EvalSub(a, b);
 }
 
@@ -582,8 +583,7 @@ const Ciphertext<Element>& operator-=(Ciphertext<Element>& a,
  * @return The result of multiplication.
  */
 template <class Element>
-Ciphertext<Element> operator*(const Ciphertext<Element>& a,
-                              const Ciphertext<Element>& b) {
+Ciphertext<Element> operator*(const Ciphertext<Element>& a, const Ciphertext<Element>& b) {
   return a->GetCryptoContext()->EvalMult(a, b);
 }
 
@@ -597,8 +597,7 @@ Ciphertext<Element> operator*(const Ciphertext<Element>& a,
  * @return &a
  */
 template <class Element>
-const Ciphertext<Element>& operator*=(Ciphertext<Element>& a,
-                                      const Ciphertext<Element>& b) {
+const Ciphertext<Element>& operator*=(Ciphertext<Element>& a, const Ciphertext<Element>& b) {
   return a = a->GetCryptoContext()->EvalMult(a, b);
 }
 

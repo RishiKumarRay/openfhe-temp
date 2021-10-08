@@ -34,7 +34,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UnitTestEvalMultMany : public ::testing::Test {
+class UnitTestEvalMultMany : public ::testing::Test
+{
  protected:
   virtual void SetUp() {}
 
@@ -46,16 +47,14 @@ class UnitTestEvalMultMany : public ::testing::Test {
 static CryptoContext<Poly> MakeBFVPolyCC() {
   DEBUG_FLAG(false);
   DEBUG("in MakeBFVPolyCC");
-  int relWindow = 8;
-  int plaintextModulus = 256;
-  double sigma = 4;
+  int relWindow            = 8;
+  int plaintextModulus     = 256;
+  double sigma             = 4;
   double rootHermiteFactor = 1.6;
 
   // Set Crypto Parameters
-  CryptoContext<Poly> cryptoContext =
-      CryptoContextFactory<Poly>::genCryptoContextBFV(
-          plaintextModulus, rootHermiteFactor, relWindow, sigma, 0, 3, 0,
-          OPTIMIZED, 4);
+  CryptoContext<Poly> cryptoContext = CryptoContextFactory<Poly>::genCryptoContextBFV(
+    plaintextModulus, rootHermiteFactor, relWindow, sigma, 0, 3, 0, OPTIMIZED, 4);
 
   cryptoContext->Enable(ENCRYPTION);
   cryptoContext->Enable(SHE);
@@ -64,14 +63,13 @@ static CryptoContext<Poly> MakeBFVPolyCC() {
 }
 
 static CryptoContext<DCRTPoly> MakeBFVrnsDCRTPolyCC() {
-  int plaintextModulus = 256;
-  double sigma = 4;
+  int plaintextModulus     = 256;
+  double sigma             = 4;
   double rootHermiteFactor = 1.03;
 
   // Set Crypto Parameters
-  CryptoContext<DCRTPoly> cryptoContext =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          plaintextModulus, rootHermiteFactor, sigma, 0, 3, 0, OPTIMIZED, 4);
+  CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
+    plaintextModulus, rootHermiteFactor, sigma, 0, 3, 0, OPTIMIZED, 4);
 
   cryptoContext->Enable(ENCRYPTION);
   cryptoContext->Enable(SHE);
@@ -95,8 +93,7 @@ TEST(UTBFVrnsEVALMM, Poly_BFVrns_Eval_Mult_Many_Operations) {
 }
 
 template <typename Element>
-static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext,
-                                string msg) {
+static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext, string msg) {
   DEBUG_FLAG(false);
   ////////////////////////////////////////////////////////////
   // Perform the key generation operation.
@@ -113,28 +110,23 @@ static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext,
   // Plaintext
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts1 = {5, 4, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0};
-  std::vector<int64_t> vectorOfInts2 = {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  std::vector<int64_t> vectorOfInts3 = {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-  std::vector<int64_t> vectorOfInts4 = {4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  std::vector<int64_t> vectorOfInts1 = { 5, 4, 3, 2, 1, 0, 5, 4, 3, 2, 1, 0 };
+  std::vector<int64_t> vectorOfInts2 = { 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts3 = { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  std::vector<int64_t> vectorOfInts4 = { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-  std::vector<int64_t> vectorOfInts5 = {10, 8, 6, 4, 2, 0, 10, 8, 6, 4, 2, 0};
-  std::vector<int64_t> vectorOfInts6 = {30, 24, 18, 12, 6, 0,
-                                        30, 24, 18, 12, 6, 0};
-  std::vector<int64_t> vectorOfInts7 = {120, 96, 72, 48, 24, 0,
-                                        120, 96, 72, 48, 24, 0};
+  std::vector<int64_t> vectorOfInts5 = { 10, 8, 6, 4, 2, 0, 10, 8, 6, 4, 2, 0 };
+  std::vector<int64_t> vectorOfInts6 = { 30, 24, 18, 12, 6, 0, 30, 24, 18, 12, 6, 0 };
+  std::vector<int64_t> vectorOfInts7 = { 120, 96, 72, 48, 24, 0, 120, 96, 72, 48, 24, 0 };
   DEBUG("MakeCoefPackedPlaintext");
   Plaintext plaintext1 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts1);
   Plaintext plaintext2 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts2);
   Plaintext plaintext3 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts3);
   Plaintext plaintext4 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts4);
 
-  Plaintext plaintextResult1 =
-      cryptoContext->MakeCoefPackedPlaintext(vectorOfInts5);
-  Plaintext plaintextResult2 =
-      cryptoContext->MakeCoefPackedPlaintext(vectorOfInts6);
-  Plaintext plaintextResult3 =
-      cryptoContext->MakeCoefPackedPlaintext(vectorOfInts7);
+  Plaintext plaintextResult1 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts5);
+  Plaintext plaintextResult2 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts6);
+  Plaintext plaintextResult3 = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts7);
 
   ////////////////////////////////////////////////////////////
   // Encryption
@@ -150,12 +142,9 @@ static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext,
   ////////////////////////////////////////////////////////////
   DEBUG("EvalMults");
   // Perform consecutive multiplications and do a keyswtiching at the end.
-  auto ciphertextMul12 =
-      cryptoContext->EvalMultNoRelin(ciphertext1, ciphertext2);
-  auto ciphertextMul123 =
-      cryptoContext->EvalMultNoRelin(ciphertextMul12, ciphertext3);
-  auto ciphertextMul1234 =
-      cryptoContext->EvalMultAndRelinearize(ciphertextMul123, ciphertext4);
+  auto ciphertextMul12   = cryptoContext->EvalMultNoRelin(ciphertext1, ciphertext2);
+  auto ciphertextMul123  = cryptoContext->EvalMultNoRelin(ciphertextMul12, ciphertext3);
+  auto ciphertextMul1234 = cryptoContext->EvalMultAndRelinearize(ciphertextMul123, ciphertext4);
 
   ////////////////////////////////////////////////////////////
   // Decryption of multiplicative results with and without keyswtiching (depends
@@ -192,19 +181,14 @@ static void RunEvalMultManyTest(CryptoContext<Element> cryptoContext,
   ////////////////////////////////////////////////////////////
 
   Plaintext plaintextMulMany;
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMul12345,
-                         &plaintextMulMany);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMul12345, &plaintextMulMany);
 
   plaintextResult1->SetLength(plaintextMul1->GetLength());
   plaintextResult2->SetLength(plaintextMul2->GetLength());
   plaintextResult3->SetLength(plaintextMul3->GetLength());
 
-  EXPECT_EQ(*plaintextMul1, *plaintextResult1)
-      << msg << ".EvalMult gives incorrect results.\n";
-  EXPECT_EQ(*plaintextMul2, *plaintextResult2)
-      << msg << ".EvalMult gives incorrect results.\n";
-  EXPECT_EQ(*plaintextMul3, *plaintextResult3)
-      << msg << ".EvalMultAndRelinearize gives incorrect results.\n";
-  EXPECT_EQ(*plaintextMulMany, *plaintextResult3)
-      << msg << ".EvalMultMany gives incorrect results.\n";
+  EXPECT_EQ(*plaintextMul1, *plaintextResult1) << msg << ".EvalMult gives incorrect results.\n";
+  EXPECT_EQ(*plaintextMul2, *plaintextResult2) << msg << ".EvalMult gives incorrect results.\n";
+  EXPECT_EQ(*plaintextMul3, *plaintextResult3) << msg << ".EvalMultAndRelinearize gives incorrect results.\n";
+  EXPECT_EQ(*plaintextMulMany, *plaintextResult3) << msg << ".EvalMultMany gives incorrect results.\n";
 }

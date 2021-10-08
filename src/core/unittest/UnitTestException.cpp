@@ -35,7 +35,9 @@ library.
 using namespace std;
 using namespace lbcrypto;
 
-static void regthrow(const string& msg) { PALISADE_THROW(config_error, msg); }
+static void regthrow(const string& msg) {
+  PALISADE_THROW(config_error, msg);
+}
 
 static void parthrow(const string& msg) {
   // now try throw inside omp
@@ -44,7 +46,8 @@ static void parthrow(const string& msg) {
   for (int i = 0; i < 10; i++) {
     try {
       if (i == 7) regthrow("inside throw");
-    } catch (...) {
+    }
+    catch (...) {
       e.CaptureException();
     }
   }

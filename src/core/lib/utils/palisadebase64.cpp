@@ -25,7 +25,6 @@
 
 namespace lbcrypto {
 
-const char to_base64_char[] =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+const char to_base64_char[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 } /* namespace lbcrypto */

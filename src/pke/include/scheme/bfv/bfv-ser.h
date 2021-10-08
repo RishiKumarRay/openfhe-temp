@@ -32,8 +32,7 @@ extern template class lbcrypto::LPCryptoParametersBFV<lbcrypto::Poly>;
 extern template class lbcrypto::LPCryptoParametersBFV<lbcrypto::NativePoly>;
 
 extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::Poly>;
-extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFV<
-    lbcrypto::NativePoly>;
+extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::NativePoly>;
 
 extern template class lbcrypto::LPAlgorithmBFV<lbcrypto::Poly>;
 extern template class lbcrypto::LPAlgorithmBFV<lbcrypto::NativePoly>;
@@ -48,8 +47,7 @@ extern template class lbcrypto::LPAlgorithmParamsGenBFV<lbcrypto::Poly>;
 extern template class lbcrypto::LPAlgorithmParamsGenBFV<lbcrypto::NativePoly>;
 
 extern template class lbcrypto::LPCryptoParametersBFV<lbcrypto::DCRTPoly>;
-extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFV<
-    lbcrypto::DCRTPoly>;
+extern template class lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmBFV<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmPREBFV<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmSHEBFV<lbcrypto::DCRTPoly>;
@@ -60,9 +58,7 @@ CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersBFV<lbcrypto::NativePoly>);
 CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersBFV<lbcrypto::DCRTPoly>);
 
 CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::Poly>);
-CEREAL_REGISTER_TYPE(
-    lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::NativePoly>);
-CEREAL_REGISTER_TYPE(
-    lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::DCRTPoly>);
+CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::NativePoly>);
+CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionSchemeBFV<lbcrypto::DCRTPoly>);
 
 #endif

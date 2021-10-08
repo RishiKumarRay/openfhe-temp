@@ -34,12 +34,12 @@ namespace lbcrypto {
 // On-line stage of pre-image sampling (includes only G-sampling)
 
 template <class Element>
-Matrix<Element> RLWETrapdoorUtility<Element>::GaussSampOnline(
-    size_t n, size_t k, const Matrix<Element>& A,
-    const RLWETrapdoorPair<Element>& T, const Element& u, DggType& dgg,
-    const shared_ptr<Matrix<Element>> pHat, int64_t base) {
+Matrix<Element> RLWETrapdoorUtility<Element>::GaussSampOnline(size_t n, size_t k, const Matrix<Element>& A,
+                                                              const RLWETrapdoorPair<Element>& T, const Element& u,
+                                                              DggType& dgg, const shared_ptr<Matrix<Element>> pHat,
+                                                              int64_t base) {
   const shared_ptr<ParmType> params = u.GetParams();
-  auto zero_alloc = Element::Allocator(params, Format::EVALUATION);
+  auto zero_alloc                   = Element::Allocator(params, Format::EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -54,8 +54,7 @@ Matrix<Element> RLWETrapdoorUtility<Element>::GaussSampOnline(
 
   perturbedSyndrome.SetFormat(Format::COEFFICIENT);
 
-  LatticeGaussSampUtility<Element>::GaussSampGqArbBase(
-      perturbedSyndrome, c, k, modulus, base, dgg, &zHatBBI);
+  LatticeGaussSampUtility<Element>::GaussSampGqArbBase(perturbedSyndrome, c, k, modulus, base, dgg, &zHatBBI);
 
   // Convert zHat from a matrix of integers to a vector of Element ring elements
   // zHat is in the coefficient representation
@@ -78,11 +77,12 @@ Matrix<Element> RLWETrapdoorUtility<Element>::GaussSampOnline(
 // Offline stage of pre-image sampling (perturbation sampling)
 
 template <class Element>
-shared_ptr<Matrix<Element>> RLWETrapdoorUtility<Element>::GaussSampOffline(
-    size_t n, size_t k, const RLWETrapdoorPair<Element>& T, DggType& dgg,
-    DggType& dggLargeSigma, int64_t base) {
+shared_ptr<Matrix<Element>> RLWETrapdoorUtility<Element>::GaussSampOffline(size_t n, size_t k,
+                                                                           const RLWETrapdoorPair<Element>& T,
+                                                                           DggType& dgg, DggType& dggLargeSigma,
+                                                                           int64_t base) {
   const shared_ptr<ParmType> params = T.m_e(0, 0).GetParams();
-  auto zero_alloc = Element::Allocator(params, Format::EVALUATION);
+  auto zero_alloc                   = Element::Allocator(params, Format::EVALUATION);
 
   double c = (base + 1) * SIGMA;
 
@@ -97,10 +97,11 @@ shared_ptr<Matrix<Element>> RLWETrapdoorUtility<Element>::GaussSampOffline(
 }
 
 template <>
-inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(
-    size_t n, double s, double sigma, const RLWETrapdoorPair<DCRTPoly>& Tprime,
-    const DCRTPoly::DggType& dgg, const DCRTPoly::DggType& dggLargeSigma,
-    shared_ptr<Matrix<DCRTPoly>> perturbationVector) {
+inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(size_t n, double s, double sigma,
+                                                         const RLWETrapdoorPair<DCRTPoly>& Tprime,
+                                                         const DCRTPoly::DggType& dgg,
+                                                         const DCRTPoly::DggType& dggLargeSigma,
+                                                         shared_ptr<Matrix<DCRTPoly>> perturbationVector) {
   DEBUG_FLAG(false);
   TimeVar t1, t1_tot;
 
@@ -121,12 +122,9 @@ inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(
   NativePoly vd((*params)[0], Format::EVALUATION, 1);
 
   for (size_t i = 0; i < k; i++) {
-    va += (NativePoly)Tprime0(0, i).GetElementAtIndex(0) *
-          Tprime0(0, i).Transpose().GetElementAtIndex(0);
-    vb += (NativePoly)Tprime1(0, i).GetElementAtIndex(0) *
-          Tprime0(0, i).Transpose().GetElementAtIndex(0);
-    vd += (NativePoly)Tprime1(0, i).GetElementAtIndex(0) *
-          Tprime1(0, i).Transpose().GetElementAtIndex(0);
+    va += (NativePoly)Tprime0(0, i).GetElementAtIndex(0) * Tprime0(0, i).Transpose().GetElementAtIndex(0);
+    vb += (NativePoly)Tprime1(0, i).GetElementAtIndex(0) * Tprime0(0, i).Transpose().GetElementAtIndex(0);
+    vd += (NativePoly)Tprime1(0, i).GetElementAtIndex(0) * Tprime1(0, i).Transpose().GetElementAtIndex(0);
   }
   DEBUG("z1b: " << TOC(t1));  // 9
   TIC(t1);
@@ -172,7 +170,8 @@ inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(
     for (size_t i = 0; i < n * k; i++) {
       p2ZVector(i, 0) = dgg.GenerateIntegerKarney(0, sigmaLarge);
     }
-  } else {
+  }
+  else {
     // Peikert's inversion sampling method
     std::shared_ptr<int64_t> dggVector = dggLargeSigma.GenerateIntVector(n * k);
 
@@ -198,10 +197,8 @@ inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(
   auto zero_alloc = NativePoly::Allocator((*params)[0], Format::EVALUATION);
   Matrix<NativePoly> Tp2(zero_alloc, 2, 1);
   for (unsigned int i = 0; i < k; i++) {
-    Tp2(0, 0) += Tprime0(0, i).GetElementAtIndex(0) *
-                 (NativePoly)p2(i, 0).GetElementAtIndex(0);
-    Tp2(1, 0) += Tprime1(0, i).GetElementAtIndex(0) *
-                 (NativePoly)p2(i, 0).GetElementAtIndex(0);
+    Tp2(0, 0) += Tprime0(0, i).GetElementAtIndex(0) * (NativePoly)p2(i, 0).GetElementAtIndex(0);
+    Tp2(1, 0) += Tprime1(0, i).GetElementAtIndex(0) * (NativePoly)p2(i, 0).GetElementAtIndex(0);
   }
 
   DEBUG("z1h2: " << TOC(t1));
@@ -213,18 +210,14 @@ inline void RLWETrapdoorUtility<DCRTPoly>::ZSampleSigmaP(
 
   Matrix<Field2n> c([]() { return Field2n(); }, 2, 1);
 
-  c(0, 0) =
-      Field2n(Tp2(0, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
-  c(1, 0) =
-      Field2n(Tp2(1, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+  c(0, 0) = Field2n(Tp2(0, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
+  c(1, 0) = Field2n(Tp2(1, 0)).ScalarMult(-sigma * sigma / (s * s - sigma * sigma));
 
-  auto p1ZVector =
-      std::make_shared<Matrix<int64_t>>([]() { return 0; }, n * 2, 1);
+  auto p1ZVector = std::make_shared<Matrix<int64_t>>([]() { return 0; }, n * 2, 1);
   DEBUG("z1i: " << TOC(t1));
   TIC(t1);
 
-  LatticeGaussSampUtility<DCRTPoly>::ZSampleSigma2x2(a, b, d, c, dgg,
-                                                     p1ZVector);
+  LatticeGaussSampUtility<DCRTPoly>::ZSampleSigma2x2(a, b, d, c, dgg, p1ZVector);
   DEBUG("z1j1: " << TOC(t1));  // 14
   TIC(t1);
 

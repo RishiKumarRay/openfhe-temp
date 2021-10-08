@@ -84,7 +84,8 @@ typedef shared_ptr<const PlaintextImpl> ConstPlaintext;
 
 enum PtxtPolyType { IsPoly, IsDCRTPoly, IsNativePoly };
 
-class PlaintextImpl {
+class PlaintextImpl
+{
  protected:
   bool isEncoded;
   PtxtPolyType typeFlag;
@@ -94,9 +95,9 @@ class PlaintextImpl {
   mutable NativePoly encodedNativeVector;
   mutable DCRTPoly encodedVectorDCRT;
 
-  static const int intCTOR = 0x01;
-  static const int vecintCTOR = 0x02;
-  static const int fracCTOR = 0x04;
+  static const int intCTOR     = 0x01;
+  static const int vecintCTOR  = 0x02;
+  static const int fracCTOR    = 0x04;
   static const int vecuintCTOR = 0x08;
 
   double scalingFactor;
@@ -104,56 +105,53 @@ class PlaintextImpl {
   size_t depth;
 
  public:
-  PlaintextImpl(shared_ptr<Poly::Params> vp, EncodingParams ep,
-                bool isEncoded = false)
-      : isEncoded(isEncoded),
-        typeFlag(IsPoly),
-        encodingParams(ep),
-        encodedVector(vp, Format::COEFFICIENT),
-        scalingFactor(1),
-        level(0),
-        depth(1) {}
+  PlaintextImpl(shared_ptr<Poly::Params> vp, EncodingParams ep, bool isEncoded = false) :
+      isEncoded(isEncoded),
+      typeFlag(IsPoly),
+      encodingParams(ep),
+      encodedVector(vp, Format::COEFFICIENT),
+      scalingFactor(1),
+      level(0),
+      depth(1) {}
 
-  PlaintextImpl(shared_ptr<NativePoly::Params> vp, EncodingParams ep,
-                bool isEncoded = false)
-      : isEncoded(isEncoded),
-        typeFlag(IsNativePoly),
-        encodingParams(ep),
-        encodedNativeVector(vp, Format::COEFFICIENT),
-        scalingFactor(1),
-        level(0),
-        depth(1) {}
+  PlaintextImpl(shared_ptr<NativePoly::Params> vp, EncodingParams ep, bool isEncoded = false) :
+      isEncoded(isEncoded),
+      typeFlag(IsNativePoly),
+      encodingParams(ep),
+      encodedNativeVector(vp, Format::COEFFICIENT),
+      scalingFactor(1),
+      level(0),
+      depth(1) {}
 
-  PlaintextImpl(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
-                bool isEncoded = false)
-      : isEncoded(isEncoded),
-        typeFlag(IsDCRTPoly),
-        encodingParams(ep),
-        encodedVector(vp, Format::COEFFICIENT),
-        encodedVectorDCRT(vp, Format::COEFFICIENT),
-        scalingFactor(1),
-        level(0),
-        depth(1) {}
+  PlaintextImpl(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, bool isEncoded = false) :
+      isEncoded(isEncoded),
+      typeFlag(IsDCRTPoly),
+      encodingParams(ep),
+      encodedVector(vp, Format::COEFFICIENT),
+      encodedVectorDCRT(vp, Format::COEFFICIENT),
+      scalingFactor(1),
+      level(0),
+      depth(1) {}
 
-  PlaintextImpl(const PlaintextImpl& rhs)
-      : isEncoded(rhs.isEncoded),
-        typeFlag(rhs.typeFlag),
-        encodingParams(rhs.encodingParams),
-        encodedVector(rhs.encodedVector),
-        encodedVectorDCRT(rhs.encodedVectorDCRT),
-        scalingFactor(rhs.scalingFactor),
-        level(rhs.level),
-        depth(rhs.depth) {}
+  PlaintextImpl(const PlaintextImpl& rhs) :
+      isEncoded(rhs.isEncoded),
+      typeFlag(rhs.typeFlag),
+      encodingParams(rhs.encodingParams),
+      encodedVector(rhs.encodedVector),
+      encodedVectorDCRT(rhs.encodedVectorDCRT),
+      scalingFactor(rhs.scalingFactor),
+      level(rhs.level),
+      depth(rhs.depth) {}
 
-  PlaintextImpl(const PlaintextImpl&& rhs)
-      : isEncoded(rhs.isEncoded),
-        typeFlag(rhs.typeFlag),
-        encodingParams(std::move(rhs.encodingParams)),
-        encodedVector(std::move(rhs.encodedVector)),
-        encodedVectorDCRT(std::move(rhs.encodedVectorDCRT)),
-        scalingFactor(rhs.scalingFactor),
-        level(rhs.level),
-        depth(rhs.depth) {}
+  PlaintextImpl(const PlaintextImpl&& rhs) :
+      isEncoded(rhs.isEncoded),
+      typeFlag(rhs.typeFlag),
+      encodingParams(std::move(rhs.encodingParams)),
+      encodedVector(std::move(rhs.encodedVector)),
+      encodedVectorDCRT(std::move(rhs.encodedVectorDCRT)),
+      scalingFactor(rhs.scalingFactor),
+      level(rhs.level),
+      depth(rhs.depth) {}
 
   virtual ~PlaintextImpl() {}
 
@@ -166,24 +164,32 @@ class PlaintextImpl {
   /**
    * Get the scaling factor of the plaintext.
    */
-  double GetScalingFactor() const { return scalingFactor; }
+  double GetScalingFactor() const {
+    return scalingFactor;
+  }
 
   /**
    * Set the scaling factor of the plaintext.
    */
-  void SetScalingFactor(double sf) { scalingFactor = sf; }
+  void SetScalingFactor(double sf) {
+    scalingFactor = sf;
+  }
 
   /**
    * IsEncoded
    * @return true when encoding is done
    */
-  bool IsEncoded() const { return isEncoded; }
+  bool IsEncoded() const {
+    return isEncoded;
+  }
 
   /**
    * GetEncodingParams
    * @return Encoding params used with this plaintext
    */
-  const EncodingParams GetEncodingParams() const { return encodingParams; }
+  const EncodingParams GetEncodingParams() const {
+    return encodingParams;
+  }
 
   /**
    * Encode the plaintext into a polynomial
@@ -204,7 +210,7 @@ class PlaintextImpl {
    */
   int64_t LowBound() const {
     uint64_t half = GetEncodingParams()->GetPlaintextModulus() >> 1;
-    bool odd = (GetEncodingParams()->GetPlaintextModulus() & 0x1) == 1;
+    bool odd      = (GetEncodingParams()->GetPlaintextModulus() & 0x1) == 1;
     int64_t bound = -1 * half;
     if (odd) bound--;
     return bound;
@@ -225,8 +231,7 @@ class PlaintextImpl {
    * @param fmt
    */
   void SetFormat(Format fmt) const {
-    if (typeFlag == IsPoly)
-      encodedVector.SetFormat(fmt);
+    if (typeFlag == IsPoly) encodedVector.SetFormat(fmt);
     else if (typeFlag == IsNativePoly)
       encodedNativeVector.SetFormat(fmt);
     else
@@ -249,9 +254,8 @@ class PlaintextImpl {
    */
   usint GetElementRingDimension() const {
     return typeFlag == IsPoly ? encodedVector.GetRingDimension()
-                              : (typeFlag == IsNativePoly
-                                     ? encodedNativeVector.GetRingDimension()
-                                     : encodedVectorDCRT.GetRingDimension());
+                              : (typeFlag == IsNativePoly ? encodedNativeVector.GetRingDimension()
+                                                          : encodedVectorDCRT.GetRingDimension());
   }
 
   /**
@@ -259,11 +263,9 @@ class PlaintextImpl {
    * @return modulus on the underlying elemenbt
    */
   const BigInteger GetElementModulus() const {
-    return typeFlag == IsPoly
-               ? encodedVector.GetModulus()
-               : (typeFlag == IsNativePoly
-                      ? BigInteger(encodedNativeVector.GetModulus())
-                      : encodedVectorDCRT.GetModulus());
+    return typeFlag == IsPoly ? encodedVector.GetModulus()
+                              : (typeFlag == IsNativePoly ? BigInteger(encodedNativeVector.GetModulus())
+                                                          : encodedVectorDCRT.GetModulus());
   }
 
   /**
@@ -287,33 +289,39 @@ class PlaintextImpl {
    *
    * @return the depth of the plaintext
    */
-  size_t GetDepth() const { return depth; }
+  size_t GetDepth() const {
+    return depth;
+  }
 
   /*
    * Method to set the depth of a plaintext.
    */
-  void SetDepth(size_t d) { depth = d; }
+  void SetDepth(size_t d) {
+    depth = d;
+  }
 
   /*
    * Method to get the level of a plaintext.
    *
    * @return the level of the plaintext
    */
-  size_t GetLevel() const { return level; }
+  size_t GetLevel() const {
+    return level;
+  }
 
   /*
    * Method to set the level of a plaintext.
    */
-  void SetLevel(size_t l) { level = l; }
+  void SetLevel(size_t l) {
+    level = l;
+  }
 
   virtual double GetLogError() const {
-    PALISADE_THROW(not_available_error,
-                   "no estimate of noise available for the current scheme");
+    PALISADE_THROW(not_available_error, "no estimate of noise available for the current scheme");
   }
 
   virtual double GetLogPrecision() const {
-    PALISADE_THROW(not_available_error,
-                   "no estimate of precision available for the current scheme");
+    PALISADE_THROW(not_available_error, "no estimate of precision available for the current scheme");
   }
 
   virtual const std::string& GetStringValue() const {
@@ -354,7 +362,9 @@ class PlaintextImpl {
    * @param other - the other plaintext to compare to.
    * @return whether the two plaintext are the same.
    */
-  bool operator==(const PlaintextImpl& other) const { return CompareTo(other); }
+  bool operator==(const PlaintextImpl& other) const {
+    return CompareTo(other);
+  }
 
   bool operator!=(const PlaintextImpl& other) const {
     return !(*this == other);

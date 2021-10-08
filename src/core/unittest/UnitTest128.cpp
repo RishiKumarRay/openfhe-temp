@@ -50,97 +50,71 @@ using namespace lbcrypto;
  ************************************************/
 #if (NATIVEINT == 128)
 TEST(UT128, modular_operations) {
-  bigintnat::NativeInteger modulus = ((bigintnat::NativeInteger(1) << 120) +
-                                      bigintnat::NativeInteger(123456789));
-  bigintnat::NativeInteger mu = modulus.ComputeMu();
+  bigintnat::NativeInteger modulus = ((bigintnat::NativeInteger(1) << 120) + bigintnat::NativeInteger(123456789));
+  bigintnat::NativeInteger mu      = modulus.ComputeMu();
 
-  bigintnat::NativeInteger a =
-      (bigintnat::NativeInteger(1) << 110) + bigintnat::NativeInteger(1234);
-  bigintnat::NativeInteger b =
-      (bigintnat::NativeInteger(1) << 115) + bigintnat::NativeInteger(6789);
+  bigintnat::NativeInteger a = (bigintnat::NativeInteger(1) << 110) + bigintnat::NativeInteger(1234);
+  bigintnat::NativeInteger b = (bigintnat::NativeInteger(1) << 115) + bigintnat::NativeInteger(6789);
 
-  bigintnat::NativeInteger c =
-      (bigintnat::NativeInteger(1) << 120) + bigintnat::NativeInteger(6);
+  bigintnat::NativeInteger c = (bigintnat::NativeInteger(1) << 120) + bigintnat::NativeInteger(6);
 
   bigintnat::NativeInteger result = a;
 
   result.ModMulEq(b, modulus, mu);
 
-  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"),
-            BigInteger(result))
-      << "Failure in ModMulEq";
+  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"), BigInteger(result)) << "Failure in ModMulEq";
 
   result = a.ModMul(b, modulus, mu);
 
-  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"),
-            BigInteger(result))
-      << "Failure in ModMul";
+  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"), BigInteger(result)) << "Failure in ModMul";
 
   result = a.ModMulFast(b, modulus, mu);
 
-  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"),
-            BigInteger(result))
-      << "Failure in ModMulFast";
+  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"), BigInteger(result)) << "Failure in ModMulFast";
 
   result = a;
 
   result.ModMulFastEq(b, modulus, mu);
 
-  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"),
-            BigInteger(result))
-      << "Failure in ModMulFastEq";
+  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"), BigInteger(result)) << "Failure in ModMulFastEq";
 
   bigintnat::NativeInteger precon = b.PrepModMulConst(modulus);
 
   result = a.ModMulFastConst(b, modulus, precon);
 
-  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"),
-            BigInteger(result))
-      << "Failure in ModMulFastConst";
+  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"), BigInteger(result)) << "Failure in ModMulFastConst";
 
   result = a;
 
   result.ModMulFastConstEq(b, modulus, precon);
 
-  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"),
-            BigInteger(result))
-      << "Failure in ModMulFastConstEq";
+  EXPECT_EQ(BigInteger("784483038650039308657432244878529921"), BigInteger(result)) << "Failure in ModMulFastConstEq";
 
   result = a.ModExp(b, modulus);
 
-  EXPECT_EQ(BigInteger("420836984722658338771647831749821018"),
-            BigInteger(result))
-      << "Failure in ModExp";
+  EXPECT_EQ(BigInteger("420836984722658338771647831749821018"), BigInteger(result)) << "Failure in ModExp";
 
   result = a;
 
   result.ModExpEq(b, modulus);
 
-  EXPECT_EQ(BigInteger("420836984722658338771647831749821018"),
-            BigInteger(result))
-      << "Failure in ModExpEq";
+  EXPECT_EQ(BigInteger("420836984722658338771647831749821018"), BigInteger(result)) << "Failure in ModExpEq";
 
   result = a.ModAddFast(c, modulus);
 
-  EXPECT_EQ(BigInteger("1298074214633706907132623958849475"),
-            BigInteger(result))
-      << "Failure in ModAddFast";
+  EXPECT_EQ(BigInteger("1298074214633706907132623958849475"), BigInteger(result)) << "Failure in ModAddFast";
 
   result = a.ModSubFast(c, modulus);
 
-  EXPECT_EQ(BigInteger("1298074214633706907132624205763041"),
-            BigInteger(result))
-      << "Failure in ModSubFast";
+  EXPECT_EQ(BigInteger("1298074214633706907132624205763041"), BigInteger(result)) << "Failure in ModSubFast";
 
   result = a.ModInverse(modulus);
 
-  EXPECT_EQ(BigInteger("859455677183853192994953853474516202"),
-            BigInteger(result))
-      << "Failure in ModInverse";
+  EXPECT_EQ(BigInteger("859455677183853192994953853474516202"), BigInteger(result)) << "Failure in ModInverse";
 }
 
 TEST(UT128, NTT_operations) {
-  usint m1 = 16;
+  usint m1              = 16;
   NativeInteger modulus = FirstPrime<NativeInteger>(100, m1);
   NativeInteger rootOfUnity(RootOfUnity(m1, modulus));
 
@@ -150,10 +124,10 @@ TEST(UT128, NTT_operations) {
   shared_ptr<ILNativeParams> x2p(new ILNativeParams(params2));
 
   NativePoly x1(x1p, Format::COEFFICIENT);
-  x1 = {431, 3414, 1234, 7845, 2145, 7415, 5471, 8452};
+  x1 = { 431, 3414, 1234, 7845, 2145, 7415, 5471, 8452 };
 
   NativePoly x2(x2p, Format::COEFFICIENT);
-  x2 = {4127, 9647, 1987, 5410};
+  x2 = { 4127, 9647, 1987, 5410 };
 
   NativePoly x1Clone(x1);
   NativePoly x2Clone(x2);

@@ -30,13 +30,12 @@
 namespace lbcrypto {
 
 template <typename VecType>
-std::uniform_int_distribution<int>
-    TernaryUniformGeneratorImpl<VecType>::m_distribution =
-        std::uniform_int_distribution<int>(-1, 1);
+std::uniform_int_distribution<int> TernaryUniformGeneratorImpl<VecType>::m_distribution =
+  std::uniform_int_distribution<int>(-1, 1);
 
 template <typename VecType>
-VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(
-    usint size, const typename VecType::Integer &modulus, usint h) const {
+VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(usint size, const typename VecType::Integer& modulus,
+                                                             usint h) const {
   VecType v(size);
   v.SetModulus(modulus);
 
@@ -47,15 +46,14 @@ VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(
 
     for (usint i = 0; i < size; i++) {
       randomNumber = m_distribution(PseudoRandomNumberGenerator::GetPRNG());
-      if (randomNumber < 0)
-        v[i] = modulus - typename VecType::Integer(1);
+      if (randomNumber < 0) v[i] = modulus - typename VecType::Integer(1);
       else
         v[i] = typename VecType::Integer(randomNumber);
     }
-  } else {
+  }
+  else {
     int32_t randomIndex;
-    std::uniform_int_distribution<int> distrHWT =
-        std::uniform_int_distribution<int>(0, size - 1);
+    std::uniform_int_distribution<int> distrHWT = std::uniform_int_distribution<int>(0, size - 1);
 
     BinaryUniformGeneratorImpl<VecType> bug;
 
@@ -67,7 +65,8 @@ VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(
     while ((counterPlus < h / 2 - 1) || (counterPlus > h / 2 + 1)) {
       // initializes all values
       counterPlus = 0;
-      for (uint32_t k = 0; k < size; k++) v[k] = typename VecType::Integer(0);
+      for (uint32_t k = 0; k < size; k++)
+        v[k] = typename VecType::Integer(0);
 
       usint i = 0;
       while (i < h) {
@@ -77,7 +76,8 @@ VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(
         if (v[randomIndex] == typename VecType::Integer(0)) {
           if (bug.GenerateInteger() == typename VecType::Integer(0)) {
             v[randomIndex] = modulus - typename VecType::Integer(1);
-          } else {
+          }
+          else {
             v[randomIndex] = typename VecType::Integer(1);
             counterPlus++;
           }
@@ -91,20 +91,17 @@ VecType TernaryUniformGeneratorImpl<VecType>::GenerateVector(
 }
 
 template <typename VecType>
-std::shared_ptr<int32_t>
-TernaryUniformGeneratorImpl<VecType>::GenerateIntVector(usint size,
-                                                        usint h) const {
-  std::shared_ptr<int32_t> ans(new int32_t[size],
-                               std::default_delete<int32_t[]>());
+std::shared_ptr<int32_t> TernaryUniformGeneratorImpl<VecType>::GenerateIntVector(usint size, usint h) const {
+  std::shared_ptr<int32_t> ans(new int32_t[size], std::default_delete<int32_t[]>());
 
   if (h == 0) {
     for (usint i = 0; i < size; i++) {
       (ans.get())[i] = m_distribution(PseudoRandomNumberGenerator::GetPRNG());
     }
-  } else {
+  }
+  else {
     int32_t randomIndex;
-    std::uniform_int_distribution<int> distrHWT =
-        std::uniform_int_distribution<int>(0, size - 1);
+    std::uniform_int_distribution<int> distrHWT = std::uniform_int_distribution<int>(0, size - 1);
 
     BinaryUniformGeneratorImpl<VecType> bug;
 
@@ -116,7 +113,8 @@ TernaryUniformGeneratorImpl<VecType>::GenerateIntVector(usint size,
     while ((counterPlus < h / 2 - 1) || (counterPlus > h / 2 + 1)) {
       // initializes all values
       counterPlus = 0;
-      for (uint32_t k = 0; k < size; k++) (ans.get())[k] = 0;
+      for (uint32_t k = 0; k < size; k++)
+        (ans.get())[k] = 0;
 
       usint i = 0;
       while (i < h) {
@@ -126,7 +124,8 @@ TernaryUniformGeneratorImpl<VecType>::GenerateIntVector(usint size,
         if ((ans.get())[randomIndex] == 0) {
           if (bug.GenerateInteger() == typename VecType::Integer(0)) {
             (ans.get())[randomIndex] = -1;
-          } else {
+          }
+          else {
             (ans.get())[randomIndex] = 1;
             counterPlus++;
           }

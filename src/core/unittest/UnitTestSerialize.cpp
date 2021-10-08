@@ -56,15 +56,13 @@ void bigint(const string& msg) {
 
     Serial::Serialize(val, s, SerType::JSON);
     Serial::Deserialize(deser, s, SerType::JSON);
-    EXPECT_EQ(val, deser) << msg << " " << siz
-                          << " integer json ser/deser fails";
+    EXPECT_EQ(val, deser) << msg << " " << siz << " integer json ser/deser fails";
 
     s.str("");
     Serial::Serialize(val, s, SerType::BINARY);
 
     Serial::Deserialize(deser, s, SerType::BINARY);
-    EXPECT_EQ(val, deser) << msg << " " << siz
-                          << " integer binary ser/deser fails";
+    EXPECT_EQ(val, deser) << msg << " " << siz << " integer binary ser/deser fails";
   };
 
   sfunc(small, "small");
@@ -72,7 +70,9 @@ void bigint(const string& msg) {
   sfunc(larger, "larger");
 }
 
-TEST(UTSer, bigint) { RUN_ALL_BACKENDS_INT(bigint, "bigint") }
+TEST(UTSer, bigint) {
+  RUN_ALL_BACKENDS_INT(bigint, "bigint")
+}
 
 template <typename T>
 void hugeint(const string& msg) {
@@ -84,20 +84,20 @@ void hugeint(const string& msg) {
 
     Serial::Serialize(val, s, SerType::JSON);
     Serial::Deserialize(deser, s, SerType::JSON);
-    EXPECT_EQ(val, deser) << msg << " " << siz
-                          << " integer json ser/deser fails";
+    EXPECT_EQ(val, deser) << msg << " " << siz << " integer json ser/deser fails";
 
     s.str("");
     Serial::Serialize(val, s, SerType::BINARY);
     Serial::Deserialize(deser, s, SerType::BINARY);
-    EXPECT_EQ(val, deser) << msg << " " << siz
-                          << " integer binary ser/deser fails";
+    EXPECT_EQ(val, deser) << msg << " " << siz << " integer binary ser/deser fails";
   };
 
   sfunc(yooge, "Huge");
 }
 
-TEST(UTSer, hugeint) { RUN_BIG_BACKENDS_INT(hugeint, "hugeint") }
+TEST(UTSer, hugeint) {
+  RUN_BIG_BACKENDS_INT(hugeint, "hugeint")
+}
 
 template <typename V>
 void vector_of_bigint(const string& msg) {
@@ -116,7 +116,7 @@ void vector_of_bigint(const string& msg) {
   typename V::Integer ranval;
 
   for (int i = 0; i < vecsize; i++) {
-    ranval = dug.GenerateInteger();
+    ranval        = dug.GenerateInteger();
     testvec.at(i) = ranval;
   }
 
@@ -158,7 +158,9 @@ void ilparams_test(const string& msg) {
   sfunc(p);
 }
 
-TEST(UTSer, ilparams_test) { RUN_ALL_POLYS(ilparams_test, "ilparams_test") }
+TEST(UTSer, ilparams_test) {
+  RUN_ALL_POLYS(ilparams_test, "ilparams_test")
+}
 
 template <typename Element>
 void ildcrtparams_test(const string& msg) {
@@ -208,7 +210,9 @@ void ilvector_test(const string& msg) {
   sfunc(vec);
 }
 
-TEST(UTSer, ilvector_test) { RUN_ALL_POLYS(ilvector_test, "ilvector_test") }
+TEST(UTSer, ilvector_test) {
+  RUN_ALL_POLYS(ilvector_test, "ilvector_test")
+}
 
 template <typename Element>
 void ildcrtpoly_test(const string& msg) {
@@ -261,7 +265,7 @@ void serialize_matrix_bigint(const string& msg) {
   // load up the matix with random values
   for (size_t i = 0; i < nrows; i++) {
     for (size_t j = 0; j < ncols; j++) {
-      ranval = dug.GenerateInteger();
+      ranval        = dug.GenerateInteger();
       testmat(i, j) = ranval;
     }
   }

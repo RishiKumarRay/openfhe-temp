@@ -29,14 +29,12 @@
 #include "utils/serial.h"
 
 extern template class lbcrypto::LPCryptoParametersBGVrns<lbcrypto::DCRTPoly>;
-extern template class lbcrypto::LPPublicKeyEncryptionSchemeBGVrns<
-    lbcrypto::DCRTPoly>;
+extern template class lbcrypto::LPPublicKeyEncryptionSchemeBGVrns<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmBGVrns<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmMultipartyBGVrns<lbcrypto::DCRTPoly>;
 extern template class lbcrypto::LPAlgorithmSHEBGVrns<lbcrypto::DCRTPoly>;
 
 CEREAL_REGISTER_TYPE(lbcrypto::LPCryptoParametersBGVrns<lbcrypto::DCRTPoly>);
-CEREAL_REGISTER_TYPE(
-    lbcrypto::LPPublicKeyEncryptionSchemeBGVrns<lbcrypto::DCRTPoly>);
+CEREAL_REGISTER_TYPE(lbcrypto::LPPublicKeyEncryptionSchemeBGVrns<lbcrypto::DCRTPoly>);
 
 #endif

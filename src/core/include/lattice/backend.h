@@ -34,7 +34,7 @@
 #include "lattice/poly.h"
 #if defined(WITH_INTEL_HEXL)
 #include "lattice/hexldcrtpoly.h"
-#else // default
+#else  // default
 #include "lattice/dcrtpoly.h"
 #endif
 
@@ -60,7 +60,7 @@ using ILNativeParams = ILParamsImpl<NativeInteger>;
 
 // the default for the backend...
 using ILParams = ILParamsImpl<BigInteger>;
-using Poly = PolyImpl<BigVector>;
+using Poly     = PolyImpl<BigVector>;
 
 using M2DCRTParams = ILDCRTParams<M2Integer>;
 using M4DCRTParams = ILDCRTParams<M4Integer>;
@@ -68,24 +68,24 @@ using M4DCRTParams = ILDCRTParams<M4Integer>;
 using M6DCRTParams = ILDCRTParams<M6Integer>;
 #endif
 
-#if defined(WITH_INTEL_HEXL) // Hardware specialization
+#if defined(WITH_INTEL_HEXL)  // Hardware specialization
 
-  using M2DCRTPoly = HexlDCRTPoly<M2Vector>;
-  using M4DCRTPoly = HexlDCRTPoly<M4Vector>;
-  #ifdef WITH_NTL
-  using M6DCRTPoly = HexlDCRTPoly<M6Vector>;
-  #endif
+using M2DCRTPoly = HexlDCRTPoly<M2Vector>;
+using M4DCRTPoly = HexlDCRTPoly<M4Vector>;
+#ifdef WITH_NTL
+using M6DCRTPoly = HexlDCRTPoly<M6Vector>;
+#endif
 
-  using DCRTPoly = HexlDCRTPoly<BigVector>;
-#else // Default case
+using DCRTPoly = HexlDCRTPoly<BigVector>;
+#else  // Default case
 
-  using M2DCRTPoly = DCRTPolyImpl<M2Vector>;
-  using M4DCRTPoly = DCRTPolyImpl<M4Vector>;
-  #ifdef WITH_NTL
-  using M6DCRTPoly = DCRTPolyImpl<M6Vector>;
-  #endif
-  
-  using DCRTPoly = DCRTPolyImpl<BigVector>;
+using M2DCRTPoly = DCRTPolyImpl<M2Vector>;
+using M4DCRTPoly = DCRTPolyImpl<M4Vector>;
+#ifdef WITH_NTL
+using M6DCRTPoly = DCRTPolyImpl<M6Vector>;
+#endif
+
+using DCRTPoly = DCRTPolyImpl<BigVector>;
 #endif
 
 }  // namespace lbcrypto

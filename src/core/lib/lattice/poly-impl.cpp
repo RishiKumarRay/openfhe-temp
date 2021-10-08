@@ -33,12 +33,11 @@
 namespace lbcrypto {
 
 template <>
-PolyImpl<BigVector>::PolyImpl(const shared_ptr<ILDCRTParams<BigInteger>> params,
-                              Format format, bool initializeElementToZero)
-    : m_values(nullptr), m_format(format) {
+PolyImpl<BigVector>::PolyImpl(const shared_ptr<ILDCRTParams<BigInteger>> params, Format format,
+                              bool initializeElementToZero) :
+    m_values(nullptr), m_format(format) {
   // construct a local params out of the stuff from the DCRT Params
-  m_params = std::make_shared<ILParams>(params->GetCyclotomicOrder(),
-                                        params->GetModulus(), 1);
+  m_params = std::make_shared<ILParams>(params->GetCyclotomicOrder(), params->GetModulus(), 1);
 
   if (initializeElementToZero) {
     this->SetValuesToZero();

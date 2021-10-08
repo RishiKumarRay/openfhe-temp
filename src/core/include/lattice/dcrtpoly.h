@@ -57,10 +57,11 @@ namespace lbcrypto {
  * Heidelberg
  */
 template <typename VecType>
-class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, NativeVector, PolyImpl> {
+class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, NativeVector, PolyImpl>
+{
  public:
   using Integer = typename VecType::Integer;
-  using Params = ILDCRTParams<Integer>;
+  using Params  = ILDCRTParams<Integer>;
 
   typedef VecType Vector;
 
@@ -76,14 +77,16 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
 
   // this class contains an array of these, aka NativePoly
   // warning, this has been removed before but lattice/backend.h can't be included
-  // as this creates a circular dependency. PolyType can be thought of as a 
+  // as this creates a circular dependency. PolyType can be thought of as a
   // forward declaration of the NativePoly type.
   using PolyType = PolyImpl<NativeVector>;
 
   // the composed polynomial type
   typedef PolyImpl<VecType> PolyLargeType;
 
-  static const std::string GetElementName() { return "DCRTPolyImpl"; }
+  static const std::string GetElementName() {
+    return "DCRTPolyImpl";
+  }
 
   // CONSTRUCTORS
 
@@ -102,12 +105,11 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    *Coefficient representation. It is defined in inttypes.h.
    *@param initializeElementToZero
    */
-  DCRTPolyImpl(const shared_ptr<Params> params, Format format = EVALUATION,
-               bool initializeElementToZero = false);
+  DCRTPolyImpl(const shared_ptr<Params> params, Format format = EVALUATION, bool initializeElementToZero = false);
 
-  const DCRTPolyType &operator=(const PolyLargeType &element);
+  const DCRTPolyType& operator=(const PolyLargeType& element);
 
-  const DCRTPolyType &operator=(const PolyType &element) override;
+  const DCRTPolyType& operator=(const PolyType& element) override;
 
   /**
    * @brief Constructor based on discrete Gaussian generator.
@@ -119,8 +121,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * that indicates if the polynomial is in Evaluation representation or
    * Coefficient representation. It is defined in inttypes.h.
    */
-  DCRTPolyImpl(const DggType &dgg, const shared_ptr<Params> params,
-               Format format = EVALUATION);
+  DCRTPolyImpl(const DggType& dgg, const shared_ptr<Params> params, Format format = EVALUATION);
 
   /**
    * @brief Constructor based on binary distribution generator. This is not
@@ -133,8 +134,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * that indicates if the polynomial is in Evaluation representation or
    * Coefficient representation. It is defined in inttypes.h.
    */
-  DCRTPolyImpl(const BugType &bug, const shared_ptr<Params> params,
-               Format format = EVALUATION);
+  DCRTPolyImpl(const BugType& bug, const shared_ptr<Params> params, Format format = EVALUATION);
 
   /**
    * @brief Constructor based on ternary distribution generator.
@@ -148,8 +148,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param h - Hamming weight for sparse ternary distribution (by default, when
    * h = 0, the distribution is NOT sparse)
    */
-  DCRTPolyImpl(const TugType &tug, const shared_ptr<Params> params,
-               Format format = EVALUATION, uint32_t h = 0);
+  DCRTPolyImpl(const TugType& tug, const shared_ptr<Params> params, Format format = EVALUATION, uint32_t h = 0);
 
   /**
    * @brief Constructor based on discrete uniform generator.
@@ -160,8 +159,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * that indicates if the polynomial is in Evaluation representation or
    * Coefficient representation. It is defined in inttypes.h.
    */
-  DCRTPolyImpl(DugType &dug, const shared_ptr<Params> params,
-               Format format = EVALUATION);
+  DCRTPolyImpl(DugType& dug, const shared_ptr<Params> params, Format format = EVALUATION);
 
   /**
    * @brief Construct using a single Poly. The Poly is copied into every tower.
@@ -171,7 +169,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element Poly to build other towers from.
    * @param params parameter set required for DCRTPoly.
    */
-  DCRTPolyImpl(const PolyLargeType &element, const shared_ptr<Params> params);
+  DCRTPolyImpl(const PolyLargeType& element, const shared_ptr<Params> params);
 
   /**
    * @brief Construct using a single PolyType. The PolyType is copied into
@@ -182,7 +180,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element Poly to build other towers from.
    * @param params parameter set required for DCRTPoly.
    */
-  DCRTPolyImpl(const PolyType &element, const shared_ptr<Params> params);
+  DCRTPolyImpl(const PolyType& element, const shared_ptr<Params> params);
 
   /**
    * @brief Construct using an tower of ILVectro2ns. The params and format for
@@ -190,28 +188,30 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    *
    * @param &towers vector of Polys which correspond to each tower of DCRTPoly.
    */
-  explicit DCRTPolyImpl(const std::vector<PolyType> &elements);
+  explicit DCRTPolyImpl(const std::vector<PolyType>& elements);
 
   /**
    * @brief Copy constructor.
    *
    * @param &element DCRTPoly to copy from
    */
-  DCRTPolyImpl(const DCRTPolyType &element);
+  DCRTPolyImpl(const DCRTPolyType& element);
 
   /**
    * @brief Move constructor.
    *
    * @param &&element DCRTPoly to move from
    */
-  explicit DCRTPolyImpl(const DCRTPolyType &&element);
+  explicit DCRTPolyImpl(const DCRTPolyType&& element);
 
   // CLONE OPERATIONS
   /**
    * @brief Clone the object by making a copy of it and returning the copy
    * @return new Element
    */
-  virtual DCRTPolyType Clone() const override { return DCRTPolyImpl(*this); }
+  virtual DCRTPolyType Clone() const override {
+    return DCRTPolyImpl(*this);
+  }
 
   /**
    * @brief Makes a copy of the DCRTPoly, but it includes only a sequential
@@ -227,16 +227,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
 
     for (uint32_t i = startTower; i <= endTower; i++) {
       moduli[i - startTower] = this->GetParams()->GetParams()[i]->GetModulus();
-      roots[i - startTower] =
-          this->GetParams()->GetParams()[i]->GetRootOfUnity();
+      roots[i - startTower]  = this->GetParams()->GetParams()[i]->GetRootOfUnity();
     }
 
-    auto params = DCRTPolyImpl::Params(this->GetCyclotomicOrder(), moduli,
-                                       roots, {}, {}, 0);
+    auto params = DCRTPolyImpl::Params(this->GetCyclotomicOrder(), moduli, roots, {}, {}, 0);
 
-    auto res =
-        DCRTPolyImpl(std::make_shared<typename DCRTPolyImpl::Params>(params),
-                     EVALUATION, false);
+    auto res = DCRTPolyImpl(std::make_shared<typename DCRTPolyImpl::Params>(params), EVALUATION, false);
 
     for (uint32_t i = startTower; i <= endTower; i++) {
       res.SetElementAtIndex(i - startTower, this->GetElementAtIndex(i));
@@ -249,7 +245,9 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @brief Clone the object, but have it contain nothing
    * @return new Element
    */
-  virtual DCRTPolyType CloneEmpty() const override { return DCRTPolyImpl(); }
+  virtual DCRTPolyType CloneEmpty() const override {
+    return DCRTPolyImpl();
+  }
 
   /**
    * @brief Clone method creates a new DCRTPoly and clones only the params. The
@@ -269,8 +267,8 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * that indicates if the polynomial is in Evaluation representation or
    * Coefficient representation. It is defined in inttypes.h.
    */
-  virtual DCRTPolyType CloneWithNoise(const DiscreteGaussianGeneratorImpl<VecType> &dgg,
-                              Format format = EVALUATION) const override;
+  virtual DCRTPolyType CloneWithNoise(const DiscreteGaussianGeneratorImpl<VecType>& dgg,
+                                      Format format = EVALUATION) const override;
 
   /**
    * @brief Destructor.
@@ -284,16 +282,16 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * Note this operation is computationally intense.
    * @return interpolated value at index i.
    */
-  virtual Integer &at(usint i) override;
-  virtual const Integer &at(usint i) const override;
+  virtual Integer& at(usint i) override;
+  virtual const Integer& at(usint i) const override;
 
   /**
    * @brief Get interpolated value of element at index i.
    * Note this operation is computationally intense.
    * @return interpolated value at index i.
    */
-  virtual Integer &operator[](usint i) override;
-  virtual const Integer &operator[](usint i) const override;
+  virtual Integer& operator[](usint i) override;
+  virtual const Integer& operator[](usint i) const override;
 
   /**
    * @brief Get method of individual tower of elements.
@@ -301,7 +299,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param i index of tower to be returned.
    * @returns a reference to the returned tower
    */
-  virtual const PolyType &GetElementAtIndex(usint i) const override;
+  virtual const PolyType& GetElementAtIndex(usint i) const override;
 
   /**
    * @brief Get method of the number of component elements, also known as the
@@ -316,7 +314,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    *
    * @returns a vector of the component elements.
    */
-  virtual const std::vector<PolyType> &GetAllElements() const override;
+  virtual const std::vector<PolyType>& GetAllElements() const override;
 
   /**
    * @brief Write the element as \f$ \sum\limits{i=0}^{\lfloor {\log q/base}
@@ -329,8 +327,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * 2^{baseBits} \f$.
    * @return is the pointer where the base decomposition vector is stored
    */
-  virtual std::vector<DCRTPolyType> BaseDecompose(usint baseBits,
-                bool evalModeAnswer = true) const override;
+  virtual std::vector<DCRTPolyType> BaseDecompose(usint baseBits, bool evalModeAnswer = true) const override;
 
   /**
    * @brief Generate a vector of PolyImpl's as \f$ \left\{x, {base}*x,
@@ -362,7 +359,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs the copied element.
    * @return the resulting element.
    */
-  virtual const DCRTPolyType &operator=(const DCRTPolyType &rhs) override;
+  virtual const DCRTPolyType& operator=(const DCRTPolyType& rhs) override;
 
   /**
    * @brief Move Assignment Operator.
@@ -370,7 +367,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs the copied element.
    * @return the resulting element.
    */
-  virtual const DCRTPolyType &operator=(DCRTPolyType &&rhs) override;
+  virtual const DCRTPolyType& operator=(DCRTPolyType&& rhs) override;
 
   /**
    * @brief Initalizer list
@@ -378,7 +375,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs the list to initalized the element.
    * @return the resulting element.
    */
-  virtual DCRTPolyType &operator=(std::initializer_list<uint64_t> rhs) override;
+  virtual DCRTPolyType& operator=(std::initializer_list<uint64_t> rhs) override;
 
   /**
    * @brief Assignment Operator. The usint val will be set at index zero and all
@@ -387,7 +384,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param val is the usint to assign to index zero.
    * @return the resulting vector.
    */
-  virtual DCRTPolyType &operator=(uint64_t val) override;
+  virtual DCRTPolyType& operator=(uint64_t val) override;
 
   /**
    * @brief Creates a Poly from a vector of signed integers (used for trapdoor
@@ -396,7 +393,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs the vector to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  virtual DCRTPolyType &operator=(const std::vector<int64_t> &rhs) override;
+  virtual DCRTPolyType& operator=(const std::vector<int64_t>& rhs) override;
 
   /**
    * @brief Creates a Poly from a vector of signed integers (used for trapdoor
@@ -405,7 +402,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs the vector to set the PolyImpl to.
    * @return the resulting PolyImpl.
    */
-  virtual DCRTPolyType &operator=(const std::vector<int32_t> &rhs) override;
+  virtual DCRTPolyType& operator=(const std::vector<int32_t>& rhs) override;
 
   /**
    * @brief Initalizer list
@@ -414,7 +411,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @return the resulting PolyImpl.
    */
 
-  virtual DCRTPolyType &operator=(std::initializer_list<std::string> rhs) override;
+  virtual DCRTPolyType& operator=(std::initializer_list<std::string> rhs) override;
 
   /**
    * @brief Unary minus on a element.
@@ -432,7 +429,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @return true if this element represents the same values as the specified
    * element, false otherwise
    */
-  virtual bool operator==(const DCRTPolyType &rhs) const override;
+  virtual bool operator==(const DCRTPolyType& rhs) const override;
 
   /**
    * @brief Performs an entry-wise addition over all elements of each tower with
@@ -441,7 +438,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs is the element to add with.
    * @return is the result of the addition.
    */
-  virtual const DCRTPolyType &operator+=(const DCRTPolyType &rhs) override;
+  virtual const DCRTPolyType& operator+=(const DCRTPolyType& rhs) override;
 
   /**
    * @brief Performs an entry-wise subtraction over all elements of each tower
@@ -450,7 +447,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &rhs is the element to subtract from.
    * @return is the result of the addition.
    */
-  virtual const DCRTPolyType &operator-=(const DCRTPolyType &rhs) override;
+  virtual const DCRTPolyType& operator-=(const DCRTPolyType& rhs) override;
 
   /**
    * @brief Permutes coefficients in a polynomial. Moves the ith index to the
@@ -459,7 +456,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &i is the element to perform the automorphism transform with.
    * @return is the result of the automorphism transform.
    */
-  virtual DCRTPolyType AutomorphismTransform(const usint &i) const override {
+  virtual DCRTPolyType AutomorphismTransform(const usint& i) const override {
     DCRTPolyType result(*this);
     for (usint k = 0; k < m_vectors.size(); k++) {
       result.m_vectors[k] = m_vectors[k].AutomorphismTransform(i);
@@ -475,8 +472,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &map a vector with precomputed indices
    * @return is the result of the automorphism transform.
    */
-  virtual DCRTPolyType AutomorphismTransform(usint i,
-                                     const std::vector<usint> &map) const override {
+  virtual DCRTPolyType AutomorphismTransform(usint i, const std::vector<usint>& map) const override {
     DCRTPolyType result(*this);
     for (usint k = 0; k < m_vectors.size(); k++) {
       result.m_vectors[k] = m_vectors[k].AutomorphismTransform(i, map);
@@ -494,7 +490,8 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
       PALISADE_THROW(not_implemented_error,
                      "DCRTPolyImpl element transposition is currently "
                      "implemented only in the Evaluation representation.");
-    } else {
+    }
+    else {
       usint m = this->GetCyclotomicOrder();
       return AutomorphismTransform(m - 1);
     }
@@ -506,7 +503,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to add with.
    * @return is the result of the addition.
    */
-  virtual DCRTPolyType Plus(const DCRTPolyType &element) const override;
+  virtual DCRTPolyType Plus(const DCRTPolyType& element) const override;
 
   /**
    * @brief Performs a multiplication operation and returns the result.
@@ -514,7 +511,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to multiply with.
    * @return is the result of the multiplication.
    */
-  virtual DCRTPolyType Times(const DCRTPolyType &element) const override;
+  virtual DCRTPolyType Times(const DCRTPolyType& element) const override;
 
   /**
    * @brief Performs a subtraction operation and returns the result.
@@ -522,7 +519,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to subtract from.
    * @return is the result of the subtraction.
    */
-  virtual DCRTPolyType Minus(const DCRTPolyType &element) const override;
+  virtual DCRTPolyType Minus(const DCRTPolyType& element) const override;
 
   // SCALAR OPERATIONS
 
@@ -532,7 +529,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to add entry-wise.
    * @return is the result of the addition operation.
    */
-  virtual DCRTPolyType Plus(const Integer &element) const override;
+  virtual DCRTPolyType Plus(const Integer& element) const override;
 
   /**
    * @brief Scalar addition for elements in CRT format.
@@ -543,7 +540,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to add entry-wise.
    * @return is the result of the addition operation.
    */
-  virtual DCRTPolyType Plus(const vector<Integer> &element) const override;
+  virtual DCRTPolyType Plus(const vector<Integer>& element) const override;
 
   /**
    * @brief Scalar subtraction - subtract an element to all entries.
@@ -551,7 +548,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to subtract entry-wise.
    * @return is the return value of the minus operation.
    */
-  virtual DCRTPolyType Minus(const Integer &element) const override;
+  virtual DCRTPolyType Minus(const Integer& element) const override;
 
   /**
    * @brief Scalar subtraction for elements in CRT format.
@@ -562,7 +559,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to subtract entry-wise.
    * @return is the result of the subtraction operation.
    */
-  virtual DCRTPolyType Minus(const vector<Integer> &element) const override;
+  virtual DCRTPolyType Minus(const vector<Integer>& element) const override;
 
   /**
    * @brief Scalar multiplication - multiply all entries.
@@ -570,7 +567,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to multiply entry-wise.
    * @return is the return value of the times operation.
    */
-  virtual DCRTPolyType Times(const Integer &element) const override;
+  virtual DCRTPolyType Times(const Integer& element) const override;
 
   /**
    * @brief Scalar multiplication - multiply by a signed integer
@@ -598,7 +595,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to multiply entry-wise.
    * @return is the return value of the times operation.
    */
-  virtual DCRTPolyType Times(const std::vector<NativeInteger> &element) const override;
+  virtual DCRTPolyType Times(const std::vector<NativeInteger>& element) const override;
 
   /**
    * @brief Scalar modular multiplication by an integer represented in CRT
@@ -607,7 +604,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to multiply entry-wise.
    * @return is the return value of the times operation.
    */
-  virtual DCRTPolyType Times(const std::vector<Integer> &element) const override;
+  virtual DCRTPolyType Times(const std::vector<Integer>& element) const override;
 
   /**
    * @brief Performs a negation operation and returns the result.
@@ -616,10 +613,9 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    */
   virtual DCRTPolyType Negate() const override;
 
-  virtual const DCRTPolyType &operator+=(const Integer &element) override {
+  virtual const DCRTPolyType& operator+=(const Integer& element) override {
     for (usint i = 0; i < this->GetNumOfElements(); i++) {
-      this->m_vectors[i] +=
-          (element.Mod(this->m_vectors[i].GetModulus())).ConvertToInt();
+      this->m_vectors[i] += (element.Mod(this->m_vectors[i].GetModulus())).ConvertToInt();
     }
     return *this;
   }
@@ -630,10 +626,9 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to subtract from.
    * @return is the result of the subtraction.
    */
-  virtual const DCRTPolyType &operator-=(const Integer &element) override {
+  virtual const DCRTPolyType& operator-=(const Integer& element) override {
     for (usint i = 0; i < this->GetNumOfElements(); i++) {
-      this->m_vectors[i] -=
-          (element.Mod(this->m_vectors[i].GetModulus())).ConvertToInt();
+      this->m_vectors[i] -= (element.Mod(this->m_vectors[i].GetModulus())).ConvertToInt();
     }
     return *this;
   }
@@ -644,7 +639,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to multiply by.
    * @return is the result of the multiplication.
    */
-  virtual const DCRTPolyType &operator*=(const Integer &element) override;
+  virtual const DCRTPolyType& operator*=(const Integer& element) override;
 
   /**
    * @brief Performs an multiplication operation and returns the result.
@@ -652,14 +647,14 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &element is the element to multiply with.
    * @return is the result of the multiplication.
    */
-  virtual const DCRTPolyType &operator*=(const DCRTPolyType &element) override;
+  virtual const DCRTPolyType& operator*=(const DCRTPolyType& element) override;
 
   /**
    * @brief Get value of element at index i.
    *
    * @return value at index i.
    */
-  virtual PolyType &ElementAtIndex(usint i) override;
+  virtual PolyType& ElementAtIndex(usint i) override;
 
   // multiplicative inverse operation
   /**
@@ -677,7 +672,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param index where the element should be set
    * @param element The element to store
    */
-  virtual void SetElementAtIndex(usint index, const PolyType &element) override {
+  virtual void SetElementAtIndex(usint index, const PolyType& element) override {
     m_vectors[index] = element;
   }
 
@@ -687,7 +682,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param index where the element should be set
    * @param element The element to store
    */
-  virtual void SetElementAtIndex(usint index, PolyType &&element) override {
+  virtual void SetElementAtIndex(usint index, PolyType&& element) override {
     m_vectors[index] = std::move(element);
   }
 
@@ -705,9 +700,8 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @brief Add uniformly random values to all components except for the first
    * one
    */
-  virtual DCRTPolyType AddRandomNoise(const Integer &modulus) const override {
-    PALISADE_THROW(not_implemented_error,
-                   "AddRandomNoise is not currently implemented for DCRTPoly");
+  virtual DCRTPolyType AddRandomNoise(const Integer& modulus) const override {
+    PALISADE_THROW(not_implemented_error, "AddRandomNoise is not currently implemented for DCRTPoly");
   }
 
   /**
@@ -716,7 +710,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    *
    * @param &wFactor ratio between the sparse and none-sparse values.
    */
-  virtual void MakeSparse(const uint32_t &wFactor) override;
+  virtual void MakeSparse(const uint32_t& wFactor) override;
 
   /**
    * @brief Returns true if ALL the tower(s) are empty.
@@ -745,11 +739,10 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &qlInvModq precomputed values for [q_l^{-1}]_{q_i}
    * @param &qlInvModqPrecon NTL-specific precomputations
    */
-  virtual void DropLastElementAndScale(
-      const std::vector<NativeInteger> &QlQlInvModqlDivqlModq,
-      const std::vector<NativeInteger> &QlQlInvModqlDivqlModqPrecon,
-      const std::vector<NativeInteger> &qlInvModq,
-      const std::vector<NativeInteger> &qlInvModqPrecon) override;
+  virtual void DropLastElementAndScale(const std::vector<NativeInteger>& QlQlInvModqlDivqlModq,
+                                       const std::vector<NativeInteger>& QlQlInvModqlDivqlModqPrecon,
+                                       const std::vector<NativeInteger>& qlInvModq,
+                                       const std::vector<NativeInteger>& qlInvModqPrecon) override;
 
   /**
    * @brief ModReduces reduces the DCRTPoly element's composite modulus by
@@ -763,12 +756,10 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &qlInvModq precomputed values for [q_{l}^{-1}]_{q_i}
    * @param &qlInvModqPrecon NTL-specific precomputations for [q_{l}^{-1}]_{q_i}
    */
-  virtual void ModReduce(const NativeInteger &t,
-                 const std::vector<NativeInteger> &tModqPrecon,
-                 const NativeInteger &negtInvModq,
-                 const NativeInteger &negtInvModqPrecon,
-                 const std::vector<NativeInteger> &qlInvModq,
-                 const std::vector<NativeInteger> &qlInvModqPrecon) override;
+  virtual void ModReduce(const NativeInteger& t, const std::vector<NativeInteger>& tModqPrecon,
+                         const NativeInteger& negtInvModq, const NativeInteger& negtInvModqPrecon,
+                         const std::vector<NativeInteger>& qlInvModq,
+                         const std::vector<NativeInteger>& qlInvModqPrecon) override;
 
   /**
    * @brief Interpolates the DCRTPoly to an Poly based on the Chinese Remainder
@@ -832,13 +823,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &modpBarrettMu 128-bit Barrett reduction precomputed values
    * @return the representation of {X + alpha*Q} in basis {P}.
    */
-  virtual DCRTPolyType ApproxSwitchCRTBasis(
-      const std::shared_ptr<Params> paramsQ,
-      const std::shared_ptr<Params> paramsP,
-      const std::vector<NativeInteger> &QHatInvModq,
-      const std::vector<NativeInteger> &QHatInvModqPrecon,
-      const std::vector<std::vector<NativeInteger>> &QHatModp,
-      const std::vector<DoubleNativeInt> &modpBarrettMu) const override;
+  virtual DCRTPolyType ApproxSwitchCRTBasis(const std::shared_ptr<Params> paramsQ,
+                                            const std::shared_ptr<Params> paramsP,
+                                            const std::vector<NativeInteger>& QHatInvModq,
+                                            const std::vector<NativeInteger>& QHatInvModqPrecon,
+                                            const std::vector<std::vector<NativeInteger>>& QHatModp,
+                                            const std::vector<DoubleNativeInt>& modpBarrettMu) const override;
 
   /**
    * @brief Performs approximate modulus raising:
@@ -863,13 +853,11 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * p_j
    * @return the representation of {X + alpha*Q} in basis {Q,P}.
    */
-  virtual void ApproxModUp(const shared_ptr<Params> paramsQ,
-                   const shared_ptr<Params> paramsP,
-                   const shared_ptr<Params> paramsQP,
-                   const vector<NativeInteger> &QHatInvModq,
-                   const vector<NativeInteger> &QHatInvModqPrecon,
-                   const vector<vector<NativeInteger>> &QHatModp,
-                   const vector<DoubleNativeInt> &modpBarrettMu) override;
+  virtual void ApproxModUp(const shared_ptr<Params> paramsQ, const shared_ptr<Params> paramsP,
+                           const shared_ptr<Params> paramsQP, const vector<NativeInteger>& QHatInvModq,
+                           const vector<NativeInteger>& QHatInvModqPrecon,
+                           const vector<vector<NativeInteger>>& QHatModp,
+                           const vector<DoubleNativeInt>& modpBarrettMu) override;
 
   /**
    * @brief Performs approximate modulus reduction:
@@ -900,17 +888,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @return the representation of {\approx(X/P)}_{Q}
    */
   virtual DCRTPolyType ApproxModDown(
-      const shared_ptr<Params> paramsQ, const shared_ptr<Params> paramsP,
-      const vector<NativeInteger> &PInvModq,
-      const vector<NativeInteger> &PInvModqPrecon,
-      const vector<NativeInteger> &PHatInvModp,
-      const vector<NativeInteger> &PHatInvModpPrecon,
-      const vector<vector<NativeInteger>> &PHatModq,
-      const vector<DoubleNativeInt> &modqBarrettMu,
-      const vector<NativeInteger> &tInvModp = vector<NativeInteger>(),
-      const vector<NativeInteger> &tInvModpPrecon = vector<NativeInteger>(),
-      const NativeInteger &t = 0,
-      const vector<NativeInteger> &tModqPrecon = vector<NativeInteger>()) const override;
+    const shared_ptr<Params> paramsQ, const shared_ptr<Params> paramsP, const vector<NativeInteger>& PInvModq,
+    const vector<NativeInteger>& PInvModqPrecon, const vector<NativeInteger>& PHatInvModp,
+    const vector<NativeInteger>& PHatInvModpPrecon, const vector<vector<NativeInteger>>& PHatModq,
+    const vector<DoubleNativeInt>& modqBarrettMu, const vector<NativeInteger>& tInvModp = vector<NativeInteger>(),
+    const vector<NativeInteger>& tInvModpPrecon = vector<NativeInteger>(), const NativeInteger& t = 0,
+    const vector<NativeInteger>& tModqPrecon = vector<NativeInteger>()) const override;
 
   /**
    * @brief Performs CRT basis switching:
@@ -937,14 +920,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @params &qInv precomputed values for 1/q_i
    * @return the representation of {X}_{P}
    */
-  virtual DCRTPolyType SwitchCRTBasis(
-      const shared_ptr<Params> paramsP,
-      const std::vector<NativeInteger> &QHatInvModq,
-      const std::vector<NativeInteger> &QHatInvModqPrecon,
-      const std::vector<std::vector<NativeInteger>> &QHatModp,
-      const std::vector<std::vector<NativeInteger>> &alphaQModp,
-      const std::vector<DoubleNativeInt> &modpBarrettMu,
-      const std::vector<double> &qInv) const override;
+  virtual DCRTPolyType SwitchCRTBasis(const shared_ptr<Params> paramsP, const std::vector<NativeInteger>& QHatInvModq,
+                                      const std::vector<NativeInteger>& QHatInvModqPrecon,
+                                      const std::vector<std::vector<NativeInteger>>& QHatModp,
+                                      const std::vector<std::vector<NativeInteger>>& alphaQModp,
+                                      const std::vector<DoubleNativeInt>& modpBarrettMu,
+                                      const std::vector<double>& qInv) const override;
 
   /**
    * @brief Performs modulus raising:
@@ -973,15 +954,13 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param resultFormat Specifies the format we want the result to be in
    *
    */
-  virtual void ExpandCRTBasis(const shared_ptr<Params> paramsQP,
-                      const shared_ptr<Params> paramsP,
-                      const std::vector<NativeInteger> &QHatInvModq,
-                      const std::vector<NativeInteger> &QHatInvModqPrecon,
-                      const std::vector<std::vector<NativeInteger>> &QHatModp,
-                      const std::vector<std::vector<NativeInteger>> &alphaQModp,
-                      const std::vector<DoubleNativeInt> &modpBarrettMu,
-                      const std::vector<double> &qInv,
-                      Format resultFormat = EVALUATION) override;
+  virtual void ExpandCRTBasis(const shared_ptr<Params> paramsQP, const shared_ptr<Params> paramsP,
+                              const std::vector<NativeInteger>& QHatInvModq,
+                              const std::vector<NativeInteger>& QHatInvModqPrecon,
+                              const std::vector<std::vector<NativeInteger>>& QHatModp,
+                              const std::vector<std::vector<NativeInteger>>& alphaQModp,
+                              const std::vector<DoubleNativeInt>& modpBarrettMu, const std::vector<double>& qInv,
+                              Format resultFormat = EVALUATION) override;
 
   /**
    * @brief Performs scale and round:
@@ -1010,14 +989,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @return the result of computation as a polynomial with native 64-bit
    * coefficients
    */
-  virtual PolyType ScaleAndRound(
-      const NativeInteger &t,
-      const std::vector<NativeInteger> &tQHatInvModqDivqModt,
-      const std::vector<NativeInteger> &tQHatInvModqDivqModtPrecon,
-      const std::vector<NativeInteger> &tQHatInvModqBDivqModt,
-      const std::vector<NativeInteger> &tQHatInvModqBDivqModtPrecon,
-      const std::vector<double> &tQHatInvModqDivqFrac,
-      const std::vector<double> &tQHatInvModqBDivqFrac) const override;
+  virtual PolyType ScaleAndRound(const NativeInteger& t, const std::vector<NativeInteger>& tQHatInvModqDivqModt,
+                                 const std::vector<NativeInteger>& tQHatInvModqDivqModtPrecon,
+                                 const std::vector<NativeInteger>& tQHatInvModqBDivqModt,
+                                 const std::vector<NativeInteger>& tQHatInvModqBDivqModtPrecon,
+                                 const std::vector<double>& tQHatInvModqDivqFrac,
+                                 const std::vector<double>& tQHatInvModqBDivqFrac) const override;
 
   /**
    * @brief Computes approximate scale and round:
@@ -1041,10 +1018,9 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * p_j
    * @return the result {\approx{t/Q * X}}_{P}
    */
-  virtual DCRTPolyType ApproxScaleAndRound(
-      const shared_ptr<Params> paramsP,
-      const std::vector<std::vector<NativeInteger>> &tPSHatInvModsDivsModp,
-      const std::vector<DoubleNativeInt> &modpBarretMu) const override;
+  virtual DCRTPolyType ApproxScaleAndRound(const shared_ptr<Params> paramsP,
+                                           const std::vector<std::vector<NativeInteger>>& tPSHatInvModsDivsModp,
+                                           const std::vector<DoubleNativeInt>& modpBarretMu) const override;
 
   /**
    * @brief Computes scale and round:
@@ -1071,11 +1047,10 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * p_j
    * @return the result {t/Q * X}_{P}
    */
-  virtual DCRTPolyType ScaleAndRound(
-      const shared_ptr<Params> paramsP,
-      const std::vector<std::vector<NativeInteger>> &tPSHatInvModsDivsModp,
-      const std::vector<double> &tPSHatInvModsDivsFrac,
-      const std::vector<DoubleNativeInt> &modpBarretMu) const override;
+  virtual DCRTPolyType ScaleAndRound(const shared_ptr<Params> paramsP,
+                                     const std::vector<std::vector<NativeInteger>>& tPSHatInvModsDivsModp,
+                                     const std::vector<double>& tPSHatInvModsDivsFrac,
+                                     const std::vector<DoubleNativeInt>& modpBarretMu) const override;
 
   /**
    * @brief Computes scale and round for fast rounding:
@@ -1098,13 +1073,11 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &negInvqModtgammaPrecon NTL-specific precomputations
    * @return
    */
-  virtual PolyType ScaleAndRound(
-      const std::vector<NativeInteger> &moduliQ, const NativeInteger &t,
-      const NativeInteger &tgamma,
-      const std::vector<NativeInteger> &tgammaQHatModq,
-      const std::vector<NativeInteger> &tgammaQHatModqPrecon,
-      const std::vector<NativeInteger> &negInvqModtgamma,
-      const std::vector<NativeInteger> &negInvqModtgammaPrecon) const override;
+  virtual PolyType ScaleAndRound(const std::vector<NativeInteger>& moduliQ, const NativeInteger& t,
+                                 const NativeInteger& tgamma, const std::vector<NativeInteger>& tgammaQHatModq,
+                                 const std::vector<NativeInteger>& tgammaQHatModqPrecon,
+                                 const std::vector<NativeInteger>& negInvqModtgamma,
+                                 const std::vector<NativeInteger>& negInvqModtgammaPrecon) const override;
 
   /**
    * @brief Expands basis:
@@ -1136,19 +1109,13 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &mtildeInvModbskPrecon NTL-specific precomputations
    */
   virtual void FastBaseConvqToBskMontgomery(
-      const shared_ptr<Params> paramsBsk,
-      const std::vector<NativeInteger> &moduliQ,
-      const std::vector<NativeInteger> &moduliBsk,
-      const std::vector<DoubleNativeInt> &modbskBarrettMu,
-      const std::vector<NativeInteger> &mtildeQHatInvModq,
-      const std::vector<NativeInteger> &mtildeQHatInvModqPrecon,
-      const std::vector<std::vector<NativeInteger>> &QHatModbsk,
-      const std::vector<uint16_t> &QHatModmtilde,
-      const std::vector<NativeInteger> &QModbsk,
-      const std::vector<NativeInteger> &QModbskPrecon,
-      const uint16_t &negQInvModmtilde,
-      const std::vector<NativeInteger> &mtildeInvModbsk,
-      const std::vector<NativeInteger> &mtildeInvModbskPrecon) override;
+    const shared_ptr<Params> paramsBsk, const std::vector<NativeInteger>& moduliQ,
+    const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
+    const std::vector<NativeInteger>& mtildeQHatInvModq, const std::vector<NativeInteger>& mtildeQHatInvModqPrecon,
+    const std::vector<std::vector<NativeInteger>>& QHatModbsk, const std::vector<uint16_t>& QHatModmtilde,
+    const std::vector<NativeInteger>& QModbsk, const std::vector<NativeInteger>& QModbskPrecon,
+    const uint16_t& negQInvModmtilde, const std::vector<NativeInteger>& mtildeInvModbsk,
+    const std::vector<NativeInteger>& mtildeInvModbskPrecon) override;
 
   /**
    * @brief Computes scale and floor:
@@ -1174,16 +1141,12 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &tQInvModbsk: [t*Q^{-1}]_{bsk_j}
    * @param &tQInvModbskPrecon: NTL-specific precomputations
    */
-  virtual void FastRNSFloorq(const NativeInteger &t,
-                     const std::vector<NativeInteger> &moduliQ,
-                     const std::vector<NativeInteger> &moduliBsk,
-                     const std::vector<DoubleNativeInt> &modbskBarrettMu,
-                     const std::vector<NativeInteger> &tQHatInvModq,
-                     const std::vector<NativeInteger> &tQHatInvModqPrecon,
-                     const std::vector<std::vector<NativeInteger>> &QHatModbsk,
-                     const std::vector<std::vector<NativeInteger>> &qInvModbsk,
-                     const std::vector<NativeInteger> &tQInvModbsk,
-                     const std::vector<NativeInteger> &tQInvModbskPrecon) override;
+  virtual void FastRNSFloorq(
+    const NativeInteger& t, const std::vector<NativeInteger>& moduliQ, const std::vector<NativeInteger>& moduliBsk,
+    const std::vector<DoubleNativeInt>& modbskBarrettMu, const std::vector<NativeInteger>& tQHatInvModq,
+    const std::vector<NativeInteger>& tQHatInvModqPrecon, const std::vector<std::vector<NativeInteger>>& QHatModbsk,
+    const std::vector<std::vector<NativeInteger>>& qInvModbsk, const std::vector<NativeInteger>& tQInvModbsk,
+    const std::vector<NativeInteger>& tQInvModbskPrecon) override;
 
   /**
    * @brief @brief Converts basis:
@@ -1213,18 +1176,13 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * @param &BModq: [B]_{q_i}
    * @param &BModqPrecon NTL precomptations for [B]_{q_i}
    */
-  virtual void FastBaseConvSK(const std::vector<NativeInteger> &moduliQ,
-                      const std::vector<DoubleNativeInt> &modqBarrettMu,
-                      const std::vector<NativeInteger> &moduliBsk,
-                      const std::vector<DoubleNativeInt> &modbskBarrettMu,
-                      const std::vector<NativeInteger> &BHatInvModb,
-                      const std::vector<NativeInteger> &BHatInvModbPrecon,
-                      const std::vector<NativeInteger> &BHatModmsk,
-                      const NativeInteger &BInvModmsk,
-                      const NativeInteger &BInvModmskPrecon,
-                      const std::vector<std::vector<NativeInteger>> &BHatModq,
-                      const std::vector<NativeInteger> &BModq,
-                      const std::vector<NativeInteger> &BModqPrecon) override;
+  virtual void FastBaseConvSK(
+    const std::vector<NativeInteger>& moduliQ, const std::vector<DoubleNativeInt>& modqBarrettMu,
+    const std::vector<NativeInteger>& moduliBsk, const std::vector<DoubleNativeInt>& modbskBarrettMu,
+    const std::vector<NativeInteger>& BHatInvModb, const std::vector<NativeInteger>& BHatInvModbPrecon,
+    const std::vector<NativeInteger>& BHatModmsk, const NativeInteger& BInvModmsk,
+    const NativeInteger& BInvModmskPrecon, const std::vector<std::vector<NativeInteger>>& BHatModq,
+    const std::vector<NativeInteger>& BModq, const std::vector<NativeInteger>& BModqPrecon) override;
 
   /**
    * @brief Convert from Coefficient to CRT or vice versa; calls FFT and inverse
@@ -1242,11 +1200,9 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * ASSUMPTION: This method assumes that the caller provides the correct
    * rootOfUnity for the modulus
    */
-  virtual void SwitchModulus(const Integer &modulus, const Integer &rootOfUnity,
-                     const Integer &modulusArb = Integer(0),
-                     const Integer &rootOfUnityArb = Integer(0)) override {
-    PALISADE_THROW(not_implemented_error,
-                   "SwitchModulus not implemented on DCRTPoly");
+  virtual void SwitchModulus(const Integer& modulus, const Integer& rootOfUnity, const Integer& modulusArb = Integer(0),
+                             const Integer& rootOfUnityArb = Integer(0)) override {
+    PALISADE_THROW(not_implemented_error, "SwitchModulus not implemented on DCRTPoly");
   }
 
   /**
@@ -1258,8 +1214,7 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
    * ASSUMPTION: This method assumes that the caller provides the correct
    * rootOfUnity for the modulus
    */
-  virtual void SwitchModulusAtIndex(usint index, const Integer &modulus,
-                            const Integer &rootOfUnity) override;
+  virtual void SwitchModulusAtIndex(usint index, const Integer& modulus, const Integer& rootOfUnity) override;
 
   /**
    * @brief Determines if inverse exists
@@ -1278,32 +1233,34 @@ class DCRTPolyImpl : public DCRTPolyInterface<DCRTPolyImpl<VecType>, VecType, Na
   virtual double Norm() const override;
 
   template <class Archive>
-  void save(Archive &ar, std::uint32_t const version) const {
+  void save(Archive& ar, std::uint32_t const version) const {
     ar(::cereal::make_nvp("v", m_vectors));
     ar(::cereal::make_nvp("f", this->m_format));
     ar(::cereal::make_nvp("p", this->m_params));
   }
 
   template <class Archive>
-  void load(Archive &ar, std::uint32_t const version) {
+  void load(Archive& ar, std::uint32_t const version) {
     if (version > SerializedVersion()) {
-      PALISADE_THROW(deserialize_error,
-                     "serialized object version " + std::to_string(version) +
-                         " is from a later version of the library");
+      PALISADE_THROW(
+        deserialize_error,
+        "serialized object version " + std::to_string(version) + " is from a later version of the library");
     }
     ar(::cereal::make_nvp("v", m_vectors));
     ar(::cereal::make_nvp("f", this->m_format));
     ar(::cereal::make_nvp("p", this->m_params));
   }
 
-  std::string SerializedObjectName() const override { return "DCRTPoly"; }
-  static uint32_t SerializedVersion() { return 1; }
+  std::string SerializedObjectName() const override {
+    return "DCRTPoly";
+  }
+  static uint32_t SerializedVersion() {
+    return 1;
+  }
 
  protected:
-
   // array of vectors used for double-CRT presentation
   std::vector<PolyType> m_vectors;
-
 };
 }  // namespace lbcrypto
 

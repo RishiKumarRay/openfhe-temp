@@ -50,65 +50,56 @@ using ModulusM = std::pair<NativeInteger, uint64_t>;
  * computing on vectors of integers. It is NOT supported for DCRTPoly
  */
 
-class PackedEncoding : public PlaintextImpl {
+class PackedEncoding : public PlaintextImpl
+{
   vector<int64_t> value;
 
  public:
   // these two constructors are used inside of Decrypt
-  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep,
-                 vector<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep,
-                 vector<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
-                 vector<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, vector<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep,
-                 std::initializer_list<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep,
-                 std::initializer_list<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
-  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep,
-                 std::initializer_list<int64_t> coeffs)
-      : PlaintextImpl(vp, ep), value(coeffs) {}
+  PackedEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, std::initializer_list<int64_t> coeffs) :
+      PlaintextImpl(vp, ep), value(coeffs) {}
 
   /**
    * @brief Constructs a container with a copy of each of the elements in rhs,
    * in the same order.
    * @param rhs - The input object to copy.
    */
-  explicit PackedEncoding(const std::vector<int64_t> &rhs)
-      : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(rhs) {}
+  explicit PackedEncoding(const std::vector<int64_t>& rhs) :
+      PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(rhs) {}
 
   /**
    * @brief Constructs a container with a copy of each of the elements in il, in
    * the same order.
    * @param arr the list to copy.
    */
-  PackedEncoding(std::initializer_list<int64_t> arr)
-      : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(arr) {}
+  PackedEncoding(std::initializer_list<int64_t> arr) :
+      PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value(arr) {}
 
   /**
    * @brief Default empty constructor with empty uninitialized data elements.
    */
-  PackedEncoding()
-      : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value() {}
+  PackedEncoding() : PlaintextImpl(shared_ptr<Poly::Params>(0), nullptr), value() {}
 
   static usint GetAutomorphismGenerator(usint m) {
     return m_automorphismGenerator[m];
@@ -118,26 +109,34 @@ class PackedEncoding : public PlaintextImpl {
 
   bool Decode();
 
-  const vector<int64_t> &GetPackedValue() const { return value; }
+  const vector<int64_t>& GetPackedValue() const {
+    return value;
+  }
 
   /**
    * SetIntVectorValue
    * @param val integer vector to initialize the plaintext
    */
-  void SetIntVectorValue(const vector<int64_t> &val) { value = val; }
+  void SetIntVectorValue(const vector<int64_t>& val) {
+    value = val;
+  }
 
   /**
    * GetEncodingType
    * @return this is a Packed encoding
    */
-  PlaintextEncodings GetEncodingType() const { return Packed; }
+  PlaintextEncodings GetEncodingType() const {
+    return Packed;
+  }
 
   /**
    * Get method to return the length of plaintext
    *
    * @return the length of the plaintext in terms of the number of bits.
    */
-  size_t GetLength() const { return value.size(); }
+  size_t GetLength() const {
+    return value.size();
+  }
 
   /**
    * @brief Method to set encoding params
@@ -152,14 +151,16 @@ class PackedEncoding : public PlaintextImpl {
    * @param m the encoding cyclotomic order.
    * @params modulus is the plaintext modulus
    */
-  static void SetParams(usint m, const PlaintextModulus &modulus)
-      __attribute__((deprecated("use SetParams(usint m, EncodingParams p)")));
+  static void SetParams(usint m, const PlaintextModulus& modulus)
+    __attribute__((deprecated("use SetParams(usint m, EncodingParams p)")));
 
   /**
    * SetLength of the plaintext to the given size
    * @param siz
    */
-  void SetLength(size_t siz) { value.resize(siz); }
+  void SetLength(size_t siz) {
+    value.resize(siz);
+  }
 
   /**
    * Method to compare two plaintext to test for equivalence.  This method does
@@ -168,8 +169,8 @@ class PackedEncoding : public PlaintextImpl {
    * @param other - the other plaintext to compare to.
    * @return whether the two plaintext are equivalent.
    */
-  bool CompareTo(const PlaintextImpl &other) const {
-    const auto &rv = static_cast<const PackedEncoding &>(other);
+  bool CompareTo(const PlaintextImpl& other) const {
+    const auto& rv = static_cast<const PackedEncoding&>(other);
     return this->value == rv.value;
   }
 
@@ -178,14 +179,15 @@ class PackedEncoding : public PlaintextImpl {
    */
   static void Destroy();
 
-  void PrintValue(std::ostream &out) const {
+  void PrintValue(std::ostream& out) const {
     // for sanity's sake, trailing zeros get elided into "..."
     out << "(";
     size_t i = value.size();
     while (--i > 0)
       if (value[i] != 0) break;
 
-    for (size_t j = 0; j <= i; j++) out << ' ' << value[j];
+    for (size_t j = 0; j <= i; j++)
+      out << ' ' << value[j];
 
     out << " ... )";
   }
@@ -202,7 +204,7 @@ class PackedEncoding : public PlaintextImpl {
   static std::map<usint, std::vector<usint>> m_toCRTPerm;
   static std::map<usint, std::vector<usint>> m_fromCRTPerm;
 
-  static void SetParams_2n(usint m, const NativeInteger &modulusNI);
+  static void SetParams_2n(usint m, const NativeInteger& modulusNI);
 
   static void SetParams_2n(usint m, EncodingParams params);
 
@@ -213,7 +215,7 @@ class PackedEncoding : public PlaintextImpl {
    * @param modulus is the plaintext modulus used for packing.
    */
   template <typename P>
-  void Pack(P *ring, const PlaintextModulus &modulus) const;
+  void Pack(P* ring, const PlaintextModulus& modulus) const;
 
   /**
    * @brief Unpacks the data from aggregated plaintext to slot values.
@@ -222,7 +224,7 @@ class PackedEncoding : public PlaintextImpl {
    * @param modulus is the plaintext modulus used in packing operation.
    */
   template <typename P>
-  void Unpack(P *ring, const PlaintextModulus &modulus) const;
+  void Unpack(P* ring, const PlaintextModulus& modulus) const;
 };
 
 }  // namespace lbcrypto

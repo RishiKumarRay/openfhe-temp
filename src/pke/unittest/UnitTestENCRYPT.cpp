@@ -38,7 +38,8 @@ using namespace lbcrypto;
 // This file unit tests the ENCRYPTION capabilities for all schemes, using all
 // known elements
 
-class Encrypt_Decrypt : public ::testing::Test {
+class Encrypt_Decrypt : public ::testing::Test
+{
  public:
   virtual ~Encrypt_Decrypt() {}
 
@@ -79,34 +80,30 @@ class Encrypt_Decrypt : public ::testing::Test {
 
 template <typename Element>
 void EncryptionString(const CryptoContext<Element> cc, const string& failmsg) {
-  string value =
-      "You keep using that word. I do not think it means what you think it "
-      "means";
-  Plaintext plaintext =
-      CryptoContextImpl<Element>::MakePlaintext(String, cc, value);
+  string value = "You keep using that word. I do not think it means what you think it "
+                 "means";
+  Plaintext plaintext = CryptoContextImpl<Element>::MakePlaintext(String, cc, value);
 
   LPKeyPair<Element> kp = cc->KeyGen();
-  EXPECT_EQ(kp.good(), true)
-      << failmsg << " key generation for string encrypt/decrypt failed";
+  EXPECT_EQ(kp.good(), true) << failmsg << " key generation for string encrypt/decrypt failed";
 
   Ciphertext<Element> ciphertext = cc->Encrypt(kp.publicKey, plaintext);
   Plaintext plaintextNew;
   cc->Decrypt(kp.secretKey, ciphertext, &plaintextNew);
-  EXPECT_EQ(*plaintext, *plaintextNew)
-      << failmsg << " string encrypt/decrypt failed";
+  EXPECT_EQ(*plaintext, *plaintextNew) << failmsg << " string encrypt/decrypt failed";
 }
 
 GENERATE_TEST_CASES_FUNC(Encrypt_Decrypt, EncryptionString, 512, 256)
 
 template <typename Element>
-void EncryptionCoefPacked(const CryptoContext<Element> cc,
-                          const string& failmsg) {
+void EncryptionCoefPacked(const CryptoContext<Element> cc, const string& failmsg) {
   size_t intSize = cc->GetRingDimension();
-  auto ptm = cc->GetCryptoParameters()->GetPlaintextModulus();
-  int half = ptm / 2;
+  auto ptm       = cc->GetCryptoParameters()->GetPlaintextModulus();
+  int half       = ptm / 2;
 
   vector<int64_t> intvec;
-  for (size_t ii = 0; ii < intSize; ii++) intvec.push_back(rand() % half);
+  for (size_t ii = 0; ii < intSize; ii++)
+    intvec.push_back(rand() % half);
   Plaintext plaintextInt = cc->MakeCoefPackedPlaintext(intvec);
 
   vector<int64_t> sintvec;
@@ -118,21 +115,18 @@ void EncryptionCoefPacked(const CryptoContext<Element> cc,
   Plaintext plaintextSInt = cc->MakeCoefPackedPlaintext(sintvec);
 
   LPKeyPair<Element> kp = cc->KeyGen();
-  EXPECT_EQ(kp.good(), true)
-      << failmsg << " key generation for coef packed encrypt/decrypt failed";
+  EXPECT_EQ(kp.good(), true) << failmsg << " key generation for coef packed encrypt/decrypt failed";
 
   Ciphertext<Element> ciphertext4 = cc->Encrypt(kp.publicKey, plaintextInt);
   Plaintext plaintextIntNew;
   cc->Decrypt(kp.secretKey, ciphertext4, &plaintextIntNew);
-  EXPECT_EQ(*plaintextIntNew, *plaintextInt)
-      << failmsg << "coef packed encrypt/decrypt failed for integer plaintext";
+  EXPECT_EQ(*plaintextIntNew, *plaintextInt) << failmsg << "coef packed encrypt/decrypt failed for integer plaintext";
 
   Ciphertext<Element> ciphertext5 = cc->Encrypt(kp.publicKey, plaintextSInt);
   Plaintext plaintextSIntNew;
   cc->Decrypt(kp.secretKey, ciphertext5, &plaintextSIntNew);
   EXPECT_EQ(*plaintextSIntNew, *plaintextSInt)
-      << failmsg
-      << "coef packed encrypt/decrypt failed for signed integer plaintext";
+    << failmsg << "coef packed encrypt/decrypt failed for signed integer plaintext";
 }
 
 GENERATE_TEST_CASES_FUNC(Encrypt_Decrypt, EncryptionCoefPacked, 128, 512)

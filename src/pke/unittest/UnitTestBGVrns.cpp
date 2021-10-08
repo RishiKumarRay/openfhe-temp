@@ -36,7 +36,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTBGVrns : public ::testing::Test {
+class UTBGVrns : public ::testing::Test
+{
  public:
   const usint m = 16;
   UTBGVrns() {}
@@ -51,31 +52,23 @@ class UTBGVrns : public ::testing::Test {
   }
 };
 
-#define GENERATE_TEST_CASES_FUNC_BV(x, y, ORD, PTM, SIZEMODULI, NUMPRIME,      \
-                                    RELIN, BATCH)                              \
-  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI,      \
-                            NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, MANUAL) \
-      GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI,  \
-                                NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE,     \
-                                AUTO)
+#define GENERATE_TEST_CASES_FUNC_BV(x, y, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)              \
+  GENERATE_BGVrns_TEST_CASE(                                                                         \
+    x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, MANUAL) \
+    GENERATE_BGVrns_TEST_CASE(                                                                       \
+      x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BV, BATCH, APPROXRESCALE, AUTO)
 
-#define GENERATE_TEST_CASES_FUNC_GHS(x, y, ORD, PTM, SIZEMODULI, NUMPRIME,    \
-                                     RELIN, BATCH)                            \
-  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI,     \
-                            NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE,       \
-                            MANUAL)                                           \
-      GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, \
-                                NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE,   \
-                                AUTO)
+#define GENERATE_TEST_CASES_FUNC_GHS(x, y, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)              \
+  GENERATE_BGVrns_TEST_CASE(                                                                          \
+    x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE, MANUAL) \
+    GENERATE_BGVrns_TEST_CASE(                                                                        \
+      x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, GHS, BATCH, APPROXRESCALE, AUTO)
 
-#define GENERATE_TEST_CASES_FUNC_HYBRID(x, y, ORD, PTM, SIZEMODULI, NUMPRIME,  \
-                                        RELIN, BATCH)                          \
-  GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI,      \
-                            NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE,     \
-                            MANUAL)                                            \
-      GENERATE_BGVrns_TEST_CASE(x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI,  \
-                                NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, \
-                                AUTO)
+#define GENERATE_TEST_CASES_FUNC_HYBRID(x, y, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)              \
+  GENERATE_BGVrns_TEST_CASE(                                                                             \
+    x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, MANUAL) \
+    GENERATE_BGVrns_TEST_CASE(                                                                           \
+      x, y, DCRTPoly, BGVrns, ORD, PTM, SIZEMODULI, NUMPRIME, RELIN, HYBRID, BATCH, APPROXRESCALE, AUTO)
 
 /* *
  * ORDER: Cyclotomic order. Must be a power of 2 for BGVrns.
@@ -85,24 +78,21 @@ class UTBGVrns : public ::testing::Test {
  * RELIN: The bit decomposition count used in BV relinearization.
  * PTM: The plaintext modulus.
  */
-static const usint ORDER = 1024;  // 16384;
+static const usint ORDER      = 1024;  // 16384;
 static const usint SIZEMODULI = 50;
-static const usint NUMPRIME = 8;
-static const usint RELIN = 0;
-static const usint PTM = 65537;
-static const usint BATCH = 16;
+static const usint NUMPRIME   = 8;
+static const usint RELIN      = 0;
+static const usint PTM        = 65537;
+static const usint BATCH      = 16;
 
 /**
  * Tests whether addition for BGVrns works properly.
  */
 template <class Element>
-static void UnitTest_Add_Packed(const CryptoContext<Element> cc,
-                                const string& failmsg) {
+static void UnitTest_Add_Packed(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // vectorOfInts1 = { 0,1,2,3,4,5,6,7 };
   std::vector<int64_t> vectorOfInts1(vecSize);
@@ -226,8 +216,7 @@ static void UnitTest_Add_Packed(const CryptoContext<Element> cc,
   results->SetLength(plaintextSub->GetLength());
   tmp_a = plaintextSub->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(tmp_a, tmp_b,
-                failmsg + " EvalSub Ct and Pt fails fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " EvalSub Ct and Pt fails fails");
 
   /* Testing EvalNegate
    */
@@ -239,24 +228,18 @@ static void UnitTest_Add_Packed(const CryptoContext<Element> cc,
   checkEquality(tmp_a, tmp_b, failmsg + " EvalNegate fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Add_Packed, ORDER, PTM,
-                            SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Add_Packed, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Add_Packed, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Add_Packed, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Add_Packed, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Add_Packed, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 /**
  * Tests whether multiplication for BGVrns works properly.
  */
 template <class Element>
-static void UnitTest_Mult_Packed(const CryptoContext<Element> cc,
-                                 const string& failmsg) {
+static void UnitTest_Mult_Packed(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
-  const auto cryptoParams =
-      std::dynamic_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::dynamic_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // vectorOfInts1 = { 0,1,2,3,4,5,6,7 };
   std::vector<int64_t> vectorOfInts1(vecSize);
@@ -342,28 +325,21 @@ static void UnitTest_Mult_Packed(const CryptoContext<Element> cc,
   results->SetLength(plaintextMult->GetLength());
   tmp_a = plaintextMult->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(tmp_a, tmp_b,
-                failmsg + " EvalMultNoRelin Ct and Ct fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " EvalMultNoRelin Ct and Ct fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Mult_Packed, ORDER, PTM,
-                            SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Mult_Packed, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Mult_Packed, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Mult_Packed, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Mult_Packed, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Mult_Packed, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 /**
  * Tests whether EvalAtIndex for BGVrns works properly.
  */
 template <class Element>
-static void UnitTest_EvalAtIndex(const CryptoContext<Element> cc,
-                                 const string& failmsg) {
+static void UnitTest_EvalAtIndex(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // vectorOfInts1 = { 1,2,3,4,5,6,7,8 };
   std::vector<int64_t> vectorOfInts1(vecSize);
@@ -398,11 +374,11 @@ static void UnitTest_EvalAtIndex(const CryptoContext<Element> cc,
   // Generate multiplication keys
   cc->EvalMultKeyGen(kp.secretKey);
   // Generate rotation keys for offsets +2 (left shift) and -2 (right shift)
-  cc->EvalAtIndexKeyGen(kp.secretKey, {2, -2});
+  cc->EvalAtIndexKeyGen(kp.secretKey, { 2, -2 });
 
   // Encrypt plaintexts
   Ciphertext<Element> ciphertext1 = cc->Encrypt(kp.publicKey, plaintext1);
-  Ciphertext<Element> cOnes = cc->Encrypt(kp.publicKey, pOnes);
+  Ciphertext<Element> cOnes       = cc->Encrypt(kp.publicKey, pOnes);
   Ciphertext<Element> cResult;
   Plaintext results;
 
@@ -431,24 +407,18 @@ static void UnitTest_EvalAtIndex(const CryptoContext<Element> cc,
   checkEquality(tmp_a, tmp_b, failmsg + " EvalAtIndex(-2) fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_EvalAtIndex, ORDER, PTM,
-                            SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_EvalAtIndex, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_EvalAtIndex, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_EvalAtIndex, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_EvalAtIndex, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_EvalAtIndex, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 /**
  * Tests whether EvalMerge for BGVrns works properly.
  */
 template <class Element>
-static void UnitTest_EvalMerge(const CryptoContext<Element> cc,
-                               const string& failmsg) {
+static void UnitTest_EvalMerge(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // v* = { i,0,0,0,0,0,0,0 };
   std::vector<int64_t> vOne(vecSize);
@@ -460,21 +430,21 @@ static void UnitTest_EvalMerge(const CryptoContext<Element> cc,
   std::vector<int64_t> vSeven(vecSize);
   std::vector<int64_t> vEight(vecSize);
   for (int i = 0; i < vecSize; i++) {
-    vOne[i] = (i == 0) ? 1 : 0;
-    vTwo[i] = (i == 0) ? 2 : 0;
+    vOne[i]   = (i == 0) ? 1 : 0;
+    vTwo[i]   = (i == 0) ? 2 : 0;
     vThree[i] = (i == 0) ? 3 : 0;
-    vFour[i] = (i == 0) ? 4 : 0;
-    vFive[i] = (i == 0) ? 5 : 0;
-    vSix[i] = (i == 0) ? 6 : 0;
+    vFour[i]  = (i == 0) ? 4 : 0;
+    vFive[i]  = (i == 0) ? 5 : 0;
+    vSix[i]   = (i == 0) ? 6 : 0;
     vSeven[i] = (i == 0) ? 7 : 0;
     vEight[i] = (i == 0) ? 8 : 0;
   }
-  Plaintext pOne = cc->MakePackedPlaintext(vOne);
-  Plaintext pTwo = cc->MakePackedPlaintext(vTwo);
+  Plaintext pOne   = cc->MakePackedPlaintext(vOne);
+  Plaintext pTwo   = cc->MakePackedPlaintext(vTwo);
   Plaintext pThree = cc->MakePackedPlaintext(vThree);
-  Plaintext pFour = cc->MakePackedPlaintext(vFour);
-  Plaintext pFive = cc->MakePackedPlaintext(vFive);
-  Plaintext pSix = cc->MakePackedPlaintext(vSix);
+  Plaintext pFour  = cc->MakePackedPlaintext(vFour);
+  Plaintext pFive  = cc->MakePackedPlaintext(vFive);
+  Plaintext pSix   = cc->MakePackedPlaintext(vSix);
   Plaintext pSeven = cc->MakePackedPlaintext(vSeven);
   Plaintext pEight = cc->MakePackedPlaintext(vEight);
 
@@ -496,7 +466,7 @@ static void UnitTest_EvalMerge(const CryptoContext<Element> cc,
   // Generate multiplication keys
   cc->EvalMultKeyGen(kp.secretKey);
   // Generate rotation keys for all right rotations 1 to 8.
-  vector<int32_t> indexList = {-1, -2, -3, -4, -5, -6, -7, -8};
+  vector<int32_t> indexList = { -1, -2, -3, -4, -5, -6, -7, -8 };
   cc->EvalAtIndexKeyGen(kp.secretKey, indexList);
 
   // Encrypt plaintexts
@@ -525,16 +495,12 @@ static void UnitTest_EvalMerge(const CryptoContext<Element> cc,
   checkEquality(tmp_a, tmp_b, failmsg + " EvalMerge fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_EvalMerge, ORDER, PTM,
-                            SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_EvalMerge, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_EvalMerge, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_EvalMerge, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_EvalMerge, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_EvalMerge, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 template <typename Element>
-static void UnitTest_ReEncryption(const CryptoContext<Element> cc,
-                                  const string& failmsg) {
+static void UnitTest_ReEncryption(const CryptoContext<Element> cc, const string& failmsg) {
   size_t vecSize = 128;
 
   auto ptm = 10;
@@ -546,12 +512,10 @@ static void UnitTest_ReEncryption(const CryptoContext<Element> cc,
   Plaintext plaintextInt = cc->MakePackedPlaintext(intvec);
 
   LPKeyPair<Element> kp = cc->KeyGen();
-  EXPECT_EQ(kp.good(), true)
-      << failmsg << " key generation for scalar encrypt/decrypt failed";
+  EXPECT_EQ(kp.good(), true) << failmsg << " key generation for scalar encrypt/decrypt failed";
 
   LPKeyPair<Element> newKp = cc->KeyGen();
-  EXPECT_EQ(newKp.good(), true)
-      << failmsg << " second key generation for scalar encrypt/decrypt failed";
+  EXPECT_EQ(newKp.good(), true) << failmsg << " second key generation for scalar encrypt/decrypt failed";
 
   // This generates the keys which are used to perform the key switching.
   LPEvalKey<Element> evalKey;
@@ -566,35 +530,27 @@ static void UnitTest_ReEncryption(const CryptoContext<Element> cc,
   auto tmp_b = plaintextInt->GetPackedValue();
   stringstream buffer;
   buffer << tmp_b << " - we get: " << tmp_a << endl;
-  checkEquality(tmp_a, tmp_b,
-                failmsg + " ReEncrypt integer plaintext " + buffer.str());
+  checkEquality(tmp_a, tmp_b, failmsg + " ReEncrypt integer plaintext " + buffer.str());
 
   stringstream buffer2;
   Ciphertext<Element> ciphertext2 = cc->Encrypt(kp.publicKey, plaintextInt);
   Plaintext plaintextIntNew2;
-  Ciphertext<Element> reCiphertext2 =
-      cc->ReEncrypt(evalKey, ciphertext2, kp.publicKey);
+  Ciphertext<Element> reCiphertext2 = cc->ReEncrypt(evalKey, ciphertext2, kp.publicKey);
   cc->Decrypt(newKp.secretKey, reCiphertext2, &plaintextIntNew2);
   plaintextIntNew2->SetLength(plaintextInt->GetLength());
   tmp_a = plaintextIntNew2->GetPackedValue();
   tmp_b = plaintextInt->GetPackedValue();
   buffer2 << tmp_b << " - we get: " << tmp_a << endl;
-  checkEquality(
-      tmp_a, tmp_b,
-      failmsg + " HRA-secure ReEncrypt integer plaintext " + buffer2.str());
+  checkEquality(tmp_a, tmp_b, failmsg + " HRA-secure ReEncrypt integer plaintext " + buffer2.str());
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_ReEncryption, ORDER, PTM,
-                            SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_ReEncryption, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 template <typename Element>
-static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
-                                     const string& failmsg) {
+static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // vectorOfInts1 = { 0,1,2,3,4,5,6,7 };
   std::vector<int64_t> vectorOfInts1(vecSize);
@@ -629,37 +585,35 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   std::vector<int64_t> pCt13(vecSize);
   std::vector<int64_t> pCt14(vecSize);
   for (int i = 0; i < vecSize; i++) {
-    pCtMult[i] = vectorOfInts1[i] * vectorOfInts2[i];
-    pCt3[i] = pCtMult[i] + vectorOfInts1[i];
-    pCt4[i] = pCtMult[i] - vectorOfInts1[i];
-    pCt5[i] = pCtMult[i] * vectorOfInts1[i];
-    pCt6[i] = vectorOfInts1[i] + pCtMult[i];
-    pCt7[i] = vectorOfInts1[i] - pCtMult[i];
-    auto tmp = (vectorOfInts1[i] * vectorOfInts1[i] +
-                vectorOfInts1[i] * vectorOfInts1[i]) *
-               vectorOfInts1[i];
-    pCt_5[i] = tmp + vectorOfInts2[i];
-    pCt_6[i] = tmp - vectorOfInts2[i];
-    pCt_7[i] = tmp * vectorOfInts2[i];
-    pCt8[i] = vectorOfInts1[i] * pCtMult[i];
+    pCtMult[i]  = vectorOfInts1[i] * vectorOfInts2[i];
+    pCt3[i]     = pCtMult[i] + vectorOfInts1[i];
+    pCt4[i]     = pCtMult[i] - vectorOfInts1[i];
+    pCt5[i]     = pCtMult[i] * vectorOfInts1[i];
+    pCt6[i]     = vectorOfInts1[i] + pCtMult[i];
+    pCt7[i]     = vectorOfInts1[i] - pCtMult[i];
+    auto tmp    = (vectorOfInts1[i] * vectorOfInts1[i] + vectorOfInts1[i] * vectorOfInts1[i]) * vectorOfInts1[i];
+    pCt_5[i]    = tmp + vectorOfInts2[i];
+    pCt_6[i]    = tmp - vectorOfInts2[i];
+    pCt_7[i]    = tmp * vectorOfInts2[i];
+    pCt8[i]     = vectorOfInts1[i] * pCtMult[i];
     pCtMult3[i] = pCtMult[i] * vectorOfInts1[i] * vectorOfInts1[i];
-    pCt9[i] = pCtMult3[i] + vectorOfInts1[i];
-    pCt10[i] = pCtMult3[i] - vectorOfInts1[i];
-    pCt11[i] = pCtMult3[i] * vectorOfInts1[i];
-    pCt12[i] = vectorOfInts1[i] + pCtMult3[i];
-    pCt13[i] = vectorOfInts1[i] - pCtMult3[i];
-    pCt14[i] = vectorOfInts1[i] * pCtMult3[i];
+    pCt9[i]     = pCtMult3[i] + vectorOfInts1[i];
+    pCt10[i]    = pCtMult3[i] - vectorOfInts1[i];
+    pCt11[i]    = pCtMult3[i] * vectorOfInts1[i];
+    pCt12[i]    = vectorOfInts1[i] + pCtMult3[i];
+    pCt13[i]    = vectorOfInts1[i] - pCtMult3[i];
+    pCt14[i]    = vectorOfInts1[i] * pCtMult3[i];
   }
-  Plaintext plaintextCt3 = cc->MakePackedPlaintext(pCt3);
-  Plaintext plaintextCt4 = cc->MakePackedPlaintext(pCt4);
-  Plaintext plaintextCt5 = cc->MakePackedPlaintext(pCt5);
-  Plaintext plaintextCt6 = cc->MakePackedPlaintext(pCt6);
-  Plaintext plaintextCt7 = cc->MakePackedPlaintext(pCt7);
+  Plaintext plaintextCt3  = cc->MakePackedPlaintext(pCt3);
+  Plaintext plaintextCt4  = cc->MakePackedPlaintext(pCt4);
+  Plaintext plaintextCt5  = cc->MakePackedPlaintext(pCt5);
+  Plaintext plaintextCt6  = cc->MakePackedPlaintext(pCt6);
+  Plaintext plaintextCt7  = cc->MakePackedPlaintext(pCt7);
   Plaintext plaintextCt_5 = cc->MakePackedPlaintext(pCt_5);
   Plaintext plaintextCt_6 = cc->MakePackedPlaintext(pCt_6);
   Plaintext plaintextCt_7 = cc->MakePackedPlaintext(pCt_7);
-  Plaintext plaintextCt8 = cc->MakePackedPlaintext(pCt8);
-  Plaintext plaintextCt9 = cc->MakePackedPlaintext(pCt9);
+  Plaintext plaintextCt8  = cc->MakePackedPlaintext(pCt8);
+  Plaintext plaintextCt9  = cc->MakePackedPlaintext(pCt9);
   Plaintext plaintextCt10 = cc->MakePackedPlaintext(pCt10);
   Plaintext plaintextCt11 = cc->MakePackedPlaintext(pCt11);
   Plaintext plaintextCt12 = cc->MakePackedPlaintext(pCt12);
@@ -672,14 +626,14 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   cc->EvalMultKeyGen(kp.secretKey);
 
   // Encrypt plaintexts
-  Ciphertext<Element> ct = cc->Encrypt(kp.publicKey, plaintext1);
+  Ciphertext<Element> ct  = cc->Encrypt(kp.publicKey, plaintext1);
   Ciphertext<Element> ct2 = cc->Encrypt(kp.publicKey, plaintext2);
   Ciphertext<Element> cResult;
   Plaintext results;
 
-  auto ctMul = cc->EvalMult(ct, ct2);
-  auto ctRed = cc->ModReduce(ctMul);
-  Ciphertext<Element> ctRedClone =  ctRed->Clone();
+  auto ctMul                     = cc->EvalMult(ct, ct2);
+  auto ctRed                     = cc->ModReduce(ctMul);
+  Ciphertext<Element> ctRedClone = ctRed->Clone();
 
   auto ct3 = cc->EvalAdd(ctRed, ct);  // Addition with tower diff = 1
   cc->Decrypt(kp.secretKey, ct3, &results);
@@ -707,18 +661,14 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   results->SetLength(plaintextCt5->GetLength());
   tmp_a = plaintextCt5->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " multiplication with tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " multiplication with tower diff = 1 fails");
 
-  auto ct6 =
-      cc->EvalAdd(ct, ctRed);  // Addition with tower diff = 1 (inputs reversed)
+  auto ct6 = cc->EvalAdd(ct, ctRed);  // Addition with tower diff = 1 (inputs reversed)
   cc->Decrypt(kp.secretKey, ct6, &results);
   results->SetLength(plaintextCt6->GetLength());
   tmp_a = plaintextCt6->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b,
-      failmsg + " addition (reverse) with tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " addition (reverse) with tower diff = 1 fails");
 
   // In-place addition with tower diff = 1 (inputs reversed)
   auto ct_clone = ct->Clone();
@@ -727,36 +677,29 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   results->SetLength(plaintextCt6->GetLength());
   tmp_a = plaintextCt6->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b,
-      failmsg + " in-place addition (reverse) with tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " in-place addition (reverse) with tower diff = 1 fails");
 
-  auto ct7 = cc->EvalSub(
-      ct, ctRed);  // Subtraction with tower diff = 1 (inputs reversed)
+  auto ct7 = cc->EvalSub(ct, ctRed);  // Subtraction with tower diff = 1 (inputs reversed)
   cc->Decrypt(kp.secretKey, ct7, &results);
   results->SetLength(plaintextCt7->GetLength());
   tmp_a = plaintextCt7->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " subtraction (reverse) with tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " subtraction (reverse) with tower diff = 1 fails");
 
-  auto ct8 = cc->EvalMult(
-      ct, ctRed);  // Multiplication with tower diff = 1 (inputs reversed)
+  auto ct8 = cc->EvalMult(ct, ctRed);  // Multiplication with tower diff = 1 (inputs reversed)
   cc->Decrypt(kp.secretKey, ct8, &results);
   results->SetLength(plaintextCt8->GetLength());
   tmp_a = plaintextCt8->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b,failmsg + " multiplication (reverse) with tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " multiplication (reverse) with tower diff = 1 fails");
 
-  auto ctMul2 = cc->EvalMult(ctRed, ct);
-  auto ctRed2 = cc->ModReduce(ctMul2);
-  auto ctMul3 = cc->EvalMult(ctRed2, ct);
-  auto ctRed3 = cc->ModReduce(ctMul3);
+  auto ctMul2       = cc->EvalMult(ctRed, ct);
+  auto ctRed2       = cc->ModReduce(ctMul2);
+  auto ctMul3       = cc->EvalMult(ctRed2, ct);
+  auto ctRed3       = cc->ModReduce(ctMul3);
   auto ctRed3_clone = ctRed3->Clone();
 
-  auto ct9 =
-      cc->EvalAdd(ctRed3, ct);  // Addition with more than 1 level difference
+  auto ct9 = cc->EvalAdd(ctRed3, ct);  // Addition with more than 1 level difference
   cc->Decrypt(kp.secretKey, ct9, &results);
   results->SetLength(plaintextCt9->GetLength());
   tmp_a = plaintextCt9->GetPackedValue();
@@ -771,23 +714,19 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   tmp_b = results->GetPackedValue();
   checkEquality(tmp_a, tmp_b, failmsg + " in-place addition with tower diff > 1 fails");
 
-
-  auto ct10 =
-      cc->EvalSub(ctRed3, ct);  // Subtraction with more than 1 level difference
+  auto ct10 = cc->EvalSub(ctRed3, ct);  // Subtraction with more than 1 level difference
   cc->Decrypt(kp.secretKey, ct10, &results);
   results->SetLength(plaintextCt10->GetLength());
   tmp_a = plaintextCt10->GetPackedValue();
   tmp_b = results->GetPackedValue();
   checkEquality(tmp_a, tmp_b, failmsg + " subtraction with tower diff > 1 fails");
 
-  auto ct11 = cc->EvalMult(
-      ctRed3, ct);  // Multiplication with more than 1 level difference
+  auto ct11 = cc->EvalMult(ctRed3, ct);  // Multiplication with more than 1 level difference
   cc->Decrypt(kp.secretKey, ct11, &results);
   results->SetLength(plaintextCt11->GetLength());
   tmp_a = plaintextCt11->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " multiplication with tower diff > 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " multiplication with tower diff > 1 fails");
 
   // Addition with more than 1 level difference (inputs reversed)
   auto ct12 = cc->EvalAdd(ct, ctRed3);
@@ -795,8 +734,7 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   results->SetLength(plaintextCt12->GetLength());
   tmp_a = plaintextCt12->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " addition (reverse) with tower diff > 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " addition (reverse) with tower diff > 1 fails");
 
   // In-place addition with more than 1 level difference (inputs reversed)
   auto ctClone = ct->Clone();
@@ -805,8 +743,7 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   results->SetLength(plaintextCt12->GetLength());
   tmp_a = plaintextCt12->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " in-place addition (reverse) with tower diff > 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " in-place addition (reverse) with tower diff > 1 fails");
 
   auto ct13 = cc->EvalSub(ct, ctRed3);  // Subtraction with more than 1 level
                                         // difference (inputs reversed)
@@ -814,8 +751,7 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   results->SetLength(plaintextCt13->GetLength());
   tmp_a = plaintextCt13->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " subtraction (reverse) with tower diff > 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " subtraction (reverse) with tower diff > 1 fails");
 
   auto ct14 = cc->EvalMult(ct, ctRed3);  // Multiplication with more than 1
                                          // level difference (inputs reversed)
@@ -823,8 +759,7 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   results->SetLength(plaintextCt14->GetLength());
   tmp_a = plaintextCt14->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " multiplication (reverse) with tower diff > 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " multiplication (reverse) with tower diff > 1 fails");
 
   // This scenario tests for operations on
   // ciphertext and plaintext that differ on
@@ -833,51 +768,38 @@ static void UnitTest_AutoLevelReduce(const CryptoContext<Element> cc,
   auto ct_2 = cc->EvalAdd(ct_1, ct_1);
   auto ct_3 = cc->ModReduce(ct_2);
   auto ct_4 = cc->EvalMult(ct_3, plaintext1);
-  auto ct_5 = cc->EvalAdd(
-      ct_4, plaintext2);  // Addition with plaintext and tower diff = 1
-  auto ct_6 = cc->EvalSub(
-      ct_4, plaintext2);  // Subtraction with plaintext and tower diff = 1
-  auto ct_7 = cc->EvalMult(
-      ct_4, plaintext2);  // Multiplication with plaintext and tower diff = 1
+  auto ct_5 = cc->EvalAdd(ct_4, plaintext2);   // Addition with plaintext and tower diff = 1
+  auto ct_6 = cc->EvalSub(ct_4, plaintext2);   // Subtraction with plaintext and tower diff = 1
+  auto ct_7 = cc->EvalMult(ct_4, plaintext2);  // Multiplication with plaintext and tower diff = 1
   cc->Decrypt(kp.secretKey, ct_5, &results);
   results->SetLength(plaintextCt_5->GetLength());
   tmp_a = plaintextCt_5->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b,
-      failmsg + " addition with plaintext and tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " addition with plaintext and tower diff = 1 fails");
 
   cc->Decrypt(kp.secretKey, ct_6, &results);
   results->SetLength(plaintextCt_6->GetLength());
   tmp_a = plaintextCt_6->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " subtraction with plaintext and tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " subtraction with plaintext and tower diff = 1 fails");
 
   cc->Decrypt(kp.secretKey, ct_7, &results);
   results->SetLength(plaintextCt_7->GetLength());
   tmp_a = plaintextCt_7->GetPackedValue();
   tmp_b = results->GetPackedValue();
-  checkEquality(
-      tmp_a, tmp_b, failmsg + " multiplication with plaintext and tower diff = 1 fails");
+  checkEquality(tmp_a, tmp_b, failmsg + " multiplication with plaintext and tower diff = 1 fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_AutoLevelReduce, ORDER, PTM, SIZEMODULI,
-			    NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_AutoLevelReduce, ORDER, PTM,
-			     SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_AutoLevelReduce, ORDER, PTM,
-				SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_AutoLevelReduce, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_AutoLevelReduce, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_AutoLevelReduce, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 template <typename Element>
-static void UnitTest_Compress(const CryptoContext<Element> cc,
-                              const string& failmsg) {
-  int vecSize = 8;
+static void UnitTest_Compress(const CryptoContext<Element> cc, const string& failmsg) {
+  int vecSize         = 8;
   size_t targetTowers = 1;
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // vectorOfInts1 = { 0,1,2,3,4,5,6,7 };
   std::vector<int64_t> vectorOfInts(vecSize);
@@ -897,7 +819,7 @@ static void UnitTest_Compress(const CryptoContext<Element> cc,
   Ciphertext<Element> cResult;
   Plaintext result;
   Plaintext resultCompressed;
-  auto algo = cc->GetEncryptionAlgorithm();
+  auto algo         = cc->GetEncryptionAlgorithm();
   auto ctCompressed = algo->Compress(ct, targetTowers);
 
   size_t towersLeft = ctCompressed->GetElements()[0].GetNumOfElements();
@@ -910,24 +832,18 @@ static void UnitTest_Compress(const CryptoContext<Element> cc,
   checkEquality(tmp_a, tmp_b, failmsg + " compress fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Compress, ORDER, PTM, SIZEMODULI,
-                            NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Compress, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Compress, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Compress, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Compress, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Compress, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 /**
  * Tests whether EvalFastRotation for BGVrns works properly.
  */
 template <class Element>
-static void UnitTest_EvalFastRotation(const CryptoContext<Element> cc,
-                                      const string& failmsg) {
+static void UnitTest_EvalFastRotation(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
-  const auto cryptoParams =
-      std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(
-          cc->GetCryptoParameters());
+  const auto cryptoParams = std::static_pointer_cast<LPCryptoParametersBGVrns<DCRTPoly>>(cc->GetCryptoParameters());
 
   // vectorOfInts1 = { 1,2,3,4,5,6,7,8 };
   std::vector<int64_t> vectorOfInts1(vecSize);
@@ -962,11 +878,11 @@ static void UnitTest_EvalFastRotation(const CryptoContext<Element> cc,
   // Generate multiplication keys
   cc->EvalMultKeyGen(kp.secretKey);
   // Generate rotation keys for offsets +2 (left shift) and -2 (right shift)
-  cc->EvalAtIndexKeyGen(kp.secretKey, {2, -2});
+  cc->EvalAtIndexKeyGen(kp.secretKey, { 2, -2 });
 
   // Encrypt plaintexts
   Ciphertext<Element> ciphertext1 = cc->Encrypt(kp.publicKey, plaintext1);
-  Ciphertext<Element> cOnes = cc->Encrypt(kp.publicKey, pOnes);
+  Ciphertext<Element> cOnes       = cc->Encrypt(kp.publicKey, pOnes);
   Ciphertext<Element> cResult;
   Plaintext results;
 
@@ -999,19 +915,15 @@ static void UnitTest_EvalFastRotation(const CryptoContext<Element> cc,
   checkEquality(tmp_a, tmp_b, failmsg + " EvalAtIndex(-2) fails");
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_EvalFastRotation, ORDER, PTM,
-                            SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_EvalFastRotation, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_EvalFastRotation, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_EvalFastRotation, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_EvalFastRotation, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_EvalFastRotation, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
 
 /**
  * Tests whether metadata is carried over for several operations in BGVrns
  */
 template <typename Element>
-static void UnitTest_Metadata(const CryptoContext<Element> cc,
-                              const string& failmsg) {
+static void UnitTest_Metadata(const CryptoContext<Element> cc, const string& failmsg) {
   int vecSize = 8;
 
   // input 1 = { 0,1,2,3,4,5,6,7 };
@@ -1030,7 +942,7 @@ static void UnitTest_Metadata(const CryptoContext<Element> cc,
   // Generate multiplication keys
   cc->EvalMultKeyGen(kp.secretKey);
   // Generate rotation keys for offsets +2 (left rotate) and -2 (right rotate)
-  cc->EvalAtIndexKeyGen(kp.secretKey, {2, -2});
+  cc->EvalAtIndexKeyGen(kp.secretKey, { 2, -2 });
   // Generate keys for EvalSum
   cc->EvalSumKeyGen(kp.secretKey);
 
@@ -1049,77 +961,66 @@ static void UnitTest_Metadata(const CryptoContext<Element> cc,
 
   // Checking if metadata is carried over in EvalAdd(ctx,ctx)
   Ciphertext<Element> cAddCC = cc->EvalAdd(ciphertext1, ciphertext2);
-  auto addCCValTest = MetadataTest::GetMetadata<Element>(cAddCC);
-  EXPECT_EQ(val1->GetMetadata(), addCCValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalAdd(ctx,ctx)";
+  auto addCCValTest          = MetadataTest::GetMetadata<Element>(cAddCC);
+  EXPECT_EQ(val1->GetMetadata(), addCCValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalAdd(ctx,ctx)";
 
   // Checking if metadata is carried over in EvalAddInPlace(ctx,ctx)
   Ciphertext<Element> ciphertext1_clone = ciphertext1->Clone();
   cc->EvalAddInPlace(ciphertext1_clone, ciphertext2);
   auto addCCInPlaceValTest = MetadataTest::GetMetadata<Element>(ciphertext1_clone);
   EXPECT_EQ(val1->GetMetadata(), addCCInPlaceValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalAddInPlace(ctx,ctx)";
+    << "Ciphertext metadata mismatch in EvalAddInPlace(ctx,ctx)";
 
   // Checking if metadata is carried over in EvalAdd(ctx,ptx)
   Ciphertext<Element> cAddCP = cc->EvalAdd(ciphertext1, plaintext1);
-  auto addCPValTest = MetadataTest::GetMetadata<Element>(cAddCP);
-  EXPECT_EQ(val1->GetMetadata(), addCPValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalAdd(ctx,ptx)";
+  auto addCPValTest          = MetadataTest::GetMetadata<Element>(cAddCP);
+  EXPECT_EQ(val1->GetMetadata(), addCPValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalAdd(ctx,ptx)";
 
   // Checking if metadata is carried over in EvalSub(ctx,ctx)
   Ciphertext<Element> cSubCC = cc->EvalSub(ciphertext1, ciphertext2);
-  auto subCCValTest = MetadataTest::GetMetadata<Element>(cSubCC);
-  EXPECT_EQ(val1->GetMetadata(), subCCValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalSub(ctx,ctx)";
+  auto subCCValTest          = MetadataTest::GetMetadata<Element>(cSubCC);
+  EXPECT_EQ(val1->GetMetadata(), subCCValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalSub(ctx,ctx)";
 
   // Checking if metadata is carried over in EvalSub(ctx,ptx)
   Ciphertext<Element> cSubCP = cc->EvalSub(ciphertext1, plaintext1);
-  auto subCPValTest = MetadataTest::GetMetadata<Element>(cSubCP);
-  EXPECT_EQ(val1->GetMetadata(), subCPValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalSub(ctx,ptx)";
+  auto subCPValTest          = MetadataTest::GetMetadata<Element>(cSubCP);
+  EXPECT_EQ(val1->GetMetadata(), subCPValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalSub(ctx,ptx)";
 
   // Checking if metadata is carried over in EvalMult(ctx,ctx)
   Ciphertext<Element> cMultCC = cc->EvalMult(ciphertext1, ciphertext2);
-  auto multCCValTest = MetadataTest::GetMetadata<Element>(cMultCC);
-  EXPECT_EQ(val1->GetMetadata(), multCCValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalMult(ctx,ctx)";
+  auto multCCValTest          = MetadataTest::GetMetadata<Element>(cMultCC);
+  EXPECT_EQ(val1->GetMetadata(), multCCValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalMult(ctx,ctx)";
 
   // Checking if metadata is carried over in EvalMult(ctx,ptx)
   Ciphertext<Element> cMultCP = cc->EvalMult(ciphertext1, plaintext1);
-  auto multCPValTest = MetadataTest::GetMetadata<Element>(cMultCP);
-  EXPECT_EQ(val1->GetMetadata(), multCPValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalMult(ctx,ptx)";
+  auto multCPValTest          = MetadataTest::GetMetadata<Element>(cMultCP);
+  EXPECT_EQ(val1->GetMetadata(), multCPValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalMult(ctx,ptx)";
 
   // Checking if metadata is carried over in EvalAtIndex +2 (left rotate)
-  auto cAtIndex2 = cc->EvalAtIndex(ciphertext1, 2);
+  auto cAtIndex2       = cc->EvalAtIndex(ciphertext1, 2);
   auto atIndex2ValTest = MetadataTest::GetMetadata<Element>(cAtIndex2);
-  EXPECT_EQ(val1->GetMetadata(), atIndex2ValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalAtIndex +2";
+  EXPECT_EQ(val1->GetMetadata(), atIndex2ValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalAtIndex +2";
 
   // Checking if metadata is carried over in EvalAtIndex -2 (right rotate)
-  auto cAtIndexMinus2 = cc->EvalAtIndex(ciphertext1, -2);
-  auto atIndexMinus2ValTest =
-      MetadataTest::GetMetadata<Element>(cAtIndexMinus2);
+  auto cAtIndexMinus2       = cc->EvalAtIndex(ciphertext1, -2);
+  auto atIndexMinus2ValTest = MetadataTest::GetMetadata<Element>(cAtIndexMinus2);
   EXPECT_EQ(val1->GetMetadata(), atIndexMinus2ValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalAtIndex -2";
+    << "Ciphertext metadata mismatch in EvalAtIndex -2";
 
   vector<double> weights(2);
-  for (int i = 0; i < 2; i++) weights[i] = i;
+  for (int i = 0; i < 2; i++)
+    weights[i] = i;
 
   vector<Ciphertext<Element>> ciphertexts(2);
   ciphertexts[0] = ciphertext1;
   ciphertexts[1] = ciphertext2;
 
   // Checking if metadata is carried over in EvalSum
-  auto cSum = cc->EvalSum(ciphertext1, vecSize);
+  auto cSum       = cc->EvalSum(ciphertext1, vecSize);
   auto sumValTest = MetadataTest::GetMetadata<Element>(cSum);
-  EXPECT_EQ(val1->GetMetadata(), sumValTest->GetMetadata())
-      << "Ciphertext metadata mismatch in EvalSum";
+  EXPECT_EQ(val1->GetMetadata(), sumValTest->GetMetadata()) << "Ciphertext metadata mismatch in EvalSum";
 }
 
-GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Metadata, ORDER, PTM, SIZEMODULI,
-                            NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Metadata, ORDER, PTM,
-                             SIZEMODULI, NUMPRIME, RELIN, BATCH)
-GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Metadata, ORDER, PTM,
-                                SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_BV(UTBGVrns, UnitTest_Metadata, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_GHS(UTBGVrns, UnitTest_Metadata, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)
+GENERATE_TEST_CASES_FUNC_HYBRID(UTBGVrns, UnitTest_Metadata, ORDER, PTM, SIZEMODULI, NUMPRIME, RELIN, BATCH)

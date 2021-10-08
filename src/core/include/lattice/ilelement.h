@@ -44,7 +44,8 @@ namespace lbcrypto {
  * contains no data to construct.
  */
 template <typename Element, typename VecType>
-class ILElement : public Serializable {
+class ILElement : public Serializable
+{
   using IntType = typename VecType::Integer;
 
  public:
@@ -72,9 +73,8 @@ class ILElement : public Serializable {
    * @param format
    * @return new Element
    */
-  virtual Element CloneWithNoise(
-      const DiscreteGaussianGeneratorImpl<VecType> &dgg,
-      Format format = Format::EVALUATION) const = 0;
+  virtual Element CloneWithNoise(const DiscreteGaussianGeneratorImpl<VecType>& dgg,
+                                 Format format = Format::EVALUATION) const = 0;
 
   /**
    * @brief Standard destructor
@@ -86,17 +86,17 @@ class ILElement : public Serializable {
    * @brief Assignment operator that copies elements.
    * @param rhs
    */
-  virtual const Element &operator=(const Element &rhs) = 0;
+  virtual const Element& operator=(const Element& rhs) = 0;
   /**
    * @brief Assignment operator that copies elements.
    * @param rhs
    */
-  virtual const Element &operator=(Element &&rhs) = 0;
+  virtual const Element& operator=(Element&& rhs) = 0;
   /**
    * @brief Assignment operator that copies elements.
    * @param rhs
    */
-  virtual const Element &operator=(std::initializer_list<uint64_t> rhs) = 0;
+  virtual const Element& operator=(std::initializer_list<uint64_t> rhs) = 0;
 
   // GETTERS
   /**
@@ -118,14 +118,14 @@ class ILElement : public Serializable {
    *
    * @return the modulus.
    */
-  virtual const IntType &GetModulus() const = 0;
+  virtual const IntType& GetModulus() const = 0;
 
   /**
    * @brief Get the values for the element
    *
    * @return the vector.
    */
-  virtual const VecType &GetValues() const = 0;
+  virtual const VecType& GetValues() const = 0;
 
   /**
    * @brief Get the cyclotomic order
@@ -142,16 +142,16 @@ class ILElement : public Serializable {
    * @param i is the index.
    * @return will throw an error.
    */
-  virtual IntType &at(usint i) {
+  virtual IntType& at(usint i) {
     PALISADE_THROW(not_implemented_error, "at not implemented");
   }
-  virtual const IntType &at(usint i) const {
+  virtual const IntType& at(usint i) const {
     PALISADE_THROW(not_implemented_error, "const at not implemented");
   }
-  virtual IntType &operator[](usint i) {
+  virtual IntType& operator[](usint i) {
     PALISADE_THROW(not_implemented_error, "[] not implemented");
   }
-  virtual const IntType &operator[](usint i) const {
+  virtual const IntType& operator[](usint i) const {
     PALISADE_THROW(not_implemented_error, "const [] not implemented");
   }
 
@@ -172,7 +172,7 @@ class ILElement : public Serializable {
    * @param &element is the element to add entry-wise.
    * @return is the return of the addition operation.
    */
-  virtual Element Plus(const IntType &element) const = 0;
+  virtual Element Plus(const IntType& element) const = 0;
 
   /**
    * @brief Scalar subtraction - subtract an element frp, all entries.
@@ -180,7 +180,7 @@ class ILElement : public Serializable {
    * @param &element is the element to subtract entry-wise.
    * @return is the return value of the minus operation.
    */
-  virtual Element Minus(const IntType &element) const = 0;
+  virtual Element Minus(const IntType& element) const = 0;
 
   /**
    * @brief Scalar multiplication - multiply all entries.
@@ -188,7 +188,7 @@ class ILElement : public Serializable {
    * @param &element is the element to multiply entry-wise.
    * @return is the return value of the times operation.
    */
-  virtual Element Times(const IntType &element) const = 0;
+  virtual Element Times(const IntType& element) const = 0;
 
   /**
    * @brief Scalar multiplication - mulltiply by a signed integer
@@ -196,8 +196,7 @@ class ILElement : public Serializable {
    * @param &element is the element to multiply entry-wise.
    * @return is the return value of the times operation.
    */
-  virtual Element Times(
-      bigintnat::NativeInteger::SignedNativeInt element) const = 0;
+  virtual Element Times(bigintnat::NativeInteger::SignedNativeInt element) const = 0;
 
   /**
    * @brief Performs an addition operation and returns the result.
@@ -205,7 +204,7 @@ class ILElement : public Serializable {
    * @param &element is the element to add with.
    * @return is the result of the addition.
    */
-  virtual Element Plus(const Element &element) const = 0;
+  virtual Element Plus(const Element& element) const = 0;
 
   /**
    * @brief Performs a subtraction operation and returns the result.
@@ -213,7 +212,7 @@ class ILElement : public Serializable {
    * @param &element is the element to subtract with.
    * @return is the result of the subtraction.
    */
-  virtual Element Minus(const Element &element) const = 0;
+  virtual Element Minus(const Element& element) const = 0;
 
   /**
    * @brief Performs a multiplication operation and returns the result.
@@ -221,7 +220,7 @@ class ILElement : public Serializable {
    * @param &element is the element to multiply with.
    * @return is the result of the multiplication.
    */
-  virtual Element Times(const Element &element) const = 0;
+  virtual Element Times(const Element& element) const = 0;
 
   // overloaded op= operators
   /**
@@ -230,7 +229,7 @@ class ILElement : public Serializable {
    * @param &element is the element to add
    * @return is the result of the addition.
    */
-  virtual const Element &operator+=(const IntType &element) = 0;
+  virtual const Element& operator+=(const IntType& element) = 0;
 
   /**
    * @brief Performs -= operation with a BigInteger and returns the result.
@@ -238,7 +237,7 @@ class ILElement : public Serializable {
    * @param &element is the element to subtract
    * @return is the result of the addition.
    */
-  virtual const Element &operator-=(const IntType &element) = 0;
+  virtual const Element& operator-=(const IntType& element) = 0;
 
   /**
    * @brief Performs *= operation with a BigInteger and returns the result.
@@ -246,7 +245,7 @@ class ILElement : public Serializable {
    * @param &element is the element to multiply by
    * @return is the result of the multiplication.
    */
-  virtual const Element &operator*=(const IntType &element) = 0;
+  virtual const Element& operator*=(const IntType& element) = 0;
 
   /**
    * @brief Performs an addition operation and returns the result.
@@ -254,7 +253,7 @@ class ILElement : public Serializable {
    * @param &element is the element to add
    * @return is the result of the addition.
    */
-  virtual const Element &operator+=(const Element &element) = 0;
+  virtual const Element& operator+=(const Element& element) = 0;
 
   /**
    * @brief Performs an subtraction operation and returns the result.
@@ -262,7 +261,7 @@ class ILElement : public Serializable {
    * @param &element is the element to subtract
    * @return is the result of the addition.
    */
-  virtual const Element &operator-=(const Element &element) = 0;
+  virtual const Element& operator-=(const Element& element) = 0;
 
   /**
    * @brief Performs an multiplication operation and returns the result.
@@ -270,19 +269,19 @@ class ILElement : public Serializable {
    * @param &element is the element to multiply by
    * @return is the result of the multiplication.
    */
-  virtual const Element &operator*=(const Element &element) = 0;
+  virtual const Element& operator*=(const Element& element) = 0;
 
   /**
    * @brief Equality operator.  Compares values of element to be compared to.
    * @param element the element to compare to.
    */
-  virtual bool operator==(const Element &element) const = 0;
+  virtual bool operator==(const Element& element) const = 0;
 
   /**
    * @brief Inequality operator.  Compares values of element to be compared to.
    * @param element the element to compare to.
    */
-  inline bool operator!=(const Element &element) const {
+  inline bool operator!=(const Element& element) const {
     return !(*this == element);
   }
 
@@ -297,7 +296,7 @@ class ILElement : public Serializable {
    * @param &i is the element to perform the automorphism transform with.
    * @return is the result of the automorphism transform.
    */
-  virtual Element AutomorphismTransform(const usint &i) const = 0;
+  virtual Element AutomorphismTransform(const usint& i) const = 0;
 
   /**
    * @brief Performs an automorphism transform operation using precomputed bit
@@ -307,8 +306,7 @@ class ILElement : public Serializable {
    * @param &map a vector with precomputed indices
    * @return is the result of the automorphism transform.
    */
-  virtual Element AutomorphismTransform(
-      usint i, const std::vector<uint32_t> &map) const = 0;
+  virtual Element AutomorphismTransform(usint i, const std::vector<uint32_t>& map) const = 0;
 
   /**
    * @brief Transpose the ring element using the automorphism operation
@@ -329,8 +327,7 @@ class ILElement : public Serializable {
    * evaluation mode
    * @result is the pointer where the base decomposition vector is stored
    */
-  virtual std::vector<Element> BaseDecompose(
-      usint baseBits, bool evalModeAnswer = true) const = 0;
+  virtual std::vector<Element> BaseDecompose(usint baseBits, bool evalModeAnswer = true) const = 0;
 
   /**
    * @brief Scalar division followed by rounding operation - operation on all
@@ -339,7 +336,7 @@ class ILElement : public Serializable {
    * @param &q is the element to divide entry-wise.
    * @return is the return value of the divide, followed by rounding operation.
    */
-  virtual Element DivideAndRound(const IntType &q) const = 0;
+  virtual Element DivideAndRound(const IntType& q) const = 0;
 
   /**
    * @brief Determines if inverse exists
@@ -371,7 +368,7 @@ class ILElement : public Serializable {
    * @param &wFactor ratio between the original element's ring dimension and the
    * new ring dimension.
    */
-  virtual void MakeSparse(const uint32_t &wFactor) = 0;
+  virtual void MakeSparse(const uint32_t& wFactor) = 0;
 
   /**
    * @brief Calculate Element mod 2
@@ -395,8 +392,7 @@ class ILElement : public Serializable {
    * @return is the return value of the multiply, divide and followed by
    * rounding operation.
    */
-  virtual Element MultiplyAndRound(const IntType &p,
-                                   const IntType &q) const = 0;
+  virtual Element MultiplyAndRound(const IntType& p, const IntType& q) const = 0;
 
   /**
    * @brief Calculate a vector of elements by raising the base element to
@@ -414,7 +410,7 @@ class ILElement : public Serializable {
    * @param modulus is the modulus to use.
    * @return is the return value of the modulus.
    */
-  virtual Element Mod(const IntType &modulus) const = 0;
+  virtual Element Mod(const IntType& modulus) const = 0;
 
   /**
    * @brief Switch modulus and adjust the values
@@ -426,9 +422,9 @@ class ILElement : public Serializable {
    * ASSUMPTION: This method assumes that the caller provides the correct
    * rootOfUnity for the modulus.
    */
-  virtual void SwitchModulus(const IntType &modulus, const IntType &rootOfUnity,
-                             const IntType &modulusArb = IntType::ZERO,
-                             const IntType &rootOfUnityArb = IntType::ZERO) = 0;
+  virtual void SwitchModulus(const IntType& modulus, const IntType& rootOfUnity,
+                             const IntType& modulusArb     = IntType::ZERO,
+                             const IntType& rootOfUnityArb = IntType::ZERO) = 0;
 
   /**
    * @brief onvert from Coefficient to CRT or vice versa; calls FFT and inverse

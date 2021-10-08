@@ -38,50 +38,46 @@ using namespace lbcrypto;
 int run_demo_pre(string input);
 
 void usage() {
-  std::cout << "-i (optional) run interactively to select parameters"
-            << std::endl
+  std::cout << "-i (optional) run interactively to select parameters" << std::endl
             << " <PARAMETER SET> to run with that parameter set" << std::endl;
 }
 
 // trim whitespace from string from start (in place)
 // code from to https://stackoverflow.com/a/44973498/524503
-static inline void ltrim(std::string &s) {
-  s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-                                  [](int ch) { return !std::isspace(ch); }));
+static inline void ltrim(std::string& s) {
+  s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
 }
 // trim from end (in place)
-static inline void rtrim(std::string &s) {
-  s.erase(std::find_if(s.rbegin(), s.rend(),
-                       [](int ch) { return !std::isspace(ch); })
-              .base(),
-          s.end());
+static inline void rtrim(std::string& s) {
+  s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
 }
 // trim from both ends (in place)
-static inline void trim(std::string &s) {
+static inline void trim(std::string& s) {
   ltrim(s);
   rtrim(s);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   bool interactive = false;
   ////////////////////////////////////////////////////////////
   // Set-up of parameters
   ////////////////////////////////////////////////////////////
-  string input = "";
+  string input    = "";
   string progname = *argv;
   while (argc-- > 1) {
     string arg(*++argv);
     if (arg == "-help" || arg == "-?") {
       usage();
       return 0;
-    } else if (arg == "-i") {
+    }
+    else if (arg == "-i") {
       interactive = true;
-
-    } else if (arg[0] == '-') {
+    }
+    else if (arg[0] == '-') {
       usage();
       return (0);
-
-    } else {
+    }
+    else {
       input = arg;
     }
   }
@@ -91,19 +87,15 @@ int main(int argc, char *argv[]) {
   if (input.compare("") == 0) {
     std::cout << "\nThis code demonstrates the use of multiple schemes for "
                  "basic proxy-re-encryption operations. ";
-    std::cout
-        << "This code shows how to use schemes and pre-computed parameters for "
-           "those schemes can be selected during run-time. ";
+    std::cout << "This code shows how to use schemes and pre-computed parameters for "
+                 "those schemes can be selected during run-time. ";
     std::cout << "In this demonstration we encrypt data and then proxy "
                  "re-encrypt it. ";
 
-    std::cout << "\nThis demo can be run as " << progname << " <PARAMETER SET> "
+    std::cout << "\nThis demo can be run as " << progname << " <PARAMETER SET> " << std::endl;
+    std::cout << "\nRunning this demo as " << progname << " ALL or without any parameters will run all schemes "
               << std::endl;
-    std::cout << "\nRunning this demo as " << progname
-              << " ALL or without any parameters will run all schemes "
-              << std::endl;
-    std::cout << "\nRunning this demo as " << progname
-              << " -i enters interactive mode " << std::endl;
+    std::cout << "\nRunning this demo as " << progname << " -i enters interactive mode " << std::endl;
   }
   std::cout << "time using Math backend " << MATHBACKEND << std::endl;
 
@@ -128,8 +120,8 @@ int main(int argc, char *argv[]) {
     std::cout << "or enter ALL to run every set." << std::endl;
     input = "";
     std::cin >> input;
-
-  } else if (input.compare("") == 0) {
+  }
+  else if (input.compare("") == 0) {
     // input can be specified on the command line
     input = "ALL";
   }
@@ -137,15 +129,14 @@ int main(int argc, char *argv[]) {
   if (input.compare("ALL") != 0) {  // run a particular parameter set
     // validate input
     bool valid = false;
-    for (string param : tokens) {
+    for (string param: tokens) {
       if (input.compare(param) == 0) {
         valid = true;
         break;
       }
     }
     if (!valid) {
-      std::cout << "Error: " << input << " is not a valid parameter set."
-                << std::endl;
+      std::cout << "Error: " << input << " is not a valid parameter set." << std::endl;
       std::cout << "Valid sets are: " << parameter_set_list;
       exit(1);
     }
@@ -156,9 +147,10 @@ int main(int argc, char *argv[]) {
     if (rc) {  // there could be an error
       exit(1);
     }
-  } else {  // run ALL parameter sets
+  }
+  else {  // run ALL parameter sets
     // tokens contain the array of parameter name strings
-    for (string param : tokens) {
+    for (string param: tokens) {
       std::cout << "Running using parameter set: " << param << std::endl;
       int rc = run_demo_pre(param);
 
@@ -183,7 +175,7 @@ int run_demo_pre(string input) {
   }
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
 
   cout << "\nParam generation time: "
        << "\t" << diff << " ms" << endl;
@@ -193,23 +185,13 @@ int run_demo_pre(string input) {
   cryptoContext->Enable(SHE);
   cryptoContext->Enable(PRE);
 
-  std::cout << "p = "
-            << cryptoContext->GetCryptoParameters()->GetPlaintextModulus()
-            << std::endl;
-  std::cout << "n = "
-            << cryptoContext->GetCryptoParameters()
-                       ->GetElementParams()
-                       ->GetCyclotomicOrder() /
-                   2
+  std::cout << "p = " << cryptoContext->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cryptoContext->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
             << std::endl;
   std::cout << "log2 q = "
-            << log2(cryptoContext->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
+            << log2(cryptoContext->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
-  std::cout << "r = " << cryptoContext->GetCryptoParameters()->GetRelinWindow()
-            << std::endl;
+  std::cout << "r = " << cryptoContext->GetCryptoParameters()->GetRelinWindow() << std::endl;
 
   ////////////////////////////////////////////////////////////
   // Perform Key Generation Operation
@@ -218,15 +200,14 @@ int run_demo_pre(string input) {
   // Initialize Key Pair Containers
   LPKeyPair<Poly> keyPair1;
 
-  std::cout << "\nRunning key generation (used for source data)..."
-            << std::endl;
+  std::cout << "\nRunning key generation (used for source data)..." << std::endl;
 
   start = currentDateTime();
 
   keyPair1 = cryptoContext->KeyGen();
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -239,8 +220,8 @@ int run_demo_pre(string input) {
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts = {1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1};
-  Plaintext plaintext = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts);
+  std::vector<int64_t> vectorOfInts = { 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1 };
+  Plaintext plaintext               = cryptoContext->MakeCoefPackedPlaintext(vectorOfInts);
 
   ////////////////////////////////////////////////////////////
   // Encryption
@@ -251,7 +232,7 @@ int run_demo_pre(string input) {
   auto ciphertext1 = cryptoContext->Encrypt(keyPair1.publicKey, plaintext);
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Encryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -266,7 +247,7 @@ int run_demo_pre(string input) {
   cryptoContext->Decrypt(keyPair1.secretKey, ciphertext1, &plaintextDec1);
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Decryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -296,7 +277,7 @@ int run_demo_pre(string input) {
   keyPair2 = cryptoContext->KeyGen();
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -317,11 +298,10 @@ int run_demo_pre(string input) {
 
   start = currentDateTime();
 
-  reencryptionKey12 =
-      cryptoContext->ReKeyGen(keyPair2.publicKey, keyPair1.secretKey);
+  reencryptionKey12 = cryptoContext->ReKeyGen(keyPair2.publicKey, keyPair1.secretKey);
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Key generation time: "
        << "\t" << diff << " ms" << endl;
 
@@ -334,7 +314,7 @@ int run_demo_pre(string input) {
   auto ciphertext2 = cryptoContext->ReEncrypt(reencryptionKey12, ciphertext1);
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Re-Encryption time: "
        << "\t" << diff << " ms" << endl;
 
@@ -349,7 +329,7 @@ int run_demo_pre(string input) {
   cryptoContext->Decrypt(keyPair2.secretKey, ciphertext2, &plaintextDec2);
 
   finish = currentDateTime();
-  diff = finish - start;
+  diff   = finish - start;
   cout << "Decryption time: "
        << "\t" << diff << " ms" << endl;
 

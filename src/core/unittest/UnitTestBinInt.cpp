@@ -55,7 +55,8 @@ extern bool TestNative;
 /* TESTING METHODS OF ALL THE INTEGER CLASSES   */
 /************************************************/
 
-class UTBinInt : public ::testing::Test {
+class UTBinInt : public ::testing::Test
+{
  protected:
 };
 
@@ -63,20 +64,22 @@ template <typename T>
 void assign_test(const string& msg) {
   T v;
   vector<uint64_t> vals({
-      27,
-      uint64_t(1) << 10,
-      uint64_t(1) << 25,
-      uint64_t(1) << 35,
-      uint64_t(1) << 55,
+    27,
+    uint64_t(1) << 10,
+    uint64_t(1) << 25,
+    uint64_t(1) << 35,
+    uint64_t(1) << 55,
   });
 
-  for (auto tv : vals) {
+  for (auto tv: vals) {
     v = uint64_t(tv);
     EXPECT_EQ(v.ConvertToInt(), tv) << msg;
   }
 }
 
-TEST_F(UTBinInt, assign) { RUN_ALL_BACKENDS_INT(assign_test, "assign") }
+TEST_F(UTBinInt, assign) {
+  RUN_ALL_BACKENDS_INT(assign_test, "assign")
+}
 
 template <typename T>
 void identity_test(const string& msg) {
@@ -104,7 +107,9 @@ void identity_test(const string& msg) {
   f(lg, msg + " small");
 }
 
-TEST_F(UTBinInt, identity) { RUN_BIG_BACKENDS_INT(identity_test, "identity") }
+TEST_F(UTBinInt, identity) {
+  RUN_BIG_BACKENDS_INT(identity_test, "identity")
+}
 
 /************************************************/
 /* TESTING BASIC MATH METHODS AND OPERATORS     */
@@ -128,10 +133,9 @@ void basic_math_test(const string& msg) {
     T b("2034");
 
     calculatedResult = a.Add(b);
-    expectedResult = 205484;
+    expectedResult   = 205484;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing add_a_greater_than_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing add_a_greater_than_b";
   }
   // TEST_F CASE WHEN FIRST NUMBER IS LESS THAN SECOND NUMBER AND MSB
   // HAS NO OVERFLOW
@@ -140,10 +144,9 @@ void basic_math_test(const string& msg) {
     T b("203450");
 
     calculatedResult = a.Add(b);
-    expectedResult = 205484;
+    expectedResult   = 205484;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing add_a_less_than_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing add_a_less_than_b";
   }
   // TEST_F CASE WHEN MSB OF THE RESULT HAS BIT-OVERFLOW TO THE NEXT
   // BYTE
@@ -152,10 +155,9 @@ void basic_math_test(const string& msg) {
     T b("16523408");
 
     calculatedResult = a.Add(b);
-    expectedResult = 17292308;
+    expectedResult   = 17292308;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing overflow_to_next_byte";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing overflow_to_next_byte";
   }
   // TEST_F CASE WHEN MSB OF THE RESULT HAS BIT-OVERFLOW IN THE SAME
   // BYTE
@@ -164,10 +166,10 @@ void basic_math_test(const string& msg) {
     T b("1015");
 
     calculatedResult = a.Add(b);
-    expectedResult = 1050;
+    expectedResult   = 1050;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing add_no_overflow_to_next_byte";
+      << msg << " Failure testing add_no_overflow_to_next_byte";
   }
 
   /************************************************/
@@ -187,8 +189,7 @@ void basic_math_test(const string& msg) {
     a += b;
     expectedResult = 2237;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << " Failure testing add_equals_a_greater_than_b";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << " Failure testing add_equals_a_greater_than_b";
   }
   // TEST_F CASE WHEN FIRST NUMBER IS LESS THAN SECOND NUMBER AND MSB
   // HAS NO OVERFLOW
@@ -199,8 +200,7 @@ void basic_math_test(const string& msg) {
     a += b;
     expectedResult = 205484;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing add_equals_a_less_than_b";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing add_equals_a_less_than_b";
   }
   // TEST_F CASE WHEN MSB OF THE RESULT HAS BIT-OVERFLOW TO THE NEXT
   // BYTE
@@ -211,8 +211,7 @@ void basic_math_test(const string& msg) {
     a += b;
     expectedResult = 17292308;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing add_equals_overflow_to_next_byte";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing add_equals_overflow_to_next_byte";
   }
   // TEST_F CASE WHEN MSB OF THE RESULT HAS BIT-OVERFLOW IN THE SAME
   // BYTE
@@ -223,8 +222,7 @@ void basic_math_test(const string& msg) {
     a += b;
     expectedResult = 1050;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing add_equals_no_overflow_to_next_byte";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing add_equals_no_overflow_to_next_byte";
   }
   /************************************************/
   /* TESTING METHOD SUB FOR ALL CONDITIONS      */
@@ -256,10 +254,9 @@ void basic_math_test(const string& msg) {
     T b("2048956567");
 
     calculatedResult = a.Sub(b);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing sub_a_equal_to_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing sub_a_equal_to_b";
   }
   // TEST_F CASE WHEN FIRST NUMBER IS GREATER THAN THE SECOND NUMBER
   {
@@ -267,10 +264,9 @@ void basic_math_test(const string& msg) {
     T b("2034455");
 
     calculatedResult = a.Sub(b);
-    expectedResult = 2046922112;
+    expectedResult   = 2046922112;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing sub_a_greater_than_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing sub_a_greater_than_b";
   }
   // TEST_F CASE WHEN SUBTRACTION NEEDS BORROW FROM NEXT BYTE
   {
@@ -278,10 +274,9 @@ void basic_math_test(const string& msg) {
     T b("65406");
 
     calculatedResult = a.Sub(b);
-    expectedResult = 131331;
+    expectedResult   = 131331;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing sub_borrow_from_next_byte";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing sub_borrow_from_next_byte";
   }
 
   /************************************************/
@@ -313,8 +308,7 @@ void basic_math_test(const string& msg) {
     a -= b;
     expectedResult = 0;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing sub_equals_a_equal_to_b";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing sub_equals_a_equal_to_b";
   }
   // TEST_F CASE WHEN FIRST NUMBER IS GREATER THAN THE SECOND NUMBER
   {
@@ -324,8 +318,7 @@ void basic_math_test(const string& msg) {
     a -= b;
     expectedResult = 2046922112;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing sub_equals_a_greater_than_b";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing sub_equals_a_greater_than_b";
   }
   // TEST_F CASE WHEN SUBTRACTION NEEDS BORROW FROM NEXT BYTE
   {
@@ -335,8 +328,7 @@ void basic_math_test(const string& msg) {
     a -= b;
     expectedResult = 131331;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing sub_equals_borrow_from_next_byte";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing sub_equals_borrow_from_next_byte";
   }
 
   /************************************************/
@@ -353,10 +345,9 @@ void basic_math_test(const string& msg) {
     T b("654");
 
     calculatedResult = a * b;
-    expectedResult = 1286418;
+    expectedResult   = 1286418;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing mul_test";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing mul_test";
   }
 
   /************************************************/
@@ -376,11 +367,10 @@ void basic_math_test(const string& msg) {
     T b("2034455");
 
     calculatedResult = a.DividedBy(b);
-    expectedResult = 0;
+    expectedResult   = 0;
 
     // RESULT SHOULD BE ZERO
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing divided_by_a_less_than_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing divided_by_a_less_than_b";
   }
 
   // TEST_F CASE WHEN FIRST NUMBER IS EQUAL TO THE SECOND NUMBER
@@ -389,10 +379,9 @@ void basic_math_test(const string& msg) {
     T b("2048956567");
 
     calculatedResult = a.DividedBy(b);
-    expectedResult = 1;
+    expectedResult   = 1;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing divided_by_a_equals_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing divided_by_a_equals_b";
   }
 
   // TEST_F CASE WHEN FIRST NUMBER IS GREATER THAN THE SECOND NUMBER
@@ -401,10 +390,9 @@ void basic_math_test(const string& msg) {
     T b("2034455");
 
     calculatedResult = a.DividedBy(b);
-    expectedResult = 1007;
+    expectedResult   = 1007;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing divided_by_a_greater_than_b";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing divided_by_a_greater_than_b";
   }
 
   {
@@ -412,10 +400,9 @@ void basic_math_test(const string& msg) {
     T b("4049");
 
     calculatedResult = a.Mod(b);
-    expectedResult = 4047;
+    expectedResult   = 4047;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing Mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing Mod";
   }
 
   // TEST_F CASE FOR VERIFICATION OF ROUNDING OPERATION.
@@ -425,10 +412,10 @@ void basic_math_test(const string& msg) {
     T b("4049");
 
     calculatedResult = a.DivideAndRound(b);
-    expectedResult = 2;
+    expectedResult   = 2;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing divided_and_rounding_by_a_greater_than_b";
+      << msg << " Failure testing divided_and_rounding_by_a_greater_than_b";
   }
 
   /*{
@@ -500,33 +487,30 @@ void basic_compare_test(const string& msg) {
     T a("112504");
     T b("46968");
 
-    c = a.Compare(b);
+    c              = a.Compare(b);
     expectedResult = 1;
 
-    EXPECT_EQ(expectedResult, (int)c)
-        << msg << " Failure testing compare_a_greater_than_b";
+    EXPECT_EQ(expectedResult, (int)c) << msg << " Failure testing compare_a_greater_than_b";
   }
   // TEST_F CASE WHEN FIRST NUMBER IS LESS THAN SECOND NUMBER
   {
     T a("12504");
     T b("46968");
 
-    c = a.Compare(b);
+    c              = a.Compare(b);
     expectedResult = -1;
 
-    EXPECT_EQ(expectedResult, (int)c)
-        << msg << " Failure testing compare_a_less_than_b";
+    EXPECT_EQ(expectedResult, (int)c) << msg << " Failure testing compare_a_less_than_b";
   }
   // TEST_F CASE WHEN FIRST NUMBER IS EQUAL TO SECOND NUMBER
   {
     T a("34512504");
     T b("34512504");
 
-    c = a.Compare(b);
+    c              = a.Compare(b);
     expectedResult = 0;
 
-    EXPECT_EQ(expectedResult, (int)c)
-        << msg << " Failure testing compare_a_equals_b";
+    EXPECT_EQ(expectedResult, (int)c) << msg << " Failure testing compare_a_equals_b";
   }
 }
 
@@ -553,10 +537,9 @@ void mod_test(const string& msg) {
     T p("240");
 
     calculatedResult = m.Mod(p);
-    expectedResult = 27;
+    expectedResult   = 27;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing number_less_than_modulus";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing number_less_than_modulus";
   }
   // TEST_F CASE WHEN THE NUMBER IS GREATER THAN MOD
   {
@@ -564,10 +547,9 @@ void mod_test(const string& msg) {
     T p("406");
 
     calculatedResult = m.Mod(p);
-    expectedResult = 35;
+    expectedResult   = 35;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing number_greater_than_modulus";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing number_greater_than_modulus";
   }
   // TEST_F CASE WHEN THE NUMBER IS DIVISIBLE BY MOD
   {
@@ -575,10 +557,9 @@ void mod_test(const string& msg) {
     T p("16");
 
     calculatedResult = m.Mod(p);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing number_dividible_by_modulus";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing number_dividible_by_modulus";
   }
 
   // TEST_F CASE WHEN THE NUMBER IS EQUAL TO MOD
@@ -587,10 +568,9 @@ void mod_test(const string& msg) {
     T p("67108913");
 
     calculatedResult = m.Mod(p);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing number_equal_to_modulus";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing number_equal_to_modulus";
   }
 
 #ifdef OUT
@@ -624,7 +604,9 @@ void mod_test(const string& msg) {
 #endif
 }
 
-TEST_F(UTBinInt, mod_operations) { RUN_ALL_BACKENDS_INT(mod_test, "mod") }
+TEST_F(UTBinInt, mod_operations) {
+  RUN_ALL_BACKENDS_INT(mod_test, "mod")
+}
 
 template <typename T>
 void mod_inverse(const string& msg) {
@@ -648,10 +630,9 @@ void mod_inverse(const string& msg) {
     T p("108");
 
     calculatedResult = m.ModInverse(p);
-    expectedResult = 65;
+    expectedResult   = 65;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing number_less_than_modulus";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing number_less_than_modulus";
   }
   // TEST_F CASE WHEN THE NUMBER AND MOD ARE NOT CO-PRIME
   {
@@ -659,10 +640,9 @@ void mod_inverse(const string& msg) {
     T p("108");
 
     calculatedResult = m.ModInverse(p);
-    expectedResult = 77;
+    expectedResult   = 77;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing number_greater_than_modulus";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing number_greater_than_modulus";
   }
 
   // TESTCASE
@@ -676,8 +656,7 @@ void mod_inverse(const string& msg) {
 
     modresult = first.Mod(second);
 
-    EXPECT_EQ(modcorrect, modresult.ToString())
-        << msg << " Failure ModInverse() Mod regression test";
+    EXPECT_EQ(modcorrect, modresult.ToString()) << msg << " Failure ModInverse() Mod regression test";
 
     T input("405107564542978792");
     T modulus("1152921504606847009");
@@ -687,14 +666,13 @@ void mod_inverse(const string& msg) {
     bool thrown = false;
     try {
       modIresult = input.ModInverse(modulus);
-    } catch (...) {
+    }
+    catch (...) {
       thrown = true;
     }
 
-    EXPECT_FALSE(thrown)
-        << msg << " Failure testing ModInverse() non co-prime arguments";
-    EXPECT_EQ(modIcorrect, modIresult.ToString())
-        << msg << " Failure ModInverse() regression test";
+    EXPECT_FALSE(thrown) << msg << " Failure testing ModInverse() non co-prime arguments";
+    EXPECT_EQ(modIcorrect, modIresult.ToString()) << msg << " Failure ModInverse() regression test";
   }
 
 #ifdef OUT
@@ -707,13 +685,14 @@ void mod_inverse(const string& msg) {
 
     modresult = first.Mod(second);
 
-    EXPECT_EQ(modcorrect, modresult.ToString())
-        << msg << " Failure ModInverse() Mod(0)";
+    EXPECT_EQ(modcorrect, modresult.ToString()) << msg << " Failure ModInverse() Mod(0)";
   }
 #endif
 }
 
-TEST_F(UTBinInt, mod_inverse) { RUN_ALL_BACKENDS_INT(mod_inverse, "modinv") }
+TEST_F(UTBinInt, mod_inverse) {
+  RUN_ALL_BACKENDS_INT(mod_inverse, "modinv")
+}
 
 template <typename T>
 void mod_arithmetic(const string& msg) {
@@ -735,10 +714,10 @@ void mod_arithmetic(const string& msg) {
     T q("4067");
 
     calculatedResult = m.ModAdd(n, q);
-    expectedResult = 2871;
+    expectedResult   = 2871;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing first_number_greater_than_modulus";
+      << msg << " Failure testing first_number_greater_than_modulus";
   }
   // TEST_F CASE WHEN THE SECOND NUMBER IS GREATER THAN MOD
   {
@@ -747,10 +726,10 @@ void mod_arithmetic(const string& msg) {
     T q("4067");
 
     calculatedResult = m.ModAdd(n, q);
-    expectedResult = 3419;
+    expectedResult   = 3419;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing second_number_greater_than_modulus";
+      << msg << " Failure testing second_number_greater_than_modulus";
   }
   // TEST_F CASE WHEN THE BOTH NUMBERS ARE LESS THAN MOD
   {
@@ -759,9 +738,9 @@ void mod_arithmetic(const string& msg) {
     T q("4067");
 
     calculatedResult = m.ModAdd(n, q);
-    expectedResult = 971;
+    expectedResult   = 971;
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing both_numbers_less_than_modulus";
+      << msg << " Failure testing both_numbers_less_than_modulus";
   }
   // TEST_F CASE WHEN THE BOTH NUMBERS ARE GREATER THAN MOD
   {
@@ -770,10 +749,10 @@ void mod_arithmetic(const string& msg) {
     T q("4067");
 
     calculatedResult = m.ModAdd(n, q);
-    expectedResult = 2861;
+    expectedResult   = 2861;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing both_numbers_greater_than_modulus";
+      << msg << " Failure testing both_numbers_greater_than_modulus";
   }
 
   /************************************************/
@@ -796,10 +775,10 @@ void mod_arithmetic(const string& msg) {
     T q("406");
 
     calculatedResult = m.ModSub(n, q);
-    expectedResult = 196;
+    expectedResult   = 196;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing first_number_greater_than_modulus";
+      << msg << " Failure testing first_number_greater_than_modulus";
   }
   // TEST_F CASE WHEN THE FIRST NUMBER LESS THAN SECOND NUMBER AND MOD
   {
@@ -808,11 +787,11 @@ void mod_arithmetic(const string& msg) {
     T q("406756");
 
     calculatedResult = m.ModSub(n, q);
-    expectedResult = 33029;
+    expectedResult   = 33029;
 
     // [{(a mod c)+ c} - (b mod c)] since a < b
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing first_number_less_than_modulus";
+      << msg << " Failure testing first_number_less_than_modulus";
   }
   // TEST_F CASE WHEN THE FIRST NUMBER EQUAL TO SECOND NUMBER
   {
@@ -821,10 +800,10 @@ void mod_arithmetic(const string& msg) {
     T q("406756");
 
     calculatedResult = m.ModSub(n, q);
-    expectedResult = 0;
+    expectedResult   = 0;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing first_number_equals_second_number";
+      << msg << " Failure testing first_number_equals_second_number";
   }
 
   /************************************************/
@@ -843,10 +822,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 24;
+    expectedResult   = 24;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul first > mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul first > mod";
   }
 
   // FIRST == MOD
@@ -856,10 +834,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul first == mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul first == mod";
   }
 
   // SECOND > MOD
@@ -869,10 +846,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 15;
+    expectedResult   = 15;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul second > mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul second > mod";
   }
 
   // SECOND == MOD
@@ -882,10 +858,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul second == mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul second == mod";
   }
 
   // BOTH > MOD
@@ -895,10 +870,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 20;
+    expectedResult   = 20;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul both > mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul both > mod";
   }
 
   // BOTH == MOD
@@ -908,10 +882,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul both == mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul both == mod";
   }
 
   // PRODUCT > MOD
@@ -921,10 +894,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 3;
+    expectedResult   = 3;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul product > mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul product > mod";
   }
 
   // PRODUCT == MOD
@@ -934,10 +906,9 @@ void mod_arithmetic(const string& msg) {
     T q("32");
 
     calculatedResult = m.ModMul(n, q);
-    expectedResult = 0;
+    expectedResult   = 0;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing ModMul product == mod";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing ModMul product == mod";
   }
 
   /************************************************/
@@ -955,10 +926,9 @@ void mod_arithmetic(const string& msg) {
     T q("406756");
 
     calculatedResult = m.ModExp(n, q);
-    expectedResult = 96776;
+    expectedResult   = 96776;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing mod_exp_test";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing mod_exp_test";
   }
 }
 
@@ -979,13 +949,14 @@ void big_modexp(const string& msg) {
   T calculatedResult = m.ModExp(n, q);
   T expectedResult("187237443793760596004690725849");
 
-  EXPECT_EQ(expectedResult, calculatedResult)
-      << msg << " Failure testing very big mod_exp_test";
+  EXPECT_EQ(expectedResult, calculatedResult) << msg << " Failure testing very big mod_exp_test";
 
   DEBUG("big_modexp time ns " << TOC_NS(t));
 }
 
-TEST_F(UTBinInt, big_modexp) { RUN_BIG_BACKENDS_INT(big_modexp, "big_modexp") }
+TEST_F(UTBinInt, big_modexp) {
+  RUN_BIG_BACKENDS_INT(big_modexp, "big_modexp")
+}
 
 template <typename T>
 void power_2_modexp(const string& msg) {
@@ -996,8 +967,7 @@ void power_2_modexp(const string& msg) {
   T calculatedResult = m.ModExp(n, q);
   T expectedResult(0);
 
-  EXPECT_EQ(expectedResult, calculatedResult)
-      << msg << " Failure testing TWO.ModExp(50,16)";
+  EXPECT_EQ(expectedResult, calculatedResult) << msg << " Failure testing TWO.ModExp(50,16)";
 }
 
 TEST_F(UTBinInt, power_2_modexp) {
@@ -1031,22 +1001,21 @@ void shift(const string& msg) {
     T a("39960");
     usshort shift = 3;
 
-    T calculatedResult = a << (shift);
+    T calculatedResult      = a << (shift);
     uint64_t expectedResult = 319680;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing shift_less_than_max_shift";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing shift_less_than_max_shift";
   }
   // TEST_F CASE WHEN SHIFT IS GREATER THAN 4 (MAX SHIFT DONE AT A TIME)
   {
     T a("39960");
     usshort shift = 6;
 
-    T calculatedResult = a << (shift);
+    T calculatedResult      = a << (shift);
     uint64_t expectedResult = 2557440;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing shift_greater_than_max_shift";
+      << msg << " Failure testing shift_greater_than_max_shift";
   }
 
   /************************************************/
@@ -1071,8 +1040,7 @@ void shift(const string& msg) {
     a <<= (num);
     uint64_t expectedResult = 319680;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing shift_less_than_max_shift";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing shift_less_than_max_shift";
   }
   // TEST_F CASE WHEN SHIFT IS GREATER THAN 4 (MAX SHIFT DONE AT A TIME)
   {
@@ -1082,8 +1050,7 @@ void shift(const string& msg) {
     a <<= (num);
     uint64_t expectedResult = 2557440;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing shift_greater_than_max_shift";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing shift_greater_than_max_shift";
   }
 
   /********************************************************/
@@ -1106,22 +1073,21 @@ void shift(const string& msg) {
     T a("39965675");
     usshort shift = 3;
 
-    T calculatedResult = a >> (shift);
+    T calculatedResult      = a >> (shift);
     uint64_t expectedResult = 4995709;
 
-    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing shift_less_than_max_shift";
+    EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt()) << msg << " Failure testing shift_less_than_max_shift";
   }
   // TEST_F CASE WHEN SHIFT IS GREATER THAN 4 (MAX SHIFT DONE AT A TIME)
   {
     T a("39965675");
     usshort shift = 6;
 
-    T calculatedResult = a >> (shift);
+    T calculatedResult      = a >> (shift);
     uint64_t expectedResult = 624463;
 
     EXPECT_EQ(expectedResult, calculatedResult.ConvertToInt())
-        << msg << " Failure testing shift_greater_than_max_shift";
+      << msg << " Failure testing shift_greater_than_max_shift";
   }
 
   /***************************************************************/
@@ -1148,8 +1114,7 @@ void shift(const string& msg) {
     a >>= (shift);
     uint64_t expectedResult = 4995709;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing shift_less_than_max_shift";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing shift_less_than_max_shift";
   }
   // TEST_F CASE WHEN SHIFT IS GREATER THAN 4 (MAX SHIFT DONE AT A TIME)
   {
@@ -1159,12 +1124,13 @@ void shift(const string& msg) {
     a >>= (shift);
     uint64_t expectedResult = 624463;
 
-    EXPECT_EQ(expectedResult, a.ConvertToInt())
-        << msg << " Failure testing shift_greater_than_max_shift";
+    EXPECT_EQ(expectedResult, a.ConvertToInt()) << msg << " Failure testing shift_greater_than_max_shift";
   }
 }
 
-TEST_F(UTBinInt, shift) { RUN_ALL_BACKENDS_INT(shift, "shift") }
+TEST_F(UTBinInt, shift) {
+  RUN_ALL_BACKENDS_INT(shift, "shift")
+}
 
 /****************************************/
 /* TESTING METHOD  FromBinaryString */
@@ -1175,13 +1141,15 @@ void binString(const string& msg) {
   // TEST_F CASE FOR STATIC METHOD FromBinaryString in BigInteger
 
   string binaryString = "1011101101110001111010111011000000011";
-  T b = T::FromBinaryString(binaryString);
+  T b                 = T::FromBinaryString(binaryString);
 
   T expectedResult("100633769475");
   EXPECT_EQ(expectedResult, b) << msg << " Failure testing FromBinaryString";
 }
 
-TEST_F(UTBinInt, binString) { RUN_ALL_BACKENDS_INT(binString, "binString") }
+TEST_F(UTBinInt, binString) {
+  RUN_ALL_BACKENDS_INT(binString, "binString")
+}
 
 template <typename T>
 void expNoMod(const string& msg) {
@@ -1192,7 +1160,9 @@ void expNoMod(const string& msg) {
   EXPECT_EQ(expectedResult, result) << msg << " Failure testing exp";
 }
 
-TEST_F(UTBinInt, expNoMod) { RUN_ALL_BACKENDS_INT(expNoMod, "expNoMod") }
+TEST_F(UTBinInt, expNoMod) {
+  RUN_ALL_BACKENDS_INT(expNoMod, "expNoMod")
+}
 
 template <typename T>
 void convToDouble(const string& msg) {

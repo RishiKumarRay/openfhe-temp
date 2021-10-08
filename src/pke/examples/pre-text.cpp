@@ -74,9 +74,11 @@ CryptoContext<Poly> GeneratePREContext(string scheme, PlaintextModulus ptm) {
 
   if (scheme == "Null") {
     cc = GenTestCryptoContext<Poly>(scheme, m, ptm);
-  } else if (scheme == "BFV") {
+  }
+  else if (scheme == "BFV") {
     cc = GenTestCryptoContext<Poly>("BFV_rlwe", m, ptm);
-  } else {
+  }
+  else {
     cout << "Unrecognized scheme '" << scheme << "'" << endl;
     cout << "Available schemes are: Null, and BFV" << endl;
   }
@@ -87,7 +89,7 @@ CryptoContext<Poly> GeneratePREContext(string scheme, PlaintextModulus ptm) {
 int main(int argc, char* argv[]) {
   string schemeName;
   bool beVerbose = true;
-  bool haveName = false;
+  bool haveName  = false;
 
   // Process parameters, find the parameter set name specified on the command
   // line
@@ -97,17 +99,19 @@ int main(int argc, char* argv[]) {
     if (parm[0] == '-') {
       if (parm == "-s") {
         beVerbose = false;
-      } else {
+      }
+      else {
         cout << "Unrecognized parameter " << parm << endl;
         return 1;
       }
-    } else {
+    }
+    else {
       if (haveName) {
         cout << "Cannot specify multiple parameter set names" << endl;
         return 1;
       }
 
-      haveName = true;
+      haveName   = true;
       schemeName = parm;
     }
   }
@@ -117,8 +121,7 @@ int main(int argc, char* argv[]) {
   if (cc == 0) return 0;
 
   if (beVerbose) {
-    cout << "Crypto system for " << schemeName
-         << " initialized with parameters:" << endl;
+    cout << "Crypto system for " << schemeName << " initialized with parameters:" << endl;
     cout << *cc->GetCryptoParameters() << endl;
   }
 
@@ -134,10 +137,9 @@ int main(int argc, char* argv[]) {
 
   // generate a random string of length ptsize
   auto randchar = []() -> char {
-    const char charset[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
+    const char charset[] = "0123456789"
+                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                           "abcdefghijklmnopqrstuvwxyz";
     const size_t max_index = (sizeof(charset) - 1);
     return charset[rand() % max_index];
   };
@@ -199,8 +201,7 @@ int main(int argc, char* argv[]) {
   // after the re-encryption operation.
   ////////////////////////////////////////////////////////////
 
-  if (beVerbose)
-    cout << "Running second key generation (used for re-encryption)" << endl;
+  if (beVerbose) cout << "Running second key generation (used for re-encryption)" << endl;
 
   LPKeyPair<Poly> newKp = cc->KeyGen();
 
@@ -219,7 +220,8 @@ int main(int argc, char* argv[]) {
   LPEvalKey<Poly> evalKey;
   try {
     evalKey = cc->ReKeyGen(newKp.publicKey, kp.secretKey);
-  } catch (std::exception& e) {
+  }
+  catch (std::exception& e) {
     cout << e.what() << ", cannot proceed with PRE" << endl;
     return 0;
   }
@@ -240,8 +242,7 @@ int main(int argc, char* argv[]) {
 
   if (beVerbose) cout << "Running decryption of re-encrypted cipher" << endl;
 
-  DecryptResult result1 =
-      cc->Decrypt(newKp.secretKey, newCiphertext, &plaintextNew2);
+  DecryptResult result1 = cc->Decrypt(newKp.secretKey, newCiphertext, &plaintextNew2);
 
   if (!result1.isValid) {
     std::cout << "Decryption failed!" << std::endl;
@@ -250,19 +251,15 @@ int main(int argc, char* argv[]) {
 
   if (plaintext != plaintextNew2) {
     cout << "Mismatch on decryption of PRE ciphertext" << endl;
-    if (plaintext->GetEncodingType() != plaintextNew2->GetEncodingType())
-      cout << "encoding mismatch" << endl;
+    if (plaintext->GetEncodingType() != plaintextNew2->GetEncodingType()) cout << "encoding mismatch" << endl;
 
-    if (plaintext->GetEncodingParams() != plaintextNew2->GetEncodingParams())
-      cout << "params" << endl;
+    if (plaintext->GetEncodingParams() != plaintextNew2->GetEncodingParams()) cout << "params" << endl;
 
     if (plaintext->GetLength() != plaintextNew2->GetLength())
-      cout << "length mismatch " << plaintext->GetLength() << " and "
-           << plaintextNew2->GetLength() << endl;
+      cout << "length mismatch " << plaintext->GetLength() << " and " << plaintextNew2->GetLength() << endl;
 
     for (size_t i = 0; i < plaintext->GetLength(); i++) {
-      if (plaintext->GetStringValue().at(i) !=
-          plaintextNew2->GetStringValue().at(i)) {
+      if (plaintext->GetStringValue().at(i) != plaintextNew2->GetStringValue().at(i)) {
         cout << "mismatch at " << i << endl;
         cout << plaintext->GetStringValue() << endl;
         cout << plaintextNew2->GetStringValue() << endl;

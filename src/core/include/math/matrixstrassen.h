@@ -33,7 +33,8 @@
 namespace lbcrypto {
 
 template <class Element>
-class MatrixStrassen {  // TODO : public Serializable {
+class MatrixStrassen
+{  // TODO : public Serializable {
  public:
   typedef vector<vector<Element>> data_t;
   typedef vector<Element> lineardata_t;
@@ -47,8 +48,8 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &rows number of rows.
    * @param &rows number of columns.
    */
-  MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols)
-      : data(), rows(rows), cols(cols), allocZero(allocZero) {
+  MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols) :
+      data(), rows(rows), cols(cols), allocZero(allocZero) {
     data.resize(rows);
     for (auto row = data.begin(); row != data.end(); ++row) {
       for (size_t col = 0; col < cols; ++col) {
@@ -68,8 +69,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &allocGen lambda function for intialization using a distribution
    * generator.
    */
-  MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols,
-                 alloc_func allocGen);
+  MatrixStrassen(alloc_func allocZero, size_t rows, size_t cols, alloc_func allocGen);
 
   /**
    * Constructor of an empty matrix; SetSize must be called on this matrix to
@@ -77,13 +77,11 @@ class MatrixStrassen {  // TODO : public Serializable {
    *
    * @param &allocZero lambda function for zero initialization.
    */
-  explicit MatrixStrassen(alloc_func allocZero)
-      : data(), rows(0), cols(0), allocZero(allocZero) {}
+  explicit MatrixStrassen(alloc_func allocZero) : data(), rows(0), cols(0), allocZero(allocZero) {}
 
   void SetSize(size_t rows, size_t cols) {
     if (this->rows != 0 || this->cols != 0) {
-      PALISADE_THROW(not_available_error,
-                     "You cannot SetSize on a non-empty matrix");
+      PALISADE_THROW(not_available_error, "You cannot SetSize on a non-empty matrix");
     }
 
     this->rows = rows;
@@ -102,8 +100,8 @@ class MatrixStrassen {  // TODO : public Serializable {
    *
    * @param &other the matrix object to be copied
    */
-  MatrixStrassen(const MatrixStrassen<Element>& other)
-      : data(), rows(other.rows), cols(other.cols), allocZero(other.allocZero) {
+  MatrixStrassen(const MatrixStrassen<Element>& other) :
+      data(), rows(other.rows), cols(other.cols), allocZero(other.allocZero) {
     deepCopyData(other.data);
   }
 
@@ -113,8 +111,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix object whose values are to be copied
    * @return the resulting matrix
    */
-  inline MatrixStrassen<Element>& operator=(
-      const MatrixStrassen<Element>& other);
+  inline MatrixStrassen<Element>& operator=(const MatrixStrassen<Element>& other);
 
   /**
    * In-place change of the current matrix to a matrix of all ones
@@ -159,8 +156,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the multiplier matrix
    * @return the result of multiplication
    */
-  inline MatrixStrassen<Element> operator*(
-      MatrixStrassen<Element> const& other) const {
+  inline MatrixStrassen<Element> operator*(MatrixStrassen<Element> const& other) const {
     return Mult(other);
   }
 
@@ -237,28 +233,36 @@ class MatrixStrassen {  // TODO : public Serializable {
    *
    * @return the data as vector of vectors
    */
-  const data_t& GetData() const { return data; }
+  const data_t& GetData() const {
+    return data;
+  }
 
   /**
    * Get property to access the number of rows in the matrix
    *
    * @return the number of rows
    */
-  size_t GetRows() const { return rows; }
+  size_t GetRows() const {
+    return rows;
+  }
 
   /**
    * Get property to access the number of columns in the matrix
    *
    * @return the number of columns
    */
-  size_t GetCols() const { return cols; }
+  size_t GetCols() const {
+    return cols;
+  }
 
   /**
    * Get property to access the zero allocator for the matrix
    *
    * @return the lambda function corresponding to the element zero allocator
    */
-  alloc_func GetAllocator() const { return allocZero; }
+  alloc_func GetAllocator() const {
+    return allocZero;
+  }
 
   /**
    * Sets the evaluation or coefficient representation for all ring elements
@@ -275,11 +279,9 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix to be added
    * @return the resulting matrix
    */
-  inline MatrixStrassen<Element> Add(
-      MatrixStrassen<Element> const& other) const {
+  inline MatrixStrassen<Element> Add(MatrixStrassen<Element> const& other) const {
     if (rows != other.rows || cols != other.cols) {
-      PALISADE_THROW(math_error,
-                     "Addition operands have incompatible dimensions");
+      PALISADE_THROW(math_error, "Addition operands have incompatible dimensions");
     }
     MatrixStrassen<Element> result(*this);
 #pragma omp parallel for
@@ -298,8 +300,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix to be added
    * @return the resulting matrix
    */
-  inline MatrixStrassen<Element> operator+(
-      MatrixStrassen<Element> const& other) const {
+  inline MatrixStrassen<Element> operator+(MatrixStrassen<Element> const& other) const {
     return this->Add(other);
   }
 
@@ -309,8 +310,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix to be added
    * @return the resulting matrix (same object)
    */
-  inline MatrixStrassen<Element>& operator+=(
-      MatrixStrassen<Element> const& other);
+  inline MatrixStrassen<Element>& operator+=(MatrixStrassen<Element> const& other);
 
   /**
    * MatrixStrassen substraction
@@ -318,11 +318,9 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix to be substracted
    * @return the resulting matrix
    */
-  inline MatrixStrassen<Element> Sub(
-      MatrixStrassen<Element> const& other) const {
+  inline MatrixStrassen<Element> Sub(MatrixStrassen<Element> const& other) const {
     if (rows != other.rows || cols != other.cols) {
-      PALISADE_THROW(math_error,
-                     "Subtraction operands have incompatible dimensions");
+      PALISADE_THROW(math_error, "Subtraction operands have incompatible dimensions");
     }
     MatrixStrassen<Element> result(allocZero, rows, other.cols);
 #pragma omp parallel for
@@ -341,8 +339,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix to be substracted
    * @return the resulting matrix
    */
-  inline MatrixStrassen<Element> operator-(
-      MatrixStrassen<Element> const& other) const {
+  inline MatrixStrassen<Element> operator-(MatrixStrassen<Element> const& other) const {
     return this->Sub(other);
   }
 
@@ -352,8 +349,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the matrix to be substracted
    * @return the resulting matrix (same object)
    */
-  inline MatrixStrassen<Element>& operator-=(
-      MatrixStrassen<Element> const& other);
+  inline MatrixStrassen<Element>& operator-=(MatrixStrassen<Element> const& other);
 
   /**
    * MatrixStrassen transposition
@@ -402,7 +398,9 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &col column index
    * @return the element at the index
    */
-  inline Element& operator()(size_t row, size_t col) { return data[row][col]; }
+  inline Element& operator()(size_t row, size_t col) {
+    return data[row][col];
+  }
 
   /**
    * MatrixStrassen indexing operator - read-only instance of the element
@@ -424,8 +422,7 @@ class MatrixStrassen {  // TODO : public Serializable {
   inline MatrixStrassen<Element> ExtractRow(size_t row) const {
     MatrixStrassen<Element> result(this->allocZero, 1, this->cols);
     int i = 0;
-    for (auto elem = this->GetData()[row].begin();
-         elem != this->GetData()[row].end(); ++elem) {
+    for (auto elem = this->GetData()[row].begin(); elem != this->GetData()[row].end(); ++elem) {
       result(0, i) = **elem;
       i++;
     }
@@ -445,8 +442,7 @@ class MatrixStrassen {  // TODO : public Serializable {
    * @param &other the multiplier matrix
    * @return the result of multiplication
    */
-  MatrixStrassen<Element> Mult(const MatrixStrassen<Element>& other,
-                               int nrec = 0, int pad = -1) const;
+  MatrixStrassen<Element> Mult(const MatrixStrassen<Element>& other, int nrec = 0, int pad = -1) const;
 
   /*
    * Multiply the matrix by a vector whose elements are all 1's.  This causes
@@ -482,21 +478,18 @@ class MatrixStrassen {  // TODO : public Serializable {
   mutable int colpad = 0;
   alloc_func allocZero;
   mutable char* pattern = nullptr;
-  mutable int numAdd = 0;
-  mutable int numMult = 0;
-  mutable int numSub = 0;
+  mutable int numAdd    = 0;
+  mutable int numMult   = 0;
+  mutable int numSub    = 0;
   mutable MatDescriptor desc;
   mutable Element zeroUniquePtr = allocZero();
-  mutable int NUM_THREADS = 1;
+  mutable int NUM_THREADS       = 1;
 
-  void multiplyInternalCAPS(it_lineardata_t A, it_lineardata_t B,
-                            it_lineardata_t C, MatDescriptor desc,
+  void multiplyInternalCAPS(it_lineardata_t A, it_lineardata_t B, it_lineardata_t C, MatDescriptor desc,
                             it_lineardata_t work) const;
-  void strassenDFSCAPS(it_lineardata_t A, it_lineardata_t B, it_lineardata_t C,
-                       MatDescriptor desc,
+  void strassenDFSCAPS(it_lineardata_t A, it_lineardata_t B, it_lineardata_t C, MatDescriptor desc,
                        it_lineardata_t workPassThrough) const;
-  void block_multiplyCAPS(it_lineardata_t A, it_lineardata_t B,
-                          it_lineardata_t C, MatDescriptor d,
+  void block_multiplyCAPS(it_lineardata_t A, it_lineardata_t B, it_lineardata_t C, MatDescriptor d,
                           it_lineardata_t workPassThrough) const;
   void LinearizeDataCAPS(lineardata_t* lineardataPtr) const;
   void UnlinearizeDataCAPS(lineardata_t* lineardataPtr) const;
@@ -505,44 +498,27 @@ class MatrixStrassen {  // TODO : public Serializable {
   long long numEntriesPerProc(MatDescriptor desc) const;
   // deep copy of data - used for copy constructor
   void deepCopyData(data_t const& src);
-  void getData(const data_t& Adata, const data_t& Bdata, const data_t& Cdata,
-               int row, int inner, int col) const;
+  void getData(const data_t& Adata, const data_t& Bdata, const data_t& Cdata, int row, int inner, int col) const;
 
-  void smartSubtractionCAPS(it_lineardata_t result, it_lineardata_t A,
-                            it_lineardata_t B) const;
-  void smartAdditionCAPS(it_lineardata_t result, it_lineardata_t A,
-                         it_lineardata_t B) const;
-  void addMatricesCAPS(int numEntries, it_lineardata_t C, it_lineardata_t A,
-                       it_lineardata_t B) const;
-  void addSubMatricesCAPS(int numEntries, it_lineardata_t T1,
-                          it_lineardata_t S11, it_lineardata_t S12,
-                          it_lineardata_t T2, it_lineardata_t S21,
-                          it_lineardata_t S22) const;
-  void subMatricesCAPS(int numEntries, it_lineardata_t C, it_lineardata_t A,
-                       it_lineardata_t B) const;
-  void tripleAddMatricesCAPS(int numEntries, it_lineardata_t T1,
-                             it_lineardata_t S11, it_lineardata_t S12,
-                             it_lineardata_t T2, it_lineardata_t S21,
-                             it_lineardata_t S22, it_lineardata_t T3,
+  void smartSubtractionCAPS(it_lineardata_t result, it_lineardata_t A, it_lineardata_t B) const;
+  void smartAdditionCAPS(it_lineardata_t result, it_lineardata_t A, it_lineardata_t B) const;
+  void addMatricesCAPS(int numEntries, it_lineardata_t C, it_lineardata_t A, it_lineardata_t B) const;
+  void addSubMatricesCAPS(int numEntries, it_lineardata_t T1, it_lineardata_t S11, it_lineardata_t S12,
+                          it_lineardata_t T2, it_lineardata_t S21, it_lineardata_t S22) const;
+  void subMatricesCAPS(int numEntries, it_lineardata_t C, it_lineardata_t A, it_lineardata_t B) const;
+  void tripleAddMatricesCAPS(int numEntries, it_lineardata_t T1, it_lineardata_t S11, it_lineardata_t S12,
+                             it_lineardata_t T2, it_lineardata_t S21, it_lineardata_t S22, it_lineardata_t T3,
                              it_lineardata_t S31, it_lineardata_t S32) const;
-  void tripleSubMatricesCAPS(int numEntries, it_lineardata_t T1,
-                             it_lineardata_t S11, it_lineardata_t S12,
-                             it_lineardata_t T2, it_lineardata_t S21,
-                             it_lineardata_t S22, it_lineardata_t T3,
+  void tripleSubMatricesCAPS(int numEntries, it_lineardata_t T1, it_lineardata_t S11, it_lineardata_t S12,
+                             it_lineardata_t T2, it_lineardata_t S21, it_lineardata_t S22, it_lineardata_t T3,
                              it_lineardata_t S31, it_lineardata_t S32) const;
 
-  void distributeFrom1ProcCAPS(MatDescriptor desc, it_lineardata_t O,
-                               it_lineardata_t I) const;
-  void collectTo1ProcCAPS(MatDescriptor desc, it_lineardata_t O,
-                          it_lineardata_t I) const;
-  void sendBlockCAPS(int rank, int target, it_lineardata_t O, int bs,
-                     int source, it_lineardata_t I, int ldi) const;
-  void receiveBlockCAPS(int rank, int target, it_lineardata_t O, int bs,
-                        int source, it_lineardata_t I, int ldo) const;
-  void distributeFrom1ProcRecCAPS(MatDescriptor desc, it_lineardata_t O,
-                                  it_lineardata_t I, int ldi) const;
-  void collectTo1ProcRecCAPS(MatDescriptor desc, it_lineardata_t O,
-                             it_lineardata_t I, int ldo) const;
+  void distributeFrom1ProcCAPS(MatDescriptor desc, it_lineardata_t O, it_lineardata_t I) const;
+  void collectTo1ProcCAPS(MatDescriptor desc, it_lineardata_t O, it_lineardata_t I) const;
+  void sendBlockCAPS(int rank, int target, it_lineardata_t O, int bs, int source, it_lineardata_t I, int ldi) const;
+  void receiveBlockCAPS(int rank, int target, it_lineardata_t O, int bs, int source, it_lineardata_t I, int ldo) const;
+  void distributeFrom1ProcRecCAPS(MatDescriptor desc, it_lineardata_t O, it_lineardata_t I, int ldi) const;
+  void collectTo1ProcRecCAPS(MatDescriptor desc, it_lineardata_t O, it_lineardata_t I, int ldo) const;
 };
 
 /**
@@ -553,8 +529,7 @@ class MatrixStrassen {  // TODO : public Serializable {
  * @return the resulting matrix
  */
 template <class Element>
-inline MatrixStrassen<Element> operator*(Element const& e,
-                                         MatrixStrassen<Element> const& M) {
+inline MatrixStrassen<Element> operator*(Element const& e, MatrixStrassen<Element> const& M) {
   return M.ScalarMult(e);
 }
 
@@ -575,8 +550,7 @@ inline MatrixStrassen<BigInteger> Rotate(MatrixStrassen<Poly> const& inMat);
  * @param &inMat the matrix of power-of-2 cyclotomic ring elements to be rotated
  * @return the resulting matrix of big binary integers
  */
-inline MatrixStrassen<BigVector> RotateVecResult(
-    MatrixStrassen<Poly> const& inMat);
+inline MatrixStrassen<BigVector> RotateVecResult(MatrixStrassen<Poly> const& inMat);
 
 /**
  *  Stream output operator
@@ -586,8 +560,7 @@ inline MatrixStrassen<BigVector> RotateVecResult(
  * @return the chained stream
  */
 template <class Element>
-inline std::ostream& operator<<(std::ostream& os,
-                                const MatrixStrassen<Element>& m);
+inline std::ostream& operator<<(std::ostream& os, const MatrixStrassen<Element>& m);
 
 /**
  * Gives the Choleshky decomposition of the input matrix.
@@ -610,8 +583,7 @@ inline MatrixStrassen<double> Cholesky(const MatrixStrassen<int32_t>& input);
  * @param &modulus the ring modulus
  * @return the resulting matrix of int32_t
  */
-inline MatrixStrassen<int32_t> ConvertToInt32(
-    const MatrixStrassen<BigInteger>& input, const BigInteger& modulus);
+inline MatrixStrassen<int32_t> ConvertToInt32(const MatrixStrassen<BigInteger>& input, const BigInteger& modulus);
 
 /**
  * Convert a matrix of BigVector to int32_t
@@ -621,8 +593,7 @@ inline MatrixStrassen<int32_t> ConvertToInt32(
  * @param &modulus the ring modulus
  * @return the resulting matrix of int32_t
  */
-inline MatrixStrassen<int32_t> ConvertToInt32(
-    const MatrixStrassen<BigVector>& input, const BigInteger& modulus);
+inline MatrixStrassen<int32_t> ConvertToInt32(const MatrixStrassen<BigVector>& input, const BigInteger& modulus);
 
 /**
  * Split a vector of int32_t into a vector of ring elements with ring dimension
@@ -633,9 +604,8 @@ inline MatrixStrassen<int32_t> ConvertToInt32(
  * @param &params Poly element params
  * @return the resulting matrix of Poly
  */
-inline MatrixStrassen<Poly> SplitInt32IntoPolyElements(
-    MatrixStrassen<int32_t> const& other, size_t n,
-    const shared_ptr<ILParams> params);
+inline MatrixStrassen<Poly> SplitInt32IntoPolyElements(MatrixStrassen<int32_t> const& other, size_t n,
+                                                       const shared_ptr<ILParams> params);
 
 /**
  * Another method for splitting a vector of int32_t into a vector of ring
@@ -646,8 +616,7 @@ inline MatrixStrassen<Poly> SplitInt32IntoPolyElements(
  * @param &params Poly element params
  * @return the resulting matrix of Poly
  */
-inline MatrixStrassen<Poly> SplitInt32AltIntoPolyElements(
-    MatrixStrassen<int32_t> const& other, size_t n,
-    const shared_ptr<ILParams> params);
+inline MatrixStrassen<Poly> SplitInt32AltIntoPolyElements(MatrixStrassen<int32_t> const& other, size_t n,
+                                                          const shared_ptr<ILParams> params);
 }  // namespace lbcrypto
 #endif  // LBCRYPTO_MATH_MATRIXSTRASSEN_H

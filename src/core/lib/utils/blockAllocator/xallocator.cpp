@@ -95,14 +95,17 @@ XallocInitDestroy::~XallocInitDestroy() {
 template <class T>
 T nexthigher(T k) {
   k--;
-  for (size_t i = 1; i < sizeof(T) * CHAR_BIT; i <<= 1) k |= (k >> i);
+  for (size_t i = 1; i < sizeof(T) * CHAR_BIT; i <<= 1)
+    k |= (k >> i);
   return k + 1;
 }
 
 /// Create the xallocator lock. Call only one time at startup.
 /// note for C++11 we do not need to control the lock with the lock_* functions.
 /// instead we control the next exection function in the code.
-static void lock_init() { _xallocInitialized = true; }
+static void lock_init() {
+  _xallocInitialized = true;
+}
 
 /// Destroy the xallocator lock.
 static void lock_destroy() {
@@ -234,16 +237,16 @@ extern "C" void xalloc_init() {
   new (&_allocator16384) AllocatorPool<char[16384], MAX_BLOCKS>();
 
   // Populate allocator array with all instances
-  _allocators[0] = reinterpret_cast<Allocator*>(&_allocator8);
-  _allocators[1] = reinterpret_cast<Allocator*>(&_allocator16);
-  _allocators[2] = reinterpret_cast<Allocator*>(&_allocator32);
-  _allocators[3] = reinterpret_cast<Allocator*>(&_allocator64);
-  _allocators[4] = reinterpret_cast<Allocator*>(&_allocator128);
-  _allocators[5] = reinterpret_cast<Allocator*>(&_allocator256);
-  _allocators[6] = reinterpret_cast<Allocator*>(&_allocator396);
-  _allocators[7] = reinterpret_cast<Allocator*>(&_allocator512);
-  _allocators[8] = reinterpret_cast<Allocator*>(&_allocator768);
-  _allocators[9] = reinterpret_cast<Allocator*>(&_allocator1024);
+  _allocators[0]  = reinterpret_cast<Allocator*>(&_allocator8);
+  _allocators[1]  = reinterpret_cast<Allocator*>(&_allocator16);
+  _allocators[2]  = reinterpret_cast<Allocator*>(&_allocator32);
+  _allocators[3]  = reinterpret_cast<Allocator*>(&_allocator64);
+  _allocators[4]  = reinterpret_cast<Allocator*>(&_allocator128);
+  _allocators[5]  = reinterpret_cast<Allocator*>(&_allocator256);
+  _allocators[6]  = reinterpret_cast<Allocator*>(&_allocator396);
+  _allocators[7]  = reinterpret_cast<Allocator*>(&_allocator512);
+  _allocators[8]  = reinterpret_cast<Allocator*>(&_allocator768);
+  _allocators[9]  = reinterpret_cast<Allocator*>(&_allocator1024);
   _allocators[10] = reinterpret_cast<Allocator*>(&_allocator2048);
   _allocators[11] = reinterpret_cast<Allocator*>(&_allocator4096);
   _allocators[12] = reinterpret_cast<Allocator*>(&_allocator8192);
@@ -290,8 +293,7 @@ extern "C" Allocator* xallocator_get_allocator(size_t size) {
   // to minimize wasted storage. This offers application specific tuning.
   DEBUG_FLAG(false);
   size_t blockSize = size + sizeof(Allocator*);
-  if (blockSize > 256 && blockSize <= 396)
-    blockSize = 396;
+  if (blockSize > 256 && blockSize <= 396) blockSize = 396;
   else if (blockSize > 512 && blockSize <= 768)
     blockSize = 768;
   else
@@ -302,8 +304,7 @@ extern "C" Allocator* xallocator_get_allocator(size_t size) {
 #ifdef STATIC_POOLS
 
   if (allocator == nullptr) {
-    std::cerr << "static pool allocator for blockSize " << blockSize
-              << " not found! " << std::endl;
+    std::cerr << "static pool allocator for blockSize " << blockSize << " not found! " << std::endl;
   }
   assert(allocator != nullptr);
 #else
@@ -333,7 +334,7 @@ extern "C" void* xmalloc(size_t size) {
   std::unique_lock<std::mutex> lock(xalloc_mutex);
   {
     // Allocate a raw memory block
-    allocator = xallocator_get_allocator(size);
+    allocator      = xallocator_get_allocator(size);
     blockMemoryPtr = allocator->Allocate(sizeof(Allocator*) + size);
     DEBUG("xmalloc " << size);
   }
@@ -377,13 +378,14 @@ extern "C" void* xrealloc(void* oldMem, size_t size) {
   if (size == 0) {
     xfree(oldMem);
     return 0;
-  } else {
+  }
+  else {
     // Create a new memory block
     void* newMem = xmalloc(size);
     if (newMem != 0) {
       // Get the original allocator instance from the old memory block
       Allocator* oldAllocator = get_block_allocator(oldMem);
-      size_t oldSize = oldAllocator->GetBlockSize() - sizeof(Allocator*);
+      size_t oldSize          = oldAllocator->GetBlockSize() - sizeof(Allocator*);
 
       // Copy the bytes from the old memory block into the new (as much as will
       // fit)
@@ -411,8 +413,7 @@ extern "C" void xalloc_stats() {
     for (usint i = 0; i < MAX_ALLOCATORS; i++) {
       if (_allocators[i] == 0) break;
 
-      if (_allocators[i]->GetName() != nullptr)
-        cout << _allocators[i]->GetName();
+      if (_allocators[i]->GetName() != nullptr) cout << _allocators[i]->GetName();
 
       cout << " Block Size: " << _allocators[i]->GetBlockSize();
       cout << " Block Count: " << _allocators[i]->GetBlockCount();

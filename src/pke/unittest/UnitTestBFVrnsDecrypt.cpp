@@ -35,8 +35,8 @@
 using namespace std;
 using namespace lbcrypto;
 
-class UTBFVrnsDecrypt
-    : public ::testing::TestWithParam<std::tuple<usint, usint>> {
+class UTBFVrnsDecrypt : public ::testing::TestWithParam<std::tuple<usint, usint>>
+{
  protected:
   void SetUp() {}
 
@@ -54,14 +54,13 @@ class UTBFVrnsDecrypt
  * @param vectorSize The length of the two vectors.
  * @param failmsg Debug message to display upon failure.
  */
-static void checkEquality(const std::vector<int64_t>& a,
-                          const std::vector<int64_t>& b, int vectorSize,
+static void checkEquality(const std::vector<int64_t>& a, const std::vector<int64_t>& b, int vectorSize,
                           const string& failmsg) {
   std::vector<usint> allTrue(vectorSize);
   std::vector<usint> tmp(vectorSize);
   for (int i = 0; i < vectorSize; i++) {
     allTrue[i] = 1;
-    tmp[i] = (a[i] == b[i]);
+    tmp[i]     = (a[i] == b[i]);
   }
   EXPECT_TRUE(tmp == allTrue) << failmsg;
 }
@@ -70,13 +69,12 @@ static void checkEquality(const std::vector<int64_t>& a,
 // static vector<usint> dcrtbit_args{30, 40, 50, 60};
 
 TEST_P(UTBFVrnsDecrypt, BFVrns_Decrypt) {
-  usint ptm = std::get<0>(GetParam());
+  usint ptm      = std::get<0>(GetParam());
   usint dcrtBits = std::get<1>(GetParam());
-  double sigma = 3.19;
+  double sigma   = 3.19;
 
-  CryptoContext<DCRTPoly> cc =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
-          ptm, HEStd_128_classic, sigma, 0, 0, 0, OPTIMIZED, 2, 0, dcrtBits);
+  CryptoContext<DCRTPoly> cc = CryptoContextFactory<DCRTPoly>::genCryptoContextBFVrns(
+    ptm, HEStd_128_classic, sigma, 0, 0, 0, OPTIMIZED, 2, 0, dcrtBits);
 
   cc->Enable(ENCRYPTION);
   cc->Enable(SHE);
@@ -88,14 +86,14 @@ TEST_P(UTBFVrnsDecrypt, BFVrns_Decrypt) {
   for (usint i = 0; i < vecsize; ++i) {
     if (ptm == 2) {
       vectorOfInts[i] = rand() % ptm;
-    } else {
+    }
+    else {
       vectorOfInts[i] = (rand() % ptm) / 2;
     }
   }
 
   Plaintext plaintext;
-  if (!(ptm & (ptm - 1)))
-    plaintext = cc->MakeCoefPackedPlaintext(vectorOfInts);
+  if (!(ptm & (ptm - 1))) plaintext = cc->MakeCoefPackedPlaintext(vectorOfInts);
   else
     plaintext = cc->MakePackedPlaintext(vectorOfInts);
   Plaintext result;
@@ -106,7 +104,8 @@ TEST_P(UTBFVrnsDecrypt, BFVrns_Decrypt) {
     auto tmp_a = plaintext->GetCoefPackedValue();
     auto tmp_b = result->GetCoefPackedValue();
     checkEquality(tmp_a, tmp_b, vecsize, "BFVrns Decrypt fails");
-  } else {
+  }
+  else {
     auto tmp_a = plaintext->GetPackedValue();
     auto tmp_b = result->GetPackedValue();
     checkEquality(tmp_a, tmp_b, vecsize, "BFVrns Decrypt fails");
@@ -136,46 +135,45 @@ TEST_P(UTBFVrnsDecrypt, BFVrns_Decrypt) {
  * log2(5308417) = 22.34
  * log2(3221225473) = 31.58
  */
-INSTANTIATE_TEST_SUITE_P(
-    BFVrns_Decrypt, UTBFVrnsDecrypt,
-    ::testing::Values(std::make_tuple(1 << 1, 30),        // A
-                      std::make_tuple(1 << 15, 30),       // A
-                      std::make_tuple(1 << 31, 30),       // A
-                      std::make_tuple(1 << 1, 35),        // A
-                      std::make_tuple(1 << 15, 35),       // A
-                      std::make_tuple(1 << 31, 35),       // B
-                      std::make_tuple(1 << 1, 40),        // A
-                      std::make_tuple(1 << 15, 40),       // A
-                      std::make_tuple(1 << 31, 40),       // B
-                      std::make_tuple(1 << 1, 45),        // A
-                      std::make_tuple(1 << 15, 45),       // A
-                      std::make_tuple(1 << 31, 45),       // B
-                      std::make_tuple(1 << 1, 50),        // A
-                      std::make_tuple(1 << 15, 50),       // B
-                      std::make_tuple(1 << 31, 50),       // B
-                      std::make_tuple(1 << 1, 55),        // C
-                      std::make_tuple(1 << 15, 55),       // C
-                      std::make_tuple(1 << 31, 55),       // D
-                      std::make_tuple(1 << 1, 60),        // C
-                      std::make_tuple(1 << 15, 60),       // C
-                      std::make_tuple(1 << 31, 60),       // D
-                      std::make_tuple(65537, 30),         // E
-                      std::make_tuple(5308417, 30),       // F
-                      std::make_tuple(65537, 35),         // E
-                      std::make_tuple(5308417, 35),       // F
-                      std::make_tuple(3221225473, 35),    // F
-                      std::make_tuple(65537, 40),         // F
-                      std::make_tuple(5308417, 40),       // F
-                      std::make_tuple(3221225473, 40),    // F
-                      std::make_tuple(65537, 45),         // F
-                      std::make_tuple(5308417, 45),       // F
-                      std::make_tuple(3221225473, 45),    // F
-                      std::make_tuple(65537, 50),         // F
-                      std::make_tuple(5308417, 50),       // F
-                      std::make_tuple(3221225473, 50),    // F
-                      std::make_tuple(65537, 55),         // G
-                      std::make_tuple(5308417, 55),       // G
-                      std::make_tuple(3221225473, 55),    // H
-                      std::make_tuple(65537, 60),         // G
-                      std::make_tuple(5308417, 60),       // H
-                      std::make_tuple(3221225473, 60)));  // H
+INSTANTIATE_TEST_SUITE_P(BFVrns_Decrypt, UTBFVrnsDecrypt,
+                         ::testing::Values(std::make_tuple(1 << 1, 30),        // A
+                                           std::make_tuple(1 << 15, 30),       // A
+                                           std::make_tuple(1 << 31, 30),       // A
+                                           std::make_tuple(1 << 1, 35),        // A
+                                           std::make_tuple(1 << 15, 35),       // A
+                                           std::make_tuple(1 << 31, 35),       // B
+                                           std::make_tuple(1 << 1, 40),        // A
+                                           std::make_tuple(1 << 15, 40),       // A
+                                           std::make_tuple(1 << 31, 40),       // B
+                                           std::make_tuple(1 << 1, 45),        // A
+                                           std::make_tuple(1 << 15, 45),       // A
+                                           std::make_tuple(1 << 31, 45),       // B
+                                           std::make_tuple(1 << 1, 50),        // A
+                                           std::make_tuple(1 << 15, 50),       // B
+                                           std::make_tuple(1 << 31, 50),       // B
+                                           std::make_tuple(1 << 1, 55),        // C
+                                           std::make_tuple(1 << 15, 55),       // C
+                                           std::make_tuple(1 << 31, 55),       // D
+                                           std::make_tuple(1 << 1, 60),        // C
+                                           std::make_tuple(1 << 15, 60),       // C
+                                           std::make_tuple(1 << 31, 60),       // D
+                                           std::make_tuple(65537, 30),         // E
+                                           std::make_tuple(5308417, 30),       // F
+                                           std::make_tuple(65537, 35),         // E
+                                           std::make_tuple(5308417, 35),       // F
+                                           std::make_tuple(3221225473, 35),    // F
+                                           std::make_tuple(65537, 40),         // F
+                                           std::make_tuple(5308417, 40),       // F
+                                           std::make_tuple(3221225473, 40),    // F
+                                           std::make_tuple(65537, 45),         // F
+                                           std::make_tuple(5308417, 45),       // F
+                                           std::make_tuple(3221225473, 45),    // F
+                                           std::make_tuple(65537, 50),         // F
+                                           std::make_tuple(5308417, 50),       // F
+                                           std::make_tuple(3221225473, 50),    // F
+                                           std::make_tuple(65537, 55),         // G
+                                           std::make_tuple(5308417, 55),       // G
+                                           std::make_tuple(3221225473, 55),    // H
+                                           std::make_tuple(65537, 60),         // G
+                                           std::make_tuple(5308417, 60),       // H
+                                           std::make_tuple(3221225473, 60)));  // H

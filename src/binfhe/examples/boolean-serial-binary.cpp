@@ -21,7 +21,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 #include "binfhecontext-ser.h"
 
 using namespace lbcrypto;
@@ -54,8 +53,7 @@ int main() {
 
   // Serializing key-independent crypto context
 
-  if (!Serial::SerializeToFile(DATAFOLDER + "/cryptoContext.txt", cc1,
-                               SerType::BINARY)) {
+  if (!Serial::SerializeToFile(DATAFOLDER + "/cryptoContext.txt", cc1, SerType::BINARY)) {
     cerr << "Error serializing the cryptocontext" << endl;
     return 1;
   }
@@ -63,15 +61,13 @@ int main() {
 
   // Serializing refreshing and key switching keys (needed for bootstrapping)
 
-  if (!Serial::SerializeToFile(DATAFOLDER + "/refreshKey.txt",
-                               cc1.GetRefreshKey(), SerType::BINARY)) {
+  if (!Serial::SerializeToFile(DATAFOLDER + "/refreshKey.txt", cc1.GetRefreshKey(), SerType::BINARY)) {
     cerr << "Error serializing the refreshing key" << endl;
     return 1;
   }
   cout << "The refreshing key has been serialized." << std::endl;
 
-  if (!Serial::SerializeToFile(DATAFOLDER + "/ksKey.txt", cc1.GetSwitchKey(),
-                               SerType::BINARY)) {
+  if (!Serial::SerializeToFile(DATAFOLDER + "/ksKey.txt", cc1.GetSwitchKey(), SerType::BINARY)) {
     cerr << "Error serializing the switching key" << endl;
     return 1;
   }
@@ -98,8 +94,7 @@ int main() {
   // Deserializing the cryptocontext
 
   BinFHEContext cc;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/cryptoContext.txt", cc,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/cryptoContext.txt", cc, SerType::BINARY) == false) {
     cerr << "Could not deserialize the cryptocontext" << endl;
     return 1;
   }
@@ -108,29 +103,26 @@ int main() {
   // deserializing the refreshing and switching keys (for bootstrapping)
 
   std::shared_ptr<RingGSWBTKey> refreshKey;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/refreshKey.txt", refreshKey,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/refreshKey.txt", refreshKey, SerType::BINARY) == false) {
     cerr << "Could not deserialize the refresh key" << endl;
     return 1;
   }
   cout << "The refresh key has been deserialized." << std::endl;
 
   std::shared_ptr<LWESwitchingKey> ksKey;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/ksKey.txt", ksKey,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/ksKey.txt", ksKey, SerType::BINARY) == false) {
     cerr << "Could not deserialize the switching key" << endl;
     return 1;
   }
   cout << "The switching key has been deserialized." << std::endl;
 
   // Loading the keys in the cryptocontext
-  cc.BTKeyLoad({refreshKey, ksKey});
+  cc.BTKeyLoad({ refreshKey, ksKey });
 
   // Deserializing the secret key
 
   LWEPrivateKey sk;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/sk1.txt", sk,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/sk1.txt", sk, SerType::BINARY) == false) {
     cerr << "Could not deserialize the secret key" << endl;
     return 1;
   }
@@ -139,8 +131,7 @@ int main() {
   // Deserializing a previously serialized ciphertext
 
   LWECiphertext ct;
-  if (Serial::DeserializeFromFile(DATAFOLDER + "/ct1.txt", ct,
-                                  SerType::BINARY) == false) {
+  if (Serial::DeserializeFromFile(DATAFOLDER + "/ct1.txt", ct, SerType::BINARY) == false) {
     cerr << "Could not deserialize the ciphertext" << endl;
     return 1;
   }

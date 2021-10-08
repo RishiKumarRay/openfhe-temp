@@ -42,7 +42,8 @@ namespace lbcrypto {
 // the items in ElementOrder are an index into DefaultSet[]
 enum ElementOrder { M16 = 0, M1024, M2048, M4096, M8192, M16384, M32768 };
 
-class ElemParamFactory {
+class ElemParamFactory
+{
  public:
   static struct ElemParmSet {
     usint m;    // cyclotomic order
@@ -73,10 +74,9 @@ class ElemParamFactory {
   static shared_ptr<P> GenElemParams(ElementOrder o) {
     DEBUG_FLAG(false);
     DEBUG("in GenElemParams(ElementOrder o)");
-    return std::make_shared<P>(
-        DefaultSet[static_cast<int>(o)].m,
-        typename P::Integer(DefaultSet[static_cast<int>(o)].q),
-        typename P::Integer(DefaultSet[static_cast<int>(o)].ru));
+    return std::make_shared<P>(DefaultSet[static_cast<int>(o)].m,
+                               typename P::Integer(DefaultSet[static_cast<int>(o)].q),
+                               typename P::Integer(DefaultSet[static_cast<int>(o)].ru));
   }
 
   /**
@@ -92,9 +92,8 @@ class ElemParamFactory {
     DEBUG("in GenElemParams(usint m)");
     size_t sIdx = GetNearestIndex(m);
 
-    return std::make_shared<P>(DefaultSet[sIdx].m,
-                               typename P::Integer(DefaultSet[sIdx].q),
-                               typename P::Integer(DefaultSet[sIdx].ru));
+    return std::make_shared<P>(
+      DefaultSet[sIdx].m, typename P::Integer(DefaultSet[sIdx].q), typename P::Integer(DefaultSet[sIdx].ru));
   }
 
   /**
@@ -110,7 +109,7 @@ class ElemParamFactory {
   static shared_ptr<P> GenElemParams(usint m, usint bits, usint towersize = 1) {
     DEBUG_FLAG(false);
     DEBUG("in GenElemParams(usint m, usint bits, usint towers)");
-    typename P::Integer q = FirstPrime<typename P::Integer>(bits, m);
+    typename P::Integer q  = FirstPrime<typename P::Integer>(bits, m);
     typename P::Integer ru = RootOfUnity<typename P::Integer>(m, q);
     return std::make_shared<P>(m, q, ru);
   }
@@ -124,8 +123,7 @@ class ElemParamFactory {
    * @return
    */
   template <typename P>
-  static shared_ptr<P> GenElemParams(usint m,
-                                     const typename P::Integer& ctModulus,
+  static shared_ptr<P> GenElemParams(usint m, const typename P::Integer& ctModulus,
                                      const typename P::Integer& rootUnity) {
     DEBUG_FLAG(false);
     DEBUG("in GenElemParams(usint m, const typename P::Integer etc)");
@@ -134,13 +132,11 @@ class ElemParamFactory {
 };
 
 template <>
-inline shared_ptr<ILDCRTParams<M2Integer>>
-ElemParamFactory::GenElemParams<ILDCRTParams<M2Integer>>(usint m, usint bits,
-                                                         usint towersize) {
+inline shared_ptr<ILDCRTParams<M2Integer>> ElemParamFactory::GenElemParams<ILDCRTParams<M2Integer>>(usint m, usint bits,
+                                                                                                    usint towersize) {
   DEBUG_FLAG(false);
-  DEBUG(
-      "in GenElemParams<ILDCRTParams<M2Integer>>(usint m, usint bits, usint "
-      "towersize)");
+  DEBUG("in GenElemParams<ILDCRTParams<M2Integer>>(usint m, usint bits, usint "
+        "towersize)");
   DEBUGEXP(m);
   DEBUGEXP(bits);
   DEBUGEXP(towersize);
@@ -148,13 +144,11 @@ ElemParamFactory::GenElemParams<ILDCRTParams<M2Integer>>(usint m, usint bits,
 }
 
 template <>
-inline shared_ptr<ILDCRTParams<M4Integer>>
-ElemParamFactory::GenElemParams<ILDCRTParams<M4Integer>>(usint m, usint bits,
-                                                         usint towersize) {
+inline shared_ptr<ILDCRTParams<M4Integer>> ElemParamFactory::GenElemParams<ILDCRTParams<M4Integer>>(usint m, usint bits,
+                                                                                                    usint towersize) {
   DEBUG_FLAG(false);
-  DEBUG(
-      "in GenElemParams<ILDCRTParams<M4Integer>>(usint m, usint bits, usint "
-      "towersize)");
+  DEBUG("in GenElemParams<ILDCRTParams<M4Integer>>(usint m, usint bits, usint "
+        "towersize)");
   DEBUGEXP(m);
   DEBUGEXP(bits);
   DEBUGEXP(towersize);
@@ -162,13 +156,11 @@ ElemParamFactory::GenElemParams<ILDCRTParams<M4Integer>>(usint m, usint bits,
 }
 #ifdef WITH_NTL
 template <>
-inline shared_ptr<ILDCRTParams<M6Integer>>
-ElemParamFactory::GenElemParams<ILDCRTParams<M6Integer>>(usint m, usint bits,
-                                                         usint towersize) {
+inline shared_ptr<ILDCRTParams<M6Integer>> ElemParamFactory::GenElemParams<ILDCRTParams<M6Integer>>(usint m, usint bits,
+                                                                                                    usint towersize) {
   DEBUG_FLAG(false);
-  DEBUG(
-      "in GenElemParams<ILDCRTParams<M6Integer>>(usint m, usint bits, usint "
-      "towersize)");
+  DEBUG("in GenElemParams<ILDCRTParams<M6Integer>>(usint m, usint bits, usint "
+        "towersize)");
   DEBUGEXP(m);
   DEBUGEXP(bits);
   DEBUGEXP(towersize);

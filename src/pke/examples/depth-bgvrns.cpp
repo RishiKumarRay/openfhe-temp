@@ -38,7 +38,7 @@
 using namespace std;
 using namespace lbcrypto;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   ////////////////////////////////////////////////////////////
   // Set-up of parameters
   ////////////////////////////////////////////////////////////
@@ -46,10 +46,9 @@ int main(int argc, char *argv[]) {
   std::cout << "\nThis code demonstrates the use of the BGVrns scheme for "
                "homomorphic multiplication. "
             << std::endl;
-  std::cout
-      << "This code shows how to auto-generate parameters during run-time "
-         "based on desired plaintext moduli and security levels. "
-      << std::endl;
+  std::cout << "This code shows how to auto-generate parameters during run-time "
+               "based on desired plaintext moduli and security levels. "
+            << std::endl;
   std::cout << "In this demonstration we use three input plaintexts and show "
                "how to both add them together and multiply them together.\n"
             << std::endl;
@@ -58,8 +57,8 @@ int main(int argc, char *argv[]) {
   TimeVar t;
   double processingTime(0.0);
 
-  usint plaintextModulus = 536903681;
-  double sigma = 3.2;
+  usint plaintextModulus      = 536903681;
+  double sigma                = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
 
   ////////////////////////////////////////////////////////////
@@ -71,28 +70,18 @@ int main(int argc, char *argv[]) {
   // ciphertexts, i.e., ceiling{log2{7}} Max depth is set to 3 (second 3) to
   // generate homomorphic evaluation multiplication keys for s^2 and s^3
   CryptoContext<DCRTPoly> cryptoContext =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(
-          3, plaintextModulus, securityLevel, sigma, 3);
+    CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(3, plaintextModulus, securityLevel, sigma, 3);
 
   // enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
   cryptoContext->Enable(SHE);
   cryptoContext->Enable(LEVELEDSHE);
 
-  std::cout << "\np = "
-            << cryptoContext->GetCryptoParameters()->GetPlaintextModulus()
-            << std::endl;
-  std::cout << "n = "
-            << cryptoContext->GetCryptoParameters()
-                       ->GetElementParams()
-                       ->GetCyclotomicOrder() /
-                   2
+  std::cout << "\np = " << cryptoContext->GetCryptoParameters()->GetPlaintextModulus() << std::endl;
+  std::cout << "n = " << cryptoContext->GetCryptoParameters()->GetElementParams()->GetCyclotomicOrder() / 2
             << std::endl;
   std::cout << "log2 q = "
-            << log2(cryptoContext->GetCryptoParameters()
-                        ->GetElementParams()
-                        ->GetModulus()
-                        .ConvertToDouble())
+            << log2(cryptoContext->GetCryptoParameters()->GetElementParams()->GetModulus().ConvertToDouble())
             << std::endl;
 
   // Initialize Public Key Containers
@@ -100,8 +89,7 @@ int main(int argc, char *argv[]) {
 
   // Perform Key Generation Operation
 
-  std::cout << "\nRunning key generation (used for source data)..."
-            << std::endl;
+  std::cout << "\nRunning key generation (used for source data)..." << std::endl;
 
   TIC(t);
 
@@ -124,34 +112,33 @@ int main(int argc, char *argv[]) {
   cryptoContext->EvalMultKeysGen(keyPair.secretKey);
 
   processingTime = TOC(t);
-  std::cout
-      << "Key generation time for homomorphic multiplication evaluation keys: "
-      << processingTime << "ms" << std::endl;
+  std::cout << "Key generation time for homomorphic multiplication evaluation keys: " << processingTime << "ms"
+            << std::endl;
 
   ////////////////////////////////////////////////////////////
   // Encode source data
   ////////////////////////////////////////////////////////////
 
-  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext1 = cryptoContext->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext1               = cryptoContext->MakePackedPlaintext(vectorOfInts1);
 
-  std::vector<int64_t> vectorOfInts2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext2 = cryptoContext->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext2               = cryptoContext->MakePackedPlaintext(vectorOfInts2);
 
-  std::vector<int64_t> vectorOfInts3 = {2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext3 = cryptoContext->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = { 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext3               = cryptoContext->MakePackedPlaintext(vectorOfInts3);
 
-  std::vector<int64_t> vectorOfInts4 = {2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext4 = cryptoContext->MakePackedPlaintext(vectorOfInts4);
+  std::vector<int64_t> vectorOfInts4 = { 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext4               = cryptoContext->MakePackedPlaintext(vectorOfInts4);
 
-  std::vector<int64_t> vectorOfInts5 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext5 = cryptoContext->MakePackedPlaintext(vectorOfInts5);
+  std::vector<int64_t> vectorOfInts5 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext5               = cryptoContext->MakePackedPlaintext(vectorOfInts5);
 
-  std::vector<int64_t> vectorOfInts6 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext6 = cryptoContext->MakePackedPlaintext(vectorOfInts6);
+  std::vector<int64_t> vectorOfInts6 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext6               = cryptoContext->MakePackedPlaintext(vectorOfInts6);
 
-  std::vector<int64_t> vectorOfInts7 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext7 = cryptoContext->MakePackedPlaintext(vectorOfInts7);
+  std::vector<int64_t> vectorOfInts7 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext7               = cryptoContext->MakePackedPlaintext(vectorOfInts7);
 
   cout << "\nOriginal Plaintext #1: \n";
   cout << plaintext1 << endl;
@@ -196,8 +183,7 @@ int main(int argc, char *argv[]) {
 
   cout << "Completed\n";
 
-  std::cout << "\nAverage encryption time: " << processingTime / 7 << "ms"
-            << std::endl;
+  std::cout << "\nAverage encryption time: " << processingTime / 7 << "ms" << std::endl;
 
   ////////////////////////////////////////////////////////////
   // Homomorphic multiplication of 2 ciphertexts
@@ -240,13 +226,11 @@ int main(int argc, char *argv[]) {
 
   cout << "Completed\n";
 
-  std::cout << "\nTotal time of multiplying 7 ciphertexts using EvalMultMany: "
-            << processingTime << "ms" << std::endl;
+  std::cout << "\nTotal time of multiplying 7 ciphertexts using EvalMultMany: " << processingTime << "ms" << std::endl;
 
   Plaintext plaintextDecMult7;
 
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult7,
-                         &plaintextDecMult7);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult7, &plaintextDecMult7);
 
   plaintextDecMult7->SetLength(plaintext1->GetLength());
 
@@ -263,26 +247,22 @@ int main(int argc, char *argv[]) {
 
   TIC(t);
 
-  auto ciphertextMult12 =
-      cryptoContext->EvalMultNoRelin(ciphertexts[0], ciphertexts[1]);
+  auto ciphertextMult12 = cryptoContext->EvalMultNoRelin(ciphertexts[0], ciphertexts[1]);
   cryptoContext->ModReduceInPlace(ciphertextMult12);
 
   processingTime = TOC(t);
 
   cout << "Completed\n";
 
-  std::cout << "Time of multiplying 2 ciphertexts w/o relinearization: "
-            << processingTime << "ms" << std::endl;
+  std::cout << "Time of multiplying 2 ciphertexts w/o relinearization: " << processingTime << "ms" << std::endl;
 
   auto ciphertexts2 = cryptoContext->ModReduce(ciphertexts[2]);
 
-  auto ciphertextMult123 =
-      cryptoContext->EvalMultAndRelinearize(ciphertextMult12, ciphertexts2);
+  auto ciphertextMult123 = cryptoContext->EvalMultAndRelinearize(ciphertextMult12, ciphertexts2);
 
   Plaintext plaintextDecMult123;
 
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult123,
-                         &plaintextDecMult123);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult123, &plaintextDecMult123);
 
   plaintextDecMult123->SetLength(plaintext1->GetLength());
 
@@ -295,16 +275,13 @@ int main(int argc, char *argv[]) {
 
   cout << "\nRunning a depth-3 multiplication w/o relinearization...";
 
-  ciphertextMult12 =
-      cryptoContext->EvalMultNoRelin(ciphertexts[0], ciphertexts[1]);
+  ciphertextMult12 = cryptoContext->EvalMultNoRelin(ciphertexts[0], ciphertexts[1]);
   cryptoContext->ModReduceInPlace(ciphertextMult12);
-  ciphertextMult123 =
-      cryptoContext->EvalMultNoRelin(ciphertextMult12, ciphertexts2);
+  ciphertextMult123 = cryptoContext->EvalMultNoRelin(ciphertextMult12, ciphertexts2);
   ciphertextMult123 = cryptoContext->ModReduce(ciphertextMult123);
   cout << "Completed\n";
 
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult123,
-                         &plaintextDecMult123);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult123, &plaintextDecMult123);
 
   plaintextDecMult123->SetLength(plaintext1->GetLength());
 
@@ -326,13 +303,11 @@ int main(int argc, char *argv[]) {
 
   processingTime = TOC(t);
   cout << "Completed\n";
-  std::cout << "Time for multiplying 3 ciphertexts w/ relinearization: "
-            << processingTime << "ms" << std::endl;
+  std::cout << "Time for multiplying 3 ciphertexts w/ relinearization: " << processingTime << "ms" << std::endl;
 
   ciphertextMult123 = cryptoContext->EvalMult(ciphertextMult12, ciphertexts2);
 
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult123,
-                         &plaintextDecMult123);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMult123, &plaintextDecMult123);
 
   plaintextDecMult123->SetLength(plaintext1->GetLength());
 

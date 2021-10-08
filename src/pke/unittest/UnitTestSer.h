@@ -36,16 +36,17 @@ using namespace std;
 using namespace lbcrypto;
 
 template <typename T, typename ST>
-void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype,
-                                string msg) {
+void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype, string msg) {
   LPKeyPair<T> kp = cc->KeyGen();
   try {
     cc->EvalMultKeyGen(kp.secretKey);
-  } catch (...) {
+  }
+  catch (...) {
   }
   try {
     cc->EvalSumKeyGen(kp.secretKey, kp.publicKey);
-  } catch (...) {
+  }
+  catch (...) {
   }
 
   stringstream s;
@@ -60,14 +61,12 @@ void UnitTestContextWithSertype(CryptoContext<T> cc, const ST& sertype,
   EXPECT_EQ(*cc, *newcc) << msg << " Mismatched context";
 
   EXPECT_EQ(*cc->GetEncryptionAlgorithm(), *newcc->GetEncryptionAlgorithm())
-      << msg << " Scheme mismatch after ser/deser";
+    << msg << " Scheme mismatch after ser/deser";
   EXPECT_EQ(*cc->GetCryptoParameters(), *newcc->GetCryptoParameters())
-      << msg << " Crypto parms mismatch after ser/deser";
-  EXPECT_EQ(*cc->GetEncodingParams(), *newcc->GetEncodingParams())
-      << msg << " Encoding parms mismatch after ser/deser";
-  EXPECT_EQ(cc->GetEncryptionAlgorithm()->GetEnabled(),
-            newcc->GetEncryptionAlgorithm()->GetEnabled())
-      << msg << " Enabled features mismatch after ser/deser";
+    << msg << " Crypto parms mismatch after ser/deser";
+  EXPECT_EQ(*cc->GetEncodingParams(), *newcc->GetEncodingParams()) << msg << " Encoding parms mismatch after ser/deser";
+  EXPECT_EQ(cc->GetEncryptionAlgorithm()->GetEnabled(), newcc->GetEncryptionAlgorithm()->GetEnabled())
+    << msg << " Enabled features mismatch after ser/deser";
 
   s.str("");
   s.clear();

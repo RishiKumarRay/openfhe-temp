@@ -47,8 +47,7 @@ using namespace lbcrypto;
  * @return
  */
 template <typename I>
-inline shared_ptr<ILDCRTParams<I>> GenerateDCRTParams(usint m, usint numOfTower,
-                                                      usint pbits) {
+inline shared_ptr<ILDCRTParams<I>> GenerateDCRTParams(usint m, usint numOfTower, usint pbits) {
   DEBUG_FLAG(false);
   DEBUG("in GenerateDCRTParams");
   DEBUGEXP(m);
@@ -68,9 +67,9 @@ inline shared_ptr<ILDCRTParams<I>> GenerateDCRTParams(usint m, usint numOfTower,
   DEBUGEXP(q);
 
   for (;;) {
-    moduli[j] = q;
+    moduli[j]       = q;
     rootsOfUnity[j] = RootOfUnity(m, q);
-    modulus = modulus * I(q.ConvertToInt());
+    modulus         = modulus * I(q.ConvertToInt());
     DEBUG("j " << j << " modulus " << q << " rou " << rootsOfUnity[j]);
     if (++j == numOfTower) break;
 

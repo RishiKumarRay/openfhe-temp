@@ -29,10 +29,10 @@ namespace bigintnat {
 
 // helper template to stream vector contents provided T has an stream operator<<
 template <typename T>
-std::ostream &operator<<(std::ostream &os, const std::vector<T> &v) {
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
   os << "[";
   // for (const auto itr : v){
-  for (const auto &i : v) {
+  for (const auto& i: v) {
     os << " " << i;
   }
   os << " ]";
@@ -40,7 +40,6 @@ std::ostream &operator<<(std::ostream &os, const std::vector<T> &v) {
 }
 
 // to stream internal representation
-template std::ostream &operator<<<uint64_t>(std::ostream &os,
-                                            const std::vector<uint64_t> &v);
+template std::ostream& operator<<<uint64_t>(std::ostream& os, const std::vector<uint64_t>& v);
 
 }  // namespace bigintnat

@@ -33,30 +33,24 @@ using std::string;
 
 namespace lbcrypto {
 
-class StringEncoding : public PlaintextImpl {
+class StringEncoding : public PlaintextImpl
+{
   string ptx;
   // enum EncodingType { CHAR7bit } encoding = CHAR7bit;
 
  public:
   // these three constructors are used inside of Decrypt
-  StringEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  StringEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  StringEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  StringEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  StringEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep)
-      : PlaintextImpl(vp, ep) {}
+  StringEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep) : PlaintextImpl(vp, ep) {}
 
-  StringEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, string str)
-      : PlaintextImpl(vp, ep), ptx(str) {}
+  StringEncoding(shared_ptr<Poly::Params> vp, EncodingParams ep, string str) : PlaintextImpl(vp, ep), ptx(str) {}
 
-  StringEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep,
-                 string str)
-      : PlaintextImpl(vp, ep), ptx(str) {}
+  StringEncoding(shared_ptr<NativePoly::Params> vp, EncodingParams ep, string str) : PlaintextImpl(vp, ep), ptx(str) {}
 
-  StringEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, string str)
-      : PlaintextImpl(vp, ep), ptx(str) {}
+  StringEncoding(shared_ptr<DCRTPoly::Params> vp, EncodingParams ep, string str) : PlaintextImpl(vp, ep), ptx(str) {}
 
   // TODO provide wide-character version (for unicode); right now this class
   // only supports strings of 7-bit ASCII characters
@@ -67,13 +61,17 @@ class StringEncoding : public PlaintextImpl {
    * GetStringValue
    * @return the un-encoded string
    */
-  const string& GetStringValue() const { return ptx; }
+  const string& GetStringValue() const {
+    return ptx;
+  }
 
   /**
    * SetStringValue
    * @param val to initialize the Plaintext
    */
-  void SetStringValue(const std::string& value) { ptx = value; }
+  void SetStringValue(const std::string& value) {
+    ptx = value;
+  }
 
   /**
    * Encode the plaintext into the Poly
@@ -91,14 +89,18 @@ class StringEncoding : public PlaintextImpl {
    * GetEncodingType
    * @return this is a String encoding
    */
-  PlaintextEncodings GetEncodingType() const { return String; }
+  PlaintextEncodings GetEncodingType() const {
+    return String;
+  }
 
   /**
    * Get length of the plaintext
    *
    * @return number of elements in this plaintext
    */
-  size_t GetLength() const { return ptx.size(); }
+  size_t GetLength() const {
+    return ptx.size();
+  }
 
   /**
    * Method to compare two plaintext to test for equivalence
@@ -116,7 +118,9 @@ class StringEncoding : public PlaintextImpl {
    * PrintValue - used by operator<< for this object
    * @param out
    */
-  void PrintValue(std::ostream& out) const { out << ptx; }
+  void PrintValue(std::ostream& out) const {
+    out << ptx;
+  }
 };
 
 } /* namespace lbcrypto */

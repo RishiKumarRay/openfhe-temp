@@ -30,15 +30,14 @@ int main() {
   // Sample Program: Step 1 - Set CryptoContext
 
   // Set the main parameters
-  int plaintextModulus = 65537;
-  double sigma = 3.2;
+  int plaintextModulus        = 65537;
+  double sigma                = 3.2;
   SecurityLevel securityLevel = HEStd_128_classic;
-  uint32_t depth = 2;
+  uint32_t depth              = 2;
 
   // Instantiate the crypto context
-  CryptoContext<DCRTPoly> cryptoContext =
-      CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(
-          depth, plaintextModulus, securityLevel, sigma, depth, OPTIMIZED, BV);
+  CryptoContext<DCRTPoly> cryptoContext = CryptoContextFactory<DCRTPoly>::genCryptoContextBGVrns(
+    depth, plaintextModulus, securityLevel, sigma, depth, OPTIMIZED, BV);
 
   // Enable features that you wish to use
   cryptoContext->Enable(ENCRYPTION);
@@ -57,19 +56,19 @@ int main() {
   cryptoContext->EvalMultKeyGen(keyPair.secretKey);
 
   // Generate the rotation evaluation keys
-  cryptoContext->EvalAtIndexKeyGen(keyPair.secretKey, {1, 2, -1, -2});
+  cryptoContext->EvalAtIndexKeyGen(keyPair.secretKey, { 1, 2, -1, -2 });
 
   // Sample Program: Step 3 - Encryption
 
   // First plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext1 = cryptoContext->MakePackedPlaintext(vectorOfInts1);
+  std::vector<int64_t> vectorOfInts1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext1               = cryptoContext->MakePackedPlaintext(vectorOfInts1);
   // Second plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts2 = {3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext2 = cryptoContext->MakePackedPlaintext(vectorOfInts2);
+  std::vector<int64_t> vectorOfInts2 = { 3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext2               = cryptoContext->MakePackedPlaintext(vectorOfInts2);
   // Third plaintext vector is encoded
-  std::vector<int64_t> vectorOfInts3 = {1, 2, 5, 2, 5, 6, 7, 8, 9, 10, 11, 12};
-  Plaintext plaintext3 = cryptoContext->MakePackedPlaintext(vectorOfInts3);
+  std::vector<int64_t> vectorOfInts3 = { 1, 2, 5, 2, 5, 6, 7, 8, 9, 10, 11, 12 };
+  Plaintext plaintext3               = cryptoContext->MakePackedPlaintext(vectorOfInts3);
 
   // The encoded vectors are encrypted
   auto ciphertext1 = cryptoContext->Encrypt(keyPair.publicKey, plaintext1);
@@ -79,16 +78,14 @@ int main() {
   // Sample Program: Step 4 - Evaluation
 
   // Homomorphic additions
-  auto ciphertextAdd12 = cryptoContext->EvalAdd(ciphertext1, ciphertext2);
-  auto ciphertextAddResult =
-      cryptoContext->EvalAdd(ciphertextAdd12, ciphertext3);
+  auto ciphertextAdd12     = cryptoContext->EvalAdd(ciphertext1, ciphertext2);
+  auto ciphertextAddResult = cryptoContext->EvalAdd(ciphertextAdd12, ciphertext3);
 
   // Homomorphic multiplications
   // modulus switching is done automatically because by default the modulus
   // switching method is set to AUTO (rather than MANUAL)
-  auto ciphertextMul12 = cryptoContext->EvalMult(ciphertext1, ciphertext2);
-  auto ciphertextMultResult =
-      cryptoContext->EvalMult(ciphertextMul12, ciphertext3);
+  auto ciphertextMul12      = cryptoContext->EvalMult(ciphertext1, ciphertext2);
+  auto ciphertextMultResult = cryptoContext->EvalMult(ciphertextMul12, ciphertext3);
 
   // Homomorphic rotations
   auto ciphertextRot1 = cryptoContext->EvalAtIndex(ciphertext1, 1);
@@ -100,13 +97,11 @@ int main() {
 
   // Decrypt the result of additions
   Plaintext plaintextAddResult;
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextAddResult,
-                         &plaintextAddResult);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextAddResult, &plaintextAddResult);
 
   // Decrypt the result of multiplications
   Plaintext plaintextMultResult;
-  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMultResult,
-                         &plaintextMultResult);
+  cryptoContext->Decrypt(keyPair.secretKey, ciphertextMultResult, &plaintextMultResult);
 
   // Decrypt the result of rotations
   Plaintext plaintextRot1;

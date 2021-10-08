@@ -28,9 +28,8 @@
 namespace lbcrypto {
 
 template <>
-Ciphertext<Poly> LPAlgorithmSHENull<Poly>::EvalMult(
-    ConstCiphertext<Poly> ciphertext1,
-    ConstCiphertext<Poly> ciphertext2) const {
+Ciphertext<Poly> LPAlgorithmSHENull<Poly>::EvalMult(ConstCiphertext<Poly> ciphertext1,
+                                                    ConstCiphertext<Poly> ciphertext2) const {
   Ciphertext<Poly> newCiphertext = ciphertext1->CloneEmpty();
 
   const Poly& c1 = ciphertext1->GetElement();
@@ -46,8 +45,7 @@ Ciphertext<Poly> LPAlgorithmSHENull<Poly>::EvalMult(
 }
 
 template <>
-Ciphertext<Poly> LPAlgorithmSHENull<Poly>::EvalMult(
-    ConstCiphertext<Poly> ciphertext1, ConstPlaintext plaintext) const {
+Ciphertext<Poly> LPAlgorithmSHENull<Poly>::EvalMult(ConstCiphertext<Poly> ciphertext1, ConstPlaintext plaintext) const {
   Ciphertext<Poly> newCiphertext = ciphertext1->CloneEmpty();
 
   const Poly& c1 = ciphertext1->GetElement();
@@ -70,9 +68,8 @@ template class LPAlgorithmSHENull<Poly>;
 template class LPLeveledSHEAlgorithmNull<Poly>;
 
 template <>
-Ciphertext<NativePoly> LPAlgorithmSHENull<NativePoly>::EvalMult(
-    ConstCiphertext<NativePoly> ciphertext1,
-    ConstCiphertext<NativePoly> ciphertext2) const {
+Ciphertext<NativePoly> LPAlgorithmSHENull<NativePoly>::EvalMult(ConstCiphertext<NativePoly> ciphertext1,
+                                                                ConstCiphertext<NativePoly> ciphertext2) const {
   Ciphertext<NativePoly> newCiphertext = ciphertext1->CloneEmpty();
 
   const NativePoly& c1 = ciphertext1->GetElement();
@@ -88,8 +85,8 @@ Ciphertext<NativePoly> LPAlgorithmSHENull<NativePoly>::EvalMult(
 }
 
 template <>
-Ciphertext<NativePoly> LPAlgorithmSHENull<NativePoly>::EvalMult(
-    ConstCiphertext<NativePoly> ciphertext1, ConstPlaintext plaintext) const {
+Ciphertext<NativePoly> LPAlgorithmSHENull<NativePoly>::EvalMult(ConstCiphertext<NativePoly> ciphertext1,
+                                                                ConstPlaintext plaintext) const {
   Ciphertext<NativePoly> newCiphertext = ciphertext1->CloneEmpty();
 
   const NativePoly& c1 = ciphertext1->GetElement();
@@ -112,9 +109,8 @@ template class LPAlgorithmSHENull<NativePoly>;
 template class LPLeveledSHEAlgorithmNull<NativePoly>;
 
 template <>
-Ciphertext<DCRTPoly> LPAlgorithmSHENull<DCRTPoly>::EvalMult(
-    ConstCiphertext<DCRTPoly> ciphertext1,
-    ConstCiphertext<DCRTPoly> ciphertext2) const {
+Ciphertext<DCRTPoly> LPAlgorithmSHENull<DCRTPoly>::EvalMult(ConstCiphertext<DCRTPoly> ciphertext1,
+                                                            ConstCiphertext<DCRTPoly> ciphertext2) const {
   Ciphertext<DCRTPoly> newCiphertext = ciphertext1->CloneEmpty();
 
   const DCRTPoly& c1 = ciphertext1->GetElement();
@@ -140,8 +136,8 @@ Ciphertext<DCRTPoly> LPAlgorithmSHENull<DCRTPoly>::EvalMult(
 }
 
 template <>
-Ciphertext<DCRTPoly> LPAlgorithmSHENull<DCRTPoly>::EvalMult(
-    ConstCiphertext<DCRTPoly> ciphertext1, ConstPlaintext plaintext) const {
+Ciphertext<DCRTPoly> LPAlgorithmSHENull<DCRTPoly>::EvalMult(ConstCiphertext<DCRTPoly> ciphertext1,
+                                                            ConstPlaintext plaintext) const {
   Ciphertext<DCRTPoly> newCiphertext = ciphertext1->CloneEmpty();
 
   const DCRTPoly& c1 = ciphertext1->GetElement();
