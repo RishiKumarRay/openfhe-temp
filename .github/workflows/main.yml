@@ -1,4 +1,4 @@
-name: Build and Deploy Dev Api
+name: Build PALISADE main branch
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'github-actions-pipeline'
 
 jobs:
-  docker:
+  Build:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -23,3 +23,37 @@ jobs:
         echo ${NATIVE_SIZE}
         export CMAKE_ARGS=${NATIVE_SIZE}
         echo ${CMAKE_ARGS}
+
+    - name: debug_mb2_build
+      run: |
+        echo "running ..."
+
+    - name: debug_mb4_build
+      run: |
+        echo "running ..."
+
+    - name: debug_tcm_ntl_mb6_build
+      run: |
+        echo "running ..."
+    - name: default_build
+      run: |
+        echo "running ..."
+    - name: noflag_mb4_build
+      run: |
+        echo "running ..."
+
+    - name: ntl_mb6_build
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb2_build
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb4_build
+      run: |
+        echo "running ..."
+
+    - name: tcm_ntl_mb6_build
+      run: |
+        echo "running ..."
