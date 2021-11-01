@@ -318,4 +318,4 @@ jobs:
 
     - name: tcm_ntl_mb6_test_pke
       run: |
-        echo "running ...
+        echo "running ..."
