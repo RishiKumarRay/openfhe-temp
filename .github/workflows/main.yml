@@ -26,34 +26,295 @@ jobs:
 
     - name: debug_mb2_build
       run: |
-        echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
+        make -j $(nproc) all
+        make allextras
+    - name: debug_mb2_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
 
     - name: debug_mb4_build
       run: |
-        echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
+        make -j $(nproc) all
+        make allextras
+    - name: debug_mb4_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb4_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
 
     - name: debug_tcm_ntl_mb6_build
       run: |
-        echo "running ..."
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: debug_tcm_ntl_mb6_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
     - name: default_build
       run: |
-        echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} ..
+        make -j $(nproc) all
+    - name: default_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: default_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+        retention-days: 1
+
     - name: noflag_mb4_build
       run: |
-        echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
+        make -j $(nproc) all
+        make allextras
+    - name: noflag_mb4_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: noflag_mb4_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
 
     - name: ntl_mb6_build
       run: |
-        echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
+        make -j $(nproc) all
+        make allextras
+    - name: ntl_mb6_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ntl_mb6_build-artifact
+        path: |
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
 
     - name: tcm_mb2_build
       run: |
         echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: tcm_mb2_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
 
     - name: tcm_mb4_build
       run: |
-        echo "running ..."
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: tcm_mb4_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb4_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
 
     - name: tcm_ntl_mb6_build
       run: |
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: tcm_ntl_mb6_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_ntl_mb6_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+  Unit_test:
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      GIT_SUBMODULE_STRATEGY: recursive
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: debug_mb2_test_binfhe
+      run: |
         echo "running ..."
+
+    - name: debug_mb2_test_core
+      run: |
+        echo "running ..."
+ 
+    - name: debug_mb2_test_pke
+      run: |
+        echo "running ..."
+ 
+    - name: debug_mb4_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: debug_mb4_test_core
+      run: |
+        echo "running ..."
+
+    - name: debug_mb4_test_pke
+      run: |
+        echo "running ..."
+
+    - name: debug_tcm_ntl_mb6_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: debug_tcm_ntl_mb6_test_core
+      run: |
+        echo "running ..."
+
+    - name: debug_tcm_ntl_mb6_test_pke
+      run: |
+        echo "running ..."
+
+    - name: default_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: default_test_core
+      run: |
+        echo "running ..."
+
+    - name: default_test_pke
+      run: |
+        echo "running ..."
+
+    - name: noflag_mb4_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: noflag_mb4_test_core
+      run: |
+        echo "running ..."
+
+    - name: noflag_mb4_test_pke
+      run: |
+        echo "running ..."
+
+    - name: ntl_mb6_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: ntl_mb6_test_core
+      run: |
+        echo "running ..."
+
+    - name: ntl_mb6_test_pke
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb2_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb2_test_core
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb2_test_pke
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb4_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb4_test_core
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb4_test_pke
+      run: |
+        echo "running ..."
+
+    - name: tcm_ntl_mb6_test_binfhe
+      run: |
+        echo "running ..."
+
+    - name: tcm_ntl_mb6_test_core
+      run: |
+        echo "running ..."
+
+    - name: tcm_ntl_mb6_test_pke
+      run: |
+        echo "running ...
