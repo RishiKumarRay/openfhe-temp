@@ -7,6 +7,10 @@ on:
       - 'github-actions-pipeline'
 
 jobs:
+
+  ###############################################
+  #    Build jobs starts here
+  ###############################################
   Build:
     runs-on: [self-hosted, Linux, X64]
     env:
@@ -203,6 +207,10 @@ jobs:
           build/bin/extras
         retention-days: 1
 
+
+  ###############################################
+  #    Unit_test jobs starts here
+  ###############################################
   Unit_test:
     needs: Build
     runs-on: [self-hosted, Linux, X64]
@@ -212,30 +220,50 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
+    # -- debug_mb2_test_binfhe
+    - name: download-debug_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
     - name: debug_mb2_test_binfhe
       run: |
-        echo "running ..."
+        pwd
+        echo $LD_LIBRARY_PATH
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: debug_mb2_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
 
+    # -- debug_mb2_test_core
     - name: debug_mb2_test_core
       run: |
         echo "running ..."
- 
+
+    # -- debug_mb2_test_pke
     - name: debug_mb2_test_pke
       run: |
         echo "running ..."
  
+    # -- debug_mb4_test_binfhe
     - name: debug_mb4_test_binfhe
       run: |
         echo "running ..."
 
+    # -- debug_mb4_test_core
     - name: debug_mb4_test_core
       run: |
         echo "running ..."
 
+    # -- debug_mb4_test_pke
     - name: debug_mb4_test_pke
       run: |
         echo "running ..."
 
+    # -- debug_tcm_ntl_mb6_test_binfhe
     - name: debug_tcm_ntl_mb6_test_binfhe
       run: |
         echo "running ..."
