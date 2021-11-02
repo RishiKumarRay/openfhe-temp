@@ -61,7 +61,7 @@ jobs:
       run: |
         pwd
         echo $LD_LIBRARY_PATH
-        build/unittest/binfhe_tests --gtest_output=xml
+        ./build/unittest/binfhe_tests --gtest_output=xml
     - name: debug_mb2_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
       with:
