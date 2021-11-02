@@ -57,6 +57,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb2_build-artifact
+    - run: |
+          ls -alh build/third-party/
+          ls -alh build/
+          ls -alh build/
+          ls -alh build/bin/
+          ls -alh build/bin/
     - name: debug_mb2_test_binfhe
       run: |
         pwd
