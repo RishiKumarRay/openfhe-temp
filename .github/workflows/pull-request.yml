@@ -8,7 +8,9 @@ on:
 jobs:
 
   ###############################################
+  #
   #    Build jobs starts here
+  #
   ###############################################
   Build:
     runs-on: [self-hosted, Linux, X64]
@@ -26,3 +28,1015 @@ jobs:
         echo ${NATIVE_SIZE}
         export CMAKE_ARGS=${NATIVE_SIZE}
         echo ${CMAKE_ARGS}
+
+    - name: debug_mb2_build
+      run: |
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
+        make -j $(nproc) all
+        make allextras
+    - name: debug_mb2_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: debug_mb4_build
+      run: |
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
+        make -j $(nproc) all
+        make allextras
+    - name: debug_mb4_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb4_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: debug_tcm_ntl_mb6_build
+      run: |
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: debug_tcm_ntl_mb6_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: default_build
+      run: |
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} ..
+        make -j $(nproc) all
+    - name: default_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: default_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+        retention-days: 1
+
+    - name: noflag_mb4_build
+      run: |
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
+        make -j $(nproc) all
+        make allextras
+    - name: noflag_mb4_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: noflag_mb4_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: ntl_mb6_build
+      run: |
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
+        make -j $(nproc) all
+        make allextras
+    - name: ntl_mb6_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ntl_mb6_build-artifact
+        path: |
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: tcm_mb2_build
+      run: |
+        echo "running ..."
+        whoami
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: tcm_mb2_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: tcm_mb4_build
+      run: |
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: tcm_mb4_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb4_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+    - name: tcm_ntl_mb6_build
+      run: |
+        mkdir -p build
+        cd build
+        cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        make tcm
+        make -j $(nproc) all
+        make allextras
+    - name: tcm_ntl_mb6_build-upload-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_ntl_mb6_build-artifact
+        path: |
+          build/third-party/lib
+          build/lib
+          build/unittest
+          build/bin/benchmark
+          build/bin/extras
+        retention-days: 1
+
+
+  ###############################################
+  #
+  #    Unit_test jobs starts here
+  #
+  ###############################################
+  Unit_test:
+    needs: Build
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      GIT_SUBMODULE_STRATEGY: recursive
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # -- debug_mb2_test_binfhe
+    - name: download-debug_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
+        path: build/
+    - name: debug_mb2_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: debug_mb2_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_mb2_test_core
+    - name: download-debug_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
+        path: build/
+    - name: debug_mb2_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: debug_mb2_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_mb2_test_pke
+    - name: download-debug_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
+        path: build/
+    - name: debug_mb2_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: debug_mb2_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_mb4_test_binfhe
+    - name: download-debug_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb4_build-artifact
+        path: build/
+    - name: debug_mb4_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: debug_mb4_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb4_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_mb4_test_core
+    - name: download-debug_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb4_build-artifact
+        path: build/
+    - name: debug_mb4_build
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: debug_mb4_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb4_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_mb4_test_pke
+    - name: download-debug_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb4_build-artifact
+        path: build/
+    - name: debug_mb4_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: debug_mb4_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb4_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_tcm_ntl_mb6_test_binfhe
+    - name: download-debug_tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
+    - name: debug_tcm_ntl_mb6_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: debug_tcm_ntl_mb6_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_tcm_ntl_mb6_test_core
+    - name: download-debug_tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
+    - name: debug_tcm_ntl_mb6_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: debug_tcm_ntl_mb6_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- debug_tcm_ntl_mb6_test_pke
+    - name: download-debug_tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
+    - name: debug_tcm_ntl_mb6_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: debug_tcm_ntl_mb6_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- default_test_binfhe
+    - name: download-default_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: default_build-artifact
+        path: build/
+    - name: default_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: default_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: default_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- default_test_core
+    - name: download-default_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: default_build-artifact
+        path: build/
+    - name: default_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: default_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: default_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- default_test_pke
+    - name: download-default_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: default_build-artifact
+        path: build/
+    - name: default_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: default_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: default_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- noflag_mb4_test_binfhe
+    - name: download-noflag_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: noflag_mb4_build-artifact
+        path: build/
+    - name: noflag_mb4_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: noflag_mb4_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: noflag_mb4_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- noflag_mb4_test_core
+    - name: download-noflag_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: noflag_mb4_build-artifact
+        path: build/
+    - name: noflag_mb4_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: noflag_mb4_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: noflag_mb4_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- noflag_mb4_test_pke
+    - name: download-noflag_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: noflag_mb4_build-artifact
+        path: build/
+    - name: noflag_mb4_test_pke
+      run: |
+          pwd
+          echo $LD_LIBRARY_PATH
+          chmod -R +x build/
+          build/unittest/pke_tests --gtest_output=xml
+    - name: noflag_mb4_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: noflag_mb4_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- ntl_mb6_test_binfhe
+    - name: download-ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ntl_mb6_build-artifact
+        path: build/
+    - name: ntl_mb6_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: ntl_mb6_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ntl_mb6_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- ntl_mb6_test_core
+    - name: download-ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ntl_mb6_build-artifact
+        path: build/
+    - name: ntl_mb6_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: ntl_mb6_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ntl_mb6_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- ntl_mb6_test_pke
+    - name: download-ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ntl_mb6_build-artifact
+        path: build/
+    - name: ntl_mb6_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: ntl_mb6_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ntl_mb6_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_mb2_test_binfhe
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: tcm_mb2_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: tcm_mb2_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb2_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_mb2_test_core
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: tcm_mb2_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: tcm_mb2_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb2_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_mb2_test_pke
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: tcm_mb2_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: tcm_mb2_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb2_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_mb4_test_binfhe
+    - name: download-tcm_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb4_build-artifact
+        path: build/
+    - name: tcm_mb4_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: tcm_mb4_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb4_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_mb4_test_core
+    - name: download-tcm_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb4_build-artifact
+        path: build/
+    - name: tcm_mb4_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: tcm_mb4_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb4_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_mb4_test_pke
+    - name: download-tcm_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb4_build-artifact
+        path: build/
+    - name: tcm_mb4_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: tcm_mb4_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_mb4_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_ntl_mb6_test_binfhe
+    - name: download-tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_ntl_mb6_build-artifact
+        path: build/
+    - name: tcm_ntl_mb6_test_binfhe
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: tcm_ntl_mb6_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_ntl_mb6_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # - tcm_ntl_mb6_test_core
+    - name: download-tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_ntl_mb6_build-artifact
+        path: build/
+    - name: tcm_ntl_mb6_test_core
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/core_tests --gtest_output=xml
+    - name: tcm_ntl_mb6_test_core-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_ntl_mb6_test_core-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+    # -- tcm_ntl_mb6_test_pke
+    - name: download-tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_ntl_mb6_build-artifact
+        path: build/
+    - name: tcm_ntl_mb6_test_pke
+      run: |
+        pwd
+        echo $LD_LIBRARY_PATH
+        chmod -R +x build/
+        build/unittest/pke_tests --gtest_output=xml
+    - name: tcm_ntl_mb6_test_pke-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: tcm_ntl_mb6_test_pke-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
+
+
+  ###############################################
+  #
+  #    Benchmark jobs starts here
+  #
+  ###############################################
+  Benchmark:
+    needs: Unit_test
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      GIT_SUBMODULE_STRATEGY: recursive
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    # benchmark_basic
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_basic
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/basic_test --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_basic-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_basic-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+    
+    # benchmark_binfhe_ap
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_binfhe_ap
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/binfhe-ap --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_binfhe_ap-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_binfhe_ap-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_binfhe_ginx
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_binfhe_ginx
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/binfhe-ginx --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_binfhe_ginx-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_binfhe_ginx-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_encoding
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_encoding
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/Encoding --benchmark_out=" ${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_encoding-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_encoding-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_integermath
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_integermath
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/IntegerMath --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_integermath-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_integermath-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_lattice
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_lattice
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/Lattice --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_lattice-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_lattice-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_lib
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_lib
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/lib-benchmark --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_lib-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_lib-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_nbtheory
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_nbtheory
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/NbTheory --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_nbtheory-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_nbtheory-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_poly_1k
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_poly_1k
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/poly-benchmark-1k --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_poly_1k-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_poly_1k-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_poly_4k_
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_poly_4k_
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/poly-benchmark-4k --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_poly_4k_-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_poly_4k_-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_poly_16k
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_poly_16k
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/poly-benchmark-16k --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_poly_16k-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_poly_16k-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+    # benchmark_vectormath
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
+    - name: benchmark_vectormath
+      run: |
+        chmod -R +x build/
+        build/bin/benchmark/VectorMath --benchmark_out="${{ github.workflow}}_${{ github.sha }}" --benchmark_out_format=csv
+    - name: benchmark_vectormath-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_vectormath-artifact
+        path: |
+          ${{ github.workflow}}_${{ github.sha }}
+        retention-days: 30
+
+
+  ###############################################
+  #
+  #    Extras jobs starts here
+  #
+  ###############################################
+  Extras:
+    needs: Benchmark
+    runs-on: [self-hosted, Linux, X64]
+    env:
+      GIT_SUBMODULE_STRATEGY: recursive
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: debug_mb2_extras_core
+      run: |
+        echo "running ..."
+
+    - name: debug_mb4_extras_core
+      run: |
+        echo "running ..."
+
+    - name: debug_tcm_ntl_mb6_extras_core
+      run: |
+        echo "running ..."
+
+    - name: noflag_mb4_extras_core
+      run: |
+        echo "running ..."
+
+    - name: ntl_mb6_extras_core
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb2_extras_core
+      run: |
+        echo "running ..."
+
+    - name: tcm_mb4_extras_core
+      run: |
+        echo "running ..."
+
+    - name: tcm_ntl_mb6_extras_core
+      run: |
+        echo "running ..."
