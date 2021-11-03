@@ -229,10 +229,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb2_build-artifact
+        path: build/
     - name: debug_mb2_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: debug_mb2_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -247,10 +249,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb2_build-artifact
+        path: build/
     - name: debug_mb2_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: debug_mb2_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -265,10 +269,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb2_build-artifact
+        path: build/
     - name: debug_mb2_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: debug_mb2_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -283,10 +289,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb4_build-artifact
+        path: build/
     - name: debug_mb4_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: debug_mb4_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -301,10 +309,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb4_build-artifact
+        path: build/
     - name: debug_mb4_build
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: debug_mb4_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -319,10 +329,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_mb4_build-artifact
+        path: build/
     - name: debug_mb4_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: debug_mb4_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -337,10 +349,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
     - name: debug_tcm_ntl_mb6_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: debug_tcm_ntl_mb6_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -355,10 +369,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
     - name: debug_tcm_ntl_mb6_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: debug_tcm_ntl_mb6_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -373,10 +389,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
     - name: debug_tcm_ntl_mb6_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: debug_tcm_ntl_mb6_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -391,10 +409,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: default_build-artifact
+        path: build/
     - name: default_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: default_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -409,10 +429,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: default_build-artifact
+        path: build/
     - name: default_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: default_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -427,10 +449,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: default_build-artifact
+        path: build/
     - name: default_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: default_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -445,10 +469,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: noflag_mb4_build-artifact
+        path: build/
     - name: noflag_mb4_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: noflag_mb4_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -463,10 +489,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: noflag_mb4_build-artifact
+        path: build/
     - name: noflag_mb4_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: noflag_mb4_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -481,10 +509,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: noflag_mb4_build-artifact
+        path: build/
     - name: noflag_mb4_test_pke
       run: |
           pwd
           echo $LD_LIBRARY_PATH
+          chmod -R +x build/
           build/unittest/pke_tests --gtest_output=xml
     - name: noflag_mb4_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -499,10 +529,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: ntl_mb6_build-artifact
+        path: build/
     - name: ntl_mb6_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: ntl_mb6_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -517,10 +549,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: ntl_mb6_build-artifact
+        path: build/
     - name: ntl_mb6_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: ntl_mb6_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -535,10 +569,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: ntl_mb6_build-artifact
+        path: build/
     - name: ntl_mb6_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: ntl_mb6_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -553,10 +589,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_mb2_build-artifact
+        path: build/
     - name: tcm_mb2_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: tcm_mb2_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -571,10 +609,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_mb2_build-artifact
+        path: build/
     - name: tcm_mb2_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: tcm_mb2_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -589,10 +629,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_mb2_build-artifact
+        path: build/
     - name: tcm_mb2_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: tcm_mb2_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -607,10 +649,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_mb4_build-artifact
+        path: build/
     - name: tcm_mb4_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: tcm_mb4_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -625,10 +669,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_mb4_build-artifact
+        path: build/
     - name: tcm_mb4_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: tcm_mb4_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -643,10 +689,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_mb4_build-artifact
+        path: build/
     - name: tcm_mb4_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: tcm_mb4_test_pke-artifacts
       uses: actions/upload-artifact@v2
@@ -661,10 +709,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_ntl_mb6_build-artifact
+        path: build/
     - name: tcm_ntl_mb6_test_binfhe
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/binfhe_tests --gtest_output=xml
     - name: tcm_ntl_mb6_test_binfhe-artifacts
       uses: actions/upload-artifact@v2
@@ -679,10 +729,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_ntl_mb6_build-artifact
+        path: build/
     - name: tcm_ntl_mb6_test_core
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/core_tests --gtest_output=xml
     - name: tcm_ntl_mb6_test_core-artifacts
       uses: actions/upload-artifact@v2
@@ -697,10 +749,12 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: tcm_ntl_mb6_build-artifact
+        path: build/
     - name: tcm_ntl_mb6_test_pke
       run: |
         pwd
         echo $LD_LIBRARY_PATH
+        chmod -R +x build/
         build/unittest/pke_tests --gtest_output=xml
     - name: tcm_ntl_mb6_test_pke-artifacts
       uses: actions/upload-artifact@v2
