@@ -68,6 +68,7 @@ jobs:
     - name: debug_mb2_test_binfhe
       run: |
         ls -alh build/
+        chmod -R +x build/
         pwd
         echo $LD_LIBRARY_PATH
         build/unittest/binfhe_tests --gtest_output=xml
