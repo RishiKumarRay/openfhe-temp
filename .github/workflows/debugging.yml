@@ -65,7 +65,16 @@ jobs:
       with:
         name: debug_mb2_build-artifact
         path: build/
-    - run: |
-        ls -alh
-        ls -alh build
-
+    - name: debug_mb2_test_binfhe
+      run: |
+        ls -alh build/
+        pwd
+        echo $LD_LIBRARY_PATH
+        build/unittest/binfhe_tests --gtest_output=xml
+    - name: debug_mb2_test_binfhe-artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: debug_mb2_test_binfhe-artifact
+        path: |
+          test_detail.xml
+        retention-days: 2
