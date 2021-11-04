@@ -1009,34 +1009,114 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
+    # debug_mb2_extras_core
+    - name: download-debug_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb2_build-artifact
+        path: build/
     - name: debug_mb2_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # debug_mb4_extras_core
+    - name: download-debug_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_mb4_build-artifact
+        path: build/
     - name: debug_mb4_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # debug_tcm_ntl_mb6_extras_core
+    - name: download-debug_tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: debug_tcm_ntl_mb6_build-artifact
+        path: build/
     - name: debug_tcm_ntl_mb6_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # noflag_mb4_extras_core
+    - name: download-noflag_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: noflag_mb4_build-artifact
+        path: build/
     - name: noflag_mb4_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # ntl_mb6_extras_core
+    - name: download-ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ntl_mb6_build-artifact
+        path: build/
     - name: ntl_mb6_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # tcm_mb2_extras_core
+    - name: download-tcm_mb2_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb2_build-artifact
+        path: build/
     - name: tcm_mb2_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # tcm_mb4_extras_core
+    - name: download-tcm_mb4_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_mb4_build-artifact
+        path: build/
     - name: tcm_mb4_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
 
+    # tcm_ntl_mb6_extras_core
+    - name: download-tcm_ntl_mb6_build-artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: tcm_ntl_mb6_build-artifact
+        path: build/
     - name: tcm_ntl_mb6_extras_core
       run: |
-        echo "running ..."
+        chmod -R +x build/
+        ./build/bin/extras/core/dft
+        ./build/bin/extras/core/math
+        ./build/bin/extras/core/ntt1
+        ./build/bin/extras/core/ntt2
