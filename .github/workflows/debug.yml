@@ -1,4 +1,4 @@
-name: Build PALISADE pull-request
+name: Publish Github Pages
 
 on:
   pull_request:
