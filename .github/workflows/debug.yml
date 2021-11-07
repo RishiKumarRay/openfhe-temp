@@ -34,7 +34,7 @@ jobs:
         whoami
         mkdir -p build
         cd build
-        cmake ${CMAKE_ARGS} ..
+        cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9 ..
         make apidocs
         cd ..
         mv doc/apidocs/html/ public/
