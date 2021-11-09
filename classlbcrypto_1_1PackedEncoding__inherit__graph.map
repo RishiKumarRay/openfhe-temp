@@ -1,0 +1,4 @@
+<map id="lbcrypto::PackedEncoding" name="lbcrypto::PackedEncoding">
+<area shape="rect" id="node1" title="Type used for representing IntArray types. Provides conversion functions to encode and decode plainte..." alt="" coords="5,80,192,107"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1PlaintextImpl.html" title="This class represents plaintext in the Palisade library." alt="" coords="13,5,184,32"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="lbcrypto::Field2n" name="lbcrypto::Field2n">
+<area shape="rect" id="node1" title="A class to represent field elements with power&#45;of&#45;2 dimension." alt="" coords="134,95,265,121"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,196,47"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="220,13,379,39"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="lbcrypto::LPPREAlgorithm&lt; Element &gt;" name="lbcrypto::LPPREAlgorithm&lt; Element &gt;">
+<area shape="rect" id="node1" title="Abstract interface class for LBC PRE algorithms." alt="" coords="5,136,192,177"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LPAlgorithmPREBFV.html" title="PRE scheme based on BFV. This functionality is currently DISABLED in LPPublicKeyEncryptionSchemeBFV b..." alt="" coords="251,37,463,79"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1LPAlgorithmPREBGVrns.html" title="PRE scheme based on BGVrns. The basic scheme is described here:" alt="" coords="240,103,475,144"/>
+<area shape="rect" id="node6" href="$classlbcrypto_1_1LPAlgorithmPRECKKS.html" title="PRE scheme based on CKKS. The basic scheme is described here:" alt="" coords="247,168,468,209"/>
+<area shape="rect" id="node7" href="$classlbcrypto_1_1LPAlgorithmPRENull.html" title="PRE scheme based on Null." alt="" coords="251,233,463,275"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LPAlgorithmPREBFVrns.html" title="PRE algorithms implementation for BFVrns." alt="" coords="523,5,755,47"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1LPAlgorithmPREBFVrnsB.html" title="PRE algorithms implementation for BFVrnsB." alt="" coords="523,71,755,112"/>
+</map>

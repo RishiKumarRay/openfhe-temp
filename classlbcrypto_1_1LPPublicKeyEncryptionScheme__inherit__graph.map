@@ -1,0 +1,9 @@
+<map id="lbcrypto::LPPublicKeyEncryptionScheme&lt; Element &gt;" name="lbcrypto::LPPublicKeyEncryptionScheme&lt; Element &gt;">
+<area shape="rect" id="node1" title="Abstract interface for public key encryption schemes." alt="" coords="5,169,236,211"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LPPublicKeyEncryptionSchemeBFV.html" title="Main public key encryption scheme for BFV implementation,." alt="" coords="284,5,515,47"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LPPublicKeyEncryptionSchemeBFVrns.html" title="Main public key encryption scheme for BFVrns implementation,." alt="" coords="284,71,515,112"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1LPPublicKeyEncryptionSchemeBFVrnsB.html" title="Main public key encryption scheme for BFVrnsB implementation,." alt="" coords="284,136,515,177"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1LPPublicKeyEncryptionSchemeBGVrns.html" title="Main public key encryption scheme for the BGVrns/BGVrns implementation." alt="" coords="284,201,515,243"/>
+<area shape="rect" id="node6" href="$classlbcrypto_1_1LPPublicKeyEncryptionSchemeCKKS.html" title="Main public key encryption scheme for the CKKS/CKKS implementation." alt="" coords="284,267,515,308"/>
+<area shape="rect" id="node7" href="$classlbcrypto_1_1LPPublicKeyEncryptionSchemeNull.html" title="Main public key encryption scheme for Null implementation,." alt="" coords="284,332,515,373"/>
+</map>

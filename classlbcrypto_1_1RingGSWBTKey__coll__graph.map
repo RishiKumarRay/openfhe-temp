@@ -1,0 +1,4 @@
+<map id="lbcrypto::RingGSWBTKey" name="lbcrypto::RingGSWBTKey">
+<area shape="rect" id="node1" title="Class that stores the refreshing key (used in bootstrapping) A three&#45;dimensional vector of RingGSW ci..." alt="" coords="5,80,189,107"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="18,5,177,32"/>
+</map>

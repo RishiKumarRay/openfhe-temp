@@ -1,0 +1,32 @@
+\batchmode
+\documentclass{article}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+% Packages requested by user
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+
+\usepackage{newunicodechar}
+  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \newunicodechar{²}{${}^{2}$}% Superscript two
+  \newunicodechar{³}{${}^{3}$}% Superscript three
+
+\pagestyle{empty}
+\begin{document}
+$ \sum\limits{i=0}^{\lfloor {\log q/base} \rfloor} {(base^i u_i)} $
+\pagebreak
+
+$ \left\{u_0, u_1,...,u_{\lfloor {\log q/base} \rfloor} \right\} \in R_{{base}^{\lceil {\log q/base} \rceil}} $
+\pagebreak
+
+$ base = 2^{baseBits} $
+\pagebreak
+
+$ \left\{x, {base}*x, {base}^2*x, ..., {base}^{\lfloor {\log q/{base}} \rfloor} \right\}*x $
+\pagebreak
+
+$ x $
+\pagebreak
+
+\end{document}

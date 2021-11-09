@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classlbcrypto_1_1LPCryptoParameters.html" title="main implementation class to capture essential cryptoparameters of any LBC system" alt="" coords="5,72,220,113"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LPCryptoParametersNull.html" title=" " alt="" coords="268,39,483,80"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LPCryptoParametersRLWE.html" title="Template for crypto parameters." alt="" coords="268,104,483,145"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1LPCryptoParametersBFVrns.html" title="This is the parameters class for the BFVrns encryption scheme. This scheme is also referred to as the..." alt="" coords="531,5,745,47"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1LPCryptoParametersBFVrnsB.html" title="This is the parameters class for the BFVrnsB encryption scheme. This scheme is also referred to as th..." alt="" coords="531,71,745,112"/>
+<area shape="rect" id="node6" href="$classlbcrypto_1_1LPCryptoParametersBGVrns.html" title="Crypto parameters class for RLWE&#45;based schemes." alt="" coords="531,136,745,177"/>
+<area shape="rect" id="node7" href="$classlbcrypto_1_1LPCryptoParametersCKKS.html" title="Crypto parameters class for RLWE&#45;based schemes." alt="" coords="531,201,745,243"/>
+</map>

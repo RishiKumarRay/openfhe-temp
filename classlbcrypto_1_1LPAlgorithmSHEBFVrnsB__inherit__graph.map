@@ -1,0 +1,5 @@
+<map id="lbcrypto::LPAlgorithmSHEBFVrnsB&lt; Element &gt;" name="lbcrypto::LPAlgorithmSHEBFVrnsB&lt; Element &gt;">
+<area shape="rect" id="node1" title="SHE algorithms implementation for BFVrnsB." alt="" coords="5,184,239,225"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LPAlgorithmSHEBFV.html" title="SHE algorithms implementation for BFV. This scheme is also referred to as the FV scheme." alt="" coords="15,95,229,136"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LPSHEAlgorithm.html" title="Abstract interface class for LBC SHE algorithms." alt="" coords="28,5,216,47"/>
+</map>

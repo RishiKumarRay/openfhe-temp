@@ -1,0 +1,5 @@
+<map id="lbcrypto::ILDCRTParams&lt; IntType &gt;" name="lbcrypto::ILDCRTParams&lt; IntType &gt;">
+<area shape="rect" id="node1" title="Parameters for array of ideal lattices (used for Double&#45;CRT)." alt="" coords="5,169,183,211"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1ElemParams.html" title=" " alt="" coords="12,80,176,121"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="15,5,173,32"/>
+</map>

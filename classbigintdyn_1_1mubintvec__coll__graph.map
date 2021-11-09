@@ -1,0 +1,5 @@
+<map id="bigintdyn::mubintvec&lt; ubint_el_t &gt;" name="bigintdyn::mubintvec&lt; ubint_el_t &gt;">
+<area shape="rect" id="node1" title="The class for representing vectors of ubint with associated modulo math." alt="" coords="256,46,416,87"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1BigVectorInterface.html" title=" " alt="" coords="5,5,208,61"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="27,85,186,112"/>
+</map>

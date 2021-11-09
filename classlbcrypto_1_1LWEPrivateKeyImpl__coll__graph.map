@@ -1,0 +1,4 @@
+<map id="lbcrypto::LWEPrivateKeyImpl" name="lbcrypto::LWEPrivateKeyImpl">
+<area shape="rect" id="node1" title="Class that stores the LWE scheme secret key; contains a vector." alt="" coords="5,80,215,107"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="31,5,189,32"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classlbcrypto_1_1LPParameterGenerationAlgorithm.html" title="Abstract interface for parameter generation algorithm." alt="" coords="5,136,243,177"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LPAlgorithmParamsGenBFV.html" title="Parameter generation for BFV. This scheme is also referred to as the FV scheme." alt="" coords="291,37,500,79"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1LPAlgorithmParamsGenBGVrns.html" title="Parameter generation for BGVrns." alt="" coords="291,103,500,144"/>
+<area shape="rect" id="node6" href="$classlbcrypto_1_1LPAlgorithmParamsGenCKKS.html" title="Parameter generation for CKKS." alt="" coords="291,168,500,209"/>
+<area shape="rect" id="node7" href="$classlbcrypto_1_1LPAlgorithmParamsGenNull.html" title="Parameter generation for BFV." alt="" coords="291,233,500,275"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LPAlgorithmParamsGenBFVrns.html" title="Parameter generation for BFVrns. This scheme is also referred to as the FV scheme." alt="" coords="548,5,757,47"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1LPAlgorithmParamsGenBFVrnsB.html" title="Parameter generation for BFVrnsB. This scheme is also referred to as the FV scheme." alt="" coords="548,71,757,112"/>
+</map>

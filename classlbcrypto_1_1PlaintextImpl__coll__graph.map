@@ -1,0 +1,13 @@
+<map id="lbcrypto::PlaintextImpl" name="lbcrypto::PlaintextImpl">
+<area shape="rect" id="node1" title="This class represents plaintext in the Palisade library." alt="" coords="1663,100,1833,127"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1PolyImpl.html" title=" " alt="" coords="772,23,912,65"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1ILElement.html" title=" " alt="" coords="220,5,413,61"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="5,100,164,127"/>
+<area shape="rect" id="node6" href="$classlbcrypto_1_1ILElement.html" title=" " alt="" coords="231,85,402,141"/>
+<area shape="rect" id="node10" href="$classlbcrypto_1_1ILElement.html" title=" " alt="" coords="213,165,420,221"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1PolyImpl.html" title=" " alt="" coords="1137,93,1277,134"/>
+<area shape="rect" id="node7" href="$classlbcrypto_1_1HexlDCRTPoly.html" title=" " alt="" coords="1303,162,1479,203"/>
+<area shape="rect" id="node8" href="$classlbcrypto_1_1DCRTPolyImpl.html" title=" " alt="" coords="936,166,1111,207"/>
+<area shape="rect" id="node9" href="$classlbcrypto_1_1DCRTPolyInterface.html" title=" " alt="" coords="541,158,748,229"/>
+<area shape="rect" id="node11" title=" " alt="" coords="237,246,396,287"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="lbcrypto::LPAlgorithmMultipartyBFV&lt; Element &gt;" name="lbcrypto::LPAlgorithmMultipartyBFV&lt; Element &gt;">
+<area shape="rect" id="node1" title="Concrete class for the FHE Multiparty algorithms on BFV. A version of this multiparty scheme built on..." alt="" coords="6,95,234,136"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LPMultipartyAlgorithm.html" title="Abstract interface class for LBC Multiparty algorithms based on threshold FHE. A version of this mult..." alt="" coords="5,5,235,47"/>
+</map>
