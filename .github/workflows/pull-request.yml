@@ -79,22 +79,22 @@ jobs:
   #    default jobs starts here
   #
   ###############################################
-  default:
-    #needs: debug_tcm_ntl_mb6
-    runs-on: [self-hosted, Linux, X64]
-    env:
-      GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+  # default:
+  #   #needs: debug_tcm_ntl_mb6
+  #   runs-on: [self-hosted, Linux, X64]
+  #   env:
+  #     GIT_SUBMODULE_STRATEGY: recursive
+  #     CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
+  #   steps:
+  #   - name: Checkout Code
+  #     uses: actions/checkout@v2
 
-    #default_build
-    - name: default
-      uses: ./.github/actions/default_builder
-      with:
-        module_name: default
-        cmake-args: ${{ env.CMAKE_ARGS }} ..
+  #   #default_build
+  #   - name: default
+  #     uses: ./.github/actions/default_builder
+  #     with:
+  #       module_name: default
+  #       cmake-args: ${{ env.CMAKE_ARGS }} ..
 
 
   ###############################################
@@ -103,7 +103,7 @@ jobs:
   #
   ###############################################
   noflag_mb4:
-    needs: default
+    #needs: default
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -126,7 +126,7 @@ jobs:
   #
   ###############################################
   ntl_mb6:
-    needs: noflag_mb4
+    #needs: noflag_mb4
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -149,7 +149,7 @@ jobs:
   #
   ###############################################
   tcm_mb2:
-    needs: ntl_mb6
+    #needs: ntl_mb6
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
