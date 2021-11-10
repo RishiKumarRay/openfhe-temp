@@ -15,3 +15,7 @@ sudo apt-get install autoconf -y
 sudo apt-get install -y libntl-dev -y
 sudo apt-get install -y libgmp-dev -y
 sudo apt-get install libtool -y
+
+# for documen
+sudo apt-get install doxygen -y
+sudo apt-get install graphviz -y

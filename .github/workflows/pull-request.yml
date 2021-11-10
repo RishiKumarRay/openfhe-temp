@@ -12,21 +12,21 @@ jobs:
   #    debug_mb2 jobs starts here
   #
   ###############################################
-  debug_mb2:
-    runs-on: [self-hosted, Linux, X64]
-    env:
-      GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: 'DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+  # debug_mb2:
+  #   runs-on: [self-hosted, Linux, X64]
+  #   env:
+  #     GIT_SUBMODULE_STRATEGY: recursive
+  #     CMAKE_ARGS: 'DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
+  #   steps:
+  #   - name: Checkout Code
+  #     uses: actions/checkout@v2
 
-    #debug_mb2_build
-    - name: debug_mb2
-      uses: ./.github/actions/default_builder
-      with:
-        module_name: debug_mb2
-        cmake-args: ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
+  #   #debug_mb2_build
+  #   - name: debug_mb2
+  #     uses: ./.github/actions/default_builder
+  #     with:
+  #       module_name: debug_mb2
+  #       cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
 
 
   ###############################################
@@ -34,22 +34,22 @@ jobs:
   #    debug_mb4 jobs starts here
   #
   ###############################################
-  debug_mb4:
-    needs: debug_mb2
-    runs-on: [self-hosted, Linux, X64]
-    env:
-      GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: 'DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+  # debug_mb4:
+  #   needs: debug_mb2
+  #   runs-on: [self-hosted, Linux, X64]
+  #   env:
+  #     GIT_SUBMODULE_STRATEGY: recursive
+  #     CMAKE_ARGS: 'DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
+  #   steps:
+  #   - name: Checkout Code
+  #     uses: actions/checkout@v2
 
-    #debug_mb4_build
-    - name: debug_mb4
-      uses: ./.github/actions/default_builder
-      with:
-        module_name: debug_mb4
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
+  #   #debug_mb4_build
+  #   - name: debug_mb4
+  #     uses: ./.github/actions/default_builder
+  #     with:
+  #       module_name: debug_mb4
+  #       cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
 
   ###############################################
   #
@@ -71,7 +71,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_tcm_ntl_mb6
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
 
 
   ###############################################
@@ -94,7 +94,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: default
-        cmake-args: cmake ${CMAKE_ARGS} ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} ..
 
 
   ###############################################
@@ -117,7 +117,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: noflag_mb4
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
 
 
   ###############################################
@@ -140,7 +140,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: ntl_mb6
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
 
 
   ###############################################
@@ -163,7 +163,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb2
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
         run_beanchmark: true
 
 
@@ -187,7 +187,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb4
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
 
 
   ###############################################
@@ -210,7 +210,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_ntl_mb6
-        cmake-args: cmake ${CMAKE_ARGS} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake-args: cmake ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
 
 
   ###############################################
