@@ -124,6 +124,6 @@ runs:
         ./build/bin/extras/core/ntt2
     
     # cleanup
-    - name: '${{ inputs.module_name }}_cleanup'
-      shell: bash
-      run: rm -rf build
+    # - name: '${{ inputs.module_name }}_cleanup'
+    #   shell: bash
+    #   run: rm -rf build
