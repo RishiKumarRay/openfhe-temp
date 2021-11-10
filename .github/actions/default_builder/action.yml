@@ -130,13 +130,14 @@ runs:
     # extract
     - name: '${{ inputs.module_name }}_extras_core'
       shell: bash
+      if: ${{ inputs.run_extras }}
       run: |
         ./build/bin/extras/core/dft
         ./build/bin/extras/core/math
         ./build/bin/extras/core/ntt1
         ./build/bin/extras/core/ntt2
     
-    # cleanup
-    # - name: '${{ inputs.module_name }}_cleanup'
-    #   shell: bash
-    #   run: rm -rf build
+    #cleanup
+    - name: '${{ inputs.module_name }}_cleanup'
+      shell: bash
+      run: rm -rf build
