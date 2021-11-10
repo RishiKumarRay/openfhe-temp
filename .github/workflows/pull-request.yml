@@ -57,7 +57,7 @@ jobs:
   #
   ###############################################
   debug_tcm_ntl_mb6:
-    needs: debug_mb4
+    #needs: debug_mb4
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
