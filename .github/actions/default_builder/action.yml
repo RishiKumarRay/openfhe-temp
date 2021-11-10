@@ -32,12 +32,12 @@ runs:
         cd build
         cmake ${{ inputs.cmake-args }}
         # run only if run_tcm input is set
-        if [ ${{ inputs.run_tcm }} != "" ]; then
+        if [[ "${{inputs.run_tcm}}" != "" ]]; then
           make tcm
         fi
         make -j $(nproc) all
         # run only if run_extra input is set
-        if [ ${{ inputs.run_extras }} != "" ]; then
+        if [[ "${{inputs.run_extras}}" != "" ]]; then
           make allextras 
         fi
 
