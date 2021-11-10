@@ -1,4 +1,4 @@
-name: 'template'
+name: 'A custom GitHub actions pipeline that wrappedup build, unit_test, beanchmark and extract stages'
 description: 'composite github actions'
 inputs:
   module_name:
@@ -11,6 +11,12 @@ inputs:
     default: '-DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4'
   run_beanchmark:
     description: 'Run Beanchmark stages'
+    required: false
+  run_tcm:
+    description: 'Run tcm stages'
+    required: false
+  run_extras:
+    description: 'Run allextras stages'
     required: false
 
 runs:
@@ -25,8 +31,15 @@ runs:
         mkdir -p build
         cd build
         cmake ${{ inputs.cmake-args }}
+        # run only if run_tcm input is set
+        if ${{ input.run_tcm }}; then
+          make tcm
+        fi
         make -j $(nproc) all
-        make allextras
+        # run only if run_extra input is set
+        if ${{ input.run_extras }}; then
+          make allextras 
+        fi
 
     # binfhe
     - name: '${{ inputs.module_name }}_test_binfhe'
