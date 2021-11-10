@@ -56,22 +56,22 @@ jobs:
   #    debug_tcm_ntl_mb6 jobs starts here
   #
   ###############################################
-  debug_tcm_ntl_mb6:
-    #needs: debug_mb4
-    runs-on: [self-hosted, Linux, X64]
-    env:
-      GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+  # debug_tcm_ntl_mb6:
+  #   #needs: debug_mb4
+  #   runs-on: [self-hosted, Linux, X64]
+  #   env:
+  #     GIT_SUBMODULE_STRATEGY: recursive
+  #     CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10'
+  #   steps:
+  #   - name: Checkout Code
+  #     uses: actions/checkout@v2
 
-    #debug_tcm_ntl_mb6_build
-    - name: debug_tcm_ntl_mb6
-      uses: ./.github/actions/default_builder
-      with:
-        module_name: debug_tcm_ntl_mb6
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+  #   #debug_tcm_ntl_mb6_build
+  #   - name: debug_tcm_ntl_mb6
+  #     uses: ./.github/actions/default_builder
+  #     with:
+  #       module_name: debug_tcm_ntl_mb6
+  #       cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
 
 
   ###############################################
