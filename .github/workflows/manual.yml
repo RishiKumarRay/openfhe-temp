@@ -1,4 +1,4 @@
-name: Build PALISADE Manually
+name: Run manually
 
 on:
   workflow_dispatch:
