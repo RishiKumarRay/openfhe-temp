@@ -1,4 +1,4 @@
-name: Build PALISADE main branch
+name: Run on main branch
 
 on:
   push:
