@@ -13,7 +13,6 @@ jobs:
   #
   ###############################################
   default:
-    #needs: debug_tcm_ntl_mb6
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -22,7 +21,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #default_build
     - name: default
       uses: ./.github/actions/default_builder
       with:
@@ -45,7 +43,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #debug_mb2_build
     - name: debug_mb2
       uses: ./.github/actions/default_builder
       with:
@@ -69,13 +66,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #debug_mb4_build
     - name: debug_mb4
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_mb4
         cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
         run_extras: true
+
 
   ###############################################
   #
@@ -92,7 +89,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #debug_tcm_ntl_mb6_build
     - name: debug_tcm_ntl_mb6
       uses: ./.github/actions/default_builder
       with:
@@ -117,7 +113,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #noflag_mb4_build
     - name: noflag_mb4
       uses: ./.github/actions/default_builder
       with:
@@ -141,7 +136,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #ntl_mb6_build
     - name: ntl_mb6
       uses: ./.github/actions/default_builder
       with:
@@ -165,7 +159,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #tcm_mb2_build
     - name: tcm_mb2
       uses: ./.github/actions/default_builder
       with:
@@ -191,7 +184,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #tcm_mb4_build
     - name: tcm_mb4
       uses: ./.github/actions/default_builder
       with:
@@ -216,7 +208,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    #tcm_ntl_mb6_build
     - name: tcm_ntl_mb6
       uses: ./.github/actions/default_builder
       with:
@@ -224,34 +215,3 @@ jobs:
         cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
-
-
-  ###############################################
-  #
-  #    Pages jobs starts here
-  #
-  ###############################################
-  pages:
-    needs: [ default, debug_mb2, debug_mb4, debug_tcm_ntl_mb6, noflag_mb4, ntl_mb6, tcm_mb2, tcm_mb4, tcm_ntl_mb6 ]
-    runs-on: [self-hosted, Linux, X64]
-    env:
-      GIT_SUBMODULE_STRATEGY: recursive
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: build_docs
-      run: |
-        whoami
-        mkdir -p build
-        cd build
-        cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9 ..
-        make apidocs
-        cd ..
-        mv doc/apidocs/html/ docs/
-
-    - name: deploy_docs
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
