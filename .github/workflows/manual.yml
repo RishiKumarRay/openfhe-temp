@@ -2,6 +2,47 @@ name: Run manually
 
 on:
   workflow_dispatch:
+    inputs:
+      compiler:
+        description: 'Compiler Type [GCC|CLANG]'
+        required: true
+        default: 'GCC'
+      native_backend:
+        description: 'Size of NativeInteger [32|64|128]'
+        required: true
+        default: '64'
+      debug_mb2:
+        description: 'Run debug_mb2'
+        required: true
+        default: 'false'
+      debug_mb4:
+        description: 'Run debug_mb4'
+        required: true
+        default: 'false'
+      debug_tcm_ntl_mb6:
+        description: 'Run debug_tcm_ntl_mb6'
+        required: true
+        default: 'false'
+      noflag_mb4:
+        description: 'Run noflag_mb4'
+        required: true
+        default: 'false'
+      ntl_mb6:
+        description: 'Run ntl_mb6'
+        required: true
+        default: 'false'
+      tcm_mb2:
+        description: 'Run tcm_mb2'
+        required: true
+        default: 'false'
+      tcm_mb4:
+        description: 'Run tcm_mb4'
+        required: true
+        default: 'false'
+      tcm_ntl_mb6:
+        description: 'Run tcm_ntl_mb6'
+        required: true
+        default: 'false'
 
 jobs:
 
@@ -33,6 +74,7 @@ jobs:
   ###############################################
   debug_mb2:
     needs: default
+    if: ${{ github.event.inputs.debug_mb2 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -56,6 +98,7 @@ jobs:
   ###############################################
   debug_mb4:
     needs: default
+    if: ${{ github.event.inputs.debug_mb4 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -79,6 +122,7 @@ jobs:
   ###############################################
   debug_tcm_ntl_mb6:
     needs: default
+    if: ${{ github.event.inputs.debug_tcm_ntl_mb6 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -103,6 +147,7 @@ jobs:
   ###############################################
   noflag_mb4:
     needs: default
+    if: ${{ github.event.inputs.noflag_mb4 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -126,6 +171,7 @@ jobs:
   ###############################################
   ntl_mb6:
     needs: default
+    if: ${{ github.event.inputs.ntl_mb6 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -149,6 +195,7 @@ jobs:
   ###############################################
   tcm_mb2:
     needs: default
+    if: ${{ github.event.inputs.tcm_mb2 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -174,6 +221,7 @@ jobs:
   ###############################################
   tcm_mb4:
     needs: default
+    if: ${{ github.event.inputs.tcm_mb4 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -198,6 +246,7 @@ jobs:
   ###############################################
   tcm_ntl_mb6:
     needs: default
+    if: ${{ github.event.inputs.tcm_ntl_mb6 }} == "true"
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
