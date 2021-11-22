@@ -20,11 +20,11 @@ on:
         - '128'
         required: true
         default: '64'
-      default:
-        description: 'Run default'
-        type: boolean
-        required: true
-        default: true
+      # default:
+      #   description: 'Run default'
+      #   type: boolean
+      #   required: true
+      #   default: true
       debug_mb2:
         description: 'Run debug_mb2'
         type: boolean
