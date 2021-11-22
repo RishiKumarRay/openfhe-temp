@@ -5,10 +5,14 @@ inputs:
     description: 'Name of the module'
     required: true
     default: 'default'
-  cmake-args:
+  cmake_args:
     description: 'Argument for cmake command'
     required: true
     default: '-DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4'
+  native_backend:
+    description: 'Size of NativeInteger [32|64|128]'
+    required: false
+    default: ''
   run_beanchmark:
     description: 'Run Beanchmark stages'
     required: false
@@ -30,7 +34,7 @@ runs:
         whoami
         mkdir -p build
         cd build
-        cmake ${{ inputs.cmake-args }}
+        cmake ${{ inputs.cmake_args }} ${{ inputs.native_backend }}
         # run only if run_tcm input is set
         if [[ "${{inputs.run_tcm}}" != "" ]]; then
           make tcm

@@ -25,7 +25,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: default
-        cmake-args: ${{ env.CMAKE_ARGS }} ..
+        cmake_args: ${{ env.CMAKE_ARGS }} ..
 
 
   ###############################################
@@ -47,7 +47,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb2
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
         run_beanchmark: true
         run_tcm: true
         run_extras: true
@@ -72,7 +72,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_mb2
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
         run_extras: true
 
 
@@ -95,7 +95,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb4
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
         run_tcm: true
         run_extras: true
 
@@ -119,7 +119,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: noflag_mb4
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
         run_extras: true
 
 
@@ -142,7 +142,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_mb4
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
         run_extras: true
 
 
@@ -165,7 +165,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: ntl_mb6
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
         run_extras: true
 
 
@@ -188,7 +188,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_ntl_mb6
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
 
@@ -212,9 +212,10 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_tcm_ntl_mb6
-        cmake-args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
+
 
   ###############################################
   #
