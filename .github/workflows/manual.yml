@@ -20,11 +20,6 @@ on:
         - '128'
         required: true
         default: '64'
-      # default:
-      #   description: 'Run default'
-      #   type: boolean
-      #   required: true
-      #   default: true
       debug_mb2:
         description: 'Run debug_mb2'
         type: boolean
@@ -77,7 +72,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -86,7 +85,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: default
-        cmake_args: ${{ env.CMAKE_ARGS }} ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} ..
         native_backend: ${{ github.event.native_backend }}
 
 
@@ -101,7 +100,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -110,7 +113,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb2
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
         run_beanchmark: true
         run_tcm: true
         run_extras: true
@@ -128,7 +131,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -137,7 +144,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_mb2
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
         run_extras: true
         native_backend: ${{ github.event.native_backend }}
 
@@ -153,7 +160,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -162,7 +173,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb4
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
         run_tcm: true
         run_extras: true
         native_backend: ${{ github.event.native_backend }}
@@ -179,7 +190,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -188,7 +203,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: noflag_mb4
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
         run_extras: true
         native_backend: ${{ github.event.native_backend }}
 
@@ -204,7 +219,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -213,7 +232,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_mb4
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
         run_extras: true
         native_backend: ${{ github.event.native_backend }}
 
@@ -229,7 +248,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -238,7 +261,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: ntl_mb6
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
         run_extras: true
         native_backend: ${{ github.event.native_backend }}
 
@@ -254,7 +277,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -263,7 +290,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_ntl_mb6
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
         native_backend: ${{ github.event.native_backend }}
@@ -280,7 +307,11 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
-      CMAKE_ARGS: '-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9'
+      COMPILERS_MAP: >-
+       {
+         "GCC"   : "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9",
+         "CLANG" : "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-10 -DCMAKE_C_COMPILER=/usr/bin/clang-10"
+       }
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -289,7 +320,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_tcm_ntl_mb6
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
         native_backend: ${{ github.event.native_backend }}

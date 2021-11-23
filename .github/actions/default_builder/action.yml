@@ -34,7 +34,7 @@ runs:
         whoami
         mkdir -p build
         cd build
-        cmake ${{ inputs.cmake_args }} ${{ inputs.native_backend }}
+        cmake ${{ inputs.cmake_args }} -DNATIVE_SIZE=${{ inputs.native_backend }}
         # run only if run_tcm input is set
         if [[ "${{inputs.run_tcm}}" != "" ]]; then
           make tcm
