@@ -86,7 +86,7 @@ jobs:
       with:
         module_name: default
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} ..
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -96,7 +96,7 @@ jobs:
   ###############################################
   tcm_mb2:
     needs: default
-    if: ${{ github.event.inputs.tcm_mb2 }}
+    if: ${{ github.event.inputs.tcm_mb2 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -117,7 +117,7 @@ jobs:
         run_beanchmark: true
         run_tcm: true
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -127,7 +127,7 @@ jobs:
   ###############################################
   debug_mb2:
     needs: default
-    if: ${{ github.event.inputs.debug_mb2 }}
+    if: ${{ github.event.inputs.debug_mb2 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -146,7 +146,7 @@ jobs:
         module_name: debug_mb2
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2 ..
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -156,7 +156,7 @@ jobs:
   ###############################################
   tcm_mb4:
     needs: default
-    if: ${{ github.event.inputs.tcm_mb4 }}
+    if: ${{ github.event.inputs.tcm_mb4 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -176,7 +176,7 @@ jobs:
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
         run_tcm: true
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -186,7 +186,7 @@ jobs:
   ###############################################
   noflag_mb4:
     needs: default
-    if: ${{ github.event.inputs.noflag_mb4 }}
+    if: ${{ github.event.inputs.noflag_mb4 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -205,7 +205,7 @@ jobs:
         module_name: noflag_mb4
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DMATHBACKEND=4 ..
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -215,7 +215,7 @@ jobs:
   ###############################################
   debug_mb4:
     needs: default
-    if: ${{ github.event.inputs.debug_mb4 }}
+    if: ${{ github.event.inputs.debug_mb4 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -234,7 +234,7 @@ jobs:
         module_name: debug_mb4
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4 ..
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -244,7 +244,7 @@ jobs:
   ###############################################
   ntl_mb6:
     needs: default
-    if: ${{ github.event.inputs.ntl_mb6 }}
+    if: ${{ github.event.inputs.ntl_mb6 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -263,7 +263,7 @@ jobs:
         module_name: ntl_mb6
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -273,7 +273,7 @@ jobs:
   ###############################################
   tcm_ntl_mb6:
     needs: default
-    if: ${{ github.event.inputs.tcm_ntl_mb6 }}
+    if: ${{ github.event.inputs.tcm_ntl_mb6 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -293,7 +293,7 @@ jobs:
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
 
 
   ###############################################
@@ -303,7 +303,7 @@ jobs:
   ###############################################
   debug_tcm_ntl_mb6:
     needs: default
-    if: ${{ github.event.inputs.debug_tcm_ntl_mb6 }}
+    if: ${{ github.event.inputs.debug_tcm_ntl_mb6 == 'true' }}
     runs-on: [self-hosted, Linux, X64]
     env:
       GIT_SUBMODULE_STRATEGY: recursive
@@ -323,4 +323,4 @@ jobs:
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
-        native_backend: ${{ github.event.native_backend }}
+        native_backend: ${{ github.event.inputs.native_backend }}
