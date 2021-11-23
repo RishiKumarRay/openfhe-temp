@@ -8,11 +8,10 @@ inputs:
   cmake_args:
     description: 'Argument for cmake command'
     required: true
-    default: '-DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4'
   native_backend:
     description: 'Size of NativeInteger [32|64|128]'
     required: false
-    default: ''
+    default: '64'
   run_beanchmark:
     description: 'Run Beanchmark stages'
     required: false

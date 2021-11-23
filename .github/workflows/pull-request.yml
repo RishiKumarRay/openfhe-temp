@@ -26,6 +26,7 @@ jobs:
       with:
         module_name: default
         cmake_args: ${{ env.CMAKE_ARGS }} ..
+        run_beanchmark: true
 
 
   ###############################################
@@ -48,7 +49,6 @@ jobs:
       with:
         module_name: tcm_mb2
         cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
-        run_beanchmark: true
         run_tcm: true
         run_extras: true
 
