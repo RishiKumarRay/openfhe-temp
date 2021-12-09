@@ -26,7 +26,7 @@ jobs:
       with:
         module_name: default
         cmake_args: ${{ env.CMAKE_ARGS }} ..
-        run_beanchmark: true
+        run_benchmark: true
 
 
   ###############################################

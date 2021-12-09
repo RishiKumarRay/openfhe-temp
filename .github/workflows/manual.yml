@@ -114,7 +114,7 @@ jobs:
       with:
         module_name: tcm_mb2
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=2 ..
-        run_beanchmark: true
+        run_benchmark: true
         run_tcm: true
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}

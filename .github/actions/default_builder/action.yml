@@ -1,4 +1,4 @@
-name: 'A custom GitHub actions pipeline that wrappedup build, unit_test, beanchmark and extract stages'
+name: 'A custom GitHub actions pipeline that wrappedup build, unit_test, benchmark and extract stages'
 description: 'composite github actions'
 inputs:
   module_name:
@@ -12,8 +12,8 @@ inputs:
     description: 'Size of NativeInteger [32|64|128]'
     required: false
     default: '64'
-  run_beanchmark:
-    description: 'Run Beanchmark stages'
+  run_benchmark:
+    description: 'Run Benchmark stages'
     required: false
   run_tcm:
     description: 'Run tcm stages'
@@ -68,10 +68,10 @@ runs:
         echo $LD_LIBRARY_PATH
         build/unittest/pke_tests --gtest_output=xml
 
-    # -- beanchmark
+    # -- benchmark
     - name: benchmark_basic
       shell: bash
-      if: ${{ inputs.run_beanchmark }}
+      if: ${{ inputs.run_benchmark }}
       run: |
         build/bin/benchmark/basic_test --benchmark_out="basic_test_${{ github.sha }}" --benchmark_out_format=csv
         build/bin/benchmark/binfhe-ap --benchmark_out="binfhe-ap_${{ github.sha }}" --benchmark_out_format=csv
