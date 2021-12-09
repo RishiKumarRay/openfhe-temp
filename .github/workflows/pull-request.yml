@@ -48,7 +48,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb2
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=2 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=2 ..
         run_tcm: true
         run_extras: true
 
@@ -95,7 +95,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_mb4
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=Y -DMATHBACKEND=4 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=4 ..
         run_tcm: true
         run_extras: true
 
@@ -165,7 +165,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: ntl_mb6
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=ON -DMATHBACKEND=6 ..
         run_extras: true
 
 
@@ -188,7 +188,7 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: tcm_ntl_mb6
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_NTL=ON -DWITH_TCM=ON -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
 
@@ -212,6 +212,6 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: debug_tcm_ntl_mb6
-        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=Y -DWITH_TCM=Y -DMATHBACKEND=6 ..
+        cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=ON -DWITH_TCM=ON -DMATHBACKEND=6 ..
         run_tcm: true
         run_extras: true
