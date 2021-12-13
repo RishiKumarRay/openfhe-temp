@@ -10,7 +10,7 @@ aws ec2 run-instances \
     --key-name <Key-Pair-Name> \
     --subnet-id <Subnet> \
     --security-group-ids <Security-Group-ID>
-    --user-data file://user-data.txt
+    --user-data file://${OPENFHE_HOME}/scripts/setup/linux_platform_packages.sh
 ```
 
 This will create an EC2 instance.
