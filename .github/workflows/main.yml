@@ -32,7 +32,7 @@ jobs:
     - name: mb2_128
       uses: ./.github/actions/default_builder
       with:
-        module_name: mb4_tcm
+        module_name: mb2_128
         # cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=4 
         native_backend: 128
         mathbackend: 2
@@ -45,7 +45,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: mb2_128
+    - name: mb2_clang
       uses: ./.github/actions/default_builder
       with:
         module_name: mb4_tcm
