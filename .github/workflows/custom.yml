@@ -1,4 +1,4 @@
-name: Run a single custom configuration
+name: Custom
 
 on:
   workflow_dispatch:

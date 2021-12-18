@@ -1,4 +1,4 @@
-name: Reuseable Basic Workflow
+name: Reuseable Workflow
 
 on:
   workflow_call:
@@ -142,6 +142,7 @@ jobs:
   mb4_tcm:
     needs: [default, mb4_noflag, mb6_ntl_noflag]
     runs-on: [self-hosted, Linux, X64]
+    if: inputs.mb4_tcm
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -163,6 +164,7 @@ jobs:
   mb4_debug:
     needs: [default, mb4_noflag, mb6_ntl_noflag]
     runs-on: [self-hosted, Linux, X64]
+    if: inputs.mb4_debug
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -184,6 +186,7 @@ jobs:
   mb6_ntl_noflag:
     needs: default
     runs-on: [self-hosted, Linux, X64]
+    if: inputs.mb6_ntl_noflag
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -204,6 +207,7 @@ jobs:
   mb6_ntl_tcm:
     needs: [default, mb4_noflag, mb6_ntl_noflag]
     runs-on: [self-hosted, Linux, X64]
+    if: inputs.mb6_ntl_tcm
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -225,6 +229,7 @@ jobs:
   mb6_ntl_debug_tcm:
     needs: [default, mb4_noflag, mb6_ntl_noflag]
     runs-on: [self-hosted, Linux, X64]
+    if: inputs.mb6_ntl_debug_tcm
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2

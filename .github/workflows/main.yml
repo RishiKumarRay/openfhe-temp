@@ -1,4 +1,4 @@
-name: Run on main branch
+name: Main
 
 on:
   push:
@@ -12,6 +12,15 @@ jobs:
   
   call_basic_workflow:
     uses: openfheorg/openfhe-temp/.github/workflows/reuseable_workflow.yml@jsaylor/additions-to-ci-cd
+    with:
+      mb2_debug: true
+      mb2_tcm: true
+      mb4_noflag: true
+      mb4_debug: true
+      mb4_tcm: true
+      mb6_ntl_noflag: true
+      mb6_ntl_debug_tcm: true
+      mb6_ntl_tcm: true
 
   mb2_128:
     needs: call_basic_workflow

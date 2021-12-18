@@ -1,5 +1,5 @@
-name: 'A custom GitHub actions pipeline that wrappedup build, unit_test, benchmark and extract stages'
-description: 'composite github actions'
+name: 'Default Builder'
+description: 'A custom GitHub actions pipeline that wrappedup build, unit_test, benchmark and extract stages'
   
 inputs:
   module_name:
