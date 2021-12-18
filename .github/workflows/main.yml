@@ -24,7 +24,7 @@ jobs:
       mb6_ntl_tcm: true
 
   mb2_128:
-    needs: call_basic_workflow
+    needs: call
     runs-on: [self-hosted, Linux, X64]
     steps:
     - name: Checkout Code
