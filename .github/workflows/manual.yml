@@ -114,7 +114,7 @@ jobs:
       with:
         module_name: mb2_tcm
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=2
-        run_tcm: true
+        with_tcm: true
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}
 
@@ -181,7 +181,7 @@ jobs:
       with:
         module_name: mb4_tcm
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=4
-        run_tcm: true
+        with_tcm: true
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}
 
@@ -248,7 +248,7 @@ jobs:
       with:
         module_name: mb6_ntl_tcm
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_NTL=ON -DWITH_TCM=ON -DMATHBACKEND=6
-        run_tcm: true
+        with_tcm: true
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}
 
@@ -271,7 +271,7 @@ jobs:
       with:
         module_name: mb6_ntl_debug_tcm
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DWITH_NTL=ON -DWITH_TCM=ON -DMATHBACKEND=6
-        run_tcm: true
+        with_tcm: true
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}
 

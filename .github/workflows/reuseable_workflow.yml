@@ -86,7 +86,7 @@ jobs:
       with:
         module_name: mb2_tcm
         mathbackend: 2
-        run_tcm: true
+        with_tcm: true
         run_extras: true
 
 
@@ -151,7 +151,7 @@ jobs:
       with:
         module_name: mb4_tcm
         mathbackend: 4
-        run_tcm: true
+        with_tcm: true
         run_extras: true
 
 
@@ -216,7 +216,7 @@ jobs:
       with:
         module_name: mb6_ntl_tcm
         mathbackend: 6
-        run_tcm: true
+        with_tcm: true
         run_extras: true
 
 
@@ -239,7 +239,7 @@ jobs:
         module_name: mb6_ntl_debug_tcm
         mathbackend: 6
         with_debug: true
-        run_tcm: true
+        with_tcm: true
         run_extras: true
 
   ###############################################
@@ -261,6 +261,6 @@ jobs:
         mathbackend: 2
         with_debug: false
         with_nativeopts: true
-        run_tcm: false
+        with_tcm: false
         run_extras: false
         run_benchmark: true
