@@ -29,13 +29,8 @@ on:
         type: boolean
         required: true
         default: false
-      mb4_debug:
-        description: 'Run mb4_debug'
-        type: boolean
-        required: true
-        default: false
-      mb6_ntl_debug_tcm:
-        description: 'Run mb6_ntl_debug_tcm'
+      mb2_tcm:
+        description: 'Run mb2_tcm'
         type: boolean
         required: true
         default: false
@@ -44,18 +39,23 @@ on:
         type: boolean
         required: true
         default: false
-      mb6_ntl_noflag:
-        description: 'Run mb6_ntl_noflag'
-        type: boolean
-        required: true
-        default: false
-      mb2_tcm:
-        description: 'Run mb2_tcm'
+      mb4_debug:
+        description: 'Run mb4_debug'
         type: boolean
         required: true
         default: false
       mb4_tcm:
         description: 'Run mb4_tcm'
+        type: boolean
+        required: true
+        default: false
+      mb6_ntl_noflag:
+        description: 'Run mb6_ntl_noflag'
+        type: boolean
+        required: true
+        default: false
+      mb6_ntl_debug_tcm:
+        description: 'Run mb6_ntl_debug_tcm'
         type: boolean
         required: true
         default: false
@@ -98,6 +98,28 @@ jobs:
 
   ###############################################
   #
+  #    mb2_debug jobs starts here
+  #
+  ###############################################
+  mb2_debug:
+    needs: default
+    if: ${{ github.event.inputs.mb2_debug == 'true' }}
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: mb2_debug
+      uses: ./.github/actions/default_builder
+      with:
+        module_name: mb2_debug
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2
+        run_extras: true
+        native_backend: ${{ github.event.inputs.native_backend }}
+
+
+  ###############################################
+  #
   #    mb2_tcm jobs starts here
   #
   ###############################################
@@ -115,28 +137,6 @@ jobs:
         module_name: mb2_tcm
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=2
         with_tcm: true
-        run_extras: true
-        native_backend: ${{ github.event.inputs.native_backend }}
-
-
-  ###############################################
-  #
-  #    mb2_debug jobs starts here
-  #
-  ###############################################
-  mb2_debug:
-    needs: default
-    if: ${{ github.event.inputs.mb2_debug == 'true' }}
-    runs-on: [self-hosted, Linux, X64]
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: mb2_debug
-      uses: ./.github/actions/default_builder
-      with:
-        module_name: mb2_debug
-        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=2
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}
 
@@ -165,6 +165,28 @@ jobs:
 
   ###############################################
   #
+  #    mb4_debug jobs starts here
+  #
+  ###############################################
+  mb4_debug:
+    needs: default
+    if: ${{ github.event.inputs.mb4_debug == 'true' }}
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: mb4_debug
+      uses: ./.github/actions/default_builder
+      with:
+        module_name: mb4_debug
+        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4
+        run_extras: true
+        native_backend: ${{ github.event.inputs.native_backend }}
+
+
+  ###############################################
+  #
   #    mb4_tcm jobs starts here
   #
   ###############################################
@@ -182,28 +204,6 @@ jobs:
         module_name: mb4_tcm
         cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=4
         with_tcm: true
-        run_extras: true
-        native_backend: ${{ github.event.inputs.native_backend }}
-
-
-  ###############################################
-  #
-  #    debug_mb4 jobs starts here
-  #
-  ###############################################
-  debug_mb4:
-    needs: default
-    if: ${{ github.event.inputs.debug_mb4 == 'true' }}
-    runs-on: [self-hosted, Linux, X64]
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: debug_mb4
-      uses: ./.github/actions/default_builder
-      with:
-        module_name: debug_mb4
-        cmake_args: ${{ fromJson(env.COMPILERS_MAP)[github.event.inputs.compiler] }} -DBUILD_EXTRAS=ON -DCMAKE_BUILD_TYPE=Debug -DMATHBACKEND=4
         run_extras: true
         native_backend: ${{ github.event.inputs.native_backend }}
 
