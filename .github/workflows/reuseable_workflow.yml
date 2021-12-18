@@ -66,7 +66,6 @@ jobs:
       uses: ./.github/actions/default_builder
       with:
         module_name: default
-        run_benchmark: true
 
 
   ###############################################
@@ -242,3 +241,26 @@ jobs:
         with_debug: true
         run_tcm: true
         run_extras: true
+
+  ###############################################
+  #
+  #    mb2_natopt jobs starts here
+  #
+  ###############################################
+  mb2_natopt:
+    needs: [default, mb2_debug, mb2_tcm, mb4_noflag, mb4_debug, mb4_tcm, mb6_ntl_noflag, mb6_ntl_debug_tcm, mb6_ntl_tcm]
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: mb2_natopt
+      uses: ./.github/actions/default_builder
+      with:
+        module_name: mb2_natopt
+        mathbackend: 2
+        with_debug: false
+        with_nativeopts: true
+        run_tcm: false
+        run_extras: false
+        run_benchmark: true
