@@ -28,42 +28,42 @@ on:
         description: 'Run mb2_debug'
         type: boolean
         required: true
-        default: false
+        default: true
       mb2_tcm:
         description: 'Run mb2_tcm'
         type: boolean
         required: true
-        default: false
+        default: true
       mb4_noflag:
         description: 'Run mb4_noflag'
         type: boolean
         required: true
-        default: false
+        default: true
       mb4_debug:
         description: 'Run mb4_debug'
         type: boolean
         required: true
-        default: false
+        default: true
       mb4_tcm:
         description: 'Run mb4_tcm'
         type: boolean
         required: true
-        default: false
+        default: true
       mb6_ntl_noflag:
         description: 'Run mb6_ntl_noflag'
         type: boolean
         required: true
-        default: false
+        default: true
       mb6_ntl_debug_tcm:
         description: 'Run mb6_ntl_debug_tcm'
         type: boolean
         required: true
-        default: false
+        default: true
       mb6_ntl_tcm:
         description: 'Run mb6_ntl_tcm'
         type: boolean
         required: true
-        default: false
+        default: true
 
 env:
   # JSON map to convert input Compiler Type to correct cmake args, key is the input.compiler and the value is the cmake string to set the compiler for C and C++

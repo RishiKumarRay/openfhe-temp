@@ -77,7 +77,8 @@ runs:
         [[ "${{inputs.mathbackend}}" != "" ]] && cmake_args="${cmake_args} -DMATHBACKEND=${{ inputs.mathbackend }}"
         [[ "${{inputs.mathbackend}}" == "6" ]] && cmake_args="${cmake_args} -DWITH_NTL=ON"
 
-        # Append manual pushed in cmake args from the input
+        # Append manual pushed in cmake args from the input, this needs to be after the inputs
+        # So that the input can override defaults
         make_args="${cmake_args} ${{ inputs.cmake_args }}"
         
         echo "CMAKE ARGS: ${cmake_args}"
@@ -137,38 +138,35 @@ runs:
         # Double guard
         if [[ "${{ inputs.run_benchmark }}" == "true" ]]; then
           export OMP_NUM_THREADS=1
-          build/bin/benchmark/basic_test          --benchmark_out="basic_test_${{ github.sha }}"          --benchmark_out_format=csv
-          build/bin/benchmark/binfhe-ap           --benchmark_out="binfhe-ap_${{ github.sha }}"           --benchmark_out_format=csv
           build/bin/benchmark/binfhe-ginx         --benchmark_out="binfhe-ginx_${{ github.sha }}"         --benchmark_out_format=csv
-          build/bin/benchmark/Encoding            --benchmark_out="Encoding_${{ github.sha }}"            --benchmark_out_format=csv
-          build/bin/benchmark/IntegerMath         --benchmark_out="IntegerMath_${{ github.sha }}"         --benchmark_out_format=csv
-          build/bin/benchmark/Lattice             --benchmark_out="Lattice_${{ github.sha }}"             --benchmark_out_format=csv
           build/bin/benchmark/lib-benchmark       --benchmark_out="lib-benchmark_${{ github.sha }}"       --benchmark_out_format=csv
-          build/bin/benchmark/NbTheory            --benchmark_out="NbTheory_${{ github.sha }}"            --benchmark_out_format=csv
           build/bin/benchmark/poly-benchmark-1k   --benchmark_out="poly-benchmark-1k_${{ github.sha }}"   --benchmark_out_format=csv
           build/bin/benchmark/poly-benchmark-4k   --benchmark_out="poly-benchmark-4k_${{ github.sha }}"   --benchmark_out_format=csv
           build/bin/benchmark/poly-benchmark-16k  --benchmark_out="poly-benchmark-16k_${{ github.sha }}"  --benchmark_out_format=csv
-          build/bin/benchmark/VectorMath          --benchmark_out="VectorMath_${{ github.sha }}"          --benchmark_out_format=csv
+          
+          # Skipping these for time resource reasons.
+          # build/bin/benchmark/binfhe-ap           --benchmark_out="binfhe-ap_${{ github.sha }}"           --benchmark_out_format=csv
+          # build/bin/benchmark/basic_test          --benchmark_out="basic_test_${{ github.sha }}"          --benchmark_out_format=csv
+          # build/bin/benchmark/Encoding            --benchmark_out="Encoding_${{ github.sha }}"            --benchmark_out_format=csv
+          # build/bin/benchmark/IntegerMath         --benchmark_out="IntegerMath_${{ github.sha }}"         --benchmark_out_format=csv
+          # build/bin/benchmark/Lattice             --benchmark_out="Lattice_${{ github.sha }}"             --benchmark_out_format=csv
+          # build/bin/benchmark/NbTheory            --benchmark_out="NbTheory_${{ github.sha }}"            --benchmark_out_format=csv
+          # build/bin/benchmark/VectorMath          --benchmark_out="VectorMath_${{ github.sha }}"          --benchmark_out_format=csv
           unset OMP_NUM_THREADS
         fi
+
+    # -- upload benchmark results, NOTE - this list needs to be maintained with the above output files
     - name: benchmark_artifacts
       if: ${{ inputs.run_benchmark == 'true' }}
       uses: actions/upload-artifact@v2
       with:
         name: benchmark_vectormath-artifact
         path: |
-          basic_test_${{ github.sha }}
-          binfhe-ap_${{ github.sha }}
           binfhe-ginx_${{ github.sha }}
-          Encoding_${{ github.sha }}
-          IntegerMath_${{ github.sha }}
-          Lattice_${{ github.sha }}
           lib-benchmark_${{ github.sha }}
-          NbTheory_${{ github.sha }}
           poly-benchmark-1k_${{ github.sha }}
           poly-benchmark-4k_${{ github.sha }}
           poly-benchmark-16k_${{ github.sha }}
-          VectorMath_${{ github.sha }}
         retention-days: 30
 
     # -- extract

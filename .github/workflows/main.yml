@@ -40,7 +40,7 @@ jobs:
         run_extras: true
 
   mb2_clang:
-    needs: mb2_128
+    needs: call
     runs-on: [self-hosted, Linux, X64]
     steps:
     - name: Checkout Code
