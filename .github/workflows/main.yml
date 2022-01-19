@@ -6,9 +6,6 @@ on:
       - main
       - github-ci
 
-env:
-  CMAKE_ARGS: "-DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DCMAKE_C_COMPILER=/usr/bin/gcc-9"
-
 jobs:
   
   call:
@@ -34,7 +31,6 @@ jobs:
       uses: openfheorg/openfhe-temp/.github/actions/default_builder@github-ci
       with:
         module_name: mb2_128
-        # cmake_args: ${{ env.CMAKE_ARGS }} -DBUILD_EXTRAS=ON -DWITH_TCM=ON -DMATHBACKEND=4 
         native_backend: 128
         mathbackend: 2
         run_extras: true
