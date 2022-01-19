@@ -138,20 +138,20 @@ runs:
         # Double guard
         if [[ "${{ inputs.run_benchmark }}" == "true" ]]; then
           export OMP_NUM_THREADS=1
-          build/bin/benchmark/binfhe-ginx         --benchmark_out="binfhe-ginx_${{ github.sha }}"         --benchmark_out_format=csv
-          build/bin/benchmark/lib-benchmark       --benchmark_out="lib-benchmark_${{ github.sha }}"       --benchmark_out_format=csv
-          build/bin/benchmark/poly-benchmark-1k   --benchmark_out="poly-benchmark-1k_${{ github.sha }}"   --benchmark_out_format=csv
-          build/bin/benchmark/poly-benchmark-4k   --benchmark_out="poly-benchmark-4k_${{ github.sha }}"   --benchmark_out_format=csv
-          build/bin/benchmark/poly-benchmark-16k  --benchmark_out="poly-benchmark-16k_${{ github.sha }}"  --benchmark_out_format=csv
+          build/bin/benchmark/binfhe-ginx         --benchmark_out="binfhe-ginx_${{ github.sha }}.csv"         --benchmark_out_format=csv
+          build/bin/benchmark/lib-benchmark       --benchmark_out="lib-benchmark_${{ github.sha }}.csv"       --benchmark_out_format=csv
+          build/bin/benchmark/poly-benchmark-1k   --benchmark_out="poly-benchmark-1k_${{ github.sha }}.csv"   --benchmark_out_format=csv
+          build/bin/benchmark/poly-benchmark-4k   --benchmark_out="poly-benchmark-4k_${{ github.sha }}.csv"   --benchmark_out_format=csv
+          build/bin/benchmark/poly-benchmark-16k  --benchmark_out="poly-benchmark-16k_${{ github.sha }}.csv"  --benchmark_out_format=csv
           
           # Skipping these for time resource reasons.
-          # build/bin/benchmark/binfhe-ap           --benchmark_out="binfhe-ap_${{ github.sha }}"           --benchmark_out_format=csv
-          # build/bin/benchmark/basic_test          --benchmark_out="basic_test_${{ github.sha }}"          --benchmark_out_format=csv
-          # build/bin/benchmark/Encoding            --benchmark_out="Encoding_${{ github.sha }}"            --benchmark_out_format=csv
-          # build/bin/benchmark/IntegerMath         --benchmark_out="IntegerMath_${{ github.sha }}"         --benchmark_out_format=csv
-          # build/bin/benchmark/Lattice             --benchmark_out="Lattice_${{ github.sha }}"             --benchmark_out_format=csv
-          # build/bin/benchmark/NbTheory            --benchmark_out="NbTheory_${{ github.sha }}"            --benchmark_out_format=csv
-          # build/bin/benchmark/VectorMath          --benchmark_out="VectorMath_${{ github.sha }}"          --benchmark_out_format=csv
+          # build/bin/benchmark/binfhe-ap           --benchmark_out="binfhe-ap_${{ github.sha }}.csv"           --benchmark_out_format=csv
+          # build/bin/benchmark/basic_test          --benchmark_out="basic_test_${{ github.sha }}.csv"          --benchmark_out_format=csv
+          # build/bin/benchmark/Encoding            --benchmark_out="Encoding_${{ github.sha }}.csv"            --benchmark_out_format=csv
+          # build/bin/benchmark/IntegerMath         --benchmark_out="IntegerMath_${{ github.sha }}.csv"         --benchmark_out_format=csv
+          # build/bin/benchmark/Lattice             --benchmark_out="Lattice_${{ github.sha }}.csv"             --benchmark_out_format=csv
+          # build/bin/benchmark/NbTheory            --benchmark_out="NbTheory_${{ github.sha }}.csv"            --benchmark_out_format=csv
+          # build/bin/benchmark/VectorMath          --benchmark_out="VectorMath_${{ github.sha }}.csv"          --benchmark_out_format=csv
           unset OMP_NUM_THREADS
         fi
 
@@ -162,11 +162,11 @@ runs:
       with:
         name: benchmark_vectormath-artifact
         path: |
-          binfhe-ginx_${{ github.sha }}
-          lib-benchmark_${{ github.sha }}
-          poly-benchmark-1k_${{ github.sha }}
-          poly-benchmark-4k_${{ github.sha }}
-          poly-benchmark-16k_${{ github.sha }}
+          binfhe-ginx_${{ github.sha }}.csv
+          lib-benchmark_${{ github.sha }}.csv
+          poly-benchmark-1k_${{ github.sha }}.csv
+          poly-benchmark-4k_${{ github.sha }}.csv
+          poly-benchmark-16k_${{ github.sha }}.csv
         retention-days: 30
 
     # -- extract
