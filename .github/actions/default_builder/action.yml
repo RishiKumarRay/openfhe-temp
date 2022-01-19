@@ -52,6 +52,8 @@ runs:
     - name: '${{ inputs.module_name }}_cmake'
       shell: bash
       run: |
+        echo "${{ inputs.module_name }}_cmake"
+        
         whoami
         
         # Create the correct cmake arg string
@@ -89,7 +91,7 @@ runs:
     - name: '${{ inputs.module_name }}_build'
       shell: bash
       run: |
-        whoami
+        echo "${{ inputs.module_name }}_build"
 
         cd build
         
@@ -110,31 +112,35 @@ runs:
     - name: '${{ inputs.module_name }}_test_binfhe'
       shell: bash
       run: |
+        echo "${{ inputs.module_name }}_test_binfhe"
         pwd
-        echo $LD_LIBRARY_PATH
+        echo "LD_LIBRARY_PATH = ${LD_LIBRARY_PATH}"
         build/unittest/binfhe_tests --gtest_output=xml
 
     # -- test_core
     - name: '${{ inputs.module_name }}_test_core'
       shell: bash
       run: |
+        echo "${{ inputs.module_name }}_test_core"
         pwd
-        echo $LD_LIBRARY_PATH
+        echo "LD_LIBRARY_PATH = ${LD_LIBRARY_PATH}"
         build/unittest/core_tests --gtest_output=xml
 
     # -- test_pke
     - name: '${{ inputs.module_name }}_test_pke'
       shell: bash
       run: |
+        echo "${{ inputs.module_name }}_test_pke"
         pwd
-        echo $LD_LIBRARY_PATH
+        echo "LD_LIBRARY_PATH = ${LD_LIBRARY_PATH}"
         build/unittest/pke_tests --gtest_output=xml
 
     # -- benchmark
-    - name: benchmark_basic
+    - name: ${{ inputs.module_name }}_benchmark
       shell: bash
       if: ${{ inputs.run_benchmark == 'true' }}
       run: |
+        echo "${{ inputs.module_name }}_benchmark"
         # Double guard
         if [[ "${{ inputs.run_benchmark }}" == "true" ]]; then
           export OMP_NUM_THREADS=1
@@ -156,7 +162,7 @@ runs:
         fi
 
     # -- upload benchmark results, NOTE - this list needs to be maintained with the above output files
-    - name: benchmark_artifacts
+    - name: upload_benchmark_artifacts
       if: ${{ inputs.run_benchmark == 'true' }}
       uses: actions/upload-artifact@v2
       with:
@@ -174,6 +180,7 @@ runs:
       shell: bash
       if: ${{ inputs.run_extras == 'true' }}
       run: |
+        echo "${{ inputs.module_name }}_extras_core"
         # Double guard
         if [[ "${{ inputs.run_extras }}" == "true" ]]; then
           ./build/bin/extras/core/dft
