@@ -1,0 +1,5 @@
+<map id="lbcrypto::KeySwitchHYBRID" name="lbcrypto::KeySwitchHYBRID">
+<area shape="rect" id="node1" title="Abstract interface class for LBC SHE algorithms." alt="" coords="5,169,205,196"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1KeySwitchRNS.html" title="Abstract interface class for LBC SHE algorithms." alt="" coords="17,95,194,121"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1KeySwitchBase.html" title=" " alt="" coords="14,5,197,47"/>
+</map>

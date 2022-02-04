@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classlbcrypto_1_1PseudoRandomNumberGenerator.html" title="The class providing the PRNG capability to all random distribution generators in PALISADE...." alt="" coords="5,5,241,47"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1MultipartyBase.html" title=" " alt="" coords="5,49,188,90"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1MultipartyRNS.html" title="Abstract interface class for LBC Multiparty algorithms based on threshold FHE. A version of this mult..." alt="" coords="236,56,413,83"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1MultipartyBFVRNS.html" title=" " alt="" coords="466,5,669,32"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1MultipartyBGVRNS.html" title=" " alt="" coords="465,56,670,83"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1MultipartyCKKSRNS.html" title=" " alt="" coords="461,107,673,133"/>
 </map>

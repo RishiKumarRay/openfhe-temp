@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -101,35 +101,45 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;iosfwd&gt;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">enum</span> PKESchemeFeature {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    ENCRYPTION = 0x01,</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    PRE = 0x02,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    SHE = 0x04,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    FHE = 0x08,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    LEVELEDSHE = 0x10,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    MULTIPARTY = 0x20,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    ADVANCEDSHE = 0x40</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  PKE = 0x01,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  KEYSWITCH = 0x02,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  PRE = 0x04,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  LEVELEDSHE = 0x08,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ADVANCEDSHE = 0x10,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  MULTIPARTY = 0x20,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  FHE = 0x40</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, PKESchemeFeature f);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">enum</span> MODE { RLWE = 0, OPTIMIZED = 1, SPARSE = 2 };</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, MODE m);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, PKESchemeFeature f);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">enum</span> MODE { RLWE = 0, OPTIMIZED = 1, SPARSE = 2 };</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, MODE m);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">enum</span> RescalingTechnique {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    APPROXRESCALE,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    EXACTRESCALE,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    APPROXAUTO,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    INVALID_RS_TECHNIQUE  <span class="comment">// TODO (dsuponit): make this the first value</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, RescalingTechnique t);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif // _CONSTANTS_H_</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  FIXEDMANUAL,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  FIXEDAUTO,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  FLEXIBLEAUTO,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  NORESCALE,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  INVALID_RS_TECHNIQUE  <span class="comment">// TODO (dsuponit): make this the first value</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, RescalingTechnique t);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">enum</span> KeySwitchTechnique { BV, HYBRID };</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, KeySwitchTechnique t);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">enum</span> EncryptionTechnique { STANDARD, POVERQ };</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, EncryptionTechnique t);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">enum</span> MultiplicationTechnique { BEHZ, HPS, HPSPOVERQ, HPSPOVERQLEVELED };</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;std::ostream&amp; <a class="code" href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">operator&lt;&lt;</a>(std::ostream&amp; s, MultiplicationTechnique t);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif  // _CONSTANTS_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anamespacelbcrypto_html_ab44995ae273c6bd81a72c8fb9b869839"><div class="ttname"><a href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">lbcrypto::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Field2n &amp;m)</div><div class="ttdoc">Stream output operator.</div><div class="ttdef"><b>Definition:</b> field2n.h:347</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_ab44995ae273c6bd81a72c8fb9b869839"><div class="ttname"><a href="namespacelbcrypto.html#ab44995ae273c6bd81a72c8fb9b869839">lbcrypto::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Field2n &amp;m)</div><div class="ttdoc">Stream output operator.</div><div class="ttdef"><b>Definition:</b> field2n.h:345</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

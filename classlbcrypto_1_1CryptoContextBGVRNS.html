@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PALISADE Lattice Crypto Library: lbcrypto::CryptoContextBGVRNS&lt; Element &gt; Class Template Reference</title>
+<title>PALISADE Lattice Crypto Library: lbcrypto::CryptoContextBGVRNS Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -73,21 +73,30 @@ $(function() {
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classlbcrypto_1_1CryptoContextBGVRNS-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">lbcrypto::CryptoContextBGVRNS&lt; Element &gt; Class Template Reference</div>  </div>
+<div class="title">lbcrypto::CryptoContextBGVRNS Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a8eca60791621db649bf481a1be95685f"><td class="memItemLeft" align="right" valign="top"><a id="a8eca60791621db649bf481a1be95685f"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>ContextType</b> = CryptoContext&lt; Element &gt;</td></tr>
-<tr class="separator:a8eca60791621db649bf481a1be95685f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16f0d14f42c5badfc55deccf8d762c0f"><td class="memItemLeft" align="right" valign="top"><a id="a16f0d14f42c5badfc55deccf8d762c0f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>ContextType</b> = CryptoContext&lt; <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html">Element</a> &gt;</td></tr>
+<tr class="separator:a16f0d14f42c5badfc55deccf8d762c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3771ddc5784d5c3d34e59ff0b2fc1216"><td class="memItemLeft" align="right" valign="top"><a id="a3771ddc5784d5c3d34e59ff0b2fc1216"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>Factory</b> = <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">CryptoContextFactory</a>&lt; <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html">Element</a> &gt;</td></tr>
+<tr class="separator:a3771ddc5784d5c3d34e59ff0b2fc1216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9140f8e9bc6b8588bcbcbd8f845a26e1"><td class="memItemLeft" align="right" valign="top"><a id="a9140f8e9bc6b8588bcbcbd8f845a26e1"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>PublicKeyEncryptionScheme</b> = <a class="el" href="classlbcrypto_1_1SchemeBGVRNS.html">SchemeBGVRNS</a></td></tr>
+<tr class="separator:a9140f8e9bc6b8588bcbcbd8f845a26e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f1171c49d66ec80bfeea867581e7975"><td class="memItemLeft" align="right" valign="top"><a id="a1f1171c49d66ec80bfeea867581e7975"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>CryptoParams</b> = <a class="el" href="classlbcrypto_1_1CryptoParametersBGVRNS.html">CryptoParametersBGVRNS</a></td></tr>
+<tr class="separator:a1f1171c49d66ec80bfeea867581e7975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aa6a04789afdc970cc86398595710dddd"><td class="memItemLeft" align="right" valign="top"><a id="aa6a04789afdc970cc86398595710dddd"></a>
-static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>genCryptoContext</b> (const <a class="el" href="classlbcrypto_1_1CCParams.html">CCParams</a>&lt; <a class="el" href="classlbcrypto_1_1CryptoContextBGVRNS.html">CryptoContextBGVRNS</a>&lt; Element &gt;&gt; &amp;parameters)</td></tr>
-<tr class="separator:aa6a04789afdc970cc86398595710dddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa86edabad41629be50a77a58ccff0d16"><td class="memItemLeft" align="right" valign="top"><a id="aa86edabad41629be50a77a58ccff0d16"></a>
+static CryptoContext&lt; <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html">Element</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>genCryptoContext</b> (const <a class="el" href="classlbcrypto_1_1CCParams.html">CCParams</a>&lt; <a class="el" href="classlbcrypto_1_1CryptoContextBGVRNS.html">CryptoContextBGVRNS</a> &gt; &amp;parameters)</td></tr>
+<tr class="separator:aa86edabad41629be50a77a58ccff0d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/pke/include/scheme/bgvrns/<a class="el" href="cryptocontext-bgvrns_8h_source.html">cryptocontext-bgvrns.h</a></li>
@@ -95,7 +104,7 @@ static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign=
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

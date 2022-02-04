@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -101,56 +101,65 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;utils/inttypes.h&quot;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;V <a class="code" href="namespacelbcrypto.html#a24cf55013f5ce730296e1ecfc281bb99">ZeroPadForward</a>(<span class="keyword">const</span> V &amp;InputPoly, usint target_order);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;V <a class="code" href="namespacelbcrypto.html#a10e13f1a38d295d34102d4ca8235826f">ZeroPadInverse</a>(<span class="keyword">const</span> V &amp;InputPoly, usint target_order);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">   71</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">IsPowerOfTwo</a>(usint Input) {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordflow">return</span> Input &amp;&amp; !(Input &amp; (Input - 1));</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">// auxiliary function to replace a specific character &quot;in&quot; with another</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">// character &quot;out&quot;</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;std::string <a class="code" href="namespacelbcrypto.html#a4485da7b198be976967e347486bee467">replaceChar</a>(std::string str, <span class="keywordtype">char</span> in, <span class="keywordtype">char</span> out);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">// Lazy Reduction functions: 64-bit multiplier and 128-bit Barrett reducer</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">// Originally proposed for BFVrnsB</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#a35137dac20ea2cebd63cba9cff60acbc">   96</a></span>&#160;<span class="comment"></span><span class="keyword">inline</span> uint32_t <a class="code" href="namespacelbcrypto.html#a35137dac20ea2cebd63cba9cff60acbc">IsAdditionOverflow</a>(uint64_t a, uint64_t b) {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  a += b;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordflow">if</span> (a &lt; b)</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#aeb34883759c9d975df1450f89b72be7d">  112</a></span>&#160;<span class="keyword">inline</span> uint32_t <a class="code" href="namespacelbcrypto.html#aeb34883759c9d975df1450f89b72be7d">AdditionWithCarryOut</a>(uint64_t a, uint64_t b, uint64_t &amp;c) {</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  a += b;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  c = a;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keywordflow">if</span> (a &lt; b)</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}  <span class="comment">// namespace lbcrypto</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;climits&gt;</span>     <span class="comment">// CHAR_BIT</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span> <span class="comment">//std::is_integral</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a> {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;V <a class="code" href="namespacelbcrypto.html#a24cf55013f5ce730296e1ecfc281bb99">ZeroPadForward</a>(<span class="keyword">const</span> V &amp;InputPoly, usint target_order);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;V <a class="code" href="namespacelbcrypto.html#a10e13f1a38d295d34102d4ca8235826f">ZeroPadInverse</a>(<span class="keyword">const</span> V &amp;InputPoly, usint target_order);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">   73</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">IsPowerOfTwo</a>(usint Input) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">return</span> Input &amp;&amp; !(Input &amp; (Input - 1));</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">// auxiliary function to replace a specific character &quot;in&quot; with another</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">// character &quot;out&quot;</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;std::string <a class="code" href="namespacelbcrypto.html#a4485da7b198be976967e347486bee467">replaceChar</a>(std::string str, <span class="keywordtype">char</span> in, <span class="keywordtype">char</span> out);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">// Lazy Reduction functions: 64-bit multiplier and 128-bit Barrett reducer</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">// Originally proposed for BFVrnsB</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#a35137dac20ea2cebd63cba9cff60acbc">   98</a></span>&#160;<span class="comment"></span><span class="keyword">inline</span> uint32_t <a class="code" href="namespacelbcrypto.html#a35137dac20ea2cebd63cba9cff60acbc">IsAdditionOverflow</a>(uint64_t a, uint64_t b) {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  a += b;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">if</span> (a &lt; b)</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#aeb34883759c9d975df1450f89b72be7d">  114</a></span>&#160;<span class="keyword">inline</span> uint32_t <a class="code" href="namespacelbcrypto.html#aeb34883759c9d975df1450f89b72be7d">AdditionWithCarryOut</a>(uint64_t a, uint64_t b, uint64_t &amp;c) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  a += b;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  c = a;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keywordflow">if</span> (a &lt; b)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T,</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">typename</span> std::enable_if&lt;std::is_integral&lt;T&gt;::value &amp;&amp; !std::is_same&lt;T, bool&gt;::value, <span class="keywordtype">bool</span>&gt;::type = <span class="keyword">true</span>&gt;</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="namespacelbcrypto.html#ae5c3ccbd1174931ca8915581ef872f51">  132</a></span>&#160;    constexpr usint <a class="code" href="namespacelbcrypto.html#ae5c3ccbd1174931ca8915581ef872f51">GetIntegerTypeBitLength</a>() {</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(T) * CHAR_BIT;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}  <span class="comment">// namespace lbcrypto</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
-<div class="ttc" id="anamespacelbcrypto_html_a3c0bee71d2fdd0aeb2b4e300a6da8650"><div class="ttname"><a href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">lbcrypto::IsPowerOfTwo</a></div><div class="ttdeci">bool IsPowerOfTwo(usint Input)</div><div class="ttdef"><b>Definition:</b> utilities.h:71</div></div>
-<div class="ttc" id="anamespacelbcrypto_html_a35137dac20ea2cebd63cba9cff60acbc"><div class="ttname"><a href="namespacelbcrypto.html#a35137dac20ea2cebd63cba9cff60acbc">lbcrypto::IsAdditionOverflow</a></div><div class="ttdeci">uint32_t IsAdditionOverflow(uint64_t a, uint64_t b)</div><div class="ttdef"><b>Definition:</b> utilities.h:96</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_ae5c3ccbd1174931ca8915581ef872f51"><div class="ttname"><a href="namespacelbcrypto.html#ae5c3ccbd1174931ca8915581ef872f51">lbcrypto::GetIntegerTypeBitLength</a></div><div class="ttdeci">constexpr usint GetIntegerTypeBitLength()</div><div class="ttdef"><b>Definition:</b> utilities.h:132</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_a3c0bee71d2fdd0aeb2b4e300a6da8650"><div class="ttname"><a href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">lbcrypto::IsPowerOfTwo</a></div><div class="ttdeci">bool IsPowerOfTwo(usint Input)</div><div class="ttdef"><b>Definition:</b> utilities.h:73</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_a35137dac20ea2cebd63cba9cff60acbc"><div class="ttname"><a href="namespacelbcrypto.html#a35137dac20ea2cebd63cba9cff60acbc">lbcrypto::IsAdditionOverflow</a></div><div class="ttdeci">uint32_t IsAdditionOverflow(uint64_t a, uint64_t b)</div><div class="ttdef"><b>Definition:</b> utilities.h:98</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_a10e13f1a38d295d34102d4ca8235826f"><div class="ttname"><a href="namespacelbcrypto.html#a10e13f1a38d295d34102d4ca8235826f">lbcrypto::ZeroPadInverse</a></div><div class="ttdeci">V ZeroPadInverse(const V &amp;InputPoly, usint target_order)</div><div class="ttdef"><b>Definition:</b> utilities.cpp:54</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_a24cf55013f5ce730296e1ecfc281bb99"><div class="ttname"><a href="namespacelbcrypto.html#a24cf55013f5ce730296e1ecfc281bb99">lbcrypto::ZeroPadForward</a></div><div class="ttdeci">V ZeroPadForward(const V &amp;InputPoly, usint target_order)</div><div class="ttdef"><b>Definition:</b> utilities.cpp:32</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_a4485da7b198be976967e347486bee467"><div class="ttname"><a href="namespacelbcrypto.html#a4485da7b198be976967e347486bee467">lbcrypto::replaceChar</a></div><div class="ttdeci">std::string replaceChar(std::string str, char in, char out)</div><div class="ttdef"><b>Definition:</b> utilities.cpp:73</div></div>
-<div class="ttc" id="anamespacelbcrypto_html_aeb34883759c9d975df1450f89b72be7d"><div class="ttname"><a href="namespacelbcrypto.html#aeb34883759c9d975df1450f89b72be7d">lbcrypto::AdditionWithCarryOut</a></div><div class="ttdeci">uint32_t AdditionWithCarryOut(uint64_t a, uint64_t b, uint64_t &amp;c)</div><div class="ttdef"><b>Definition:</b> utilities.h:112</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_aeb34883759c9d975df1450f89b72be7d"><div class="ttname"><a href="namespacelbcrypto.html#aeb34883759c9d975df1450f89b72be7d">lbcrypto::AdditionWithCarryOut</a></div><div class="ttdeci">uint32_t AdditionWithCarryOut(uint64_t a, uint64_t b, uint64_t &amp;c)</div><div class="ttdef"><b>Definition:</b> utilities.h:114</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -92,9 +92,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a8a2f754ebe4768c1508f6c90c5d38187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3234f2d90eb8d47a86d8d67c4f76d6e4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextHelper.html#a3234f2d90eb8d47a86d8d67c4f76d6e4">printParmSetNamesByExcludeFilters</a> (std::ostream &amp;out, std::initializer_list&lt; std::string &gt; filters)</td></tr>
 <tr class="separator:a3234f2d90eb8d47a86d8d67c4f76d6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a317164443572b3be6e21512b02f5bfea"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; <a class="el" href="classlbcrypto_1_1PolyImpl.html">Poly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextHelper.html#a317164443572b3be6e21512b02f5bfea">getNewContext</a> (const string &amp;parmsetname, EncodingParams p=0)</td></tr>
-<tr class="separator:a317164443572b3be6e21512b02f5bfea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43de9831b30468def2949b1b48daf411"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html">DCRTPoly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextHelper.html#a43de9831b30468def2949b1b48daf411">getNewDCRTContext</a> (const string &amp;parmsetname, usint numTowers, usint primeBits)</td></tr>
+<tr class="memitem:add6607683682b12f4fa089286ef6d90d"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; <a class="el" href="classlbcrypto_1_1PolyImpl.html">Poly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextHelper.html#add6607683682b12f4fa089286ef6d90d">getNewContext</a> (const string &amp;parmsetname, EncodingParams p=0)</td></tr>
+<tr class="separator:add6607683682b12f4fa089286ef6d90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43de9831b30468def2949b1b48daf411"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPoly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextHelper.html#a43de9831b30468def2949b1b48daf411">getNewDCRTContext</a> (const string &amp;parmsetname, usint numTowers, usint primeBits)</td></tr>
 <tr class="separator:a43de9831b30468def2949b1b48daf411"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a133ed852c2e176ea3276f146f6b5884d"><td class="memTemplParams" colspan="2"><a id="a133ed852c2e176ea3276f146f6b5884d"></a>
 template&lt;typename Element &gt; </td></tr>
@@ -102,8 +102,8 @@ template&lt;typename Element &gt; </td></tr>
 <tr class="separator:a133ed852c2e176ea3276f146f6b5884d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a317164443572b3be6e21512b02f5bfea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a317164443572b3be6e21512b02f5bfea">&#9670;&nbsp;</a></span>getNewContext()</h2>
+<a id="add6607683682b12f4fa089286ef6d90d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add6607683682b12f4fa089286ef6d90d">&#9670;&nbsp;</a></span>getNewContext()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,7 +112,7 @@ template&lt;typename Element &gt; </td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">CryptoContext&lt; <a class="el" href="classlbcrypto_1_1PolyImpl.html">Poly</a> &gt; lbcrypto::CryptoContextHelper::getNewContext </td>
+          <td class="memname">static CryptoContext&lt;<a class="el" href="classlbcrypto_1_1PolyImpl.html">Poly</a>&gt; lbcrypto::CryptoContextHelper::getNewContext </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>parmsetname</em>, </td>
@@ -156,7 +156,7 @@ template&lt;typename Element &gt; </td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">CryptoContext&lt; <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html">DCRTPoly</a> &gt; lbcrypto::CryptoContextHelper::getNewDCRTContext </td>
+          <td class="memname">CryptoContext&lt; <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPoly</a> &gt; lbcrypto::CryptoContextHelper::getNewDCRTContext </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>parmsetname</em>, </td>
@@ -488,7 +488,7 @@ template&lt;typename Element &gt; </td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

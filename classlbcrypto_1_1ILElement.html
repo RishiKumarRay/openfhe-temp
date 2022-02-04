@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -165,9 +165,9 @@ virtual const IntType &amp;&#160;</td><td class="memItemRight" valign="bottom"><
 <tr class="memitem:ace67acbcf4ed67ce68a02e1565159af4"><td class="memItemLeft" align="right" valign="top">virtual Element&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1ILElement.html#ace67acbcf4ed67ce68a02e1565159af4">Times</a> (const IntType &amp;element) const =0</td></tr>
 <tr class="memdesc:ace67acbcf4ed67ce68a02e1565159af4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scalar multiplication - multiply all entries.  <a href="classlbcrypto_1_1ILElement.html#ace67acbcf4ed67ce68a02e1565159af4">More...</a><br /></td></tr>
 <tr class="separator:ace67acbcf4ed67ce68a02e1565159af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34e8992842f28638c8d4eff26d0fc584"><td class="memItemLeft" align="right" valign="top">virtual Element&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1ILElement.html#a34e8992842f28638c8d4eff26d0fc584">Times</a> (bigintnat::NativeInteger::SignedNativeInt element) const =0</td></tr>
-<tr class="memdesc:a34e8992842f28638c8d4eff26d0fc584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scalar multiplication - mulltiply by a signed integer.  <a href="classlbcrypto_1_1ILElement.html#a34e8992842f28638c8d4eff26d0fc584">More...</a><br /></td></tr>
-<tr class="separator:a34e8992842f28638c8d4eff26d0fc584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8581b6506d89d90efc55fb78743f6f65"><td class="memItemLeft" align="right" valign="top">virtual Element&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1ILElement.html#a8581b6506d89d90efc55fb78743f6f65">Times</a> (NativeInteger::SignedNativeInt element) const =0</td></tr>
+<tr class="memdesc:a8581b6506d89d90efc55fb78743f6f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scalar multiplication - mulltiply by a signed integer.  <a href="classlbcrypto_1_1ILElement.html#a8581b6506d89d90efc55fb78743f6f65">More...</a><br /></td></tr>
+<tr class="separator:a8581b6506d89d90efc55fb78743f6f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38a6503240f38927f387a628c764b47e"><td class="memItemLeft" align="right" valign="top">virtual Element&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1ILElement.html#a38a6503240f38927f387a628c764b47e">Plus</a> (const Element &amp;element) const =0</td></tr>
 <tr class="memdesc:a38a6503240f38927f387a628c764b47e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an addition operation and returns the result.  <a href="classlbcrypto_1_1ILElement.html#a38a6503240f38927f387a628c764b47e">More...</a><br /></td></tr>
 <tr class="separator:a38a6503240f38927f387a628c764b47e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1569,7 +1569,7 @@ template&lt;typename Element , typename VecType &gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a3c21084ea80bc73c22800792f78efa26">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a3c21084ea80bc73c22800792f78efa26">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; VecType &gt;, VecType, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a3c21084ea80bc73c22800792f78efa26">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; BigVector &gt;, BigVector, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a2758f06a1075c396b73344ed3a13a734">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a2758f06a1075c396b73344ed3a13a734">lbcrypto::DCRTPolyImpl&lt; BigVector &gt;</a>, <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">lbcrypto::HexlDCRTPoly&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">lbcrypto::HexlDCRTPoly&lt; BigVector &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#a0c6f9d80eca0a8bb416ed90ff660defe">lbcrypto::PolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#a0c6f9d80eca0a8bb416ed90ff660defe">lbcrypto::PolyImpl&lt; NativeVector &gt;</a>, and <a class="el" href="classlbcrypto_1_1PolyImpl.html#a0c6f9d80eca0a8bb416ed90ff660defe">lbcrypto::PolyImpl&lt; BigVector &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a3c21084ea80bc73c22800792f78efa26">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a3c21084ea80bc73c22800792f78efa26">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; VecType &gt;, VecType, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a3c21084ea80bc73c22800792f78efa26">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; BigVector &gt;, BigVector, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a2758f06a1075c396b73344ed3a13a734">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a2758f06a1075c396b73344ed3a13a734">lbcrypto::DCRTPolyImpl&lt; BigVector &gt;</a>, <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">lbcrypto::HexlDCRTPoly&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#a0c6f9d80eca0a8bb416ed90ff660defe">lbcrypto::PolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#a0c6f9d80eca0a8bb416ed90ff660defe">lbcrypto::PolyImpl&lt; NativeVector &gt;</a>, and <a class="el" href="classlbcrypto_1_1PolyImpl.html#a0c6f9d80eca0a8bb416ed90ff660defe">lbcrypto::PolyImpl&lt; BigVector &gt;</a>.</p>
 
 </div>
 </div>
@@ -1827,47 +1827,8 @@ template&lt;typename Element , typename VecType &gt; </div>
 
 </div>
 </div>
-<a id="a34e8992842f28638c8d4eff26d0fc584"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34e8992842f28638c8d4eff26d0fc584">&#9670;&nbsp;</a></span>Times() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Element , typename VecType &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual Element <a class="el" href="classlbcrypto_1_1ILElement.html">lbcrypto::ILElement</a>&lt; Element, VecType &gt;::Times </td>
-          <td>(</td>
-          <td class="paramtype">bigintnat::NativeInteger::SignedNativeInt&#160;</td>
-          <td class="paramname"><em>element</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Scalar multiplication - mulltiply by a signed integer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">&amp;element</td><td>is the element to multiply entry-wise. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>is the return value of the times operation. </dd></dl>
-
-<p>Implemented in <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#acee8bc36b405189c3be42b0ef2417625">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; VecType &gt;, VecType, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#acee8bc36b405189c3be42b0ef2417625">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; BigVector &gt;, BigVector, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a187ab86229c1ecc9f372fd76886426eb">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a187ab86229c1ecc9f372fd76886426eb">lbcrypto::DCRTPolyImpl&lt; BigVector &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#acee8bc36b405189c3be42b0ef2417625">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#afc9f778330e78797f0b0d26928b7363a">lbcrypto::PolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#afc9f778330e78797f0b0d26928b7363a">lbcrypto::PolyImpl&lt; NativeVector &gt;</a>, and <a class="el" href="classlbcrypto_1_1PolyImpl.html#afc9f778330e78797f0b0d26928b7363a">lbcrypto::PolyImpl&lt; BigVector &gt;</a>.</p>
-
-</div>
-</div>
 <a id="a87aae40f4589b2e10285495cfda2b492"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87aae40f4589b2e10285495cfda2b492">&#9670;&nbsp;</a></span>Times() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a87aae40f4589b2e10285495cfda2b492">&#9670;&nbsp;</a></span>Times() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1906,7 +1867,7 @@ template&lt;typename Element , typename VecType &gt; </div>
 </div>
 </div>
 <a id="ace67acbcf4ed67ce68a02e1565159af4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace67acbcf4ed67ce68a02e1565159af4">&#9670;&nbsp;</a></span>Times() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ace67acbcf4ed67ce68a02e1565159af4">&#9670;&nbsp;</a></span>Times() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1941,6 +1902,45 @@ template&lt;typename Element , typename VecType &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>is the return value of the times operation. </dd></dl>
 
 <p>Implemented in <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a90ef011a1f427c25add508227dcdda34">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a90ef011a1f427c25add508227dcdda34">lbcrypto::DCRTPolyImpl&lt; BigVector &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#ab08dd2824bc3f8c005acab8c506420fd">lbcrypto::PolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#ab08dd2824bc3f8c005acab8c506420fd">lbcrypto::PolyImpl&lt; NativeVector &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#ab08dd2824bc3f8c005acab8c506420fd">lbcrypto::PolyImpl&lt; BigVector &gt;</a>, and <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#abe20fce440768599da3a2edeb27ced9f">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; BigVector &gt;, BigVector, NativeVector, PolyImpl &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a8581b6506d89d90efc55fb78743f6f65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8581b6506d89d90efc55fb78743f6f65">&#9670;&nbsp;</a></span>Times() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Element , typename VecType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Element <a class="el" href="classlbcrypto_1_1ILElement.html">lbcrypto::ILElement</a>&lt; Element, VecType &gt;::Times </td>
+          <td>(</td>
+          <td class="paramtype">NativeInteger::SignedNativeInt&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Scalar multiplication - mulltiply by a signed integer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&amp;element</td><td>is the element to multiply entry-wise. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>is the return value of the times operation. </dd></dl>
+
+<p>Implemented in <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#ad65b7d12733f781a03b0b2ba264642ee">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; VecType &gt;, VecType, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#ad65b7d12733f781a03b0b2ba264642ee">lbcrypto::DCRTPolyInterface&lt; DCRTPolyImpl&lt; BigVector &gt;, BigVector, NativeVector, PolyImpl &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a199dd8ad532c8d5f1209a93dad60b24c">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a199dd8ad532c8d5f1209a93dad60b24c">lbcrypto::DCRTPolyImpl&lt; BigVector &gt;</a>, <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#ad65b7d12733f781a03b0b2ba264642ee">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#a235975fed9f9f988edeafa93cfaff5e7">lbcrypto::PolyImpl&lt; VecType &gt;</a>, <a class="el" href="classlbcrypto_1_1PolyImpl.html#a235975fed9f9f988edeafa93cfaff5e7">lbcrypto::PolyImpl&lt; NativeVector &gt;</a>, and <a class="el" href="classlbcrypto_1_1PolyImpl.html#a235975fed9f9f988edeafa93cfaff5e7">lbcrypto::PolyImpl&lt; BigVector &gt;</a>.</p>
 
 </div>
 </div>
@@ -1982,7 +1982,7 @@ template&lt;typename Element , typename VecType &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

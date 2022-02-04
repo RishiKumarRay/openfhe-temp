@@ -1,0 +1,4 @@
+<map id="lbcrypto::MultipartyRNS" name="lbcrypto::MultipartyRNS">
+<area shape="rect" id="node1" title="Abstract interface class for LBC Multiparty algorithms based on threshold FHE. A version of this mult..." alt="" coords="8,95,185,121"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1MultipartyBase.html" title=" " alt="" coords="5,5,188,47"/>
+</map>

@@ -1,4 +1,4 @@
 <map id="lbcrypto::CryptoObject&lt; Element &gt;" name="lbcrypto::CryptoObject&lt; Element &gt;">
-<area shape="rect" id="node1" title="CryptoObject." alt="" coords="25,5,193,47"/>
-<area shape="rect" id="node2" href="$classlbcrypto_1_1LPKey.html" title="Abstract interface class for LP Keys." alt="" coords="5,95,212,121"/>
+<area shape="rect" id="node1" title="CryptoObject." alt="" coords="17,5,185,47"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1Key.html" title="Abstract interface class for Keys." alt="" coords="5,95,196,121"/>
 </map>

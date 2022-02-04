@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -100,35 +100,18 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define LBCRYPTO_CRYPTO_BFVRNSSER_H</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;palisade.h&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;scheme/bfv/bfv-ser.h&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;utils/serial.h&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPCryptoParametersBFVrns.html">lbcrypto::LPCryptoParametersBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPPublicKeyEncryptionSchemeBFVrns.html">lbcrypto::LPPublicKeyEncryptionSchemeBFVrns</a>&lt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">lbcrypto::DCRTPoly</a>&gt;;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPAlgorithmBFVrns.html">lbcrypto::LPAlgorithmBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPAlgorithmPREBFVrns.html">lbcrypto::LPAlgorithmPREBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPAlgorithmSHEBFVrns.html">lbcrypto::LPAlgorithmSHEBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPAlgorithmMultipartyBFVrns.html">lbcrypto::LPAlgorithmMultipartyBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LPAlgorithmParamsGenBFVrns.html">lbcrypto::LPAlgorithmParamsGenBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;CEREAL_REGISTER_TYPE(<a class="code" href="classlbcrypto_1_1LPCryptoParametersBFVrns.html">lbcrypto::LPCryptoParametersBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;CEREAL_REGISTER_TYPE(</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="classlbcrypto_1_1LPPublicKeyEncryptionSchemeBFVrns.html">lbcrypto::LPPublicKeyEncryptionSchemeBFVrns&lt;lbcrypto::DCRTPoly&gt;</a>);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;utils/serial.h&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;CEREAL_REGISTER_TYPE(<a class="code" href="classlbcrypto_1_1CryptoParametersBFVRNS.html">lbcrypto::CryptoParametersBFVRNS</a>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;CEREAL_REGISTER_TYPE(<a class="code" href="classlbcrypto_1_1SchemeBFVRNS.html">lbcrypto::SchemeBFVRNS</a>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasslbcrypto_1_1LPAlgorithmMultipartyBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPAlgorithmMultipartyBFVrns.html">lbcrypto::LPAlgorithmMultipartyBFVrns</a></div><div class="ttdoc">Concrete class for the FHE Multiparty algorithms on BFVrns. This scheme is also referred to as the FV...</div><div class="ttdef"><b>Definition:</b> bfvrns.h:807</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1LPPublicKeyEncryptionSchemeBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPPublicKeyEncryptionSchemeBFVrns.html">lbcrypto::LPPublicKeyEncryptionSchemeBFVrns</a></div><div class="ttdoc">Main public key encryption scheme for BFVrns implementation,.</div><div class="ttdef"><b>Definition:</b> bfvrns.h:864</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1LPAlgorithmBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPAlgorithmBFVrns.html">lbcrypto::LPAlgorithmBFVrns</a></div><div class="ttdoc">Encryption algorithm implementation for BFVrns for the basic public key encrypt, decrypt and key gene...</div><div class="ttdef"><b>Definition:</b> bfvrns.h:563</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1LPAlgorithmSHEBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPAlgorithmSHEBFVrns.html">lbcrypto::LPAlgorithmSHEBFVrns</a></div><div class="ttdoc">SHE algorithms implementation for BFVrns.</div><div class="ttdef"><b>Definition:</b> bfvrns.h:616</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html">lbcrypto::HexlDCRTPoly</a></div><div class="ttdoc">A DCRTPoly Implementation optimized for HEXL, Intel's AVX512 IFMA instructions.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:59</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1LPAlgorithmPREBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPAlgorithmPREBFVrns.html">lbcrypto::LPAlgorithmPREBFVrns</a></div><div class="ttdoc">PRE algorithms implementation for BFVrns.</div><div class="ttdef"><b>Definition:</b> bfvrns.h:707</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1LPCryptoParametersBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPCryptoParametersBFVrns.html">lbcrypto::LPCryptoParametersBFVrns</a></div><div class="ttdoc">This is the parameters class for the BFVrns encryption scheme. This scheme is also referred to as the...</div><div class="ttdef"><b>Definition:</b> bfvrns.h:74</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1LPAlgorithmParamsGenBFVrns_html"><div class="ttname"><a href="classlbcrypto_1_1LPAlgorithmParamsGenBFVrns.html">lbcrypto::LPAlgorithmParamsGenBFVrns</a></div><div class="ttdoc">Parameter generation for BFVrns. This scheme is also referred to as the FV scheme.</div><div class="ttdef"><b>Definition:</b> bfvrns.h:520</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1CryptoParametersBFVRNS_html"><div class="ttname"><a href="classlbcrypto_1_1CryptoParametersBFVRNS.html">lbcrypto::CryptoParametersBFVRNS</a></div><div class="ttdef"><b>Definition:</b> bfvrns-cryptoparameters.h:35</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1SchemeBFVRNS_html"><div class="ttname"><a href="classlbcrypto_1_1SchemeBFVRNS.html">lbcrypto::SchemeBFVRNS</a></div><div class="ttdef"><b>Definition:</b> bfvrns-scheme.h:42</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PALISADE Lattice Crypto Library: src/core/include/math/bigintfxd/transformfxd-impl.h Source File</title>
+<title>PALISADE Lattice Crypto Library: src/core/include/math/hal/bigintfxd/transformfxd-impl.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -64,7 +64,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><a class="el" href="dir_8f49dd062eda24395df599c5385a3cb1.html">include</a></li><li class="navelem"><a class="el" href="dir_d7c8b2f75f79e8f5b9c6fe1181a954cc.html">math</a></li><li class="navelem"><a class="el" href="dir_19ac0bd6bedead29ae2428ce36a46fc8.html">bigintfxd</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><a class="el" href="dir_8f49dd062eda24395df599c5385a3cb1.html">include</a></li><li class="navelem"><a class="el" href="dir_d7c8b2f75f79e8f5b9c6fe1181a954cc.html">math</a></li><li class="navelem"><a class="el" href="dir_6a6c3dbb98709d63107c40580dce6a3a.html">hal</a></li><li class="navelem"><a class="el" href="dir_79e4e2abc00992993dc59958bf464205.html">bigintfxd</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -106,7 +106,7 @@ $(function() {
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="exception_8h.html">utils/exception.h</a>&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;utils/utilities.h&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;math/nbtheory.h&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;math/backend.h&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">// #include &quot;math/hal.h&quot;</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacebigintfxd.html">bigintfxd</a> {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
@@ -654,14 +654,14 @@ $(function() {
 <div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;    PreCompute(rootOfUnity, CycloOrder, modulus);</div>
 <div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;  }</div>
 <div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160; </div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(IntType) == <span class="keyword">typeid</span>(<a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>)) {</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;     <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a7825806e7388d566b0dabab48b879504">ForwardTransformToBitReverseInPlace</a>(</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;            m_rootOfUnityReverseTableByModulus[modulus],</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;            m_rootOfUnityPreconReverseTableByModulus[modulus], element);</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;  <span class="comment">// if (typeid(IntType) == typeid(NativeInteger)) {</span></div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;  <span class="comment">//    NumberTheoreticTransformFxd&lt;VecType&gt;().ForwardTransformToBitReverseInPlace(</span></div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;  <span class="comment">//           m_rootOfUnityReverseTableByModulus[modulus],</span></div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;  <span class="comment">//           m_rootOfUnityPreconReverseTableByModulus[modulus], element);</span></div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;  <span class="comment">// } else {</span></div>
 <div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;     <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a7825806e7388d566b0dabab48b879504">ForwardTransformToBitReverseInPlace</a>(</div>
 <div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;          m_rootOfUnityReverseTableByModulus[modulus], element);</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;  }</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;  <span class="comment">// }</span></div>
 <div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;}</div>
 <div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160; </div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> VecType&gt;</div>
@@ -691,14 +691,14 @@ $(function() {
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    PreCompute(rootOfUnity, CycloOrder, modulus);</div>
 <div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;  }</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160; </div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(IntType) == <span class="keyword">typeid</span>(<a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>)) {</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;    <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#ac3e9a116b060ec6f705ed16de43b0dc9">ForwardTransformToBitReverse</a>(</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;            element, m_rootOfUnityReverseTableByModulus[modulus],</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;            m_rootOfUnityPreconReverseTableByModulus[modulus], result);</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;  <span class="comment">// if (typeid(IntType) == typeid(NativeInteger)) {</span></div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;  <span class="comment">//   NumberTheoreticTransformFxd&lt;VecType&gt;().ForwardTransformToBitReverse(</span></div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;  <span class="comment">//           element, m_rootOfUnityReverseTableByModulus[modulus],</span></div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;  <span class="comment">//           m_rootOfUnityPreconReverseTableByModulus[modulus], result);</span></div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;  <span class="comment">// } else {</span></div>
 <div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;    <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#ac3e9a116b060ec6f705ed16de43b0dc9">ForwardTransformToBitReverse</a>(</div>
 <div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;              element, m_rootOfUnityReverseTableByModulus[modulus], result);</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;  }</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;  <span class="comment">// }</span></div>
 <div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160; </div>
 <div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;  <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;}</div>
@@ -731,17 +731,17 @@ $(function() {
 <div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;  }</div>
 <div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160; </div>
 <div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;  usint msb = <a class="code" href="namespacelbcrypto.html#ab722558e2a62942f1e07cd2fc5760e32">lbcrypto::GetMSB64</a>(CycloOrderHf - 1);</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(IntType) == <span class="keyword">typeid</span>(<a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>)) {</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;    <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a3d5cf2bc99d21b011cfe7a2f8af4e6c3">InverseTransformFromBitReverseInPlace</a>(</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;            m_rootOfUnityInverseReverseTableByModulus[modulus],</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;            m_rootOfUnityInversePreconReverseTableByModulus[modulus],</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;            m_cycloOrderInverseTableByModulus[modulus][msb],</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;            m_cycloOrderInversePreconTableByModulus[modulus][msb], element);</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;  <span class="comment">// if (typeid(IntType) == typeid(NativeInteger)) {</span></div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;  <span class="comment">//   NumberTheoreticTransformFxd&lt;VecType&gt;().InverseTransformFromBitReverseInPlace(</span></div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;  <span class="comment">//           m_rootOfUnityInverseReverseTableByModulus[modulus],</span></div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;  <span class="comment">//           m_rootOfUnityInversePreconReverseTableByModulus[modulus],</span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;  <span class="comment">//           m_cycloOrderInverseTableByModulus[modulus][msb],</span></div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;  <span class="comment">//           m_cycloOrderInversePreconTableByModulus[modulus][msb], element);</span></div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;  <span class="comment">// } else {</span></div>
 <div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a3d5cf2bc99d21b011cfe7a2f8af4e6c3">InverseTransformFromBitReverseInPlace</a>(</div>
 <div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;            m_rootOfUnityInverseReverseTableByModulus[modulus],</div>
 <div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;            m_cycloOrderInverseTableByModulus[modulus][msb], element);</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;  }</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;  <span class="comment">// }</span></div>
 <div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;}</div>
 <div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160; </div>
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> VecType&gt;</div>
@@ -778,17 +778,17 @@ $(function() {
 <div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;  }</div>
 <div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
 <div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;  usint msb = <a class="code" href="namespacelbcrypto.html#ab722558e2a62942f1e07cd2fc5760e32">lbcrypto::GetMSB64</a>(CycloOrderHf - 1);</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(IntType) == <span class="keyword">typeid</span>(<a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>)) {</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a3d5cf2bc99d21b011cfe7a2f8af4e6c3">InverseTransformFromBitReverseInPlace</a>(</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;            m_rootOfUnityInverseReverseTableByModulus[modulus],</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;            m_rootOfUnityInversePreconReverseTableByModulus[modulus],</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            m_cycloOrderInverseTableByModulus[modulus][msb],</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            m_cycloOrderInversePreconTableByModulus[modulus][msb], result);</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;  <span class="comment">// if (typeid(IntType) == typeid(NativeInteger)) {</span></div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;  <span class="comment">//   NumberTheoreticTransformFxd&lt;VecType&gt;().InverseTransformFromBitReverseInPlace(</span></div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;  <span class="comment">//           m_rootOfUnityInverseReverseTableByModulus[modulus],</span></div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;  <span class="comment">//           m_rootOfUnityInversePreconReverseTableByModulus[modulus],</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;  <span class="comment">//           m_cycloOrderInverseTableByModulus[modulus][msb],</span></div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;  <span class="comment">//           m_cycloOrderInversePreconTableByModulus[modulus][msb], result);</span></div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;  <span class="comment">// } else {</span></div>
 <div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    <a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">NumberTheoreticTransformFxd&lt;VecType&gt;</a>().<a class="code" href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a3d5cf2bc99d21b011cfe7a2f8af4e6c3">InverseTransformFromBitReverseInPlace</a>(</div>
 <div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;              m_rootOfUnityInverseReverseTableByModulus[modulus],</div>
 <div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;              m_cycloOrderInverseTableByModulus[modulus][msb], result);</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;  }</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;  <span class="comment">// }</span></div>
 <div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
 <div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;  <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;}</div>
@@ -829,35 +829,35 @@ $(function() {
 <div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;      }</div>
 <div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;      m_cycloOrderInverseTableByModulus[modulus] = TableCOI;</div>
 <div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160; </div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">typeid</span>(IntType) == <span class="keyword">typeid</span>(<a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>)) {</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;        <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> nativeModulus = modulus.<a class="code" href="classbigintnat_1_1NativeIntegerT.html#a5daa82e23dad7d6c4a2e96bf0c6f6a62">ConvertToInt</a>();</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;        VecType preconTable(CycloOrderHf, nativeModulus);</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;        VecType preconTableI(CycloOrderHf, nativeModulus);</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;      <span class="comment">// if (typeid(IntType) == typeid(NativeInteger)) {</span></div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;      <span class="comment">//   NativeInteger nativeModulus = modulus.ConvertToInt();</span></div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;      <span class="comment">//   VecType preconTable(CycloOrderHf, nativeModulus);</span></div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;      <span class="comment">//   VecType preconTableI(CycloOrderHf, nativeModulus);</span></div>
 <div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160; </div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;        <span class="keywordflow">for</span> (usint i = 0; i &lt; CycloOrderHf; i++) {</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;          preconTable[i] =</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;              <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>(</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;                  m_rootOfUnityReverseTableByModulus[modulus][i].ConvertToInt())</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;                  .<a class="code" href="classbigintnat_1_1NativeIntegerT.html#af084c13916803ac7cf7a0bbc7dac277c">PrepModMulConst</a>(nativeModulus);</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;          preconTableI[i] =</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;              <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>(</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;                  m_rootOfUnityInverseReverseTableByModulus[modulus][i]</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;                      .ConvertToInt())</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;                  .<a class="code" href="classbigintnat_1_1NativeIntegerT.html#af084c13916803ac7cf7a0bbc7dac277c">PrepModMulConst</a>(nativeModulus);</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;        }</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;      <span class="comment">//   for (usint i = 0; i &lt; CycloOrderHf; i++) {</span></div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;      <span class="comment">//     preconTable[i] =</span></div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;      <span class="comment">//         NativeInteger(</span></div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;      <span class="comment">//             m_rootOfUnityReverseTableByModulus[modulus][i].ConvertToInt())</span></div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;      <span class="comment">//             .PrepModMulConst(nativeModulus);</span></div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;      <span class="comment">//     preconTableI[i] =</span></div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;      <span class="comment">//         NativeInteger(</span></div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;      <span class="comment">//             m_rootOfUnityInverseReverseTableByModulus[modulus][i]</span></div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;      <span class="comment">//                 .ConvertToInt())</span></div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;      <span class="comment">//             .PrepModMulConst(nativeModulus);</span></div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;      <span class="comment">//   }</span></div>
 <div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160; </div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;        VecType preconTableCOI(msb + 1, nativeModulus);</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;        <span class="keywordflow">for</span> (usint i = 0; i &lt; msb + 1; i++) {</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;          preconTableCOI[i] =</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;              <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a>(</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;                  m_cycloOrderInverseTableByModulus[modulus][i].ConvertToInt())</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;                  .<a class="code" href="classbigintnat_1_1NativeIntegerT.html#af084c13916803ac7cf7a0bbc7dac277c">PrepModMulConst</a>(nativeModulus);</div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;        }</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;      <span class="comment">//   VecType preconTableCOI(msb + 1, nativeModulus);</span></div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;      <span class="comment">//   for (usint i = 0; i &lt; msb + 1; i++) {</span></div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;      <span class="comment">//     preconTableCOI[i] =</span></div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;      <span class="comment">//         NativeInteger(</span></div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;      <span class="comment">//             m_cycloOrderInverseTableByModulus[modulus][i].ConvertToInt())</span></div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;      <span class="comment">//             .PrepModMulConst(nativeModulus);</span></div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;      <span class="comment">//   }</span></div>
 <div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;        m_rootOfUnityPreconReverseTableByModulus[modulus] = preconTable;</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;        m_rootOfUnityInversePreconReverseTableByModulus[modulus] = preconTableI;</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;        m_cycloOrderInversePreconTableByModulus[modulus] = preconTableCOI;</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      }</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;      <span class="comment">//   m_rootOfUnityPreconReverseTableByModulus[modulus] = preconTable;</span></div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;      <span class="comment">//   m_rootOfUnityInversePreconReverseTableByModulus[modulus] = preconTableI;</span></div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      <span class="comment">//   m_cycloOrderInversePreconTableByModulus[modulus] = preconTableCOI;</span></div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;      <span class="comment">// }</span></div>
 <div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;    }</div>
 <div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;  }</div>
 <div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;}</div>
@@ -1442,26 +1442,24 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html_a7955e41d785272c1bbb54542a21c0bc4"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a7955e41d785272c1bbb54542a21c0bc4">bigintfxd::NumberTheoreticTransformFxd::ForwardTransformIterative</a></div><div class="ttdeci">void ForwardTransformIterative(const VecType &amp;element, const VecType &amp;rootOfUnityTable, VecType *result)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:115</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html_a07da56614280ce4ac0950b5aa3a0e577"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html#a07da56614280ce4ac0950b5aa3a0e577">bigintfxd::ChineseRemainderTransformArbFxd::SetCylotomicPolynomial</a></div><div class="ttdeci">void SetCylotomicPolynomial(const VecType &amp;poly, const IntType &amp;mod)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:1006</div></div>
-<div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">bigintfxd::NumberTheoreticTransformFxd</a></div><div class="ttdoc">Number Theoretic Transform implementation.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:44</div></div>
+<div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html">bigintfxd::NumberTheoreticTransformFxd</a></div><div class="ttdoc">Number Theoretic Transform implementation.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:47</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a3f14482b11b533db0d2b130e85faec35"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a3f14482b11b533db0d2b130e85faec35">bigintfxd::BluesteinFFTFxd::PreComputeDefaultNTTModulusRoot</a></div><div class="ttdeci">void PreComputeDefaultNTTModulusRoot(usint cycloOrder, const IntType &amp;modulus)</div><div class="ttdoc">Precomputes the modulus needed for NTT operation in forward Bluestein transform.</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:822</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html_ab61e9d47b5f1403c5041098e2f19f10e"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html#ab61e9d47b5f1403c5041098e2f19f10e">bigintfxd::ChineseRemainderTransformArbFxd::InverseTransform</a></div><div class="ttdeci">VecType InverseTransform(const VecType &amp;element, const IntType &amp;root, const IntType &amp;bigMod, const IntType &amp;bigRoot, const usint cycloOrder)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:1180</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a9149bde7f4409633badb579697c0fcde"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a9149bde7f4409633badb579697c0fcde">bigintfxd::BluesteinFFTFxd::PadZeros</a></div><div class="ttdeci">VecType PadZeros(const VecType &amp;a, const usint finalSize)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:969</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_ab7a495350aadc02bfd93ccf4f8aedb4c"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#ab7a495350aadc02bfd93ccf4f8aedb4c">bigintfxd::ChineseRemainderTransformFTTFxd::PreCompute</a></div><div class="ttdeci">void PreCompute(const IntType &amp;rootOfUnity, const usint CycloOrder, const IntType &amp;modulus)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:723</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a884d7c680e937de29a3f4c24382e8d12"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a884d7c680e937de29a3f4c24382e8d12">bigintfxd::BluesteinFFTFxd::ForwardTransform</a></div><div class="ttdeci">VecType ForwardTransform(const VecType &amp;element, const IntType &amp;root, const usint cycloOrder)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:915</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html_a98b8621d44cfb9df51154396df31b02a"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html#a98b8621d44cfb9df51154396df31b02a">bigintfxd::ChineseRemainderTransformArbFxd::PreCompute</a></div><div class="ttdeci">void PreCompute(const usint cyclotoOrder, const IntType &amp;modulus)</div><div class="ttdoc">Precomputes the root of unity and modulus needed for NTT operation in forward Bluestein transform.</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:1012</div></div>
-<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_a1e4e1ad8028aeaea4692b2d1dd365a37"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#a1e4e1ad8028aeaea4692b2d1dd365a37">bigintfxd::ChineseRemainderTransformFTTFxd::m_cycloOrderInverseTableByModulus</a></div><div class="ttdeci">static std::map&lt; IntType, VecType &gt; m_cycloOrderInverseTableByModulus</div><div class="ttdef"><b>Definition:</b> transformfxd.h:348</div></div>
-<div class="ttc" id="anamespacelbcrypto_html_a3c0bee71d2fdd0aeb2b4e300a6da8650"><div class="ttname"><a href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">lbcrypto::IsPowerOfTwo</a></div><div class="ttdeci">bool IsPowerOfTwo(usint Input)</div><div class="ttdef"><b>Definition:</b> utilities.h:71</div></div>
-<div class="ttc" id="anamespacelbcrypto_html_a51f165790e4eb0b529f7d6b6f0213101"><div class="ttname"><a href="namespacelbcrypto.html#a51f165790e4eb0b529f7d6b6f0213101">lbcrypto::GetTotient</a></div><div class="ttdeci">uint64_t GetTotient(const uint64_t n)</div><div class="ttdef"><b>Definition:</b> nbtheory2.cpp:87</div></div>
+<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_a1e4e1ad8028aeaea4692b2d1dd365a37"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#a1e4e1ad8028aeaea4692b2d1dd365a37">bigintfxd::ChineseRemainderTransformFTTFxd::m_cycloOrderInverseTableByModulus</a></div><div class="ttdeci">static std::map&lt; IntType, VecType &gt; m_cycloOrderInverseTableByModulus</div><div class="ttdef"><b>Definition:</b> transformfxd.h:351</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_a3c0bee71d2fdd0aeb2b4e300a6da8650"><div class="ttname"><a href="namespacelbcrypto.html#a3c0bee71d2fdd0aeb2b4e300a6da8650">lbcrypto::IsPowerOfTwo</a></div><div class="ttdeci">bool IsPowerOfTwo(usint Input)</div><div class="ttdef"><b>Definition:</b> utilities.h:73</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_a51f165790e4eb0b529f7d6b6f0213101"><div class="ttname"><a href="namespacelbcrypto.html#a51f165790e4eb0b529f7d6b6f0213101">lbcrypto::GetTotient</a></div><div class="ttdeci">uint64_t GetTotient(const uint64_t n)</div><div class="ttdef"><b>Definition:</b> nbtheory2.cpp:88</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html_aba607dc5074122dab9af81e269b23205"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html#aba607dc5074122dab9af81e269b23205">bigintfxd::ChineseRemainderTransformArbFxd::ForwardTransform</a></div><div class="ttdeci">VecType ForwardTransform(const VecType &amp;element, const IntType &amp;root, const IntType &amp;bigMod, const IntType &amp;bigRoot, const usint cycloOrder)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:1136</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a5c0f51cdc957c4de7e16368b51d8e914"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a5c0f51cdc957c4de7e16368b51d8e914">bigintfxd::BluesteinFFTFxd::PreComputeRootTableForNTT</a></div><div class="ttdeci">void PreComputeRootTableForNTT(usint cycloOrder, const ModulusRoot&lt; IntType &gt; &amp;nttModulusRoot)</div><div class="ttdoc">Precomputes the root of unity table needed for NTT operation in forward Bluestein transform.</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:835</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html_a5daa82e23dad7d6c4a2e96bf0c6f6a62"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html#a5daa82e23dad7d6c4a2e96bf0c6f6a62">bigintnat::NativeIntegerT::ConvertToInt</a></div><div class="ttdeci">OutputType ConvertToInt() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1886</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_ae4f12ec670bb5534e934f289133aeb44"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#ae4f12ec670bb5534e934f289133aeb44">bigintfxd::ChineseRemainderTransformFTTFxd::ForwardTransformToBitReverse</a></div><div class="ttdeci">void ForwardTransformToBitReverse(const VecType &amp;element, const IntType &amp;rootOfUnity, const usint CycloOrder, VecType *result)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:594</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_a2d2e2c14d591e0fd3cb7f1f4643576bf"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#a2d2e2c14d591e0fd3cb7f1f4643576bf">bigintfxd::ChineseRemainderTransformFTTFxd::ForwardTransformToBitReverseInPlace</a></div><div class="ttdeci">void ForwardTransformToBitReverseInPlace(const IntType &amp;rootOfUnity, const usint CycloOrder, VecType *element)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:559</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html_affada3e7eab14018c1e3ef08a4942aad"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html#affada3e7eab14018c1e3ef08a4942aad">bigintfxd::ChineseRemainderTransformArbFxd::SetPreComputedNTTModulus</a></div><div class="ttdeci">void SetPreComputedNTTModulus(usint cyclotoOrder, const IntType &amp;modulus, const IntType &amp;nttMod, const IntType &amp;nttRoot)</div><div class="ttdoc">Sets the precomputed root of unity and modulus needed for NTT operation in forward Bluestein transfor...</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:1018</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_a384c302eb9a1109581fcca3d07fb333c"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#a384c302eb9a1109581fcca3d07fb333c">bigintfxd::ChineseRemainderTransformFTTFxd::InverseTransformFromBitReverse</a></div><div class="ttdeci">void InverseTransformFromBitReverse(const VecType &amp;element, const IntType &amp;rootOfUnity, const usint CycloOrder, VecType *result)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:674</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a10469692348abd6f7822e450e98d6ab7"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a10469692348abd6f7822e450e98d6ab7">bigintfxd::BluesteinFFTFxd::PreComputePowers</a></div><div class="ttdeci">void PreComputePowers(usint cycloOrder, const ModulusRoot&lt; IntType &gt; &amp;modulusRoot)</div><div class="ttdoc">precomputes the powers of root used in forward Bluestein transform.</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:866</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html_af084c13916803ac7cf7a0bbc7dac277c"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html#af084c13916803ac7cf7a0bbc7dac277c">bigintnat::NativeIntegerT::PrepModMulConst</a></div><div class="ttdeci">NativeIntegerT PrepModMulConst(const NativeIntegerT &amp;modulus, typename std::enable_if&lt;!std::is_same&lt; T, DNativeInt &gt;::value, bool &gt;::type=true) const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1624</div></div>
-<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html">bigintfxd::ChineseRemainderTransformFTTFxd</a></div><div class="ttdoc">Golden Chinese Remainder Transform FFT implementation.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:233</div></div>
+<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html">bigintfxd::ChineseRemainderTransformFTTFxd</a></div><div class="ttdoc">Golden Chinese Remainder Transform FFT implementation.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:236</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_ab722558e2a62942f1e07cd2fc5760e32"><div class="ttname"><a href="namespacelbcrypto.html#ab722558e2a62942f1e07cd2fc5760e32">lbcrypto::GetMSB64</a></div><div class="ttdeci">usint GetMSB64(uint64_t x)</div><div class="ttdef"><b>Definition:</b> nbtheory.h:221</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1math__error_html"><div class="ttname"><a href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:113</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html_ac3e9a116b060ec6f705ed16de43b0dc9"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#ac3e9a116b060ec6f705ed16de43b0dc9">bigintfxd::NumberTheoreticTransformFxd::ForwardTransformToBitReverse</a></div><div class="ttdeci">void ForwardTransformToBitReverse(const VecType &amp;element, const VecType &amp;rootOfUnityTable, VecType *result)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:235</div></div>
@@ -1470,8 +1468,8 @@ $(function() {
 <div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html_a83b58f6509eb00d947865fa3428dfb22"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a83b58f6509eb00d947865fa3428dfb22">bigintfxd::NumberTheoreticTransformFxd::InverseTransformFromBitReverse</a></div><div class="ttdeci">void InverseTransformFromBitReverse(const VecType &amp;element, const VecType &amp;rootOfUnityInverseTable, const IntType &amp;cycloOrderInv, VecType *result)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:455</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html_a3d5cf2bc99d21b011cfe7a2f8af4e6c3"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a3d5cf2bc99d21b011cfe7a2f8af4e6c3">bigintfxd::NumberTheoreticTransformFxd::InverseTransformFromBitReverseInPlace</a></div><div class="ttdeci">void InverseTransformFromBitReverseInPlace(const VecType &amp;rootOfUnityInverseTable, const IntType &amp;cycloOrderInv, VecType *element)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:401</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a7afd6ec8cd10a7f38e3f8cce2a24f046"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a7afd6ec8cd10a7f38e3f8cce2a24f046">bigintfxd::BluesteinFFTFxd::PreComputeRBTable</a></div><div class="ttdeci">void PreComputeRBTable(usint cycloOrder, const ModulusRootPair&lt; IntType &gt; &amp;modulusRootPair)</div><div class="ttdoc">precomputes the NTT transform of the power of root of unity used in the Bluestein transform.</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:882</div></div>
-<div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html">bigintfxd::BluesteinFFTFxd</a></div><div class="ttdoc">Bluestein Fast Fourier Transform implementation.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:378</div></div>
-<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_a1a21a0f33e3ac50168399fd712f390c8"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#a1a21a0f33e3ac50168399fd712f390c8">bigintfxd::ChineseRemainderTransformFTTFxd::m_rootOfUnityReverseTableByModulus</a></div><div class="ttdeci">static std::map&lt; IntType, VecType &gt; m_rootOfUnityReverseTableByModulus</div><div class="ttdoc">map to store the forward roots of Unity for NTT, with bits reversed, with modulus as a key (aka twidd...</div><div class="ttdef"><b>Definition:</b> transformfxd.h:355</div></div>
+<div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html">bigintfxd::BluesteinFFTFxd</a></div><div class="ttdoc">Bluestein Fast Fourier Transform implementation.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:381</div></div>
+<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformFTTFxd_html_a1a21a0f33e3ac50168399fd712f390c8"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html#a1a21a0f33e3ac50168399fd712f390c8">bigintfxd::ChineseRemainderTransformFTTFxd::m_rootOfUnityReverseTableByModulus</a></div><div class="ttdeci">static std::map&lt; IntType, VecType &gt; m_rootOfUnityReverseTableByModulus</div><div class="ttdoc">map to store the forward roots of Unity for NTT, with bits reversed, with modulus as a key (aka twidd...</div><div class="ttdef"><b>Definition:</b> transformfxd.h:358</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_af625bbd0b9748bdce83ead696487955a"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#af625bbd0b9748bdce83ead696487955a">bigintfxd::BluesteinFFTFxd::Resize</a></div><div class="ttdeci">VecType Resize(const VecType &amp;a, usint lo, usint hi)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:986</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_a61b61fb7a46031802ad47644177e35d4"><div class="ttname"><a href="namespacelbcrypto.html#a61b61fb7a46031802ad47644177e35d4">lbcrypto::GetTotientList</a></div><div class="ttdeci">std::vector&lt; IntType &gt; GetTotientList(const IntType &amp;n)</div><div class="ttdef"><b>Definition:</b> nbtheory.cpp:571</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1NumberTheoreticTransformFxd_html_a60676060f673afc69cd1e019d67ea327"><div class="ttname"><a href="classbigintfxd_1_1NumberTheoreticTransformFxd.html#a60676060f673afc69cd1e019d67ea327">bigintfxd::NumberTheoreticTransformFxd::InverseTransformIterative</a></div><div class="ttdeci">void InverseTransformIterative(const VecType &amp;element, const VecType &amp;rootOfUnityInverseTable, VecType *result)</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:173</div></div>
@@ -1480,12 +1478,11 @@ $(function() {
 <div class="ttc" id="aexception_8h_html"><div class="ttname"><a href="exception_8h.html">exception.h</a></div></div>
 <div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html_ab113eed466bda88b6cf9c074e852494e"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html#ab113eed466bda88b6cf9c074e852494e">bigintfxd::ChineseRemainderTransformArbFxd::SetPreComputedNTTDivisionModulus</a></div><div class="ttdeci">void SetPreComputedNTTDivisionModulus(usint cyclotoOrder, const IntType &amp;modulus, const IntType &amp;nttMod, const IntType &amp;nttRoot)</div><div class="ttdoc">Sets the precomputed root of unity and modulus needed for NTT operation and computes m_cyclotomicPoly...</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:1027</div></div>
 <div class="ttc" id="anamespacebigintfxd_html"><div class="ttname"><a href="namespacebigintfxd.html">bigintfxd</a></div></div>
-<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html">bigintfxd::ChineseRemainderTransformArbFxd</a></div><div class="ttdoc">Chinese Remainder Transform for arbitrary cyclotomics.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:486</div></div>
+<div class="ttc" id="aclassbigintfxd_1_1ChineseRemainderTransformArbFxd_html"><div class="ttname"><a href="classbigintfxd_1_1ChineseRemainderTransformArbFxd.html">bigintfxd::ChineseRemainderTransformArbFxd</a></div><div class="ttdoc">Chinese Remainder Transform for arbitrary cyclotomics.</div><div class="ttdef"><b>Definition:</b> transformfxd.h:489</div></div>
 <div class="ttc" id="aclassbigintfxd_1_1BluesteinFFTFxd_html_a7b4780e3499268ab2c7905247abcd2b1"><div class="ttname"><a href="classbigintfxd_1_1BluesteinFFTFxd.html#a7b4780e3499268ab2c7905247abcd2b1">bigintfxd::BluesteinFFTFxd::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdef"><b>Definition:</b> transformfxd-impl.h:997</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html">bigintnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> backend.h:60</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

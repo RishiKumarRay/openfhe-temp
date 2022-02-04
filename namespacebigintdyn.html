@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -165,10 +165,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:aabdad51d88687038ca8c425453dc58df"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classbigintdyn_1_1ubint.html">ubint</a>&lt; expdtype &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigintdyn.html#aabdad51d88687038ca8c425453dc58df">xubint</a></td></tr>
-<tr class="separator:aabdad51d88687038ca8c425453dc58df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac694ae276a026526ab13a595349beb86"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classbigintdyn_1_1mubintvec.html">mubintvec</a>&lt; <a class="el" href="namespacebigintdyn.html#aabdad51d88687038ca8c425453dc58df">xubint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigintdyn.html#ac694ae276a026526ab13a595349beb86">xmubintvec</a></td></tr>
-<tr class="separator:ac694ae276a026526ab13a595349beb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee45b8c9284acfc2d85d3b0e8cb0e4e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigintdyn.html#a9ee45b8c9284acfc2d85d3b0e8cb0e4e">xmubintvec</a> = <a class="el" href="classbigintdyn_1_1mubintvec.html">mubintvec</a>&lt; <a class="el" href="classbigintdyn_1_1ubint.html">BigInteger</a> &gt;</td></tr>
+<tr class="separator:a9ee45b8c9284acfc2d85d3b0e8cb0e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6491b86f2e80e493d25e9b0da4d4311f"><td class="memItemLeft" align="right" valign="top"><a id="a6491b86f2e80e493d25e9b0da4d4311f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>BigVector</b> = <a class="el" href="namespacebigintdyn.html#a9ee45b8c9284acfc2d85d3b0e8cb0e4e">xmubintvec</a></td></tr>
+<tr class="separator:a6491b86f2e80e493d25e9b0da4d4311f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dd01053a021b3afb63b0d4d8dd61712"><td class="memTemplParams" colspan="2"><a id="a2dd01053a021b3afb63b0d4d8dd61712"></a>
 template&lt;typename IntType &gt; </td></tr>
 <tr class="memitem:a2dd01053a021b3afb63b0d4d8dd61712"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>ModulusRoot</b> = std::pair&lt; IntType, IntType &gt;</td></tr>
@@ -177,6 +178,11 @@ template&lt;typename IntType &gt; </td></tr>
 template&lt;typename IntType &gt; </td></tr>
 <tr class="memitem:a0205a06ca8d7e5823e7bfd6803015137"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>ModulusRootPair</b> = std::pair&lt; ModulusRoot&lt; IntType &gt;, ModulusRoot&lt; IntType &gt; &gt;</td></tr>
 <tr class="separator:a0205a06ca8d7e5823e7bfd6803015137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51b5969ee4ab6c50fc9dbe2e3bb3cec"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebigintdyn.html#aa51b5969ee4ab6c50fc9dbe2e3bb3cec">xubint</a> = <a class="el" href="classbigintdyn_1_1ubint.html">ubint</a>&lt; expdtype &gt;</td></tr>
+<tr class="separator:aa51b5969ee4ab6c50fc9dbe2e3bb3cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964fac332965d17e80518b600779fdc0"><td class="memItemLeft" align="right" valign="top"><a id="a964fac332965d17e80518b600779fdc0"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>BigInteger</b> = <a class="el" href="namespacebigintdyn.html#aa51b5969ee4ab6c50fc9dbe2e3bb3cec">xubint</a></td></tr>
+<tr class="separator:a964fac332965d17e80518b600779fdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -204,14 +210,14 @@ Variables</h2></td></tr>
 <div class="textblock"><p>The namespace of bigintdyn</p>
 <p>The namespace of this code </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="ac694ae276a026526ab13a595349beb86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac694ae276a026526ab13a595349beb86">&#9670;&nbsp;</a></span>xmubintvec</h2>
+<a id="a9ee45b8c9284acfc2d85d3b0e8cb0e4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ee45b8c9284acfc2d85d3b0e8cb0e4e">&#9670;&nbsp;</a></span>xmubintvec</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classbigintdyn_1_1mubintvec.html">mubintvec</a>&lt;<a class="el" href="namespacebigintdyn.html#aabdad51d88687038ca8c425453dc58df">xubint</a>&gt; <a class="el" href="namespacebigintdyn.html#ac694ae276a026526ab13a595349beb86">bigintdyn::xmubintvec</a></td>
+          <td class="memname">using <a class="el" href="namespacebigintdyn.html#a9ee45b8c9284acfc2d85d3b0e8cb0e4e">bigintdyn::xmubintvec</a> = typedef <a class="el" href="classbigintdyn_1_1mubintvec.html">mubintvec</a>&lt;<a class="el" href="classbigintdyn_1_1ubint.html">BigInteger</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -219,14 +225,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aabdad51d88687038ca8c425453dc58df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabdad51d88687038ca8c425453dc58df">&#9670;&nbsp;</a></span>xubint</h2>
+<a id="aa51b5969ee4ab6c50fc9dbe2e3bb3cec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa51b5969ee4ab6c50fc9dbe2e3bb3cec">&#9670;&nbsp;</a></span>xubint</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classbigintdyn_1_1ubint.html">ubint</a>&lt;expdtype&gt; <a class="el" href="namespacebigintdyn.html#aabdad51d88687038ca8c425453dc58df">bigintdyn::xubint</a></td>
+          <td class="memname">using <a class="el" href="namespacebigintdyn.html#aa51b5969ee4ab6c50fc9dbe2e3bb3cec">bigintdyn::xubint</a> = typedef <a class="el" href="classbigintdyn_1_1ubint.html">ubint</a>&lt;expdtype&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -256,7 +262,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

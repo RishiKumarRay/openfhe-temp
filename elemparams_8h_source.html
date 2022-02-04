@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -100,7 +100,7 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;math/backend.h&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;math/hal.h&quot;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;math/nbtheory.h&quot;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;utils/inttypes.h&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;utils/serializable.h&quot;</span></div>
@@ -244,7 +244,7 @@ $(function() {
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_acc749399f86770fe57d78609221e4749"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#acc749399f86770fe57d78609221e4749">lbcrypto::ElemParams::operator=</a></div><div class="ttdeci">const ElemParams &amp; operator=(const ElemParams &amp;rhs)</div><div class="ttdoc">Assignment operator using assignment operations of wrapped elements.</div><div class="ttdef"><b>Definition:</b> elemparams.h:103</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_a2db48a5ff9fc12e081e0d64566d3e589"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#a2db48a5ff9fc12e081e0d64566d3e589">lbcrypto::ElemParams::GetModulus</a></div><div class="ttdeci">const IntegerType &amp; GetModulus() const</div><div class="ttdoc">Simple getter method for the ciphertext modulus, not the big ciphertext modulus.</div><div class="ttdef"><b>Definition:</b> elemparams.h:146</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_a22e9b184fae616998e732346bf3f68f3"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#a22e9b184fae616998e732346bf3f68f3">lbcrypto::ElemParams::GetRootOfUnity</a></div><div class="ttdeci">const IntegerType &amp; GetRootOfUnity() const</div><div class="ttdoc">Simple getter method for the root of unity, not the big root of unity.</div><div class="ttdef"><b>Definition:</b> elemparams.h:160</div></div>
-<div class="ttc" id="anamespacelbcrypto_html_a51f165790e4eb0b529f7d6b6f0213101"><div class="ttname"><a href="namespacelbcrypto.html#a51f165790e4eb0b529f7d6b6f0213101">lbcrypto::GetTotient</a></div><div class="ttdeci">uint64_t GetTotient(const uint64_t n)</div><div class="ttdef"><b>Definition:</b> nbtheory2.cpp:87</div></div>
+<div class="ttc" id="anamespacelbcrypto_html_a51f165790e4eb0b529f7d6b6f0213101"><div class="ttname"><a href="namespacelbcrypto.html#a51f165790e4eb0b529f7d6b6f0213101">lbcrypto::GetTotient</a></div><div class="ttdeci">uint64_t GetTotient(const uint64_t n)</div><div class="ttdef"><b>Definition:</b> nbtheory2.cpp:88</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_a530aa9e3e749dbc13544fbf2997025e4"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#a530aa9e3e749dbc13544fbf2997025e4">lbcrypto::ElemParams::operator==</a></div><div class="ttdeci">virtual bool operator==(const ElemParams&lt; IntegerType &gt; &amp;other) const</div><div class="ttdoc">Equality operator that tests the equality of all wrapped values.</div><div class="ttdef"><b>Definition:</b> elemparams.h:183</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_a2335c97ff28021cf403b2d140127647e"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#a2335c97ff28021cf403b2d140127647e">lbcrypto::ElemParams::~ElemParams</a></div><div class="ttdeci">virtual ~ElemParams()</div><div class="ttdoc">Simple destructor method.</div><div class="ttdef"><b>Definition:</b> elemparams.h:118</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_aa10e419bf06edf9b0dcda97819298d02"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#aa10e419bf06edf9b0dcda97819298d02">lbcrypto::ElemParams::GetCyclotomicOrder</a></div><div class="ttdeci">usint GetCyclotomicOrder() const</div><div class="ttdoc">Simple getter method for cyclotomic order.</div><div class="ttdef"><b>Definition:</b> elemparams.h:124</div></div>
@@ -262,7 +262,7 @@ $(function() {
 <div class="ttc" id="aclasslbcrypto_1_1ElemParams_html_a58da871a25203d941acab03649927be6"><div class="ttname"><a href="classlbcrypto_1_1ElemParams.html#a58da871a25203d941acab03649927be6">lbcrypto::ElemParams::doprint</a></div><div class="ttdeci">virtual std::ostream &amp; doprint(std::ostream &amp;out) const</div><div class="ttdoc">Pretty print operator for the ElemParams type.</div><div class="ttdef"><b>Definition:</b> elemparams.h:246</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

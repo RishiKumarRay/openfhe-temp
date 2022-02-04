@@ -1,4 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,48,32"/>
-<area shape="rect" id="node2" href="$classxlist.html" title=" " alt="" coords="96,5,229,32"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1SchemeBase.html" title=" " alt="" coords="5,49,172,90"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1SchemeRNS.html" title="Abstract interface class for LBC PRE algorithms." alt="" coords="220,56,383,83"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1SchemeBFVRNS.html" title=" " alt="" coords="435,5,623,32"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1SchemeBGVRNS.html" title=" " alt="" coords="434,56,625,83"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1SchemeCKKSRNS.html" title=" " alt="" coords="431,107,628,133"/>
 </map>

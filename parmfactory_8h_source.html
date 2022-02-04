@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -103,12 +103,12 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;math/backend.h&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;math/hal.h&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;math/distrgen.h&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;utils/inttypes.h&quot;</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;lattice/backend.h&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &quot;lattice/lat-hal.h&quot;</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
@@ -127,7 +127,7 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  std::vector&lt;NativeInteger&gt; moduli(numOfTower);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  std::vector&lt;NativeInteger&gt; rootsOfUnity(numOfTower);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> q = FirstPrime&lt;NativeInteger&gt;(pbits, m);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> q = FirstPrime&lt;NativeInteger&gt;(pbits, m);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  I modulus(1);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  usint j = 0;</div>
@@ -136,7 +136,7 @@ $(function() {
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">for</span> (;;) {</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    moduli[j] = q;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    rootsOfUnity[j] = <a class="code" href="namespacelbcrypto.html#ab64c6376dae07b23fddf8f29fde17365">RootOfUnity</a>(m, q);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    modulus = modulus * I(q.<a class="code" href="classbigintnat_1_1NativeIntegerT.html#a5daa82e23dad7d6c4a2e96bf0c6f6a62">ConvertToInt</a>());</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    modulus = modulus * I(q.<a class="code" href="classintnat_1_1NativeIntegerT.html#ae2ec6368c95ecdde9e4691c1790091ac">ConvertToInt</a>());</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    DEBUG(<span class="stringliteral">&quot;j &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; modulus &quot;</span> &lt;&lt; q &lt;&lt; <span class="stringliteral">&quot; rou &quot;</span> &lt;&lt; rootsOfUnity[j]);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">if</span> (++j == numOfTower) <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
@@ -151,14 +151,14 @@ $(function() {
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_CORE_LIB_UTILS_PARMFACTORY_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html_a5daa82e23dad7d6c4a2e96bf0c6f6a62"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html#a5daa82e23dad7d6c4a2e96bf0c6f6a62">bigintnat::NativeIntegerT::ConvertToInt</a></div><div class="ttdeci">OutputType ConvertToInt() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1886</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html_ae2ec6368c95ecdde9e4691c1790091ac"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html#ae2ec6368c95ecdde9e4691c1790091ac">intnat::NativeIntegerT::ConvertToInt</a></div><div class="ttdeci">OutputType ConvertToInt() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1868</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html">intnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> ubintnat.h:79</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1math__error_html"><div class="ttname"><a href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:113</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_a3ebe688fe684e49623f99078f9d8dbc7"><div class="ttname"><a href="namespacelbcrypto.html#a3ebe688fe684e49623f99078f9d8dbc7">lbcrypto::NextPrime</a></div><div class="ttdeci">IntType NextPrime(const IntType &amp;q, uint64_t cyclotomicOrder)</div><div class="ttdef"><b>Definition:</b> nbtheory.cpp:536</div></div>
 <div class="ttc" id="anamespacelbcrypto_html_ab64c6376dae07b23fddf8f29fde17365"><div class="ttname"><a href="namespacelbcrypto.html#ab64c6376dae07b23fddf8f29fde17365">lbcrypto::RootOfUnity</a></div><div class="ttdeci">IntType RootOfUnity(usint m, const IntType &amp;modulo)</div><div class="ttdef"><b>Definition:</b> nbtheory.cpp:270</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html">bigintnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> backend.h:60</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

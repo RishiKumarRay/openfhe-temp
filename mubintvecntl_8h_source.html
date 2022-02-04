@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PALISADE Lattice Crypto Library: src/core/include/math/bigintntl/mubintvecntl.h Source File</title>
+<title>PALISADE Lattice Crypto Library: src/core/include/math/hal/bigintntl/mubintvecntl.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -64,7 +64,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><a class="el" href="dir_8f49dd062eda24395df599c5385a3cb1.html">include</a></li><li class="navelem"><a class="el" href="dir_d7c8b2f75f79e8f5b9c6fe1181a954cc.html">math</a></li><li class="navelem"><a class="el" href="dir_71a55a7f02d4dd8f700707ebcf49bf52.html">bigintntl</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><a class="el" href="dir_8f49dd062eda24395df599c5385a3cb1.html">include</a></li><li class="navelem"><a class="el" href="dir_d7c8b2f75f79e8f5b9c6fe1181a954cc.html">math</a></li><li class="navelem"><a class="el" href="dir_6a6c3dbb98709d63107c40580dce6a3a.html">hal</a></li><li class="navelem"><a class="el" href="dir_66b2bd2b8863cf8d6a0cdd432d738a19.html">bigintntl</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -72,558 +72,567 @@ $(function() {
 <div class="title">mubintvecntl.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// @file mubintvecntl.h This file contains mgmpintvec, a &lt;vector&gt; of gmpint,</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// with associated math operators</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// @author TPOC: contact@palisade-crypto.org</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// @copyright Copyright (c) 2019, New Jersey Institute of Technology (NJIT)</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">// All rights reserved.</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// Redistribution and use in source and binary forms, with or without</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// modification, are permitted provided that the following conditions are met:</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// 1. Redistributions of source code must retain the above copyright notice,</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// this list of conditions and the following disclaimer.</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// 2. Redistributions in binary form must reproduce the above copyright notice,</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// this list of conditions and the following disclaimer in the documentation</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// and/or other materials provided with the distribution. THIS SOFTWARE IS</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> * This file contains mgmpintvec, a &lt;vector&gt; of gmpint, with associated</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> * math operators.</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> * NOTE: this has been refactored so that implied modulo (ring)</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> * aritmetic is in mbintvec</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef LBCRYPTO_MATH_BIGINTNTL_MUBINTVECNTL_H</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define LBCRYPTO_MATH_BIGINTNTL_MUBINTVECNTL_H</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;config_core.h&quot;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifdef WITH_NTL</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;NTL/SmartPtr.h&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;NTL/vec_ZZ.h&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;NTL/vector.h&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;initializer_list&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &quot;math/bigintntl/ubintntl.h&quot;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="exception_8h.html">utils/exception.h</a>&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;utils/inttypes.h&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;utils/serializable.h&quot;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">// defining this forces modulo when you write to the vector (except with at())</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">// this is becuase NTL required inputs to modmath to be &lt; modulus but BU does</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">// not play with this and you will see different tests in pke pass and fail.</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">// I think this will go away soon</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">// #define FORCE_NORMALIZATION</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">// defining this enables a run time warning when a vector with uninitialized</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// modulus is used in math operations (A very bad thing)</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">// #define WARN_BAD_MODULUS</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceNTL.html">NTL</a> {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> myT&gt;</div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html">   73</a></span>&#160;<span class="keyword">class </span><a class="code" href="classNTL_1_1myVecP.html">myVecP</a> : <span class="keyword">public</span> NTL::Vec&lt;myT&gt;,</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;               <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1BigVectorInterface.html">lbcrypto::BigVectorInterface</a>&lt;myVecP&lt;myT&gt;, myT&gt;,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;               <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1Serializable.html">lbcrypto::Serializable</a> {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">// CONSTRUCTORS</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>() : Vec&lt;myT&gt;() { m_modulus_state = GARBAGE; }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> Single(<span class="keyword">const</span> myT &amp;val, <span class="keyword">const</span> myT &amp;modulus) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> vec(1);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    vec.SetModulus(modulus);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    vec[0] = val;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> vec;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// This file is included only if WITH_NTL is set to ON in CMakeLists.txt</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;config_core.h&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifdef WITH_NTL</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// @file mubintvecntl.h This file contains mgmpintvec, a &lt;vector&gt; of gmpint,</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">// with associated math operators</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// @author TPOC: contact@palisade-crypto.org</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// @copyright Copyright (c) 2019, New Jersey Institute of Technology (NJIT)</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// All rights reserved.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// Redistribution and use in source and binary forms, with or without</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// modification, are permitted provided that the following conditions are met:</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// 1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// this list of conditions and the following disclaimer.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// 2. Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// and/or other materials provided with the distribution. THIS SOFTWARE IS</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> * This file contains mgmpintvec, a &lt;vector&gt; of gmpint, with associated</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> * math operators.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> * NOTE: this has been refactored so that implied modulo (ring)</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> * aritmetic is in mbintvec</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifndef LBCRYPTO_MATH_HAL_BIGINTNTL_MUBINTVECNTL_H</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define LBCRYPTO_MATH_HAL_BIGINTNTL_MUBINTVECNTL_H</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;NTL/SmartPtr.h&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;NTL/vec_ZZ.h&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;NTL/vector.h&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;initializer_list&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;math/hal/bigintntl/ubintntl.h&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="exception_8h.html">utils/exception.h</a>&quot;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;utils/inttypes.h&quot;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;utils/serializable.h&quot;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">// defining this forces modulo when you write to the vector (except with at())</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">// this is becuase NTL required inputs to modmath to be &lt; modulus but BU does</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">// not play with this and you will see different tests in pke pass and fail.</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">// I think this will go away soon</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">// #define FORCE_NORMALIZATION</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// defining this enables a run time warning when a vector with uninitialized</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">// modulus is used in math operations (A very bad thing)</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">// #define WARN_BAD_MODULUS</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceNTL.html">NTL</a> {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">// Forward declare this class for aliases</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> IntegerType&gt; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html">   71</a></span>&#160;<span class="keyword">class </span><a class="code" href="classNTL_1_1myVecP.html">myVecP</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">// Create default type for the MATHBACKEND 6 Vector</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">using</span> <a class="code" href="classNTL_1_1myVecP.html">BigVector</a> = <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;BigInteger&gt;</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> myT&gt;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">class </span><a class="code" href="classNTL_1_1myVecP.html">myVecP</a> : <span class="keyword">public</span> NTL::Vec&lt;myT&gt;,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;               <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1BigVectorInterface.html">lbcrypto::BigVectorInterface</a>&lt;myVecP&lt;myT&gt;, myT&gt;,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;               <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1Serializable.html">lbcrypto::Serializable</a> {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="comment">// CONSTRUCTORS</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> length) : Vec&lt;myT&gt;(INIT_SIZE, length) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    m_modulus_state = GARBAGE;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(INIT_SIZE_TYPE, <span class="keyword">const</span> <span class="keywordtype">long</span> length) : Vec&lt;myT&gt;(INIT_SIZE, length) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    m_modulus_state = GARBAGE;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;a);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;&amp;a);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <span class="keywordtype">long</span> n, <span class="keyword">const</span> myT &amp;q);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <span class="keywordtype">long</span> n, <span class="keyword">const</span> myT &amp;q, std::initializer_list&lt;std::string&gt; rhs);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <span class="keywordtype">long</span> n, <span class="keyword">const</span> myT &amp;q, std::initializer_list&lt;uint64_t&gt; rhs);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>() : Vec&lt;myT&gt;() { m_modulus_state = GARBAGE; }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> Single(<span class="keyword">const</span> myT &amp;val, <span class="keyword">const</span> myT &amp;modulus) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> vec(1);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    vec.SetModulus(modulus);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    vec[0] = val;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> vec;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">explicit</span> myVecP(<span class="keyword">const</span> <span class="keywordtype">size_t</span> length) : Vec&lt;myT&gt;(INIT_SIZE, length) {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    m_modulus_state = GARBAGE;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  myVecP(INIT_SIZE_TYPE, <span class="keyword">const</span> <span class="keywordtype">long</span> length) : Vec&lt;myT&gt;(INIT_SIZE, length) {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    m_modulus_state = GARBAGE;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;a, <span class="keyword">const</span> myT &amp;q);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keyword">explicit</span> myVecP(<span class="keyword">const</span> myVecP&lt;myT&gt; &amp;a);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keywordtype">size_t</span> n, <span class="keyword">const</span> std::string &amp;sq);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  myVecP(myVecP&lt;myT&gt; &amp;&amp;a);</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;a, <span class="keyword">const</span> std::string &amp;sq);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  myVecP(<span class="keyword">const</span> <span class="keywordtype">long</span> n, <span class="keyword">const</span> myT &amp;q);</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keywordtype">size_t</span> n, uint64_t q);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;a, <span class="keyword">const</span> uint64_t q);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(std::vector&lt;std::string&gt; &amp;s);           <span class="comment">// without modulus</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(std::vector&lt;std::string&gt; &amp;s, <span class="keyword">const</span> myT &amp;q);      <span class="comment">// with modulus</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(std::vector&lt;std::string&gt; &amp;s, <span class="keyword">const</span> <span class="keywordtype">char</span> *sq);    <span class="comment">// with modulus</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a>(std::vector&lt;std::string&gt; &amp;s, <span class="keyword">const</span> uint64_t q);  <span class="comment">// with modulusu</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  myVecP(<span class="keyword">const</span> <span class="keywordtype">long</span> n, <span class="keyword">const</span> myT &amp;q, std::initializer_list&lt;std::string&gt; rhs);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  myVecP(<span class="keyword">const</span> <span class="keywordtype">long</span> n, <span class="keyword">const</span> myT &amp;q, std::initializer_list&lt;uint64_t&gt; rhs);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  myVecP(<span class="keyword">const</span> myVecP&lt;myT&gt; &amp;a, <span class="keyword">const</span> myT &amp;q);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  myVecP(<span class="keywordtype">size_t</span> n, <span class="keyword">const</span> std::string &amp;sq);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  myVecP(<span class="keyword">const</span> myVecP&lt;myT&gt; &amp;a, <span class="keyword">const</span> std::string &amp;sq);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordtype">void</span> clear(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x);  <span class="comment">// why isn&#39;t this inhereted?</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  myVecP(<span class="keywordtype">size_t</span> n, uint64_t q);</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  ~<a class="code" href="classNTL_1_1myVecP.html">myVecP</a>() {}</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  myVecP(<span class="keyword">const</span> myVecP&lt;myT&gt; &amp;a, <span class="keyword">const</span> uint64_t q);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="comment">// ASSIGNMENT OPERATORS</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;operator=(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;&amp;a);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="keyword">explicit</span> myVecP(std::vector&lt;std::string&gt; &amp;s);           <span class="comment">// without modulus</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  myVecP(std::vector&lt;std::string&gt; &amp;s, <span class="keyword">const</span> myT &amp;q);      <span class="comment">// with modulus</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  myVecP(std::vector&lt;std::string&gt; &amp;s, <span class="keyword">const</span> <span class="keywordtype">char</span> *sq);    <span class="comment">// with modulus</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  myVecP(std::vector&lt;std::string&gt; &amp;s, <span class="keyword">const</span> uint64_t q);  <span class="comment">// with modulusu</span></div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;operator=(std::initializer_list&lt;uint64_t&gt; rhs);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;operator=(std::initializer_list&lt;int32_t&gt; rhs);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;operator=(std::initializer_list&lt;std::string&gt; rhs);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;operator=(uint64_t rhs);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="comment">// ACCESSORS</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="comment">// NOTE the underlying Vec does not have a no-bounds-checking operator[]</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  myT &amp;at(<span class="keywordtype">size_t</span> i) { <span class="keywordflow">return</span> this-&gt;NTL::Vec&lt;myT&gt;::at(i); }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keyword">const</span> myT &amp;at(<span class="keywordtype">size_t</span> i)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;NTL::Vec&lt;myT&gt;::at(i); }</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  myT &amp;operator[](<span class="keywordtype">size_t</span> idx) { <span class="keywordflow">return</span> this-&gt;at(idx); }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordtype">void</span> clear(myVecP &amp;x);  <span class="comment">// why isn&#39;t this inhereted?</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  ~myVecP() {}</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="comment">// ASSIGNMENT OPERATORS</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keyword">const</span> myVecP &amp;operator=(<span class="keyword">const</span> myVecP &amp;a);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keyword">const</span> myVecP &amp;operator=(myVecP &amp;&amp;a);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keyword">const</span> myVecP &amp;operator=(std::initializer_list&lt;uint64_t&gt; rhs);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keyword">const</span> myVecP &amp;operator=(std::initializer_list&lt;int32_t&gt; rhs);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="keyword">const</span> myVecP &amp;operator=(std::initializer_list&lt;std::string&gt; rhs);</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keyword">const</span> myVecP &amp;operator=(uint64_t rhs);</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="keyword">const</span> myT &amp;operator[](<span class="keywordtype">size_t</span> idx)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;at(idx); }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="comment">// ACCESSORS</span></div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> push_back(<span class="keyword">const</span> myT &amp;a) { this-&gt;append(a); }</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="keywordtype">void</span> SwitchModulus(<span class="keyword">const</span> myT &amp;newModulus);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="comment">// public modulus accessors</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> isModulusSet(<span class="keywordtype">void</span>)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordflow">return</span> (this-&gt;m_modulus_state == INITIALIZED);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="comment">// NOTE the underlying Vec does not have a no-bounds-checking operator[]</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  myT &amp;at(<span class="keywordtype">size_t</span> i) { <span class="keywordflow">return</span> this-&gt;NTL::Vec&lt;myT&gt;::at(i); }</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keyword">const</span> myT &amp;at(<span class="keywordtype">size_t</span> i)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;NTL::Vec&lt;myT&gt;::at(i); }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  myT &amp;operator[](<span class="keywordtype">size_t</span> idx) { <span class="keywordflow">return</span> this-&gt;at(idx); }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keyword">const</span> myT &amp;operator[](<span class="keywordtype">size_t</span> idx)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;at(idx); }</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <span class="comment">// return true if both myVecP have same modulus</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> SameModulus(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keywordflow">return</span> ((this-&gt;m_modulus_state == a.m_modulus_state) &amp;&amp;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            (this-&gt;m_modulus == a.m_modulus));</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  }</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="comment">// sets modulus and the NTL init function uint64_t argument</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> uint64_t &amp;value) {</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordflow">if</span> (value == 0) {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>,</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                     <span class="stringliteral">&quot;SetModulus(uint64_t) cannot be zero&quot;</span>);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    this-&gt;m_modulus = myT(value);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    this-&gt;m_modulus_state = INITIALIZED;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  }</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="comment">// sets modulus and the NTL init function myT argument</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> myT &amp;value) {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordflow">if</span> (value == myT(0)) {</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>, <span class="stringliteral">&quot;SetModulus(myT) cannot be zero&quot;</span>);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> push_back(<span class="keyword">const</span> myT &amp;a) { this-&gt;append(a); }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordtype">void</span> SwitchModulus(<span class="keyword">const</span> myT &amp;newModulus);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  <span class="comment">// public modulus accessors</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> isModulusSet(<span class="keywordtype">void</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordflow">return</span> (this-&gt;m_modulus_state == INITIALIZED);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="comment">// return true if both myVecP have same modulus</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">bool</span> SameModulus(<span class="keyword">const</span> myVecP &amp;a)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordflow">return</span> ((this-&gt;m_modulus_state == a.m_modulus_state) &amp;&amp;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            (this-&gt;m_modulus == a.m_modulus));</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  }</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="comment">// sets modulus and the NTL init function uint64_t argument</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> uint64_t &amp;value) {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">if</span> (value == 0) {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>,</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                     <span class="stringliteral">&quot;SetModulus(uint64_t) cannot be zero&quot;</span>);</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    }</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    this-&gt;m_modulus = value;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    this-&gt;m_modulus = myT(value);</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    this-&gt;m_modulus_state = INITIALIZED;</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  }</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <span class="comment">// sets modulus and the NTL init function string argument</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> std::string &amp;value) {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    this-&gt;m_modulus = myT(value);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">if</span> (this-&gt;m_modulus == myT(0)) {</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>, <span class="stringliteral">&quot;SetModulus(string) cannot be zero&quot;</span>);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <span class="comment">// sets modulus and the NTL init function myT argument</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> myT &amp;value) {</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">if</span> (value == myT(0)) {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>, <span class="stringliteral">&quot;SetModulus(myT) cannot be zero&quot;</span>);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    this-&gt;m_modulus = value;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    this-&gt;m_modulus_state = INITIALIZED;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="comment">// sets modulus and the NTL init function uses same modulus</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;value) {</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    this-&gt;m_modulus = value.GetModulus();</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="comment">// sets modulus and the NTL init function string argument</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> std::string &amp;value) {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    this-&gt;m_modulus = myT(value);</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordflow">if</span> (this-&gt;m_modulus == myT(0)) {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>, <span class="stringliteral">&quot;SetModulus(myVecP) cannot be zero&quot;</span>);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>, <span class="stringliteral">&quot;SetModulus(string) cannot be zero&quot;</span>);</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    }</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    this-&gt;m_modulus_state = INITIALIZED;</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  }</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keyword">const</span> myT &amp;GetModulus()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">if</span> (this-&gt;isModulusSet()) {</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      <span class="keywordflow">return</span> (this-&gt;m_modulus);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a>, <span class="stringliteral">&quot;modulus not set&quot;</span>);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="comment">// sets modulus and the NTL init function uses same modulus</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SetModulus(<span class="keyword">const</span> myVecP &amp;value) {</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    this-&gt;m_modulus = value.GetModulus();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">if</span> (this-&gt;m_modulus == myT(0)) {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>, <span class="stringliteral">&quot;SetModulus(myVecP) cannot be zero&quot;</span>);</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    }</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  }</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">int</span> CopyModulus(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;rhs) {</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    this-&gt;m_modulus = rhs.m_modulus;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    this-&gt;m_modulus_state = rhs.m_modulus_state;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordflow">if</span> (isModulusSet()) {</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordflow">return</span> (0);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      this-&gt;m_modulus_state = GARBAGE;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      <span class="keywordflow">return</span> (-1);</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  }</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordtype">size_t</span> GetLength(<span class="keywordtype">void</span>)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;length(); }</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordtype">void</span> resize(<span class="keywordtype">size_t</span> n) {</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="comment">// resize is the STL::vector standard call for this functionality</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    this-&gt;SetLength(n);  <span class="comment">// SetLength() is an NTL call</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="comment">// MODULUS ARITHMETIC OPERATIONS</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    this-&gt;m_modulus_state = INITIALIZED;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  }</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keyword">const</span> myT &amp;GetModulus()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">if</span> (this-&gt;isModulusSet()) {</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      <span class="keywordflow">return</span> (this-&gt;m_modulus);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a>, <span class="stringliteral">&quot;modulus not set&quot;</span>);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    }</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">int</span> CopyModulus(<span class="keyword">const</span> myVecP &amp;rhs) {</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    this-&gt;m_modulus = rhs.m_modulus;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    this-&gt;m_modulus_state = rhs.m_modulus_state;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordflow">if</span> (isModulusSet()) {</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      <span class="keywordflow">return</span> (0);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      this-&gt;m_modulus_state = GARBAGE;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keywordflow">return</span> (-1);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  }</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#adab4a8802d8703a0cae8f3f3c6cd77c3">Mod</a>(<span class="keyword">const</span> myT &amp;b) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a2dee447fa70746b51e48726bc013907f">ModEq</a>(<span class="keyword">const</span> myT &amp;b);</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a87248283db23eb5f597246a3eb79ac4e">  247</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a87248283db23eb5f597246a3eb79ac4e">ModAdd</a>(<span class="keyword">const</span> myT &amp;b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModAdd&quot;</span>);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">ModAddEq</a>(b);</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keywordflow">return</span> ans;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  }</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">  260</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">ModAddEq</a>(<span class="keyword">const</span> myT &amp;b) {</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModAdd&quot;</span>);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      this-&gt;operator[](i).ModAddEq(b, this-&gt;m_modulus);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    }</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  }</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#adb3f0d004afc2ea786ca9e0596a88d55">ModAddAtIndex</a>(<span class="keywordtype">size_t</span> i, <span class="keyword">const</span> myT &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="keywordtype">size_t</span> GetLength(<span class="keywordtype">void</span>)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;length(); }</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keywordtype">void</span> resize(<span class="keywordtype">size_t</span> n) {</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="comment">// resize is the STL::vector standard call for this functionality</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    this-&gt;SetLength(n);  <span class="comment">// SetLength() is an NTL call</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  }</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="comment">// MODULUS ARITHMETIC OPERATIONS</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  myVecP <a class="code" href="classNTL_1_1myVecP.html#adab4a8802d8703a0cae8f3f3c6cd77c3">Mod</a>(<span class="keyword">const</span> myT &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <span class="keyword">const</span> myVecP &amp;<a class="code" href="classNTL_1_1myVecP.html#a2dee447fa70746b51e48726bc013907f">ModEq</a>(<span class="keyword">const</span> myT &amp;b);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a87248283db23eb5f597246a3eb79ac4e">  256</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a87248283db23eb5f597246a3eb79ac4e">ModAdd</a>(<span class="keyword">const</span> myT &amp;b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModAdd&quot;</span>);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">ModAddEq</a>(b);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">return</span> ans;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">  269</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">ModAddEq</a>(<span class="keyword">const</span> myT &amp;b) {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModAdd&quot;</span>);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      this-&gt;operator[](i).ModAddEq(b, this-&gt;m_modulus);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    }</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  }</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#ac533d1c397d80c845098c66f5044c82d">ModAddAtIndexEq</a>(<span class="keywordtype">size_t</span> i, <span class="keyword">const</span> myT &amp;b);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#adb3f0d004afc2ea786ca9e0596a88d55">ModAddAtIndex</a>(<span class="keywordtype">size_t</span> i, <span class="keyword">const</span> myT &amp;b) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
-<div class="line"><a name="l00292"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a50bcf72240b4192291652058d9b33889">  292</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a50bcf72240b4192291652058d9b33889">ModAdd</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModAdd()&quot;</span>);</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">ModAddEq</a>(b);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keywordflow">return</span> ans;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  }</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a0a2fb4136f4d746afce4cf4a5b1eeb72">  305</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a0a2fb4136f4d746afce4cf4a5b1eeb72">ModAddEq</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) {</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModAddEq()&quot;</span>);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      this-&gt;operator[](i).ModAddEq(b[i], this-&gt;m_modulus);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    }</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  }</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classNTL_1_1myVecP.html#ad36907fac5e8b053c571fc0b8ee6c32d">modadd_p</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#ab570db710a0d4284d38dc9d24d80a486">  323</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#ab570db710a0d4284d38dc9d24d80a486">ModSub</a>(<span class="keyword">const</span> myT &amp;b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModSub&quot;</span>);</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">ModSubEq</a>(b);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordflow">return</span> ans;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  }</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00336"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">  336</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">ModSubEq</a>(<span class="keyword">const</span> myT &amp;b) {</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModSubEq&quot;</span>);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      this-&gt;operator[](i).ModSubEq(b, this-&gt;m_modulus);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    }</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  }</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
-<div class="line"><a name="l00350"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a8025585d86e8bb0af8b4a7ff29576e1b">  350</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a8025585d86e8bb0af8b4a7ff29576e1b">ModSub</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModSub()&quot;</span>);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">ModSubEq</a>(b);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordflow">return</span> ans;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  }</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a3ed3578802e415c741e760602ace2f81">  363</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a3ed3578802e415c741e760602ace2f81">ModSubEq</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) {</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModSubEq()&quot;</span>);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;      this-&gt;operator[](i).ModSubEq(b[i], this-&gt;m_modulus);</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    }</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  }</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classNTL_1_1myVecP.html#a1f838a07c1df6089a0d211e33afabd1a">modsub_p</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00381"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#ab3d4424a9e6075c00f183e2db945e727">  381</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#ab3d4424a9e6075c00f183e2db945e727">ModMul</a>(<span class="keyword">const</span> myT &amp;b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModMul&quot;</span>);</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">ModMulEq</a>(b);</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordflow">return</span> ans;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  }</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
-<div class="line"><a name="l00394"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">  394</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">ModMulEq</a>(<span class="keyword">const</span> myT &amp;b) {</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModMul&quot;</span>);</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      this-&gt;operator[](i).ModMulEq(b, this-&gt;m_modulus);</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    }</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  }</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
-<div class="line"><a name="l00409"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a18c103722994d48e1749bc5c692d8edb">  409</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a18c103722994d48e1749bc5c692d8edb">ModMul</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP Mul()&quot;</span>);</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">ModMulEq</a>(b);</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keywordflow">return</span> ans;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;  }</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
-<div class="line"><a name="l00423"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a69937b2e9b94f6f53d9f416579b04202">  423</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a69937b2e9b94f6f53d9f416579b04202">ModMulEq</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) {</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP Mul()&quot;</span>);</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;      this-&gt;operator[](i).ModMulEq(b[i], this-&gt;m_modulus);</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    }</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;  }</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160; </div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classNTL_1_1myVecP.html#adc5c4d1affd9e0b169242ebb38455fac">modmul_p</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160; </div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#addecb29d1632589c5430059e5c177ebb">ModExp</a>(<span class="keyword">const</span> myT &amp;b) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160; </div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#ac36f1d362c007dae17a225675a8f03dc">ModExpEq</a>(<span class="keyword">const</span> myT &amp;b);</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160; </div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a5b617b2e87e3a0bcb7758990e1cd41a1">ModInverse</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160; </div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a2620b7158573492b2a0d3c112886158e">ModInverseEq</a>();</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160; </div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a0202740715dbea6d2540e1639ba1340a">ModByTwo</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160; </div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a92f0262cee5c883fcb9b99d73cf934f0">ModByTwoEq</a>();</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160; </div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#adee792e03a9ced28274bfcec91958c8e">MultiplyAndRound</a>(<span class="keyword">const</span> myT &amp;p, <span class="keyword">const</span> myT &amp;q) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160; </div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a97a398e538ed6e31289ae59dd590d301">MultiplyAndRoundEq</a>(<span class="keyword">const</span> myT &amp;p, <span class="keyword">const</span> myT &amp;q);</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160; </div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#ac193d52c4467fbe7a6bff3b6b64d775e">DivideAndRound</a>(<span class="keyword">const</span> myT &amp;q) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#ac533d1c397d80c845098c66f5044c82d">ModAddAtIndexEq</a>(<span class="keywordtype">size_t</span> i, <span class="keyword">const</span> myT &amp;b);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a50bcf72240b4192291652058d9b33889">  301</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a50bcf72240b4192291652058d9b33889">ModAdd</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModAdd()&quot;</span>);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">ModAddEq</a>(b);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keywordflow">return</span> ans;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a0a2fb4136f4d746afce4cf4a5b1eeb72">  314</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a0a2fb4136f4d746afce4cf4a5b1eeb72">ModAddEq</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) {</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModAddEq()&quot;</span>);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      this-&gt;operator[](i).ModAddEq(b[i], this-&gt;m_modulus);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    }</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  }</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classNTL_1_1myVecP.html#ad36907fac5e8b053c571fc0b8ee6c32d">modadd_p</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#ab570db710a0d4284d38dc9d24d80a486">  332</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#ab570db710a0d4284d38dc9d24d80a486">ModSub</a>(<span class="keyword">const</span> myT &amp;b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModSub&quot;</span>);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">ModSubEq</a>(b);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordflow">return</span> ans;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
+<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">  345</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">ModSubEq</a>(<span class="keyword">const</span> myT &amp;b) {</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModSubEq&quot;</span>);</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      this-&gt;operator[](i).ModSubEq(b, this-&gt;m_modulus);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  }</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00359"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a8025585d86e8bb0af8b4a7ff29576e1b">  359</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a8025585d86e8bb0af8b4a7ff29576e1b">ModSub</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModSub()&quot;</span>);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">ModSubEq</a>(b);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordflow">return</span> ans;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  }</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
+<div class="line"><a name="l00372"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a3ed3578802e415c741e760602ace2f81">  372</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a3ed3578802e415c741e760602ace2f81">ModSubEq</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) {</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP ModSubEq()&quot;</span>);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      this-&gt;operator[](i).ModSubEq(b[i], this-&gt;m_modulus);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    }</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  }</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classNTL_1_1myVecP.html#a1f838a07c1df6089a0d211e33afabd1a">modsub_p</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160; </div>
+<div class="line"><a name="l00390"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#ab3d4424a9e6075c00f183e2db945e727">  390</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#ab3d4424a9e6075c00f183e2db945e727">ModMul</a>(<span class="keyword">const</span> myT &amp;b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModMul&quot;</span>);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">ModMulEq</a>(b);</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keywordflow">return</span> ans;</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;  }</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
+<div class="line"><a name="l00403"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">  403</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">ModMulEq</a>(<span class="keyword">const</span> myT &amp;b) {</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    ModulusCheck(<span class="stringliteral">&quot;Warning: myVecP::ModMul&quot;</span>);</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      this-&gt;operator[](i).ModMulEq(b, this-&gt;m_modulus);</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    }</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  }</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
+<div class="line"><a name="l00418"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a18c103722994d48e1749bc5c692d8edb">  418</a></span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a18c103722994d48e1749bc5c692d8edb">ModMul</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP Mul()&quot;</span>);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> ans(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    ans.<a class="code" href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">ModMulEq</a>(b);</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordflow">return</span> ans;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a69937b2e9b94f6f53d9f416579b04202">  432</a></span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a69937b2e9b94f6f53d9f416579b04202">ModMulEq</a>(<span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) {</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    ArgCheckVector(b, <span class="stringliteral">&quot;myVecP Mul()&quot;</span>);</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    <span class="keywordflow">for</span> (usint i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;      this-&gt;operator[](i).ModMulEq(b[i], this-&gt;m_modulus);</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    }</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    <span class="keywordflow">return</span> (*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;  }</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classNTL_1_1myVecP.html#adc5c4d1affd9e0b169242ebb38455fac">modmul_p</a>(<a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;x, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160; </div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#addecb29d1632589c5430059e5c177ebb">ModExp</a>(<span class="keyword">const</span> myT &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#ac36f1d362c007dae17a225675a8f03dc">ModExpEq</a>(<span class="keyword">const</span> myT &amp;b);</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160; </div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a5b617b2e87e3a0bcb7758990e1cd41a1">ModInverse</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160; </div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a2620b7158573492b2a0d3c112886158e">ModInverseEq</a>();</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160; </div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a0202740715dbea6d2540e1639ba1340a">ModByTwo</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160; </div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a92f0262cee5c883fcb9b99d73cf934f0">ModByTwoEq</a>();</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160; </div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#adee792e03a9ced28274bfcec91958c8e">MultiplyAndRound</a>(<span class="keyword">const</span> myT &amp;p, <span class="keyword">const</span> myT &amp;q) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#a97a398e538ed6e31289ae59dd590d301">MultiplyAndRoundEq</a>(<span class="keyword">const</span> myT &amp;p, <span class="keyword">const</span> myT &amp;q);</div>
 <div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#aa33f62f3f01543c43104240e333a8164">DivideAndRoundEq</a>(<span class="keyword">const</span> myT &amp;q);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#ac193d52c4467fbe7a6bff3b6b64d775e">DivideAndRound</a>(<span class="keyword">const</span> myT &amp;q) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160; </div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;  <span class="comment">// OTHER FUNCTIONS</span></div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160; </div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a1d53f3ffc92c7c04174b15c24791d5e1">GetDigitAtIndexForBase</a>(<span class="keywordtype">size_t</span> index, usint base) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;  <span class="comment">// STRINGS &amp; STREAMS</span></div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160; </div>
-<div class="line"><a name="l00549"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a989d420a14aff0fd4303e7e1151fb200">  549</a></span>&#160;  <span class="keyword">friend</span> std::ostream &amp;<a class="code" href="classNTL_1_1myVecP.html#a989d420a14aff0fd4303e7e1151fb200">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;                                  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;ptr_obj) {</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;    <span class="keyword">auto</span> len = ptr_obj.GetLength();</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot;[&quot;</span>;</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;      os &lt;&lt; ptr_obj.at(i);</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;      os &lt;&lt; ((i == (len - 1)) ? <span class="stringliteral">&quot;]&quot;</span> : <span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;    }</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot; modulus: &quot;</span> &lt;&lt; ptr_obj.m_modulus;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;  }</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;  <span class="comment">// SERIALIZATION</span></div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;!cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;  save(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    <span class="comment">// YSP. This was seg-faulting in MINGW</span></div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;    <span class="comment">// ar( m_modulus.ToString() );</span></div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;    <span class="comment">// ar( m_modulus_state );</span></div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;    <span class="comment">// ar( this-&gt;GetLength() );</span></div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;    <span class="comment">// for(size_t i=0; i&lt;this-&gt;GetLength(); i++ )</span></div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;    <span class="comment">//  ar( (*this)[i] );</span></div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m_modulus.ToString()));</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, this-&gt;GetLength()));</div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, (*<span class="keyword">this</span>)[i].ToString()));</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;    }</div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;  }</div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160; </div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;  save(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m_modulus.ToString()));</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, this-&gt;GetLength()));</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, (*<span class="keyword">this</span>)[i].ToString()));</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    }</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;  }</div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160; </div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;!cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;  load(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version) {</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;    <span class="keywordflow">if</span> (version &gt; SerializedVersion()) {</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1deserialize__error.html">lbcrypto::deserialize_error</a>,</div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;                     <span class="stringliteral">&quot;serialized object version &quot;</span> + std::to_string(version) +</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;                         <span class="stringliteral">&quot; is from a later version of the library&quot;</span>);</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;    }</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;    <span class="comment">// YSP. This was seg-faulting in MINGW</span></div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;    <span class="comment">// std::string m;</span></div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;    <span class="comment">// ar( m );</span></div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;    <span class="comment">// m_modulus = m;</span></div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;    <span class="comment">// ar( m_modulus_state );</span></div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;    <span class="comment">// cereal::size_type len;</span></div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;    <span class="comment">// ar( len );</span></div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;    <span class="comment">// this-&gt;SetLength(len);</span></div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;    <span class="comment">// for(size_t i=0; i&lt;len; i++ )</span></div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;    <span class="comment">//  ar( (*this)[i] );</span></div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160; </div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;    std::string m;</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m));</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;    m_modulus = m;</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    cereal::size_type len;</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, len));</div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;    this-&gt;resize(len);</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;      std::string s;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, s));</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;      (*this)[i] = s;</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;    }</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;  }</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160; </div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;  load(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version) {</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;    <span class="keywordflow">if</span> (version &gt; SerializedVersion()) {</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1deserialize__error.html">lbcrypto::deserialize_error</a>,</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;                     <span class="stringliteral">&quot;serialized object version &quot;</span> + std::to_string(version) +</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;                         <span class="stringliteral">&quot; is from a later version of the library&quot;</span>);</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;    }</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;    std::string m;</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m));</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;    m_modulus = m;</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    cereal::size_type len;</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, len));</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;    this-&gt;resize(len);</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;      std::string s;</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, s));</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;      (*this)[i] = s;</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    }</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;  }</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160; </div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;  std::string SerializedObjectName()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;NTLVector&quot;</span>; }</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160; </div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;  <span class="keyword">static</span> uint32_t SerializedVersion() { <span class="keywordflow">return</span> 1; }</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160; </div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;  <span class="comment">// utility function to warn if modulus is no good</span></div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;  <span class="comment">// use when argument to function is myT</span></div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;  <span class="keywordtype">void</span> ModulusCheck(std::string msg)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;    <span class="keywordflow">if</span> (!isModulusSet()) {</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a>,</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;                     msg + <span class="stringliteral">&quot; uninitialized this-&gt;modulus&quot;</span>);</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;    }</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;  }</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; </div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;  <span class="comment">// utility function to check argument consistency for vector vector fns</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;  <span class="comment">// use when argument to function is myVecP</span></div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;  <span class="keywordtype">void</span> ArgCheckVector(<span class="keyword">const</span> myVecP &amp;b, std::string fname)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    <span class="keywordflow">if</span> (this-&gt;m_modulus != b.m_modulus) {</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      PALISADE_THROW(</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;          <a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>,</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;          fname + <span class="stringliteral">&quot; modulus vector modulus vector op of different moduli&quot;</span>);</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!isModulusSet()) {</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;      PALISADE_THROW(</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;          <a class="code" href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a>,</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;          fname + <span class="stringliteral">&quot; modulus vector modulus vector op  GARBAGE  moduli&quot;</span>);</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (this-&gt;GetLength() != b.GetLength()) {</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>,</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;                     fname + <span class="stringliteral">&quot; vectors of different lengths&quot;</span>);</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    }</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;  }</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;  <span class="comment">// used to make sure all entries in this are &lt;=current modulus</span></div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;  <span class="keywordtype">void</span> Renormalize(<span class="keywordtype">void</span>) {</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; this-&gt;GetLength(); ++i) {</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;      (*this)[i] %= m_modulus;</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;    }</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;  }</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;  myT m_modulus;</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;  <span class="comment">// TODO: BE 2 has gotten rid of this, we may too.</span></div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;  <span class="keyword">enum</span> ModulusState {</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;    GARBAGE,</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;    INITIALIZED  <span class="comment">// note different order,  GARBAGE is the default</span></div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;                 <span class="comment">// state</span></div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;  };</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;  <span class="comment">// enum to store the state of the</span></div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;  ModulusState m_modulus_state;</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160; </div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160; <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;  <span class="keywordtype">bool</span> IndexCheck(<span class="keywordtype">size_t</span> index)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    <span class="keywordflow">if</span> (index &gt;= this-&gt;GetLength()) {</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    }</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;  }</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;};</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="comment">// template class ends</span></div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160; </div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;}  <span class="comment">// namespace NTL</span></div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160; </div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160; </div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="preprocessor">#endif  // LBCRYPTO_MATH_BIGINTNTL_MUBINTVECNTL_H</span></div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> &amp;<a class="code" href="classNTL_1_1myVecP.html#aa33f62f3f01543c43104240e333a8164">DivideAndRoundEq</a>(<span class="keyword">const</span> myT &amp;q);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160; </div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;  <span class="comment">// OTHER FUNCTIONS</span></div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;  <a class="code" href="classNTL_1_1myVecP.html">myVecP</a> <a class="code" href="classNTL_1_1myVecP.html#a1d53f3ffc92c7c04174b15c24791d5e1">GetDigitAtIndexForBase</a>(<span class="keywordtype">size_t</span> index, usint base) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160; </div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;  <span class="comment">// STRINGS &amp; STREAMS</span></div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160; </div>
+<div class="line"><a name="l00558"></a><span class="lineno"><a class="line" href="classNTL_1_1myVecP.html#a989d420a14aff0fd4303e7e1151fb200">  558</a></span>&#160;  <span class="keyword">friend</span> std::ostream &amp;<a class="code" href="classNTL_1_1myVecP.html#a989d420a14aff0fd4303e7e1151fb200">operator&lt;&lt;</a>(std::ostream &amp;os,</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;                                  <span class="keyword">const</span> <a class="code" href="classNTL_1_1myVecP.html">myVecP&lt;myT&gt;</a> &amp;ptr_obj) {</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;    <span class="keyword">auto</span> len = ptr_obj.GetLength();</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot;[&quot;</span>;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;      os &lt;&lt; ptr_obj.at(i);</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;      os &lt;&lt; ((i == (len - 1)) ? <span class="stringliteral">&quot;]&quot;</span> : <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;    }</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot; modulus: &quot;</span> &lt;&lt; ptr_obj.m_modulus;</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;  }</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160; </div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;  <span class="comment">// SERIALIZATION</span></div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160; </div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;!cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;  save(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    <span class="comment">// YSP. This was seg-faulting in MINGW</span></div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;    <span class="comment">// ar( m_modulus.ToString() );</span></div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;    <span class="comment">// ar( m_modulus_state );</span></div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;    <span class="comment">// ar( this-&gt;GetLength() );</span></div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;    <span class="comment">// for(size_t i=0; i&lt;this-&gt;GetLength(); i++ )</span></div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;    <span class="comment">//  ar( (*this)[i] );</span></div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m_modulus.ToString()));</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, this-&gt;GetLength()));</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, (*<span class="keyword">this</span>)[i].ToString()));</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;    }</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;  }</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160; </div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;  save(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m_modulus.ToString()));</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, this-&gt;GetLength()));</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; this-&gt;GetLength(); i++) {</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, (*<span class="keyword">this</span>)[i].ToString()));</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;    }</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;  }</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160; </div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;!cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;  load(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version) {</div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;    <span class="keywordflow">if</span> (version &gt; SerializedVersion()) {</div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1deserialize__error.html">lbcrypto::deserialize_error</a>,</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;                     <span class="stringliteral">&quot;serialized object version &quot;</span> + std::to_string(version) +</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;                         <span class="stringliteral">&quot; is from a later version of the library&quot;</span>);</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;    }</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;    <span class="comment">// YSP. This was seg-faulting in MINGW</span></div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;    <span class="comment">// std::string m;</span></div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;    <span class="comment">// ar( m );</span></div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;    <span class="comment">// m_modulus = m;</span></div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;    <span class="comment">// ar( m_modulus_state );</span></div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;    <span class="comment">// cereal::size_type len;</span></div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    <span class="comment">// ar( len );</span></div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;    <span class="comment">// this-&gt;SetLength(len);</span></div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;    <span class="comment">// for(size_t i=0; i&lt;len; i++ )</span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;    <span class="comment">//  ar( (*this)[i] );</span></div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160; </div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    std::string m;</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m));</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;    m_modulus = m;</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;    cereal::size_type len;</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, len));</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;    this-&gt;resize(len);</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;      std::string s;</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, s));</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;      (*this)[i] = s;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;    }</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;  }</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;  <span class="keyword">typename</span> std::enable_if&lt;cereal::traits::is_text_archive&lt;Archive&gt;::value,</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;                          <span class="keywordtype">void</span>&gt;::type</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;  load(Archive &amp;ar, std::uint32_t <span class="keyword">const</span> version) {</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    <span class="keywordflow">if</span> (version &gt; SerializedVersion()) {</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1deserialize__error.html">lbcrypto::deserialize_error</a>,</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;                     <span class="stringliteral">&quot;serialized object version &quot;</span> + std::to_string(version) +</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;                         <span class="stringliteral">&quot; is from a later version of the library&quot;</span>);</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;    }</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;    std::string m;</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;m&quot;</span>, m));</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    m_modulus = m;</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;ms&quot;</span>, m_modulus_state));</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;    cereal::size_type len;</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;    ar(::cereal::make_nvp(<span class="stringliteral">&quot;l&quot;</span>, len));</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;    this-&gt;resize(len);</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;      std::string s;</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;      ar(::cereal::make_nvp(<span class="stringliteral">&quot;v&quot;</span>, s));</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;      (*this)[i] = s;</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;    }</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;  }</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160; </div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;  std::string SerializedObjectName()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;NTLVector&quot;</span>; }</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160; </div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;  <span class="keyword">static</span> uint32_t SerializedVersion() { <span class="keywordflow">return</span> 1; }</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;  <span class="comment">// utility function to warn if modulus is no good</span></div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;  <span class="comment">// use when argument to function is myT</span></div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;  <span class="keywordtype">void</span> ModulusCheck(std::string msg)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    <span class="keywordflow">if</span> (!isModulusSet()) {</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a>,</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;                     msg + <span class="stringliteral">&quot; uninitialized this-&gt;modulus&quot;</span>);</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;    }</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;  }</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160; </div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;  <span class="comment">// utility function to check argument consistency for vector vector fns</span></div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;  <span class="comment">// use when argument to function is myVecP</span></div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;  <span class="keywordtype">void</span> ArgCheckVector(<span class="keyword">const</span> myVecP &amp;b, std::string fname)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;    <span class="keywordflow">if</span> (this-&gt;m_modulus != b.m_modulus) {</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;      PALISADE_THROW(</div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;          <a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>,</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;          fname + <span class="stringliteral">&quot; modulus vector modulus vector op of different moduli&quot;</span>);</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!isModulusSet()) {</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;      PALISADE_THROW(</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;          <a class="code" href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a>,</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;          fname + <span class="stringliteral">&quot; modulus vector modulus vector op  GARBAGE  moduli&quot;</span>);</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (this-&gt;GetLength() != b.GetLength()) {</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a>,</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;                     fname + <span class="stringliteral">&quot; vectors of different lengths&quot;</span>);</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    }</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;  }</div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160; </div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;  <span class="comment">// used to make sure all entries in this are &lt;=current modulus</span></div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;  <span class="keywordtype">void</span> Renormalize(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; this-&gt;GetLength(); ++i) {</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;      (*this)[i] %= m_modulus;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    }</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;  }</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160; </div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;  myT m_modulus;</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;  <span class="comment">// TODO: BE 2 has gotten rid of this, we may too.</span></div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;  <span class="keyword">enum</span> ModulusState {</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    GARBAGE,</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;    INITIALIZED  <span class="comment">// note different order,  GARBAGE is the default</span></div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;                 <span class="comment">// state</span></div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;  };</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;  <span class="comment">// enum to store the state of the</span></div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;  ModulusState m_modulus_state;</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;  <span class="keywordtype">bool</span> IndexCheck(<span class="keywordtype">size_t</span> index)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    <span class="keywordflow">if</span> (index &gt;= this-&gt;GetLength()) {</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    }</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;  }</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;};</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;<span class="comment">// template class ends</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160; </div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;}  <span class="comment">// namespace NTL</span></div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="preprocessor">#endif  // LBCRYPTO_MATH_HAL_BIGINTNTL_MUBINTVECNTL_H</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="preprocessor">#endif // WITH_NTL</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a031a89e86b9a6b2bf84e9045e00126a7"><div class="ttname"><a href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">NTL::myVecP::ModMulEq</a></div><div class="ttdeci">const myVecP &amp; ModMulEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:394</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a1f838a07c1df6089a0d211e33afabd1a"><div class="ttname"><a href="classNTL_1_1myVecP.html#a1f838a07c1df6089a0d211e33afabd1a">NTL::myVecP::modsub_p</a></div><div class="ttdeci">void modsub_p(myVecP &amp;x, const myVecP &amp;a, const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:457</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_adb3f0d004afc2ea786ca9e0596a88d55"><div class="ttname"><a href="classNTL_1_1myVecP.html#adb3f0d004afc2ea786ca9e0596a88d55">NTL::myVecP::ModAddAtIndex</a></div><div class="ttdeci">myVecP ModAddAtIndex(size_t i, const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:410</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_adab4a8802d8703a0cae8f3f3c6cd77c3"><div class="ttname"><a href="classNTL_1_1myVecP.html#adab4a8802d8703a0cae8f3f3c6cd77c3">NTL::myVecP::Mod</a></div><div class="ttdeci">myVecP Mod(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:372</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a0202740715dbea6d2540e1639ba1340a"><div class="ttname"><a href="classNTL_1_1myVecP.html#a0202740715dbea6d2540e1639ba1340a">NTL::myVecP::ModByTwo</a></div><div class="ttdeci">myVecP ModByTwo() const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:530</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_ac36f1d362c007dae17a225675a8f03dc"><div class="ttname"><a href="classNTL_1_1myVecP.html#ac36f1d362c007dae17a225675a8f03dc">NTL::myVecP::ModExpEq</a></div><div class="ttdeci">const myVecP &amp; ModExpEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:502</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a991ab698e8497433bca3fa782766a902"><div class="ttname"><a href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">NTL::myVecP::ModSubEq</a></div><div class="ttdeci">const myVecP &amp; ModSubEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:336</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a2dee447fa70746b51e48726bc013907f"><div class="ttname"><a href="classNTL_1_1myVecP.html#a2dee447fa70746b51e48726bc013907f">NTL::myVecP::ModEq</a></div><div class="ttdeci">const myVecP &amp; ModEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:391</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1BigVectorInterface_html"><div class="ttname"><a href="classlbcrypto_1_1BigVectorInterface.html">lbcrypto::BigVectorInterface</a></div><div class="ttdef"><b>Definition:</b> interface.h:588</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a1d53f3ffc92c7c04174b15c24791d5e1"><div class="ttname"><a href="classNTL_1_1myVecP.html#a1d53f3ffc92c7c04174b15c24791d5e1">NTL::myVecP::GetDigitAtIndexForBase</a></div><div class="ttdeci">myVecP GetDigitAtIndexForBase(size_t index, usint base) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:624</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a16a809d38402bddbc991658a26441a0a"><div class="ttname"><a href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">NTL::myVecP::ModAddEq</a></div><div class="ttdeci">const myVecP &amp; ModAddEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:260</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a031a89e86b9a6b2bf84e9045e00126a7"><div class="ttname"><a href="classNTL_1_1myVecP.html#a031a89e86b9a6b2bf84e9045e00126a7">NTL::myVecP::ModMulEq</a></div><div class="ttdeci">const myVecP &amp; ModMulEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:403</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a1f838a07c1df6089a0d211e33afabd1a"><div class="ttname"><a href="classNTL_1_1myVecP.html#a1f838a07c1df6089a0d211e33afabd1a">NTL::myVecP::modsub_p</a></div><div class="ttdeci">void modsub_p(myVecP &amp;x, const myVecP &amp;a, const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:458</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_adb3f0d004afc2ea786ca9e0596a88d55"><div class="ttname"><a href="classNTL_1_1myVecP.html#adb3f0d004afc2ea786ca9e0596a88d55">NTL::myVecP::ModAddAtIndex</a></div><div class="ttdeci">myVecP ModAddAtIndex(size_t i, const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:411</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_adab4a8802d8703a0cae8f3f3c6cd77c3"><div class="ttname"><a href="classNTL_1_1myVecP.html#adab4a8802d8703a0cae8f3f3c6cd77c3">NTL::myVecP::Mod</a></div><div class="ttdeci">myVecP Mod(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:373</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a0202740715dbea6d2540e1639ba1340a"><div class="ttname"><a href="classNTL_1_1myVecP.html#a0202740715dbea6d2540e1639ba1340a">NTL::myVecP::ModByTwo</a></div><div class="ttdeci">myVecP ModByTwo() const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:531</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_ac36f1d362c007dae17a225675a8f03dc"><div class="ttname"><a href="classNTL_1_1myVecP.html#ac36f1d362c007dae17a225675a8f03dc">NTL::myVecP::ModExpEq</a></div><div class="ttdeci">const myVecP &amp; ModExpEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:503</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a991ab698e8497433bca3fa782766a902"><div class="ttname"><a href="classNTL_1_1myVecP.html#a991ab698e8497433bca3fa782766a902">NTL::myVecP::ModSubEq</a></div><div class="ttdeci">const myVecP &amp; ModSubEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:345</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a2dee447fa70746b51e48726bc013907f"><div class="ttname"><a href="classNTL_1_1myVecP.html#a2dee447fa70746b51e48726bc013907f">NTL::myVecP::ModEq</a></div><div class="ttdeci">const myVecP &amp; ModEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:392</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1BigVectorInterface_html"><div class="ttname"><a href="classlbcrypto_1_1BigVectorInterface.html">lbcrypto::BigVectorInterface</a></div><div class="ttdef"><b>Definition:</b> vector.h:33</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a1d53f3ffc92c7c04174b15c24791d5e1"><div class="ttname"><a href="classNTL_1_1myVecP.html#a1d53f3ffc92c7c04174b15c24791d5e1">NTL::myVecP::GetDigitAtIndexForBase</a></div><div class="ttdeci">myVecP GetDigitAtIndexForBase(size_t index, usint base) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:625</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a16a809d38402bddbc991658a26441a0a"><div class="ttname"><a href="classNTL_1_1myVecP.html#a16a809d38402bddbc991658a26441a0a">NTL::myVecP::ModAddEq</a></div><div class="ttdeci">const myVecP &amp; ModAddEq(const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:269</div></div>
 <div class="ttc" id="anamespaceNTL_html"><div class="ttname"><a href="namespaceNTL.html">NTL</a></div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a5b617b2e87e3a0bcb7758990e1cd41a1"><div class="ttname"><a href="classNTL_1_1myVecP.html#a5b617b2e87e3a0bcb7758990e1cd41a1">NTL::myVecP::ModInverse</a></div><div class="ttdeci">myVecP ModInverse() const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:511</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a5b617b2e87e3a0bcb7758990e1cd41a1"><div class="ttname"><a href="classNTL_1_1myVecP.html#a5b617b2e87e3a0bcb7758990e1cd41a1">NTL::myVecP::ModInverse</a></div><div class="ttdeci">myVecP ModInverse() const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:512</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1deserialize__error_html"><div class="ttname"><a href="classlbcrypto_1_1deserialize__error.html">lbcrypto::deserialize_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:147</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a69937b2e9b94f6f53d9f416579b04202"><div class="ttname"><a href="classNTL_1_1myVecP.html#a69937b2e9b94f6f53d9f416579b04202">NTL::myVecP::ModMulEq</a></div><div class="ttdeci">const myVecP &amp; ModMulEq(const myVecP &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:423</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a69937b2e9b94f6f53d9f416579b04202"><div class="ttname"><a href="classNTL_1_1myVecP.html#a69937b2e9b94f6f53d9f416579b04202">NTL::myVecP::ModMulEq</a></div><div class="ttdeci">const myVecP &amp; ModMulEq(const myVecP &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:432</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1config__error_html"><div class="ttname"><a href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:107</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_ab3d4424a9e6075c00f183e2db945e727"><div class="ttname"><a href="classNTL_1_1myVecP.html#ab3d4424a9e6075c00f183e2db945e727">NTL::myVecP::ModMul</a></div><div class="ttdeci">myVecP ModMul(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:381</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html"><div class="ttname"><a href="classNTL_1_1myVecP.html">NTL::myVecP</a></div><div class="ttdoc">The class for representing vectors of ubint with associated modulo math.</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:73</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a3ed3578802e415c741e760602ace2f81"><div class="ttname"><a href="classNTL_1_1myVecP.html#a3ed3578802e415c741e760602ace2f81">NTL::myVecP::ModSubEq</a></div><div class="ttdeci">const myVecP &amp; ModSubEq(const myVecP &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:363</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_ab570db710a0d4284d38dc9d24d80a486"><div class="ttname"><a href="classNTL_1_1myVecP.html#ab570db710a0d4284d38dc9d24d80a486">NTL::myVecP::ModSub</a></div><div class="ttdeci">myVecP ModSub(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:323</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_ab3d4424a9e6075c00f183e2db945e727"><div class="ttname"><a href="classNTL_1_1myVecP.html#ab3d4424a9e6075c00f183e2db945e727">NTL::myVecP::ModMul</a></div><div class="ttdeci">myVecP ModMul(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:390</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html"><div class="ttname"><a href="classNTL_1_1myVecP.html">NTL::myVecP</a></div><div class="ttdoc">The class for representing vectors of ubint with associated modulo math.</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:71</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a3ed3578802e415c741e760602ace2f81"><div class="ttname"><a href="classNTL_1_1myVecP.html#a3ed3578802e415c741e760602ace2f81">NTL::myVecP::ModSubEq</a></div><div class="ttdeci">const myVecP &amp; ModSubEq(const myVecP &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:372</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_ab570db710a0d4284d38dc9d24d80a486"><div class="ttname"><a href="classNTL_1_1myVecP.html#ab570db710a0d4284d38dc9d24d80a486">NTL::myVecP::ModSub</a></div><div class="ttdeci">myVecP ModSub(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:332</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1math__error_html"><div class="ttname"><a href="classlbcrypto_1_1math__error.html">lbcrypto::math_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:113</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1Serializable_html"><div class="ttname"><a href="classlbcrypto_1_1Serializable.html">lbcrypto::Serializable</a></div><div class="ttdoc">Base class for PALISADE serialization.</div><div class="ttdef"><b>Definition:</b> serializable.h:76</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_ad36907fac5e8b053c571fc0b8ee6c32d"><div class="ttname"><a href="classNTL_1_1myVecP.html#ad36907fac5e8b053c571fc0b8ee6c32d">NTL::myVecP::modadd_p</a></div><div class="ttdeci">void modadd_p(myVecP &amp;x, const myVecP &amp;a, const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:437</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a92f0262cee5c883fcb9b99d73cf934f0"><div class="ttname"><a href="classNTL_1_1myVecP.html#a92f0262cee5c883fcb9b99d73cf934f0">NTL::myVecP::ModByTwoEq</a></div><div class="ttdeci">const myVecP &amp; ModByTwoEq()</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:538</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_ac193d52c4467fbe7a6bff3b6b64d775e"><div class="ttname"><a href="classNTL_1_1myVecP.html#ac193d52c4467fbe7a6bff3b6b64d775e">NTL::myVecP::DivideAndRound</a></div><div class="ttdeci">myVecP DivideAndRound(const myT &amp;q) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:590</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a0a2fb4136f4d746afce4cf4a5b1eeb72"><div class="ttname"><a href="classNTL_1_1myVecP.html#a0a2fb4136f4d746afce4cf4a5b1eeb72">NTL::myVecP::ModAddEq</a></div><div class="ttdeci">const myVecP &amp; ModAddEq(const myVecP &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:305</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a8025585d86e8bb0af8b4a7ff29576e1b"><div class="ttname"><a href="classNTL_1_1myVecP.html#a8025585d86e8bb0af8b4a7ff29576e1b">NTL::myVecP::ModSub</a></div><div class="ttdeci">myVecP ModSub(const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:350</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a18c103722994d48e1749bc5c692d8edb"><div class="ttname"><a href="classNTL_1_1myVecP.html#a18c103722994d48e1749bc5c692d8edb">NTL::myVecP::ModMul</a></div><div class="ttdeci">myVecP ModMul(const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:409</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a989d420a14aff0fd4303e7e1151fb200"><div class="ttname"><a href="classNTL_1_1myVecP.html#a989d420a14aff0fd4303e7e1151fb200">NTL::myVecP::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const myVecP&lt; myT &gt; &amp;ptr_obj)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:549</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_aa33f62f3f01543c43104240e333a8164"><div class="ttname"><a href="classNTL_1_1myVecP.html#aa33f62f3f01543c43104240e333a8164">NTL::myVecP::DivideAndRoundEq</a></div><div class="ttdeci">const myVecP &amp; DivideAndRoundEq(const myT &amp;q)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:606</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a50bcf72240b4192291652058d9b33889"><div class="ttname"><a href="classNTL_1_1myVecP.html#a50bcf72240b4192291652058d9b33889">NTL::myVecP::ModAdd</a></div><div class="ttdeci">myVecP ModAdd(const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:292</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a97a398e538ed6e31289ae59dd590d301"><div class="ttname"><a href="classNTL_1_1myVecP.html#a97a398e538ed6e31289ae59dd590d301">NTL::myVecP::MultiplyAndRoundEq</a></div><div class="ttdeci">const myVecP &amp; MultiplyAndRoundEq(const myT &amp;p, const myT &amp;q)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:575</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_ad36907fac5e8b053c571fc0b8ee6c32d"><div class="ttname"><a href="classNTL_1_1myVecP.html#ad36907fac5e8b053c571fc0b8ee6c32d">NTL::myVecP::modadd_p</a></div><div class="ttdeci">void modadd_p(myVecP &amp;x, const myVecP &amp;a, const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:438</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a92f0262cee5c883fcb9b99d73cf934f0"><div class="ttname"><a href="classNTL_1_1myVecP.html#a92f0262cee5c883fcb9b99d73cf934f0">NTL::myVecP::ModByTwoEq</a></div><div class="ttdeci">const myVecP &amp; ModByTwoEq()</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:539</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_ac193d52c4467fbe7a6bff3b6b64d775e"><div class="ttname"><a href="classNTL_1_1myVecP.html#ac193d52c4467fbe7a6bff3b6b64d775e">NTL::myVecP::DivideAndRound</a></div><div class="ttdeci">myVecP DivideAndRound(const myT &amp;q) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:591</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a0a2fb4136f4d746afce4cf4a5b1eeb72"><div class="ttname"><a href="classNTL_1_1myVecP.html#a0a2fb4136f4d746afce4cf4a5b1eeb72">NTL::myVecP::ModAddEq</a></div><div class="ttdeci">const myVecP &amp; ModAddEq(const myVecP &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:314</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a8025585d86e8bb0af8b4a7ff29576e1b"><div class="ttname"><a href="classNTL_1_1myVecP.html#a8025585d86e8bb0af8b4a7ff29576e1b">NTL::myVecP::ModSub</a></div><div class="ttdeci">myVecP ModSub(const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:359</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a18c103722994d48e1749bc5c692d8edb"><div class="ttname"><a href="classNTL_1_1myVecP.html#a18c103722994d48e1749bc5c692d8edb">NTL::myVecP::ModMul</a></div><div class="ttdeci">myVecP ModMul(const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:418</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a989d420a14aff0fd4303e7e1151fb200"><div class="ttname"><a href="classNTL_1_1myVecP.html#a989d420a14aff0fd4303e7e1151fb200">NTL::myVecP::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const myVecP&lt; myT &gt; &amp;ptr_obj)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:558</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_aa33f62f3f01543c43104240e333a8164"><div class="ttname"><a href="classNTL_1_1myVecP.html#aa33f62f3f01543c43104240e333a8164">NTL::myVecP::DivideAndRoundEq</a></div><div class="ttdeci">const myVecP &amp; DivideAndRoundEq(const myT &amp;q)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:607</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a50bcf72240b4192291652058d9b33889"><div class="ttname"><a href="classNTL_1_1myVecP.html#a50bcf72240b4192291652058d9b33889">NTL::myVecP::ModAdd</a></div><div class="ttdeci">myVecP ModAdd(const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:301</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a97a398e538ed6e31289ae59dd590d301"><div class="ttname"><a href="classNTL_1_1myVecP.html#a97a398e538ed6e31289ae59dd590d301">NTL::myVecP::MultiplyAndRoundEq</a></div><div class="ttdeci">const myVecP &amp; MultiplyAndRoundEq(const myT &amp;p, const myT &amp;q)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:576</div></div>
 <div class="ttc" id="aexception_8h_html"><div class="ttname"><a href="exception_8h.html">exception.h</a></div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_ac533d1c397d80c845098c66f5044c82d"><div class="ttname"><a href="classNTL_1_1myVecP.html#ac533d1c397d80c845098c66f5044c82d">NTL::myVecP::ModAddAtIndexEq</a></div><div class="ttdeci">const myVecP &amp; ModAddAtIndexEq(size_t i, const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:423</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a2620b7158573492b2a0d3c112886158e"><div class="ttname"><a href="classNTL_1_1myVecP.html#a2620b7158573492b2a0d3c112886158e">NTL::myVecP::ModInverseEq</a></div><div class="ttdeci">const myVecP &amp; ModInverseEq()</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:521</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_addecb29d1632589c5430059e5c177ebb"><div class="ttname"><a href="classNTL_1_1myVecP.html#addecb29d1632589c5430059e5c177ebb">NTL::myVecP::ModExp</a></div><div class="ttdeci">myVecP ModExp(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:492</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_adee792e03a9ced28274bfcec91958c8e"><div class="ttname"><a href="classNTL_1_1myVecP.html#adee792e03a9ced28274bfcec91958c8e">NTL::myVecP::MultiplyAndRound</a></div><div class="ttdeci">myVecP MultiplyAndRound(const myT &amp;p, const myT &amp;q) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:559</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_a87248283db23eb5f597246a3eb79ac4e"><div class="ttname"><a href="classNTL_1_1myVecP.html#a87248283db23eb5f597246a3eb79ac4e">NTL::myVecP::ModAdd</a></div><div class="ttdeci">myVecP ModAdd(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:247</div></div>
-<div class="ttc" id="aclassNTL_1_1myVecP_html_adc5c4d1affd9e0b169242ebb38455fac"><div class="ttname"><a href="classNTL_1_1myVecP.html#adc5c4d1affd9e0b169242ebb38455fac">NTL::myVecP::modmul_p</a></div><div class="ttdeci">void modmul_p(myVecP &amp;x, const myVecP &amp;a, const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:474</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_ac533d1c397d80c845098c66f5044c82d"><div class="ttname"><a href="classNTL_1_1myVecP.html#ac533d1c397d80c845098c66f5044c82d">NTL::myVecP::ModAddAtIndexEq</a></div><div class="ttdeci">const myVecP &amp; ModAddAtIndexEq(size_t i, const myT &amp;b)</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:424</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a2620b7158573492b2a0d3c112886158e"><div class="ttname"><a href="classNTL_1_1myVecP.html#a2620b7158573492b2a0d3c112886158e">NTL::myVecP::ModInverseEq</a></div><div class="ttdeci">const myVecP &amp; ModInverseEq()</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:522</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_addecb29d1632589c5430059e5c177ebb"><div class="ttname"><a href="classNTL_1_1myVecP.html#addecb29d1632589c5430059e5c177ebb">NTL::myVecP::ModExp</a></div><div class="ttdeci">myVecP ModExp(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:493</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_adee792e03a9ced28274bfcec91958c8e"><div class="ttname"><a href="classNTL_1_1myVecP.html#adee792e03a9ced28274bfcec91958c8e">NTL::myVecP::MultiplyAndRound</a></div><div class="ttdeci">myVecP MultiplyAndRound(const myT &amp;p, const myT &amp;q) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:560</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_a87248283db23eb5f597246a3eb79ac4e"><div class="ttname"><a href="classNTL_1_1myVecP.html#a87248283db23eb5f597246a3eb79ac4e">NTL::myVecP::ModAdd</a></div><div class="ttdeci">myVecP ModAdd(const myT &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.h:256</div></div>
+<div class="ttc" id="aclassNTL_1_1myVecP_html_adc5c4d1affd9e0b169242ebb38455fac"><div class="ttname"><a href="classNTL_1_1myVecP.html#adc5c4d1affd9e0b169242ebb38455fac">NTL::myVecP::modmul_p</a></div><div class="ttdeci">void modmul_p(myVecP &amp;x, const myVecP &amp;a, const myVecP &amp;b) const</div><div class="ttdef"><b>Definition:</b> mubintvecntl.cpp:475</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classlbcrypto_1_1Metadata.html" title="Empty metadata container." alt="" coords="5,5,151,32"/>
-<area shape="rect" id="node2" href="$classlbcrypto_1_1MetadataTest.html" title="Example class inheriting from Metadata and adding a member. This is used in unit tests." alt="" coords="199,5,369,32"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1KeySwitchBase.html" title=" " alt="" coords="5,23,188,65"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1KeySwitchRNS.html" title="Abstract interface class for LBC SHE algorithms." alt="" coords="236,31,413,57"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1KeySwitchBV.html" title="Abstract interface class for LBC SHE algorithms." alt="" coords="477,5,645,32"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1KeySwitchHYBRID.html" title="Abstract interface class for LBC SHE algorithms." alt="" coords="461,56,661,83"/>
 </map>

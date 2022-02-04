@@ -1,0 +1,9 @@
+<map id="lbcrypto::CryptoParametersRNS" name="lbcrypto::CryptoParametersRNS">
+<area shape="rect" id="node1" title="main implementation class to capture essential cryptoparameters of any LBC system" alt="" coords="708,78,935,105"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1CryptoParametersBFVRNS.html" title=" " alt="" coords="983,5,1183,47"/>
+<area shape="rect" id="node6" href="$classlbcrypto_1_1CryptoParametersBGVRNS.html" title=" " alt="" coords="983,71,1183,112"/>
+<area shape="rect" id="node7" href="$classlbcrypto_1_1CryptoParametersCKKSRNS.html" title=" " alt="" coords="983,136,1183,177"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1CryptoParametersRLWE.html" title=" " alt="" coords="460,71,660,112"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1CryptoParametersBase.html" title=" " alt="" coords="212,71,412,112"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="5,78,164,105"/>
+</map>

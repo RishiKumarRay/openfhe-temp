@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -154,8 +154,8 @@ $(function() {
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <a class="code" href="classlbcrypto_1_1BinFHEContext.html">BinFHEContext</a>() {}</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1BinFHEContext.html#a87156ab067cd41bc5dd3b71cb56bc43f">GenerateBinFHEContext</a>(uint32_t n, uint32_t N, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;q,</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                             <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;Q, <span class="keywordtype">double</span> std,</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1BinFHEContext.html#a87156ab067cd41bc5dd3b71cb56bc43f">GenerateBinFHEContext</a>(uint32_t n, uint32_t N, <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;q,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                             <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;Q, <span class="keywordtype">double</span> std,</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                             uint32_t baseKS, uint32_t baseG, uint32_t baseR,</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                             BINFHEMETHOD method = GINX);</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
@@ -250,6 +250,7 @@ $(function() {
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a0ddc8a89c25e9f287270f17b0e3bec96"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a0ddc8a89c25e9f287270f17b0e3bec96">lbcrypto::BinFHEContext::EvalConstant</a></div><div class="ttdeci">LWECiphertext EvalConstant(bool value) const</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:178</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html">lbcrypto::BinFHEContext</a></div><div class="ttdoc">BinFHEContext.</div><div class="ttdef"><b>Definition:</b> binfhecontext.h:84</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html">intnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> ubintnat.h:79</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a193f551281f30be728e9ca44b247517d"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a193f551281f30be728e9ca44b247517d">lbcrypto::BinFHEContext::KeyGenN</a></div><div class="ttdeci">LWEPrivateKey KeyGenN() const</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:133</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a85b3da062569c5bcc55a125109468499"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a85b3da062569c5bcc55a125109468499">lbcrypto::BinFHEContext::GetSwitchKey</a></div><div class="ttdeci">const std::shared_ptr&lt; LWESwitchingKey &gt; GetSwitchKey() const</div><div class="ttdef"><b>Definition:</b> binfhecontext.h:133</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWECiphertextImpl_html"><div class="ttname"><a href="classlbcrypto_1_1LWECiphertextImpl.html">lbcrypto::LWECiphertextImpl</a></div><div class="ttdoc">Class that stores a LWE scheme ciphertext; composed of a vector &quot;a&quot; and integer &quot;b&quot;.</div><div class="ttdef"><b>Definition:</b> lwecore.h:207</div></div>
@@ -261,16 +262,15 @@ $(function() {
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a26d0b6ed3cee9c690fe082a7be43b401"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a26d0b6ed3cee9c690fe082a7be43b401">lbcrypto::BinFHEContext::BTKeyLoad</a></div><div class="ttdeci">void BTKeyLoad(const RingGSWEvalKey &amp;key)</div><div class="ttdef"><b>Definition:</b> binfhecontext.h:195</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1Serializable_html"><div class="ttname"><a href="classlbcrypto_1_1Serializable.html">lbcrypto::Serializable</a></div><div class="ttdoc">Base class for PALISADE serialization.</div><div class="ttdef"><b>Definition:</b> serializable.h:76</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_ae1ee838cdad74b8b6d04d434798159fd"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#ae1ee838cdad74b8b6d04d434798159fd">lbcrypto::BinFHEContext::KeyGen</a></div><div class="ttdeci">LWEPrivateKey KeyGen() const</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:129</div></div>
-<div class="ttc" id="astructlbcrypto_1_1RingGSWEvalKey_html"><div class="ttname"><a href="structlbcrypto_1_1RingGSWEvalKey.html">lbcrypto::RingGSWEvalKey</a></div><div class="ttdef"><b>Definition:</b> ringcore.h:441</div></div>
+<div class="ttc" id="astructlbcrypto_1_1RingGSWEvalKey_html"><div class="ttname"><a href="structlbcrypto_1_1RingGSWEvalKey.html">lbcrypto::RingGSWEvalKey</a></div><div class="ttdef"><b>Definition:</b> ringcore.h:439</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_acf4e933180384b2819f754f017d91141"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#acf4e933180384b2819f754f017d91141">lbcrypto::BinFHEContext::EvalNOT</a></div><div class="ttdeci">LWECiphertext EvalNOT(ConstLWECiphertext ct1) const</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:174</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a1e593091ae68443a739c1cc3befe0965"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a1e593091ae68443a739c1cc3befe0965">lbcrypto::BinFHEContext::EvalBinGate</a></div><div class="ttdeci">LWECiphertext EvalBinGate(const BINGATE gate, ConstLWECiphertext ct1, ConstLWECiphertext ct2) const</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:163</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a87156ab067cd41bc5dd3b71cb56bc43f"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a87156ab067cd41bc5dd3b71cb56bc43f">lbcrypto::BinFHEContext::GenerateBinFHEContext</a></div><div class="ttdeci">void GenerateBinFHEContext(uint32_t n, uint32_t N, const NativeInteger &amp;q, const NativeInteger &amp;Q, double std, uint32_t baseKS, uint32_t baseG, uint32_t baseR, BINFHEMETHOD method=GINX)</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:29</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_a7d54aa2e96d8ca85d4b7a84d3db53c41"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#a7d54aa2e96d8ca85d4b7a84d3db53c41">lbcrypto::BinFHEContext::Decrypt</a></div><div class="ttdeci">void Decrypt(ConstLWEPrivateKey sk, ConstLWECiphertext ct, LWEPlaintext *result) const</div><div class="ttdef"><b>Definition:</b> binfhecontext.cpp:148</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1BinFHEContext_html_ac56a12c505f77878448bcb11cfef92a4"><div class="ttname"><a href="classlbcrypto_1_1BinFHEContext.html#ac56a12c505f77878448bcb11cfef92a4">lbcrypto::BinFHEContext::GetRefreshKey</a></div><div class="ttdeci">const std::shared_ptr&lt; RingGSWBTKey &gt; GetRefreshKey() const</div><div class="ttdef"><b>Definition:</b> binfhecontext.h:124</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html">bigintnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> backend.h:60</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

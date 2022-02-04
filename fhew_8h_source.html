@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -164,39 +164,42 @@ $(function() {
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                  <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1RingGSWCiphertext.html">RingGSWCiphertext</a> &amp;input,</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                  std::shared_ptr&lt;RingGSWCiphertext&gt; acc) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keywordtype">void</span> AddToACCGINX(<span class="keyword">const</span> std::shared_ptr&lt;RingGSWCryptoParams&gt; params,</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                    <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1RingGSWCiphertext.html">RingGSWCiphertext</a> &amp;input, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;a,</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                    std::shared_ptr&lt;RingGSWCiphertext&gt; acc) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SignedDigitDecompose(</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;RingGSWCryptoParams&gt; params,</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativePoly&gt; &amp;input,</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      std::vector&lt;NativePoly&gt; *output) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  std::shared_ptr&lt;RingGSWCiphertext&gt; BootstrapCore(</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;RingGSWCryptoParams&gt; params, <span class="keyword">const</span> BINGATE gate,</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      <span class="keyword">const</span> <a class="code" href="structlbcrypto_1_1RingGSWEvalKey.html">RingGSWEvalKey</a> &amp;EK, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b,</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;LWEEncryptionScheme&gt; LWEscheme) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;};</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}  <span class="comment">// namespace lbcrypto</span></div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keywordtype">void</span> AddToACCGINX(<span class="keyword">const</span> std::shared_ptr&lt;RingGSWCryptoParams&gt; params,</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;                    <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1RingGSWCiphertext.html">RingGSWCiphertext</a> &amp;input1,  </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                    <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1RingGSWCiphertext.html">RingGSWCiphertext</a> &amp;input2, </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                    <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;a,</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                    std::shared_ptr&lt;RingGSWCiphertext&gt; acc) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> SignedDigitDecompose(</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;RingGSWCryptoParams&gt; params,</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativePoly&gt; &amp;input,</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      std::vector&lt;NativePoly&gt; *output) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  std::shared_ptr&lt;RingGSWCiphertext&gt; BootstrapCore(</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;RingGSWCryptoParams&gt; params, <span class="keyword">const</span> BINGATE gate,</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      <span class="keyword">const</span> <a class="code" href="structlbcrypto_1_1RingGSWEvalKey.html">RingGSWEvalKey</a> &amp;EK, <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b,</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      <span class="keyword">const</span> std::shared_ptr&lt;LWEEncryptionScheme&gt; LWEscheme) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;};</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;}  <span class="comment">// namespace lbcrypto</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1RingGSWAccumulatorScheme_html_aa2ae2f782f214ab610224d098efe8f17"><div class="ttname"><a href="classlbcrypto_1_1RingGSWAccumulatorScheme.html#aa2ae2f782f214ab610224d098efe8f17">lbcrypto::RingGSWAccumulatorScheme::KeyGen</a></div><div class="ttdeci">RingGSWEvalKey KeyGen(const std::shared_ptr&lt; RingGSWCryptoParams &gt; params, const std::shared_ptr&lt; LWEEncryptionScheme &gt; lwescheme, const std::shared_ptr&lt; const LWEPrivateKeyImpl &gt; LWEsk) const</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html">intnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> ubintnat.h:79</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1RingGSWAccumulatorScheme_html"><div class="ttname"><a href="classlbcrypto_1_1RingGSWAccumulatorScheme.html">lbcrypto::RingGSWAccumulatorScheme</a></div><div class="ttdoc">Ring GSW accumulator schemes described in https://eprint.iacr.org/2014/816 and &quot;Bootstrapping in FHEW...</div><div class="ttdef"><b>Definition:</b> fhew.h:49</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1PolyImpl_html"><div class="ttname"><a href="classlbcrypto_1_1PolyImpl.html">lbcrypto::PolyImpl&lt; NativeVector &gt;</a></div></div>
 <div class="ttc" id="aclasslbcrypto_1_1RingGSWAccumulatorScheme_html_a2d277b9a994ab63636c77c1f266cb1e0"><div class="ttname"><a href="classlbcrypto_1_1RingGSWAccumulatorScheme.html#a2d277b9a994ab63636c77c1f266cb1e0">lbcrypto::RingGSWAccumulatorScheme::Bootstrap</a></div><div class="ttdeci">std::shared_ptr&lt; LWECiphertextImpl &gt; Bootstrap(const std::shared_ptr&lt; RingGSWCryptoParams &gt; params, const RingGSWEvalKey &amp;EK, const std::shared_ptr&lt; const LWECiphertextImpl &gt; ct1, const std::shared_ptr&lt; LWEEncryptionScheme &gt; LWEscheme) const</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1RingGSWAccumulatorScheme_html_aa70d859c5d4332b6ddc9f0f5b2af7f8e"><div class="ttname"><a href="classlbcrypto_1_1RingGSWAccumulatorScheme.html#aa70d859c5d4332b6ddc9f0f5b2af7f8e">lbcrypto::RingGSWAccumulatorScheme::EvalNOT</a></div><div class="ttdeci">std::shared_ptr&lt; LWECiphertextImpl &gt; EvalNOT(const std::shared_ptr&lt; RingGSWCryptoParams &gt; params, const std::shared_ptr&lt; const LWECiphertextImpl &gt; ct1) const</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1RingGSWCiphertext_html"><div class="ttname"><a href="classlbcrypto_1_1RingGSWCiphertext.html">lbcrypto::RingGSWCiphertext</a></div><div class="ttdoc">Class that stores a RingGSW ciphertext; a two-dimensional vector of ring elements.</div><div class="ttdef"><b>Definition:</b> ringcore.h:272</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeVector_html"><div class="ttname"><a href="classbigintnat_1_1NativeVector.html">bigintnat::NativeVector</a></div><div class="ttdef"><b>Definition:</b> mubintvecnat.h:102</div></div>
-<div class="ttc" id="astructlbcrypto_1_1RingGSWEvalKey_html"><div class="ttname"><a href="structlbcrypto_1_1RingGSWEvalKey.html">lbcrypto::RingGSWEvalKey</a></div><div class="ttdef"><b>Definition:</b> ringcore.h:441</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1RingGSWCiphertext_html"><div class="ttname"><a href="classlbcrypto_1_1RingGSWCiphertext.html">lbcrypto::RingGSWCiphertext</a></div><div class="ttdoc">Class that stores a RingGSW ciphertext; a two-dimensional vector of ring elements.</div><div class="ttdef"><b>Definition:</b> ringcore.h:270</div></div>
+<div class="ttc" id="astructlbcrypto_1_1RingGSWEvalKey_html"><div class="ttname"><a href="structlbcrypto_1_1RingGSWEvalKey.html">lbcrypto::RingGSWEvalKey</a></div><div class="ttdef"><b>Definition:</b> ringcore.h:439</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeVectorT_html"><div class="ttname"><a href="classintnat_1_1NativeVectorT.html">intnat::NativeVectorT</a></div><div class="ttdef"><b>Definition:</b> mubintvecnat.h:56</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1RingGSWAccumulatorScheme_html_a1322a0611101b6d2a037ff6bd2e221b9"><div class="ttname"><a href="classlbcrypto_1_1RingGSWAccumulatorScheme.html#a1322a0611101b6d2a037ff6bd2e221b9">lbcrypto::RingGSWAccumulatorScheme::EvalBinGate</a></div><div class="ttdeci">std::shared_ptr&lt; LWECiphertextImpl &gt; EvalBinGate(const std::shared_ptr&lt; RingGSWCryptoParams &gt; params, const BINGATE gate, const RingGSWEvalKey &amp;EK, const std::shared_ptr&lt; const LWECiphertextImpl &gt; ct1, const std::shared_ptr&lt; const LWECiphertextImpl &gt; ct2, const std::shared_ptr&lt; LWEEncryptionScheme &gt; LWEscheme) const</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html">bigintnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> backend.h:60</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

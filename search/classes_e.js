@@ -1,8 +1,28 @@
 var searchData=
 [
-  ['ternaryuniformgeneratorimpl_1211',['TernaryUniformGeneratorImpl',['../classlbcrypto_1_1TernaryUniformGeneratorImpl.html',1,'lbcrypto']]],
-  ['threadexception_1212',['ThreadException',['../classlbcrypto_1_1ThreadException.html',1,'lbcrypto']]],
-  ['trapdoorparams_1213',['TrapdoorParams',['../classlbcrypto_1_1TrapdoorParams.html',1,'lbcrypto']]],
-  ['type_5ferror_1214',['type_error',['../classlbcrypto_1_1type__error.html',1,'lbcrypto']]],
-  ['typed_1215',['typeD',['../structbigintnat_1_1NativeIntegerT_1_1typeD.html',1,'bigintnat::NativeIntegerT']]]
+  ['samplercombiner_1162',['SamplerCombiner',['../classlbcrypto_1_1SamplerCombiner.html',1,'lbcrypto']]],
+  ['schemebase_1163',['SchemeBase',['../classlbcrypto_1_1SchemeBase.html',1,'lbcrypto']]],
+  ['schemebase_3c_20dcrtpoly_20_3e_1164',['SchemeBase&lt; DCRTPoly &gt;',['../classlbcrypto_1_1SchemeBase.html',1,'lbcrypto']]],
+  ['schemebfvrns_1165',['SchemeBFVRNS',['../classlbcrypto_1_1SchemeBFVRNS.html',1,'lbcrypto']]],
+  ['schemebgvrns_1166',['SchemeBGVRNS',['../classlbcrypto_1_1SchemeBGVRNS.html',1,'lbcrypto']]],
+  ['schemeckksrns_1167',['SchemeCKKSRNS',['../classlbcrypto_1_1SchemeCKKSRNS.html',1,'lbcrypto']]],
+  ['schemerns_1168',['SchemeRNS',['../classlbcrypto_1_1SchemeRNS.html',1,'lbcrypto']]],
+  ['serbinary_1169',['SERBINARY',['../classlbcrypto_1_1SerType_1_1SERBINARY.html',1,'lbcrypto::SerType']]],
+  ['serializable_1170',['Serializable',['../classlbcrypto_1_1Serializable.html',1,'lbcrypto']]],
+  ['serialize_5ferror_1171',['serialize_error',['../classlbcrypto_1_1serialize__error.html',1,'lbcrypto']]],
+  ['serjson_1172',['SERJSON',['../classlbcrypto_1_1SerType_1_1SERJSON.html',1,'lbcrypto::SerType']]],
+  ['signeddatatype_1173',['SignedDataType',['../structbigintdyn_1_1SignedDataType.html',1,'bigintdyn']]],
+  ['signeddatatype_3c_20uint16_5ft_20_3e_1174',['SignedDataType&lt; uint16_t &gt;',['../structbigintdyn_1_1SignedDataType_3_01uint16__t_01_4.html',1,'bigintdyn']]],
+  ['signeddatatype_3c_20uint32_5ft_20_3e_1175',['SignedDataType&lt; uint32_t &gt;',['../structbigintdyn_1_1SignedDataType_3_01uint32__t_01_4.html',1,'bigintdyn']]],
+  ['signeddatatype_3c_20uint64_5ft_20_3e_1176',['SignedDataType&lt; uint64_t &gt;',['../structbigintdyn_1_1SignedDataType_3_01uint64__t_01_4.html',1,'bigintdyn']]],
+  ['signeddatatype_3c_20uint8_5ft_20_3e_1177',['SignedDataType&lt; uint8_t &gt;',['../structbigintdyn_1_1SignedDataType_3_01uint8__t_01_4.html',1,'bigintdyn']]],
+  ['signeddoubledatatype_1178',['SignedDoubleDataType',['../structbigintdyn_1_1SignedDoubleDataType.html',1,'bigintdyn']]],
+  ['signeddoubledatatype_3c_20uint16_5ft_20_3e_1179',['SignedDoubleDataType&lt; uint16_t &gt;',['../structbigintdyn_1_1SignedDoubleDataType_3_01uint16__t_01_4.html',1,'bigintdyn']]],
+  ['signeddoubledatatype_3c_20uint32_5ft_20_3e_1180',['SignedDoubleDataType&lt; uint32_t &gt;',['../structbigintdyn_1_1SignedDoubleDataType_3_01uint32__t_01_4.html',1,'bigintdyn']]],
+  ['signeddoubledatatype_3c_20uint64_5ft_20_3e_1181',['SignedDoubleDataType&lt; uint64_t &gt;',['../structbigintdyn_1_1SignedDoubleDataType_3_01uint64__t_01_4.html',1,'bigintdyn']]],
+  ['signeddoubledatatype_3c_20uint8_5ft_20_3e_1182',['SignedDoubleDataType&lt; uint8_t &gt;',['../structbigintdyn_1_1SignedDoubleDataType_3_01uint8__t_01_4.html',1,'bigintdyn']]],
+  ['stdlatticeparm_1183',['StdLatticeParm',['../classlbcrypto_1_1StdLatticeParm.html',1,'lbcrypto']]],
+  ['stl_5fallocator_1184',['stl_allocator',['../classstl__allocator.html',1,'']]],
+  ['stl_5fallocator_3c_20void_20_3e_1185',['stl_allocator&lt; void &gt;',['../classstl__allocator_3_01void_01_4.html',1,'']]],
+  ['stringencoding_1186',['StringEncoding',['../classlbcrypto_1_1StringEncoding.html',1,'lbcrypto']]]
 ];

@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classlbcrypto_1_1ParallelControls.html" title=" " alt="" coords="5,5,191,32"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1LeveledSHEBase.html" title=" " alt="" coords="5,49,197,90"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LeveledSHERNS.html" title="Abstract interface class for LBC SHE algorithms." alt="" coords="245,56,432,83"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LeveledSHEBFVRNS.html" title=" " alt="" coords="485,5,698,32"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1LeveledSHEBGVRNS.html" title=" " alt="" coords="484,56,699,83"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1LeveledSHECKKSRNS.html" title=" " alt="" coords="480,107,703,133"/>
 </map>

@@ -1,0 +1,5 @@
+<map id="lbcrypto::CryptoParametersBase&lt; Element &gt;" name="lbcrypto::CryptoParametersBase&lt; Element &gt;">
+<area shape="rect" id="node1" title="main implementation class to capture essential cryptoparameters of any LBC system" alt="" coords="5,80,205,121"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1CryptoParametersRLWE.html" title="Template for crypto parameters." alt="" coords="5,169,205,211"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1Serializable.html" title="Base class for PALISADE serialization." alt="" coords="26,5,185,32"/>
+</map>

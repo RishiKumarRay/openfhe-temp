@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -69,7 +69,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classlbcrypto_1_1CryptoContextFactory-members.html">List of all members</a>  </div>
@@ -81,7 +80,7 @@ $(function() {
 <p><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html" title="CryptoContextFactory.">CryptoContextFactory</a>.  
  <a href="classlbcrypto_1_1CryptoContextFactory.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="cryptocontext_8h_source.html">cryptocontext.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="cryptocontextfactory_8h_source.html">cryptocontextfactory.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for lbcrypto::CryptoContextFactory&lt; Element &gt;:</div>
 <div class="dyncontent">
@@ -92,15 +91,6 @@ Collaboration diagram for lbcrypto::CryptoContextFactory&lt; Element &gt;:</div>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:aae380c2b160f371cdebd1c15f6bc8504"><td class="memItemLeft" align="right" valign="top"><a id="aae380c2b160f371cdebd1c15f6bc8504"></a>
-CryptoContext&lt; <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html">DCRTPoly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>genCryptoContextNull</b> (unsigned int m, const PlaintextModulus ptModulus)</td></tr>
-<tr class="separator:aae380c2b160f371cdebd1c15f6bc8504"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a605cf0b71eb9620d6cc53c2dd8c3d414"><td class="memItemLeft" align="right" valign="top"><a id="a605cf0b71eb9620d6cc53c2dd8c3d414"></a>
-CryptoContext&lt; <a class="el" href="classlbcrypto_1_1HexlDCRTPoly.html">DCRTPoly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>genCryptoContextNull</b> (unsigned int m, EncodingParams encodingParams)</td></tr>
-<tr class="separator:a605cf0b71eb9620d6cc53c2dd8c3d414"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af6c048ca5f4db33d9dfa77207c4326aa"><td class="memItemLeft" align="right" valign="top"><a id="af6c048ca5f4db33d9dfa77207c4326aa"></a>
@@ -112,63 +102,33 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><b>GetContextCount
 <tr class="memitem:a112cf5e1bffd7d072794234405eed433"><td class="memItemLeft" align="right" valign="top"><a id="a112cf5e1bffd7d072794234405eed433"></a>
 static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetSingleContext</b> ()</td></tr>
 <tr class="separator:a112cf5e1bffd7d072794234405eed433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d42ee591650f66ae50e4c4869af7217"><td class="memItemLeft" align="right" valign="top"><a id="a5d42ee591650f66ae50e4c4869af7217"></a>
-static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetContext</b> (shared_ptr&lt; <a class="el" href="classlbcrypto_1_1LPCryptoParameters.html">LPCryptoParameters</a>&lt; Element &gt;&gt; params, shared_ptr&lt; <a class="el" href="classlbcrypto_1_1LPPublicKeyEncryptionScheme.html">LPPublicKeyEncryptionScheme</a>&lt; Element &gt;&gt; scheme, const string &amp;schemeId=&quot;Not&quot;)</td></tr>
-<tr class="separator:a5d42ee591650f66ae50e4c4869af7217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0c1d248a34f9465ea6e00735a9796f"><td class="memItemLeft" align="right" valign="top"><a id="a5b0c1d248a34f9465ea6e00735a9796f"></a>
+static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetContext</b> (shared_ptr&lt; <a class="el" href="classlbcrypto_1_1CryptoParametersBase.html">CryptoParametersBase</a>&lt; Element &gt;&gt; params, shared_ptr&lt; <a class="el" href="classlbcrypto_1_1SchemeBase.html">SchemeBase</a>&lt; Element &gt;&gt; scheme, const string &amp;schemeId=&quot;Not&quot;)</td></tr>
+<tr class="separator:a5b0c1d248a34f9465ea6e00735a9796f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a526d54db822f28ce330a8f1310f6c357"><td class="memItemLeft" align="right" valign="top"><a id="a526d54db822f28ce330a8f1310f6c357"></a>
 static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetContextForPointer</b> (<a class="el" href="classlbcrypto_1_1CryptoContextImpl.html">CryptoContextImpl</a>&lt; Element &gt; *cc)</td></tr>
 <tr class="separator:a526d54db822f28ce330a8f1310f6c357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7c27f38d80253290863184a24ba648c"><td class="memItemLeft" align="right" valign="top"><a id="ae7c27f38d80253290863184a24ba648c"></a>
 static const vector&lt; CryptoContext&lt; Element &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetAllContexts</b> ()</td></tr>
 <tr class="separator:ae7c27f38d80253290863184a24ba648c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7656c01a2594f233ffcdbab66b94d83c"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a7656c01a2594f233ffcdbab66b94d83c">genCryptoContextBFV</a> (shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, const std::string &amp;delta, MODE mode=RLWE, const std::string &amp;bigmodulus=&quot;0&quot;, const std::string &amp;bigrootofunity=&quot;0&quot;, int depth=0, int assuranceMeasure=0, float securityLevel=0, const std::string &amp;bigmodulusarb=&quot;0&quot;, const std::string &amp;bigrootofunityarb=&quot;0&quot;, int maxDepth=2)</td></tr>
-<tr class="separator:a7656c01a2594f233ffcdbab66b94d83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2af3d2785c4c04e33a613833de52ddd5"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a2af3d2785c4c04e33a613833de52ddd5">genCryptoContextBFV</a> (shared_ptr&lt; ParmType &gt; params, EncodingParams encodingParams, usint relinWindow, float stDev, const std::string &amp;delta, MODE mode=RLWE, const std::string &amp;bigmodulus=&quot;0&quot;, const std::string &amp;bigrootofunity=&quot;0&quot;, int depth=0, int assuranceMeasure=0, float securityLevel=0, const std::string &amp;bigmodulusarb=&quot;0&quot;, const std::string &amp;bigrootofunityarb=&quot;0&quot;, int maxDepth=2)</td></tr>
-<tr class="separator:a2af3d2785c4c04e33a613833de52ddd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2613e24e04b79a744155eb9a6df7970c"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a2613e24e04b79a744155eb9a6df7970c">genCryptoContextBFV</a> (const PlaintextModulus plaintextModulus, float securityLevel, usint relinWindow, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t n=0)</td></tr>
-<tr class="separator:a2613e24e04b79a744155eb9a6df7970c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbd48a45c05ebc48c9624a9eece25e70"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#acbd48a45c05ebc48c9624a9eece25e70">genCryptoContextBFV</a> (const PlaintextModulus plaintextModulus, SecurityLevel securityLevel, usint relinWindow, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t n=0)</td></tr>
-<tr class="separator:acbd48a45c05ebc48c9624a9eece25e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d87da4c8d549aa14ed5fa31498165d7"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a3d87da4c8d549aa14ed5fa31498165d7">genCryptoContextBFV</a> (EncodingParams encodingParams, float securityLevel, usint relinWindow, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t n=0)</td></tr>
-<tr class="separator:a3d87da4c8d549aa14ed5fa31498165d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa589a8f23c84f8162f78c4ad28a27d02"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#aa589a8f23c84f8162f78c4ad28a27d02">genCryptoContextBFV</a> (EncodingParams encodingParams, SecurityLevel securityLevel, usint relinWindow, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t n=0)</td></tr>
-<tr class="separator:aa589a8f23c84f8162f78c4ad28a27d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b804ce1d8241d9158fc0bc11b7e6bc1"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a6b804ce1d8241d9158fc0bc11b7e6bc1">genCryptoContextBFVrns</a> (const PlaintextModulus plaintextModulus, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:a6b804ce1d8241d9158fc0bc11b7e6bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a094bec9857e242a539cba3af35cf18dc"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a094bec9857e242a539cba3af35cf18dc">genCryptoContextBFVrns</a> (const PlaintextModulus plaintextModulus, SecurityLevel securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:a094bec9857e242a539cba3af35cf18dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2602853bf258d0e50fffe5ec69b6d58"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#aa2602853bf258d0e50fffe5ec69b6d58">genCryptoContextBFVrns</a> (EncodingParams encodingParams, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:aa2602853bf258d0e50fffe5ec69b6d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a095a8b0f068f683d8d14d4f2c0707154"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a095a8b0f068f683d8d14d4f2c0707154">genCryptoContextBFVrns</a> (EncodingParams encodingParams, SecurityLevel securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:a095a8b0f068f683d8d14d4f2c0707154"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70003209143e5c9bcf8d2c36796d3133"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a70003209143e5c9bcf8d2c36796d3133">genCryptoContextBFVrnsB</a> (const PlaintextModulus plaintextModulus, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:a70003209143e5c9bcf8d2c36796d3133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f18ad87591ee6e12f75f51d0a5c5433"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a4f18ad87591ee6e12f75f51d0a5c5433">genCryptoContextBFVrnsB</a> (const PlaintextModulus plaintextModulus, SecurityLevel securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t=0)</td></tr>
-<tr class="separator:a4f18ad87591ee6e12f75f51d0a5c5433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e097c47796e99a79359835dce95613"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#aa4e097c47796e99a79359835dce95613">genCryptoContextBFVrnsB</a> (EncodingParams encodingParams, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:aa4e097c47796e99a79359835dce95613"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cd95aed7aa5f21f53a9193494f7d8e1"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a8cd95aed7aa5f21f53a9193494f7d8e1">genCryptoContextBFVrnsB</a> (EncodingParams encodingParams, SecurityLevel securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</td></tr>
-<tr class="separator:a8cd95aed7aa5f21f53a9193494f7d8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa462992db843e0c10e8d9e01bfae3291"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#aa462992db843e0c10e8d9e01bfae3291">genCryptoContextCKKS</a> (shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, KeySwitchTechnique ksTech=BV, RescalingTechnique rsTech=APPROXRESCALE)</td></tr>
-<tr class="separator:aa462992db843e0c10e8d9e01bfae3291"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbe9ba5238f99799a21f288e51437f57"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#abbe9ba5238f99799a21f288e51437f57">genCryptoContextCKKS</a> (shared_ptr&lt; ParmType &gt; params, EncodingParams encodingParams, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, enum KeySwitchTechnique ksTech=BV, RescalingTechnique rsTech=APPROXRESCALE)</td></tr>
-<tr class="separator:abbe9ba5238f99799a21f288e51437f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f6a8e47d479e8961dce63f8dd796fe"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#ac9f6a8e47d479e8961dce63f8dd796fe">genCryptoContextCKKSWithParamsGen</a> (usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow, usint batchSize, MODE mode, int depth=1, int maxDepth=2, usint firstModSize=FIRSTMODSIZE, enum KeySwitchTechnique ksTech=BV, enum RescalingTechnique rsTech=APPROXRESCALE, uint32_t numLargeDigits=4)</td></tr>
-<tr class="separator:ac9f6a8e47d479e8961dce63f8dd796fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24fd97c9009a33567a34f8e465492100"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a24fd97c9009a33567a34f8e465492100">genCryptoContextCKKS</a> (usint multiplicativeDepth, usint scalingFactorBits, usint batchSize, SecurityLevel stdLevel=HEStd_128_classic, usint ringDim=0, enum RescalingTechnique rsTech=DEFAULTRSTECH, enum KeySwitchTechnique ksTech=HYBRID, uint32_t numLargeDigits=0, int maxDepth=2, usint firstModSize=FIRSTMODSIZE, usint relinWindow=0, MODE mode=OPTIMIZED)</td></tr>
-<tr class="separator:a24fd97c9009a33567a34f8e465492100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6201c59f42df4334ec16fba8cc09dde6"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a6201c59f42df4334ec16fba8cc09dde6">genCryptoContextBGVrns</a> (shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, KeySwitchTechnique ksTech=BV, enum ModSwitchMethod msMethod=MANUAL)</td></tr>
-<tr class="separator:a6201c59f42df4334ec16fba8cc09dde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75c51be8e0fbcb781c2ad8272ec5e643"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a75c51be8e0fbcb781c2ad8272ec5e643">genCryptoContextBGVrns</a> (shared_ptr&lt; ParmType &gt; params, EncodingParams encodingParams, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, enum KeySwitchTechnique ksTech=BV, enum ModSwitchMethod msMethod=MANUAL)</td></tr>
-<tr class="separator:a75c51be8e0fbcb781c2ad8272ec5e643"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae241125093c27a2d44001bb482948409"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#ae241125093c27a2d44001bb482948409">genCryptoContextBGVrnsWithParamsGen</a> (usint cyclOrder, usint numPrimes, usint ptm, usint relinWindow, MODE mode, int depth=1, int maxDepth=2, enum KeySwitchTechnique ksTech=BV, usint firstModSize=0, usint dcrtBits=0, uint32_t numLargeDigits=4, usint batchSize=0, enum ModSwitchMethod msMethod=MANUAL)</td></tr>
-<tr class="separator:ae241125093c27a2d44001bb482948409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32d0b8aa66d9990001cb3c7e1f1d6af2"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a32d0b8aa66d9990001cb3c7e1f1d6af2">genCryptoContextBGVrns</a> (usint multiplicativeDepth, usint ptm, SecurityLevel stdLevel=HEStd_128_classic, float stdDev=3.19, int maxDepth=2, MODE mode=OPTIMIZED, enum KeySwitchTechnique ksTech=HYBRID, usint ringDim=0, uint32_t numLargeDigits=0, usint firstModSize=0, usint dcrtBits=0, usint relinWindow=0, usint batchSize=0, enum ModSwitchMethod msMethod=AUTO)</td></tr>
-<tr class="separator:a32d0b8aa66d9990001cb3c7e1f1d6af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fd10038ca831d04adcadd5ab10128c6"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a6fd10038ca831d04adcadd5ab10128c6">genCryptoContextNull</a> (unsigned int m, const PlaintextModulus ptModulus)</td></tr>
-<tr class="separator:a6fd10038ca831d04adcadd5ab10128c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0db35540084b4cd21abbfbfeac05d362"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a0db35540084b4cd21abbfbfeac05d362">genCryptoContextNull</a> (unsigned int m, EncodingParams encodingParams)</td></tr>
-<tr class="separator:a0db35540084b4cd21abbfbfeac05d362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5487c3173af172a3009cd75ab7797c0e"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a5487c3173af172a3009cd75ab7797c0e">genCryptoContextBFVrns</a> (const PlaintextModulus plaintextModulus, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0, MultiplicationTechnique multTech=HPS)</td></tr>
+<tr class="separator:a5487c3173af172a3009cd75ab7797c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8017941ac3e5c16d1d52a6fe06faa18"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#af8017941ac3e5c16d1d52a6fe06faa18">genCryptoContextBFVrns</a> (const PlaintextModulus plaintextModulus, SecurityLevel securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0, MultiplicationTechnique multTech=HPS)</td></tr>
+<tr class="separator:af8017941ac3e5c16d1d52a6fe06faa18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e578d664baa7095f39aa76646b3fa10"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a6e578d664baa7095f39aa76646b3fa10">genCryptoContextBFVrns</a> (EncodingParams encodingParams, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0, MultiplicationTechnique multTech=HPS)</td></tr>
+<tr class="separator:a6e578d664baa7095f39aa76646b3fa10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60adafc1abefd6569f5513cc61f6cf9c"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a60adafc1abefd6569f5513cc61f6cf9c">genCryptoContextBFVrns</a> (EncodingParams encodingParams, SecurityLevel securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0, MultiplicationTechnique multTech=HPS)</td></tr>
+<tr class="separator:a60adafc1abefd6569f5513cc61f6cf9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1021793722898cb23e41910e046c705b"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a1021793722898cb23e41910e046c705b">genCryptoContextBGVrns</a> (shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, KeySwitchTechnique ksTech=BV, enum RescalingTechnique rsTech=FIXEDMANUAL)</td></tr>
+<tr class="separator:a1021793722898cb23e41910e046c705b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd596e91f8c43ea2059843d88ce42ef0"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#abd596e91f8c43ea2059843d88ce42ef0">genCryptoContextBGVrns</a> (shared_ptr&lt; ParmType &gt; params, EncodingParams encodingParams, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, enum KeySwitchTechnique ksTech=BV, enum RescalingTechnique rsTech=FIXEDMANUAL)</td></tr>
+<tr class="separator:abd596e91f8c43ea2059843d88ce42ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8acbc16c2f1cb06056b8d638503ed78"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#ad8acbc16c2f1cb06056b8d638503ed78">genCryptoContextBGVrnsWithParamsGen</a> (usint cyclOrder, usint numPrimes, usint ptm, usint relinWindow, MODE mode, int depth=1, int maxDepth=2, enum KeySwitchTechnique ksTech=BV, usint firstModSize=0, usint dcrtBits=0, uint32_t numLargeDigits=4, usint batchSize=0, enum RescalingTechnique rsTech=FIXEDMANUAL, usint multihopQBound=0)</td></tr>
+<tr class="separator:ad8acbc16c2f1cb06056b8d638503ed78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83979b4c5b2b5b6d25a64a7873d1b9d4"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#a83979b4c5b2b5b6d25a64a7873d1b9d4">genCryptoContextBGVrns</a> (usint multiplicativeDepth, usint ptm, SecurityLevel stdLevel=HEStd_128_classic, float stdDev=3.19, int maxDepth=2, MODE mode=OPTIMIZED, enum KeySwitchTechnique ksTech=HYBRID, usint ringDim=0, uint32_t numLargeDigits=0, usint firstModSize=0, usint dcrtBits=0, usint relinWindow=0, usint batchSize=0, enum RescalingTechnique rsTech=FIXEDAUTO, usint multihopQBound=0)</td></tr>
+<tr class="separator:a83979b4c5b2b5b6d25a64a7873d1b9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae05e2e42b3b1426314aa8a4b5e27863d"><td class="memItemLeft" align="right" valign="top">static CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html#ae05e2e42b3b1426314aa8a4b5e27863d">genCryptoContextCKKSrns</a> (shared_ptr&lt; ParmType &gt; params, EncodingParams encodingParams, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, enum KeySwitchTechnique ksTech=BV, RescalingTechnique rsTech=FIXEDMANUAL)</td></tr>
+<tr class="separator:ae05e2e42b3b1426314aa8a4b5e27863d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
@@ -183,674 +143,8 @@ class lbcrypto::CryptoContextFactory&lt; Element &gt;</h3>
 <p><a class="el" href="classlbcrypto_1_1CryptoContextFactory.html" title="CryptoContextFactory.">CryptoContextFactory</a>. </p>
 <p>A class that contains static methods to generate new crypto contexts from user parameters </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2613e24e04b79a744155eb9a6df7970c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2613e24e04b79a744155eb9a6df7970c">&#9670;&nbsp;</a></span>genCryptoContextBFV() <span class="overload">[1/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFV </td>
-          <td>(</td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>plaintextModulus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFV Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">plaintextModulus</td><td>plaintext modulus </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>root Hermite factor (lattice security parameter) </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>bits in the base of digits in key switching/relinearization </td></tr>
-    <tr><td class="paramname">dist</td><td>distribution parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="acbd48a45c05ebc48c9624a9eece25e70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbd48a45c05ebc48c9624a9eece25e70">&#9670;&nbsp;</a></span>genCryptoContextBFV() <span class="overload">[2/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Element &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static CryptoContext&lt;Element&gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; Element &gt;::genCryptoContextBFV </td>
-          <td>(</td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>plaintextModulus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SecurityLevel&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFV Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">plaintextModulus</td><td>plaintext modulus </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>standard security level </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>bits in the base of digits in key switching/relinearization </td></tr>
-    <tr><td class="paramname">dist</td><td>distribution parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a3d87da4c8d549aa14ed5fa31498165d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d87da4c8d549aa14ed5fa31498165d7">&#9670;&nbsp;</a></span>genCryptoContextBFV() <span class="overload">[3/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFV </td>
-          <td>(</td>
-          <td class="paramtype">EncodingParams&#160;</td>
-          <td class="paramname"><em>encodingParams</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFV Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">encodingParams</td><td>plaintext encoding parameters </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>root Hermite factor (lattice security parameter) </td></tr>
-    <tr><td class="paramname">distribution</td><td>parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="aa589a8f23c84f8162f78c4ad28a27d02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa589a8f23c84f8162f78c4ad28a27d02">&#9670;&nbsp;</a></span>genCryptoContextBFV() <span class="overload">[4/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFV </td>
-          <td>(</td>
-          <td class="paramtype">EncodingParams&#160;</td>
-          <td class="paramname"><em>encodingParams</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SecurityLevel&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFV Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">encodingParams</td><td>plaintext encoding parameters </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>standard security level </td></tr>
-    <tr><td class="paramname">distribution</td><td>parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a7656c01a2594f233ffcdbab66b94d83c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7656c01a2594f233ffcdbab66b94d83c">&#9670;&nbsp;</a></span>genCryptoContextBFV() <span class="overload">[5/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFV </td>
-          <td>(</td>
-          <td class="paramtype">shared_ptr&lt; ParmType &gt;&#160;</td>
-          <td class="paramname"><em>params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>plaintextmodulus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>stDev</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>delta</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>RLWE</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigmodulus</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigrootofunity</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>depth</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>assuranceMeasure</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>securityLevel</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigmodulusarb</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigrootofunityarb</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFV Scheme </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">params</td><td>ring parameters </td></tr>
-    <tr><td class="paramname">plaintextModulus</td><td>plaintext modulus </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>bits in the base of digits in key switching/relinearization </td></tr>
-    <tr><td class="paramname">stdDev</td><td>sigma - distribution parameter for error distribution </td></tr>
-    <tr><td class="paramname">delta</td><td>- the plaintext scaling parameter floor(q/t) in BFV </td></tr>
-    <tr><td class="paramname">mode</td><td>- mode for generating secret keys (RLWE vs OPTIMIZED) </td></tr>
-    <tr><td class="paramname">bigmodulus</td><td>- large modulus used in tensoring of homomorphic multiplication </td></tr>
-    <tr><td class="paramname">bigrootofunity</td><td>- root of unity for bigmodulus </td></tr>
-    <tr><td class="paramname">depth</td><td>of supported computation circuit (not used; for future use) </td></tr>
-    <tr><td class="paramname">assuranceMeasure</td><td>alpha - effective bound for gaussians: - sqrt{alpha}*sigma..sqrt{alpha}*sigma </td></tr>
-    <tr><td class="paramname">security</td><td>level - root Hermite factor </td></tr>
-    <tr><td class="paramname">bigmodulusarb</td><td>- additional large modulus for bigmoduls for the case of general (non-power-of-two) cyclotomics </td></tr>
-    <tr><td class="paramname">bigrootofunityarb</td><td>- root of unity for bigmodulusarb </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a2af3d2785c4c04e33a613833de52ddd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2af3d2785c4c04e33a613833de52ddd5">&#9670;&nbsp;</a></span>genCryptoContextBFV() <span class="overload">[6/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFV </td>
-          <td>(</td>
-          <td class="paramtype">shared_ptr&lt; ParmType &gt;&#160;</td>
-          <td class="paramname"><em>params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">EncodingParams&#160;</td>
-          <td class="paramname"><em>encodingParams</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>stDev</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>delta</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>RLWE</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigmodulus</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigrootofunity</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>depth</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>assuranceMeasure</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>securityLevel</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigmodulusarb</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bigrootofunityarb</em> = <code>&quot;0&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFV Scheme </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">params</td><td>ring parameters </td></tr>
-    <tr><td class="paramname">encodingParams</td><td>plaintext encoding parameters </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>bits in the base of digits in key switching/relinearization </td></tr>
-    <tr><td class="paramname">stdDev</td><td>sigma - distribution parameter for error distribution </td></tr>
-    <tr><td class="paramname">delta</td><td>- the plaintext scaling parameter floor(q/t) in BFV </td></tr>
-    <tr><td class="paramname">mode</td><td>- mode for generating secret keys (RLWE vs OPTIMIZED) </td></tr>
-    <tr><td class="paramname">bigmodulus</td><td>- large modulus used in tensoring of homomorphic multiplication </td></tr>
-    <tr><td class="paramname">bigrootofunity</td><td>- root of unity for bigmodulus </td></tr>
-    <tr><td class="paramname">depth</td><td>of supported computation circuit (not used; for future use) </td></tr>
-    <tr><td class="paramname">assuranceMeasure</td><td>alpha - effective bound for gaussians: - sqrt{alpha}*sigma..sqrt{alpha}*sigma </td></tr>
-    <tr><td class="paramname">security</td><td>level - root Hermite factor </td></tr>
-    <tr><td class="paramname">bigmodulusarb</td><td>- additional large modulus for bigmoduls for the case of general (non-power-of-two) cyclotomics </td></tr>
-    <tr><td class="paramname">bigrootofunityarb</td><td>- root of unity for bigmodulusarb </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a6b804ce1d8241d9158fc0bc11b7e6bc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b804ce1d8241d9158fc0bc11b7e6bc1">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[1/4]</span></h2>
+<a id="a5487c3173af172a3009cd75ab7797c0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5487c3173af172a3009cd75ab7797c0e">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -924,7 +218,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>n</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MultiplicationTechnique&#160;</td>
+          <td class="paramname"><em>multTech</em> = <code>HPS</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -958,8 +258,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a094bec9857e242a539cba3af35cf18dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a094bec9857e242a539cba3af35cf18dc">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[2/4]</span></h2>
+<a id="af8017941ac3e5c16d1d52a6fe06faa18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8017941ac3e5c16d1d52a6fe06faa18">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1033,7 +333,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>n</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MultiplicationTechnique&#160;</td>
+          <td class="paramname"><em>multTech</em> = <code>HPS</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1067,8 +373,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa2602853bf258d0e50fffe5ec69b6d58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2602853bf258d0e50fffe5ec69b6d58">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[3/4]</span></h2>
+<a id="a6e578d664baa7095f39aa76646b3fa10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e578d664baa7095f39aa76646b3fa10">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1142,7 +448,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>n</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MultiplicationTechnique&#160;</td>
+          <td class="paramname"><em>multTech</em> = <code>HPS</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1176,8 +488,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a095a8b0f068f683d8d14d4f2c0707154"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a095a8b0f068f683d8d14d4f2c0707154">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[4/4]</span></h2>
+<a id="a60adafc1abefd6569f5513cc61f6cf9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60adafc1abefd6569f5513cc61f6cf9c">&#9670;&nbsp;</a></span>genCryptoContextBFVrns() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1251,7 +563,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>n</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MultiplicationTechnique&#160;</td>
+          <td class="paramname"><em>multTech</em> = <code>HPS</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1285,444 +603,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a70003209143e5c9bcf8d2c36796d3133"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70003209143e5c9bcf8d2c36796d3133">&#9670;&nbsp;</a></span>genCryptoContextBFVrnsB() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFVrnsB </td>
-          <td>(</td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>plaintextModulus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>relinWindow</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dcrtBits</em> = <code>60</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFVrnsB Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">plaintextModulus</td><td>plaintext modulus </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>root Hermite factor (lattice security parameter) </td></tr>
-    <tr><td class="paramname">dist</td><td>distribution parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>the key switching window used for digit decomposition (0 - means to use only CRT decomposition) </td></tr>
-    <tr><td class="paramname">dcrtBits</td><td>size of "small" CRT moduli </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a4f18ad87591ee6e12f75f51d0a5c5433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f18ad87591ee6e12f75f51d0a5c5433">&#9670;&nbsp;</a></span>genCryptoContextBFVrnsB() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFVrnsB </td>
-          <td>(</td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>plaintextModulus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SecurityLevel&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>relinWindow</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dcrtBits</em> = <code>60</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFVrnsB Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">plaintextModulus</td><td>plaintext modulus </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>standard security level </td></tr>
-    <tr><td class="paramname">dist</td><td>distribution parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>the key switching window used for digit decomposition (0 - means to use only CRT decomposition) </td></tr>
-    <tr><td class="paramname">dcrtBits</td><td>size of "small" CRT moduli </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="aa4e097c47796e99a79359835dce95613"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4e097c47796e99a79359835dce95613">&#9670;&nbsp;</a></span>genCryptoContextBFVrnsB() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFVrnsB </td>
-          <td>(</td>
-          <td class="paramtype">EncodingParams&#160;</td>
-          <td class="paramname"><em>encodingParams</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>relinWindow</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dcrtBits</em> = <code>60</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFVrnsB Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">encodingParams</td><td>plaintext encoding parameters </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>root Hermite factor (lattice security parameter) </td></tr>
-    <tr><td class="paramname">dist</td><td>distribution parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>the key switching window used for digit decomposition (0 - means to use only CRT decomposition) </td></tr>
-    <tr><td class="paramname">dcrtBits</td><td>size of "small" CRT moduli </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a8cd95aed7aa5f21f53a9193494f7d8e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cd95aed7aa5f21f53a9193494f7d8e1">&#9670;&nbsp;</a></span>genCryptoContextBFVrnsB() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextBFVrnsB </td>
-          <td>(</td>
-          <td class="paramtype">EncodingParams&#160;</td>
-          <td class="paramname"><em>encodingParams</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SecurityLevel&#160;</td>
-          <td class="paramname"><em>securityLevel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>dist</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numAdds</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numMults</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>numKeyswitches</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>relinWindow</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dcrtBits</em> = <code>60</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>n</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the BFVrnsB Scheme using the scheme's ParamsGen methods </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">encodingParams</td><td>plaintext encoding parameters </td></tr>
-    <tr><td class="paramname">securityLevel</td><td>standard security level </td></tr>
-    <tr><td class="paramname">dist</td><td>distribution parameter for Gaussian noise generation </td></tr>
-    <tr><td class="paramname">numAdds</td><td>additive depth for homomorphic computations (assumes numMults and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numMults</td><td>multiplicative depth for homomorphic computations (assumes numAdds and numKeySwitches are set to zero) </td></tr>
-    <tr><td class="paramname">numKeyswitches</td><td>key-switching depth for homomorphic computations (assumes numAdds and numMults are set to zero) </td></tr>
-    <tr><td class="paramname">mode</td><td>secret key distribution mode (RLWE [Gaussian noise] or OPTIMIZED [ternary uniform distribution]) </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated (by default, it is 2); setting it to a value larger than 2 adds support for homomorphic multiplication w/o relinearization </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>the key switching window used for digit decomposition (0 - means to use only CRT decomposition) </td></tr>
-    <tr><td class="paramname">dcrtBits</td><td>size of "small" CRT moduli </td></tr>
-    <tr><td class="paramname">n</td><td>ring dimension in case the user wants to use a custom ring dimension </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a6201c59f42df4334ec16fba8cc09dde6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6201c59f42df4334ec16fba8cc09dde6">&#9670;&nbsp;</a></span>genCryptoContextBGVrns() <span class="overload">[1/3]</span></h2>
+<a id="a1021793722898cb23e41910e046c705b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1021793722898cb23e41910e046c705b">&#9670;&nbsp;</a></span>genCryptoContextBGVrns() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1783,8 +665,8 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum ModSwitchMethod&#160;</td>
-          <td class="paramname"><em>msMethod</em> = <code>MANUAL</code>&#160;</td>
+          <td class="paramtype">enum RescalingTechnique&#160;</td>
+          <td class="paramname"><em>rsTech</em> = <code>FIXEDMANUAL</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1818,8 +700,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a75c51be8e0fbcb781c2ad8272ec5e643"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75c51be8e0fbcb781c2ad8272ec5e643">&#9670;&nbsp;</a></span>genCryptoContextBGVrns() <span class="overload">[2/3]</span></h2>
+<a id="abd596e91f8c43ea2059843d88ce42ef0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd596e91f8c43ea2059843d88ce42ef0">&#9670;&nbsp;</a></span>genCryptoContextBGVrns() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1880,8 +762,8 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum ModSwitchMethod&#160;</td>
-          <td class="paramname"><em>msMethod</em> = <code>MANUAL</code>&#160;</td>
+          <td class="paramtype">enum RescalingTechnique&#160;</td>
+          <td class="paramname"><em>rsTech</em> = <code>FIXEDMANUAL</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1914,8 +796,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a32d0b8aa66d9990001cb3c7e1f1d6af2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32d0b8aa66d9990001cb3c7e1f1d6af2">&#9670;&nbsp;</a></span>genCryptoContextBGVrns() <span class="overload">[3/3]</span></h2>
+<a id="a83979b4c5b2b5b6d25a64a7873d1b9d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83979b4c5b2b5b6d25a64a7873d1b9d4">&#9670;&nbsp;</a></span>genCryptoContextBGVrns() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2006,8 +888,14 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum ModSwitchMethod&#160;</td>
-          <td class="paramname"><em>msMethod</em> = <code>AUTO</code>&#160;</td>
+          <td class="paramtype">enum RescalingTechnique&#160;</td>
+          <td class="paramname"><em>rsTech</em> = <code>FIXEDAUTO</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">usint&#160;</td>
+          <td class="paramname"><em>multihopQBound</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2045,8 +933,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ae241125093c27a2d44001bb482948409"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae241125093c27a2d44001bb482948409">&#9670;&nbsp;</a></span>genCryptoContextBGVrnsWithParamsGen()</h2>
+<a id="ad8acbc16c2f1cb06056b8d638503ed78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8acbc16c2f1cb06056b8d638503ed78">&#9670;&nbsp;</a></span>genCryptoContextBGVrnsWithParamsGen()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2131,8 +1019,14 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum ModSwitchMethod&#160;</td>
-          <td class="paramname"><em>msMethod</em> = <code>MANUAL</code>&#160;</td>
+          <td class="paramtype">enum RescalingTechnique&#160;</td>
+          <td class="paramname"><em>rsTech</em> = <code>FIXEDMANUAL</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">usint&#160;</td>
+          <td class="paramname"><em>multihopQBound</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2168,8 +1062,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa462992db843e0c10e8d9e01bfae3291"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa462992db843e0c10e8d9e01bfae3291">&#9670;&nbsp;</a></span>genCryptoContextCKKS() <span class="overload">[1/3]</span></h2>
+<a id="ae05e2e42b3b1426314aa8a4b5e27863d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae05e2e42b3b1426314aa8a4b5e27863d">&#9670;&nbsp;</a></span>genCryptoContextCKKSrns()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2180,104 +1074,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextCKKS </td>
-          <td>(</td>
-          <td class="paramtype">shared_ptr&lt; ParmType &gt;&#160;</td>
-          <td class="paramname"><em>params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>plaintextmodulus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>stDev</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>RLWE</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>depth</em> = <code>1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">KeySwitchTechnique&#160;</td>
-          <td class="paramname"><em>ksTech</em> = <code>BV</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">RescalingTechnique&#160;</td>
-          <td class="paramname"><em>rsTech</em> = <code>APPROXRESCALE</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the CKKS Scheme </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">plaintextmodulus</td><td></td></tr>
-    <tr><td class="paramname">ringdim</td><td></td></tr>
-    <tr><td class="paramname">modulus</td><td></td></tr>
-    <tr><td class="paramname">rootOfUnity</td><td></td></tr>
-    <tr><td class="paramname">relinWindow</td><td></td></tr>
-    <tr><td class="paramname">stDev</td><td></td></tr>
-    <tr><td class="paramname">mode</td><td></td></tr>
-    <tr><td class="paramname">depth</td><td></td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated </td></tr>
-    <tr><td class="paramname">ksTech</td><td>key switching technique to use (e.g., GHS or BV) </td></tr>
-    <tr><td class="paramname">rsTech</td><td>rescaling technique to use (e.g., APPROXRESCALE or EXACTRESCALE) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="abbe9ba5238f99799a21f288e51437f57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbe9ba5238f99799a21f288e51437f57">&#9670;&nbsp;</a></span>genCryptoContextCKKS() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextCKKS </td>
+          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextCKKSrns </td>
           <td>(</td>
           <td class="paramtype">shared_ptr&lt; ParmType &gt;&#160;</td>
           <td class="paramname"><em>params</em>, </td>
@@ -2328,7 +1125,7 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">RescalingTechnique&#160;</td>
-          <td class="paramname"><em>rsTech</em> = <code>APPROXRESCALE</code>&#160;</td>
+          <td class="paramname"><em>rsTech</em> = <code>FIXEDMANUAL</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2353,347 +1150,22 @@ template&lt;typename T &gt; </div>
     <tr><td class="paramname">mode</td><td></td></tr>
     <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated </td></tr>
     <tr><td class="paramname">ksTech</td><td>key switching technique to use (e.g., GHS or BV) </td></tr>
-    <tr><td class="paramname">rsTech</td><td>rescaling technique to use (e.g., APPROXRESCALE or EXACTRESCALE) </td></tr>
+    <tr><td class="paramname">rsTech</td><td>rescaling technique to use (e.g., FIXEDMANUAL or FLEXIBLEAUTO) </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a24fd97c9009a33567a34f8e465492100"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24fd97c9009a33567a34f8e465492100">&#9670;&nbsp;</a></span>genCryptoContextCKKS() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextCKKS </td>
-          <td>(</td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>multiplicativeDepth</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>scalingFactorBits</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>batchSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SecurityLevel&#160;</td>
-          <td class="paramname"><em>stdLevel</em> = <code>HEStd_128_classic</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>ringDim</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum RescalingTechnique&#160;</td>
-          <td class="paramname"><em>rsTech</em> = <code>DEFAULTRSTECH</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum KeySwitchTechnique&#160;</td>
-          <td class="paramname"><em>ksTech</em> = <code>HYBRID</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>numLargeDigits</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>firstModSize</em> = <code>FIRSTMODSIZE</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em> = <code>0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>OPTIMIZED</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the CKKS Scheme.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">multiplicativeDepth</td><td>the depth of multiplications supported by the scheme (equal to number of towers - 1) </td></tr>
-    <tr><td class="paramname">scalingFactorBits</td><td>the size of the scaling factor in bits </td></tr>
-    <tr><td class="paramname">batchSize</td><td>the number of slots being used in the ciphertext </td></tr>
-    <tr><td class="paramname">stdLevel</td><td>the standard security level we want the scheme to satisfy </td></tr>
-    <tr><td class="paramname">ringDim</td><td>the ring dimension (if not specified selected automatically based on stdLevel) </td></tr>
-    <tr><td class="paramname">ksTech</td><td>key switching technique to use (e.g., HYBRID, GHS or BV) </td></tr>
-    <tr><td class="paramname">rsTech</td><td>rescaling technique to use (e.g., APPROXRESCALE or EXACTRESCALE) </td></tr>
-    <tr><td class="paramname">numLargeDigits</td><td>the number of big digits to use in HYBRID key switching </td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated </td></tr>
-    <tr><td class="paramname">firstModSize</td><td>the bit-length of the first modulus </td></tr>
-    <tr><td class="paramname">relinWindow</td><td>the relinearization windows (used in BV key switching, use 0 for RNS decomposition) </td></tr>
-    <tr><td class="paramname">mode</td><td>RLWE (gaussian distribution) or OPTIMIZED (ternary distribution) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="ac9f6a8e47d479e8961dce63f8dd796fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9f6a8e47d479e8961dce63f8dd796fe">&#9670;&nbsp;</a></span>genCryptoContextCKKSWithParamsGen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextCKKSWithParamsGen </td>
-          <td>(</td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>cyclOrder</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>numPrimes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>scaleExp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>relinWindow</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>batchSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">MODE&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>depth</em> = <code>1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usint&#160;</td>
-          <td class="paramname"><em>firstModSize</em> = <code>FIRSTMODSIZE</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum KeySwitchTechnique&#160;</td>
-          <td class="paramname"><em>ksTech</em> = <code>BV</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">enum RescalingTechnique&#160;</td>
-          <td class="paramname"><em>rsTech</em> = <code>APPROXRESCALE</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>numLargeDigits</em> = <code>4</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Automatically generate the moduli chain and construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the CKKS Scheme with it.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cyclOrder</td><td>the cyclotomic order M </td></tr>
-    <tr><td class="paramname">numPrimes</td><td>the number of towers/primes to use when building the moduli chain </td></tr>
-    <tr><td class="paramname">scaleExp</td><td>the plaintext scaling factor, which is equal to dcrtBits in our implementation of CKKS </td></tr>
-    <tr><td class="paramname">batchSize</td><td>the batch size of the ciphertext </td></tr>
-    <tr><td class="paramname">mode</td><td>RLWE or OPTIMIZED </td></tr>
-    <tr><td class="paramname">depth</td><td></td></tr>
-    <tr><td class="paramname">maxDepth</td><td>the maximum power of secret key for which the relinearization key is generated </td></tr>
-    <tr><td class="paramname">firstModSize</td><td>the bit-length of the first modulus </td></tr>
-    <tr><td class="paramname">ksTech</td><td>key switching technique to use (e.g., GHS or BV) </td></tr>
-    <tr><td class="paramname">rsTech</td><td>rescaling technique to use (e.g., APPROXRESCALE or EXACTRESCALE) </td></tr>
-    <tr><td class="paramname">numLargeDigits</td><td>the number of big digits to use in HYBRID key switching </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>new context </dd></dl>
-
-</div>
-</div>
-<a id="a6fd10038ca831d04adcadd5ab10128c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fd10038ca831d04adcadd5ab10128c6">&#9670;&nbsp;</a></span>genCryptoContextNull() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextNull </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const PlaintextModulus&#160;</td>
-          <td class="paramname"><em>ptModulus</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the Null Scheme </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">m</td><td>cyclotomic order (ring dimension n = m/2 for power-of-two cyclotomics) </td></tr>
-    <tr><td class="paramname">plaintextModulus</td><td>plaintext modulus </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a0db35540084b4cd21abbfbfeac05d362"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0db35540084b4cd21abbfbfeac05d362">&#9670;&nbsp;</a></span>genCryptoContextNull() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">CryptoContext&lt; T &gt; <a class="el" href="classlbcrypto_1_1CryptoContextFactory.html">lbcrypto::CryptoContextFactory</a>&lt; T &gt;::genCryptoContextNull </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">EncodingParams&#160;</td>
-          <td class="paramname"><em>encodingParams</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>construct a PALISADE <a class="el" href="classlbcrypto_1_1CryptoContextImpl.html" title="CryptoContextImpl.">CryptoContextImpl</a> for the Null Scheme </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">m</td><td>cyclotomic order (ring dimension n = m/2 for power-of-two cyclotomics) </td></tr>
-    <tr><td class="paramname">encodingParams</td><td>plaintext encoding parameters </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/pke/include/<a class="el" href="cryptocontext_8h_source.html">cryptocontext.h</a></li>
+<li>src/pke/include/<a class="el" href="cryptocontextfactory_8h_source.html">cryptocontextfactory.h</a></li>
 <li>src/pke/lib/cryptocontextfactory.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

@@ -1,0 +1,7 @@
+<map id="lbcrypto::SchemeRNS" name="lbcrypto::SchemeRNS">
+<area shape="rect" id="node1" title="Abstract interface class for LBC PRE algorithms." alt="" coords="231,95,394,121"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1SchemeBFVRNS.html" title=" " alt="" coords="5,169,193,196"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1SchemeBGVRNS.html" title=" " alt="" coords="217,169,408,196"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1SchemeCKKSRNS.html" title=" " alt="" coords="433,169,630,196"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1SchemeBase.html" title=" " alt="" coords="229,5,396,47"/>
+</map>

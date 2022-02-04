@@ -1,12 +1,17 @@
 var searchData=
 [
-  ['nalloc_1162',['NAlloc',['../structbigintnat_1_1NAlloc.html',1,'bigintnat']]],
-  ['nativeintegert_1163',['NativeIntegerT',['../classbigintnat_1_1NativeIntegerT.html',1,'bigintnat']]],
-  ['nativevector_1164',['NativeVector',['../classbigintnat_1_1NativeVector.html',1,'bigintnat']]],
-  ['not_5favailable_5ferror_1165',['not_available_error',['../classlbcrypto_1_1not__available__error.html',1,'lbcrypto']]],
-  ['not_5fimplemented_5ferror_1166',['not_implemented_error',['../classlbcrypto_1_1not__implemented__error.html',1,'lbcrypto']]],
-  ['numbertheoretictransformdyn_1167',['NumberTheoreticTransformDyn',['../classbigintdyn_1_1NumberTheoreticTransformDyn.html',1,'bigintdyn']]],
-  ['numbertheoretictransformfxd_1168',['NumberTheoreticTransformFxd',['../classbigintfxd_1_1NumberTheoreticTransformFxd.html',1,'bigintfxd']]],
-  ['numbertheoretictransformnat_1169',['NumberTheoreticTransformNat',['../classbigintnat_1_1NumberTheoreticTransformNat.html',1,'bigintnat']]],
-  ['numbertheoretictransformntl_1170',['NumberTheoreticTransformNtl',['../classNTL_1_1NumberTheoreticTransformNtl.html',1,'NTL']]]
+  ['math_5ferror_1098',['math_error',['../classlbcrypto_1_1math__error.html',1,'lbcrypto']]],
+  ['matrix_1099',['Matrix',['../classlbcrypto_1_1Matrix.html',1,'lbcrypto']]],
+  ['matrixstrassen_1100',['MatrixStrassen',['../classlbcrypto_1_1MatrixStrassen.html',1,'lbcrypto']]],
+  ['metadata_1101',['Metadata',['../classlbcrypto_1_1Metadata.html',1,'lbcrypto']]],
+  ['metadatatest_1102',['MetadataTest',['../classlbcrypto_1_1MetadataTest.html',1,'lbcrypto']]],
+  ['mubintvec_1103',['mubintvec',['../classbigintdyn_1_1mubintvec.html',1,'bigintdyn']]],
+  ['multipartybase_1104',['MultipartyBase',['../classlbcrypto_1_1MultipartyBase.html',1,'lbcrypto']]],
+  ['multipartybase_3c_20dcrtpoly_20_3e_1105',['MultipartyBase&lt; DCRTPoly &gt;',['../classlbcrypto_1_1MultipartyBase.html',1,'lbcrypto']]],
+  ['multipartybfvrns_1106',['MultipartyBFVRNS',['../classlbcrypto_1_1MultipartyBFVRNS.html',1,'lbcrypto']]],
+  ['multipartybgvrns_1107',['MultipartyBGVRNS',['../classlbcrypto_1_1MultipartyBGVRNS.html',1,'lbcrypto']]],
+  ['multipartyckksrns_1108',['MultipartyCKKSRNS',['../classlbcrypto_1_1MultipartyCKKSRNS.html',1,'lbcrypto']]],
+  ['multipartyrns_1109',['MultipartyRNS',['../classlbcrypto_1_1MultipartyRNS.html',1,'lbcrypto']]],
+  ['myvecp_1110',['myVecP',['../classNTL_1_1myVecP.html',1,'NTL']]],
+  ['myzz_1111',['myZZ',['../classNTL_1_1myZZ.html',1,'NTL']]]
 ];

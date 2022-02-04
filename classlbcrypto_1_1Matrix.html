@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -135,10 +135,20 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7dff7a3ab515635333f23e4c5d00b3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b17ae1b5c34255c36bfad2a1272e1d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; Element &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#a9b17ae1b5c34255c36bfad2a1272e1d4">Identity</a> ()</td></tr>
 <tr class="separator:a9b17ae1b5c34255c36bfad2a1272e1d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afee4eac0e0997930cd33f11d77f31103"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#afee4eac0e0997930cd33f11d77f31103">GadgetVector</a> (int64_t base=2) const</td></tr>
-<tr class="separator:afee4eac0e0997930cd33f11d77f31103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b2add88d492af6e89c5c4f05a03ffcb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#a7b2add88d492af6e89c5c4f05a03ffcb">Norm</a> () const</td></tr>
-<tr class="separator:a7b2add88d492af6e89c5c4f05a03ffcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353b57df54a3bbf8993f72234b5fc2b1"><td class="memTemplParams" colspan="2">template&lt;typename T  = Element, typename std::enable_if&lt; !std::is_same&lt; T, M2DCRTPoly &gt;::value &amp;&amp;!std::is_same&lt; T, M4DCRTPoly &gt;::value &amp;&amp;!std::is_same&lt; T, M6DCRTPoly &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a353b57df54a3bbf8993f72234b5fc2b1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#a353b57df54a3bbf8993f72234b5fc2b1">GadgetVector</a> (int64_t base=2) const</td></tr>
+<tr class="separator:a353b57df54a3bbf8993f72234b5fc2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353b57df54a3bbf8993f72234b5fc2b1"><td class="memTemplParams" colspan="2"><a id="a353b57df54a3bbf8993f72234b5fc2b1"></a>
+template&lt;typename T  = Element, typename std::enable_if&lt; std::is_same&lt; T, M2DCRTPoly &gt;::value||std::is_same&lt; T, M4DCRTPoly &gt;::value||std::is_same&lt; T, M6DCRTPoly &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a353b57df54a3bbf8993f72234b5fc2b1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>GadgetVector</b> (int64_t base=2) const</td></tr>
+<tr class="separator:a353b57df54a3bbf8993f72234b5fc2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba9423b9f1d75886b41b67f9eb4cea41"><td class="memTemplParams" colspan="2">template&lt;typename T  = Element, typename std::enable_if&lt; std::is_same&lt; T, double &gt;::value||std::is_same&lt; T, int &gt;::value||std::is_same&lt; T, int64_t &gt;::value||std::is_same&lt; T, Field2n &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:aba9423b9f1d75886b41b67f9eb4cea41"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#aba9423b9f1d75886b41b67f9eb4cea41">Norm</a> () const</td></tr>
+<tr class="separator:aba9423b9f1d75886b41b67f9eb4cea41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba9423b9f1d75886b41b67f9eb4cea41"><td class="memTemplParams" colspan="2"><a id="aba9423b9f1d75886b41b67f9eb4cea41"></a>
+template&lt;typename T  = Element, typename std::enable_if&lt; !std::is_same&lt; T, double &gt;::value &amp;&amp;!std::is_same&lt; T, int &gt;::value &amp;&amp;!std::is_same&lt; T, int64_t &gt;::value &amp;&amp;!std::is_same&lt; T, Field2n &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:aba9423b9f1d75886b41b67f9eb4cea41"><td class="memTemplItemLeft" align="right" valign="top">double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Norm</b> () const</td></tr>
+<tr class="separator:aba9423b9f1d75886b41b67f9eb4cea41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa13b9c518b67bafc20c4d917315ea9ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#aa13b9c518b67bafc20c4d917315ea9ba">Mult</a> (<a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; Element &gt; const &amp;other) const</td></tr>
 <tr class="separator:aa13b9c518b67bafc20c4d917315ea9ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84d54ac06addc199824724a91df6b5c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlbcrypto_1_1Matrix.html#a84d54ac06addc199824724a91df6b5c8">operator*</a> (<a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt; Element &gt; const &amp;other) const</td></tr>
@@ -672,22 +682,32 @@ template&lt;class Element &gt; </div>
 
 </div>
 </div>
-<a id="afee4eac0e0997930cd33f11d77f31103"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afee4eac0e0997930cd33f11d77f31103">&#9670;&nbsp;</a></span>GadgetVector()</h2>
+<a id="a353b57df54a3bbf8993f72234b5fc2b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a353b57df54a3bbf8993f72234b5fc2b1">&#9670;&nbsp;</a></span>GadgetVector()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Element &gt; </div>
+<div class="memtemplate">
+template&lt;typename T  = Element, typename std::enable_if&lt; !std::is_same&lt; T, M2DCRTPoly &gt;::value &amp;&amp;!std::is_same&lt; T, M4DCRTPoly &gt;::value &amp;&amp;!std::is_same&lt; T, M6DCRTPoly &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt;Element&gt; <a class="el" href="classlbcrypto_1_1Matrix.html">lbcrypto::Matrix</a>&lt; Element &gt;::GadgetVector </td>
+          <td class="memname"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt;T&gt; <a class="el" href="classlbcrypto_1_1Matrix.html">lbcrypto::Matrix</a>&lt; Element &gt;::GadgetVector </td>
           <td>(</td>
           <td class="paramtype">int64_t&#160;</td>
           <td class="paramname"><em>base</em> = <code>2</code></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Sets the first row to be powers of two for when the base is two</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -859,6 +879,9 @@ template&lt;class Element &gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Element &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt;Element&gt;&amp; <a class="el" href="classlbcrypto_1_1Matrix.html">lbcrypto::Matrix</a>&lt; Element &gt;::Identity </td>
@@ -867,6 +890,11 @@ template&lt;class Element &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>In-place change of the current matrix to Identity matrix</p>
 <dl class="section return"><dt>Returns</dt><dd>the resulting matrix </dd></dl>
@@ -955,13 +983,18 @@ template&lt;class Element &gt; </div>
 
 </div>
 </div>
-<a id="a7b2add88d492af6e89c5c4f05a03ffcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b2add88d492af6e89c5c4f05a03ffcb">&#9670;&nbsp;</a></span>Norm()</h2>
+<a id="aba9423b9f1d75886b41b67f9eb4cea41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba9423b9f1d75886b41b67f9eb4cea41">&#9670;&nbsp;</a></span>Norm()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Element &gt; </div>
+<div class="memtemplate">
+template&lt;typename T  = Element, typename std::enable_if&lt; std::is_same&lt; T, double &gt;::value||std::is_same&lt; T, int &gt;::value||std::is_same&lt; T, int64_t &gt;::value||std::is_same&lt; T, Field2n &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">double <a class="el" href="classlbcrypto_1_1Matrix.html">lbcrypto::Matrix</a>&lt; Element &gt;::Norm </td>
@@ -970,6 +1003,11 @@ template&lt;class Element &gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Computes the infinity norm</p>
 <dl class="section return"><dt>Returns</dt><dd>the norm in double format </dd></dl>
@@ -983,6 +1021,9 @@ template&lt;class Element &gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Element &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classlbcrypto_1_1Matrix.html">Matrix</a>&lt;Element&gt;&amp; <a class="el" href="classlbcrypto_1_1Matrix.html">lbcrypto::Matrix</a>&lt; Element &gt;::Ones </td>
@@ -991,6 +1032,11 @@ template&lt;class Element &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>In-place change of the current matrix to a matrix of all ones</p>
 <dl class="section return"><dt>Returns</dt><dd>the resulting matrix </dd></dl>
@@ -1690,7 +1736,7 @@ template&lt;class Element &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:35 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

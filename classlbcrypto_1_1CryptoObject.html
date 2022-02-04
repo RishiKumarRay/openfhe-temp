@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -81,14 +81,14 @@ $(function() {
 <p><a class="el" href="classlbcrypto_1_1CryptoObject.html" title="CryptoObject.">CryptoObject</a>.  
  <a href="classlbcrypto_1_1CryptoObject.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="cryptocontext_8h_source.html">cryptocontext.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="cryptoobject_8h_source.html">cryptoobject.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for lbcrypto::CryptoObject&lt; Element &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classlbcrypto_1_1CryptoObject__inherit__graph.png" border="0" usemap="#lbcrypto_1_1CryptoObject_3_01Element_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="lbcrypto_1_1CryptoObject_3_01Element_01_4_inherit__map" id="lbcrypto_1_1CryptoObject_3_01Element_01_4_inherit__map">
-<area shape="rect" title="CryptoObject." alt="" coords="25,5,193,47"/>
-<area shape="rect" href="classlbcrypto_1_1LPKey.html" title="Abstract interface class for LP Keys." alt="" coords="5,95,212,121"/>
+<area shape="rect" title="CryptoObject." alt="" coords="17,5,185,47"/>
+<area shape="rect" href="classlbcrypto_1_1Key.html" title="Abstract interface class for Keys." alt="" coords="5,95,196,121"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -103,9 +103,9 @@ Collaboration diagram for lbcrypto::CryptoObject&lt; Element &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaf6e95b91d88d2871822d833e3f4d653"><td class="memItemLeft" align="right" valign="top"><a id="aaf6e95b91d88d2871822d833e3f4d653"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CryptoObject</b> (CryptoContext&lt; Element &gt; cc=nullptr, const string &amp;tag=&quot;&quot;)</td></tr>
-<tr class="separator:aaf6e95b91d88d2871822d833e3f4d653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b58dc3b52a94d739586a2381088aa5a"><td class="memItemLeft" align="right" valign="top"><a id="a6b58dc3b52a94d739586a2381088aa5a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>CryptoObject</b> (CryptoContext&lt; Element &gt; cc=nullptr, const std::string &amp;tag=&quot;&quot;)</td></tr>
+<tr class="separator:a6b58dc3b52a94d739586a2381088aa5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ade0de114a9939012d9ea1fcf0828f"><td class="memItemLeft" align="right" valign="top"><a id="a53ade0de114a9939012d9ea1fcf0828f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>CryptoObject</b> (const <a class="el" href="classlbcrypto_1_1CryptoObject.html">CryptoObject</a> &amp;rhs)</td></tr>
 <tr class="separator:a53ade0de114a9939012d9ea1fcf0828f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,18 +124,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
 <tr class="memitem:a264b0ed243039519af8a00af9c50aae2"><td class="memItemLeft" align="right" valign="top"><a id="a264b0ed243039519af8a00af9c50aae2"></a>
 CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetCryptoContext</b> () const</td></tr>
 <tr class="separator:a264b0ed243039519af8a00af9c50aae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56ebff4fc33355939c74cf8d47853384"><td class="memItemLeft" align="right" valign="top"><a id="a56ebff4fc33355939c74cf8d47853384"></a>
-const shared_ptr&lt; <a class="el" href="classlbcrypto_1_1LPCryptoParameters.html">LPCryptoParameters</a>&lt; Element &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetCryptoParameters</b> () const</td></tr>
-<tr class="separator:a56ebff4fc33355939c74cf8d47853384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a669008b59be3769906d9e18ebd0775e0"><td class="memItemLeft" align="right" valign="top"><a id="a669008b59be3769906d9e18ebd0775e0"></a>
+const std::shared_ptr&lt; <a class="el" href="classlbcrypto_1_1CryptoParametersBase.html">CryptoParametersBase</a>&lt; Element &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetCryptoParameters</b> () const</td></tr>
+<tr class="separator:a669008b59be3769906d9e18ebd0775e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a585e86e41a57547574eac6179c1f6317"><td class="memItemLeft" align="right" valign="top"><a id="a585e86e41a57547574eac6179c1f6317"></a>
 const EncodingParams&#160;</td><td class="memItemRight" valign="bottom"><b>GetEncodingParameters</b> () const</td></tr>
 <tr class="separator:a585e86e41a57547574eac6179c1f6317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bc8fa82614fa86c55f1624ddfce7cff"><td class="memItemLeft" align="right" valign="top"><a id="a5bc8fa82614fa86c55f1624ddfce7cff"></a>
-const string&#160;</td><td class="memItemRight" valign="bottom"><b>GetKeyTag</b> () const</td></tr>
-<tr class="separator:a5bc8fa82614fa86c55f1624ddfce7cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8069e3db014aa3bead500f3e5d284487"><td class="memItemLeft" align="right" valign="top"><a id="a8069e3db014aa3bead500f3e5d284487"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetKeyTag</b> (const string &amp;tag)</td></tr>
-<tr class="separator:a8069e3db014aa3bead500f3e5d284487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6d3722bb2be5c4f26f776dde4251cc3"><td class="memItemLeft" align="right" valign="top"><a id="ab6d3722bb2be5c4f26f776dde4251cc3"></a>
+const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>GetKeyTag</b> () const</td></tr>
+<tr class="separator:ab6d3722bb2be5c4f26f776dde4251cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34cd684b1229cd07b4b9290569c98659"><td class="memItemLeft" align="right" valign="top"><a id="a34cd684b1229cd07b4b9290569c98659"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetKeyTag</b> (const std::string &amp;tag)</td></tr>
+<tr class="separator:a34cd684b1229cd07b4b9290569c98659"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c15b78302019578eb02b10769e8c2f9"><td class="memTemplParams" colspan="2"><a id="a1c15b78302019578eb02b10769e8c2f9"></a>
 template&lt;class Archive &gt; </td></tr>
 <tr class="memitem:a1c15b78302019578eb02b10769e8c2f9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>save</b> (Archive &amp;ar, std::uint32_t const version) const</td></tr>
@@ -159,9 +159,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aeb6e6f3fde6dd49c2e5ee90ac05726f7"><td class="memItemLeft" align="right" valign="top"><a id="aeb6e6f3fde6dd49c2e5ee90ac05726f7"></a>
 CryptoContext&lt; Element &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>context</b></td></tr>
 <tr class="separator:aeb6e6f3fde6dd49c2e5ee90ac05726f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ebe2ff2d5903aa787c075131b402cbd"><td class="memItemLeft" align="right" valign="top"><a id="a3ebe2ff2d5903aa787c075131b402cbd"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>keyTag</b></td></tr>
-<tr class="separator:a3ebe2ff2d5903aa787c075131b402cbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad17229df4df88acb27b5eb354d24e8d"><td class="memItemLeft" align="right" valign="top"><a id="aad17229df4df88acb27b5eb354d24e8d"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>keyTag</b></td></tr>
+<tr class="separator:aad17229df4df88acb27b5eb354d24e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Element&gt;<br />
@@ -170,12 +170,12 @@ class lbcrypto::CryptoObject&lt; Element &gt;</h3>
 <p><a class="el" href="classlbcrypto_1_1CryptoObject.html" title="CryptoObject.">CryptoObject</a>. </p>
 <p>A class to aid in referring to the crypto context that an object belongs to </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/pke/include/<a class="el" href="cryptocontext_8h_source.html">cryptocontext.h</a></li>
+<li>src/pke/include/<a class="el" href="cryptoobject_8h_source.html">cryptoobject.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

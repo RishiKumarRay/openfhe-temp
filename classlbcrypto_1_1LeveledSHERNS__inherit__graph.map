@@ -1,0 +1,7 @@
+<map id="lbcrypto::LeveledSHERNS" name="lbcrypto::LeveledSHERNS">
+<area shape="rect" id="node1" title="Abstract interface class for LBC SHE algorithms." alt="" coords="257,95,444,121"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1LeveledSHEBFVRNS.html" title=" " alt="" coords="5,169,219,196"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1LeveledSHEBGVRNS.html" title=" " alt="" coords="243,169,458,196"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1LeveledSHECKKSRNS.html" title=" " alt="" coords="482,169,705,196"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1LeveledSHEBase.html" title=" " alt="" coords="255,5,447,47"/>
+</map>

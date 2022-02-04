@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classNTL_1_1BluesteinFFTNtl.html" title="Bluestein Fast Fourier Transform implementation." alt="" coords="5,5,164,47"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1PlaintextImpl.html" title="This class represents plaintext in the Palisade library." alt="" coords="5,81,176,108"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1CKKSPackedEncoding.html" title="Type used for representing IntArray types. Provides conversion functions to encode and decode plainte..." alt="" coords="224,5,447,32"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1CoefPackedEncoding.html" title=" " alt="" coords="227,56,444,83"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1PackedEncoding.html" title="Type used for representing IntArray types. Provides conversion functions to encode and decode plainte..." alt="" coords="242,107,429,133"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1StringEncoding.html" title=" " alt="" coords="245,157,425,184"/>
 </map>

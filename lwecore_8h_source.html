@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -102,7 +102,7 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;math/backend.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;math/hal.h&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;math/discretegaussiangenerator.h&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;utils/serializable.h&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
@@ -114,12 +114,12 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="classlbcrypto_1_1LWECryptoParams.html">LWECryptoParams</a>() : m_n(0), m_N(0), m_q(0), m_Q(0), m_baseKS(0) {}</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1LWECryptoParams.html#ada41fc3c0e76e9c96a3c82860a614a99">   56</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECryptoParams.html#ada41fc3c0e76e9c96a3c82860a614a99">LWECryptoParams</a>(uint32_t n, uint32_t N, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;q,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                           <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;Q, <span class="keywordtype">double</span> std, uint32_t baseKS)</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1LWECryptoParams.html#ada41fc3c0e76e9c96a3c82860a614a99">   56</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECryptoParams.html#ada41fc3c0e76e9c96a3c82860a614a99">LWECryptoParams</a>(uint32_t n, uint32_t N, <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;q,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                           <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;Q, <span class="keywordtype">double</span> std, uint32_t baseKS)</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      : m_n(n), m_N(N), m_q(q), m_Q(Q), m_baseKS(baseKS) {</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    m_dgg.SetStd(std);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span> (Q.<a class="code" href="classbigintnat_1_1NativeIntegerT.html#ae96c044f7415d79c2cb5cbc3c9134fca">GetMSB</a>() &gt; MAX_MODULUS_SIZE) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">if</span> (Q.<a class="code" href="classintnat_1_1NativeIntegerT.html#a414ae5f57ac30b48adb3c1884f2c354b">GetMSB</a>() &gt; MAX_MODULUS_SIZE) {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      std::string errMsg =</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;          <span class="stringliteral">&quot;ERROR: Maximum size of Q supported for FHEW is 60 bits.&quot;</span>;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      PALISADE_THROW(<a class="code" href="classlbcrypto_1_1config__error.html">config_error</a>, errMsg);</div>
@@ -131,9 +131,9 @@ $(function() {
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1LWECryptoParams.html#ad4e83f88ef93ae60ca5da96db66531d6">   73</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1LWECryptoParams.html#ad4e83f88ef93ae60ca5da96db66531d6">PreCompute</a>() {</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">// Number of digits in representing numbers mod Q</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    uint32_t digitCount = (uint32_t)std::ceil(</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        log(m_Q.<a class="code" href="classbigintnat_1_1NativeIntegerT.html#a3b47211e9e17aab27f306234da8acb7b">ConvertToDouble</a>()) / log(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(m_baseKS)));</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        log(m_Q.<a class="code" href="classintnat_1_1NativeIntegerT.html#ada765db9d07343643e32804d30d98db7">ConvertToDouble</a>()) / log(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(m_baseKS)));</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// Populate digits</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> value = 1;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> value = 1;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; digitCount; i++) {</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      m_digitsKS.push_back(value);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      value *= m_baseKS;</div>
@@ -186,9 +186,9 @@ $(function() {
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  uint32_t GetN()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_N; }</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;Getq()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_q; }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;Getq()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_q; }</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;GetQ()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Q; }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;GetQ()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Q; }</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  uint32_t GetBaseKS()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_baseKS; }</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
@@ -247,9 +247,9 @@ $(function() {
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="comment">// ring dimension for RingGSW/RingLWE scheme</span></div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  uint32_t m_N;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="comment">// modulus for the additive LWE scheme</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> m_q;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> m_q;</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="comment">// modulus for the RingGSW/RingLWE scheme</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> m_Q;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> m_Q;</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="comment">// Error distribution generator</span></div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  DiscreteGaussianGeneratorImpl&lt;NativeVector&gt; m_dgg;</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="comment">// Base used in key switching</span></div>
@@ -262,13 +262,13 @@ $(function() {
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>() {}</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;&amp;a, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b)</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;&amp;a, <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b)</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      : m_a(std::move(a)), m_b(b) {}</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b)</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;a, <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b)</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      : m_a(a), m_b(b) {}</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;&amp;a, <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> b)</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;&amp;a, <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> b)</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      : m_a(std::move(a)), m_b(b) {}</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a>(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a> &amp;rhs) {</div>
@@ -293,15 +293,15 @@ $(function() {
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  }</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;GetA()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_a; }</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;GetA()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_a; }</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;GetA(std::size_t i)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_a[i]; }</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;GetA(std::size_t i)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_a[i]; }</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;GetB()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_b; }</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;GetB()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_b; }</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <span class="keywordtype">void</span> SetA(<span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;a) { m_a = a; }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <span class="keywordtype">void</span> SetA(<span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;a) { m_a = a; }</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordtype">void</span> SetB(<span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b) { m_b = b; }</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordtype">void</span> SetB(<span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> &amp;b) { m_b = b; }</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1LWECiphertextImpl.html">LWECiphertextImpl</a> &amp;other)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">return</span> m_a == other.m_a &amp;&amp; m_b == other.m_b;</div>
@@ -333,15 +333,15 @@ $(function() {
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keyword">static</span> uint32_t SerializedVersion() { <span class="keywordflow">return</span> 1; }</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> m_a;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> m_b;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> m_a;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <a class="code" href="classintnat_1_1NativeIntegerT.html">NativeInteger</a> m_b;</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;};</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
 <div class="line"><a name="l00289"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">  289</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a> : <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1Serializable.html">Serializable</a> {</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a>() {}</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a>(<span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;s) : m_s(s) {}</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a>(<span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;s) : m_s(s) {}</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a>(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a> &amp;rhs) {</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    this-&gt;m_s = rhs.m_s;</div>
@@ -361,9 +361,9 @@ $(function() {
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  }</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;GetElement()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_s; }</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;GetElement()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_s; }</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keywordtype">void</span> SetElement(<span class="keyword">const</span> <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> &amp;s) { m_s = s; }</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keywordtype">void</span> SetElement(<span class="keyword">const</span> <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> &amp;s) { m_s = s; }</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1LWEPrivateKeyImpl.html">LWEPrivateKeyImpl</a> &amp;other)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">return</span> m_s == other.m_s;</div>
@@ -393,7 +393,7 @@ $(function() {
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keyword">static</span> uint32_t SerializedVersion() { <span class="keywordflow">return</span> 1; }</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> m_s;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> m_s;</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;};</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
 <div class="line"><a name="l00351"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1LWESwitchingKey.html">  351</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlbcrypto_1_1LWESwitchingKey.html">LWESwitchingKey</a> : <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1Serializable.html">Serializable</a> {</div>
@@ -468,22 +468,22 @@ $(function() {
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html">intnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> ubintnat.h:79</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWECiphertextImpl_html"><div class="ttname"><a href="classlbcrypto_1_1LWECiphertextImpl.html">lbcrypto::LWECiphertextImpl</a></div><div class="ttdoc">Class that stores a LWE scheme ciphertext; composed of a vector &quot;a&quot; and integer &quot;b&quot;.</div><div class="ttdef"><b>Definition:</b> lwecore.h:207</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1deserialize__error_html"><div class="ttname"><a href="classlbcrypto_1_1deserialize__error.html">lbcrypto::deserialize_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:147</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1config__error_html"><div class="ttname"><a href="classlbcrypto_1_1config__error.html">lbcrypto::config_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:107</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html_ae96c044f7415d79c2cb5cbc3c9134fca"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html#ae96c044f7415d79c2cb5cbc3c9134fca">bigintnat::NativeIntegerT::GetMSB</a></div><div class="ttdeci">usint GetMSB() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1932</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWEPrivateKeyImpl_html"><div class="ttname"><a href="classlbcrypto_1_1LWEPrivateKeyImpl.html">lbcrypto::LWEPrivateKeyImpl</a></div><div class="ttdoc">Class that stores the LWE scheme secret key; contains a vector.</div><div class="ttdef"><b>Definition:</b> lwecore.h:289</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWECryptoParams_html"><div class="ttname"><a href="classlbcrypto_1_1LWECryptoParams.html">lbcrypto::LWECryptoParams</a></div><div class="ttdoc">Class that stores all parameters for the LWE scheme.</div><div class="ttdef"><b>Definition:</b> lwecore.h:42</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeVector_html"><div class="ttname"><a href="classbigintnat_1_1NativeVector.html">bigintnat::NativeVector</a></div><div class="ttdef"><b>Definition:</b> mubintvecnat.h:102</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWECryptoParams_html_ad4e83f88ef93ae60ca5da96db66531d6"><div class="ttname"><a href="classlbcrypto_1_1LWECryptoParams.html#ad4e83f88ef93ae60ca5da96db66531d6">lbcrypto::LWECryptoParams::PreCompute</a></div><div class="ttdeci">void PreCompute()</div><div class="ttdef"><b>Definition:</b> lwecore.h:73</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html_a414ae5f57ac30b48adb3c1884f2c354b"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html#a414ae5f57ac30b48adb3c1884f2c354b">intnat::NativeIntegerT::GetMSB</a></div><div class="ttdeci">usint GetMSB() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1914</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1Serializable_html"><div class="ttname"><a href="classlbcrypto_1_1Serializable.html">lbcrypto::Serializable</a></div><div class="ttdoc">Base class for PALISADE serialization.</div><div class="ttdef"><b>Definition:</b> serializable.h:76</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeVectorT_html"><div class="ttname"><a href="classintnat_1_1NativeVectorT.html">intnat::NativeVectorT</a></div><div class="ttdef"><b>Definition:</b> mubintvecnat.h:56</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWECryptoParams_html_ada41fc3c0e76e9c96a3c82860a614a99"><div class="ttname"><a href="classlbcrypto_1_1LWECryptoParams.html#ada41fc3c0e76e9c96a3c82860a614a99">lbcrypto::LWECryptoParams::LWECryptoParams</a></div><div class="ttdeci">LWECryptoParams(uint32_t n, uint32_t N, const NativeInteger &amp;q, const NativeInteger &amp;Q, double std, uint32_t baseKS)</div><div class="ttdef"><b>Definition:</b> lwecore.h:56</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html_a3b47211e9e17aab27f306234da8acb7b"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html#a3b47211e9e17aab27f306234da8acb7b">bigintnat::NativeIntegerT::ConvertToDouble</a></div><div class="ttdeci">double ConvertToDouble() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1899</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html">bigintnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> backend.h:60</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeIntegerT_html_ada765db9d07343643e32804d30d98db7"><div class="ttname"><a href="classintnat_1_1NativeIntegerT.html#ada765db9d07343643e32804d30d98db7">intnat::NativeIntegerT::ConvertToDouble</a></div><div class="ttdeci">double ConvertToDouble() const</div><div class="ttdef"><b>Definition:</b> ubintnat.h:1881</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1LWESwitchingKey_html"><div class="ttname"><a href="classlbcrypto_1_1LWESwitchingKey.html">lbcrypto::LWESwitchingKey</a></div><div class="ttdoc">Class that stores the LWE scheme switching key.</div><div class="ttdef"><b>Definition:</b> lwecore.h:351</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

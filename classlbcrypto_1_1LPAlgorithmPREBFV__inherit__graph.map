@@ -1,6 +1,0 @@
-<map id="lbcrypto::LPAlgorithmPREBFV&lt; Element &gt;" name="lbcrypto::LPAlgorithmPREBFV&lt; Element &gt;">
-<area shape="rect" id="node1" title="PRE scheme based on BFV. This functionality is currently DISABLED in LPPublicKeyEncryptionSchemeBFV b..." alt="" coords="240,39,452,80"/>
-<area shape="rect" id="node3" href="$classlbcrypto_1_1LPAlgorithmPREBFVrns.html" title="PRE algorithms implementation for BFVrns." alt="" coords="500,5,732,47"/>
-<area shape="rect" id="node4" href="$classlbcrypto_1_1LPAlgorithmPREBFVrnsB.html" title="PRE algorithms implementation for BFVrnsB." alt="" coords="500,71,732,112"/>
-<area shape="rect" id="node2" href="$classlbcrypto_1_1LPPREAlgorithm.html" title="Abstract interface class for LBC PRE algorithms." alt="" coords="5,39,192,80"/>
-</map>

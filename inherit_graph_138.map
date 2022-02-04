@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structNTL_1_1Log2_3_012_01_4.html" title="Struct to find log 2 value of N. Base case for recursion. Needed in the preprocessing step of ubint t..." alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1PREBase.html" title=" " alt="" coords="5,49,156,90"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1PRERNS.html" title="Abstract interface class for LBC PRE algorithms." alt="" coords="204,56,339,83"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1PREBFVRNS.html" title=" " alt="" coords="391,5,553,32"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1PREBGVRNS.html" title=" " alt="" coords="391,56,553,83"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1PRECKKSRNS.html" title=" " alt="" coords="387,107,557,133"/>
 </map>

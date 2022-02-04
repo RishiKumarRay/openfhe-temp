@@ -1,6 +1,0 @@
-<map id="lbcrypto::LPLeveledSHEAlgorithm&lt; Element &gt;" name="lbcrypto::LPLeveledSHEAlgorithm&lt; Element &gt;">
-<area shape="rect" id="node1" title="Abstract interface for Leveled SHE operations." alt="" coords="5,71,244,112"/>
-<area shape="rect" id="node2" href="$classlbcrypto_1_1LPLeveledSHEAlgorithmBGVrns.html" title="Concrete feature class for Leveled SHEBGVrns operations. This class adds leveled (BGVrns scheme) feat..." alt="" coords="292,5,531,47"/>
-<area shape="rect" id="node3" href="$classlbcrypto_1_1LPLeveledSHEAlgorithmCKKS.html" title="Concrete feature class for Leveled SHECKKS operations. This class adds leveled (CKKS scheme) features..." alt="" coords="292,71,531,112"/>
-<area shape="rect" id="node4" href="$classlbcrypto_1_1LPLeveledSHEAlgorithmNull.html" title="Concrete feature class for Leveled SHE operations." alt="" coords="292,136,531,177"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="lbcrypto::LPAlgorithmBFVrns&lt; Element &gt;" name="lbcrypto::LPAlgorithmBFVrns&lt; Element &gt;">
-<area shape="rect" id="node1" title="Encryption algorithm implementation for BFVrns for the basic public key encrypt, decrypt and key gene..." alt="" coords="17,184,224,225"/>
-<area shape="rect" id="node2" href="$classlbcrypto_1_1LPAlgorithmBFV.html" title="Encryption algorithm implementation for BFV for the basic public key encrypt, decrypt and key generat..." alt="" coords="27,95,214,136"/>
-<area shape="rect" id="node3" href="$classlbcrypto_1_1LPEncryptionAlgorithm.html" title="Abstract interface for encryption algorithm." alt="" coords="5,5,236,47"/>
-</map>

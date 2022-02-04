@@ -1,3 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structbigintfxd_1_1DataTypeChecker_3_01uint16__t_01_4.html" title="Struct for validating if Dtype is amongst {uint8_t, uint16_t, uint32_t}. sets value true if datatype ..." alt="" coords="5,5,207,47"/>
+<area shape="rect" id="node1" href="$classbigintfxd_1_1BigIntegerFixedT.html" title="Main class for big integers represented as an array of native (primitive) unsigned integers." alt="" coords="5,5,208,47"/>
 </map>

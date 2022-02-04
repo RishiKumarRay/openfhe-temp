@@ -1,7 +1,8 @@
 <map id="lbcrypto::ChineseRemainderTransformFTTInterface&lt; VecType &gt;" name="lbcrypto::ChineseRemainderTransformFTTInterface&lt; VecType &gt;">
-<area shape="rect" id="node1" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="5,97,212,153"/>
+<area shape="rect" id="node1" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="5,129,212,185"/>
 <area shape="rect" id="node2" href="$classbigintdyn_1_1ChineseRemainderTransformFTTDyn.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="272,5,491,47"/>
 <area shape="rect" id="node3" href="$classbigintfxd_1_1ChineseRemainderTransformFTTFxd.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="273,71,490,112"/>
-<area shape="rect" id="node4" href="$classbigintnat_1_1ChineseRemainderTransformFTTNat.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="273,136,489,177"/>
-<area shape="rect" id="node5" href="$classNTL_1_1ChineseRemainderTransformFTTNtl.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="260,201,503,243"/>
+<area shape="rect" id="node4" href="$classintnat_1_1ChineseRemainderTransformFTTNat.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="273,136,489,177"/>
+<area shape="rect" id="node5" href="$classintnathexl_1_1ChineseRemainderTransformFTTNat.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="272,201,491,243"/>
+<area shape="rect" id="node6" href="$classNTL_1_1ChineseRemainderTransformFTTNtl.html" title="Golden Chinese Remainder Transform FFT implementation." alt="" coords="260,267,503,308"/>
 </map>

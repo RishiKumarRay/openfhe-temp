@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -261,12 +261,12 @@ $(function() {
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1CKKSPackedEncoding.html#ac09d4e04774705f29bd0102c2577450e">FitToNativeVector</a>(<span class="keyword">const</span> std::vector&lt;int64_t&gt; &amp;vec, int64_t bigBound,</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                         <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> *nativeVec) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                         <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> *nativeVec) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#if NATIVEINT == 128</span></div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1CKKSPackedEncoding.html#ac09d4e04774705f29bd0102c2577450e">FitToNativeVector</a>(<span class="keyword">const</span> std::vector&lt;__int128&gt; &amp;vec, __int128 bigBound,</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                         <a class="code" href="classbigintnat_1_1NativeVector.html">NativeVector</a> *nativeVec) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                         <a class="code" href="classintnat_1_1NativeVectorT.html">NativeVector</a> *nativeVec) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  constexpr __int128 Max128BitValue()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="comment">// 2^127-2^73-1 - max value that could be rounded to int128_t</span></div>
@@ -297,7 +297,7 @@ $(function() {
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasslbcrypto_1_1PlaintextImpl_html"><div class="ttname"><a href="classlbcrypto_1_1PlaintextImpl.html">lbcrypto::PlaintextImpl</a></div><div class="ttdoc">This class represents plaintext in the Palisade library.</div><div class="ttdef"><b>Definition:</b> plaintext.h:87</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1PlaintextImpl_html"><div class="ttname"><a href="classlbcrypto_1_1PlaintextImpl.html">lbcrypto::PlaintextImpl</a></div><div class="ttdoc">This class represents plaintext in the Palisade library.</div><div class="ttdef"><b>Definition:</b> plaintext.h:85</div></div>
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_aa67035b037b39498da90ef1ac1b12d93"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#aa67035b037b39498da90ef1ac1b12d93">lbcrypto::CKKSPackedEncoding::PrintValue</a></div><div class="ttdeci">void PrintValue(std::ostream &amp;out) const</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:221</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_a7faf48ea6937fcce3d173588e69e3ed2"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#a7faf48ea6937fcce3d173588e69e3ed2">lbcrypto::CKKSPackedEncoding::CKKSPackedEncoding</a></div><div class="ttdeci">CKKSPackedEncoding(const std::vector&lt; std::complex&lt; double &gt;&gt; &amp;rhs)</div><div class="ttdoc">Constructs a container with a copy of each of the elements in rhs, in the same order.</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:111</div></div>
@@ -308,10 +308,10 @@ $(function() {
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_a718d8c246a412b11397c529e9984feb6"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#a718d8c246a412b11397c529e9984feb6">lbcrypto::CKKSPackedEncoding::Encode</a></div><div class="ttdeci">bool Encode()</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.cpp:115</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_ac09d4e04774705f29bd0102c2577450e"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#ac09d4e04774705f29bd0102c2577450e">lbcrypto::CKKSPackedEncoding::FitToNativeVector</a></div><div class="ttdeci">void FitToNativeVector(const std::vector&lt; int64_t &gt; &amp;vec, int64_t bigBound, NativeVector *nativeVec) const</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.cpp:527</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_a7829f39dcd5efa2ed5d209b3115f047f"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#a7829f39dcd5efa2ed5d209b3115f047f">lbcrypto::CKKSPackedEncoding::GetLogError</a></div><div class="ttdeci">double GetLogError() const</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:189</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1Params_html"><div class="ttname"><a href="classlbcrypto_1_1Params.html">lbcrypto::Params</a></div><div class="ttdef"><b>Definition:</b> cryptocontextparams-base.h:43</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1Params_html"><div class="ttname"><a href="classlbcrypto_1_1Params.html">lbcrypto::Params</a></div><div class="ttdef"><b>Definition:</b> cryptocontextparams-base.h:56</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_aa1e8d32b5b8be6a1d520ecf76b3bff4e"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#aa1e8d32b5b8be6a1d520ecf76b3bff4e">lbcrypto::CKKSPackedEncoding::GetLength</a></div><div class="ttdeci">size_t GetLength() const</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:183</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeVector_html"><div class="ttname"><a href="classbigintnat_1_1NativeVector.html">bigintnat::NativeVector</a></div><div class="ttdef"><b>Definition:</b> mubintvecnat.h:102</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_a7850d71124d29b9b7e8f952b87ec8409"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#a7850d71124d29b9b7e8f952b87ec8409">lbcrypto::CKKSPackedEncoding::SetLength</a></div><div class="ttdeci">void SetLength(size_t siz)</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:202</div></div>
+<div class="ttc" id="aclassintnat_1_1NativeVectorT_html"><div class="ttname"><a href="classintnat_1_1NativeVectorT.html">intnat::NativeVectorT</a></div><div class="ttdef"><b>Definition:</b> mubintvecnat.h:56</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_aa92c6a3dd3ba52e033081da5c23effe0"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#aa92c6a3dd3ba52e033081da5c23effe0">lbcrypto::CKKSPackedEncoding::GetLogPrecision</a></div><div class="ttdeci">double GetLogPrecision() const</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:194</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_a2b116bf3cc1157c9a0e1304e39a00dab"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#a2b116bf3cc1157c9a0e1304e39a00dab">lbcrypto::CKKSPackedEncoding::CKKSPackedEncoding</a></div><div class="ttdeci">CKKSPackedEncoding()</div><div class="ttdoc">Default empty constructor with empty uninitialized data elements.</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:120</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_ad22ead0c7770b8249bb1d67b32fc514c"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#ad22ead0c7770b8249bb1d67b32fc514c">lbcrypto::CKKSPackedEncoding::Decode</a></div><div class="ttdeci">bool Decode()</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:136</div></div>
@@ -320,7 +320,7 @@ $(function() {
 <div class="ttc" id="aclasslbcrypto_1_1CKKSPackedEncoding_html_a6be12f87aea24aaab6311c110da0990c"><div class="ttname"><a href="classlbcrypto_1_1CKKSPackedEncoding.html#a6be12f87aea24aaab6311c110da0990c">lbcrypto::CKKSPackedEncoding::GetEncodingType</a></div><div class="ttdeci">PlaintextEncodings GetEncodingType() const</div><div class="ttdef"><b>Definition:</b> ckkspackedencoding.h:176</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

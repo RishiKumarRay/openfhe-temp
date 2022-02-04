@@ -1,0 +1,7 @@
+<map id="lbcrypto::ParameterGenerationRNS" name="lbcrypto::ParameterGenerationRNS">
+<area shape="rect" id="node1" title="Abstract interface for parameter generation algorithm." alt="" coords="276,78,525,105"/>
+<area shape="rect" id="node3" href="$classlbcrypto_1_1ParameterGenerationBFVRNS.html" title=" " alt="" coords="573,5,796,47"/>
+<area shape="rect" id="node4" href="$classlbcrypto_1_1ParameterGenerationBGVRNS.html" title=" " alt="" coords="573,71,796,112"/>
+<area shape="rect" id="node5" href="$classlbcrypto_1_1ParameterGenerationCKKSRNS.html" title=" " alt="" coords="573,136,796,177"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1ParameterGenerationBase.html" title=" " alt="" coords="5,71,228,112"/>
+</map>

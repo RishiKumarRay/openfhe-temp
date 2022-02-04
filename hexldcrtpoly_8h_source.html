@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PALISADE Lattice Crypto Library: src/core/include/lattice/hexldcrtpoly.h Source File</title>
+<title>PALISADE Lattice Crypto Library: src/core/include/lattice/hal/hexl/hexldcrtpoly.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -64,7 +64,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><a class="el" href="dir_8f49dd062eda24395df599c5385a3cb1.html">include</a></li><li class="navelem"><a class="el" href="dir_b899a0eed640f7a13d0e6d26543d4f4d.html">lattice</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><a class="el" href="dir_8f49dd062eda24395df599c5385a3cb1.html">include</a></li><li class="navelem"><a class="el" href="dir_b899a0eed640f7a13d0e6d26543d4f4d.html">lattice</a></li><li class="navelem"><a class="el" href="dir_8b41d6fd4875776657d464c761ca960a.html">hal</a></li><li class="navelem"><a class="el" href="dir_7de28b8aba2df3350c57563031a951c7.html">hexl</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -72,177 +72,177 @@ $(function() {
 <div class="title">hexldcrtpoly.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="hexldcrtpoly_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#if defined(WITH_INTEL_HEXL)</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef LBCRYPTO_LATTICE_HEXLDCRTPOLY_H</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define LBCRYPTO_LATTICE_HEXLDCRTPOLY_H</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">// C++ standard libs</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">// Third-party libs</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &quot;hexl/hexl.hpp&quot;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">// Local PALISADE libs</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;math/backend.h&quot;</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;lattice/dcrtpoly.h&quot;</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;utils/debug.h&quot;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// PALISADE&#39;s main namespace</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a> {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> VecType = BigVector&gt;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html">   59</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> : <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyImpl</a>&lt;VecType&gt; {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="comment">// Shortcut to base class</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keyword">using</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> = <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyImpl&lt;VecType&gt;</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keyword">using</span> Integer = <span class="keyword">typename</span> VecType::Integer;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keyword">using</span> <a class="code" href="classlbcrypto_1_1ILDCRTParams.html">Params</a> = <a class="code" href="classlbcrypto_1_1ILDCRTParams.html">ILDCRTParams&lt;Integer&gt;</a>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keyword">typedef</span> VecType Vector;</div>
+<a href="hexldcrtpoly_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// This file is included only if WITH_INTEL_HEXL is set to ON in CMakeLists.txt</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifdef WITH_INTEL_HEXL</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifndef LBCRYPTO_LATTICE_HEXLDCRTPOLY_H</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define LBCRYPTO_LATTICE_HEXLDCRTPOLY_H</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">// C++ standard libs</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">// Third-party libs</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &quot;hexl/hexl.hpp&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">// Local PALISADE libs</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;math/hal.h&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &quot;lattice/hal/default/dcrtpoly.h&quot;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &quot;utils/debug.h&quot;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">// PALISADE&#39;s main namespace</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> VecType = BigVector&gt;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html">   61</a></span>&#160;<span class="keyword">class </span><a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> : <span class="keyword">public</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyImpl</a>&lt;VecType&gt; {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="comment">// Shortcut to base class</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keyword">using</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> = <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyImpl&lt;VecType&gt;</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keyword">using</span> Integer = <span class="keyword">typename</span> VecType::Integer;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keyword">using</span> <a class="code" href="classlbcrypto_1_1ILDCRTParams.html">Params</a> = <a class="code" href="classlbcrypto_1_1ILDCRTParams.html">ILDCRTParams&lt;Integer&gt;</a>;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">using</span> DggType = <span class="keyword">typename</span> DCRTPolyType::DggType;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keyword">using</span> DugType = <span class="keyword">typename</span> DCRTPolyType::DugType;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">using</span> TugType = <span class="keyword">typename</span> DCRTPolyType::TugType;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">using</span> BugType = <span class="keyword">typename</span> DCRTPolyType::BugType;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="comment">// this class contains an array of these:</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">using</span> PolyType = <span class="keyword">typename</span> <a class="code" href="classlbcrypto_1_1PolyImpl.html">DCRTPolyType::PolyType</a>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">// the composed polynomial type</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">using</span> PolyLargeType = <span class="keyword">typename</span> <a class="code" href="classlbcrypto_1_1PolyImpl.html">DCRTPolyType::PolyLargeType</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> std::string GetElementName() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;HexlDCRTPoly&quot;</span>; }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">typedef</span> VecType Vector;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">using</span> DggType = <span class="keyword">typename</span> DCRTPolyType::DggType;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">using</span> DugType = <span class="keyword">typename</span> DCRTPolyType::DugType;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keyword">using</span> TugType = <span class="keyword">typename</span> DCRTPolyType::TugType;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keyword">using</span> BugType = <span class="keyword">typename</span> DCRTPolyType::BugType;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="comment">// this class contains an array of these:</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keyword">using</span> PolyType = <span class="keyword">typename</span> <a class="code" href="classlbcrypto_1_1PolyImpl.html">DCRTPolyType::PolyType</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="comment">// the composed polynomial type</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keyword">using</span> PolyLargeType = <span class="keyword">typename</span> <a class="code" href="classlbcrypto_1_1PolyImpl.html">DCRTPolyType::PolyLargeType</a>;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="comment">// =============================================================================================</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="comment">// All methods in this section are optimized for HEXL</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#af66a8858b3583ee1410099cd9c745db3">DropLastElementAndScale</a>(</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;QlQlInvModqlDivqlModq,</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;QlQlInvModqlDivqlModqPrecon,</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;qlInvModq,</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;qlInvModqPrecon) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="comment">// =============================================================================================</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="comment">// All methods below here are required for substitution with DCRTPolyImpl&lt;&gt; but are not optimized</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>() : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>() {}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> std::string GetElementName() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;HexlDCRTPoly&quot;</span>; }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="comment">// =============================================================================================</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="comment">// All methods in this section are optimized for HEXL</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#af66a8858b3583ee1410099cd9c745db3">DropLastElementAndScale</a>(</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;QlQlInvModqlDivqlModq,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;QlQlInvModqlDivqlModqPrecon,</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;qlInvModq,</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <span class="keyword">const</span> std::vector&lt;NativeInteger&gt; &amp;qlInvModqPrecon) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="comment">// =============================================================================================</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="comment">// All methods below here are required for substitution with DCRTPolyImpl&lt;&gt; but are not optimized</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> shared_ptr&lt;Params&gt; params, Format format = EVALUATION,</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;               <span class="keywordtype">bool</span> initializeElementToZero = <span class="keyword">false</span>)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(params, format, initializeElementToZero) {}</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="comment">// Need to be able to make a copy,</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> &amp;dcrtPoly) : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(dcrtPoly) {}</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> std::vector&lt;PolyType&gt; &amp;elements)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(elements) {}</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> DggType &amp;dgg, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;               Format format = EVALUATION)</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(dgg, params, format) {}</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(DugType &amp;dug, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;               Format format = EVALUATION)</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(dug, params, format) {}</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> TugType &amp;tug, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;               Format format = EVALUATION, uint32_t h = 0)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(tug, params, format, h) {}</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> BugType &amp;bug, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;               Format format = EVALUATION)</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(bug, params, format) {}</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> PolyLargeType&amp; element, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(element, params) {}</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">  128</a></span>&#160;  <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">operator=</a>(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> &amp;rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#af905877cd082d61e2092211ce8d8daa8">  139</a></span>&#160;  <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#af905877cd082d61e2092211ce8d8daa8">operator=</a>(<a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> &amp;&amp;rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  }</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="comment">// All assignment operators need to be overriden because the return type is</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="comment">// different</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">operator=</a>(<span class="keyword">const</span> PolyLargeType &amp;rhs) {</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  }</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keyword">const</span> HexlDCRTPoly &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">operator=</a>(<span class="keyword">const</span> PolyType &amp;rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">  162</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">operator=</a>(std::initializer_list&lt;uint64_t&gt; rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#aaeb069d4a0538c0bc7e54a8d43ab9cc9">  174</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#aaeb069d4a0538c0bc7e54a8d43ab9cc9">operator=</a>(uint64_t rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  }</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#ac9b1f3ddb28c85c6eed67756727026bd">  186</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#ac9b1f3ddb28c85c6eed67756727026bd">operator=</a>(<span class="keyword">const</span> std::vector&lt;int64_t&gt; &amp;rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  }</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a32f69739e67857b9f647e49c8036b616">  198</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a32f69739e67857b9f647e49c8036b616">operator=</a>(<span class="keyword">const</span> std::vector&lt;int32_t&gt; &amp;rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  }</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a5977421f361f0fbfb3c4514036453a6c">  210</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5977421f361f0fbfb3c4514036453a6c">operator=</a>(std::initializer_list&lt;std::string&gt; rhs)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    DCRTPolyType::operator=(rhs);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a5060283ec99cd7ccaf76fbbb37c6cc9f">  221</a></span>&#160;  std::vector&lt;HexlDCRTPoly&gt; <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5060283ec99cd7ccaf76fbbb37c6cc9f">operator=</a>(std::vector&lt;DCRTPolyType&gt;&amp; dcrtVec)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="comment">// Use the base class to do the decompose</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="comment">// std::vector&lt;DCRTPolyType&gt; dcrtVec = DCRTPolyType::CRTDecompose(baseBits);</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// std::vector&lt;HexlDCRTPoly&gt; hexlVec(dcrtVec.begin(), dcrtVec.end());</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    std::vector&lt;HexlDCRTPoly&gt; hexlVec(dcrtVec.size());</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="comment">// use a lambda function to transform the std::vector&lt;DCRTPolyImpl&gt; to std::vector&lt;HexlDCRTPoly&gt;</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    std::transform(dcrtVec.begin(), dcrtVec.end(), hexlVec.begin(),</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      [](<a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>&amp; dcrtPoly) -&gt; <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        return HexlDCRTPoly(dcrtPoly);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      }</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    );</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordflow">return</span> hexlVec;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  }</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;};  <span class="comment">// HexlDCRTPoly</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>() : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>() {}</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> shared_ptr&lt;Params&gt; params, Format format = EVALUATION,</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;               <span class="keywordtype">bool</span> initializeElementToZero = <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(params, format, initializeElementToZero) {}</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="comment">// Need to be able to make a copy,</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> &amp;dcrtPoly) : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(dcrtPoly) {}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> std::vector&lt;PolyType&gt; &amp;elements)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(elements) {}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> DggType &amp;dgg, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;               Format format = EVALUATION)</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(dgg, params, format) {}</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(DugType &amp;dug, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;               Format format = EVALUATION)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(dug, params, format) {}</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> TugType &amp;tug, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;               Format format = EVALUATION, uint32_t h = 0)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(tug, params, format, h) {}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> BugType &amp;bug, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params,</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;               Format format = EVALUATION)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(bug, params, format) {}</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a>(<span class="keyword">const</span> PolyLargeType&amp; element, <span class="keyword">const</span> shared_ptr&lt;Params&gt; params)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      : <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>(element, params) {}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">  130</a></span>&#160;  <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">operator=</a>(<span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> &amp;rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#af905877cd082d61e2092211ce8d8daa8">  141</a></span>&#160;  <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#af905877cd082d61e2092211ce8d8daa8">operator=</a>(<a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a> &amp;&amp;rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  <span class="comment">// All assignment operators need to be overriden because the return type is</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">// different</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keyword">const</span> <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">operator=</a>(<span class="keyword">const</span> PolyLargeType &amp;rhs) {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  }</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="keyword">const</span> HexlDCRTPoly &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">operator=</a>(<span class="keyword">const</span> PolyType &amp;rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  }</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">  164</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">operator=</a>(std::initializer_list&lt;uint64_t&gt; rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  }</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#aaeb069d4a0538c0bc7e54a8d43ab9cc9">  176</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#aaeb069d4a0538c0bc7e54a8d43ab9cc9">operator=</a>(uint64_t rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  }</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#ac9b1f3ddb28c85c6eed67756727026bd">  188</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#ac9b1f3ddb28c85c6eed67756727026bd">operator=</a>(<span class="keyword">const</span> std::vector&lt;int64_t&gt; &amp;rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a32f69739e67857b9f647e49c8036b616">  200</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a32f69739e67857b9f647e49c8036b616">operator=</a>(<span class="keyword">const</span> std::vector&lt;int32_t&gt; &amp;rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a5977421f361f0fbfb3c4514036453a6c">  212</a></span>&#160;  <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> &amp;<a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5977421f361f0fbfb3c4514036453a6c">operator=</a>(std::initializer_list&lt;std::string&gt; rhs)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    DCRTPolyType::operator=(rhs);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  }</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="classlbcrypto_1_1HexlDCRTPoly.html#a5060283ec99cd7ccaf76fbbb37c6cc9f">  223</a></span>&#160;  std::vector&lt;HexlDCRTPoly&gt; <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html#a5060283ec99cd7ccaf76fbbb37c6cc9f">operator=</a>(std::vector&lt;DCRTPolyType&gt;&amp; dcrtVec)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="comment">// Use the base class to do the decompose</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="comment">// std::vector&lt;DCRTPolyType&gt; dcrtVec = DCRTPolyType::CRTDecompose(baseBits);</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="comment">// std::vector&lt;HexlDCRTPoly&gt; hexlVec(dcrtVec.begin(), dcrtVec.end());</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    std::vector&lt;HexlDCRTPoly&gt; hexlVec(dcrtVec.size());</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="comment">// use a lambda function to transform the std::vector&lt;DCRTPolyImpl&gt; to std::vector&lt;HexlDCRTPoly&gt;</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    std::transform(dcrtVec.begin(), dcrtVec.end(), hexlVec.begin(),</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      [](<a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPolyType</a>&amp; dcrtPoly) -&gt; <a class="code" href="classlbcrypto_1_1HexlDCRTPoly.html">HexlDCRTPoly</a> {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        return HexlDCRTPoly(dcrtPoly);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    );</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordflow">return</span> hexlVec;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  }</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="comment">// typedef HexlDCRTPoly&lt;BigVector&gt; DCRTPoly;</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}  <span class="comment">// namespace lbcrypto</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;};  <span class="comment">// HexlDCRTPoly</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">// typedef HexlDCRTPoly&lt;BigVector&gt; DCRTPoly;</span></div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor">#endif  // LBCRYPTO_LATTICE_HEXLDCRTPOLY_H</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;}  <span class="comment">// namespace lbcrypto</span></div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#endif  // WITH_INTEL_HEXL</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#endif  // LBCRYPTO_LATTICE_HEXLDCRTPOLY_H</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">#endif  // WITH_INTEL_HEXL</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_af66a8858b3583ee1410099cd9c745db3"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#af66a8858b3583ee1410099cd9c745db3">lbcrypto::HexlDCRTPoly::DropLastElementAndScale</a></div><div class="ttdeci">virtual void DropLastElementAndScale(const std::vector&lt; NativeInteger &gt; &amp;QlQlInvModqlDivqlModq, const std::vector&lt; NativeInteger &gt; &amp;QlQlInvModqlDivqlModqPrecon, const std::vector&lt; NativeInteger &gt; &amp;qlInvModq, const std::vector&lt; NativeInteger &gt; &amp;qlInvModqPrecon) override</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.cpp:48</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a5e16cfe8143c71fc16b199f6e66ad626"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">virtual const HexlDCRTPoly &amp; operator=(const DCRTPolyType &amp;rhs) override</div><div class="ttdoc">Assignment Operator.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:128</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a5060283ec99cd7ccaf76fbbb37c6cc9f"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a5060283ec99cd7ccaf76fbbb37c6cc9f">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">std::vector&lt; HexlDCRTPoly &gt; operator=(std::vector&lt; DCRTPolyType &gt; &amp;dcrtVec) const</div><div class="ttdoc">assignment operator to transform a vector of the Base class into this Derived class</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:221</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_af66a8858b3583ee1410099cd9c745db3"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#af66a8858b3583ee1410099cd9c745db3">lbcrypto::HexlDCRTPoly::DropLastElementAndScale</a></div><div class="ttdeci">virtual void DropLastElementAndScale(const std::vector&lt; NativeInteger &gt; &amp;QlQlInvModqlDivqlModq, const std::vector&lt; NativeInteger &gt; &amp;QlQlInvModqlDivqlModqPrecon, const std::vector&lt; NativeInteger &gt; &amp;qlInvModq, const std::vector&lt; NativeInteger &gt; &amp;qlInvModqPrecon) override</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.cpp:49</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a5e16cfe8143c71fc16b199f6e66ad626"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a5e16cfe8143c71fc16b199f6e66ad626">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">virtual const HexlDCRTPoly &amp; operator=(const DCRTPolyType &amp;rhs) override</div><div class="ttdoc">Assignment Operator.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:130</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a5060283ec99cd7ccaf76fbbb37c6cc9f"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a5060283ec99cd7ccaf76fbbb37c6cc9f">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">std::vector&lt; HexlDCRTPoly &gt; operator=(std::vector&lt; DCRTPolyType &gt; &amp;dcrtVec) const</div><div class="ttdoc">assignment operator to transform a vector of the Base class into this Derived class</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:223</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1DCRTPolyImpl_html"><div class="ttname"><a href="classlbcrypto_1_1DCRTPolyImpl.html">lbcrypto::DCRTPolyImpl</a></div><div class="ttdoc">Ideal lattice for the double-CRT representation. The implementation contains a vector of underlying n...</div><div class="ttdef"><b>Definition:</b> dcrtpoly.h:57</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_ac9b1f3ddb28c85c6eed67756727026bd"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#ac9b1f3ddb28c85c6eed67756727026bd">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(const std::vector&lt; int64_t &gt; &amp;rhs) override</div><div class="ttdoc">Creates a Poly from a vector of signed integers (used for trapdoor sampling)</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:186</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_ac9b1f3ddb28c85c6eed67756727026bd"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#ac9b1f3ddb28c85c6eed67756727026bd">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(const std::vector&lt; int64_t &gt; &amp;rhs) override</div><div class="ttdoc">Creates a Poly from a vector of signed integers (used for trapdoor sampling)</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:188</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1PolyImpl_html"><div class="ttname"><a href="classlbcrypto_1_1PolyImpl.html">lbcrypto::PolyImpl&lt; NativeVector &gt;</a></div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_aaeb069d4a0538c0bc7e54a8d43ab9cc9"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#aaeb069d4a0538c0bc7e54a8d43ab9cc9">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(uint64_t rhs) override</div><div class="ttdoc">Assignment Operator. The usint rhs will be set at index zero and all other indices will be set to zer...</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:174</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a32f69739e67857b9f647e49c8036b616"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a32f69739e67857b9f647e49c8036b616">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(const std::vector&lt; int32_t &gt; &amp;rhs) override</div><div class="ttdoc">Creates a Poly from a vector of signed integers (used for trapdoor sampling)</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:198</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a5977421f361f0fbfb3c4514036453a6c"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a5977421f361f0fbfb3c4514036453a6c">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(std::initializer_list&lt; std::string &gt; rhs) override</div><div class="ttdoc">Initalizer list.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:210</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_af905877cd082d61e2092211ce8d8daa8"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#af905877cd082d61e2092211ce8d8daa8">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">virtual const HexlDCRTPoly &amp; operator=(DCRTPolyType &amp;&amp;rhs) override</div><div class="ttdoc">Move Assignment Operator.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:139</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_af5f92cd8de1c2158c048379eb3a7d936"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(std::initializer_list&lt; uint64_t &gt; rhs) override</div><div class="ttdoc">Initalizer list.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:162</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html">lbcrypto::HexlDCRTPoly</a></div><div class="ttdoc">A DCRTPoly Implementation optimized for HEXL, Intel's AVX512 IFMA instructions.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:59</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_aaeb069d4a0538c0bc7e54a8d43ab9cc9"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#aaeb069d4a0538c0bc7e54a8d43ab9cc9">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(uint64_t rhs) override</div><div class="ttdoc">Assignment Operator. The usint rhs will be set at index zero and all other indices will be set to zer...</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:176</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a32f69739e67857b9f647e49c8036b616"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a32f69739e67857b9f647e49c8036b616">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(const std::vector&lt; int32_t &gt; &amp;rhs) override</div><div class="ttdoc">Creates a Poly from a vector of signed integers (used for trapdoor sampling)</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:200</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_a5977421f361f0fbfb3c4514036453a6c"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#a5977421f361f0fbfb3c4514036453a6c">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(std::initializer_list&lt; std::string &gt; rhs) override</div><div class="ttdoc">Initalizer list.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:212</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_af905877cd082d61e2092211ce8d8daa8"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#af905877cd082d61e2092211ce8d8daa8">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">virtual const HexlDCRTPoly &amp; operator=(DCRTPolyType &amp;&amp;rhs) override</div><div class="ttdoc">Move Assignment Operator.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:141</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html_af5f92cd8de1c2158c048379eb3a7d936"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html#af5f92cd8de1c2158c048379eb3a7d936">lbcrypto::HexlDCRTPoly::operator=</a></div><div class="ttdeci">HexlDCRTPoly &amp; operator=(std::initializer_list&lt; uint64_t &gt; rhs) override</div><div class="ttdoc">Initalizer list.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:164</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1HexlDCRTPoly_html"><div class="ttname"><a href="classlbcrypto_1_1HexlDCRTPoly.html">lbcrypto::HexlDCRTPoly</a></div><div class="ttdoc">A DCRTPoly Implementation optimized for HEXL, Intel's AVX512 IFMA instructions.</div><div class="ttdef"><b>Definition:</b> hexldcrtpoly.h:61</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1ILDCRTParams_html"><div class="ttname"><a href="classlbcrypto_1_1ILDCRTParams.html">lbcrypto::ILDCRTParams</a></div><div class="ttdoc">Parameters for array of ideal lattices (used for Double-CRT).</div><div class="ttdef"><b>Definition:</b> ildcrtparams.h:53</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

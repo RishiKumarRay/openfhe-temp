@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -69,8 +69,9 @@ $(function() {
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>Add()
 : <a class="el" href="classbigintdyn_1_1ubint.html#acec6802313cbf7bb4e0746675f8698dc">bigintdyn::ubint&lt; limb_t &gt;</a>
-, <a class="el" href="classbigintfxd_1_1BigInteger.html#aa71294a5d5bbe386e824faca5e562b3b">bigintfxd::BigInteger&lt; uint_type, BITLENGTH &gt;</a>
-, <a class="el" href="classbigintnat_1_1NativeIntegerT.html#a0d1578a4388109b0763e2052cc82126e">bigintnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classbigintfxd_1_1BigIntegerFixedT.html#a0c90c91275ec1d934ce6bff41cd35c06">bigintfxd::BigIntegerFixedT&lt; uint_type, BITLENGTH &gt;</a>
+, <a class="el" href="classintnat_1_1NativeIntegerT.html#a9447262dd24014ac332b45069979b04e">intnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeIntegerT.html#ab11a97141288a1b2c3647316cf81cd6e">intnathexl::NativeIntegerT&lt; NativeInt &gt;</a>
 , <a class="el" href="classlbcrypto_1_1BigIntegerInterface.html#ab76a0e51bc149cd015966cafae795049">lbcrypto::BigIntegerInterface&lt; T &gt;</a>
 , <a class="el" href="classlbcrypto_1_1Matrix.html#a8fae2b1880b21e6500a08fd48e1690dd">lbcrypto::Matrix&lt; Element &gt;</a>
 , <a class="el" href="classlbcrypto_1_1MatrixStrassen.html#ac9c1d9fcf918323cd1827bf97098eb7c">lbcrypto::MatrixStrassen&lt; Element &gt;</a>
@@ -78,15 +79,18 @@ $(function() {
 </li>
 <li>AddEq()
 : <a class="el" href="classbigintdyn_1_1ubint.html#a1af100f4eda5fbc70a3451562664b484">bigintdyn::ubint&lt; limb_t &gt;</a>
-, <a class="el" href="classbigintfxd_1_1BigInteger.html#a1c3e88d0840177feef0c067ede07d07d">bigintfxd::BigInteger&lt; uint_type, BITLENGTH &gt;</a>
-, <a class="el" href="classbigintnat_1_1NativeIntegerT.html#a1936ffe891ea2adcf5d41f88ca35214b">bigintnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classbigintfxd_1_1BigIntegerFixedT.html#aa2dd264e5c225c695bfe91c9c677f0d8">bigintfxd::BigIntegerFixedT&lt; uint_type, BITLENGTH &gt;</a>
+, <a class="el" href="classintnat_1_1NativeIntegerT.html#a019f7f5f5a059e6b744d12749e7bfffb">intnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeIntegerT.html#a7a4a3bbb17e30b7e582a030e60bc2c8f">intnathexl::NativeIntegerT&lt; NativeInt &gt;</a>
 , <a class="el" href="classNTL_1_1myZZ.html#a910ed3e9314bdbf35176c796a1075a0d">NTL::myZZ</a>
 </li>
 <li>AddEqCheck()
-: <a class="el" href="classbigintnat_1_1NativeIntegerT.html#ac94956794d9f847925b309c641141c8c">bigintnat::NativeIntegerT&lt; NativeInt &gt;</a>
+: <a class="el" href="classintnat_1_1NativeIntegerT.html#aa153409f8f5a4fdce234d538c5884071">intnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeIntegerT.html#ad19a663a4bec43b685828a4684a103dd">intnathexl::NativeIntegerT&lt; NativeInt &gt;</a>
 </li>
 <li>AddEqFast()
-: <a class="el" href="classbigintnat_1_1NativeIntegerT.html#ab9e32368eb68ab5f231438d26add2ab9">bigintnat::NativeIntegerT&lt; NativeInt &gt;</a>
+: <a class="el" href="classintnat_1_1NativeIntegerT.html#a6f4dffcb0557f2c0d4aac640df2703d2">intnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeIntegerT.html#a258c59c4486eb0ad9b8a7e063820bfa7">intnathexl::NativeIntegerT&lt; NativeInt &gt;</a>
 </li>
 <li>AddILElementOne()
 : <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#afbab85648499a5954a8ae8f92ea4f8e7">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>
@@ -95,24 +99,12 @@ $(function() {
 , <a class="el" href="classlbcrypto_1_1PolyImpl.html#aa2f44ce09496d9104858c7ba8bef554f">lbcrypto::PolyImpl&lt; VecType &gt;</a>
 </li>
 <li>AddRandomNoise()
-: <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#aa27a69b9e199e7ad7edb7d88adc44528">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>
+: <a class="el" href="classlbcrypto_1_1AdvancedSHEBase.html#a4f93fac65120d1195bcec69656cd5b55">lbcrypto::AdvancedSHEBase&lt; Element &gt;</a>
+, <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#aa27a69b9e199e7ad7edb7d88adc44528">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#aec031b96c902996ebb986097e7919442">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>
-, <a class="el" href="classlbcrypto_1_1LPSHEAlgorithm.html#ac4d52f775cfa969542664b2a225e687b">lbcrypto::LPSHEAlgorithm&lt; Element &gt;</a>
 </li>
 <li>address()
 : <a class="el" href="classstl__allocator.html#a12b8de8ea063ce1e9e5828196c713eba">stl_allocator&lt; T &gt;</a>
-</li>
-<li>AdjustLevels()
-: <a class="el" href="classlbcrypto_1_1LPAlgorithmSHEBGVrns.html#ab2089b66add5dca746866fdbf1c05033">lbcrypto::LPAlgorithmSHEBGVrns&lt; Element &gt;</a>
-</li>
-<li>AdjustLevelsEq()
-: <a class="el" href="classlbcrypto_1_1LPAlgorithmSHEBGVrns.html#aa7bf91898afeda8b339caf9aa3e416d1">lbcrypto::LPAlgorithmSHEBGVrns&lt; Element &gt;</a>
-</li>
-<li>AdjustLevelWithoutRescale()
-: <a class="el" href="classlbcrypto_1_1LPAlgorithmSHECKKS.html#ac785b87c298c86667c430f7cc5d099a5">lbcrypto::LPAlgorithmSHECKKS&lt; Element &gt;</a>
-</li>
-<li>AdjustLevelWithRescale()
-: <a class="el" href="classlbcrypto_1_1LPAlgorithmSHECKKS.html#a4d1c52136c0e1aa5537007e154b2cecd">lbcrypto::LPAlgorithmSHECKKS&lt; Element &gt;</a>
 </li>
 <li>Allocate()
 : <a class="el" href="classAllocator.html#ab539239b108dce3bef3f302f688e322d">Allocator</a>
@@ -123,8 +115,9 @@ $(function() {
 <li>Allocator()
 : <a class="el" href="classAllocator.html#abb188c51eb27e4d0d5e7555ab45c1445">Allocator</a>
 , <a class="el" href="classbigintdyn_1_1ubint.html#a7356180af9027a5d1aa5df0a86c581bd">bigintdyn::ubint&lt; limb_t &gt;</a>
-, <a class="el" href="classbigintfxd_1_1BigInteger.html#ab5403aa7f7db8ea6e405a47505b4b7ff">bigintfxd::BigInteger&lt; uint_type, BITLENGTH &gt;</a>
-, <a class="el" href="classbigintnat_1_1NativeIntegerT.html#a54fcfa3fe7e46d352342fee8ce0396f1">bigintnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classbigintfxd_1_1BigIntegerFixedT.html#a021e0a083c9a7a52afb403204303bce7">bigintfxd::BigIntegerFixedT&lt; uint_type, BITLENGTH &gt;</a>
+, <a class="el" href="classintnat_1_1NativeIntegerT.html#abe7d8c873d56482908735d463c25f32a">intnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeIntegerT.html#a8a903b407f9af66291acaecfa58d8fbd">intnathexl::NativeIntegerT&lt; NativeInt &gt;</a>
 , <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a707b00f0957b9401a58e4f143bf7cb34">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1PolyImpl.html#ac787ab0953e79def7a06f39aa3e65ab4">lbcrypto::PolyImpl&lt; VecType &gt;</a>
 , <a class="el" href="classNTL_1_1myZZ.html#a4030a872c73f1aa60000ad9a22f0d906">NTL::myZZ</a>
@@ -147,33 +140,32 @@ $(function() {
 </li>
 <li>AssignVal()
 : <a class="el" href="classbigintdyn_1_1ubint.html#a569047036869c8f56e2713dac001daf5">bigintdyn::ubint&lt; limb_t &gt;</a>
-, <a class="el" href="classbigintfxd_1_1BigInteger.html#a6e7bb7fc4aa85a85b0c242893ec375de">bigintfxd::BigInteger&lt; uint_type, BITLENGTH &gt;</a>
-, <a class="el" href="classbigintnat_1_1NativeIntegerT.html#a18be609a646925d736d3db914d44cbfc">bigintnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classbigintfxd_1_1BigIntegerFixedT.html#a648a6441dc4ba724539e03d747c630ba">bigintfxd::BigIntegerFixedT&lt; uint_type, BITLENGTH &gt;</a>
+, <a class="el" href="classintnat_1_1NativeIntegerT.html#aab8cce17329780b3f54e629e96a3dabe">intnat::NativeIntegerT&lt; NativeInt &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeIntegerT.html#abe898cfe9b5b8875bb824ab7918c9eb3">intnathexl::NativeIntegerT&lt; NativeInt &gt;</a>
 </li>
 <li>at()
 : <a class="el" href="classbigintdyn_1_1mubintvec.html#a82ed4ed8049aae133093cd6ddb61c42f">bigintdyn::mubintvec&lt; ubint_el_t &gt;</a>
-, <a class="el" href="classbigintfxd_1_1BigVectorImpl.html#abcbfe421be27ff91a402ef3640f784c4">bigintfxd::BigVectorImpl&lt; IntegerType &gt;</a>
-, <a class="el" href="classbigintnat_1_1NativeVector.html#a096a1ddb28804563e1453a445f9805bf">bigintnat::NativeVector&lt; IntegerType &gt;</a>
+, <a class="el" href="classbigintfxd_1_1BigVectorFixedT.html#a55946ed5c45d524a7729b18d04c84559">bigintfxd::BigVectorFixedT&lt; IntegerType &gt;</a>
+, <a class="el" href="classintnat_1_1NativeVectorT.html#a782aa9c69c4badd0dbb0d5d60c72e7db">intnat::NativeVectorT&lt; IntegerType &gt;</a>
+, <a class="el" href="classintnathexl_1_1NativeVectorT.html#a4bede56e4704be711c5ceed715e6eae6">intnathexl::NativeVectorT&lt; IntegerType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a3de4e1a07f58874a6f03f9de8cca63c2">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a51c801b6fd516206b274d90163dd4bf1">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1ILElement.html#a359fe4a33cd095b663313d970518c1b7">lbcrypto::ILElement&lt; Element, VecType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1PolyImpl.html#aa400a6cd69cb62adaff8d2beefe1368c">lbcrypto::PolyImpl&lt; VecType &gt;</a>
 </li>
-<li>AutomaticLevelReduce()
-: <a class="el" href="classlbcrypto_1_1LPAlgorithmSHECKKS.html#a9996aff2b82e87d8b9c93869aa58ce47">lbcrypto::LPAlgorithmSHECKKS&lt; Element &gt;</a>
-</li>
 <li>AutomorphismTransform()
-: <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#a77f3f1e018b1687961203d6af9b7b1c6">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>
+: <a class="el" href="classlbcrypto_1_1DCRTPolyImpl.html#ae7336e935f2a0cd14d6bcfc8a8a2f373">lbcrypto::DCRTPolyImpl&lt; VecType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1DCRTPolyInterface.html#a5805c88f6af7bb50febbfe8d436298ab">lbcrypto::DCRTPolyInterface&lt; DerivedType, BigVecType, LilVecType, RNSContainerType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1Field2n.html#aab75ecab5052e5470ca35c47ea993877">lbcrypto::Field2n</a>
-, <a class="el" href="classlbcrypto_1_1ILElement.html#ac5dcc9fbc3a60640bb1722f236b2bdb8">lbcrypto::ILElement&lt; Element, VecType &gt;</a>
+, <a class="el" href="classlbcrypto_1_1ILElement.html#afc8d59503d85d7ad398b1a287fd86e1c">lbcrypto::ILElement&lt; Element, VecType &gt;</a>
 , <a class="el" href="classlbcrypto_1_1PolyImpl.html#af963604e83451dbece828d739f08529a">lbcrypto::PolyImpl&lt; VecType &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:35 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:24 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

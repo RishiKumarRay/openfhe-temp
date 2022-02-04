@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PALISADE Lattice Crypto Library
-   &#160;<span id="projectnumber">1.11.5</span>
+   &#160;<span id="projectnumber">1.11.6</span>
    </div>
    <div id="projectbrief">A lattice crypto library for software engineers by software engineers.</div>
   </td>
@@ -101,394 +101,204 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;cryptocontext.h&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;lattice/elemparamfactory.h&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;palisade.h&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;utils/parmfactory.h&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> usint DefaultQbits = 59;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> usint DefaultT = 3;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextNull(usint ORDER,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                                   PlaintextModulus ptm,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                                   usint bits = DefaultQbits,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                                   usint towers = DefaultT) {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">auto</span> p = ElemParamFactory::GenElemParams&lt;typename Element::Params&gt;(</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      ORDER, bits, towers);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  CryptoContext&lt;Element&gt; cc =</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a6fd10038ca831d04adcadd5ab10128c6">CryptoContextFactory&lt;Element&gt;::genCryptoContextNull</a>(ORDER, ptm);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextBFV(usint ORDER,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                                                  PlaintextModulus ptm,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                                                  usint bits = DefaultQbits,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                                                  usint towers = DefaultT,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                                                  MODE mode = RLWE);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Poly&gt; GenCryptoContextBFV(usint ORDER,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                                               PlaintextModulus ptm, usint bits,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                                               usint towers, MODE mode) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  shared_ptr&lt;typename Poly::Params&gt; p =</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      ElemParamFactory::GenElemParams&lt;typename Poly::Params&gt;(ORDER, bits,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                                             towers);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  CryptoContext&lt;Poly&gt; cc = <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a7656c01a2594f233ffcdbab66b94d83c">CryptoContextFactory&lt;Poly&gt;::genCryptoContextBFV</a>(</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      ptm, 1.06, 8, 4, 0, 1, 0, mode);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;NativePoly&gt; GenCryptoContextBFV(usint ORDER,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                                                     PlaintextModulus ptm,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                                     usint bits, usint towers,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                                     MODE mode) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  CryptoContext&lt;NativePoly&gt; cc =</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a7656c01a2594f233ffcdbab66b94d83c">CryptoContextFactory&lt;NativePoly&gt;::genCryptoContextBFV</a>(ptm, 1.06, 8, 4, 0,</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                                                            1, 0, mode);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextBFV(usint ORDER,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                                                   PlaintextModulus ptm,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                                                   usint bits, usint towers,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                                                   MODE mode) {</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__implemented__error.html">not_implemented_error</a>, <span class="stringliteral">&quot;DCRT is not supported for BFV&quot;</span>);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextBFVrns(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                                                     MODE mode = RLWE,</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                                                     uint32_t batchSize = 0);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Poly&gt; GenCryptoContextBFVrns(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                                                  MODE mode,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                                                  uint32_t batchSize) {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__implemented__error.html">not_implemented_error</a>, <span class="stringliteral">&quot;Poly is not supported for BFVrns&quot;</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;NativePoly&gt; GenCryptoContextBFVrns(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                                                        MODE mode,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                                        uint32_t batchSize) {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__implemented__error.html">not_implemented_error</a>,</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                 <span class="stringliteral">&quot;NativePoly is not supported for BFVrns&quot;</span>);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextBFVrns(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                                                      MODE mode,</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                                                      uint32_t batchSize) {</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  EncodingParams encodingParams(std::make_shared&lt;EncodingParamsImpl&gt;(ptm));</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  encodingParams-&gt;SetBatchSize(batchSize);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  CryptoContext&lt;DCRTPoly&gt; cc =</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a6b804ce1d8241d9158fc0bc11b7e6bc1">CryptoContextFactory&lt;DCRTPoly&gt;::genCryptoContextBFVrns</a>(</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;          encodingParams, HEStd_128_classic, 3.2, 0, 2, 0, mode, 2, 20, 60);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  cc-&gt;Enable(MULTIPARTY);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextBFVrnsB(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                                                      MODE mode = RLWE,</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                                                      uint32_t batchSize = 0);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Poly&gt; GenCryptoContextBFVrnsB(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                                                   MODE mode,</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                                                   uint32_t batchSize) {</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__implemented__error.html">not_implemented_error</a>, <span class="stringliteral">&quot;Poly is not supported for BFVrnsB&quot;</span>);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;NativePoly&gt; GenCryptoContextBFVrnsB(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                                                         MODE mode,</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                                                         uint32_t batchSize) {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__implemented__error.html">not_implemented_error</a>,</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                 <span class="stringliteral">&quot;NativePoly is not supported for BFVrnsB&quot;</span>);</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextBFVrnsB(PlaintextModulus ptm,</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                                                       MODE mode,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                                                       uint32_t batchSize) {</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  EncodingParams encodingParams(std::make_shared&lt;EncodingParamsImpl&gt;(ptm));</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  encodingParams-&gt;SetBatchSize(batchSize);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  CryptoContext&lt;DCRTPoly&gt; cc =</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a70003209143e5c9bcf8d2c36796d3133">CryptoContextFactory&lt;DCRTPoly&gt;::genCryptoContextBFVrnsB</a>(</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;          encodingParams, HEStd_128_classic, 3.2, 0, 2, 0, mode, 2, 20, 60);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  cc-&gt;Enable(MULTIPARTY);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;}</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextCKKS(</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow,</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    usint batchSize, MODE mode, KeySwitchTechnique ksTech,</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    RescalingTechnique rsTech);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Poly&gt; GenCryptoContextCKKS(usint cyclOrder,</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                                                usint numPrimes, usint scaleExp,</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                                                usint relinWindow,</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                                                usint batchSize, MODE mode,</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                                                KeySwitchTechnique ksTech,</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                                                RescalingTechnique rsTech) {</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__implemented__error.html">not_implemented_error</a>, <span class="stringliteral">&quot;Poly is not supported for CKKS&quot;</span>);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;}</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">/* *</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="comment"> * Generate a CryptoContext for the CKKS scheme.</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment"> * @param m Cyclotomic order. Must be a power of 2.</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment"> * @param init_size Number of co-primes comprising the ciphertext modulus.</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment"> *            It is equal to the desired depth of the computation.</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="comment"> * @param dcrtBits Size of each co-prime in bits. Should fit into a</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="comment"> *           machine word, i.e., less than 64.</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="comment"> * @param p Scaling parameter 2^p. p should usually be equal to dcrtBits.</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment"> * @param relinWin The bit decomposition count used in relinearization.</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment"> *           Use 0 to go with max possible. Use small values (3-4?)</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment"> *           if you need rotations before any multiplications.</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment"> * @param batchSize The length of the packed vectors to be used with CKKS.</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="comment"> * @param mode (e.g., RLWE or OPTIMIZED)</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment"> * @param ksTech key switching technique to use (e.g., GHS or BV)</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment"> * @param rsTech rescaling technique to use (e.g., APPROXRESCALE or</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment"> * EXACTRESCALE)</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;NativePoly&gt; GenCryptoContextCKKS(</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow,</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    usint batchSize, MODE mode, KeySwitchTechnique ksTech,</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    RescalingTechnique rsTech) {</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  usint m = cyclOrder;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  usint init_size = numPrimes;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  usint dcrtBits = scaleExp;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  uint64_t p = scaleExp;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  usint relinWin = relinWindow;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordtype">float</span> stdDev = 3.19;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  usint batch = batchSize;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> q = FirstPrime&lt;NativeInteger&gt;(dcrtBits, m);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <a class="code" href="classbigintnat_1_1NativeIntegerT.html">NativeInteger</a> rootOfUnity = RootOfUnity&lt;NativeInteger&gt;(m, q);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keyword">auto</span> params = std::make_shared&lt;ILNativeParams&gt;(m, q, rootOfUnity);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  EncodingParams encodingParams(</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      std::make_shared&lt;EncodingParamsImpl&gt;((int64_t)1 &lt;&lt; p));</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  encodingParams-&gt;SetBatchSize(batch);</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  CryptoContext&lt;NativePoly&gt; cc =</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#aa462992db843e0c10e8d9e01bfae3291">CryptoContextFactory&lt;NativePoly&gt;::genCryptoContextCKKS</a>(</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;          params, encodingParams, relinWin, stdDev, mode, init_size);</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment">/* *</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment"> * Generate a CryptoContext for the CKKS scheme.</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="comment"> * @param m Cyclotomic order. Must be a power of 2.</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment"> * @param init_size Number of co-primes comprising the ciphertext modulus.</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment"> *            It is equal to the desired depth of the computation.</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment"> * @param dcrtBits Size of each co-prime in bits. Should fit into a</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment"> *           machine word, i.e., less than 64.</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment"> * @param p Scaling parameter 2^p. p should usually be equal to dcrtBits.</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="comment"> * @param relinWin The bit decomposition count used in relinearization.</span></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="comment"> *           Use 0 to go with max possible. Use small values (3-4?)</span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment"> *           if you need rotations before any multiplications.</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment"> * @param batchSize The length of the packed vectors to be used with CKKS.</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="comment"> * @param mode (e.g., RLWE or OPTIMIZED)</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="comment"> * @param ksTech key switching technique to use (e.g., GHS or BV)</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="comment"> * @param rsTech rescaling technique to use (e.g., APPROXRESCALE or</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="comment"> * EXACTRESCALE)</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextCKKS(</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow,</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    usint batchSize, MODE mode, KeySwitchTechnique ksTech,</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    RescalingTechnique rsTech) {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  usint n = cyclOrder / 2;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  usint dcrtBits = scaleExp;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  usint relinWin = relinWindow;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  usint batch = batchSize;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  CryptoContext&lt;DCRTPoly&gt; cc =</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#aa462992db843e0c10e8d9e01bfae3291">CryptoContextFactory&lt;DCRTPoly&gt;::genCryptoContextCKKS</a>(</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;          numPrimes - 1, dcrtBits, batch, HEStd_NotSet, n, <span class="comment">/*ringDimension*/</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;          rsTech, ksTech, 0,                               <span class="comment">/*numLargeDigits*/</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;          2,                                               <span class="comment">/*maxDepth*/</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;          FIRSTMODSIZE,                                    <span class="comment">/*firstMod*/</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;          relinWin, mode);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  cc-&gt;Enable(LEVELEDSHE);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  cc-&gt;Enable(MULTIPARTY);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="comment">/* *</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment"> * Generate a CryptoContext for the BGVrns scheme.</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="comment"> * @param m Cyclotomic order. Must be a power of 2.</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="comment"> * @param init_size Number of co-primes comprising the ciphertext modulus.</span></div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="comment"> *            It is equal to the desired depth of the computation.</span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="comment"> * @param dcrtBits Size of each co-prime in bits. Should fit into a</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="comment"> *           machine word, i.e., less than 64.</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="comment"> * @param ptm the plaintext modulus.</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="comment"> * @param relinWin The bit decomposition count used in relinearization.</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment"> *           Use 0 to go with max possible. Use small values (3-4?)</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="comment"> *           if you need rotations before any multiplications.</span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="comment"> * @param mode (e.g., RLWE or OPTIMIZED)</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="comment"> * @param ksTech key switching technique to use (e.g., GHS or BV)</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="comment"> * @param batchSize The length of the packed vectors to be used with CKKS.</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment"> * @param msMethod mod switching method</span></div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextBGVrns(</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    usint cyclOrder, usint numPrimes, usint dcrtBits, usint ptm,</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint batchSize,</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    ModSwitchMethod msMethod);</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Poly&gt; GenCryptoContextBGVrns(</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    usint cyclOrder, usint numPrimes, usint dcrtBits, usint ptm,</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint batchSize,</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    ModSwitchMethod msMethod) {</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__available__error.html">not_available_error</a>, <span class="stringliteral">&quot;Poly is not supported for BGVrns&quot;</span>);</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;NativePoly&gt; GenCryptoContextBGVrns(</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    usint cyclOrder, usint numPrimes, usint dcrtBits, usint ptm,</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint batchSize,</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    ModSwitchMethod msMethod) {</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__available__error.html">not_available_error</a>, <span class="stringliteral">&quot;NativePoly is not supported for BGVrns&quot;</span>);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextBGVrns(</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    usint cyclOrder, usint numPrimes, usint dcrtBits, usint ptm,</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint batchSize,</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    ModSwitchMethod msMethod) {</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  usint n = cyclOrder / 2;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  usint relinWin = relinWindow;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keywordtype">float</span> stdDev = 3.2;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  CryptoContext&lt;DCRTPoly&gt; cc =</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a6201c59f42df4334ec16fba8cc09dde6">CryptoContextFactory&lt;DCRTPoly&gt;::genCryptoContextBGVrns</a>(</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;          numPrimes - 1, ptm, HEStd_NotSet, stdDev, 1, <span class="comment">/* maxDepth */</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;          mode, ksTech, n,                             <span class="comment">/*ringDimension*/</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;          0,                                           <span class="comment">/*numLargeDigits*/</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;          60,                                          <span class="comment">/*firstMod*/</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;          dcrtBits, relinWin, batchSize, msMethod);</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  cc-&gt;Enable(LEVELEDSHE);</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  cc-&gt;Enable(MULTIPARTY);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenTestCryptoContext(</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; name, usint ORDER, PlaintextModulus ptm,</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    usint bits = DefaultQbits, usint towers = DefaultT, usint relinWin = 0,</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    usint batchSize = 16, KeySwitchTechnique ksTech = BV,</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    RescalingTechnique rsTech = APPROXRESCALE,</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    ModSwitchMethod msMethod = MANUAL) {</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  shared_ptr&lt;typename Element::Params&gt; p =</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      ElemParamFactory::GenElemParams&lt;typename Element::Params&gt;(ORDER, bits,</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                                                                towers);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  CryptoContext&lt;Element&gt; cc;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;Null&quot;</span>) {</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    cc = <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a6fd10038ca831d04adcadd5ab10128c6">CryptoContextFactory&lt;Element&gt;::genCryptoContextNull</a>(ORDER, ptm);</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFV_rlwe&quot;</span>) {</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    cc = GenCryptoContextBFV&lt;Element&gt;(ORDER, ptm, bits, towers, RLWE);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFV_opt&quot;</span>) {</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    cc = GenCryptoContextBFV&lt;Element&gt;(ORDER, ptm, bits, towers, OPTIMIZED);</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrns_rlwe&quot;</span>) {</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    cc = GenCryptoContextBFVrns&lt;Element&gt;(ptm, RLWE, batchSize);</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrns_opt&quot;</span>) {</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    cc = GenCryptoContextBFVrns&lt;Element&gt;(ptm, OPTIMIZED, batchSize);</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrnsB_rlwe&quot;</span>) {</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    cc = GenCryptoContextBFVrnsB&lt;Element&gt;(ptm, RLWE, batchSize);</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrnsB_opt&quot;</span>) {</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    cc = GenCryptoContextBFVrnsB&lt;Element&gt;(ptm, OPTIMIZED, batchSize);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;CKKS_sparse&quot;</span>) {</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    cc = GenCryptoContextCKKS&lt;Element&gt;(ORDER, towers, ptm, relinWin, batchSize,</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;                                       SPARSE, ksTech, rsTech);</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;CKKS&quot;</span>) {</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    cc = GenCryptoContextCKKS&lt;Element&gt;(ORDER, towers, ptm, relinWin, batchSize,</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;                                       OPTIMIZED, ksTech, rsTech);</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BGVrns_rlwe&quot;</span>) {</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    cc = GenCryptoContextBGVrns&lt;Element&gt;(ORDER, towers, bits, ptm, relinWin,</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                                         RLWE, ksTech, batchSize, msMethod);</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((name == <span class="stringliteral">&quot;BGVrns_opt&quot;</span>) || (name == <span class="stringliteral">&quot;BGVrns&quot;</span>)) {</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    cc =</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        GenCryptoContextBGVrns&lt;Element&gt;(ORDER, towers, bits, ptm, relinWin,</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                                        OPTIMIZED, ksTech, batchSize, msMethod);</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BGVrns_sparse&quot;</span>) {</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    cc = GenCryptoContextBGVrns&lt;Element&gt;(ORDER, towers, bits, ptm, relinWin,</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                                         SPARSE, ksTech, batchSize, msMethod);</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;nothing for &quot;</span> &lt;&lt; name &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__available__error.html">not_available_error</a>, <span class="stringliteral">&quot;No generator for &quot;</span> + name);</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  }</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  cc-&gt;Enable(ENCRYPTION);</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  cc-&gt;Enable(PRE);</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  cc-&gt;Enable(SHE);</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160; </div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;  <span class="keywordflow">return</span> cc;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_PKE_LIB_CRYPTOCONTEXTGEN_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;cryptocontextfactory.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="cryptocontext-ckksrns_8h.html">scheme/ckksrns/cryptocontext-ckksrns.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="gen-cryptocontext_8h.html">gen-cryptocontext.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;lattice/elemparamfactory.h&quot;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;utils/parmfactory.h&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacelbcrypto.html">lbcrypto</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> usint DefaultQbits = 59;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> usint DefaultT = 3;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextBFVrns(PlaintextModulus ptm,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                                     MODE mode = RLWE,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                                     uint32_t batchSize = 0,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                                     MultiplicationTechnique multTech = HPS);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextBFVrns(PlaintextModulus ptm,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                                      MODE mode,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                                                      uint32_t batchSize,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                                                      MultiplicationTechnique multTech) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  EncodingParams encodingParams(std::make_shared&lt;EncodingParamsImpl&gt;(ptm));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  encodingParams-&gt;SetBatchSize(batchSize);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  CryptoContext&lt;DCRTPoly&gt; cc =</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a5487c3173af172a3009cd75ab7797c0e">CryptoContextFactory&lt;DCRTPoly&gt;::genCryptoContextBFVrns</a>(</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;          encodingParams, HEStd_128_classic, 3.2, 0, 2, 0, mode, 2, 20, 60, 0, multTech);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  cc-&gt;Enable(PKE);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  cc-&gt;Enable(KEYSWITCH);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  cc-&gt;Enable(PRE);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  cc-&gt;Enable(LEVELEDSHE);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  cc-&gt;Enable(MULTIPARTY);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">return</span> cc;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextCKKSrns(</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    usint batchSize, MODE mode, KeySwitchTechnique ksTech,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    RescalingTechnique rsTech);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">/* *</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment"> * Generate a CryptoContext for the CKKS scheme.</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"> * @param m Cyclotomic order. Must be a power of 2.</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment"> * @param init_size Number of co-primes comprising the ciphertext modulus.</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment"> *            It is equal to the desired depth of the computation.</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"> * @param scaleExp (dcrtBits) Size of each co-prime in bits. Should fit into a</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"> *           machine word, i.e., less than 64.</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment"> * @param p Scaling parameter 2^p. p should usually be equal to (dcrtBits).</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"> * @param relinWin The bit decomposition count used in relinearization.</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"> *           Use 0 to go with max possible. Use small values (3-4?)</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"> *           if you need rotations before any multiplications.</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment"> * @param batchSize The length of the packed vectors to be used with CKKS.</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"> * @param mode (e.g., RLWE or OPTIMIZED)</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"> * @param ksTech key switching technique to use (e.g., GHS or BV)</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment"> * @param rsTech rescaling technique to use (e.g., FIXEDMANUAL or</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"> * FLEXIBLEAUTO)</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextCKKSrns(</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    usint cyclOrder, usint numPrimes, usint scaleExp, usint relinWindow,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    usint batchSize, MODE mode, KeySwitchTechnique ksTech,</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    RescalingTechnique rsTech) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="classlbcrypto_1_1CCParams_3_01CryptoContextCKKSRNS_01_4.html">CCParams&lt;CryptoContextCKKSRNS&gt;</a> parameters;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    parameters.SetMultiplicativeDepth(numPrimes - 1);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    parameters.SetScalingFactorBits(scaleExp);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    parameters.SetBatchSize(batchSize);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    parameters.SetSecurityLevel(HEStd_NotSet);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    parameters.SetRingDim(cyclOrder / 2);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    parameters.SetRescalingTechnique(rsTech);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    parameters.SetKeySwitchTechnique(ksTech);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    parameters.SetRelinWindow(relinWindow);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    parameters.SetMode(mode);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    CryptoContext&lt;DCRTPoly&gt; cc = GenCryptoContext(parameters);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    cc-&gt;Enable(PKE);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    cc-&gt;Enable(KEYSWITCH);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    cc-&gt;Enable(LEVELEDSHE);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    cc-&gt;Enable(MULTIPARTY);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> cc;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">/* *</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> * Generate a CryptoContext for the BGVrns scheme.</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment"> * @param m Cyclotomic order. Must be a power of 2.</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment"> * @param init_size Number of co-primes comprising the ciphertext modulus.</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment"> *            It is equal to the desired depth of the computation.</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment"> * @param dcrtBits Size of each co-prime in bits. Should fit into a</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment"> *           machine word, i.e., less than 64.</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment"> * @param ptm the plaintext modulus.</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment"> * @param relinWin The bit decomposition count used in relinearization.</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment"> *           Use 0 to go with max possible. Use small values (3-4?)</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment"> *           if you need rotations before any multiplications.</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment"> * @param mode (e.g., RLWE or OPTIMIZED)</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment"> * @param ksTech key switching technique to use (e.g., GHS or BV)</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment"> * @param batchSize The length of the packed vectors to be used with CKKS.</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment"> * @param msMethod mod switching method</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;Element&gt; GenCryptoContextBGVrns(</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    usint cyclOrder, usint numPrimes, usint dcrtBits, usint ptm,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint batchSize,</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    RescalingTechnique rsTech);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenCryptoContextBGVrns(</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    usint cyclOrder, usint numPrimes, usint dcrtBits, usint ptm,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    usint relinWindow, MODE mode, KeySwitchTechnique ksTech, usint batchSize,</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    RescalingTechnique rsTech) {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  usint n = cyclOrder / 2;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  usint relinWin = relinWindow;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  <span class="keywordtype">float</span> stdDev = 3.2;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  CryptoContext&lt;DCRTPoly&gt; cc =</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      <a class="code" href="classlbcrypto_1_1CryptoContextFactory.html#a1021793722898cb23e41910e046c705b">CryptoContextFactory&lt;DCRTPoly&gt;::genCryptoContextBGVrns</a>(</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;          numPrimes - 1, ptm, HEStd_NotSet, stdDev, 1, <span class="comment">/* maxDepth */</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;          mode, ksTech, n,                             <span class="comment">/*ringDimension*/</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;          0,                                           <span class="comment">/*numLargeDigits*/</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;          60,                                          <span class="comment">/*firstMod*/</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;          dcrtBits, relinWin, batchSize, rsTech);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  cc-&gt;Enable(PKE);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  cc-&gt;Enable(KEYSWITCH);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  cc-&gt;Enable(PRE);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  cc-&gt;Enable(LEVELEDSHE);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  cc-&gt;Enable(MULTIPARTY);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keywordflow">return</span> cc;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keyword">inline</span> CryptoContext&lt;DCRTPoly&gt; GenTestCryptoContext(</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; name, usint ORDER, PlaintextModulus ptm,</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    usint bits = DefaultQbits, usint towers = DefaultT, usint relinWin = 0,</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    usint batchSize = 16, KeySwitchTechnique ksTech = BV,</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    RescalingTechnique rsTech = FIXEDMANUAL, usint dummy = 0) {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keyword">using</span> Element = <a class="code" href="classlbcrypto_1_1DCRTPolyImpl.html">DCRTPoly</a>;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  shared_ptr&lt;typename Element::Params&gt; p =</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      ElemParamFactory::GenElemParams&lt;typename Element::Params&gt;(ORDER, bits,</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                                                                towers);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  CryptoContext&lt;Element&gt; cc;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrns_rlwe&quot;</span>) {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    cc = GenCryptoContextBFVrns&lt;Element&gt;(ptm, RLWE, batchSize, HPS);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrns_opt&quot;</span>) {</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    cc = GenCryptoContextBFVrns&lt;Element&gt;(ptm, OPTIMIZED, batchSize, HPS);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrnsB_rlwe&quot;</span>) {</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    cc = GenCryptoContextBFVrns&lt;Element&gt;(ptm, RLWE, batchSize, BEHZ);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BFVrnsB_opt&quot;</span>) {</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    cc = GenCryptoContextBFVrns&lt;Element&gt;(ptm, OPTIMIZED, batchSize, BEHZ);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;CKKS_sparse&quot;</span>) {</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    cc = GenCryptoContextCKKSrns&lt;Element&gt;(ORDER, towers, ptm, relinWin, batchSize,</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                                       SPARSE, ksTech, rsTech);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;CKKS&quot;</span>) {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    cc = GenCryptoContextCKKSrns&lt;Element&gt;(ORDER, towers, ptm, relinWin, batchSize,</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                                       OPTIMIZED, ksTech, rsTech);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BGVrns_rlwe&quot;</span>) {</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    cc = GenCryptoContextBGVrns&lt;Element&gt;(ORDER, towers, bits, ptm, relinWin,</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                                         RLWE, ksTech, batchSize, rsTech);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((name == <span class="stringliteral">&quot;BGVrns_opt&quot;</span>) || (name == <span class="stringliteral">&quot;BGVrns&quot;</span>)) {</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    cc =</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        GenCryptoContextBGVrns&lt;Element&gt;(ORDER, towers, bits, ptm, relinWin,</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                                        OPTIMIZED, ksTech, batchSize, rsTech);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;BGVrns_sparse&quot;</span>) {</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    cc = GenCryptoContextBGVrns&lt;Element&gt;(ORDER, towers, bits, ptm, relinWin,</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                                         SPARSE, ksTech, batchSize, rsTech);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;nothing for &quot;</span> &lt;&lt; name &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    PALISADE_THROW(<a class="code" href="classlbcrypto_1_1not__available__error.html">not_available_error</a>, <span class="stringliteral">&quot;No generator for &quot;</span> + name);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  }</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  cc-&gt;Enable(PKE);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  cc-&gt;Enable(KEYSWITCH);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  cc-&gt;Enable(PRE);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  cc-&gt;Enable(LEVELEDSHE);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <span class="keywordflow">return</span> cc;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_PKE_LIB_CRYPTOCONTEXTGEN_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclasslbcrypto_1_1CCParams_3_01CryptoContextCKKSRNS_01_4_html"><div class="ttname"><a href="classlbcrypto_1_1CCParams_3_01CryptoContextCKKSRNS_01_4.html">lbcrypto::CCParams&lt; CryptoContextCKKSRNS &gt;</a></div><div class="ttdef"><b>Definition:</b> cryptocontextparams-ckksrns.h:46</div></div>
 <div class="ttc" id="anamespacelbcrypto_html"><div class="ttname"><a href="namespacelbcrypto.html">lbcrypto</a></div><div class="ttdef"><b>Definition:</b> binfhecontext.h:36</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a6fd10038ca831d04adcadd5ab10128c6"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a6fd10038ca831d04adcadd5ab10128c6">lbcrypto::CryptoContextFactory::genCryptoContextNull</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextNull(unsigned int m, const PlaintextModulus ptModulus)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:690</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_aa462992db843e0c10e8d9e01bfae3291"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#aa462992db843e0c10e8d9e01bfae3291">lbcrypto::CryptoContextFactory::genCryptoContextCKKS</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextCKKS(shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, KeySwitchTechnique ksTech=BV, RescalingTechnique rsTech=APPROXRESCALE)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:402</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a6201c59f42df4334ec16fba8cc09dde6"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a6201c59f42df4334ec16fba8cc09dde6">lbcrypto::CryptoContextFactory::genCryptoContextBGVrns</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextBGVrns(shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, KeySwitchTechnique ksTech=BV, enum ModSwitchMethod msMethod=MANUAL)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:460</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a5487c3173af172a3009cd75ab7797c0e"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a5487c3173af172a3009cd75ab7797c0e">lbcrypto::CryptoContextFactory::genCryptoContextBFVrns</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextBFVrns(const PlaintextModulus plaintextModulus, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0, MultiplicationTechnique multTech=HPS)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:92</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1DCRTPolyImpl_html"><div class="ttname"><a href="classlbcrypto_1_1DCRTPolyImpl.html">lbcrypto::DCRTPolyImpl&lt; BigVector &gt;</a></div></div>
+<div class="ttc" id="acryptocontext-ckksrns_8h_html"><div class="ttname"><a href="cryptocontext-ckksrns_8h.html">cryptocontext-ckksrns.h</a></div><div class="ttdoc">API to generate CKKSRNS crypto context.</div></div>
+<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a1021793722898cb23e41910e046c705b"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a1021793722898cb23e41910e046c705b">lbcrypto::CryptoContextFactory::genCryptoContextBGVrns</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextBGVrns(shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, MODE mode=RLWE, int depth=1, int maxDepth=2, KeySwitchTechnique ksTech=BV, enum RescalingTechnique rsTech=FIXEDMANUAL)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:209</div></div>
 <div class="ttc" id="aclasslbcrypto_1_1not__available__error_html"><div class="ttname"><a href="classlbcrypto_1_1not__available__error.html">lbcrypto::not_available_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:126</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a6b804ce1d8241d9158fc0bc11b7e6bc1"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a6b804ce1d8241d9158fc0bc11b7e6bc1">lbcrypto::CryptoContextFactory::genCryptoContextBFVrns</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextBFVrns(const PlaintextModulus plaintextModulus, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:194</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a70003209143e5c9bcf8d2c36796d3133"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a70003209143e5c9bcf8d2c36796d3133">lbcrypto::CryptoContextFactory::genCryptoContextBFVrnsB</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextBFVrnsB(const PlaintextModulus plaintextModulus, float securityLevel, float dist, unsigned int numAdds, unsigned int numMults, unsigned int numKeyswitches, MODE mode=OPTIMIZED, int maxDepth=2, uint32_t relinWindow=0, size_t dcrtBits=60, uint32_t n=0)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:298</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1CryptoContextFactory_html_a7656c01a2594f233ffcdbab66b94d83c"><div class="ttname"><a href="classlbcrypto_1_1CryptoContextFactory.html#a7656c01a2594f233ffcdbab66b94d83c">lbcrypto::CryptoContextFactory::genCryptoContextBFV</a></div><div class="ttdeci">static CryptoContext&lt; Element &gt; genCryptoContextBFV(shared_ptr&lt; ParmType &gt; params, const PlaintextModulus plaintextmodulus, usint relinWindow, float stDev, const std::string &amp;delta, MODE mode=RLWE, const std::string &amp;bigmodulus=&quot;0&quot;, const std::string &amp;bigrootofunity=&quot;0&quot;, int depth=0, int assuranceMeasure=0, float securityLevel=0, const std::string &amp;bigmodulusarb=&quot;0&quot;, const std::string &amp;bigrootofunityarb=&quot;0&quot;, int maxDepth=2)</div><div class="ttdef"><b>Definition:</b> cryptocontextfactory.cpp:89</div></div>
-<div class="ttc" id="aclasslbcrypto_1_1not__implemented__error_html"><div class="ttname"><a href="classlbcrypto_1_1not__implemented__error.html">lbcrypto::not_implemented_error</a></div><div class="ttdef"><b>Definition:</b> exception.h:119</div></div>
-<div class="ttc" id="aclassbigintnat_1_1NativeIntegerT_html"><div class="ttname"><a href="classbigintnat_1_1NativeIntegerT.html">bigintnat::NativeIntegerT</a></div><div class="ttdoc">Main class for big integers represented as an array of native (primitive) unsigned integers.</div><div class="ttdef"><b>Definition:</b> backend.h:60</div></div>
+<div class="ttc" id="agen-cryptocontext_8h_html"><div class="ttname"><a href="gen-cryptocontext_8h.html">gen-cryptocontext.h</a></div><div class="ttdoc">Constructs CryptoContext based on the provided set of parameters.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 19 2022 20:29:34 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Feb 4 2022 18:05:23 for PALISADE Lattice Crypto Library by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.17
 </small></address>

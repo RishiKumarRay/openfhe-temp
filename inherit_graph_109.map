@@ -1,9 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classlbcrypto_1_1LPMultipartyAlgorithm.html" title="Abstract interface class for LBC Multiparty algorithms based on threshold FHE. A version of this mult..." alt="" coords="5,136,235,177"/>
-<area shape="rect" id="node2" href="$classlbcrypto_1_1LPAlgorithmMultipartyBFV.html" title="Concrete class for the FHE Multiparty algorithms on BFV. A version of this multiparty scheme built on..." alt="" coords="283,37,511,79"/>
-<area shape="rect" id="node5" href="$classlbcrypto_1_1LPAlgorithmMultipartyBGVrns.html" title="The multiparty homomorphic encryption capability for the BGVrns scheme. A version of this multiparty ..." alt="" coords="283,103,511,144"/>
-<area shape="rect" id="node6" href="$classlbcrypto_1_1LPAlgorithmMultipartyCKKS.html" title="The multiparty homomorphic encryption capability for the CKKS scheme. A version of this multiparty sc..." alt="" coords="283,168,511,209"/>
-<area shape="rect" id="node7" href="$classlbcrypto_1_1LPAlgorithmMultipartyNull.html" title="Concrete class for the FHE Multiparty algorithms on the Null scheme. A version of this multiparty sch..." alt="" coords="283,233,511,275"/>
-<area shape="rect" id="node3" href="$classlbcrypto_1_1LPAlgorithmMultipartyBFVrns.html" title="Concrete class for the FHE Multiparty algorithms on BFVrns. This scheme is also referred to as the FV..." alt="" coords="559,5,787,47"/>
-<area shape="rect" id="node4" href="$classlbcrypto_1_1LPAlgorithmMultipartyBFVrnsB.html" title="Concrete class for the FHE Multiparty algorithms on BFVrnsB. This scheme is also referred to as the F..." alt="" coords="559,71,787,112"/>
+<area shape="rect" id="node1" href="$classlbcrypto_1_1DistributionGenerator.html" title=" " alt="" coords="5,5,229,47"/>
+<area shape="rect" id="node2" href="$classlbcrypto_1_1DiscreteGaussianGeneratorGeneric.html" title="The class for Generic Discrete Gaussion Distribution generator." alt="" coords="277,5,475,47"/>
 </map>
