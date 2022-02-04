@@ -419,6 +419,10 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 #--------------------------------------------------------------------
 # Documentation logic
 #--------------------------------------------------------------------
+add_subdirectory("doc")
+#--------------------------------------------------------------------
+# Submodule Update logic
+#--------------------------------------------------------------------
 find_package (Git REQUIRED)
 if(GIT_SUBMOD_AUTO AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     # Update submodules as needed
@@ -449,20 +453,6 @@ if(GIT_SUBMOD_AUTO AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         set(GIT_SUBMODULE_SYNCED ON CACHE BOOL "" FORCE)
     endif()
 endif()
-
-find_package (Doxygen QUIET COMPONENTS dot)
-if (DOXYGEN_FOUND)
-
-    add_custom_target( apidocs
-        COMMAND sh -c "( cat ${CMAKE_CURRENT_SOURCE_DIR}/lbcrypto-doxy-config && echo PROJECT_NUMBER=${PALISADE_VERSION} ) | ${DOXYGEN_EXECUTABLE} -"
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Generating API documentation with Doxygen"
-        VERBATIM )
-	message (STATUS "Doxygen and dot are found")
-
-else (DOXYGEN_FOUND)
-  message(STATUS "Doxygen and dot (from graphviz) need to be installed to generate the doxygen documentation")
-endif (DOXYGEN_FOUND)
 
 #--------------------------------------------------------------------
 # Coverage logic
