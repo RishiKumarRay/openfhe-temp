@@ -10,6 +10,7 @@ cmake-build-debug
 test/build
 test/bin
 output.txt
+Doxyfile
 apidoc_warning_logfile.txt
 third-party/distros/gmp-6.1.1
 third-party/distros/gmp-6.1.2
