@@ -420,6 +420,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 # Documentation logic
 #--------------------------------------------------------------------
 add_subdirectory("doc")
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/doc" ${CMAKE_MODULE_PATH})  # So we can find FindSphinx.cmake
 #--------------------------------------------------------------------
 # Submodule Update logic
 #--------------------------------------------------------------------
